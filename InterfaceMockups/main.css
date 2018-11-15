@@ -1,4 +1,30 @@
-.body{
+body{
     background-color: #EEEEEE;
     color: #111111;
+}
+button{
+    background-color: cadetblue;
+    border: solid .1em;
+    padding: .2em;
+    margin: .2em;
+    border-radius: .5em;
+    font-family: Arial, sans-serif;
+}
+button:hover{
+    background-color: lightsteelblue;
+}
+
+h2{
+    font-family: Arial, sans-serif;
+    font-size: 3em;
+}
+
+.projectTomi{
+    font-family: Magneto, sans-serif;
+    font-size: 10em;
+}
+
+#center{
+    padding-left: 5vw;
+    padding-right: 5vw;
 }
