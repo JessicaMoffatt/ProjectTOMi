@@ -14,38 +14,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="projects.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="projects.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/InterfaceMockups/projects.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="329">
-              <caret line="65" column="18" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="18" />
+            <state relative-caret-position="465">
+              <caret line="165" column="12" selection-start-line="165" selection-start-column="12" selection-end-line="165" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="doStuff.js" pinned="false" current-in-tab="false">
-        <entry file="file://C:/wamp64/bin/apache/apache2.4.27/htdocs/finalproject/part1/js/doStuff.js">
+      <file leaf-file-name="projectInfo.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/InterfaceMockups/projectInfo.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="19" column="27" lean-forward="true" selection-start-line="9" selection-start-column="4" selection-end-line="20" selection-end-column="15" />
+            <state relative-caret-position="391">
+              <caret line="71" column="16" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="manageprojects.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="manageprojects.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/InterfaceMockups/manageprojects.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="projects.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/InterfaceMockups/projects.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="157" selection-start-column="157" selection-end-column="157" />
+            <state relative-caret-position="380">
+              <caret line="30" column="26" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -53,8 +44,8 @@
       <file leaf-file-name="project.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/InterfaceMockups/project.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
+            <state relative-caret-position="261">
+              <caret line="108" column="35" selection-start-line="108" selection-start-column="35" selection-end-line="108" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -78,9 +69,10 @@
         <option value="$PROJECT_DIR$/InterfaceMockups/main.css" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="C:/wamp64/bin/apache/apache2.4.27/htdocs/finalproject/part3/js/rentalDoStuff.js" />
-        <option value="$PROJECT_DIR$/InterfaceMockups/project.js" />
         <option value="$PROJECT_DIR$/InterfaceMockups/projects.json" />
+        <option value="$PROJECT_DIR$/InterfaceMockups/projectInfo.json" />
         <option value="$PROJECT_DIR$/InterfaceMockups/manageprojects.html" />
+        <option value="$PROJECT_DIR$/InterfaceMockups/project.js" />
         <option value="$PROJECT_DIR$/InterfaceMockups/projects.css" />
       </list>
     </option>
@@ -153,16 +145,15 @@
       <option name="presentableId" value="Default" />
       <updated>1542311026974</updated>
       <workItem from="1542311028255" duration="1558000" />
-      <workItem from="1542321233412" duration="10402000" />
+      <workItem from="1542321233412" duration="19612000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11960000" />
+    <option name="totallyTimeSpent" value="21170000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24963397" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -225,43 +216,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/wamp64/bin/apache/apache2.4.27/htdocs/finalproject/part1/js/doStuff.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="19" column="27" lean-forward="true" selection-start-line="9" selection-start-column="4" selection-end-line="20" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/wamp64/bin/apache/apache2.4.27/htdocs/Lab12/partb/js/asdf.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-487" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/InterfaceMockups/project.js">
+    <entry file="file://C:/wamp64/bin/apache/apache2.4.27/htdocs/finalproject/part1/js/doStuff.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
-          <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
+          <caret line="11" column="39" lean-forward="true" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/InterfaceMockups/projects.json">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="157" selection-start-column="157" selection-end-column="157" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/InterfaceMockups/manageprojects.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+          <caret column="138" lean-forward="true" selection-end-column="138" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/InterfaceMockups/projects.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="65" column="18" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="18" />
+        <state relative-caret-position="465">
+          <caret line="165" column="12" selection-start-line="165" selection-start-column="12" selection-end-line="165" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/InterfaceMockups/projectInfo.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="71" column="16" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/InterfaceMockups/project.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="108" column="35" selection-start-line="108" selection-start-column="35" selection-end-line="108" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/InterfaceMockups/manageprojects.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="30" column="26" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
         </state>
       </provider>
     </entry>
