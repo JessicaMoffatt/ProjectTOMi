@@ -1,8 +1,8 @@
 [
   {"projectId":    "AM0001",
-  "name":  "project 1",
+  "name":  "Garry's Boats",
   "projectManager": "Manager Name",
-  "client": "Client Name",
+  "client": "Garry",
   "budget": 100,
   "expenses": [{"id": 1, "description" : "Desc", "value": 10}],
   "teamMembers": ["Bill", "Chris", "Tony"]
