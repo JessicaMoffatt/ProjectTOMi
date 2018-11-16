@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset = "UTF-8">
+    <title>Manage Projects</title>
+    <link rel = "stylesheet" href = "projects.css" type = "text/css">
+    <link rel = "stylesheet"
+          href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div id = "visibleMenu" class = "menu">
+    <form onsubmit = "return false">
+        <input title = "search" type = "text" name = "search">
+        <div onclick = "hideMenu()"><i class = "fa fa-bars"></i></div>
+    </form>
+    <div class = "scrollList">
+        <ul id = "projects">
+        </ul>
+        <div id = "bottomButton">
+            <button>Create New Project</button>
+        </div>
+    </div>
+</div>
+<div id = "hiddenMenu" class = "menu2 hidden">
+    <div onclick = "showMenu()"><i class = "fa fa-bars"></i></div>
+</div>
+<div id = "header"><a href = "../index.html"><img src = "icon.png" alt = "Icon"/></a></div>
+<div id = "infoPane" class = "middle">
+
+    <div>information</div>
+</div>
+
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type = "text/javascript" src = "project.js"></script>
+</body>
+</html>

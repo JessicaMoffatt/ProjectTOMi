@@ -1,0 +1,147 @@
+#header{
+    background-color: orange;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 11vh;
+    border-bottom: #ee9400 solid 1px;
+}
+
+#header img{
+    height: 11vh;
+    width: auto;
+}
+
+.middle{
+    position:fixed;
+    left: 20vw;
+    width: 80vw;
+    height: 89vh;
+    top: 11vh;
+    background-color: #EEEEEE;
+    color: #111111;
+    font-family: Arial, sans-serif;
+}
+
+.middleBig{
+    position:fixed;
+    left: 3vw;
+    width: 97vw;
+    height: 89vh;
+    top: 11vh;
+    background-color: #EEEEEE;
+    color: #111111;
+    font-family: Arial, sans-serif;
+}
+
+.menu
+{
+
+    position:fixed;
+    top:11vh;
+    left:0;
+    display:block;
+    background-color: orange;
+    width:20vw;
+    height:89vh;
+    margin:0;
+    padding:0;
+}
+
+.menu ul
+{
+    list-style:none;
+    display:block;
+    width:100%;
+    margin:0;
+    padding:0;
+}
+
+.menu button
+{
+    text-align:center;
+    text-decoration:none;
+    font-family: Arial, sans-serif;
+    color: #111111;
+    background-color: orange;
+    display:block;
+    width:100%;
+    padding-top:15px;
+    padding-bottom:15px;
+    border: none;
+}
+.menu input{
+    margin-top: 2vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    margin-left: 2.5vw;
+    width: 13vw;
+    margin-right: 2.5vw;
+    border: none;
+    border-radius: 10vh;
+    background-color: #EEEEEE;
+}
+.menu i{
+    color: #EEEEEE;
+    position:absolute;
+    right: 1vw;
+    top: 3vh;
+}
+.menu img
+{
+    padding:10%;
+    width:80%;
+    height:auto;
+}
+
+.menu button:hover
+{
+    background-color: #ee9400;
+    color: #111111;
+}
+
+#bottomButton{
+    position: absolute;
+    background-color: cornflowerblue;
+    bottom: 0;
+    width: 20vw;
+    height: 7vh;
+}
+#bottomButton button{
+    background-color: cornflowerblue;
+}
+
+#bottomButton button:hover{
+    background-color: #5384dc;
+}
+
+.menu2{
+    position:fixed;
+    top:11vh;
+    left:0;
+    display:block;
+    background-color: orange;
+    height:89vh;
+    margin:0;
+    padding:0;
+    width:3vw;
+}
+
+.menu2 i{
+    color: #EEEEEE;
+    position:absolute;
+    right: 1vw;
+    top: 3vh;
+}
+
+.hidden{
+    display: none;
+}
+
+.scrollList{
+    height: 76vh;
+    overflow-y: scroll;
+}
