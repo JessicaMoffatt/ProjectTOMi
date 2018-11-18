@@ -44,7 +44,7 @@ function displayInformation(){
     let edit = document.createElement("i");
     edit.classList.add("fa");
     edit.classList.add("fa-edit");
-    title.appendChild(document.createTextNode(displayed.name));
+    title.appendChild(document.createTextNode(displayed.name + " "));
     title.appendChild(edit);
     mainDiv.appendChild(title);
 
@@ -54,7 +54,7 @@ function displayInformation(){
     mainDiv.appendChild(client);
 
     // Project Id
-    let pid = document.createElement("h4");
+    let pid = document.createElement("h3");
     pid.appendChild(document.createTextNode(displayed.projectId));
     mainDiv.appendChild(pid);
 
@@ -67,7 +67,6 @@ function displayInformation(){
     let budget = document.createElement("div");
     budget.appendChild(document.createTextNode("Budget: $" + parseFloat(displayed.budget * 100 / 100).toFixed(2)));
     mainDiv.appendChild(budget);
-    mainDiv.appendChild(document.createElement("br"));
 
     // Expenses
     let expenses = document.createElement("div");
@@ -104,8 +103,10 @@ function displayInformation(){
 
 
     let teamDiv = document.createElement("div");
-    let teamTitle = document.createElement("h1");
+    let teamTitle = document.createElement("h2");
     teamTitle.appendChild(document.createTextNode("Team"));
+    teamDiv.appendChild(document.createElement("br"));
+    teamDiv.appendChild(document.createElement("br"));
     teamDiv.appendChild(teamTitle);
 
     let teamTable = document.createElement("table");

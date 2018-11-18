@@ -1,26 +1,31 @@
 body{
-    background-color: #EEEEEE;
-    color: #111111;
+    background-color: #ffffff;
+    color: #3E3E3E;
 }
 button{
-    background-color: cadetblue;
+    background-color: #3863AE;
     border: solid .1em;
     padding: .2em;
     margin: .2em;
     border-radius: .5em;
+    color: #ffffff;
     font-family: Arial, sans-serif;
 }
 button:hover{
-    background-color: lightsteelblue;
+    background-color: #ef7c22;
+    color: #3E3E3E;
 }
 
 h2{
-    font-family: Arial, sans-serif;
-    font-size: 3em;
+    font-family: "Trebuchet MS", sans-serif;
+    color: #ef7c22;
+    font-weight: bold;
+
 }
 
 .projectTomi{
     font-family: Magneto, sans-serif;
+    color: #ef7c22;
     font-size: 10em;
 }
 

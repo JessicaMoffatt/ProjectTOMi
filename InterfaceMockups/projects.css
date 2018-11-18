@@ -1,11 +1,11 @@
 #header{
-    background-color: orange;
+    background-color: #ef7c22;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     height: 11vh;
-    border-bottom: #ee9400 solid 1px;
+    border-bottom: #de6c11 solid 1px;
 }
 
 #header img{
@@ -19,8 +19,8 @@
     width: 80vw;
     height: 89vh;
     top: 11vh;
-    background-color: #EEEEEE;
-    color: #111111;
+    background-color: #ffffff;
+    color: #3E3E3E;
     font-family: Arial, sans-serif;
 }
 
@@ -30,19 +30,28 @@
     width: 97vw;
     height: 89vh;
     top: 11vh;
-    background-color: #EEEEEE;
-    color: #111111;
+    background-color: #ffffff;
+    color: #3E3E3E;
     font-family: Arial, sans-serif;
+
+}
+
+.middle p, .middle div{
+    padding-bottom: 1.5rem;
+}
+
+.middleBig p, .middleBig div{
+    padding-bottom: 1.5rem;
 }
 
 .menu
 {
-
     position:fixed;
     top:11vh;
     left:0;
     display:block;
-    background-color: orange;
+    background-color: #ef7c22;
+    color: #3E3E3E;
     width:20vw;
     height:89vh;
     margin:0;
@@ -63,8 +72,8 @@
     text-align:center;
     text-decoration:none;
     font-family: Arial, sans-serif;
-    color: #111111;
-    background-color: orange;
+    color: #ffffff;
+    background-color: #ef7c22;
     display:block;
     width:100%;
     padding-top:15px;
@@ -82,10 +91,10 @@
     margin-right: 2.5vw;
     border: none;
     border-radius: 10vh;
-    background-color: #EEEEEE;
+    background-color: #ffffff;
 }
 .menu i{
-    color: #EEEEEE;
+    color: #ffffff;
     position:absolute;
     right: 1vw;
     top: 3vh;
@@ -99,23 +108,25 @@
 
 .menu button:hover
 {
-    background-color: #ee9400;
-    color: #111111;
+    background-color: #de6c11;
+    color: #ffffff;
 }
 
 #bottomButton{
     position: absolute;
-    background-color: cornflowerblue;
+    background-color: #3863AE;
     bottom: 0;
     width: 20vw;
     height: 7vh;
 }
 #bottomButton button{
-    background-color: cornflowerblue;
+    background-color: #3863AE;
+    color: #ffffff;
 }
 
 #bottomButton button:hover{
-    background-color: #5384dc;
+    background-color: #27529d;
+    color: #ffffff;
 }
 
 .menu2{
@@ -123,7 +134,7 @@
     top:11vh;
     left:0;
     display:block;
-    background-color: orange;
+    background-color: #ef7c22;
     height:89vh;
     margin:0;
     padding:0;
@@ -131,7 +142,7 @@
 }
 
 .menu2 i{
-    color: #EEEEEE;
+    color: #ffffff;
     position:absolute;
     right: 1vw;
     top: 3vh;
@@ -164,4 +175,19 @@
     position: absolute;
     top:0;
     right: 25vw;
+}
+
+h2{
+    font-family: "Trebuchet MS", sans-serif;
+    padding-bottom: 2rem;
+}
+
+h1{
+    font-family: "Trebuchet MS", sans-serif;
+    padding-bottom: 3rem;
+}
+
+h3{
+    font-family: "Trebuchet MS", sans-serif;
+    padding-bottom: 1rem;
 }
