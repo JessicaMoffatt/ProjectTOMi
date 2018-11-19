@@ -163,10 +163,13 @@ function editInformation(){
     form.appendChild(pid);
 
     // Manager
+    let managerDiv = document.createElement("H3");
+    managerDiv.appendChild(document.createTextNode("Project Manager: "));
     let manager = document.createElement("input");
     manager.setAttribute("value", displayed.projectManager);
     manager.classList.add("h3Input");
-    form.appendChild(manager);
+    managerDiv.appendChild(manager);
+    form.appendChild(managerDiv);
 
     // Budget
     let budget = document.createElement("div");

@@ -192,3 +192,35 @@ h3{
     padding-bottom: 1rem;
 }
 
+input{
+    border: none;
+    border-bottom: #3E3E3E solid 1px;
+}
+
+.h1Input{
+    font-size: 2em;
+    font-family: "Trebuchet MS", sans-serif;
+    font-weight: bold;
+    margin: .67em 0;
+    margin-bottom: 3rem;
+    color: #3E3E3E;
+}
+
+.h2Input{
+    font-size: 1.5em;
+    font-family: "Trebuchet MS", sans-serif;
+    font-weight: bold;
+    margin: .75em 0;
+    margin-bottom: 3rem;
+    color: #3E3E3E;
+}
+
+.h3Input{
+    font-size: 1.17em;
+    font-family: "Trebuchet MS", sans-serif;
+    font-weight: bold;
+    margin: .83em 0;
+    margin-bottom: 1rem;
+    color: #3E3E3E;
+
+}
