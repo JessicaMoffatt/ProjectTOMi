@@ -2,9 +2,9 @@ package ca.projectTOMi.tomi.controller;
 
 import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.persistence.TeamRepository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class TeamController {
@@ -14,8 +14,24 @@ public class TeamController {
         this.repository = repository;
     }
 
-    @PostMapping("/team")
+    @PostMapping("/teams")
     public Team createTeam(@RequestBody Team team){
         return repository.save(team);
+    }
+
+    @GetMapping("/teams")
+    public List<Team> all(){
+        return repository.findAll();
+    }
+
+    @GetMapping("/teams/{teamId}")
+    public Team getTeam(@PathVariable Long teamId){
+        Team t = repository.findById(teamId).orElseThrow(()-> new RuntimeException() );
+        return t;
+    }
+
+    @GetMapping("/teams/active")
+    public List<Team> findActive(){
+        return repository.getAllByActive(true);
     }
 }

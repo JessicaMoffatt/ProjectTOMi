@@ -12,7 +12,8 @@ public class Team {
     @GeneratedValue(generator = "team_sequence")
     @SequenceGenerator(
             name = "team_sequence",
-            sequenceName = "team_sequence"
+            sequenceName = "team_sequence",
+            allocationSize = 1
     )
     private Long teamId;
 

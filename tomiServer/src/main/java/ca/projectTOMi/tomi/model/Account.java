@@ -16,7 +16,8 @@ public class Account {
     @GeneratedValue(generator = "account_sequence")
     @SequenceGenerator(
             name = "account_sequence",
-            sequenceName = "account_sequence"
+            sequenceName = "account_sequence",
+            allocationSize = 1
     )
     private Long id;
 
