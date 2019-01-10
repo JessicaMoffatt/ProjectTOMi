@@ -1,28 +1,51 @@
 package ca.projectTOMi.tomi.model;
 
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Size;
 import lombok.Data;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
-
+/**
+ * A Team represents a group of Accounts whom work under the same team lead. The use of the Team is
+ * to provide access to Accounts’ time sheets and productivity reports.
+ *
+ * @author Karol Talbot
+ * @version 1
+ */
 @Entity
 @Data
 public class Team {
-    @Id
-    @GeneratedValue(generator = "team_sequence")
-    @SequenceGenerator(
-            name = "team_sequence",
-            sequenceName = "team_sequence",
-            allocationSize = 1
-    )
-    private Long teamId;
+  /**
+   * The unique identifier for this Team.
+   */
+  @Id
+  @GeneratedValue (generator = "team_sequence")
+  @SequenceGenerator (
+    name = "team_sequence",
+    sequenceName = "team_sequence",
+    allocationSize = 1
+  )
+  private Long teamId;
 
-    @OneToOne
-    private Account teamLead;
+  /**
+   * The Account of the team leader for this Team.
+   */
+  @OneToOne
+  private Account teamLead;
 
-    @Size(max = 100)
-    private String teamName;
+  /**
+   * The name of this Team.
+   */
+  @Size (max = 100)
+  private String teamName;
 
-    private boolean active;
+  /**
+   * If this Team is active.
+   */
+  private boolean active;
 
 }
