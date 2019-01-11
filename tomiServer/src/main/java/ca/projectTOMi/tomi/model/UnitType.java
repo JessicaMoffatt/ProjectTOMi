@@ -11,6 +11,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /*
+    @author Jessica Moffatt
+    @version 1
     A unit type is used to distinguish between types of units.
  */
 @Entity

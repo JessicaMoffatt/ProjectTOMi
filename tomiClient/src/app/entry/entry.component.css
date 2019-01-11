@@ -1,0 +1,9 @@
+.small_number_input{
+  width:50px;
+}
+
+.entry_container{
+  border: 1px solid black;
+  display:inline-block;
+}
+

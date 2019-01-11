@@ -1,0 +1,20 @@
+<body>
+<div class="entry_container">
+  <div>
+    <input [(ngModel)]="entry.projectName" placeholder="Project Name">
+    <label *ngFor="let day of days">{{day}}
+      <input class="small_number_input" *ngFor="let hour of entry.hours|slice:0:1"
+                                                   [(ngModel)]="hour" placeholder="0" type="number" step=".25" ng-click="">
+    </label>
+    <button (click)="delete()">X</button>
+  </div>
+  <div>
+    <input [(ngModel)]="entry.task" placeholder="Task">
+    <input [(ngModel)]="entry.unitType" placeholder="Unit Type">
+    <input [(ngModel)]="entry.component" placeholder="Component">
+    <label><input [ngModel]="entry.quantity" placeholder="Quantity" class="small_number_input">Units</label>
+    <button (click)="copy()">[COPY]</button>
+  </div>
+  <button (click)="save()">[SAVE]</button>
+</div>
+</body>
