@@ -10,10 +10,19 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+/**
+ * A task represents a deliverable for the client. Can also be thought of as a phase of development.
+ *
+ * @author Iliya Kiritchkov
+ * @version 1
+ */
 @Entity
 @Data
 public class Task {
 
+    /**
+     * The unique identifier for this Task. Used to distinguish between Accounts.
+     */
     @Id
     @GeneratedValue(generator = "task_sequence")
     @SequenceGenerator(
@@ -23,10 +32,16 @@ public class Task {
     )
     private Long taskId;
 
+    /**
+     * The name of this Task.
+     */
     @Column(unique = true)
     @NotBlank
     @Size(max = 100)
     private String name;
 
+    /**
+     * If this Task is billable.
+     */
     private boolean billable;
 }
