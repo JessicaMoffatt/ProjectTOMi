@@ -34,4 +34,7 @@ public class TeamController {
   public List<Team> findActive() {
     return repository.getAllByActive(true);
   }
+
+  @DeleteMapping("/teams/{teamId}")
+  public 
 }
