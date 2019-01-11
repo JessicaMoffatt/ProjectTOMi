@@ -27,7 +27,7 @@ public class Timesheet {
     private Long timesheetId;
 
 
-    /*
+    /**
      * The account of the user that the timesheet belongs to
      */
     @ManyToOne
