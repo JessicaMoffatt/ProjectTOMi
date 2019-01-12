@@ -1,2 +1,4 @@
-<app-entry *ngFor="let entry of entries" [entry]="entry"></app-entry>
-<button (click)="addEntry()">+</button>
+<app-entry *ngFor="let entry of entries" [entry]="entry" (copyRequested)="copyEntry($event)"></app-entry>
+<div #componentHolder ></div>
+<button #addEntryBtn (click)="addEntry()">+</button>
+

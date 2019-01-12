@@ -22,7 +22,7 @@ export const TEMPENTRIES: Entry[] = [
     project: "Placeholder for Project object 2",
     task: "Developement Beta",
     component: "Man Walking 22",
-    quantity: 3,
+    quantity: 5,
     unitType: "Placeholder for Unit Type object 2"
   }
 ];

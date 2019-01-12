@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Entry} from "../entry";
 import {EntryService} from "../entry.service";
 
@@ -11,6 +11,8 @@ import {EntryService} from "../entry.service";
 export class EntryComponent implements OnInit {
   @Input() entry: Entry;
 
+  @Output() copyRequested = new EventEmitter<any>();
+
   days: string[] = ["M","T","W","R","F","S","U"];
 
   constructor(
@@ -21,10 +23,14 @@ export class EntryComponent implements OnInit {
   }
 
   copy():void{
-    this.entryService.copyEntry(this.entry);
+    this.copyRequested.emit(this.entry);
   }
 
   delete():void{
     this.entryService.deleteEntry(this.entry);
+  }
+
+  setEntry(passedEntry: Entry){
+    this.entry = passedEntry;
   }
 }
