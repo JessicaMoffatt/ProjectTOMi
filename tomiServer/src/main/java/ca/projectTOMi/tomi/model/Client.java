@@ -23,7 +23,8 @@ public class Client {
   @GeneratedValue(generator = "client_sequence")
   @SequenceGenerator(
     name = "client_sequence",
-    sequenceName = "client_sequence"
+    sequenceName = "client_sequence",
+    allocationSize = 1
   )
   private Long clientId;
 
