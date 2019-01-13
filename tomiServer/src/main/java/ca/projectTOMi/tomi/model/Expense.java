@@ -26,7 +26,8 @@ public class Expense {
   @GeneratedValue (generator = "expense_sequence")
   @SequenceGenerator (
     name = "expense_sequence",
-    sequenceName = "expense_sequence"
+    sequenceName = "expense_sequence",
+    allocationSize = 1
   )
   private Long expenseId;
 

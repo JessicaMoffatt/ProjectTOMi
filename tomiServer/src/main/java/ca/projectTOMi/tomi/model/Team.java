@@ -29,7 +29,7 @@ public class Team {
     sequenceName = "team_sequence",
     allocationSize = 1
   )
-  private Long teamId;
+  private Long id;
 
   /**
    * The Account of the team leader for this Team.
