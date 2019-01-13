@@ -19,8 +19,7 @@ export class EntryService {
     private http: HttpClient
   ) { }
 
-  addEntry(entry: Entry){
-    //this should be for save entries!
+  saveEntry(entry: Entry){
     // return this.http.post<Entry>(this.entriesUrl, entry, httpOptions).pipe(
     //   catchError(this.handleError<Entry>('addEntry'))
     // );

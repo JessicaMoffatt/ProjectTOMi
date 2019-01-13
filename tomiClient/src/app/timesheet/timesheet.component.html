@@ -1,4 +1,18 @@
-<app-entry *ngFor="let entry of entries" [entry]="entry" (copyRequested)="copyEntry($event)"></app-entry>
-<div #componentHolder ></div>
-<button #addEntryBtn (click)="addEntry()">+</button>
+<div class="main_container">
+  <span class="circle">
+    <i class="arrow left"></i>
+  </span>
+  <span class="week_title">Week of Jan 14, 2019</span>
+  <span class="circle">
+    <i class="arrow right"></i>
+  </span>
+  <!--This is a placeholder -->
+  <button class="calendar"></button> <span id="submission_status">Not Submitted</span>
 
+  <app-entry *ngFor="let entry of entries" [entry]="entry" (copyRequested)="copyEntry($event)"></app-entry>
+  <div #componentHolder ></div>
+  <div (click)="addEntry()" class="add_entry btn">+</div>
+</div>
+<div class="tally_container">
+  <span id="hours_tally">Hours: {{tally}}</span><span class="submit btn">Submit</span>
+</div>
