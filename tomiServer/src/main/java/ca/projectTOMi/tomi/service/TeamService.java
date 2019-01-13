@@ -43,10 +43,7 @@ public class TeamService {
       team.setActive(newTeam.isActive());
       team.setTeamLead(newTeam.getTeamLead());
       return repository.save(team);
-    }).orElseGet(() -> {
-      newTeam.setId(id);
-      return repository.save(newTeam);
-    });
+    }).orElseThrow(() -> new TeamNotFoundException());
   }
 
   /**
