@@ -4,6 +4,9 @@ import ca.projectTOMi.tomi.exception.TaskNotFoundException;
 import ca.projectTOMi.tomi.model.Task;
 import ca.projectTOMi.tomi.persistence.TaskRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Provides services for {@link Task} objects.
  *
@@ -45,5 +48,34 @@ public class TaskService {
         return repository.findById(id).orElseThrow(() -> new TaskNotFoundException());
     }
 
+    /**
+     * Gets a list of all {@Link Task} objects that are active.
+     * @return List containing all Tasks that are active.
+     */
+    public List<Task> getActiveTasks() {
+        return repository.getAllByActive(true).stream().collect(Collectors.toList());
+    }
 
+    /**
+     * Gets a list of all {@Link Task} objects that are active and billable.
+     * @return List containing all Tasks that are active and billable.
+     */
+    public List<Task> getActiveAndBillable() {
+        return repository.getAllByBillableAndActive(true, true).stream().collect(Collectors.toList());
+    }
+
+    /**
+     * Gets a list of all {@Link Task} objects that are active and non-billable.
+     * @return List containing all Tasks that are active and non-billable.
+     */
+    public List<Task> getActiveAndNonBillable() {
+        return repository.getAllByBillableAndActive(false, true).stream().collect(Collectors.toList());
+    }
+
+    /**
+     * Persists the provided {@Link Task}
+     * @param task Task to be persisted.
+     * @return Task that was persisted.
+     */
+    public Task saveTask(Task task) { return repository.save(task); }
 }
