@@ -37,7 +37,5 @@ public class Client {
    */
   @Column(unique = true, length = 100, nullable = false)
   private String name;
-
-  private ArrayList<Date> fish;
 }
 
