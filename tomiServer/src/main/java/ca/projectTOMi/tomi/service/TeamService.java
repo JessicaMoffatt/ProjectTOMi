@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.exception.TeamNotFoundException;
 import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.persistence.TeamRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * Provides services for {@link Team} objects.
@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
  * @author Karol Talbot
  * @version 1
  */
-@Component
+@Service
 public class TeamService {
   private TeamRepository repository;
 
   /**
-   * Constructor for the TeamService component.
+   * Constructor for the TeamService service.
    *
    * @param repository
    *   Repository responsible for persisting {@link Team} instances
@@ -31,7 +31,7 @@ public class TeamService {
    * Updates the team with the provided id with the provided attributes.
    *
    * @param id
-   *   the unique identifier for the team to update
+   *   the unique identifier for the team to be updated
    * @param newTeam
    *   Team object containing the updated attributes
    *
@@ -50,7 +50,7 @@ public class TeamService {
    * Gets a {@link Team} object with the provided id.
    *
    * @param id
-   *   the unique identifier for the Team to find
+   *   the unique identifier for the Team to be found
    *
    * @return Team object matching the provided id
    */

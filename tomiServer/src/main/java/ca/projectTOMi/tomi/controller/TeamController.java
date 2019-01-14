@@ -1,6 +1,7 @@
 package ca.projectTOMi.tomi.controller;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -32,7 +33,8 @@ public class TeamController {
   TeamService service;
 
   /**
-   * Constructor for this TeamController with parameters required for
+   * Constructor for this TeamController with parameters required for proper function of this
+   * controller.
    *
    * @param assembler
    *   converts team objects into resources
@@ -95,7 +97,7 @@ public class TeamController {
    * the PUT request to /teams/id.
    *
    * @param id
-   *   the unique identifier for the Team to update
+   *   the unique identifier for the Team to be updated
    * @param newTeam
    *   the updated team
    *
