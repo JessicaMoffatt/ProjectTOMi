@@ -30,7 +30,7 @@ public class Task {
             sequenceName = "task_sequence",
             allocationSize = 1
     )
-    private Long taskId;
+    private Long id;
 
     /**
      * The name of this Task.
@@ -43,5 +43,12 @@ public class Task {
     /**
      * If this Task is billable.
      */
+    @Column(nullable = false)
     private boolean billable;
+
+    /**
+     * If this Task is active.
+     */
+    @Column(nullable = false)
+    private boolean active;
 }
