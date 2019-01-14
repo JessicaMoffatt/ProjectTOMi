@@ -12,6 +12,7 @@ export class EntryComponent implements OnInit {
   @Input() entry: Entry;
 
   @Output() copyRequested = new EventEmitter<any>();
+  @Output() deleteRequested = new EventEmitter<any>();
 
   days: string[] = ["M","T","W","R","F","S","U"];
 
@@ -27,7 +28,7 @@ export class EntryComponent implements OnInit {
   }
 
   delete():void{
-    this.entryService.deleteEntry(this.entry);
+    this.deleteRequested.emit(this.entry);
   }
 
   setEntry(passedEntry: Entry){

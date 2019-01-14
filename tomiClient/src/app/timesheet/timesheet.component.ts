@@ -1,16 +1,11 @@
 import {
-  Component,
-  ComponentFactoryResolver,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild,
-  ViewContainerRef
+  Component, Injectable,
+  OnInit, ViewChild, ViewContainerRef
 } from '@angular/core';
 import {Entry} from "../entry";
 import {EntryService} from "../entry.service";
 import {TEMPENTRIES} from "../entry/mock_entries";
-import {EntryComponent} from "../entry/entry.component";
+import {updateBinding} from "@angular/core/src/render3/instructions";
 
 @Component({
   selector: 'app-timesheet',
@@ -20,15 +15,14 @@ import {EntryComponent} from "../entry/entry.component";
 export class TimesheetComponent implements OnInit {
 
   // entries: Entry[];
-  entries = TEMPENTRIES;
+  entries: Entry[];
 
   tally: number=0;
 
   @ViewChild('componentHolder', { read: ViewContainerRef }) componentHolder: ViewContainerRef;
 
   constructor(
-    private entryService: EntryService,
-    private componentFactoryResolver: ComponentFactoryResolver
+    private entryService: EntryService
   ) { }
 
   ngOnInit() {
@@ -37,29 +31,38 @@ export class TimesheetComponent implements OnInit {
 
   getEntries():void{
     // this.entryService.getEntries().subscribe(entries => this.entries = entries);
-    //initial population of tally
-    //TODO if hours isn't an array need to change this, also change tempentries
-    TEMPENTRIES.forEach(function(entry){
-      entry.hours.forEach(function(hr){
-        console.log(1);
-        // this.tally = hr;
-      })
-
-    });
+    this.entries = TEMPENTRIES;
+    this.updateTally();
   }
 
   public addEntry(): void{
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(EntryComponent);
-    const componentRef = this.componentHolder.createComponent(componentFactory);
-    componentRef.instance.setEntry(new Entry());
+    let newEntry = new Entry();
 
-    console.log(this.tally);
+    //TODO change
+    this.entries.push(newEntry);
   }
 
-  copyEntry(event: any):void{
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(EntryComponent);
-    const componentRef = this.componentHolder.createComponent(componentFactory);
-    componentRef.instance.setEntry(event as Entry);
+  copyEntry(entry: Entry):void{
+    this.entries.push(entry);
+  }
+
+  deleteEntry(entry: Entry){
+    let index = this.entries.indexOf(entry);
+    this.entries.splice(index, 1);
+
+    // this.entryService.deleteEntry(entry).subscribe();
+  }
+
+  public updateTally():void{
+    //TODO if hours isn't an array need to change this, also change tempentries
+    let hours = 0;
+    this.entries.forEach(function(entry){
+      entry.hours.forEach(function(hr){
+        hours = hours + hr;
+      })
+    });
+
+    this.tally = hours;
   }
 
 }

@@ -4,8 +4,17 @@
 
 .week_title{
   font-size:200%;
+
   margin-left:15px;
   margin-right:15px;
+}
+
+.btn{
+  color:#FFFFFF;
+  border: 1px solid #3E3E3E;
+
+  font-weight:bold;
+  text-align:center;
 }
 
 .btn:hover{
@@ -13,8 +22,9 @@
 }
 
 i {
-  border: solid black;
+  border: solid #3E3E3E;
   border-width: 0 4px 4px 0;
+
   padding: 6px;
 }
 
@@ -40,28 +50,32 @@ i {
   position:absolute;
   top:50%;
   left:40%;
+
   margin: -8px 0 0 -6px;
 }
 
 .left {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
+
   position:absolute;
   top:50%;
   left:50%;
-  margin: -8px 0 0 -6px;
 
+  margin: -8px 0 0 -6px;
 }
 
 .calendar{
   width:30px;
   height:30px;
+
   margin-left:15px;
   margin-right:15px;
 }
 
 #submission_status{
   color:#7A7A7A;
+
   font-weight:bold;
 }
 
@@ -71,15 +85,15 @@ i {
 
   font-weight:bold;
   font-size: 200%;
-
   text-align:center;
+  line-height:25px;
 
-  line-height:30px;
+  width:25px;
+  height:25px;
 
-  width:30px;
-  height:30px;
+  margin:5px;
 
-  border:1px solid black;
+  border:1px solid #3E3E3E;
   border-radius:100%;
 }
 
@@ -89,15 +103,27 @@ i {
 
 /* Tally Container Styles */
 .tally_container{
+  background-color:#EEF0F0;
+  height: 30px;
+  position:relative;
+  bottom: 0px;
+}
+
+.hours_tally{
 
 }
 
 .submit{
   background-color:#009E0F;
-  color:#FFFFFF;
+}
 
-  font-weight:bold;
+.save{
+  background-color:#3863AE;
+  margin-right:15px;
+}
 
-  text-align:center;
-
+.bottom_btn{
+  padding:3px 5px 3px 5px;
+  border-radius:4px;
+  float:right;
 }

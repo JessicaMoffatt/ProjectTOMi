@@ -1,28 +1,25 @@
 <body>
 <div class="entry_container">
   <div>
-      <input [(ngModel)]="entry.projectName" placeholder="Project Name">
-      <label *ngFor="let day of days">{{day}}
+      <input [(ngModel)]="entry.projectName" placeholder="Project Name" style="width:20em">
         <span *ngIf="entry.hours">
-        <input class="small_number_input" *ngFor="let hour of entry.hours|slice:0:1"
-                                                     [(ngModel)]="hour" placeholder="0" type="number" step=".25" ng-click="">
+          <span *ngFor="let hour of entry.hours; let i = index">
+            <label><strong>{{days[i]}}</strong>
+            <input class="small_number_input" [(ngModel)]="hour" placeholder="0" type="number" step=".25">
+            </label>
+          </span>
         </span>
-        <span *ngIf="!entry.hours">
-          <input class="small_number_input" ng-repeat="(key, value) in [1,1,1,1,1,1,1]"
-                 [(ngModel)]="hour" placeholder="0" type="number" step=".25" ng-click="">
-        </span>
-      </label>
-    <button (click)="delete()">X</button>
+    <span class="delete btn" (click)="delete()">X</span>
   </div>
   <div>
     <span *ngIf="entry">
     <input [(ngModel)]="entry.task" placeholder="Task">
     <input [(ngModel)]="entry.unitType" placeholder="Unit Type">
-    <input [(ngModel)]="entry.component" placeholder="Component">
-    <label><input [ngModel]="entry.quantity" placeholder="Quantity" class="small_number_input">Units</label>
+    <input [(ngModel)]="entry.component" placeholder="Component" style="width:20em">
+      <!-- TODO replace Units with ACTUAl units, depending on the Unit Type-->
+    <label><input [ngModel]="entry.quantity" placeholder="Quantity" class="small_number_input"><strong>Units</strong></label>
    </span>
-    <button (click)="copy()">[COPY]</button>
+    <span class="copy btn" (click)="copy()">C</span>
   </div>
-  <button (click)="save()">[SAVE]</button>
 </div>
 </body>

@@ -13,7 +13,7 @@ const httpOptions ={
 })
 export class EntryService {
 
-  private entriesUrl = 'api/timesheet';
+  private entriesUrl = 'api/entries';
 
   constructor(
     private http: HttpClient
@@ -25,8 +25,12 @@ export class EntryService {
     // );
   }
 
-  deleteEntry(entry: Entry){
+  deleteEntry(entry: Entry | number): Observable<Entry>{
+    // const id = typeof entry === 'number' ? entry : entry.id;
+    // const url = `${this.entriesUrl}/${id}`;
 
+    // return this.http.delete<Entry>(url, httpOptions).pipe(catchError(this.handleError<Entry>('deleteEntry')));
+    return null;
   }
 
   updateEntry(entry: Entry): Observable<any>{
@@ -35,8 +39,7 @@ export class EntryService {
   }
 
   getEntries(): Observable<Entry[]>{
-    return this.http.get<Entry[]>(this.entriesUrl).pipe(catchError(this.handleError('getEntries', []))
-    );
+    return this.http.get<Entry[]>(this.entriesUrl);
   }
   /**
    * Handle Http operation that failed.
