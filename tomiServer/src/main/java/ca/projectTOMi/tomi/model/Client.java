@@ -1,14 +1,10 @@
 package ca.projectTOMi.tomi.model;
 
-import java.util.ArrayList;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import lombok.Data;
 
 /**
