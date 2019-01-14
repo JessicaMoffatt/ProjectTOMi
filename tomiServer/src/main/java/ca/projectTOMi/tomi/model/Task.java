@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 /**
- * A task represents a deliverable for the client. Can also be thought of as a phase of development.
+ * A Task represents a deliverable for the client. Can also be thought of as a phase of development.
  *
  * @author Iliya Kiritchkov
  * @version 1
@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 public class Task {
 
     /**
-     * The unique identifier for this Task. Used to distinguish between Accounts.
+     * The unique identifier for this Task. Used to distinguish between Tasks.
      */
     @Id
     @GeneratedValue(generator = "task_sequence")

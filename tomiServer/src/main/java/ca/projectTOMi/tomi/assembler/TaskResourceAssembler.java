@@ -15,7 +15,8 @@ public class TaskResourceAssembler implements ResourceAssembler<Task, Resource<T
 
     @Override
     public Resource<Task> toResource(Task task) {
+        Resource<Task> resource = new Resource<>(task,
+                linkTo(methodOn(TaskController.class)));
 
-        return null;
     }
 }

@@ -13,14 +13,14 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
     /**
-     * Gets the list of Tasks by billable status.
+     * Gets the list of {@link Task} by billable status.
      * @param billable if the Task is billable.
      * @return The list of Tasks that correspond to the billable status.
      */
     public List<Task> getAllByBillable(boolean billable);
 
     /**
-     * Gets the list of Tasks by billable and active statuses.
+     * Gets the list of {@link Task} by billable and active statuses.
      * @param billable if the Task is billable.
      * @param active if the Task is active.
      * @return The list of Tasks that correspond to the billable and active statuses.
@@ -28,8 +28,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     public List<Task> getAllByBillableAndActive(boolean billable, boolean active);
 
     /**
-     * Gets the list of Tasks by active status.
-     * @param active
+     * Gets the list of {@link Task} by active status.
+     * @param active if the Task is active.
      * @return The list of Tasks that are active.
      */
     public List<Task> getAllByActive(boolean active);
