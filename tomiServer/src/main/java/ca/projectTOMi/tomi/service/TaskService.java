@@ -3,6 +3,7 @@ package ca.projectTOMi.tomi.service;
 import ca.projectTOMi.tomi.exception.TaskNotFoundException;
 import ca.projectTOMi.tomi.model.Task;
 import ca.projectTOMi.tomi.persistence.TaskRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
  * @author Iliya Kiritchkov
  * @version 1
  */
+@Component
 public class TaskService {
     private TaskRepository repository;
 
