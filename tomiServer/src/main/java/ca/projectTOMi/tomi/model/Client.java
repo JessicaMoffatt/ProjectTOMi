@@ -26,7 +26,7 @@ public class Client {
     sequenceName = "client_sequence",
     allocationSize = 1
   )
-  private Long clientId;
+  private Long id;
 
   /**
    * The name of this Client.
