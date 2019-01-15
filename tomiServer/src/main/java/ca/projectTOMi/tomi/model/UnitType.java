@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -49,6 +50,7 @@ public class UnitType {
      * The measurement of value of for this Unit Type.
      */
     @Column(nullable = false)
+    @Min(0)
     private double weight;
 
     /**

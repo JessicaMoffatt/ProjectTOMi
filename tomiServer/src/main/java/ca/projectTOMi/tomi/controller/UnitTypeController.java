@@ -1,32 +1,42 @@
 package ca.projectTOMi.tomi.controller;
 
+import ca.projectTOMi.tomi.assembler.UnitTypeResourceAssembler;
 import ca.projectTOMi.tomi.model.UnitType;
 import ca.projectTOMi.tomi.persistence.UnitTypeRepository;
+import ca.projectTOMi.tomi.service.UnitTypeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/*
-    UnitTypeController is used to control the flow of data regarding unit types to/from the view.
+/**
+ * Handles HTTP requests for {@Link UnitType} objects in the ProjectTOMi system.
+ *
+ * @author Karol Talbot (updated by Iliya Kiritchkov)
+ * @version 1.1
  */
 @RestController
 public class UnitTypeController {
-    /*
-        The repository for the UnitType class.
-     */
-    UnitTypeRepository repository;
+    UnitTypeResourceAssembler assembler;
+    UnitTypeService service;
 
-    public UnitTypeController(UnitTypeRepository repository){
-        this.repository = repository;
+    /**
+     * Constructor for this UnitTypeController.
+     *
+     * @param assembler Converts {@Link UnitType} objects into resources.
+     * @param service   Provides services required for UnitType objects.
+     */
+    public UnitTypeController(UnitTypeResourceAssembler assembler, UnitTypeService service) {
+        this.assembler = assembler;
+        this.service = service;
     }
 
     @PostMapping("/unitTypes")
-    public UnitType createUnitType(@RequestBody UnitType unitType){
+    public UnitType createUnitType(@RequestBody UnitType unitType) {
         return repository.save(unitType);
     }
 
     @PutMapping("/unitTypes/{id}")
-    public UnitType updateUnitType(@RequestBody UnitType newUnitType, @PathVariable Long id){
+    public UnitType updateUnitType(@RequestBody UnitType newUnitType, @PathVariable Long id) {
         UnitType updatedUnitType = repository.findById(id).map(unitType -> {
             unitType.setName(newUnitType.getName());
             unitType.setBillable(newUnitType.isBillable());
@@ -34,7 +44,7 @@ public class UnitTypeController {
             unitType.setWeight(newUnitType.getWeight());
 
             return repository.save(unitType);
-        }).orElseGet(()->{
+        }).orElseGet(() -> {
             newUnitType.setId(id);
             return repository.save(newUnitType);
         });
@@ -42,13 +52,13 @@ public class UnitTypeController {
     }
 
     @GetMapping("/unitTypes")
-    public List<UnitType> all(){
+    public List<UnitType> all() {
         return repository.findAll();
     }
 
     @GetMapping("/unitTypes/{unitTypeId}")
-    public UnitType getUnitType(@PathVariable Long unitTypeId){
-        UnitType unitType = repository.findById(unitTypeId).orElseThrow(()-> new RuntimeException() );
+    public UnitType getUnitType(@PathVariable Long unitTypeId) {
+        UnitType unitType = repository.findById(unitTypeId).orElseThrow(() -> new RuntimeException());
         return unitType;
     }
 
@@ -57,7 +67,7 @@ public class UnitTypeController {
 //        return repository.delete();
 //    }
 
-    public UnitType getUnitTypeById(Long unitTypeId){
+    public UnitType getUnitTypeById(Long unitTypeId) {
         UnitType unitType = repository.findById(unitTypeId).get();
         return unitType;
     }

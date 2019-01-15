@@ -1,4 +1,11 @@
 package ca.projectTOMi.tomi.exception;
 
-public class UnitTypeNotFoundException {
+/**
+ * A requested {@Link UnitType} was unavailable.
+ *
+ * @author Iliya Kiritchkov
+ * @version 1
+ */
+public class UnitTypeNotFoundException extends RuntimeException {
+
 }

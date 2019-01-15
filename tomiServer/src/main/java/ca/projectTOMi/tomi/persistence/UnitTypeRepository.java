@@ -17,8 +17,18 @@ public interface UnitTypeRepository extends JpaRepository<UnitType, Long> {
 
     /**
      * Gets the list of {@Link UnitType} by active status.
+     *
      * @param active if the UnitType is active.
      * @return The list of UnitTypes by active status.
      */
     public List<UnitType> getAllByActive(boolean active);
+
+    /**
+     * Gets the list of {@Link UnitType} by active and billable statuses.
+     *
+     * @param active   if the UnitType is active.
+     * @param billable if the UnitType is billable.
+     * @return The list of UnitTypes by active and billable statuses.
+     */
+    public List<UnitType> getAllByActiveAndBillable(boolean active, boolean billable);
 }
