@@ -9,12 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
  * A Unit Type is used to distinguish between types of units.
  *
- * @author Karol Talbot (updated by Iliya Kiritchkov)
+ * @author Jessica Moffatt (updated by Iliya Kiritchkov)
  * @version 1.1
  */
 @Entity

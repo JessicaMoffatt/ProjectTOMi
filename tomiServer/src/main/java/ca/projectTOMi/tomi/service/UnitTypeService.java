@@ -81,4 +81,14 @@ public class UnitTypeService {
     public List<UnitType> getActiveAndNonBillableUnitTypes() {
         return repository.getAllByActiveAndBillable(true, false).stream().collect(Collectors.toList());
     }
+
+    /**
+     * Persists the provided @{Link UnitType}.
+     *
+     * @param unitType UnitType to be persisted.
+     * @return the UnitType that was persisted.
+     */
+    public UnitType saveUnitType(UnitType unitType) {
+        return repository.save(unitType);
+    }
 }
