@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 /**
  * class representing a single timesheet for a user for a specific week.  Entries (task ,client, hours)
- * on the timesheet are attacched by referencing it.
  */
 
 @Entity
