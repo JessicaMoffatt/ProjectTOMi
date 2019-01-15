@@ -62,13 +62,15 @@ public class UserAccountService {
    * @return List containing all UserAccounts for that team
    */
   public List<UserAccount> getUserAccountsByTeam(Long teamId) {
-    return repository.getUserAccountsByTeam(teamService.getTeam(teamId)).stream().collect(Collectors.toList());
+    return repository.getUserAccountsByTeam(teamService.getTeamById(teamId)).stream().collect(Collectors.toList());
   }
 
   /**
    * Persists the provided {@link UserAccount}.
    *
-   * @param userAccount UserAccount to be persisted
+   * @param userAccount
+   *   UserAccount to be persisted
+   *
    * @return the UserAccount that was persisted
    */
   public UserAccount saveUserAccount(UserAccount userAccount) {

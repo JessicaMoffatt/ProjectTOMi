@@ -72,7 +72,7 @@ public class TeamController {
    */
   @GetMapping ("/teams/{id}")
   public Resource<Team> getTeam(@PathVariable Long id) {
-    Team team = service.getTeam(id);
+    Team team = service.getTeamById(id);
     return assembler.toResource(team);
   }
 
@@ -126,7 +126,7 @@ public class TeamController {
    */
   @DeleteMapping ("/teams/{id}")
   public ResponseEntity<?> setTeamInactive(@PathVariable Long id) {
-    Team team = service.getTeam(id);
+    Team team = service.getTeamById(id);
     team.setActive(false);
     service.saveTeam(team);
 

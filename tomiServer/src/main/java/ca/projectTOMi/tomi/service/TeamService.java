@@ -21,7 +21,7 @@ public class TeamService {
    * Constructor for the TeamService service.
    *
    * @param repository
-   *   Repository responsible for persisting {@link Team} instances
+   *   Repository responsible for persisting Team instances
    */
   public TeamService(TeamRepository repository) {
     this.repository = repository;
@@ -54,7 +54,7 @@ public class TeamService {
    *
    * @return Team object matching the provided id
    */
-  public Team getTeam(Long id) {
+  public Team getTeamById(Long id) {
     return repository.findById(id).orElseThrow(() -> new TeamNotFoundException());
   }
 
@@ -70,7 +70,9 @@ public class TeamService {
   /**
    * Persists the provided {@link Team}.
    *
-   * @param team Team to be persisted
+   * @param team
+   *   Team to be persisted
+   *
    * @return the Team that was persisted
    */
   public Team saveTeam(Team team) {
