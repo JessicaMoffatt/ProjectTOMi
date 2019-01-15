@@ -4,7 +4,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.net.URISyntaxException;
-import ca.projectTOMi.tomi.controller.AccountController;
+import ca.projectTOMi.tomi.controller.UserAccountController;
 import ca.projectTOMi.tomi.controller.TeamController;
 import ca.projectTOMi.tomi.model.Team;
 import org.springframework.hateoas.Resource;
@@ -26,7 +26,7 @@ public class TeamResourceAssembler implements ResourceAssembler<Team, Resource<T
       linkTo(methodOn(TeamController.class).getTeam(team.getId())).withSelfRel(),
       linkTo(methodOn(TeamController.class).getActiveTeams()).withRel("teams"),
       linkTo(methodOn(TeamController.class).setTeamInactive(team.getId())).withRel("delete"),
-      linkTo(methodOn(AccountController.class).getAccountsByTeam(team.getId())).withRel("getAccounts")
+      linkTo(methodOn(UserAccountController.class).getAccountsByTeam(team.getId())).withRel("getAccounts")
     );
 
     try {

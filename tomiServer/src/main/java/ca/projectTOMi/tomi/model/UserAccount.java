@@ -23,47 +23,47 @@ import org.hibernate.annotations.OnDeleteAction;
  */
 @Entity
 @Data
-public class Account {
+public class UserAccount {
   /**
-   * The unique identifier for this Account. Used to distinguish between Accounts.
+   * The unique identifier for this UserAccount. Used to distinguish between Accounts.
    */
   @Id
-  @GeneratedValue (generator = "account_sequence")
+  @GeneratedValue (generator = "user_account_sequence")
   @SequenceGenerator (
-    name = "account_sequence",
-    sequenceName = "account_sequence",
+    name = "user_account_sequence",
+    sequenceName = "user_account_sequence",
     allocationSize = 1
   )
   private Long id;
 
   /**
-   * The team this Account is a member of.
+   * The team this UserAccount is a member of.
    */
   @ManyToOne
   @OnDelete (action = OnDeleteAction.NO_ACTION)
   private Team team;
 
   /**
-   * This Account holder's first name.
+   * This UserAccount holder's first name.
    */
   @NotBlank
   private String firstName;
 
   /**
-   * This Account holder's last name.
+   * This UserAccount holder's last name.
    */
   @NotBlank
   private String lastName;
 
   /**
-   * The email address for this Account.
+   * The email address for this UserAccount.
    */
   @NotBlank
   @Column (unique = true)
   private String email;
 
   /**
-   * The salaried rate of this Account multiplied by 100 to remove decimals.
+   * The salaried rate of this UserAccount multiplied by 100 to remove decimals.
    */
   @Min (0)
   private Long salariedRate;
@@ -72,7 +72,7 @@ public class Account {
   private Set<Project> projects = new HashSet<>();
 
   /**
-   * If this Account is active.
+   * If this UserAccount is active.
    */
   private boolean active;
 }

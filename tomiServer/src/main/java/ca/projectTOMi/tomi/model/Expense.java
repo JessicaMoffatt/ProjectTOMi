@@ -29,7 +29,7 @@ public class Expense {
     sequenceName = "expense_sequence",
     allocationSize = 1
   )
-  private Long expenseId;
+  private Long id;
 
   /**
    * The {@link Project} this Expense belongs to.
