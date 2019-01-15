@@ -33,5 +33,8 @@ public class Client {
    */
   @Column(unique = true, length = 100, nullable = false)
   private String name;
+
+  @Column(nullable = false)
+  private boolean active;
 }
 
