@@ -10,7 +10,7 @@ import java.util.List;
  * UnitTypeRepository is used to persist and retrieve data regarding {@Link UnitType} from the database.
  *
  * @author Karol Talbot (updated by Iliya Kiritchkov)
- * @version 1.1
+ * @version 1.2
  */
 @Repository
 public interface UnitTypeRepository extends JpaRepository<UnitType, Long> {
@@ -22,13 +22,4 @@ public interface UnitTypeRepository extends JpaRepository<UnitType, Long> {
      * @return The list of UnitTypes by active status.
      */
     public List<UnitType> getAllByActive(boolean active);
-
-    /**
-     * Gets the list of {@Link UnitType} by active and billable statuses.
-     *
-     * @param active   if the UnitType is active.
-     * @param billable if the UnitType is billable.
-     * @return The list of UnitTypes by active and billable statuses.
-     */
-    public List<UnitType> getAllByActiveAndBillable(boolean active, boolean billable);
 }
