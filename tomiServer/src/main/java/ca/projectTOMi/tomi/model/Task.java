@@ -1,5 +1,6 @@
 package ca.projectTOMi.tomi.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -35,9 +36,8 @@ public class Task {
     /**
      * The name of this Task.
      */
-    @Column(unique = true)
+    @Column(unique = true, length = 100)
     @NotBlank
-    @Size(max = 100)
     private String name;
 
     /**
