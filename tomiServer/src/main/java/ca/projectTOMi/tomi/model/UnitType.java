@@ -10,15 +10,18 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-/*
-    A unit type is used to distinguish between types of units.
+/**
+ * A Unit Type is used to distinguish between types of units.
+ *
+ * @author Karol Talbot (updated by Iliya Kiritchkov)
+ * @version 1.1
  */
 @Entity
 @Data
 public class UnitType {
 
-    /*
-        The unique identifier of this unit type.
+    /**
+     * The unique identifier of this Unit Type. Used to distinguish between Unit Types.
      */
     @Id
     @GeneratedValue(generator = "unit_type_sequence")
@@ -29,28 +32,34 @@ public class UnitType {
     )
     private Long id;
 
-    /*
-        The name of this unit type.
+    /**
+     * The name of this Unit Type.
      */
     @NotBlank
-    @Column(unique=true)
+    @Column(unique = true)
     private String name;
 
-    /*
-        The unit of measurement for this unit type.
+    /**
+     * The unit of measurement for this Unit Type.
      */
     @NotBlank
     private String unit;
 
-    /*
-        The worth of what was produced.
+    /**
+     * The measurement of value of for this Unit Type.
      */
-    @NotNull
+    @Column(nullable = false)
     private double weight;
 
-    /*
-        Represents whether or not this unit type is billable.
+    /**
+     * Represents whether or not this Unit Type is billable.
      */
-    @NotNull
+    @Column(nullable = false)
     private boolean billable;
+
+    /**
+     * Represents whether or not this Unit Type is active.
+     */
+    @Column(nullable = false)
+    private boolean active;
 }
