@@ -48,7 +48,8 @@ public class ClientController {
 
   @GetMapping("/clients/{id}")
   public Resource<Client> getClient(@PathVariable Long id){
-    return assembler.toResource(service.getClient(id));
+    Client client = service.getClient(id);
+    return assembler.toResource(client);
   }
 
   @PostMapping("/clients")

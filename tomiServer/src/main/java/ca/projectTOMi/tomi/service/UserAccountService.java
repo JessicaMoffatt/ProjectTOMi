@@ -41,7 +41,7 @@ public class UserAccountService {
    * @return UserAccount object matching the provided id
    */
   public UserAccount getUserAccount(Long id) {
-    return this.repository.getOne(id);
+    return this.repository.findById(id).orElseThrow(() -> new UserAccountNotFoundException());
   }
 
   /**

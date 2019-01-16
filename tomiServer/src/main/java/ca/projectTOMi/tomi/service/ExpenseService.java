@@ -44,7 +44,7 @@ public class ExpenseService {
    * @return Expense object matching the provided id
    */
   public Expense getExpenseById(Long id) {
-    return repository.getOne(id);
+    return this.repository.findById(id).orElseThrow(() -> new ExpenseNotFoundException());
   }
 
   /**

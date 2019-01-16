@@ -19,7 +19,7 @@ public class ClientService {
   }
 
   public Client getClient(Long id) {
-    return repository.getOne(id);
+    return this.repository.findById(id).orElseThrow(() -> new ClientNotFoundException());
   }
 
   public Client saveClient(Client client) {
