@@ -10,6 +10,7 @@ import {Team} from "../team";
 })
 export class TeamComponent implements OnInit {
   teams: Team[];
+  team: Team;
 
   constructor(private teamService: TeamService) {
   }
@@ -17,6 +18,11 @@ export class TeamComponent implements OnInit {
   ngOnInit() {
     this.teamService.findAllTeams().subscribe((data: Array<Team>) => {
       this.teams = data;
+    });
+
+    this.teamService.findTeamById(7).subscribe((data: Team) => {
+      this.team = data;
+      console.log(this.team);
     });
   }
 }

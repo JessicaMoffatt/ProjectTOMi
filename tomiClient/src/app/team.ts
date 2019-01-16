@@ -5,6 +5,7 @@ export class Team{
   teamName: string;
   teamLead: Account;
   active: boolean;
+  _links: [];
 
   //TODO remove id defaulting to -1
   constructor(){
@@ -12,5 +13,6 @@ export class Team{
     this.teamLead = new Account();
     this.active = false;
     this.id = -1;
+    _links: new Array();
   }
 }
