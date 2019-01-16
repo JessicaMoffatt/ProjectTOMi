@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * Provides services for {@link UserAccount} objects.
  *
  * @author Karol Talbot
- * @version 1
+ * @version 1.1
  */
 @Service
 public class UserAccountService {

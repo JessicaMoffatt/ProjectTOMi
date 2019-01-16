@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * Provides services for {@link Expense} objects.
  *
  * @author Karol Talbot
- * @version 1
+ * @version 1.1
  */
 @Service
 public class ExpenseService {

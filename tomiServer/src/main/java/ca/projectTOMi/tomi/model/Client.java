@@ -34,6 +34,9 @@ public class Client {
   @Column(unique = true, length = 100, nullable = false)
   private String name;
 
+  /**
+   * If this Client is active.
+   */
   @Column(nullable = false)
   private boolean active;
 }
