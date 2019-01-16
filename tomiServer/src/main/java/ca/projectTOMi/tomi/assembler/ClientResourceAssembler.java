@@ -24,6 +24,6 @@ public class ClientResourceAssembler implements ResourceAssembler<Client, Resour
     } catch (URISyntaxException e) {
       System.out.println(e);
     }
-    return resource
+    return resource;
   }
 }
