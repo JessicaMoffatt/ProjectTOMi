@@ -1,15 +1,18 @@
 package ca.projectTOMi.tomi.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -18,7 +21,7 @@ import java.time.LocalDate;
  * An entry is one weeks' worth of work on a specific component. Entries are part of timesheets and are used to determine billable and non billable hours, as well as the productivity of users.
  *
  * @author Iliya Kiritchkov
- * @version 1
+ * @version 1.1
  */
 @Entity
 @Data
@@ -34,7 +37,7 @@ public class Entry {
             sequenceName = "entry_sequence",
             allocationSize = 1
     )
-    private Long entryId;
+    private Long id;
 
     /**
      * The account of the user creating the entry.
@@ -81,13 +84,43 @@ public class Entry {
      */
     private LocalDate date;
 
-    /**
-     * This field has issues that need to be resolved:
-     * 1. The hours array may need to be split from a weekly array to each day of the week for proper database normalization.
-     * 2. Need to enforce that each day has at least 0 hours and no more than 24.
-     */
-    //TODO
-    private Double[] hours;
+    @Column(scale = 2)
+    @Min(0)
+    @Max(24)
+    private Double mondayHours;
+
+    @Column(scale = 2)
+    @Min(0)
+    @Max(24)
+    private Double tuesdayHours;
+
+    @Column(scale = 2)
+    @Min(0)
+    @Max(24)
+    private Double wednesdayHours;
+
+    @Column(scale = 2)
+    @Min(0)
+    @Max(24)
+    private Double thursdayHours;
+
+    @Column(scale = 2)
+    @Min(0)
+    @Max(24)
+    private Double fridayHours;
+
+    @Column(scale = 2)
+    @Min(0)
+    @Max(24)
+    private Double saturdayHours;
+
+    @Column(scale = 2)
+    @Min(0)
+    @Max(24)
+    private Double sundayHours;
+
+    @Formula("mondayHours + tuesdayHours + wednesdayHours + thursdayHours + fridayHours + saturdayHours + sundayHours")
+    private Double totalHours;
 
     /**
      * The quantity of the unit type's unit that was produced.
