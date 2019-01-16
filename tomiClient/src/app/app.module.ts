@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { TimesheetComponent } from './timesheet/timesheet.component';
 import { EntryComponent } from './entry/entry.component';
 import {RouterModule} from "@angular/router";
+import { TeamComponent } from './team/team.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TimesheetComponent,
-    EntryComponent
+    EntryComponent,
+    TeamComponent
   ],
   imports: [
     BrowserModule,

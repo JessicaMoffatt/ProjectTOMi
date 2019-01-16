@@ -49,10 +49,4 @@ public class UnitType {
      */
     @NotNull
     private double weight;
-
-    /*
-        Represents whether or not this unit type is billable.
-     */
-    @NotNull
-    private boolean billable;
 }

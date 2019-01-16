@@ -29,7 +29,6 @@ public class UnitTypeController {
     public UnitType updateUnitType(@RequestBody UnitType newUnitType, @PathVariable Long id){
         UnitType updatedUnitType = repository.findById(id).map(unitType -> {
             unitType.setName(newUnitType.getName());
-            unitType.setBillable(newUnitType.isBillable());
             unitType.setUnit(newUnitType.getUnit());
             unitType.setWeight(newUnitType.getWeight());
 
