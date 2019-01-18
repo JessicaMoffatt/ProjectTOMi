@@ -7,11 +7,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
- * An Expense is anything other than a user's billable hours that is being charged towards a
- * {@link Project}'s budget.
+ * An Expense is anything other than a user's billable hours that is being charged towards a {@link
+ * Project}'s budget.
  *
  * @author Karol Talbot
  * @version 1
@@ -29,7 +30,7 @@ public class Expense {
     sequenceName = "expense_sequence",
     allocationSize = 1
   )
-  private Long expenseId;
+  private Long id;
 
   /**
    * The {@link Project} this Expense belongs to.
@@ -48,4 +49,10 @@ public class Expense {
    */
   @NotBlank
   private String notes;
+
+  /**
+   * If this Expense is active.
+   */
+  @NotNull
+  private boolean active;
 }

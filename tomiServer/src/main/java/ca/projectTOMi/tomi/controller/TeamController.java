@@ -13,7 +13,14 @@ import ca.projectTOMi.tomi.service.TeamService;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Handles HTTP requests for {@link Team} objects in the ProjectTOMi system.
@@ -22,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
  * @version 1
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin (origins = "http://localhost:4200")
 public class TeamController {
   TeamResourceAssembler assembler;
   TeamService service;
@@ -65,7 +72,7 @@ public class TeamController {
    */
   @GetMapping ("/teams/{id}")
   public Resource<Team> getTeam(@PathVariable Long id) {
-    Team team = service.getTeam(id);
+    Team team = service.getTeamById(id);
     return assembler.toResource(team);
   }
 
@@ -119,7 +126,7 @@ public class TeamController {
    */
   @DeleteMapping ("/teams/{id}")
   public ResponseEntity<?> setTeamInactive(@PathVariable Long id) {
-    Team team = service.getTeam(id);
+    Team team = service.getTeamById(id);
     team.setActive(false);
     service.saveTeam(team);
 

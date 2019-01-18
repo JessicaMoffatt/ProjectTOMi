@@ -26,12 +26,18 @@ public class Client {
     sequenceName = "client_sequence",
     allocationSize = 1
   )
-  private Long clientId;
+  private Long id;
 
   /**
    * The name of this Client.
    */
   @Column(unique = true, length = 100, nullable = false)
   private String name;
+
+  /**
+   * If this Client is active.
+   */
+  @Column(nullable = false)
+  private boolean active;
 }
 

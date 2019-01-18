@@ -12,7 +12,7 @@ a, #logo {
   float: left;
 }
 
-div{
+#logo{
   font-weight: bolder;
   white-space: nowrap;
 }
