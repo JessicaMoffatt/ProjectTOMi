@@ -26,7 +26,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * Handles HTTP requests for {@Link UnitType} objects in the ProjectTOMi system.
  *
  * @author Karol Talbot (updated by Iliya Kiritchkov)
- * @version 1.1
+ * @version 1.2
  */
 @RestController
 public class UnitTypeController {
@@ -45,11 +45,11 @@ public class UnitTypeController {
     }
 
     /**
-     * Returns a collection of all active {@Link UnitType} objects to the source of a GET request to /unittypes.
+     * Returns a collection of all active {@Link UnitType} objects to the source of a GET request to /unit_types.
      *
      * @return Collection of resources representing all active UnitTypes.
      */
-    @GetMapping("/unittypes")
+    @GetMapping("/unit_types")
     public Resources<Resource<UnitType>> getActiveUnitTypes() {
         List<Resource<UnitType>> unitType = service.getActiveUnitTypes().stream().map(assembler::toResource).collect(Collectors.toList());
 
@@ -58,38 +58,12 @@ public class UnitTypeController {
     }
 
     /**
-     * Returns a collection of all active and billable {@Link UnitType} objects to the source of the GET request to /unittypes/billable.
-     *
-     * @return Collection of resources representing all active and billable UnitTypes.
-     */
-    @GetMapping("/unittypes/billable")
-    public Resources<Resource<UnitType>> getActiveAndBillableUnitTypes() {
-        List<Resource<UnitType>> unitType = service.getActiveAndBillableUnitTypes().stream().map(assembler::toResource).collect(Collectors.toList());
-
-        return new Resources<>(unitType,
-                linkTo(methodOn(UnitTypeController.class).getActiveAndBillableUnitTypes()).withSelfRel());
-    }
-
-    /**
-     * Returns a collection of all active and non-billable {@Link UnitType} objects to the source of the GET request to /unittypes/nonbillable.
-     *
-     * @return Collection of resources representing all active and non-billable UnitTypes.
-     */
-    @GetMapping("unittypes/nonbillable")
-    public Resources<Resource<UnitType>> getActiveAndNonBillableUnitTypes() {
-        List<Resource<UnitType>> unitType = service.getActiveAndNonBillableUnitTypes().stream().map(assembler::toResource).collect(Collectors.toList());
-
-        return new Resources<>(unitType,
-                linkTo(methodOn(UnitTypeController.class).getActiveAndNonBillableUnitTypes()).withSelfRel());
-    }
-
-    /**
-     * Returns a resource representing the requested {@Link UnitType} to the source of a GET request to /unittypes/id.
+     * Returns a resource representing the requested {@Link UnitType} to the source of a GET request to /unit_types/id.
      *
      * @param id unique identifier for the UnitType.
      * @return Resource representing the UnitType object.
      */
-    @GetMapping("unittypes/{id}")
+    @GetMapping("unit_types/{id}")
     public Resource<UnitType> getUnitType(@PathVariable Long id) {
         UnitType unitType = service.getUnitType(id);
 
@@ -97,13 +71,13 @@ public class UnitTypeController {
     }
 
     /**
-     * Creates a new {@Link UnitType} with the attributes provided in the POST request to /unittypes.
+     * Creates a new {@Link UnitType} with the attributes provided in the POST request to /unit_types.
      *
      * @param newUnitType a UnitType object with required information.
      * @return response containing links to the newly created UnitType.
      * @throws URISyntaxException when the created URI is unable to be parsed.
      */
-    @PostMapping("/unittypes")
+    @PostMapping("/unit_types")
     public ResponseEntity<?> createUnitType(@RequestBody UnitType newUnitType) throws URISyntaxException {
         Resource<UnitType> resource = assembler.toResource(service.saveUnitType(newUnitType));
 
@@ -111,14 +85,14 @@ public class UnitTypeController {
     }
 
     /**
-     * Updates the attributes for a {@Link UnitType} with the provided id with the attributes provided in the PUT request to /unittypes/id.
+     * Updates the attributes for a {@Link UnitType} with the provided id with the attributes provided in the PUT request to /unit_types/id.
      *
      * @param id          the unique identifier for the UnitType to update.
      * @param newUnitType the updated UnitType.
      * @return response containing a link to the updated UnitType.
      * @throws URISyntaxException when the created URI is unable to be parsed.
      */
-    @PutMapping("/unittypes/{id}")
+    @PutMapping("/unit_types/{id}")
     public ResponseEntity<?> updateUnitType(@PathVariable Long id, @RequestBody UnitType newUnitType) throws URISyntaxException {
         UnitType updatedUnitType = service.updateUnitType(id, newUnitType);
         Resource<UnitType> resource = assembler.toResource(updatedUnitType);
@@ -127,12 +101,12 @@ public class UnitTypeController {
 
     /**
      * Sets the requested {@Link UnitType}'s active attribute to false, removing it from the list of active UnitTypes.
-     * Responds to the DELETE requests to /unittypes/id.
+     * Responds to the DELETE requests to /unit_types/id.
      *
      * @param id the unique identifier for the task to be set inactive.
      * @return a response without any content.
      */
-    @DeleteMapping("/unittypes/{id}")
+    @DeleteMapping("/unit_types/{id}")
     public ResponseEntity<?> setUnitTypeInactive(@PathVariable Long id) {
         UnitType unitType = service.getUnitType(id);
         unitType.setActive(false);

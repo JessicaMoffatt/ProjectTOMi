@@ -39,7 +39,6 @@ public class UnitTypeService {
             unitType.setName(newUnitType.getName());
             unitType.setUnit(newUnitType.getUnit());
             unitType.setWeight(newUnitType.getWeight());
-            unitType.setBillable(newUnitType.isBillable());
             unitType.setActive(newUnitType.isActive());
             return repository.save(unitType);
         }).orElseThrow(() -> new UnitTypeNotFoundException());
@@ -62,24 +61,6 @@ public class UnitTypeService {
      */
     public List<UnitType> getActiveUnitTypes() {
         return repository.getAllByActive(true).stream().collect(Collectors.toList());
-    }
-
-    /**
-     * Gets a list of all {@Link UnitType} objects that are active and billable.
-     *
-     * @return List containing all UnitTypes that are active and billable.
-     */
-    public List<UnitType> getActiveAndBillableUnitTypes() {
-        return repository.getAllByActiveAndBillable(true, true).stream().collect(Collectors.toList());
-    }
-
-    /**
-     * Gets a list of all {@Link UnitType} objects that are active and non-billable.
-     *
-     * @return List containing all UnitTypes that are active and non-billable.
-     */
-    public List<UnitType> getActiveAndNonBillableUnitTypes() {
-        return repository.getAllByActiveAndBillable(true, false).stream().collect(Collectors.toList());
     }
 
     /**

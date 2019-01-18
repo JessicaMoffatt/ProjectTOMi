@@ -15,7 +15,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * UniTypeResourceAssembler is responsible for creating a standard resource for {@Link UnitType}.
  *
  * @author Iliya Kiritchkov
- * @version 1
+ * @version 1.1
  */
 @Component
 public class UnitTypeResourceAssembler implements ResourceAssembler<UnitType, Resource<UnitType>> {
@@ -25,8 +25,6 @@ public class UnitTypeResourceAssembler implements ResourceAssembler<UnitType, Re
         Resource<UnitType> resource = new Resource<>(unitType,
                 linkTo(methodOn(UnitTypeController.class).getUnitType(unitType.getId())).withSelfRel(),
                 linkTo(methodOn(UnitTypeController.class).getActiveUnitTypes()).withRel("unittypes"),
-                linkTo(methodOn(UnitTypeController.class).getActiveAndBillableUnitTypes()).withRel("unittypes/billable"),
-                linkTo(methodOn(UnitTypeController.class).getActiveAndNonBillableUnitTypes()).withRel("unittypes/nonbillable"),
                 linkTo(methodOn(UnitTypeController.class).setUnitTypeInactive(unitType.getId())).withRel("delete")
         );
 

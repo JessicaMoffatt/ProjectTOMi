@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
  * A Unit Type is used to distinguish between types of units.
  *
  * @author Jessica Moffatt (updated by Iliya Kiritchkov)
- * @version 1.1
+ * @version 1.2
  */
 @Entity
 @Data
@@ -51,12 +51,6 @@ public class UnitType {
     @Column(nullable = false)
     @Min(0)
     private double weight;
-
-    /**
-     * Represents whether or not this Unit Type is billable.
-     */
-    @Column(nullable = false)
-    private boolean billable;
 
     /**
      * Represents whether or not this Unit Type is active.
