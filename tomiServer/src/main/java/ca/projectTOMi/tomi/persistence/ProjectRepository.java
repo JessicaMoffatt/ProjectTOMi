@@ -1,5 +1,6 @@
 package ca.projectTOMi.tomi.persistence;
 
+import java.util.List;
 import ca.projectTOMi.tomi.model.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +15,13 @@ public interface ProjectRepository extends JpaRepository<Project, String> {
   @Query ("SELECT projectId FROM Project WHERE projectId LIKE %?1")
   public String getIds(String prefix);
 
+  /**
+   * Get all {@link Project}s that have the provided active status.
+   *
+   * @param active
+   *   if the Project is active
+   *
+   * @return List containing all Projects with the provided active state
+   */
+  public List<Project> getAllByActive(boolean active);
 }

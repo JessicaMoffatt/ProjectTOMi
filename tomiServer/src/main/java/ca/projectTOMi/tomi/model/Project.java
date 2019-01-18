@@ -28,7 +28,7 @@ public class Project {
    * The unique identifier for this Project.
    */
   @Id
-  private String projectId;
+  private String id;
 
   /**
    * The Client this Project is for.
