@@ -127,4 +127,10 @@ public class Entry {
      */
     @Min(0)
     private Double quantity;
+
+    /**
+     * If this Entry is active.
+     */
+    @Column(nullable = false)
+    private boolean active;
 }
