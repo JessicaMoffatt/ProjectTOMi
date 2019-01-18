@@ -1,0 +1,40 @@
+1. how do you display the vlan status
+sh vl br
+2. how does a pro write: interface fa 0/0
+in fa0/0
+3. command to assign a switch the default gateway to 192.168.10.1
+ip default-gateway 192.168.10.1
+4. command to prevent DNS look-up
+no ip domain-lo
+5. command to name your device "S1"
+hostname S1
+6. commands to prevent messages from interrupting you (separate with ;)
+line con 0; logg s
+7. R1(config)# command to create a Pool of DHCP IP addresses called NET_10
+ip dhcp pool NET_10
+8. R1(dhcp-config)# command to set dhcp pool address range 192.168.10.0 S/N 255.255.255.0
+network 192.168.10.0 /24
+9. R1(dhcp-config)# command to set a dhcp pool default gateway value to 192.168.10.1
+default-router 192.168.10.1
+10. R1(dhcp-config)# command to set the DHCP pool dns-server to 8.8.8.8
+dns-server 8.8.8.8
+11. R1(config)# command to prevent the address 192.168.10.11 from being assigned to a PC by a dhcp server
+ip dhcp excluded-address 192.168.10.11
+12. R1# command to turn on server debug messages so that you can see DHCP requests and responses
+debug ip dhcp server packet
+13. S1(config)# command to set the vlan 1 priority to 24576
+spanning-tree vlan 1 priority 24576
+14. command to verify if a switch is root switch or not
+show spanning-tree
+15. S1(config)# commands to name vlan 10 "JIMBO" (separate with ;)
+vlan 10; name JIMBO
+16. S1(config-if)# command to enable STP encapsulation
+switchport trunk encapsulation dot1q
+17. S1(config-if)# command to enable trunking
+switchport mode trunk
+18. S1(config-if)# command to set the native vlan on a port to 99
+switchport trunk native vlan 99
+19. R1(config)# command to interface loopback 0
+in lo0
+20. R1(config-if)#command to assign 192.168.1.126 255.255.255.192 to a loopback interface
+ip ad 192.168.1.126 255.255.255.192
