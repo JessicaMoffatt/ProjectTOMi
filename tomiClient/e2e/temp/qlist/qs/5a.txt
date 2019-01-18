@@ -1,0 +1,5 @@
+question and answer
+question
+In IPv4, how many bits are in the destination address header?
+answer
+32

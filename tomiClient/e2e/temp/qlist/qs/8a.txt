@@ -1,0 +1,5 @@
+question and answer
+question
+What is the subnet mask of /16
+answer
+255.255.0.0
