@@ -3,6 +3,7 @@ package ca.projectTOMi.tomi.model;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -11,6 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * A Project represents a project that either needs to be completed, or has been completed
@@ -24,10 +26,14 @@ import lombok.Data;
 @Data
 @Table (name = "project")
 public class Project {
+
+
+
   /**
    * The unique identifier for this Project.
    */
   @Id
+  @GeneratedValue
   private String id;
 
   /**
