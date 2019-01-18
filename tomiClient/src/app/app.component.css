@@ -1,0 +1,19 @@
+*{
+  font-family: Arial;
+  font-size:14pt;
+  color:#3E3E3E;
+}
+
+.btn{
+  color:#FFFFFF;
+  border: 1px solid #3E3E3E;
+  font-weight:bold;
+
+  text-align:center;
+
+  display:inline-block;
+}
+
+.btn:hover{
+  cursor:default;
+}

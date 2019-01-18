@@ -1,0 +1,12 @@
+<label>Name:<input id="team_name" placeholder="Team Name" value={{team?.teamName}} style="width:20em"></label>
+<!--<label>Team Lead:<input id="team_lead" placeholder="Team Lead" value="{{team?.teamLead}}" style="width:20em"></label>-->
+<div>Team Members</div>
+<div class="team_members">
+<ul *ngIf="teamMembers">
+  <li *ngFor="let m of teamMembers">
+    <span *ngIf="m">{{m.firstName}} {{m.lastName}}</span>
+  </li>
+</ul>
+</div>
+<button (click)="save(team)">Save</button>
+
