@@ -1,11 +1,9 @@
 import {
-  Component, Injectable,
+  Component,
   OnInit, ViewChild, ViewContainerRef
 } from '@angular/core';
 import {Entry} from "../entry";
-import {EntryService} from "../entry.service";
 import {TEMPENTRIES} from "../entry/mock_entries";
-import {updateBinding} from "@angular/core/src/render3/instructions";
 
 @Component({
   selector: 'app-timesheet',
@@ -21,9 +19,6 @@ export class TimesheetComponent implements OnInit {
 
   @ViewChild('componentHolder', { read: ViewContainerRef }) componentHolder: ViewContainerRef;
 
-  constructor(
-    private entryService: EntryService
-  ) { }
 
   ngOnInit() {
     this.getEntries();

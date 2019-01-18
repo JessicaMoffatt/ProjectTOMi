@@ -6,7 +6,7 @@ span {
   width: 100%;
 }
 
-a, div {
+a, #logo {
   color: white;
   padding: 16px;
   float: left;
