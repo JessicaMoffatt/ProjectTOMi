@@ -27,11 +27,11 @@ public class Timesheet {
     private Long timesheetId;
 
 
-    /**
-     * The account of the user that the timesheet belongs to
+    /*
+     * The userAccount of the user that the timesheet belongs to
      */
     @ManyToOne
-    private Account account;
+    private UserAccount userAccount;
 
     /*
      * the submission status of the timesheet, one of: logging, submitted, approved, rejected

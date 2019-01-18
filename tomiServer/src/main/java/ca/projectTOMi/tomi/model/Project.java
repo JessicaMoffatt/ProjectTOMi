@@ -14,7 +14,7 @@ import lombok.Data;
 
 /**
  * A Project represents a project that either needs to be completed, or has been completed
- * (dependent on it's active status.) Projects are worked on by specific {@link Account} lead by a project
+ * (dependent on it's active status.) Projects are worked on by specific {@link UserAccount} lead by a project
  * manager.
  *
  * @author Karol Talbot
@@ -37,10 +37,10 @@ public class Project {
   private Client client;
 
   /**
-   * The Account managing this Project.
+   * The UserAccount managing this Project.
    */
   @OneToOne
-  private Account projectManager;
+  private UserAccount projectManager;
 
   /**
    * The name of this Project
@@ -64,7 +64,7 @@ public class Project {
    * The Accounts that are members of this Project.
    */
   @ManyToMany
-  private Set<Account> projectMembers = new HashSet<>();
+  private Set<UserAccount> projectMembers = new HashSet<>();
 
   /**
    * If this Project is active.

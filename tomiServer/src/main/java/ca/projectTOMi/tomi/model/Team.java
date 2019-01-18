@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Data;
 
@@ -32,10 +33,10 @@ public class Team {
   private Long id;
 
   /**
-   * The Account of the team leader for this Team.
+   * The UserAccount of the team leader for this Team.
    */
   @OneToOne
-  private Account teamLead;
+  private UserAccount teamLead;
 
   /**
    * The name of this Team.
@@ -46,6 +47,7 @@ public class Team {
   /**
    * If this Team is active.
    */
+  @NotNull
   private boolean active;
 
 }
