@@ -1,10 +1,11 @@
 package ca.projectTOMi.tomi.service;
 
 import ca.projectTOMi.tomi.exception.EntryNotFoundException;
+import ca.projectTOMi.tomi.exception.IllegalEntryStateException;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.model.Status;
 import ca.projectTOMi.tomi.persistence.EntryRepository;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 /**
@@ -65,11 +66,34 @@ public class EntryService {
 
     /**
      * Persists the provided {@Link Entry}
+     *
      * @param entry Entry to be persisted.
      * @return Entry that was persisted.
      */
-    public Entry saveEntry (Entry entry) {
-        entry.setStatus(Status.LOGGING);
+    public Entry saveEntry(Entry entry) {
         return repository.save(entry);
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    public Entry deleteEntry(Long id) {
+        return repository.findById(id).map(entry -> {
+            entry.setActive(false);
+            return repository.save(entry);
+        }).orElseThrow(() -> new EntryNotFoundException());
+
+        // If the status of the Entry is LOGGING then it will be physically deleted from the database.
+        if (entry.getStatus().equals(Status.LOGGING)) {
+            repository.delete(entry);
+            return null;
+
+            // Otherwise the Entry's active status is set to false.
+        } else {
+            repository.save(entry);
+        }
+
+        return null;
     }
 }

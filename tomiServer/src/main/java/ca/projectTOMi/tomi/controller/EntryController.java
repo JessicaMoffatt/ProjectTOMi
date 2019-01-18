@@ -1,10 +1,7 @@
 package ca.projectTOMi.tomi.controller;
 
 import ca.projectTOMi.tomi.assembler.EntryResourceAssembler;
-import ca.projectTOMi.tomi.exception.IllegalEntryStateException;
 import ca.projectTOMi.tomi.model.Entry;
-import ca.projectTOMi.tomi.model.Status;
-import ca.projectTOMi.tomi.persistence.EntryRepository;
 import ca.projectTOMi.tomi.service.EntryService;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 /**
  * Handles HTTP requests for {@Link Entry} objects in the ProjectTOMi system.
@@ -81,20 +77,14 @@ public class EntryController {
         return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
     }
 
-
-    @DeleteMapping{"/entries/{id}"}
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/entries/{id}")
     public ResponseEntity<?> deleteOrSetInactiveEntry(@PathVariable Long id) {
-
-        Entry entry = service.getEntry(id);
-
-        if (entry.getStatus().equals(Status.APPROVED) || entry.getStatus().equals(Status.SUBMITTED)) {
-            throw new IllegalEntryStateException();
-        } else if (entry.getStatus().equals(Status.LOGGING)) {
-            service.deleteEntry(entry);
-        } else if (entry.getStatus().equals(Status.REJECTED)) {
-            service.logRejectedEntry(entry);
-        }
-
+        service.deleteEntry(id);
 
     }
 }
