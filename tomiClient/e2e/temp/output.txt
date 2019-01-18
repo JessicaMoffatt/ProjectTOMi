@@ -1,0 +1,16 @@
+'noon' is a palindrome
+'A man, a plan, a canal: Panama' is a palindrome
+'Never odd or even.' is a palindrome
+'Alice' is NOT a palindrome
+'Madam' is a palindrome
+'Peter Parker' is NOT a palindrome
+'xxaxbxx' is NOT a palindrome
+'xxaxaxx' is a palindrome
+'X*x_a%x+A)X^x' is a palindrome
+'axxxxxb' is NOT a palindrome
+'xxaaxx' is a palindrome
+'xxabxx' is NOT a palindrome
+'axxxxb' is NOT a palindrome
+'x*x&&aA$!x-x' is a palindrome
+'1357x31' is NOT a palindrome
+'A*3$57__53.a' is a palindrome

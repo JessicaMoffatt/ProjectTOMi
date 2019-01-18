@@ -1,7 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 import { ApprovePanelComponent } from './approve-panel/approve-panel.component';
@@ -13,9 +16,15 @@ import { UnitTypesPanelComponent } from './unit-types-panel/unit-types-panel.com
 import { TasksPanelComponent } from './tasks-panel/tasks-panel.component';
 import { UserAccountsPanelComponent } from './user-accounts-panel/user-accounts-panel.component';
 
+import { TimesheetComponent } from './timesheet/timesheet.component';
+import { EntryComponent } from './entry/entry.component';
+import {RouterModule} from "@angular/router";
+import { TeamComponent } from './team/team.component';
+
 @NgModule({
   declarations: [
     AppComponent,
+
     TopNavBarComponent,
     ApprovePanelComponent,
     TimesheetPanelComponent,
@@ -24,11 +33,19 @@ import { UserAccountsPanelComponent } from './user-accounts-panel/user-accounts-
     ManageTeamsPanelComponent,
     UnitTypesPanelComponent,
     TasksPanelComponent,
-    UserAccountsPanelComponent
+    UserAccountsPanelComponent,
+    TimesheetComponent,
+    EntryComponent,
+    TeamComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule
+  ],
+  entryComponents:[
+    EntryComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
