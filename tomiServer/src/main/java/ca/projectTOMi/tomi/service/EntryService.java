@@ -75,25 +75,20 @@ public class EntryService {
     }
 
     /**
-     * @param id
-     * @return
+     * Deletes an {@Link Entry} object. The delete action is based on the current Status of the Entry.
+     * If the status is LOGGING then the Entry will be physically deleted from the database, otherwise,
+     * the Entry active field will be set to false.
+     *
+     * @param id id of the Entry to be deleted.
      */
-    public Entry deleteEntry(Long id) {
-        return repository.findById(id).map(entry -> {
-            entry.setActive(false);
-            return repository.save(entry);
-        }).orElseThrow(() -> new EntryNotFoundException());
+    public void deleteEntry(Long id) {
+        Entry entry = this.getEntry(id);
 
-        // If the status of the Entry is LOGGING then it will be physically deleted from the database.
         if (entry.getStatus().equals(Status.LOGGING)) {
             repository.delete(entry);
-            return null;
-
-            // Otherwise the Entry's active status is set to false.
         } else {
+            entry.setActive(false);
             repository.save(entry);
         }
-
-        return null;
     }
 }

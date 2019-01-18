@@ -65,7 +65,7 @@ public class EntryController {
     /**
      * Updates the attributes for a {@Link Entry} with the provided id with the attributes provided in the PUT request to /entries/id.
      *
-     * @param id he unique identifier for the Entry to update.
+     * @param id       he unique identifier for the Entry to update.
      * @param newEntry the updated Entry.
      * @return response containing a link to the updated Entry.
      * @throws URISyntaxException when the created URI is unable to be parsed.
@@ -78,13 +78,15 @@ public class EntryController {
     }
 
     /**
+     * Deletes the {@Link Entry} with the provided id. The EntryService determines how to properly delete the Entry object.
+     * Responds to the DELETE requests to /entries/id.
      *
-     * @param id
-     * @return
+     * @param id the unique identifier for the Entry to be deleted or set inactive.
+     * @return a response without any content.
      */
     @DeleteMapping("/entries/{id}")
-    public ResponseEntity<?> deleteOrSetInactiveEntry(@PathVariable Long id) {
+    public ResponseEntity<?> deleteEntry(@PathVariable Long id) {
         service.deleteEntry(id);
-
+        return ResponseEntity.noContent().build();
     }
 }
