@@ -4,6 +4,7 @@ import ca.projectTOMi.tomi.assembler.EntryResourceAssembler;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.service.EntryService;
 import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * Handles HTTP requests for {@Link Entry} objects in the ProjectTOMi system.
@@ -49,6 +55,34 @@ public class EntryController {
     }
 
     /**
+     * Returns a collection of all {@Link Entry} objects that belong to the {@Link Account}.
+     *
+     * @param accountId unique id of the Account.
+     * @return Collection of resources representing all Entries that belong to the Account.
+     */
+    @GetMapping("entries/account/{id}")
+    public Resources<Resource<Entry>> getEntriesByAccount(@PathVariable Long accountId) {
+        List<Resource<Entry>> entry = service.getEntriesByAccount(accountId).stream().map(assembler::toResource).collect(Collectors.toList());
+
+        return new Resources<>(entry,
+                linkTo(methodOn(EntryController.class).getEntriesByAccount(accountId)).withSelfRel());
+    }
+
+    /**
+     * Returns a collection of all {@Link Entry} objects that belong to the {@Link Project}.
+     *
+     * @param projectId unique id of the Project.
+     * @return Collection of resources representing all Entries that belong to the Project.
+     */
+    @GetMapping("entries/project/{id}")
+    public Resources<Resource<Entry>> getEntriesByProject(@PathVariable String projectId) {
+        List<Resource<Entry>> entry = service.getEntriesByProject(projectId).stream().map(assembler::toResource).collect(Collectors.toList());
+
+        return new Resources<>(entry,
+                linkTo(methodOn(EntryController.class).getEntriesByProject(projectId)).withSelfRel());
+    }
+
+    /**
      * Creates a new {@Link Entry} with the attributes provided in the POST request to /entries.
      *
      * @param newEntry an Entry object with required information.
@@ -65,7 +99,7 @@ public class EntryController {
     /**
      * Updates the attributes for a {@Link Entry} with the provided id with the attributes provided in the PUT request to /entries/id.
      *
-     * @param id       he unique identifier for the Entry to update.
+     * @param id       the unique identifier for the Entry to update.
      * @param newEntry the updated Entry.
      * @return response containing a link to the updated Entry.
      * @throws URISyntaxException when the created URI is unable to be parsed.
