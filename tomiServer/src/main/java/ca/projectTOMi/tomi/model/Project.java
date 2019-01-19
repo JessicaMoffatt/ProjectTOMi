@@ -17,8 +17,8 @@ import lombok.Data;
  * (dependent on it's active status.) Projects are worked on by specific {@link Account} lead by a project
  * manager.
  *
- * @author Karol Talbot
- * @version 1
+ * @author Karol Talbot (Updated by Iliya Kiritchkov)
+ * @version 1.1
  */
 @Entity
 @Data
@@ -28,7 +28,7 @@ public class Project {
    * The unique identifier for this Project.
    */
   @Id
-  private String projectId;
+  private String id;
 
   /**
    * The Client this Project is for.

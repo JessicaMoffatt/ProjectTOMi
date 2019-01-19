@@ -13,8 +13,8 @@ import lombok.Data;
  * An Expense is anything other than a user's billable hours that is being charged towards a
  * {@link Project}'s budget.
  *
- * @author Karol Talbot
- * @version 1
+ * @author Karol Talbot (Updated by Iliya Kiritchkov)
+ * @version 1.1
  */
 @Entity
 @Data
@@ -29,7 +29,7 @@ public class Expense {
     sequenceName = "expense_sequence",
     allocationSize = 1
   )
-  private Long expenseId;
+  private Long id;
 
   /**
    * The {@link Project} this Expense belongs to.
