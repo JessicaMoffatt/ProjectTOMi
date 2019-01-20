@@ -89,7 +89,7 @@ public class UserAccountController {
     List<Resource<UserAccount>> userAccount = service.getUserAccountsByTeam(teamId).stream().map(assembler::toResource).collect(Collectors.toList());
 
     return new Resources<>(userAccount,
-      linkTo(methodOn(UserAccountController.class).getActiveAccounts()).withSelfRel());
+      linkTo(methodOn(UserAccountController.class).getAccountsByTeam(teamId)).withSelfRel());
   }
 
   /**

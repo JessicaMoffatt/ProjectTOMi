@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Team} from "./team";
 import {Observable, ReplaySubject, Subject, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
+import {Account} from "./account";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -14,8 +15,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class TeamService{
-  private teamUrl = `http://localhost:8080/teams/`;
-  private accountUrl = `http://localhost:8080/user_accounts/`;
+  private teamUrl = `http://localhost:8080/teams`;
+
+  teamMembers: Account[] = new Array();
 
   private teamsSource = new Subject<Team[]>();
   teamsSource$ = this.teamsSource.asObservable();
@@ -27,17 +29,11 @@ export class TeamService{
   constructor(private http: HttpClient) {
   }
 
-  findTeamById(id:number): Observable<Team>{
-    return this.http.get(`${this.teamUrl}/${id}`).pipe(map((response: Response) => response))
-      .pipe(map((data:any) => {
-        return data as Team;
-      }));
-  }
 
-  findTeamMembers(team:Team): Observable<Account[]>{
-    return this.http.get(`${this.accountUrl}/${team}`).pipe(map((response: Response) => response))
-      .pipe(map((data:any) => {
-        return data as Account[];
+  findTeamMembers(id:number): Observable<Array<Account>>{
+    return this.http.get(`${this.teamUrl}/${id}/user_accounts`).pipe(map((response: Response) => response))
+      .pipe(map((data: any) => {
+        return data._embedded.userAccounts as Account[];
       }));
   }
 
@@ -46,14 +42,12 @@ export class TeamService{
   //TODO return something other than null?
   save(team: Team): Observable<Team>{
     if(team.id === -1){
-      const url = team._links["update"];
-      this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).subscribe((response)=>{
+      this.http.post<Team>(this.teamUrl, JSON.stringify(team), httpOptions).subscribe((response)=>{
         return response as Team;
       });
     }else{
       const url = team._links["update"];
       this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).subscribe((response)=>{
-
         return response as Team;
       });
     }

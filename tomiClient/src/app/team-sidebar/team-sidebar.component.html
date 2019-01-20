@@ -4,11 +4,11 @@
   <div>
     <ul *ngIf="teams">
       <li *ngFor="let t of teams">
-        <span *ngIf="t">{{t.teamName}}</span>
+        <span *ngIf="t" (click)="displayTeam(t)">{{t.teamName}}</span>
       </li>
     </ul>
   </div>
 </div>
-<div (click)="createAddTeamComponent()" [ngClass]="['add_team', 'btn']">New Team</div>
+<div (click)="createAddTeamComponent()" [ngClass]="['add_team', 'btn','btn_padding','rounded_corners']">New Team</div>
 <template #add_team_container></template>
 

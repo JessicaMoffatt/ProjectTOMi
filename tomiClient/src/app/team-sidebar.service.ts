@@ -1,4 +1,4 @@
-import {ComponentFactoryResolver, Inject, Injectable} from '@angular/core';
+import {ComponentFactoryResolver, ComponentRef, Inject, Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {Team} from "./team";
 import {map} from "rxjs/operators";
@@ -16,9 +16,16 @@ const httpOptions = {
 export class TeamSidebarService {
   private teamUrl = `http://localhost:8080/teams/`;
 
+  ref:ComponentRef<any>;
+
+  selectedTeam: Team;
+
   constructor(private http: HttpClient) {
   }
 
+  destroyAddTeamComponent(){
+    this.ref.destroy();
+  }
 
   findAllTeams(): Observable<Array<Team>>{
     return this.http.get(this.teamUrl).pipe(map((response: Response) => response))
@@ -27,6 +34,10 @@ export class TeamSidebarService {
       }));
   }
 
-
-
+  findTeamById(id:number): Observable<Team>{
+    return this.http.get(`${this.teamUrl}/${id}`).pipe(map((response: Response) => response))
+      .pipe(map((data:any) => {
+        return data as Team;
+      }));
+  }
 }

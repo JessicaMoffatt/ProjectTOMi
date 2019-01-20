@@ -12,6 +12,7 @@ import { EntryComponent } from './entry/entry.component';
 import { TeamComponent } from './team/team.component';
 import { TeamSidebarComponent } from './team-sidebar/team-sidebar.component';
 import { AddTeamComponent } from './add-team/add-team.component';
+import {TeamSidebarService} from "./team-sidebar.service";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,9 @@ import { AddTeamComponent } from './add-team/add-team.component';
     EntryComponent,
     AddTeamComponent
   ],
-  providers: [],
+  providers: [
+    TeamSidebarService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

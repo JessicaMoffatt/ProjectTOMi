@@ -1,12 +1,17 @@
-<label>Name:<input id="team_name" placeholder="Team Name" value={{team?.teamName}} style="width:20em"></label>
-<!--<label>Team Lead:<input id="team_lead" placeholder="Team Lead" value="{{team?.teamLead}}" style="width:20em"></label>-->
-<div>Team Members</div>
-<div class="team_members">
-<ul *ngIf="teamMembers">
-  <li *ngFor="let m of teamMembers">
-    <span *ngIf="m">{{m.firstName}} {{m.lastName}}</span>
-  </li>
-</ul>
+<div [ngClass]="'team_container'">
+  <div>
+    <input id="team_name" placeholder="Team Name" value={{teamSideBarService.selectedTeam?.teamName}} style="width:20em">
+    <div>
+      <label>Team Lead:<input id="team_lead" placeholder="Team Lead" value="{{teamSideBarService.selectedTeam?.teamLead.firstName}} {{teamSideBarService.selectedTeam?.teamLead.lastName}}" style="width:20em"></label>
+    </div>
+  </div>
+  <h2>Team Members</h2>
+  <div [ngClass]="'team_members'">
+    <ul *ngIf="teamService.teamMembers">
+      <li *ngFor="let m of teamService.teamMembers">
+        <span [ngClass]="['rounded_corners','list_item']" *ngIf="m">{{m.firstName}} {{m.lastName}}</span>
+      </li>
+    </ul>
+  </div>
+  <div [ngClass]="['btn','rounded_corners','btn_padding','save_team_btn']" (click)="save(teamSideBarService.selectedTeam)">Save</div>
 </div>
-<button (click)="save(team)">Save</button>
-

@@ -1,36 +1,34 @@
-import {Component, EventEmitter, HostListener, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TeamService} from "../team.service";
 import {Team} from "../team";
 import {Observable} from "rxjs";
 import {Account} from "../account";
+import {TeamSidebarService} from "../team-sidebar.service";
 
 @Component({
   selector: 'app-team',
-  providers: [TeamService],
   templateUrl: './team.component.html',
-  styleUrls: ['./team.component.css']
+  styleUrls: ['./team.component.css','../app.component.css']
 })
 export class TeamComponent implements OnInit {
-  team: Team;
-  teamMembers: Account[];
 
-  constructor(private teamService: TeamService) {
+
+  constructor(private teamService: TeamService, private teamSideBarService: TeamSidebarService) {
   }
 
   ngOnInit() {
-    this.teamService.findTeamById(8).subscribe((data: Team) => {
-      this.team = data;
-    });
+    // this.teamSideBarService.findTeamById(9).subscribe((data: Team) => {
+    //   this.team = data;
+    // });
+    //
+    // this.teamService.findTeamMembers(9).subscribe((data: Array<Account>) => {
+    //   this.teamMembers = data;
+    // });
   }
 
   save(team: Team): Observable<Team>{
-    let teamName = (<HTMLInputElement>document.getElementById("team_name")).value;
-    team.teamName = teamName;
+    team.teamName = (<HTMLInputElement>document.getElementById("team_name")).value;
 
     return this.teamService.save(team);
-  }
-
-  add(): void{
-
   }
 }
