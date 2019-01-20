@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.ProjectResourceAssembler;
+import ca.projectTOMi.tomi.exception.InvalidIDPrefix;
 import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.service.ProjectService;
 import org.springframework.hateoas.Resource;
@@ -87,6 +88,10 @@ public class ProjectController {
    */
   @PostMapping ("/projects")
   public ResponseEntity<?> createProject(@RequestBody Project newProject) throws URISyntaxException {
+    if(!newProject.getId().trim().matches("^\\p{Alpha}\\p{Alpha}\\d{0,5}+$")){
+      throw new InvalidIDPrefix();
+    }
+    newProject.setId(service.getId(newProject.getId()));
     Resource<Project> resource = assembler.toResource(service.saveProject(newProject));
 
     return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);

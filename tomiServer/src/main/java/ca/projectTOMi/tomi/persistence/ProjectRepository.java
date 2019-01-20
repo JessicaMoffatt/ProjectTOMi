@@ -4,6 +4,7 @@ import java.util.List;
 import ca.projectTOMi.tomi.model.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * ProjectRepository is used to persist and retrieve data regarding {@link Project} from the database.
@@ -12,8 +13,8 @@ import org.springframework.data.jpa.repository.Query;
  * @version 1
  */
 public interface ProjectRepository extends JpaRepository<Project, String> {
-  @Query ("SELECT projectId FROM Project WHERE projectId LIKE %?1")
-  public String getIds(String prefix);
+  @Query ("SELECT id FROM Project WHERE id LIKE CONCAT('%',:prefix,'%') ORDER BY id DESC")
+  public List<String> getIds(@Param ("prefix") String prefix);
 
   /**
    * Get all {@link Project}s that have the provided active status.

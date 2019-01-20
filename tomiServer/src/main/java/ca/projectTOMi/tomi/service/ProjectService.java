@@ -72,6 +72,19 @@ public class ProjectService {
   }
 
   /**
+   * Generates a sequential id based on a provided prefix for a {@link Project}.
+   *
+   * @param prefix the prefix for the id
+   * @return the generated id
+   */
+  public String getId(String prefix){
+    String id = prefix;
+    List<String> prefixes = repository.getIds(prefix);
+    String top = prefixes.size() == 0? "0": prefixes.get(0).substring(2).trim();
+    int i = Integer.parseInt(top)+1;
+    return String.format("%s%05d", id, i);
+  }
+  /**
    * Persists the provided {@link Project}.
    *
    * @param project
