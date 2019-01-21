@@ -1,6 +1,0 @@
-QUESTION
-what is the value of binary 11 in decimal
-ENDQUESTION
-ANSWER
-3
-ENDANSWER

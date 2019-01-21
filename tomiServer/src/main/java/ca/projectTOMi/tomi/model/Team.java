@@ -4,10 +4,13 @@ package ca.projectTOMi.tomi.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 /**
@@ -36,6 +39,8 @@ public class Team {
    * The UserAccount of the team leader for this Team.
    */
   @OneToOne
+  @MapKeyColumn(name = "id")
+  @JsonManagedReference
   private UserAccount teamLead;
 
   /**

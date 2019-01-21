@@ -1,0 +1,19 @@
+.inputs{
+  width:20em;
+}
+
+.add_btn{
+  background-color:#009E0F;
+}
+
+.close_btn{
+  background-color:#CC0000;
+}
+
+.add_team_container{
+  border: 1px solid #3E3E3E;
+}
+
+.btn_container{
+  float:right;
+}

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * objects.
  *
  * @author Karol Talbot
- * @version 1
+ * @version 1.1
  */
 @Component
 public class UserAccountResourceAssembler implements ResourceAssembler<UserAccount, Resource<UserAccount>> {
@@ -25,14 +25,9 @@ public class UserAccountResourceAssembler implements ResourceAssembler<UserAccou
     Resource<UserAccount> resource = new Resource<>(userAccount,
       linkTo(methodOn(UserAccountController.class).getAccount(userAccount.getId())).withSelfRel(),
       linkTo(methodOn(UserAccountController.class).getActiveAccounts()).withRel("accounts"),
-      linkTo(methodOn(UserAccountController.class).setUserAccountInactive(userAccount.getId())).withRel("delete")
+      linkTo(methodOn(UserAccountController.class).setUserAccountInactive(userAccount.getId())).withRel("delete"),
+      linkTo(methodOn(UserAccountController.class).updateUserAccount(userAccount.getId(), userAccount)).withRel("update")
     );
-
-    try {
-      resource.add(linkTo(methodOn(UserAccountController.class).updateUserAccount(userAccount.getId(), userAccount)).withRel("update"));
-    } catch (URISyntaxException e) {
-      System.out.println(e);
-    }
 
     return resource;
   }

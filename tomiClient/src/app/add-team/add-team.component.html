@@ -1,0 +1,28 @@
+<div [ngClass]="'add_team_container'">
+  <table>
+    <tr>
+      <td>
+        <label for="team_toadd_name">Team Name</label>
+      </td>
+      <td>
+        <input id="team_toadd_name" [ngClass]="'inputs'">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="team_toadd_lead">Team Lead</label>
+      </td>
+      <td>
+        <input id="team_toadd_lead" [ngClass]="'inputs'">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div [ngClass]="'btn_container'">
+        <div [ngClass]="['btn','add_btn','rounded_corners','btn_padding']" (click)="addTeam()">Add</div>
+        <div [ngClass]="['btn','close_btn','rounded_corners','btn_padding']" (click)="destroyAddTeamComponent()">Cancel</div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

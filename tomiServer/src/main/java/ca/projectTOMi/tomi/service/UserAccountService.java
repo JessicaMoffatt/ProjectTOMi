@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * Provides services for {@link UserAccount} objects.
  *
  * @author Karol Talbot
- * @version 1.1
+ * @version 1.2
  */
 @Service
 public class UserAccountService {
@@ -109,4 +109,13 @@ public class UserAccountService {
 
   }
 
+  /**
+   * Gets the {@link UserAccount} responsible for leading the {@link ca.projectTOMi.tomi.model.Team}.
+   *
+   * @param teamId the unique identifier for the Team
+   * @return the UserAccount for the Team lead
+   */
+  public UserAccount getTeamLead(Long teamId){
+    return teamService.getTeamById(teamId).getTeamLead();
+  }
 }
