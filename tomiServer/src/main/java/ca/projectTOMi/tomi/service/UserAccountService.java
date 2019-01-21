@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.UserAccountRepository;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,9 +16,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserAccountService {
-
   UserAccountRepository repository;
   TeamService teamService;
+  TimesheetService timesheetService;
 
   /**
    * Constructor for the UserAccountService service.
@@ -26,10 +27,13 @@ public class UserAccountService {
    *   Repository responsible for persisting {@link UserAccount} instances
    * @param teamService
    *   Service responsible for interacting with {@link ca.projectTOMi.tomi.model.Team} objects
+   * @param timesheetService
+   *   Service responsible for interacting with {@link ca.projectTOMi.tomi.model.Timesheet} objects
    */
-  public UserAccountService(UserAccountRepository repository, TeamService teamService) {
+  public UserAccountService(UserAccountRepository repository, TeamService teamService, TimesheetService timesheetService) {
     this.repository = repository;
     this.teamService = teamService;
+    this.timesheetService = timesheetService;
   }
 
   /**
@@ -99,4 +103,10 @@ public class UserAccountService {
       return repository.save(userAccount);
     }).orElseThrow(() -> new UserAccountNotFoundException());
   }
+
+  @Scheduled (cron = "0 0 1 * * MON")
+  public void createWeeklyTimesheet(){
+
+  }
+
 }

@@ -49,4 +49,8 @@ public class Timesheet {
      */
     private LocalDate submitDate;
 
+    /**
+     * if the timesheet is active.
+     */
+    private boolean active;
 }
