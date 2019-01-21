@@ -19,7 +19,6 @@ import {Account} from "../account";
   styleUrls: ['./team-sidebar.component.css','../app.component.css']
 })
 export class TeamSidebarComponent implements OnInit {
-  teams: Team[];
 
   @ViewChild('add_team_container', { read: ViewContainerRef })
   add_team_container: ViewContainerRef;
@@ -29,7 +28,7 @@ export class TeamSidebarComponent implements OnInit {
 
   ngOnInit() {
     this.teamSideBarService.findAllTeams().subscribe((data: Array<Team>) => {
-      this.teams = data;
+      this.teamSideBarService.teams = data;
     });
   }
 

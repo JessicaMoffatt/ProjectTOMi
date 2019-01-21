@@ -12,23 +12,34 @@ import {TeamSidebarService} from "../team-sidebar.service";
 })
 export class TeamComponent implements OnInit {
 
-
-  constructor(private teamService: TeamService, private teamSideBarService: TeamSidebarService) {
+  constructor(public teamService: TeamService, public teamSideBarService: TeamSidebarService) {
   }
 
   ngOnInit() {
-    // this.teamSideBarService.findTeamById(9).subscribe((data: Team) => {
-    //   this.team = data;
-    // });
-    //
-    // this.teamService.findTeamMembers(9).subscribe((data: Array<Account>) => {
-    //   this.teamMembers = data;
-    // });
+  }
+
+  displayAddMember(){
+
   }
 
   save(team: Team): Observable<Team>{
     team.teamName = (<HTMLInputElement>document.getElementById("team_name")).value;
 
     return this.teamService.save(team);
+  }
+
+  delete(team: Team): Observable<Team>{
+    this.teamSideBarService.teams = this.teamSideBarService.teams.filter(t => t !== team);
+    return this.teamService.delete(team);
+  }
+
+  //TODO finish
+  archive(team:Team): Observable<Team>{
+    return null;
+  }
+
+  addMember(user_account: Account,team: Team): Observable<Account>{
+    user_account.team = team;
+    return this.teamService.addTeamMember(user_account);
   }
 }

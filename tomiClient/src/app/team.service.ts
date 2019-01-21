@@ -19,16 +19,8 @@ export class TeamService{
 
   teamMembers: Account[] = new Array();
 
-  private teamsSource = new Subject<Team[]>();
-  teamsSource$ = this.teamsSource.asObservable();
-
-  announceReload(teams: Team[]){
-    this.teamsSource.next(teams);
-  }
-
   constructor(private http: HttpClient) {
   }
-
 
   findTeamMembers(id:number): Observable<Array<Account>>{
     return this.http.get(`${this.teamUrl}/${id}/user_accounts`).pipe(map((response: Response) => response))
@@ -38,7 +30,17 @@ export class TeamService{
   }
 
   //TODO add error handling!!
-  //TODO add Post if -1!
+  //TODO return something other than null?
+  addTeamMember(user_account: Account): Observable<Account>{
+    const url = user_account._links["update"];
+    this.http.put<Account>(url["href"], JSON.stringify(user_account), httpOptions).subscribe((response)=> {
+      return response as Account;
+    });
+
+    return null;
+  }
+
+  //TODO add error handling!!
   //TODO return something other than null?
   save(team: Team): Observable<Team>{
     if(team.id === -1){
@@ -54,4 +56,14 @@ export class TeamService{
     return null;
   }
 
+  //TODO add error handling!!
+  //TODO return something other than null?
+  delete(team: Team): Observable<Team>{
+    const url = team._links["delete"];
+    this.http.delete(url["href"], httpOptions).subscribe((response)=> {
+      return response as Team;
+    });
+
+    return null;
+  }
 }

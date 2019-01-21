@@ -20,6 +20,8 @@ export class TeamSidebarService {
 
   selectedTeam: Team;
 
+  teams: Team[];
+
   constructor(private http: HttpClient) {
   }
 

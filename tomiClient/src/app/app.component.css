@@ -42,3 +42,18 @@
 .btn_padding{
   padding: 2px 5px 2px 5px;
 }
+
+.save_btn{
+  background-color: #009E0F;
+  display:inline-block;
+}
+
+.delete_btn{
+  background-color:#FFFFFF;
+  display:inline-block;
+}
+
+.archive_btn{
+  background-color:#CC0000;
+  display:inline-block;
+}
