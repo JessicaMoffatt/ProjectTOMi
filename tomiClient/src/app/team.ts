@@ -11,7 +11,7 @@ export class Team{
   constructor(){
     this.teamName = "";
     this.teamLead = new Account();
-    this.active = false;
+    this.active = true;
     this.id = -1;
     _links: new Array();
   }

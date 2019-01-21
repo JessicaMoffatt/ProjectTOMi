@@ -1,10 +1,23 @@
-<!--<input [(ngModel)]="team.teamName" placeholder="Team Name" style="width:20em">-->
-<!--<label>Team Lead<input [(ngModel)]="team.teamLead" placeholder="Team Lead" style="width:20em"></label>-->
+<div [ngClass]="'team_container'">
+  <div>
+    <input id="team_name" placeholder="Team Name" value={{teamSideBarService.selectedTeam?.teamName}} style="width:20em">
+    <span [ngClass]="['btn','rounded_corners','btn_padding','save_btn']" (click)="save(teamSideBarService.selectedTeam)">Save</span>
+    <span [ngClass]="['btn','rounded_corners','btn_padding','delete_btn']" (click)="delete(teamSideBarService.selectedTeam)">Del</span>
+    <span [ngClass]="['btn','rounded_corners','btn_padding','archive_btn']" (click)="archive(teamSideBarService.selectedTeam)">Archive</span>
+    <div>
+      <label>Team Lead:<input id="team_lead" placeholder="Team Lead" value="{{teamSideBarService.selectedTeamLead?.firstName}} {{teamSideBarService.selectedTeamLead?.lastName}}" style="width:20em"></label>
+    </div>
 
-<ul *ngIf="teams">
-  <li *ngFor="let t of teams">
-    <span *ngIf="t">{{t.teamName}} {{t.active}}</span>
-  </li>
-</ul>
+  </div>
+  <h2>Team Members</h2>
+  <div [ngClass]="'team_members'">
+    <ul *ngIf="teamService.teamMembers">
+      <li *ngFor="let m of teamService.teamMembers">
+        <span [ngClass]="['rounded_corners','list_item']" *ngIf="m">{{m.firstName}} {{m.lastName}}</span>
+      </li>
+    </ul>
+  </div>
 
-<span>{{team.teamName}}</span>
+  <div [ngClass]="['btn','rounded_corners','btn_padding','add_member_btn']" (click)="displayAddMember()">Add Member</div>
+</div>
+

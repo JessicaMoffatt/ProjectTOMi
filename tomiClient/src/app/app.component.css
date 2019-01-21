@@ -4,3 +4,57 @@
   color:#3E3E3E;
 }
 
+.btn{
+  color:#FFFFFF;
+  border: 1px solid #3E3E3E;
+  font-weight:bold;
+
+  text-align:center;
+
+  display:inline-block;
+
+  /* make text unselectable */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+.list_item{
+  padding:5px;
+  list-style-type:none;
+
+  /* make text unselectable */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+.list_item:hover{
+  background-color:#EEF0F0;
+}
+
+.rounded_corners{
+  border-radius:4px;
+}
+
+.btn_padding{
+  padding: 2px 5px 2px 5px;
+}
+
+.save_btn{
+  background-color: #009E0F;
+  display:inline-block;
+}
+
+.delete_btn{
+  background-color:#FFFFFF;
+  display:inline-block;
+}
+
+.archive_btn{
+  background-color:#CC0000;
+  display:inline-block;
+}
+

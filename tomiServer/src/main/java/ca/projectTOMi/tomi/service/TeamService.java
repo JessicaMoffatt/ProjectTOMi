@@ -41,7 +41,7 @@ public class TeamService {
     return repository.findById(id).map(team -> {
       team.setTeamName(newTeam.getTeamName());
       team.setActive(newTeam.isActive());
-      team.setTeamLead(newTeam.getTeamLead());
+      team.setTeamLeadId(newTeam.getTeamLeadId());
       return repository.save(team);
     }).orElseThrow(() -> new TeamNotFoundException());
   }

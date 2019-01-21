@@ -19,6 +19,9 @@ export class TimesheetComponent implements OnInit {
 
   @ViewChild('componentHolder', { read: ViewContainerRef }) componentHolder: ViewContainerRef;
 
+  constructor(
+    private entryService: EntryService
+  ) { }
 
   ngOnInit() {
     this.getEntries();

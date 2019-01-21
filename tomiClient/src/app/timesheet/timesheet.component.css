@@ -9,18 +9,6 @@
   margin-right:15px;
 }
 
-.btn{
-  color:#FFFFFF;
-  border: 1px solid #3E3E3E;
-
-  font-weight:bold;
-  text-align:center;
-}
-
-.btn:hover{
-  cursor:default;
-}
-
 i {
   border: solid #3E3E3E;
   border-width: 0 4px 4px 0;
@@ -90,7 +78,6 @@ i {
 
   width:25px;
   height:25px;
-
   margin:5px;
 
   border:1px solid #3E3E3E;
@@ -106,7 +93,7 @@ i {
   background-color:#EEF0F0;
   height: 30px;
   position:relative;
-  bottom: 0;
+  bottom: 0px;
 }
 
 .hours_tally{
