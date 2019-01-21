@@ -1,0 +1,6 @@
+QUESTION
+what is binary 1101 in decimal?
+ENDQUESTION
+ANSWER
+13
+ENDANSWER

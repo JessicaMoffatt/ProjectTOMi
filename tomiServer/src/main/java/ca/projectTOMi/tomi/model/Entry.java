@@ -41,12 +41,12 @@ public class Entry {
     private Long id;
 
     /**
-     * The account of the user creating the entry.
+     * The userAccount of the user creating the entry.
      */
     @NotNull
     @ManyToOne
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    private Account account;
+    private UserAccount userAccount;
 
     /**
      * The Project associated with the entry.

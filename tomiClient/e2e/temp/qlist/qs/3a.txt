@@ -1,0 +1,5 @@
+question and answer
+question
+what is the value of binary 111 in decimal
+answer
+7
