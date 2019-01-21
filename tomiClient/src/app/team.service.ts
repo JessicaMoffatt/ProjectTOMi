@@ -18,6 +18,7 @@ const httpOptions = {
 export class TeamService{
 
   private teamUrl = `http://localhost:8080/teams`;
+  private userUrl = `http://localhost:8080/user_accounts`
 
   teamMembers: Account[] = new Array();
 
@@ -28,6 +29,13 @@ export class TeamService{
     return this.http.get(`${this.teamUrl}/${id}/user_accounts`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         return data._embedded.userAccounts as Account[];
+      }));
+  }
+
+  findTeamMemberById(id:number): Observable<Account>{
+    return this.http.get(`${this.userUrl}/${id}`).pipe(map((response: Response) => response))
+      .pipe(map((data: any) => {
+        return data as Account;
       }));
   }
 
@@ -46,6 +54,7 @@ export class TeamService{
   //TODO return something other than null?
   save(team: Team): Observable<Team>{
     if(team.id === -1){
+      team.id = null;
       this.http.post<Team>(this.teamUrl, JSON.stringify(team), httpOptions).subscribe((response)=>{
         this.teamSideBarService.teams.push(team);
         this.teamSideBarService.destroyAddTeamComponent();
@@ -61,14 +70,31 @@ export class TeamService{
     return null;
   }
 
+  //TODO finish
+  cancel(team:Team): void{
+    (<HTMLInputElement>document.getElementById("team_name")).value = team.teamName;
+  }
+
   //TODO add error handling!!
   //TODO return something other than null?
   delete(team: Team): Observable<Team>{
+    let index = this.teamSideBarService.teams.findIndex((element)=>{
+     return (element.id == team.id);
+    });
+
+    this.teamSideBarService.teams.splice(index,1);
+
     const url = team._links["delete"];
+
     this.http.delete(url["href"], httpOptions).subscribe((response)=> {
+      this.teamSideBarService.selectedTeam = null;
+
       return response as Team;
     });
 
     return null;
   }
+
+
+
 }

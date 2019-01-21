@@ -2,8 +2,8 @@
   <div>
     <input id="team_name" placeholder="Team Name" value={{teamSideBarService.selectedTeam?.teamName}} style="width:20em">
     <span [ngClass]="['btn','rounded_corners','btn_padding','save_btn']" (click)="save(teamSideBarService.selectedTeam)">Save</span>
-    <span [ngClass]="['btn','rounded_corners','btn_padding','delete_btn']" (click)="delete(teamSideBarService.selectedTeam)">Del</span>
-    <span [ngClass]="['btn','rounded_corners','btn_padding','archive_btn']" (click)="archive(teamSideBarService.selectedTeam)">Archive</span>
+    <span [ngClass]="['btn','rounded_corners','btn_padding','cancel_btn']" (click)="cancel(teamSideBarService.selectedTeam)">O</span>
+    <span [ngClass]="['btn','rounded_corners','btn_padding','delete_btn']" (click)="delete(teamSideBarService.selectedTeam)">Archive</span>
     <div>
       <label>Team Lead:<input id="team_lead" placeholder="Team Lead" value="{{teamSideBarService.selectedTeam?.teamLead.firstName}} {{teamSideBarService.selectedTeam?.teamLead.lastName}}" style="width:20em"></label>
     </div>
@@ -18,6 +18,8 @@
     </ul>
   </div>
 
-  <div [ngClass]="['btn','rounded_corners','btn_padding','add_member_btn']" (click)="displayAddMember()">Add Member</div>
+  <div [ngClass]="['btn','rounded_corners','btn_padding','add_member_btn']" (click)="createAddMemberComponent()">Add Member</div>
+
+  <template #add_team_member_container></template>
 </div>
 

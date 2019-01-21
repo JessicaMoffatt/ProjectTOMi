@@ -8,7 +8,7 @@ export class Account{
   email:string;
   salariedRate:number;
   active:boolean;
-  team:Team;
+  teamId:number;
   projects:Object;
   _links: Object;
 
@@ -19,6 +19,6 @@ export class Account{
     this.email = "";
     this.salariedRate = 0;
     this.active = true;
-    this.team = new Team();
+    this.teamId = -1;
   }
 }

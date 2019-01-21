@@ -10,6 +10,7 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 /**
@@ -39,7 +40,7 @@ public class Team {
    */
   @OneToOne
   @MapKeyColumn(name = "id")
-  @JsonBackReference
+  @JsonManagedReference
   private UserAccount teamLead;
 
   /**

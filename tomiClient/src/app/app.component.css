@@ -49,12 +49,12 @@
 }
 
 .delete_btn{
-  background-color:#FFFFFF;
+  background-color:#CC0000;
   display:inline-block;
 }
 
-.archive_btn{
-  background-color:#CC0000;
+.cancel_btn{
+  background-color:#FFFFFF;
   display:inline-block;
 }
 

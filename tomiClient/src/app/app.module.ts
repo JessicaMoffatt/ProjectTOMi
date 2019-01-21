@@ -25,6 +25,7 @@ import {ManageTeamsPanelComponent} from "./manage-teams-panel/manage-teams-panel
 import {UnitTypesPanelComponent} from "./unit-types-panel/unit-types-panel.component";
 import {TasksPanelComponent} from "./tasks-panel/tasks-panel.component";
 import {UserAccountsPanelComponent} from "./user-accounts-panel/user-accounts-panel.component";
+import { AddTeamMemberComponent } from './add-team-member/add-team-member.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {UserAccountsPanelComponent} from "./user-accounts-panel/user-accounts-pa
     EntryComponent,
     TeamComponent,
     TeamSidebarComponent,
-    AddTeamComponent
+    AddTeamComponent,
+    AddTeamMemberComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,8 @@ import {UserAccountsPanelComponent} from "./user-accounts-panel/user-accounts-pa
   ],
   entryComponents:[
     EntryComponent,
-    AddTeamComponent
+    AddTeamComponent,
+    AddTeamMemberComponent
   ],
   providers: [
     TeamSidebarService

@@ -45,7 +45,6 @@ export class TeamSidebarService {
   findTeamById(id:number): Observable<Team>{
     return this.http.get(`${this.teamUrl}/${id}`).pipe(map((response: Response) => response))
       .pipe(map((data:any) => {
-        console.log(data);
         return data as Team;
       }));
   }

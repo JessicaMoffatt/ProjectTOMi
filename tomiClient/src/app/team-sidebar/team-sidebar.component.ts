@@ -34,7 +34,6 @@ export class TeamSidebarComponent implements OnInit {
 
   displayTeam(team:Team){
     this.teamSideBarService.findTeamById(team.id).subscribe((data:Team) => {
-      console.log("DATA: " + data);
       this.teamSideBarService.selectedTeam = data;
     });
 
