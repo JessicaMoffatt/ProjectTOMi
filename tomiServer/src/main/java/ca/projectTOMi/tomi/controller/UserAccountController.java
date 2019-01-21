@@ -103,7 +103,7 @@ public class UserAccountController {
    */
   @PostMapping ("/user_accounts")
   public Resource<UserAccount> createUserAccount(@RequestBody UserAccount newUserAccount) {
-    return assembler.toResource(service.saveUserAccount(newUserAccount));
+    return assembler.toResource(service.createUserAccount(newUserAccount));
   }
 
   /**

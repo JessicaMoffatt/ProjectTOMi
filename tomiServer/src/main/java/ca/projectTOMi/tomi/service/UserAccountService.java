@@ -1,6 +1,12 @@
 package ca.projectTOMi.tomi.service;
 
+import java.time.LocalDate;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.UserAccount;
@@ -12,7 +18,7 @@ import org.springframework.stereotype.Service;
  * Provides services for {@link UserAccount} objects.
  *
  * @author Karol Talbot
- * @version 1.2
+ * @version 1.3
  */
 @Service
 public class UserAccountService {
@@ -104,9 +110,25 @@ public class UserAccountService {
     }).orElseThrow(() -> new UserAccountNotFoundException());
   }
 
+  /**
+   *
+   */
   @Scheduled (cron = "0 0 1 * * MON")
   public void createWeeklyTimesheet(){
+    List<UserAccount> accounts = repository.getAllByActive(true);
+    LocalDate date = LocalDate.now();
+    for(UserAccount a: accounts){
+      timesheetService.createTimesheet(date, a);
+    }
+  }
 
+  public UserAccount createUserAccount(UserAccount userAccount){
+    UserAccount newUserAccount = repository.save(userAccount);
+    TemporalField fieldCAN = WeekFields.of(Locale.CANADA).dayOfWeek();
+    LocalDate date = LocalDate.now().with(fieldCAN, 2);
+    timesheetService.createTimesheet(date, newUserAccount);
+
+    return newUserAccount;
   }
 
   /**

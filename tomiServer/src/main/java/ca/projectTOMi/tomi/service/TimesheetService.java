@@ -1,12 +1,12 @@
 package ca.projectTOMi.tomi.service;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
+import ca.projectTOMi.tomi.model.Status;
 import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.TimesheetRepository;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 /**
@@ -38,14 +38,19 @@ public class TimesheetService {
     return repository.findById(id).map(timesheet -> {
         timesheet.setStatus(newTimesheet.getStatus());
         timesheet.setSubmitDate(newTimesheet.getSubmitDate());
-        timesheet.setTimesheetId(newTimesheet.getTimesheetId());
+        timesheet.setId(newTimesheet.getId());
         return timesheet;
       }
     ).orElseThrow(()->new TimesheetNotFoundException());
   }
 
-  public void createTimesheet(Date date, UserAccount userAccount){
-
+  public void createTimesheet(LocalDate date, UserAccount userAccount){
+    Timesheet t = new Timesheet();
+    t.setStatus(Status.LOGGING);
+    t.setStartDate(date);
+    t.setUserAccount(userAccount);
+    t.setActive(true);
+    t = repository.save(t);
   }
 
 

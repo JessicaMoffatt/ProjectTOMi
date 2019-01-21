@@ -24,7 +24,7 @@ public class Timesheet {
     /*
      * the unique id of the timesheet
      */
-    private Long timesheetId;
+    private Long id;
 
 
     /*
@@ -53,4 +53,8 @@ public class Timesheet {
      * if the timesheet is active.
      */
     private boolean active;
+
+    public String getTimesheet(){
+        return this.id + " " + this.startDate + " " + this.userAccount.getFirstName();
+    }
 }
