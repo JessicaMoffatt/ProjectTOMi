@@ -25,7 +25,7 @@ public class EntryResourceAssembler implements ResourceAssembler<Entry, Resource
         Resource<Entry> resource = new Resource<>(entry,
                 linkTo(methodOn(EntryController.class).getEntry(entry.getId())).withSelfRel(),
                 linkTo(methodOn(EntryController.class).getEntriesByAccount(entry.getAccount().getId())).withRel("account"),
-                linkTo(methodOn(EntryController.class).getEntriesByProject(entry.getProject().getProjectId())).withRel("project")
+                linkTo(methodOn(EntryController.class).getEntriesByProject(entry.getProject().getId())).withRel("project")
                 );
 
         try {

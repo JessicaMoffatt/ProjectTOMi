@@ -10,9 +10,10 @@ import lombok.Data;
 /**
  * A model class for storing information related to the Client.
  *
- * @author Karol Talbot
- * @version 1
+ * @author Karol Talbot (Updated by Iliya Kiritchkov)
+ * @version 1.1
  */
+
 @Entity
 @Data
 public class Client {

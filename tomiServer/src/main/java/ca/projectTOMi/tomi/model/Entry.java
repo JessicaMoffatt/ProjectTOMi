@@ -82,45 +82,69 @@ public class Entry {
     private String component;
 
     /**
-     * The Monday of the week this entry is for.
+     * The Monday of the week this Entry is for.
      */
     private LocalDate date;
 
+    /**
+     * The hours worked on the Monday of the week for this Entry.
+     */
     @Column(scale = 2)
     @Min(0)
     @Max(24)
     private Double mondayHours;
 
+    /**
+     * The hours worked on the Tuesday of the week for this Entry.
+     */
     @Column(scale = 2)
     @Min(0)
     @Max(24)
     private Double tuesdayHours;
 
+    /**
+     * The hours worked on the Wednesday of the week for this Entry.
+     */
     @Column(scale = 2)
     @Min(0)
     @Max(24)
     private Double wednesdayHours;
 
+    /**
+     * The hours worked on the Thursday of the week for this Entry.
+     */
     @Column(scale = 2)
     @Min(0)
     @Max(24)
     private Double thursdayHours;
 
+    /**
+     * The hours worked on the Friday of the week for this Entry.
+     */
     @Column(scale = 2)
     @Min(0)
     @Max(24)
     private Double fridayHours;
 
+    /**
+     * The hours worked on the Saturday of the week for this Entry.
+     */
     @Column(scale = 2)
     @Min(0)
     @Max(24)
     private Double saturdayHours;
 
+    /**
+     * The hours worked on the Sunday of the week for this Entry.
+     */
     @Column(scale = 2)
     @Min(0)
     @Max(24)
     private Double sundayHours;
 
+    /**
+     * The total hours worked for the week for this Entry.
+     */
     @Formula("mondayHours + tuesdayHours + wednesdayHours + thursdayHours + fridayHours + saturdayHours + sundayHours")
     private Double totalHours;
 
