@@ -32,11 +32,7 @@ public class Team {
   )
   private Long id;
 
-  /**
-   * The UserAccount of the team leader for this Team.
-   */
-  @OneToOne
-  private UserAccount teamLead;
+  private Long teamLeadId;
 
   /**
    * The name of this Team.

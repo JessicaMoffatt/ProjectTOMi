@@ -4,6 +4,7 @@ import {Team} from "./team";
 import {Observable, ReplaySubject, Subject, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
 import {Account} from "./account";
+import {TeamSidebarService} from "./team-sidebar.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,7 +20,7 @@ export class TeamService{
 
   teamMembers: Account[] = new Array();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService) {
   }
 
   findTeamMembers(id:number): Observable<Array<Account>>{
@@ -45,11 +46,14 @@ export class TeamService{
   save(team: Team): Observable<Team>{
     if(team.id === -1){
       this.http.post<Team>(this.teamUrl, JSON.stringify(team), httpOptions).subscribe((response)=>{
+        this.teamSideBarService.teams.push(team);
+        this.teamSideBarService.destroyAddTeamComponent();
         return response as Team;
       });
     }else{
       const url = team._links["update"];
       this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).subscribe((response)=>{
+        this.teamSideBarService.reloadTeams();
         return response as Team;
       });
     }

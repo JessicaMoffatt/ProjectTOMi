@@ -13,6 +13,7 @@ import { TeamComponent } from './team/team.component';
 import { TeamSidebarComponent } from './team-sidebar/team-sidebar.component';
 import { AddTeamComponent } from './add-team/add-team.component';
 import {TeamSidebarService} from "./team-sidebar.service";
+import {OrderModule} from "ngx-order-pipe";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {TeamSidebarService} from "./team-sidebar.service";
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    OrderModule
   ],
   entryComponents:[
     EntryComponent,

@@ -40,6 +40,10 @@ export class TeamSidebarComponent implements OnInit {
     this.teamService.findTeamMembers(team.id).subscribe((data: Array<Account>) => {
       this.teamService.teamMembers = data;
     });
+
+    this.teamSideBarService.getTeamLead(team.id).subscribe((data: Account) => {
+      this.teamSideBarService.selectedTeamLead = data;
+    });
   }
 
   createAddTeamComponent(){
