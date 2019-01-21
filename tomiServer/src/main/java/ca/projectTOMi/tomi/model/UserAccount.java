@@ -2,6 +2,7 @@ package ca.projectTOMi.tomi.model;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,8 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -40,8 +43,9 @@ public class UserAccount {
   /**
    * The team this UserAccount is a member of.
    */
-  @ManyToOne
+  @ManyToOne (cascade = CascadeType.ALL)
   @OnDelete (action = OnDeleteAction.NO_ACTION)
+  @JsonBackReference
   private Team team;
 
   /**

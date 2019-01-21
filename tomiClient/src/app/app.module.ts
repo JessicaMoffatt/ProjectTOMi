@@ -15,9 +15,23 @@ import { AddTeamComponent } from './add-team/add-team.component';
 import {TeamSidebarService} from "./team-sidebar.service";
 import {OrderModule} from "ngx-order-pipe";
 
+import { TimesheetComponent } from './timesheet/timesheet.component';
+import { EntryComponent } from './entry/entry.component';
+import {RouterModule} from "@angular/router";
+import { TeamComponent } from './team/team.component';
+
 @NgModule({
   declarations: [
     AppComponent,
+    TopNavBarComponent,
+    ApprovePanelComponent,
+    TimesheetPanelComponent,
+    TeamPanelComponent,
+    ProjectsPanelComponent,
+    ManageTeamsPanelComponent,
+    UnitTypesPanelComponent,
+    TasksPanelComponent,
+    UserAccountsPanelComponent,
     TimesheetComponent,
     EntryComponent,
     TeamComponent,
@@ -28,7 +42,7 @@ import {OrderModule} from "ngx-order-pipe";
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule,
+    HttpClientModule
     OrderModule
   ],
   entryComponents:[
