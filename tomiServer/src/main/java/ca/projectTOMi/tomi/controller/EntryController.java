@@ -24,6 +24,9 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * Handles HTTP requests for {@Link Entry} objects in the ProjectTOMi system.
+ *
+ * @author Iliya Kiritchkov
+ * @version 1.1
  */
 @RestController
 public class EntryController {
@@ -55,31 +58,16 @@ public class EntryController {
     }
 
     /**
-     * Returns a collection of all {@Link Entry} objects that belong to the {@Link Account}.
+     * Returns a collectin of all active {@Link Entry} objects to the source of a GET request to /entries.
      *
-     * @param accountId unique id of the Account.
-     * @return Collection of resources representing all Entries that belong to the Account.
+     * @return Collection of resources representing all active Entries.
      */
-    @GetMapping("entries/account/{id}")
-    public Resources<Resource<Entry>> getEntriesByAccount(@PathVariable Long accountId) {
-        List<Resource<Entry>> entry = service.getEntriesByAccount(accountId).stream().map(assembler::toResource).collect(Collectors.toList());
+    @GetMapping("/entries")
+    public Resources<Resource<Entry>> getActiveEntries() {
+        List<Resource<Entry>> entry = service.getActiveEntries().stream().map(assembler::toResource).collect(Collectors.toList());
 
         return new Resources<>(entry,
-                linkTo(methodOn(EntryController.class).getEntriesByAccount(accountId)).withSelfRel());
-    }
-
-    /**
-     * Returns a collection of all {@Link Entry} objects that belong to the {@Link Project}.
-     *
-     * @param projectId unique id of the Project.
-     * @return Collection of resources representing all Entries that belong to the Project.
-     */
-    @GetMapping("entries/project/{id}")
-    public Resources<Resource<Entry>> getEntriesByProject(@PathVariable String projectId) {
-        List<Resource<Entry>> entry = service.getEntriesByProject(projectId).stream().map(assembler::toResource).collect(Collectors.toList());
-
-        return new Resources<>(entry,
-                linkTo(methodOn(EntryController.class).getEntriesByProject(projectId)).withSelfRel());
+                linkTo(methodOn(EntryController.class).getActiveEntries()).withSelfRel());
     }
 
     /**

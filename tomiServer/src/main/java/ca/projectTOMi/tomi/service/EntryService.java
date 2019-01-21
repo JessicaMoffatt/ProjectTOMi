@@ -2,10 +2,8 @@ package ca.projectTOMi.tomi.service;
 
 import ca.projectTOMi.tomi.exception.EntryNotFoundException;
 import ca.projectTOMi.tomi.exception.IllegalEntryStateException;
-import ca.projectTOMi.tomi.model.Account;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.model.Status;
-import ca.projectTOMi.tomi.persistence.AccountRepository;
 import ca.projectTOMi.tomi.persistence.EntryRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,31 +14,28 @@ import java.util.stream.Collectors;
  * Provides services for {@Link Entry} objects.
  *
  * @author Iliya Kiritchkov
- * @version 1
+ * @version 1.1
  */
 @Service
 public class EntryService {
     private EntryRepository repository;
-    private AccountService accountService;
 
     /**
      * Constructor for the EntryService component.
      *
      * @param repository Repository responsible for persisting {@Link Entry} instances.
      */
-    public EntryService(EntryRepository repository, AccountService accountService) {
+    public EntryService(EntryRepository repository) {
         this.repository = repository;
-        this.accountService = accountService;
-
     }
 
     /**
      * Updates the {@Link Entry} with the provided id with the provided attributes.
      * If the updated Entry has a Status of APPROVED or SUBMITTED, an IllegalEntryStateException will
      * be raised as these statuses do not allow any modofication of the contents of an Entry object.
-     *
+     * <p>
      * If the updated Entry has a Status of LOGGING, the existing Entry will be updated to contain the updated attributes.
-
+     * <p>
      * If the updated Entry has a Status of REJECTED, a new Entry object will be created with identical content to the rejected Entry and it will be saved with an Active status of false. The existing Entry Status will be set to LOGGING.
      *
      * @param id       the unique identifier for the Entry to update.
@@ -138,21 +133,11 @@ public class EntryService {
     }
 
     /**
-     * Gets a List of all {@Link Entry} objects belonging to an Account.
-     * @param accountId the unique identifier for the Account.
-     * @return List containing all Entries belonging to an Account.
+     * Gets a List of all {@Link Entry} objects that are active.
+     *
+     * @return List containing all Entries that are active.
      */
-    public List<Entry> getEntriesByAccount(Long accountId) {
-        return repository.getEntriesByAccount(accountService.getAccount(accountId)).stream().collect(Collectors.toList());
-    }
-
-    /**
-     * This method is not yet implemented. Project Controller is required.
-     * @param projectId
-     * @return
-     */
-    //TODO
-    public List<Entry> getEntriesByProject(String projectId) {
-        return null;
+    public List<Entry> getActiveEntries() {
+        return repository.getActiveEntries(true).stream().collect(Collectors.toList());
     }
 }

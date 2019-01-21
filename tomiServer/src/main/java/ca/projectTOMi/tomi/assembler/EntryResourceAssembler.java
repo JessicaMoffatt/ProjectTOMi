@@ -15,7 +15,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * EntryResourceAssembler is responsible for creating a standard resource for {@Link Entry}.
  *
  * @author Iliya Kiritchkov
- * @version 1
+ * @version 1.1
  */
 @Component
 public class EntryResourceAssembler implements ResourceAssembler<Entry, Resource<Entry>> {
@@ -24,13 +24,12 @@ public class EntryResourceAssembler implements ResourceAssembler<Entry, Resource
     public Resource<Entry> toResource(Entry entry) {
         Resource<Entry> resource = new Resource<>(entry,
                 linkTo(methodOn(EntryController.class).getEntry(entry.getId())).withSelfRel(),
-                linkTo(methodOn(EntryController.class).getEntriesByAccount(entry.getAccount().getId())).withRel("account"),
-                linkTo(methodOn(EntryController.class).getEntriesByProject(entry.getProject().getId())).withRel("project")
+                linkTo(methodOn(EntryController.class).getActiveEntries()).withRel("entries"),
+                linkTo(methodOn(EntryController.class).deleteEntry(entry.getId())).withRel("delete")
                 );
 
         try {
             resource.add(linkTo(methodOn(EntryController.class).updateEntry(entry.getId(), entry)).withRel("update"));
-            resource.add(linkTo(methodOn(EntryController.class).deleteEntry(entry.getId())).withRel("delete"));
         } catch (URISyntaxException e) {
             System.out.println(e);
         }
