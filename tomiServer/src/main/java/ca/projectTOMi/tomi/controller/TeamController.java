@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Handles HTTP requests for {@link Team} objects in the ProjectTOMi system.
  *
  * @author Karol Talbot
- * @version 1
+ * @version 1.1
  */
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
@@ -82,16 +82,11 @@ public class TeamController {
    * @param newTeam
    *   a team object with required information.
    *
-   * @return response containing links to the newly created team
-   *
-   * @throws URISyntaxException
-   *   when the created URI is unable to be parsed
+   * @return the newly created team
    */
   @PostMapping ("/teams")
-  public ResponseEntity<?> createTeam(@RequestBody Team newTeam) throws URISyntaxException {
-    Resource<Team> resource = assembler.toResource(service.saveTeam(newTeam));
-
-    return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
+  public Resource<Team> createTeam(@RequestBody Team newTeam) {
+    return assembler.toResource(service.saveTeam(newTeam));
   }
 
   /**
@@ -103,16 +98,12 @@ public class TeamController {
    * @param newTeam
    *   the updated team
    *
-   * @return response containing a link to the updated team
-   *
-   * @throws URISyntaxException
-   *   when the created URI is unable to be parsed
+   * @return the updated team
    */
   @PutMapping ("/teams/{id}")
-  public ResponseEntity<?> updateTeam(@PathVariable Long id, @RequestBody Team newTeam) throws URISyntaxException {
+  public Resource<Team> updateTeam(@PathVariable Long id, @RequestBody Team newTeam) {
     Team updatedTeam = service.updateTeam(id, newTeam);
-    Resource<Team> resource = assembler.toResource(updatedTeam);
-    return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
+    return assembler.toResource(updatedTeam);
   }
 
   /**

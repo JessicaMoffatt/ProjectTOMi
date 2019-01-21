@@ -4,6 +4,7 @@ package ca.projectTOMi.tomi.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
@@ -36,6 +37,7 @@ public class Team {
    * The UserAccount of the team leader for this Team.
    */
   @OneToOne
+  @MapKeyColumn(name = "id")
   private UserAccount teamLead;
 
   /**
