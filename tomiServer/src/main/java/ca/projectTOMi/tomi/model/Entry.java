@@ -89,7 +89,7 @@ public class Entry {
     /**
      * The hours worked on the Monday of the week for this Entry.
      */
-    @Column(scale = 2)
+    @Column(scale = 2, nullable = false, columnDefinition = "default 0.00")
     @Min(0)
     @Max(24)
     private Double mondayHours;
@@ -97,7 +97,7 @@ public class Entry {
     /**
      * The hours worked on the Tuesday of the week for this Entry.
      */
-    @Column(scale = 2)
+    @Column(scale = 2, nullable = false, columnDefinition = "default 0.00")
     @Min(0)
     @Max(24)
     private Double tuesdayHours;
@@ -105,7 +105,7 @@ public class Entry {
     /**
      * The hours worked on the Wednesday of the week for this Entry.
      */
-    @Column(scale = 2)
+    @Column(scale = 2, nullable = false, columnDefinition = "default 0.00")
     @Min(0)
     @Max(24)
     private Double wednesdayHours;
@@ -113,7 +113,7 @@ public class Entry {
     /**
      * The hours worked on the Thursday of the week for this Entry.
      */
-    @Column(scale = 2)
+    @Column(scale = 2, nullable = false, columnDefinition = "default 0.00")
     @Min(0)
     @Max(24)
     private Double thursdayHours;
@@ -121,7 +121,7 @@ public class Entry {
     /**
      * The hours worked on the Friday of the week for this Entry.
      */
-    @Column(scale = 2)
+    @Column(scale = 2, nullable = false, columnDefinition = "default 0.00")
     @Min(0)
     @Max(24)
     private Double fridayHours;
@@ -129,7 +129,7 @@ public class Entry {
     /**
      * The hours worked on the Saturday of the week for this Entry.
      */
-    @Column(scale = 2)
+    @Column(scale = 2, nullable = false, columnDefinition = "default 0.00")
     @Min(0)
     @Max(24)
     private Double saturdayHours;
@@ -137,7 +137,7 @@ public class Entry {
     /**
      * The hours worked on the Sunday of the week for this Entry.
      */
-    @Column(scale = 2)
+    @Column(scale = 2, nullable = false, columnDefinition = "default 0.00")
     @Min(0)
     @Max(24)
     private Double sundayHours;
