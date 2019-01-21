@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import {Entry} from "../entry";
 import {TEMPENTRIES} from "../entry/mock_entries";
+import {EntryService} from "../entry.service";
 
 @Component({
   selector: 'app-timesheet',
@@ -12,7 +13,6 @@ import {TEMPENTRIES} from "../entry/mock_entries";
 })
 export class TimesheetComponent implements OnInit {
 
-  // entries: Entry[];
   entries: Entry[];
 
   tally: number=0;

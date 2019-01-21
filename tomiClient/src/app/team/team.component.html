@@ -5,7 +5,7 @@
     <span [ngClass]="['btn','rounded_corners','btn_padding','delete_btn']" (click)="delete(teamSideBarService.selectedTeam)">Del</span>
     <span [ngClass]="['btn','rounded_corners','btn_padding','archive_btn']" (click)="archive(teamSideBarService.selectedTeam)">Archive</span>
     <div>
-      <label>Team Lead:<input id="team_lead" placeholder="Team Lead" value="{{teamSideBarService.selectedTeamLead?.firstName}} {{teamSideBarService.selectedTeamLead?.lastName}}" style="width:20em"></label>
+      <label>Team Lead:<input id="team_lead" placeholder="Team Lead" value="{{teamSideBarService.selectedTeam?.teamLead.firstName}} {{teamSideBarService.selectedTeam?.teamLead.lastName}}" style="width:20em"></label>
     </div>
 
   </div>
