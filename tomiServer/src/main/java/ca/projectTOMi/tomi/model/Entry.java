@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
@@ -42,6 +43,7 @@ public class Entry {
     /**
      * The account of the user creating the entry.
      */
+    @NotNull
     @ManyToOne
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Account account;
