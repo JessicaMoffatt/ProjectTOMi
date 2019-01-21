@@ -43,7 +43,7 @@ public class UserAccount {
   /**
    * The team this UserAccount is a member of.
    */
-  @ManyToOne (cascade = CascadeType.ALL)
+  @ManyToOne
   @OnDelete (action = OnDeleteAction.NO_ACTION)
   @JsonBackReference
   private Team team;
