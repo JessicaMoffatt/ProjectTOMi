@@ -3,7 +3,6 @@ package ca.projectTOMi.tomi.assembler;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import java.net.URISyntaxException;
 import ca.projectTOMi.tomi.controller.UserAccountController;
 import ca.projectTOMi.tomi.model.UserAccount;
 import org.springframework.hateoas.Resource;
