@@ -29,7 +29,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @version 1
  */
 @RestController
-public class ProjectController {
+public final class ProjectController {
   ProjectService service;
   ProjectResourceAssembler assembler;
 
