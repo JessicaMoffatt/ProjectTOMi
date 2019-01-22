@@ -2,7 +2,7 @@ import {
   Component, ComponentFactory,
   ComponentFactoryResolver,
   ComponentRef,
-  OnInit,
+  OnInit, TemplateRef,
   Type,
   ViewChild,
   ViewContainerRef

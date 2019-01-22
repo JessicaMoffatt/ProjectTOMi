@@ -98,6 +98,7 @@ export class TeamService{
 
     this.http.delete(url["href"], httpOptions).subscribe((response)=> {
       this.teamSideBarService.selectedTeam = null;
+      this.teamMembers = new Array();
 
       return response as Team;
     });
