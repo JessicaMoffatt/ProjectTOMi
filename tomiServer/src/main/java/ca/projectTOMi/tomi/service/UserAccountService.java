@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  * @version 1.3
  */
 @Service
-public class UserAccountService {
+public final class UserAccountService {
   private UserAccountRepository repository;
   private TeamService teamService;
   private TimesheetService timesheetService;

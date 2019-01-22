@@ -6,6 +6,6 @@ import ca.projectTOMi.tomi.model.Task;
  * @author Iliya Kiritchkov
  * @version 1
  */
-public class TaskNotFoundException extends RuntimeException {
+public final class TaskNotFoundException extends RuntimeException {
 
 }

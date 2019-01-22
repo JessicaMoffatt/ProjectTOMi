@@ -18,7 +18,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Entity
 @Data
-public class UnitType {
+public final class UnitType {
 
     /**
      * The unique identifier of this Unit Type. Used to distinguish between Unit Types.

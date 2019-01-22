@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * @version 1.1
  */
 @Component
-public class UserAccountResourceAssembler implements ResourceAssembler<UserAccount, Resource<UserAccount>> {
+public final class UserAccountResourceAssembler implements ResourceAssembler<UserAccount, Resource<UserAccount>> {
 
   @Override
   public Resource<UserAccount> toResource(UserAccount userAccount) {

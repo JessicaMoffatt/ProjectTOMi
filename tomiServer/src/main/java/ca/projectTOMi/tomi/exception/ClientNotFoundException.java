@@ -6,5 +6,5 @@ package ca.projectTOMi.tomi.exception;
  * @author Karol Talbot
  * @version 1
  */
-public class ClientNotFoundException extends RuntimeException {
+public final class ClientNotFoundException extends RuntimeException {
 }

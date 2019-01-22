@@ -22,7 +22,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Data
-public class Entry {
+public final class Entry {
 
     /**
      * The unique identifier for this Entry. Used to distinguish between Entries.

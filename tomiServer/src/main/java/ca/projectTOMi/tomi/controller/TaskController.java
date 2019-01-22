@@ -29,7 +29,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @version 1
  */
 @RestController
-public class TaskController {
+public final class TaskController {
     private TaskResourceAssembler assembler;
     private TaskService service;
 

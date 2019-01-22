@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @version 1.1
  */
 @Service
-public class ExpenseService {
+public final class ExpenseService {
   private ExpenseRepository repository;
 
   /**

@@ -28,7 +28,7 @@ import org.hibernate.annotations.OnDeleteAction;
  */
 @Entity
 @Data
-public class UserAccount {
+public final class UserAccount {
   /**
    * The unique identifier for this UserAccount. Used to distinguish between Accounts.
    */

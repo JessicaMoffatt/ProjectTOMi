@@ -18,7 +18,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @version 1.1
  */
 @Component
-public class UnitTypeResourceAssembler implements ResourceAssembler<UnitType, Resource<UnitType>> {
+public final class UnitTypeResourceAssembler implements ResourceAssembler<UnitType, Resource<UnitType>> {
 
     @Override
     public Resource<UnitType> toResource(UnitType unitType) {

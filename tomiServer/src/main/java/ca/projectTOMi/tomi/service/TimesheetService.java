@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @version 1
  */
 @Service
-public class TimesheetService {
+public final class TimesheetService {
   private TimesheetRepository repository;
 
   public TimesheetService(TimesheetRepository repository){

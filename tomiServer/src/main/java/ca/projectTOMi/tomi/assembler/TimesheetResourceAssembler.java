@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @version 1
  */
 @Component
-public class TimesheetResourceAssembler implements ResourceAssembler<Timesheet, Resource<Timesheet>> {
+public final class TimesheetResourceAssembler implements ResourceAssembler<Timesheet, Resource<Timesheet>> {
 
   public Resource<Timesheet> toResource(Timesheet timesheet){
     return new Resource<>(timesheet);

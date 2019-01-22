@@ -6,6 +6,6 @@ package ca.projectTOMi.tomi.exception;
  * @author Iliya Kiritchkov
  * @version 1
  */
-public class UnitTypeNotFoundException extends RuntimeException {
+public final class UnitTypeNotFoundException extends RuntimeException {
 
 }

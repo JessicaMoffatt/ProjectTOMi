@@ -12,7 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Timesheet {
+public final class Timesheet {
     @Id
     @GeneratedValue(generator = "timesheet_sequence")
     @SequenceGenerator(

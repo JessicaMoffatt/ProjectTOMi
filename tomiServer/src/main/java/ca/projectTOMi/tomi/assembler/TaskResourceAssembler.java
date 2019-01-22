@@ -18,7 +18,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @version 1
  */
 @Component
-public class TaskResourceAssembler implements ResourceAssembler<Task, Resource<Task>> {
+public final class TaskResourceAssembler implements ResourceAssembler<Task, Resource<Task>> {
 
     @Override
     public Resource<Task> toResource(Task task) {

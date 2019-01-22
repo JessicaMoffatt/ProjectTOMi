@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Data
-public class Task {
+public final class Task {
 
     /**
      * The unique identifier for this Task. Used to distinguish between Tasks.

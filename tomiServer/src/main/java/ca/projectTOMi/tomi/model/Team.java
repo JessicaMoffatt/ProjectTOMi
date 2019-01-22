@@ -20,7 +20,7 @@ import lombok.Data;
  */
 @Entity
 @Data
-public class Team {
+public final class Team {
   /**
    * The unique identifier for this Team.
    */

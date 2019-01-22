@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * @version 1.1
  */
 @Component
-public class TeamResourceAssembler implements ResourceAssembler<Team, Resource<Team>> {
+public final class TeamResourceAssembler implements ResourceAssembler<Team, Resource<Team>> {
 
   @Override
   public Resource<Team> toResource(Team team) {

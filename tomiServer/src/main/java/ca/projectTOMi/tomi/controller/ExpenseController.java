@@ -28,7 +28,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @version 1
  */
 @RestController
-public class ExpenseController {
+public final class ExpenseController {
   private ExpenseService service;
   private ExpenseResourceAssembler assembler;
 

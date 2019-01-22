@@ -19,7 +19,7 @@ import lombok.Data;
  */
 @Entity
 @Data
-public class Expense {
+public final class Expense {
   /**
    * Unique identifier for this Expense.
    */

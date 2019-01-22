@@ -26,7 +26,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @version 1
  */
 @RestController
-public class TimesheetController {
+public final class TimesheetController {
   private TimesheetResourceAssembler assembler;
   private TimesheetService service;
 
