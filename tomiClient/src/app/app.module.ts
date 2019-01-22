@@ -26,6 +26,7 @@ import {UnitTypesPanelComponent} from "./unit-types-panel/unit-types-panel.compo
 import {TasksPanelComponent} from "./tasks-panel/tasks-panel.component";
 import {UserAccountsPanelComponent} from "./user-accounts-panel/user-accounts-panel.component";
 import { AddTeamMemberComponent } from './add-team-member/add-team-member.component';
+import {UserAccountService} from "./user-account.service";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { AddTeamMemberComponent } from './add-team-member/add-team-member.compon
     AddTeamMemberComponent
   ],
   providers: [
-    TeamSidebarService
+    TeamSidebarService,
+    UserAccountService
   ],
   bootstrap: [AppComponent]
 })

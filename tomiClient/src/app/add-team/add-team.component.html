@@ -1,4 +1,5 @@
-<div [ngClass]="'add_team_container'">
+<div [ngClass]="'modal_container'">
+  <h1>Add New Team</h1>
   <table>
     <tr>
       <td>
@@ -18,7 +19,7 @@
     </tr>
     <tr>
       <td colspan="2">
-        <div [ngClass]="'btn_container'">
+        <div [ngClass]="'modal_btns_container'">
         <div [ngClass]="['btn','add_btn','rounded_corners','btn_padding']" (click)="addTeam()">Add</div>
         <div [ngClass]="['btn','close_btn','rounded_corners','btn_padding']" (click)="destroyAddTeamComponent()">Cancel</div>
         </div>

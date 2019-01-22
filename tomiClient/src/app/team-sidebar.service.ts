@@ -1,15 +1,8 @@
-import {ComponentFactoryResolver, ComponentRef, Inject, Injectable} from '@angular/core';
+import {ComponentRef, Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {Team} from "./team";
 import {map} from "rxjs/operators";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Account} from "./account";
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-};
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'

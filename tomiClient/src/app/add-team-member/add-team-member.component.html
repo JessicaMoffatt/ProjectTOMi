@@ -1,3 +1,26 @@
-<p>
-  add-team-member works!
-</p>
+<div [ngClass]="'modal_container'">
+  <h1>Add Member To Team</h1>
+  <table>
+    <tr>
+      <td>
+        <label>New Member
+
+        <select [(ngModel)]="selectedMemberModel">
+          <option value="null"></option>
+          <option id="team_member_toadd" *ngFor="let member of (this.teamService.allMembers |orderBy: 'id')" [ngValue]="member">
+            {{member.firstName}} {{member.lastName}}
+          </option>
+        </select>
+        </label>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div [ngClass]="'modal_btns_container'">
+          <div [ngClass]="['btn','add_btn','rounded_corners','btn_padding']" (click)="addMember()">Add</div>
+          <div [ngClass]="['btn','close_btn','rounded_corners','btn_padding']" (click)="destroyAddMemberComponent()">Cancel</div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

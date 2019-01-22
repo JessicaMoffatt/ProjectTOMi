@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
+import {ComponentRef, EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Team} from "./team";
 import {Observable, ReplaySubject, Subject, throwError} from "rxjs";
@@ -18,11 +18,21 @@ const httpOptions = {
 export class TeamService{
 
   private teamUrl = `http://localhost:8080/teams`;
-  private userUrl = `http://localhost:8080/user_accounts`
+  private userUrl = `http://localhost:8080/user_accounts`;
 
   teamMembers: Account[] = new Array();
+  allMembers: Account[] = new Array();
+
+  ref:ComponentRef<any>;
 
   constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService) {
+  }
+
+  findAllMembers(): Observable<Array<Account>>{
+    return this.http.get(this.userUrl).pipe(map((response:Response) => response))
+      .pipe(map((data:any) => {
+        return data._embedded.userAccounts as Account[];
+      }));
   }
 
   findTeamMembers(id:number): Observable<Array<Account>>{
@@ -95,6 +105,8 @@ export class TeamService{
     return null;
   }
 
-
+  destroyAddMemberComponent(){
+    this.ref.destroy();
+  }
 
 }

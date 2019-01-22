@@ -26,7 +26,7 @@ export class TeamComponent implements OnInit {
   createAddMemberComponent(){
     this.add_team_member_container.clear();
     const factory = this.resolver.resolveComponentFactory(AddTeamMemberComponent);
-    this.teamSideBarService.ref = this.add_team_member_container.createComponent(factory);
+    this.teamService.ref = this.add_team_member_container.createComponent(factory);
   }
 
   save(team: Team): Observable<Team>{
@@ -40,10 +40,5 @@ export class TeamComponent implements OnInit {
 
   cancel(team: Team): void{
      this.teamService.cancel(team);
-  }
-
-  addMember(user_account: Account,team: Team): Observable<Account>{
-    user_account.teamId = team.id;
-    return this.teamService.addTeamMember(user_account);
   }
 }
