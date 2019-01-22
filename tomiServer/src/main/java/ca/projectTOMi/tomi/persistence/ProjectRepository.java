@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
  * @version 1
  */
 public interface ProjectRepository extends JpaRepository<Project, String> {
-  @Query ("SELECT projectId FROM Project WHERE projectId LIKE %?1")
-  public String getIds(String prefix);
+//  @Query ("SELECT projectId FROM Project WHERE projectId LIKE %?1")
+//  public String getIds(String prefix);
 
 }

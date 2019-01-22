@@ -20,5 +20,5 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
      *
      * @return List containing all Entries with the provided active state.
      */
-    public List<Entry> getActiveEntries(boolean active);
+    public List<Entry> getAllByActive(boolean active);
 }

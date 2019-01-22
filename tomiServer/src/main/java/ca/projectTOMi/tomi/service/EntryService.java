@@ -138,6 +138,6 @@ public class EntryService {
      * @return List containing all Entries that are active.
      */
     public List<Entry> getActiveEntries() {
-        return repository.getActiveEntries(true).stream().collect(Collectors.toList());
+        return repository.getAllByActive(true).stream().collect(Collectors.toList());
     }
 }

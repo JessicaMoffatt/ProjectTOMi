@@ -11,6 +11,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -46,6 +48,7 @@ public class Entry {
     @NotNull
     @ManyToOne
     @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @MapKeyColumn(name = "id")
     private UserAccount userAccount;
 
     /**
@@ -53,6 +56,7 @@ public class Entry {
      */
     @ManyToOne
     @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @MapKeyColumn(name = "id")
     private Project project;
 
     /**
@@ -60,6 +64,7 @@ public class Entry {
      */
     @ManyToOne
     @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @MapKeyColumn(name = "id")
     private Task task;
 
     /**
@@ -67,6 +72,7 @@ public class Entry {
      */
     @ManyToOne
     @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @MapKeyColumn(name = "id")
     private UnitType unitType;
 
     /**
@@ -89,63 +95,63 @@ public class Entry {
     /**
      * The hours worked on the Monday of the week for this Entry.
      */
-    @Column(scale = 2, nullable = false, columnDefinition = "default 0.00")
+    @Column(name = "monday_hours", scale = 2, nullable = false)
     @Min(0)
     @Max(24)
-    private Double mondayHours;
+    private Double mondayHours = 0.00;
 
     /**
      * The hours worked on the Tuesday of the week for this Entry.
      */
-    @Column(scale = 2, nullable = false, columnDefinition = "default 0.00")
+    @Column(name = "tuesday_hours", scale = 2, nullable = false)
     @Min(0)
     @Max(24)
-    private Double tuesdayHours;
+    private Double tuesdayHours = 0.00;
 
     /**
      * The hours worked on the Wednesday of the week for this Entry.
      */
-    @Column(scale = 2, nullable = false, columnDefinition = "default 0.00")
+    @Column(name = "wednesday_hours", scale = 2, nullable = false)
     @Min(0)
     @Max(24)
-    private Double wednesdayHours;
+    private Double wednesdayHours = 0.00;
 
     /**
      * The hours worked on the Thursday of the week for this Entry.
      */
-    @Column(scale = 2, nullable = false, columnDefinition = "default 0.00")
+    @Column(name = "thursday_hours", scale = 2, nullable = false)
     @Min(0)
     @Max(24)
-    private Double thursdayHours;
+    private Double thursdayHours = 0.00;
 
     /**
      * The hours worked on the Friday of the week for this Entry.
      */
-    @Column(scale = 2, nullable = false, columnDefinition = "default 0.00")
+    @Column(name = "friday_hours", scale = 2, nullable = false)
     @Min(0)
     @Max(24)
-    private Double fridayHours;
+    private Double fridayHours = 0.00;
 
     /**
      * The hours worked on the Saturday of the week for this Entry.
      */
-    @Column(scale = 2, nullable = false, columnDefinition = "default 0.00")
+    @Column(name = "saturday_hours", scale = 2, nullable = false)
     @Min(0)
     @Max(24)
-    private Double saturdayHours;
+    private Double saturdayHours = 0.00;
 
     /**
      * The hours worked on the Sunday of the week for this Entry.
      */
-    @Column(scale = 2, nullable = false, columnDefinition = "default 0.00")
+    @Column(name = "sunday_hours", scale = 2, nullable = false)
     @Min(0)
     @Max(24)
-    private Double sundayHours;
+    private Double sundayHours = 0.00;
 
     /**
      * The total hours worked for the week for this Entry.
      */
-    @Formula("mondayHours + tuesdayHours + wednesdayHours + thursdayHours + fridayHours + saturdayHours + sundayHours")
+    @Formula("monday_hours + tuesday_hours + wednesday_hours + thursday_hours + friday_hours + saturday_hours + sunday_hours")
     private Double totalHours;
 
     /**
