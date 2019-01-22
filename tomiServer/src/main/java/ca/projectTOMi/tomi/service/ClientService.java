@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ClientService {
-  ClientRepository repository;
+  private ClientRepository repository;
 
   /**
    * Constructor for the {@link Client} Service.

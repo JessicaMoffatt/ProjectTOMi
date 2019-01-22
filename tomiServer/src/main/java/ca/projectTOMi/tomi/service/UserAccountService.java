@@ -1,10 +1,8 @@
 package ca.projectTOMi.tomi.service;
 
 import java.time.LocalDate;
-import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -22,9 +20,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserAccountService {
-  UserAccountRepository repository;
-  TeamService teamService;
-  TimesheetService timesheetService;
+  private UserAccountRepository repository;
+  private TeamService teamService;
+  private TimesheetService timesheetService;
 
   /**
    * Constructor for the UserAccountService service.

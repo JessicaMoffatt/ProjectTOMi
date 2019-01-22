@@ -3,8 +3,6 @@ package ca.projectTOMi.tomi.controller;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.UserAccountResourceAssembler;
@@ -31,8 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class UserAccountController {
-  UserAccountResourceAssembler assembler;
-  UserAccountService service;
+  private UserAccountResourceAssembler assembler;
+  private UserAccountService service;
 
   /**
    * Constructor for this AccountController with parameters required for proper function of this
