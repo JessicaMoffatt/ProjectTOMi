@@ -2,6 +2,7 @@ package ca.projectTOMi.tomi.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import ca.projectTOMi.tomi.exception.IllegalTimesheetModificationException;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
 import ca.projectTOMi.tomi.model.Status;
 import ca.projectTOMi.tomi.model.Timesheet;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TimesheetService {
-  TimesheetRepository repository;
+  private TimesheetRepository repository;
 
   public TimesheetService(TimesheetRepository repository){
     this.repository = repository;
@@ -53,5 +54,16 @@ public class TimesheetService {
     t = repository.save(t);
   }
 
+  public Timesheet submitTimesheet(Long id){
+    Timesheet timesheet = repository.findById(id).orElseThrow(()->new TimesheetNotFoundException());
+    if(timesheet.getStatus() == Status.LOGGING || timesheet.getStatus() == Status.REJECTED){
+      timesheet.setStatus(Status.SUBMITTED);
+      timesheet = repository.save(timesheet);
+    }else{
+      throw new IllegalTimesheetModificationException();
+    }
+
+    return timesheet;
+  }
 
 }

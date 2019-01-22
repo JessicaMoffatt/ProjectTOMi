@@ -124,8 +124,8 @@ public class UserAccountService {
 
   public UserAccount createUserAccount(UserAccount userAccount){
     UserAccount newUserAccount = repository.save(userAccount);
-    TemporalField fieldCAN = WeekFields.of(Locale.CANADA).dayOfWeek();
-    LocalDate date = LocalDate.now().with(fieldCAN, 2);
+    TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
+    LocalDate date = LocalDate.now().with(fieldISO, 1);
     timesheetService.createTimesheet(date, newUserAccount);
 
     return newUserAccount;

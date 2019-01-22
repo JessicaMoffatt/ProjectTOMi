@@ -13,8 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -44,13 +44,18 @@ public class TimesheetController {
   }
 
   @GetMapping("/timesheets/{id}")
-  public Resource<Timesheet> getTimesheet(Long id){
+  public Resource<Timesheet> getTimesheet(@PathVariable  Long id){
     return assembler.toResource(service.getTimesheetById(id));
   }
 
   @PutMapping("/timesheets/{id}")
-  public Resource<Timesheet> updateTimesheet(@PathVariable Long id, Timesheet timesheet){
+  public Resource<Timesheet> updateTimesheet(@PathVariable Long id, @RequestBody Timesheet timesheet){
     return assembler.toResource(service.updateTimesheet(id, timesheet));
+  }
+
+  @PutMapping("/timesheets/{id}/submit")
+  public Resource<Timesheet> submitTimesheet(@PathVariable Long id){
+    return assembler.toResource(service.submitTimesheet(id));
   }
 
   @DeleteMapping("/timesheets/{id}")
@@ -58,4 +63,5 @@ public class TimesheetController {
 
     return ResponseEntity.noContent().build();
   }
+
 }
