@@ -24,7 +24,6 @@ export class TeamService{
   teamMembers: Account[] = new Array();
   allMembers: Account[] = new Array();
   private selectedMember: Account;
-
   ref:ComponentRef<any>;
 
   constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService, private userAccountService: UserAccountService) {
@@ -58,7 +57,12 @@ export class TeamService{
   findTeamMembers(id:number): Observable<Array<Account>>{
     return this.http.get(`${this.teamUrl}/${id}/user_accounts`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
-        return data._embedded.userAccounts as Account[];
+        if(data._embedded !== undefined){
+          return data._embedded.userAccounts as Account[];
+        }else{
+          let emptyList = new Array();
+          return emptyList;
+        }
       }));
   }
 
@@ -82,6 +86,7 @@ export class TeamService{
     }else{
       const url = team._links["update"];
       this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).subscribe((response)=>{
+        console.log(response);
         this.teamSideBarService.reloadTeams();
         return response as Team;
       });

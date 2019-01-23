@@ -1,4 +1,4 @@
-<div [ngClass]="'team_container'">
+<div *ngIf="teamSideBarService.selectedTeam" [ngClass]="'team_container'">
   <div>
     <input id="team_name" placeholder="Team Name" value={{teamSideBarService.selectedTeam?.teamName}} style="width:20em">
     <span [ngClass]="['btn','rounded_corners','btn_padding','save_btn']" (click)="save(teamSideBarService.selectedTeam)">Save</span>
@@ -6,13 +6,23 @@
     <span [ngClass]="['btn','rounded_corners','btn_padding','delete_btn']" (click)="delete(teamSideBarService.selectedTeam)">Archive</span>
     <div>
        <label>Team Lead
-        <select [(ngModel)]="selectedLeadModel">
-          <option value="null"></option>
-          <option id="team_lead" *ngFor="let member of (this.teamService.teamMembers |orderBy: 'id')" [ngValue]="member">
-            {{member.firstName}} {{member.lastName}}
-            <div *ngIf="member.id !== teamSideBarService.selectedTeam?.teamLead.id">TEST: {{member.firstName}}</div>
-          </option>
-        </select>
+         <div *ngIf="teamSideBarService.selectedTeam?.teamLead">
+          <select id="selected_team_lead" (change)="test()">
+          <option value="-1">None</option>
+            <option *ngFor="let member of (this.teamService.teamMembers |orderBy: 'id')" [value]="member.id" [attr.selected]="member.id === teamSideBarService.selectedTeam?.teamLead.id ? 'selected' : null">
+              {{member.firstName}} {{member.lastName}}
+            </option>
+          </select>
+          </div>
+
+         <div *ngIf="!teamSideBarService.selectedTeam?.teamLead">
+           <select [value]="this.teamService.selectedLeadModel">
+             <option value="null" [attr.selected]="true"></option>
+             <option *ngFor="let member of (this.teamService.teamMembers |orderBy: 'id')" [ngValue]="member">
+               {{member.firstName}} {{member.lastName}}
+             </option>
+           </select>
+         </div>
        </label>
     </div>
 

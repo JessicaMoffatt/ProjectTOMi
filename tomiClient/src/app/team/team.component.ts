@@ -17,7 +17,7 @@ export class TeamComponent implements OnInit {
   @ViewChild('add_team_member_container', { read: ViewContainerRef })
   add_team_member_container: ViewContainerRef;
 
-  selectedLeadModel: any = JSON.stringify(Account);
+
 
   constructor(private resolver: ComponentFactoryResolver, public teamService: TeamService, public teamSideBarService: TeamSidebarService) {
   }
@@ -41,8 +41,28 @@ export class TeamComponent implements OnInit {
 
   save(team: Team): Observable<Team>{
     team.teamName = (<HTMLInputElement>document.getElementById("team_name")).value;
-    team.teamLead = this.selectedLeadModel;
+    let leadId = Number((<HTMLInputElement>document.getElementById("selected_team_lead")).value);
+
+    let lead = null;
+
+    if(leadId !== -1){
+      this.teamService.findTeamMemberById(leadId).subscribe((data:Account) => {
+        lead = data;
+
+        team.teamLead = lead;
+      });
+    }else{
+      team.teamLead = null;
+    }
+
+    console.log(team);
+
     return this.teamService.save(team);
+  }
+
+  test(){
+    // let t = (<HTMLInputElement>document.getElementById("selected_team_lead")).value;
+    // console.log(t);
   }
 
   delete(team: Team): Observable<Team>{
