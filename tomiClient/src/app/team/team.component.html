@@ -5,7 +5,15 @@
     <span [ngClass]="['btn','rounded_corners','btn_padding','cancel_btn']" (click)="cancel(teamSideBarService.selectedTeam)">O</span>
     <span [ngClass]="['btn','rounded_corners','btn_padding','delete_btn']" (click)="delete(teamSideBarService.selectedTeam)">Archive</span>
     <div>
-      <label>Team Lead:<input id="team_lead" placeholder="Team Lead" value="{{teamSideBarService.selectedTeam?.teamLead.firstName}} {{teamSideBarService.selectedTeam?.teamLead.lastName}}" style="width:20em"></label>
+       <label>Team Lead
+        <select [(ngModel)]="selectedLeadModel">
+          <option value="null"></option>
+          <option id="team_lead" *ngFor="let member of (this.teamService.teamMembers |orderBy: 'id')" [ngValue]="member">
+            {{member.firstName}} {{member.lastName}}
+            <div *ngIf="member.id !== teamSideBarService.selectedTeam?.teamLead.id">TEST: {{member.firstName}}</div>
+          </option>
+        </select>
+       </label>
     </div>
 
   </div>
@@ -13,12 +21,13 @@
   <div [ngClass]="'team_members'">
     <ul *ngIf="teamService.teamMembers">
       <li *ngFor="let m of teamService.teamMembers">
-        <span [ngClass]="['rounded_corners','list_item']" *ngIf="m">{{m.firstName}} {{m.lastName}}</span>
+        <span [ngClass]="['rounded_corners','list_item']" (click)="selectMember(m)" *ngIf="m">{{m.firstName}} {{m.lastName}}</span>
       </li>
     </ul>
   </div>
 
   <div [ngClass]="['btn','rounded_corners','btn_padding','add_member_btn']" (click)="createAddMemberComponent()">Add Member</div>
+  <div [ngClass]="['btn','rounded_corners','btn_padding','remove_member_btn']" (click)="removeMember()">Remove Member</div>
 
   <template #add_team_member_container></template>
 </div>

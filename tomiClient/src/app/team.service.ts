@@ -5,6 +5,7 @@ import {Observable, ReplaySubject, Subject, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
 import {Account} from "./account";
 import {TeamSidebarService} from "./team-sidebar.service";
+import {UserAccountService} from "./user-account.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -22,10 +23,29 @@ export class TeamService{
 
   teamMembers: Account[] = new Array();
   allMembers: Account[] = new Array();
+  private selectedMember: Account;
 
   ref:ComponentRef<any>;
 
-  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService) {
+  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService, private userAccountService: UserAccountService) {
+  }
+
+  setSelectMember(account: Account){
+    this.selectedMember = account;
+  }
+
+  removeMember(){
+    let index = this.teamMembers.findIndex((element)=>{
+      return (element.id == this.selectedMember.id);
+    });
+
+    this.teamMembers.splice(index,1);
+
+    this.selectedMember.teamId = -1;
+
+    this.userAccountService.save(this.selectedMember);
+
+    this.selectedMember = null;
   }
 
   findAllMembers(): Observable<Array<Account>>{
@@ -47,17 +67,6 @@ export class TeamService{
       .pipe(map((data: any) => {
         return data as Account;
       }));
-  }
-
-  //TODO add error handling!!
-  //TODO return something other than null?
-  addTeamMember(user_account: Account): Observable<Account>{
-    const url = user_account._links["update"];
-    this.http.put<Account>(url["href"], JSON.stringify(user_account), httpOptions).subscribe((response)=> {
-      return response as Account;
-    });
-
-    return null;
   }
 
   //TODO add error handling!!

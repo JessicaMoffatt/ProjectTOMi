@@ -15,16 +15,14 @@ const httpOptions = {
 })
 export class UserAccountService {
 
-  constructor(private http: HttpClient, private teamService: TeamService) { }
+  constructor(private http: HttpClient) { }
 
   //TODO fix return null
   save(account: Account): Observable<Account>{
       const url = account._links["update"];
       this.http.put<Account>(url["href"], JSON.stringify(account), httpOptions).subscribe((response)=>{
 
-        // this.teamService.teamMembers.push(account);
         return response as Account;
-        console.log(response);
       });
     console.log(account);
     return null;

@@ -23,6 +23,8 @@ export class AddTeamMemberComponent implements OnInit {
   addMember():void{
     this.selectedMemberModel.teamId = this.teamSidebarService.selectedTeam.id;
     this.userAccountService.save(this.selectedMemberModel);
+
+    this.teamService.teamMembers.push(this.selectedMemberModel);
   }
 
   destroyAddMemberComponent(): void{

@@ -17,10 +17,20 @@ export class TeamComponent implements OnInit {
   @ViewChild('add_team_member_container', { read: ViewContainerRef })
   add_team_member_container: ViewContainerRef;
 
+  selectedLeadModel: any = JSON.stringify(Account);
+
   constructor(private resolver: ComponentFactoryResolver, public teamService: TeamService, public teamSideBarService: TeamSidebarService) {
   }
 
   ngOnInit() {
+  }
+
+  selectMember(account:Account){
+    this.teamService.setSelectMember(account);
+  }
+
+  removeMember(){
+    this.teamService.removeMember();
   }
 
   createAddMemberComponent(){
@@ -31,6 +41,7 @@ export class TeamComponent implements OnInit {
 
   save(team: Team): Observable<Team>{
     team.teamName = (<HTMLInputElement>document.getElementById("team_name")).value;
+    team.teamLead = this.selectedLeadModel;
     return this.teamService.save(team);
   }
 
