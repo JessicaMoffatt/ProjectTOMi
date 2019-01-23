@@ -14,8 +14,8 @@ import lombok.Data;
  * An Expense is anything other than a user's billable hours that is being charged towards a {@link
  * Project}'s budget.
  *
- * @author Karol Talbot (Updated by Iliya Kiritchkov)
- * @version 1.1
+ * @author Karol Talbot
+ * @version 1
  */
 @Entity
 @Data

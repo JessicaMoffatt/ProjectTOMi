@@ -39,13 +39,13 @@ public class EntryService {
      * If the updated Entry has a Status of REJECTED, a new Entry object will be created with identical content to the rejected Entry and it will be saved with an Active status of false. The existing Entry Status will be set to LOGGING.
      *
      * @param id       the unique identifier for the Entry to update.
-     * @param newEntry Entry object containing the updated attributes.
+     * @param updatedEntry Entry object containing the updated attributes.
      * @return Entry containing the updated attributes.
      */
-    public Entry updateEntry(Long id, Entry newEntry) {
+    public Entry updateEntry(Long id, Entry updatedEntry) {
         Entry entry = repository.findById(id).orElseThrow(() -> new EntryNotFoundException());
 
-        switch (newEntry.getStatus()) {
+        switch (updatedEntry.getStatus()) {
             case APPROVED:
                 throw new IllegalEntryStateException();
 
@@ -54,18 +54,18 @@ public class EntryService {
 
             case REJECTED:
                 Entry rejectedEntry = new Entry();
-                rejectedEntry.setComponent(newEntry.getComponent());
-                rejectedEntry.setProject(newEntry.getProject());
-                rejectedEntry.setQuantity(newEntry.getQuantity());
-                rejectedEntry.setTask(newEntry.getTask());
-                rejectedEntry.setUnitType(newEntry.getUnitType());
-                rejectedEntry.setMondayHours(newEntry.getMondayHours());
-                rejectedEntry.setTuesdayHours(newEntry.getTuesdayHours());
-                rejectedEntry.setWednesdayHours(newEntry.getWednesdayHours());
-                rejectedEntry.setThursdayHours(newEntry.getTuesdayHours());
-                rejectedEntry.setFridayHours(newEntry.getFridayHours());
-                rejectedEntry.setSaturdayHours(newEntry.getSaturdayHours());
-                rejectedEntry.setSundayHours(newEntry.getSundayHours());
+                rejectedEntry.setComponent(updatedEntry.getComponent());
+                rejectedEntry.setProject(updatedEntry.getProject());
+                rejectedEntry.setQuantity(updatedEntry.getQuantity());
+                rejectedEntry.setTask(updatedEntry.getTask());
+                rejectedEntry.setUnitType(updatedEntry.getUnitType());
+                rejectedEntry.setMondayHours(updatedEntry.getMondayHours());
+                rejectedEntry.setTuesdayHours(updatedEntry.getTuesdayHours());
+                rejectedEntry.setWednesdayHours(updatedEntry.getWednesdayHours());
+                rejectedEntry.setThursdayHours(updatedEntry.getTuesdayHours());
+                rejectedEntry.setFridayHours(updatedEntry.getFridayHours());
+                rejectedEntry.setSaturdayHours(updatedEntry.getSaturdayHours());
+                rejectedEntry.setSundayHours(updatedEntry.getSundayHours());
                 rejectedEntry.setStatus(Status.REJECTED);
                 rejectedEntry.setActive(false);
                 repository.save(rejectedEntry);
@@ -75,18 +75,20 @@ public class EntryService {
                 break;
 
             case LOGGING:
-                entry.setComponent(newEntry.getComponent());
-                entry.setProject(newEntry.getProject());
-                entry.setQuantity(newEntry.getQuantity());
-                entry.setTask(newEntry.getTask());
-                entry.setUnitType(newEntry.getUnitType());
-                entry.setMondayHours(newEntry.getMondayHours());
-                entry.setTuesdayHours(newEntry.getTuesdayHours());
-                entry.setWednesdayHours(newEntry.getWednesdayHours());
-                entry.setThursdayHours(newEntry.getTuesdayHours());
-                entry.setFridayHours(newEntry.getFridayHours());
-                entry.setSaturdayHours(newEntry.getSaturdayHours());
-                entry.setSundayHours(newEntry.getSundayHours());
+                entry.setComponent(updatedEntry.getComponent());
+                entry.setProject(updatedEntry.getProject());
+                entry.setQuantity(updatedEntry.getQuantity());
+                entry.setTask(updatedEntry.getTask());
+                entry.setUnitType(updatedEntry.getUnitType());
+                entry.setMondayHours(updatedEntry.getMondayHours());
+                entry.setTuesdayHours(updatedEntry.getTuesdayHours());
+                entry.setWednesdayHours(updatedEntry.getWednesdayHours());
+                entry.setThursdayHours(updatedEntry.getTuesdayHours());
+                entry.setFridayHours(updatedEntry.getFridayHours());
+                entry.setSaturdayHours(updatedEntry.getSaturdayHours());
+                entry.setSundayHours(updatedEntry.getSundayHours());
+                entry.setStatus(Status.LOGGING);
+                entry.setActive(true);
                 repository.save(entry);
                 break;
         }
@@ -105,12 +107,13 @@ public class EntryService {
     }
 
     /**
-     * Persists the provided {@Link Entry}
+     * Persists the provided {@Link Entry} and sets its Status to LOGGING.
      *
      * @param entry Entry to be persisted.
      * @return Entry that was persisted.
      */
     public Entry saveEntry(Entry entry) {
+        entry.setStatus(Status.LOGGING);
         return repository.save(entry);
     }
 
