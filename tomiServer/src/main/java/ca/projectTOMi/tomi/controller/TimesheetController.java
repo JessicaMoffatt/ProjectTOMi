@@ -1,7 +1,5 @@
 package ca.projectTOMi.tomi.controller;
 
-
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.TimesheetResourceAssembler;
@@ -59,7 +57,7 @@ public final class TimesheetController {
   }
 
   @DeleteMapping("/timesheets/{id}")
-  public ResponseEntity<?> setTimesheetInactive(@PathVariable Long id) throws URISyntaxException {
+  public ResponseEntity<?> setTimesheetInactive(@PathVariable Long id) {
 
     return ResponseEntity.noContent().build();
   }
