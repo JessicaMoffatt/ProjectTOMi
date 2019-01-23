@@ -87,8 +87,11 @@ public class UserAccount {
 
   @JsonProperty
   public void setTeamId(Long id){
-    Team t = new Team();
-    t.setId(id);
-    this.setTeam(t);
+    Team team = null;
+    if(id != -1) {
+      team = new Team();
+      team.setId(id);
+    }
+    this.setTeam(team);
   }
 }
