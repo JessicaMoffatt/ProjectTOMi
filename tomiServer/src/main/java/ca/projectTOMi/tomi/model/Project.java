@@ -22,7 +22,6 @@ import lombok.Data;
  */
 @Entity
 @Data
-@Table (name = "project")
 public final class Project {
   /**
    * The unique identifier for this Project.

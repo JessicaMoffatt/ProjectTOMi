@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
  * @author Karol Talbot
  * @version 1
  */
+public interface ProjectRepository extends JpaRepository<Project, String>{
   @Query ("SELECT id FROM Project WHERE id LIKE CONCAT('%',:prefix,'%') ORDER BY id DESC")
   public List<String> getIds(@Param ("prefix") String prefix);
 
