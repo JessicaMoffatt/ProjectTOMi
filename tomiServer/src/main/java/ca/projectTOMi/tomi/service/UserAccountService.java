@@ -108,8 +108,8 @@ public class UserAccountService {
      */
     public List<UserAccount> getAvailableUserAccountsForTeam(Long teamId) {
         List<UserAccount> availableUserAccounts = repository.getAllByActive(true);
-        availableUserAccounts.removeIf(userAccount -> userAccount.getTeam().getId() == teamId);
-        availableUserAccounts.removeIf(userAccount -> userAccount.getTeam().getTeamLead() == userAccount);
+        availableUserAccounts.removeIf(userAccount -> userAccount.getTeam() != null && userAccount.getTeam().getId() == teamId);
+        availableUserAccounts.removeIf(userAccount -> userAccount.getTeam() != null && userAccount.getTeam().getTeamLead() == userAccount);
 
         return availableUserAccounts;
     }
