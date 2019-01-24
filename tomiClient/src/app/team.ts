@@ -1,16 +1,13 @@
-import {Account} from "./account";
-
 export class Team{
   id: number;
   teamName: string;
-  teamLead: Account;
+  leadId: number;
   active: boolean;
   _links: [];
 
-  //TODO remove id defaulting to -1
   constructor(){
     this.teamName = "";
-    this.teamLead = null;
+    this.leadId = -1;
     this.active = true;
     this.id = -1;
     _links: new Array();

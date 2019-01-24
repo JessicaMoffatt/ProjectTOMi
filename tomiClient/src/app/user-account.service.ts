@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {Account} from "./account";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {TeamService} from "./team.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,7 +23,6 @@ export class UserAccountService {
 
         return response as Account;
       });
-    console.log(account);
     return null;
   }
 }

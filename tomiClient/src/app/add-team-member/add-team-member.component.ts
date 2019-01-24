@@ -3,6 +3,7 @@ import {TeamService} from "../team.service";
 import {Account} from "../account";
 import {UserAccountService} from "../user-account.service";
 import {TeamSidebarService} from "../team-sidebar.service";
+import {Team} from "../team";
 
 @Component({
   selector: 'app-add-team-member',
@@ -12,7 +13,6 @@ import {TeamSidebarService} from "../team-sidebar.service";
 export class AddTeamMemberComponent implements OnInit {
 
   constructor(public teamService: TeamService, private teamSidebarService: TeamSidebarService ,private userAccountService: UserAccountService) { }
-  selectedMemberModel: any = JSON.stringify(Account);
 
   ngOnInit() {
     this.teamService.findAllMembers().subscribe((data: Array<Account>) => {
@@ -20,11 +20,19 @@ export class AddTeamMemberComponent implements OnInit {
     });
   }
 
+  //TODO add error handling
   addMember():void{
-    this.selectedMemberModel.teamId = this.teamSidebarService.selectedTeam.id;
-    this.userAccountService.save(this.selectedMemberModel);
+    let memberId =  Number((<HTMLInputElement>document.getElementById("selected_member")).value);
 
-    this.teamService.teamMembers.push(this.selectedMemberModel);
+    let toAdd: Account = new Account();
+
+    this.teamService.findTeamMemberById(memberId).subscribe((data:Account) => {
+      toAdd = data;
+      toAdd.teamId = this.teamSidebarService.selectedTeam.id;
+
+      this.userAccountService.save(toAdd);
+      this.teamService.teamMembers.push(toAdd);
+    });
   }
 
   destroyAddMemberComponent(): void{

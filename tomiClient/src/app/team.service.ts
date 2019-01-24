@@ -6,6 +6,7 @@ import {catchError, map} from "rxjs/operators";
 import {Account} from "./account";
 import {TeamSidebarService} from "./team-sidebar.service";
 import {UserAccountService} from "./user-account.service";
+import {forEach} from "@angular/router/src/utils/collection";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -23,6 +24,8 @@ export class TeamService{
 
   teamMembers: Account[] = new Array();
   allMembers: Account[] = new Array();
+  allOutsideMembers: Account[] = new Array();
+
   private selectedMember: Account;
   ref:ComponentRef<any>;
 
@@ -66,6 +69,19 @@ export class TeamService{
       }));
   }
 
+  //TODO finish
+  findAllOutsideMembers(id:number): Account[]{
+    let temp: Account[];
+    this.allMembers.forEach(function(value){
+      console.log(this.teamSidebarService.selectedTeam);
+      // if(value.teamId !== this.teamSidebarService.selectedTeam.id){
+      //   temp.push(value);
+      // }
+    });
+
+    return temp;
+  }
+
   findTeamMemberById(id:number): Observable<Account>{
     return this.http.get(`${this.userUrl}/${id}`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
@@ -77,26 +93,24 @@ export class TeamService{
   //TODO return something other than null?
   save(team: Team): Observable<Team>{
     if(team.id === -1){
-      team.id = null;
-      this.http.post<Team>(this.teamUrl, JSON.stringify(team), httpOptions).subscribe((response)=>{
-        this.teamSideBarService.teams.push(team);
-        this.teamSideBarService.destroyAddTeamComponent();
-        return response as Team;
-      });
+            this.http.post<Team>(this.teamUrl, JSON.stringify(team), httpOptions).subscribe((response)=>{
+              this.teamSideBarService.teams.push(team);
+              this.teamSideBarService.destroyAddTeamComponent();
+              return response;
+            });
     }else{
       const url = team._links["update"];
       this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).subscribe((response)=>{
-        console.log(response);
         this.teamSideBarService.reloadTeams();
-        return response as Team;
+        return response;
       });
     }
-    return null;
   }
 
   //TODO finish
   cancel(team:Team): void{
     (<HTMLInputElement>document.getElementById("team_name")).value = team.teamName;
+    (<HTMLInputElement>document.getElementById("selected_team_lead")).value = team.leadId.toString();
   }
 
   //TODO add error handling!!

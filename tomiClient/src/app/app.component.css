@@ -53,22 +53,35 @@
   display:inline-block;
 }
 
-.cancel_btn{
-  background-color:#FFFFFF;
-  display:inline-block;
-}
-
-.inputs{
-  width:20em;
+.close_btn{
+  background-color:#CC0000;
+  width:15px;
+  height:15px;
+  float:right;
+  position:relative;
+  top:-1px;
+  right:-1px;
 }
 
 .add_btn{
   background-color:#009E0F;
 }
 
-.close_btn{
+.cancel_btn{
   background-color:#CC0000;
+  display:inline-block;
 }
+
+.cancel_changes_btn{
+  background-color:#CC0000;
+  width:20px;
+  height:22px;
+}
+
+.inputs{
+  width:20em;
+}
+
 
 .modal_container{
   border: 1px solid #3E3E3E;
