@@ -7,7 +7,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.xml.ws.Response;
 import ca.projectTOMi.tomi.assembler.TeamResourceAssembler;
 import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.service.TeamService;
