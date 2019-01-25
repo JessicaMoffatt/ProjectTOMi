@@ -29,7 +29,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @version 1.2
  */
 @RestController
-public final class UnitTypeController {
+public class UnitTypeController {
     private UnitTypeResourceAssembler assembler;
     private UnitTypeService service;
 
