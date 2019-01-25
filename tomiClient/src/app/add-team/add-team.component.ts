@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TeamSidebarService} from "../team-sidebar.service";
-import {Team} from "../team";
+import {Team} from "../model/team";
 import {TeamService} from "../team.service";
 import {Account} from "../account";
 import {UserAccountService} from "../user-account.service";
@@ -27,16 +27,18 @@ export class AddTeamComponent implements OnInit {
     let leadId = Number((<HTMLInputElement>document.getElementById("team_toadd_lead")).value);
     team.leadId = leadId;
 
-    // this.teamService.save(team).subscribe((data: Team) => {
-    //   // tempAccount.teamId = data.id;
-    //   // this.userAccountService.save(tempAccount);
-    //
-    //   // this.teamService.findTeamMemberById(leadId).subscribe((data: Account)=> {
-    //   //   let tempAccount = data;
-    //   // });
-    // });
-    this.teamService.save(team);
+    this.teamService.save(team).then(value => {
+      this.teamSideBarService.teams.push(value);
 
+        this.teamService.findTeamMemberById(leadId).subscribe((data: Account)=> {
+          let tempAccount = data;
+
+          tempAccount.teamId = value.id;
+          this.userAccountService.save(tempAccount);
+        });
+
+      this.teamSideBarService.destroyAddTeamComponent();
+    });
   }
 
   destroyAddTeamComponent(){

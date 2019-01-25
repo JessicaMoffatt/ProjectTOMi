@@ -7,7 +7,7 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {Team} from "../team";
+import {Team} from "../model/team";
 import {TeamSidebarService} from "../team-sidebar.service";
 import {TeamService} from "../team.service";
 import {AddTeamComponent} from "../add-team/add-team.component";

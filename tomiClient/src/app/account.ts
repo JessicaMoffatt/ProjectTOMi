@@ -1,4 +1,4 @@
-import {Team} from "./team";
+import {Team} from "./model/team";
 
 //TODO add projects properly
 export class Account{

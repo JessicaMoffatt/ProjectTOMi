@@ -3,7 +3,7 @@ import {TeamService} from "../team.service";
 import {Account} from "../account";
 import {UserAccountService} from "../user-account.service";
 import {TeamSidebarService} from "../team-sidebar.service";
-import {Team} from "../team";
+import {Team} from "../model/team";
 
 @Component({
   selector: 'app-add-team-member',

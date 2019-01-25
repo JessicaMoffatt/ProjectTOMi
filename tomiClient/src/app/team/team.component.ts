@@ -1,6 +1,6 @@
 import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {TeamService} from "../team.service";
-import {Team} from "../team";
+import {Team} from "../model/team";
 import {Observable} from "rxjs";
 import {Account} from "../account";
 import {TeamSidebarService} from "../team-sidebar.service";
@@ -37,11 +37,11 @@ export class TeamComponent implements OnInit {
     this.teamService.ref = this.add_team_member_container.createComponent(factory);
   }
 
-  save(team: Team): Observable<Team>{
+  save(team: Team){
     team.teamName = (<HTMLInputElement>document.getElementById("team_name")).value;
     let leadId = Number((<HTMLInputElement>document.getElementById("selected_team_lead")).value);
     team.leadId = leadId;
-    return this.teamService.save(team);
+    this.teamService.save(team);
   }
 
   delete(team: Team): Observable<Team>{

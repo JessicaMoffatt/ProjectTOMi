@@ -1,12 +1,12 @@
 import {ComponentRef, EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
-import {Team} from "./team";
+import {Team} from "./model/team";
 import {Observable, ReplaySubject, Subject, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
 import {Account} from "./account";
 import {TeamSidebarService} from "./team-sidebar.service";
 import {UserAccountService} from "./user-account.service";
-import {forEach} from "@angular/router/src/utils/collection";
+
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -91,20 +91,28 @@ export class TeamService{
 
   //TODO add error handling!!
   //TODO return something other than null?
-  save(team: Team): Observable<Team>{
+  async save(team: Team){
+    let testTeam: Team = null;
     if(team.id === -1){
-            this.http.post<Team>(this.teamUrl, JSON.stringify(team), httpOptions).subscribe((response)=>{
-              this.teamSideBarService.teams.push(team);
-              this.teamSideBarService.destroyAddTeamComponent();
-              return response;
-            });
+       await this.http.post<Team>(this.teamUrl, JSON.stringify(team), httpOptions).toPromise().then(response =>{
+        testTeam = response;
+        return response;
+      }).catch((error:any) => {
+        //TODO
+       });
     }else{
       const url = team._links["update"];
-      this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).subscribe((response)=>{
+      this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).toPromise().then((response)=>{
         this.teamSideBarService.reloadTeams();
+
+        testTeam =response;
         return response;
+      }).catch((error:any) => {
+        //TODO
       });
     }
+
+    return testTeam;
   }
 
   //TODO finish
