@@ -1,6 +1,0 @@
-QUESTION
-what is the value of binary 111 in decimal
-ENDQUESTION
-ANSWER
-7
-ENDANSWER

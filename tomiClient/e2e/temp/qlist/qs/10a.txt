@@ -1,5 +1,0 @@
-question and answer
-question
-true/false: for loops can count backwards
-answer
-true

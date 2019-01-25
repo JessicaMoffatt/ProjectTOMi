@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
  * Handles HTTP requests for {@link UserAccount} objects in the ProjectTOMi system.
  *
  * @author Karol Talbot
- * @version 1
+ * @version 1.2
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin (origins = "http://localhost:4200")
 public class UserAccountController {
   UserAccountResourceAssembler assembler;
   UserAccountService service;
@@ -49,8 +49,8 @@ public class UserAccountController {
   }
 
   /**
-   * Returns a resource representing the requested {@link UserAccount} to the source of a GET request to
-   * /accounts/id.
+   * Returns a resource representing the requested {@link UserAccount} to the source of a GET
+   * request to /accounts/id.
    *
    * @param id
    *   unique identifier for the UserAccount
@@ -89,19 +89,17 @@ public class UserAccountController {
     List<Resource<UserAccount>> userAccount = service.getUserAccountsByTeam(teamId).stream().map(assembler::toResource).collect(Collectors.toList());
 
     return new Resources<>(userAccount,
-      linkTo(methodOn(UserAccountController.class).getActiveAccounts()).withSelfRel());
+      linkTo(methodOn(UserAccountController.class).getAccountsByTeam(teamId)).withSelfRel());
   }
 
   /**
-   * Creates a new {@link UserAccount} with the attributes provided in the POST request to /accounts.
+   * Creates a new {@link UserAccount} with the attributes provided in the POST request to
+   * /accounts.
    *
    * @param newUserAccount
    *   a userAccount object with required information.
    *
-   * @return response containing links to the newly created userAccount
-   *
-   * @throws URISyntaxException
-   *   when the created URI is unable to be parsed
+   * @return the newly created UserAccount
    */
   @PostMapping ("/user_accounts")
   public ResponseEntity<?> createUserAccount(@RequestBody UserAccount newUserAccount) throws URISyntaxException {
@@ -111,24 +109,21 @@ public class UserAccountController {
   }
 
   /**
-   * Updates the attributes for a {@link UserAccount} with the provided id with the attributes provided
-   * in the PUT request to /accounts/id.
+   * Updates the attributes for a {@link UserAccount} with the provided id with the attributes
+   * provided in the PUT request to /accounts/id.
    *
    * @param id
    *   the unique identifier for the UserAccount to be updated
    * @param newUserAccount
    *   the updated userAccount
    *
-   * @return response containing a link to the updated userAccount
-   *
-   * @throws URISyntaxException
-   *   when the created URI is unable to be parsed
+   * @return the updated userAccount
    */
   @PutMapping ("/user_accounts/{id}")
-  public ResponseEntity<?> updateUserAccount(@PathVariable Long id, @RequestBody UserAccount newUserAccount) throws URISyntaxException {
+  public Resource<UserAccount> updateUserAccount(@PathVariable Long id, @RequestBody UserAccount newUserAccount) {
     UserAccount updatedUserAccount = service.updateUserAccount(id, newUserAccount);
     Resource<UserAccount> resource = assembler.toResource(updatedUserAccount);
-    return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
+    return resource;
   }
 
   /**
@@ -147,5 +142,15 @@ public class UserAccountController {
     service.saveUserAccount(userAccount);
 
     return ResponseEntity.noContent().build();
+  }
+
+  /**
+   * Gets the {@link UserAccount} for a {@link ca.projectTOMi.tomi.model.Team}'s leader.
+   * @param teamId the unique identifier for the Team
+   * @return the team lead's UserAccount
+   */
+  @GetMapping ("/teams/{teamId}/team_lead")
+  public Resource<UserAccount> getTeamLead(@PathVariable Long teamId) {
+    return assembler.toResource(service.getTeamLead(teamId));
   }
 }

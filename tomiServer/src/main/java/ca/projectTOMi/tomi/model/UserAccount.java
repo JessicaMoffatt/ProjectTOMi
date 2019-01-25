@@ -12,6 +12,10 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -42,6 +46,9 @@ public class UserAccount {
    */
   @ManyToOne
   @OnDelete (action = OnDeleteAction.NO_ACTION)
+  @JsonProperty(value="teamId")
+  @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+  @JsonIdentityReference(alwaysAsId = true)
   private Team team;
 
   /**
@@ -77,4 +84,14 @@ public class UserAccount {
    */
   @NotNull
   private boolean active;
+
+  @JsonProperty
+  public void setTeamId(Long id){
+    Team team = null;
+    if(id != -1) {
+      team = new Team();
+      team.setId(id);
+    }
+    this.setTeam(team);
+  }
 }

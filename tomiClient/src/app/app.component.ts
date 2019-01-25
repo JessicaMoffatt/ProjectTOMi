@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
+import {TeamSidebarService} from "./service/team-sidebar.service";
 
 @Component({
   selector: 'app-root',
-  templateUrl: '../kixs/app.component.html',
+  templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
 export class AppComponent {
-
-  public title = 'tomiClie';
-
+  title = 'tomiClient';
 }
