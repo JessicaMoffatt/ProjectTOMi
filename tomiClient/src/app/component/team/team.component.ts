@@ -1,16 +1,15 @@
 import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {TeamService} from "../team.service";
-import {Team} from "../model/team";
+import {TeamService} from "../../service/team.service";
+import {Team} from "../../model/team";
 import {Observable} from "rxjs";
-import {Account} from "../account";
-import {TeamSidebarService} from "../team-sidebar.service";
-import {AddTeamComponent} from "../add-team/add-team.component";
+import {Account} from "../../model/account";
+import {TeamSidebarService} from "../../service/team-sidebar.service";
 import {AddTeamMemberComponent} from "../add-team-member/add-team-member.component";
 
 @Component({
   selector: 'app-team',
   templateUrl: './team.component.html',
-  styleUrls: ['./team.component.css','../app.component.css']
+  styleUrls: ['./team.component.css','../../app.component.css']
 })
 export class TeamComponent implements OnInit {
 
@@ -41,7 +40,7 @@ export class TeamComponent implements OnInit {
     team.teamName = (<HTMLInputElement>document.getElementById("team_name")).value;
     let leadId = Number((<HTMLInputElement>document.getElementById("selected_team_lead")).value);
     team.leadId = leadId;
-    this.teamService.save(team);
+    this.teamService.save(team).then();
   }
 
   delete(team: Team): Observable<Team>{

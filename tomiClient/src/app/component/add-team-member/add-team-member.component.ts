@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {TeamService} from "../team.service";
-import {Account} from "../account";
-import {UserAccountService} from "../user-account.service";
-import {TeamSidebarService} from "../team-sidebar.service";
-import {Team} from "../model/team";
+import {TeamService} from "../../service/team.service";
+import {Account} from "../../model/account";
+import {UserAccountService} from "../../service/user-account.service";
+import {TeamSidebarService} from "../../service/team-sidebar.service";
+import {Team} from "../../model/team";
 
 @Component({
   selector: 'app-add-team-member',
   templateUrl: './add-team-member.component.html',
-  styleUrls: ['./add-team-member.component.css','../app.component.css']
+  styleUrls: ['./add-team-member.component.css','../../app.component.css']
 })
 export class AddTeamMemberComponent implements OnInit {
 

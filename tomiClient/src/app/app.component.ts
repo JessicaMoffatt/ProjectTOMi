@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {TeamSidebarService} from "./team-sidebar.service";
+import {TeamSidebarService} from "./service/team-sidebar.service";
 
 @Component({
   selector: 'app-root',

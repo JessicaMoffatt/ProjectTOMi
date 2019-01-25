@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Entry} from "../entry";
-import {EntryService} from "../entry.service";
+import {Entry} from "../../model/entry";
+import {EntryService} from "../../service/entry.service";
 
 @Component({
   selector: 'app-entry',

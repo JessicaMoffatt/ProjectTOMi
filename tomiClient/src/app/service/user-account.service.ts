@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
-import {Account} from "./account";
+import {Account} from "../model/account";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 const httpOptions = {

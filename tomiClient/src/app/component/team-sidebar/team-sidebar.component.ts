@@ -7,16 +7,16 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {Team} from "../model/team";
-import {TeamSidebarService} from "../team-sidebar.service";
-import {TeamService} from "../team.service";
+import {Team} from "../../model/team";
+import {TeamSidebarService} from "../../service/team-sidebar.service";
+import {TeamService} from "../../service/team.service";
 import {AddTeamComponent} from "../add-team/add-team.component";
-import {Account} from "../account";
+import {Account} from "../../model/account";
 
 @Component({
   selector: 'app-team-sidebar',
   templateUrl: './team-sidebar.component.html',
-  styleUrls: ['./team-sidebar.component.css','../app.component.css']
+  styleUrls: ['./team-sidebar.component.css','../../app.component.css']
 })
 export class TeamSidebarComponent implements OnInit {
 

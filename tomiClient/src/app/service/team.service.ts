@@ -1,9 +1,9 @@
 import {ComponentRef, EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
-import {Team} from "./model/team";
+import {Team} from "../model/team";
 import {Observable, ReplaySubject, Subject, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
-import {Account} from "./account";
+import {Account} from "../model/account";
 import {TeamSidebarService} from "./team-sidebar.service";
 import {UserAccountService} from "./user-account.service";
 

@@ -1,6 +1,6 @@
 import {ComponentRef, Injectable} from '@angular/core';
 import {Observable} from "rxjs";
-import {Team} from "./model/team";
+import {Team} from "../model/team";
 import {map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 
