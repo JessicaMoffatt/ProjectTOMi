@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
-import {Account} from "../model/account";
+import {Injectable} from '@angular/core';
+import {UserAccount} from "../model/userAccount";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 const httpOptions = {
@@ -9,20 +8,34 @@ const httpOptions = {
   })
 };
 
+/**
+ * UserAccountService is used to control the flow of data regarding user accounts to/from the view.
+ *
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class UserAccountService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  //TODO fix return null
-  save(account: Account): Observable<Account>{
-      const url = account._links["update"];
-      this.http.put<Account>(url["href"], JSON.stringify(account), httpOptions).subscribe((response)=>{
+  /**
+   * Updates a given user account through a put method to the backend.
+   *
+   * @param account The user account to be updated.
+   */
+  save(account: UserAccount) {
+    const url = account._links["update"];
 
-        return response as Account;
-      });
-    return null;
+    let teamAccount: UserAccount = null;
+
+    this.http.put<UserAccount>(url["href"], JSON.stringify(account), httpOptions).subscribe((response) => {
+      teamAccount = response;
+
+      return response;
+    });
   }
 }

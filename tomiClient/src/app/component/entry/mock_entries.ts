@@ -4,6 +4,7 @@ import {Component} from "@angular/core";
 
 export const TEMPENTRIES: Entry[] = [
   {
+    approved: 1,
     //change to project.getName. ie: remove this
     projectName: "Test Project",
     date: [ new Date(), new Date(), new Date(), new Date(), new Date(), new Date(), new Date()],
@@ -16,6 +17,7 @@ export const TEMPENTRIES: Entry[] = [
     id: 1
   },
   {
+    approved:2,
     //change to project.getName. ie: remove this
     projectName: "Test Project 2",
     date: [new Date(), new Date(), new Date(), new Date(), new Date(), new Date(), new Date()],

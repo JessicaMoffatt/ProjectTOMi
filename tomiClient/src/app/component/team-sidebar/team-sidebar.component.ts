@@ -11,7 +11,7 @@ import {Team} from "../../model/team";
 import {TeamSidebarService} from "../../service/team-sidebar.service";
 import {TeamService} from "../../service/team.service";
 import {AddTeamComponent} from "../add-team/add-team.component";
-import {Account} from "../../model/account";
+import {UserAccount} from "../../model/userAccount";
 
 @Component({
   selector: 'app-team-sidebar',
@@ -27,17 +27,17 @@ export class TeamSidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.teamSideBarService.findAllTeams().subscribe((data: Array<Team>) => {
+    this.teamSideBarService.getAllTeams().subscribe((data: Array<Team>) => {
       this.teamSideBarService.teams = data;
     });
   }
 
   displayTeam(team:Team){
-    this.teamSideBarService.findTeamById(team.id).subscribe((data:Team) => {
+    this.teamSideBarService.getTeamById(team.id).subscribe((data:Team) => {
       this.teamSideBarService.selectedTeam = data;
     });
 
-    this.teamService.findTeamMembers(team.id).subscribe((data: Array<Account>) => {
+    this.teamService.getTeamMembers(team.id).subscribe((data: Array<UserAccount>) => {
       this.teamService.teamMembers = data;
     });
   }

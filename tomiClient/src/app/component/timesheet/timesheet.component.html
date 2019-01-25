@@ -1,18 +1,26 @@
-<div class="main_container">
-  <span class="circle">
-    <i class="arrow left"></i>
+<!--
+@author Jessica Moffatt
+@version 1.0
+-->
+<div [ngClass]="'main_container'">
+  <span [ngClass]="'circle'">
+    <i [ngClass]="['arrow', 'left']"></i>
   </span>
-  <span class="week_title">Week of Jan 14, 2019</span>
-  <span class="circle">
-    <i class="arrow right"></i>
+  <span [ngClass]="'week_title'">Week of Jan 14, 2019</span>
+  <span [ngClass]="'circle'">
+    <i [ngClass]="['arrow', 'right']"></i>
   </span>
   <!--This is a placeholder -->
-  <button class="calendar"></button> <span id="submission_status">Not Submitted</span>
+  <button [ngClass]="'calendar'"></button>
+  <span id="submission_status">Not Submitted</span>
 
-  <app-entry *ngFor="let entry of entries" [entry]="entry" (copyRequested)="copyEntry($event)" (deleteRequested)="deleteEntry($event)"></app-entry>
-  <div #componentHolder ></div>
-  <div (click)="addEntry()" class="add_entry btn">+</div>
+  <app-entry *ngFor="let entry of entries" [entry]="entry" (copyRequested)="copyEntry($event)"
+             (deleteRequested)="deleteEntry($event)"></app-entry>
+  <div #componentHolder></div>
+  <div (click)="addEntry()" [ngClass]="['add_entry', 'btn']">+</div>
 </div>
-<div class="tally_container">
-  <span class="hours_tally">Hours:<strong> {{tally}}</strong></span><span class="submit btn bottom_btn">Submit</span><span class="save btn bottom_btn" (click)="save()">Save</span>
+<div [ngClass]="'tally_container'">
+  <span [ngClass]="'hours_tally'">Hours:<strong> {{tally}}</strong></span>
+  <span [ngClass]="['submit', 'btn', 'bottom_btn']">Submit</span>
+  <span [ngClass]="['save', 'btn', 'bottom_btn']" (click)="save()">Save</span>
 </div>
