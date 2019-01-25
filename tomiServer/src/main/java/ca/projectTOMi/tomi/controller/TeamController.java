@@ -83,8 +83,10 @@ public final class TeamController {
    * @return the newly created team
    */
   @PostMapping ("/teams")
-  public Resource<Team> createTeam(@RequestBody Team newTeam) {
-    return assembler.toResource(service.saveTeam(newTeam));
+  public ResponseEntity<?> createTeam(@RequestBody Team newTeam) throws URISyntaxException {
+    Resource<Team> team = assembler.toResource(service.saveTeam(newTeam));
+    ResponseEntity<?> response = ResponseEntity.created(new URI(team.getId().expand().getHref())).body(team);
+    return response;
   }
 
   /**

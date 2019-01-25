@@ -9,6 +9,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 /**
@@ -38,6 +42,9 @@ public final class Team {
    */
   @OneToOne
   @MapKeyColumn(name = "id")
+  @JsonProperty (value="leadId")
+  @JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+  @JsonIdentityReference (alwaysAsId = true)
   private UserAccount teamLead;
 
   /**
@@ -52,4 +59,13 @@ public final class Team {
   @NotNull
   private boolean active;
 
+  @JsonProperty
+  public void setLeadId(Long id){
+    UserAccount userAccount = null;
+    if(id != -1) {
+      userAccount = new UserAccount();
+      userAccount.setId(id);
+    }
+    this.setTeamLead(userAccount);
+  }
 }
