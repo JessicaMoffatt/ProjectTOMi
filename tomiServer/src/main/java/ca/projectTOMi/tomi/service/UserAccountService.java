@@ -4,32 +4,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
+import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.UserAccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
  * Provides services for {@link UserAccount} objects.
  *
  * @author Karol Talbot
- * @version 1.2
+ * @version 1.3
  */
 @Service
 public class UserAccountService {
 
-    UserAccountRepository repository;
-    TeamService teamService;
+    @Autowired UserAccountRepository repository;
+    @Autowired TeamService teamService;
 
-    /**
-     * Constructor for the UserAccountService service.
-     *
-     * @param repository  Repository responsible for persisting {@link UserAccount} instances
-     * @param teamService Service responsible for interacting with {@link ca.projectTOMi.tomi.model.Team} objects
-     */
-    public UserAccountService(UserAccountRepository repository, TeamService teamService) {
-        this.repository = repository;
-        this.teamService = teamService;
-    }
 
     /**
      * Gets a {@link UserAccount} object with the provided id.
@@ -98,6 +90,19 @@ public class UserAccountService {
      */
     public UserAccount getTeamLead(Long teamId) {
         return teamService.getTeamById(teamId).getTeamLead();
+    }
+
+  /**
+   * Removes all the members from a team.
+   *
+   * @param teamId the unique identifier for the team.
+   */
+  public void removeAllTeamMembers(Long teamId){
+      List<UserAccount> teamMembers = getUserAccountsByTeam(teamId);
+      for(UserAccount member : teamMembers){
+        member.setTeamId(Team.NO_TEAM);
+        repository.save(member);
+      }
     }
 
     /**
