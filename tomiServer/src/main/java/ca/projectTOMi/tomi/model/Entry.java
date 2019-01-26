@@ -23,8 +23,8 @@ import java.time.LocalDate;
 /**
  * An entry is one weeks' worth of work on a specific component. Entries are part of timesheets and are used to determine billable and non billable hours, as well as the productivity of users.
  *
- * @author Iliya Kiritchkov
- * @version 1.1
+ * @author Iliya Kiritchkov and Karol Talbot
+ * @version 1.2
  */
 @Entity
 @Data
@@ -74,6 +74,11 @@ public final class Entry {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @MapKeyColumn(name = "id")
     private UnitType unitType;
+
+
+    @ManyToOne
+    @MapKeyColumn(name="id")
+    private Timesheet timesheet;
 
     /**
      * Represents whether or not the entry has been approved by the project manager.

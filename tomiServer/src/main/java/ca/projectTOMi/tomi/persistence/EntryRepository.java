@@ -1,6 +1,7 @@
 package ca.projectTOMi.tomi.persistence;
 
 import ca.projectTOMi.tomi.model.Entry;
+import ca.projectTOMi.tomi.model.Timesheet;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
      * @return List containing all Entries with the provided active state.
      */
     public List<Entry> getAllByActive(boolean active);
+
+    public List<Entry> getAllByActiveTrueAndTimesheet(Timesheet timesheet);
 }

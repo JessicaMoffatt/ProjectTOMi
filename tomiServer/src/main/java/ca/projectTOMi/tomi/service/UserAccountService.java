@@ -6,6 +6,7 @@ import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
+import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.UserAccountRepository;
@@ -124,8 +125,8 @@ public final class UserAccountService {
     UserAccount newUserAccount = repository.save(userAccount);
     TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
     LocalDate date = LocalDate.now().with(fieldISO, 1);
-    timesheetService.createTimesheet(date, newUserAccount);
-
+    if(!timesheetService.createTimesheet(date, newUserAccount))
+      throw new TimesheetNotFoundException();
     return newUserAccount;
   }
 

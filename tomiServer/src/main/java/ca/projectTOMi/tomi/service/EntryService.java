@@ -4,6 +4,7 @@ import ca.projectTOMi.tomi.exception.EntryNotFoundException;
 import ca.projectTOMi.tomi.exception.IllegalEntryStateException;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.model.Status;
+import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.persistence.EntryRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 /**
  * Provides services for {@Link Entry} objects.
  *
- * @author Iliya Kiritchkov
+ * @author Iliya Kiritchkov and Karol Talbot
  * @version 1.1
  */
 @Service
@@ -87,6 +88,7 @@ public class EntryService {
                 entry.setFridayHours(updatedEntry.getFridayHours());
                 entry.setSaturdayHours(updatedEntry.getSaturdayHours());
                 entry.setSundayHours(updatedEntry.getSundayHours());
+                entry.setTimesheet(updatedEntry.getTimesheet());
                 entry.setStatus(Status.LOGGING);
                 entry.setActive(true);
                 repository.save(entry);
@@ -132,6 +134,16 @@ public class EntryService {
         } else {
             entry.setActive(false);
             repository.save(entry);
+        }
+    }
+
+    public void submitEntries(Timesheet timesheet){
+        List<Entry> entries = repository.getAllByActiveTrueAndTimesheet(timesheet);
+        for(Entry e: entries){
+            if(e.getStatus() != Status.APPROVED) {
+                e.setStatus(Status.SUBMITTED);
+            }
+            repository.save(e);
         }
     }
 

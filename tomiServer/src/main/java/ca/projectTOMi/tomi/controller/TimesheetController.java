@@ -62,4 +62,8 @@ public class TimesheetController {
     return ResponseEntity.noContent().build();
   }
 
+  @GetMapping("/timesheetEvalTest/{id}")
+  public void evalTimesheet(@PathVariable Long id){
+    service.evaluateTimesheet(id);
+  }
 }
