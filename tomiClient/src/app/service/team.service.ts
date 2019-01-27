@@ -68,6 +68,11 @@ export class TeamService {
 
     this.userAccountService.save(this.selectedMember);
 
+    if(this.teamSideBarService.selectedTeam.leadId === this.selectedMember.id){
+      this.teamSideBarService.selectedTeam.leadId = -1;
+      this.save(this.teamSideBarService.selectedTeam).then();
+    }
+
     this.selectedMember = null;
   }
 
