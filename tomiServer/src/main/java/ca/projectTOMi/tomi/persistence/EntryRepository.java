@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * EntryRepository is used to persist and retrieve data regarding {@Link Entry} from the database.
  *
- * @author Iliya Kiritchkov
+ * @author Iliya Kiritchkov and Karol Talbot
  * @version 1.2
  */
 public interface EntryRepository extends JpaRepository<Entry, Long> {
@@ -23,5 +23,11 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
      */
     public List<Entry> getAllByActive(boolean active);
 
+    /**
+     * Get all {@Link Entry} objects that are active status and part of the provided {@link Timesheet}.
+     *
+     * @param timesheet the timesheet containing the entry
+     * @return list of entries on the timesheet
+     */
     public List<Entry> getAllByActiveTrueAndTimesheet(Timesheet timesheet);
 }

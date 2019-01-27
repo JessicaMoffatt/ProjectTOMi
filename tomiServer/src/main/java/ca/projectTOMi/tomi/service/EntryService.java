@@ -137,7 +137,7 @@ public class EntryService {
         }
     }
 
-    public void submitEntries(Timesheet timesheet){
+    public void submitTimesheetEntries(Timesheet timesheet){
         List<Entry> entries = repository.getAllByActiveTrueAndTimesheet(timesheet);
         for(Entry e: entries){
             if(e.getStatus() != Status.APPROVED) {

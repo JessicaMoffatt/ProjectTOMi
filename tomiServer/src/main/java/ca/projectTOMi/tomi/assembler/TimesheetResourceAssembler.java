@@ -10,7 +10,8 @@ import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * TimesheetResourceAssembler is responsible for creating a standard resource for {@link Timesheet}
+ * objects.
  *
  * @author Karol Talbot
  * @version 1

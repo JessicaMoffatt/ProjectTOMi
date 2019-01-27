@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 1.2
  */
 @RestController
-@CrossOrigin (origins = "http://localhost:4200")
+//@CrossOrigin (origins = "http://localhost:4200")
 public class UserAccountController {
   private UserAccountResourceAssembler assembler;
   private UserAccountService service;

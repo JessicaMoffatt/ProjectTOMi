@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.TimesheetResourceAssembler;
 import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.service.TimesheetService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +26,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  */
 @RestController
 public class TimesheetController {
-  private TimesheetResourceAssembler assembler;
-  private TimesheetService service;
-
-  public TimesheetController(TimesheetResourceAssembler assembler, TimesheetService service){
-    this.assembler = assembler;
-    this.service = service;
-  }
+  @Autowired private TimesheetResourceAssembler assembler;
+  @Autowired private TimesheetService service;
 
   @GetMapping("/timesheets")
   public Resources<Resource<Timesheet>> getActiveTimesheets(){

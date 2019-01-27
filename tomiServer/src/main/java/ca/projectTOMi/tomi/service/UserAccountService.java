@@ -110,22 +110,30 @@ public final class UserAccountService {
   }
 
   /**
-   *
+   * Creates a new timesheet every monday at 1am for all active users.
    */
   @Scheduled (cron = "0 0 1 * * MON")
-  public void createWeeklyTimesheet(){
+  public void createWeeklyTimesheet() {
     List<UserAccount> accounts = repository.getAllByActive(true);
     LocalDate date = LocalDate.now();
-    for(UserAccount a: accounts){
+    for (UserAccount a : accounts) {
       timesheetService.createTimesheet(date, a);
     }
   }
 
-  public UserAccount createUserAccount(UserAccount userAccount){
+  /**
+   * Creates a new user as well as creates a timesheet for the current week dated on the previous
+   * monday.
+   *
+   * @param userAccount
+   *
+   * @return
+   */
+  public UserAccount createUserAccount(UserAccount userAccount) {
     UserAccount newUserAccount = repository.save(userAccount);
     TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
     LocalDate date = LocalDate.now().with(fieldISO, 1);
-    if(!timesheetService.createTimesheet(date, newUserAccount))
+    if (!timesheetService.createTimesheet(date, newUserAccount))
       throw new TimesheetNotFoundException();
     return newUserAccount;
   }
@@ -133,10 +141,12 @@ public final class UserAccountService {
   /**
    * Gets the {@link UserAccount} responsible for leading the {@link ca.projectTOMi.tomi.model.Team}.
    *
-   * @param teamId the unique identifier for the Team
+   * @param teamId
+   *   the unique identifier for the Team
+   *
    * @return the UserAccount for the Team lead
    */
-  public UserAccount getTeamLead(Long teamId){
+  public UserAccount getTeamLead(Long teamId) {
     return teamService.getTeamById(teamId).getTeamLead();
   }
 }
