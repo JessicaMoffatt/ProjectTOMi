@@ -110,6 +110,7 @@ public class TeamController {
    */
   @DeleteMapping ("/teams/{id}")
   public ResponseEntity<?> setTeamInactive(@PathVariable Long id) {
+    userAccountService.removeAllTeamMembers(id);
     Team team = service.getTeamById(id);
     team.setActive(false);
     service.saveTeam(team);
