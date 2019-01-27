@@ -41,6 +41,7 @@ public final class UserAccountService {
     this.timesheetService = timesheetService;
   }
 
+
   /**
    * Gets a {@link UserAccount} object with the provided id.
    *
@@ -52,6 +53,7 @@ public final class UserAccountService {
   public UserAccount getUserAccount(Long id) {
     return this.repository.findById(id).orElseThrow(() -> new UserAccountNotFoundException());
   }
+
 
   /**
    * Gets a list of all @{link UserAccount}s that are active.
@@ -73,6 +75,7 @@ public final class UserAccountService {
   public List<UserAccount> getUserAccountsByTeam(Long teamId) {
     return repository.getUserAccountsByTeam(teamService.getTeamById(teamId)).stream().collect(Collectors.toList());
   }
+
 
   /**
    * Persists the provided {@link UserAccount}.
