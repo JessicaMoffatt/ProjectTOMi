@@ -51,7 +51,7 @@ public final class UserAccountService {
    * @return UserAccount object matching the provided id
    */
   public UserAccount getUserAccount(Long id) {
-    return this.repository.findById(id).orElseThrow(() -> new UserAccountNotFoundException());
+    return this.repository.findById(id).orElseThrow(UserAccountNotFoundException::new);
   }
 
 
@@ -61,7 +61,7 @@ public final class UserAccountService {
    * @return List containing all UserAccounts that are active
    */
   public List<UserAccount> getActiveUserAccounts() {
-    return repository.getAllByActive(true).stream().collect(Collectors.toList());
+    return repository.getAllByActive(true);
   }
 
   /**
@@ -73,7 +73,7 @@ public final class UserAccountService {
    * @return List containing all UserAccounts for that team
    */
   public List<UserAccount> getUserAccountsByTeam(Long teamId) {
-    return repository.getUserAccountsByTeam(teamService.getTeamById(teamId)).stream().collect(Collectors.toList());
+    return repository.getUserAccountsByTeam(teamService.getTeamById(teamId));
   }
 
 
@@ -109,7 +109,7 @@ public final class UserAccountService {
       userAccount.setProjects(newUserAccount.getProjects());
       userAccount.setActive(newUserAccount.isActive());
       return repository.save(userAccount);
-    }).orElseThrow(() -> new UserAccountNotFoundException());
+    }).orElseThrow(UserAccountNotFoundException::new);
   }
 
   /**
@@ -129,8 +129,9 @@ public final class UserAccountService {
    * monday.
    *
    * @param userAccount
+   *   the new UserAccount
    *
-   * @return
+   * @return the created and saved userAccount
    */
   public UserAccount createUserAccount(UserAccount userAccount) {
     UserAccount newUserAccount = repository.save(userAccount);
