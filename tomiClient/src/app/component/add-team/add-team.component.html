@@ -3,7 +3,7 @@
 @version 1.0
 -->
 <div [ngClass]="'modal_container'">
-  <div [ngClass]="['btn','close_btn','btn_padding']" (click)="destroyAddTeamComponent()">X</div>
+  <div [ngClass]="['btn','close_btn']" (click)="destroyAddTeamComponent()"><span [ngClass]="'close_btn_txt'">&times;</span></div>
   <h1>Add New Team</h1>
   <table>
     <tr>
@@ -30,8 +30,8 @@
     <tr>
       <td colspan="2">
         <div [ngClass]="'modal_btns_container'">
-          <div [ngClass]="['btn','add_btn','rounded_corners','btn_padding']" (click)="addTeam()">Add</div>
-          <div [ngClass]="['btn','cancel_btn','rounded_corners','btn_padding']" (click)="destroyAddTeamComponent()">
+          <div [ngClass]="['btn','add_btn']" (click)="addTeam()">Add</div>
+          <div [ngClass]="['btn','cancel_btn']" (click)="destroyAddTeamComponent()">
             Cancel
           </div>
         </div>

@@ -16,7 +16,7 @@ import {UserAccount} from "../../model/userAccount";
 @Component({
   selector: 'app-team-sidebar',
   templateUrl: './team-sidebar.component.html',
-  styleUrls: ['./team-sidebar.component.css','../../app.component.css']
+  styleUrls: ['./team-sidebar.component.scss']
 })
 export class TeamSidebarComponent implements OnInit {
 

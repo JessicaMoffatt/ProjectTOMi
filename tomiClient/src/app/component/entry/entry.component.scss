@@ -1,25 +1,26 @@
 /*
 @author Jessica Moffatt
-@version 1.0
+@version 2.0
  */
+
+@import '../../../variables';
 
 .small_number_input{
   width:3.5em;
 }
 
 .entry_container{
-  border: 1px solid #7A7A7A;
+  border: 1px solid $dark_grey;
   border-radius: 4px;
   display:inline-block;
 }
 
-.delete{
-  background-color:#CC0000;
+.delete_entry{
   float:right;
 }
 
-.copy{
-  background-color:#3863AE;
+.copy_entry{
+  background-color:$blue;
   float:right;
 }
 

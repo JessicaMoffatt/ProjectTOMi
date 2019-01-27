@@ -14,7 +14,7 @@ import {UserAccountService} from "../../service/user-account.service";
 @Component({
   selector: 'app-add-team',
   templateUrl: './add-team.component.html',
-  styleUrls: ['./add-team.component.css','../../app.component.css']
+  styleUrls: ['./add-team.component.scss','../../app.component.scss']
 })
 export class AddTeamComponent implements OnInit {
 
