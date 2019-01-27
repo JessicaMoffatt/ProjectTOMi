@@ -25,6 +25,8 @@ import lombok.Data;
 @Entity
 @Data
 public class Team {
+  public static final Long NO_TEAM = -1L;
+
   /**
    * The unique identifier for this Team.
    */
@@ -62,7 +64,7 @@ public class Team {
   @JsonProperty
   public void setLeadId(Long id){
     UserAccount userAccount = null;
-    if(id != -1) {
+    if(id != NO_TEAM) {
       userAccount = new UserAccount();
       userAccount.setId(id);
     }

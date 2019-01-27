@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.TeamResourceAssembler;
 import ca.projectTOMi.tomi.model.Team;
+import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.service.TeamService;
+import ca.projectTOMi.tomi.service.UserAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
@@ -26,27 +29,15 @@ import org.springframework.web.bind.annotation.RestController;
  * Handles HTTP requests for {@link Team} objects in the ProjectTOMi system.
  *
  * @author Karol Talbot
- * @version 1.1
+ * @version 1.2
  */
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class TeamController {
-  TeamResourceAssembler assembler;
-  TeamService service;
 
-  /**
-   * Constructor for this TeamController with parameters required for proper function of this
-   * controller.
-   *
-   * @param assembler
-   *   converts team objects into resources
-   * @param service
-   *   provides services required for {@link Team} objects
-   */
-  public TeamController(TeamResourceAssembler assembler, TeamService service) {
-    this.assembler = assembler;
-    this.service = service;
-  }
+  @Autowired TeamResourceAssembler assembler;
+  @Autowired TeamService service;
+  @Autowired UserAccountService userAccountService;
 
   /**
    * Returns a collection of all active teams the source of a GET request to /teams.
@@ -119,10 +110,10 @@ public class TeamController {
    */
   @DeleteMapping ("/teams/{id}")
   public ResponseEntity<?> setTeamInactive(@PathVariable Long id) {
+    userAccountService.removeAllTeamMembers(id);
     Team team = service.getTeamById(id);
     team.setActive(false);
     service.saveTeam(team);
-
     return ResponseEntity.noContent().build();
   }
 }
