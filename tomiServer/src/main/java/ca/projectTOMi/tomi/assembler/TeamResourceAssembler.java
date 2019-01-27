@@ -27,7 +27,8 @@ public final class TeamResourceAssembler implements ResourceAssembler<Team, Reso
       linkTo(methodOn(TeamController.class).setTeamInactive(team.getId())).withRel("delete"),
       linkTo(methodOn(UserAccountController.class).getAccountsByTeam(team.getId())).withRel("getAccounts"),
       linkTo(methodOn(UserAccountController.class).getTeamLead(team.getId())).withRel("getTeamLead"),
-      linkTo(methodOn(TeamController.class).updateTeam(team.getId(), team)).withRel("update")
+      linkTo(methodOn(TeamController.class).updateTeam(team.getId(), team)).withRel("update"),
+      linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(team.getId())).withRel("getAvailable")
     );
 
     return resource;

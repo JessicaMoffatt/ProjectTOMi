@@ -153,4 +153,18 @@ public class UserAccountController {
   public Resource<UserAccount> getTeamLead(@PathVariable Long teamId) {
     return assembler.toResource(service.getTeamLead(teamId));
   }
+
+  /**
+   * Gets the {@Link UserAccount}s that are active, not part of the provided Team and not a team lead of any {@Link Team}.
+   * @param teamId the unique identifier for the Team
+   * @return List of UserAccounts that are active, not part of the provided Team and not a team lead of any Teams.
+   */
+  @GetMapping ("/teams/{teamId}/available")
+  public Resources<Resource<UserAccount>> getAvailableUserAccountsForTeam(@PathVariable Long teamId) {
+
+    List<Resource<UserAccount>> userAccount = service.getAvailableUserAccountsForTeam(teamId).stream().map(assembler::toResource).collect(Collectors.toList());
+
+    return new Resources<>(userAccount,
+      linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(teamId)).withSelfRel());
+  }
 }

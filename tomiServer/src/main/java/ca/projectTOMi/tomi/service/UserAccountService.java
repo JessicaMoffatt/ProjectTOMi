@@ -5,7 +5,6 @@ import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.UserAccount;
@@ -153,4 +152,17 @@ public final class UserAccountService {
   public UserAccount getTeamLead(Long teamId) {
     return teamService.getTeamById(teamId).getTeamLead();
   }
+    /**
+     * Gets the {@link UserAccount}s that are not part of the provided {@link ca.projectTOMi.tomi.model.Team} and not team leads.
+     *
+     * @param teamId the unique identifier for the Team.
+     * @return List of UserAccounts that are not part of the Team and not team leads.
+     */
+    public List<UserAccount> getAvailableUserAccountsForTeam(Long teamId) {
+        List<UserAccount> availableUserAccounts = repository.getAllByActive(true);
+        availableUserAccounts.removeIf(userAccount -> userAccount.getTeam() != null && userAccount.getTeam().getId() == teamId);
+        availableUserAccounts.removeIf(userAccount -> userAccount.getTeam() != null && userAccount.getTeam().getTeamLead().getId() == userAccount.getId());
+
+        return availableUserAccounts;
+    }
 }
