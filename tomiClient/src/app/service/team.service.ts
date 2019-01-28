@@ -170,7 +170,11 @@ export class TeamService {
    */
   cancel(team: Team): void {
     (<HTMLInputElement>document.getElementById("team_name")).value = team.teamName;
-    (<HTMLInputElement>document.getElementById("selected_team_lead")).value = team.leadId.toString();
+    if(team.leadId !== null){
+      (<HTMLInputElement>document.getElementById("selected_team_lead")).value = team.leadId.toString();
+    }else{
+      (<HTMLInputElement>document.getElementById("selected_team_lead")).value = "-1";
+    }
   }
 
   //TODO add error handling!!
