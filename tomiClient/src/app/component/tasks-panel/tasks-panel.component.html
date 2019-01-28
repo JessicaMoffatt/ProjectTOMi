@@ -1,5 +1,36 @@
-<p>
-  tasks-panel works!  work it task panel.  work it.
-</p>
+<!-- James Andrade, Jan 27,2019 -->
+
+<div id="sidebar">
+  <h1>Tasks</h1>
+  <input type="text" value="Search"/>
+  <h2>Tasks</h2>
 
 
+    <div [ngClass]="'team_members'">
+      <ul *ngIf="taskService.teamMembers">
+        <li *ngFor="let m of teamService.teamMembers">
+        <span [ngClass]="['rounded_corners','list_item']" (click)="selectMember(m)"
+              *ngIf="m">{{m.firstName}} {{m.lastName}}</span>
+        </li>
+      </ul>
+    </div>
+
+
+  <input type="button" value="New Task"/>
+</div>
+
+
+<div id="mainPanel" >
+  <h1>Tasks</h1>
+  <table>
+    <tr><th colspan="3">Task</th> <th>Billable</th></tr>
+    <tr>
+      <td>Billable Meeting</td>
+      <td><input type="button" value="Edit"/></td>
+      <td><input type="button" value="Delete"/></td>
+      <td><input type="button" value="yes"/></td>
+    </tr>
+
+
+  </table>
+</div>
