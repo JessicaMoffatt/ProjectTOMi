@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {TeamSidebarService} from "../../service/team-sidebar.service";
-import {Team} from "../../model/team";
-import {TeamService} from "../../service/team.service";
-import {UserAccount} from "../../model/userAccount";
-import {UserAccountService} from "../../service/user-account.service";
+import {TeamSidebarService} from "../../../service/team-sidebar.service";
+import {Team} from "../../../model/team";
+import {TeamService} from "../../../service/team.service";
+import {UserAccount} from "../../../model/userAccount";
+import {UserAccountService} from "../../../service/user-account.service";
 
 /**
  * AddTeamComponent is used to facilitate communication between the view and front end services.

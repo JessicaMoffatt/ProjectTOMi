@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {TimesheetComponent} from "./component/timesheet/timesheet.component";
-import {ApprovePanelComponent} from "./component/approve-panel/approve-panel.component";
-import {TeamPanelComponent} from "./component/team-panel/team-panel.component";
-import {ProjectsPanelComponent} from "./component/projects-panel/projects-panel.component";
-import {ManageTeamsPanelComponent} from "./component/manage-teams-panel/manage-teams-panel.component";
-import {UnitTypesPanelComponent} from "./component/unit-types-panel/unit-types-panel.component";
-import {TasksPanelComponent} from "./component/tasks-panel/tasks-panel.component";
-import {UserAccountsPanelComponent} from "./component/user-accounts-panel/user-accounts-panel.component";
+import {TimesheetComponent} from "./component/panel/timesheet/timesheet.component";
+import {ApprovePanelComponent} from "./component/panel/approve-panel/approve-panel.component";
+import {TeamPanelComponent} from "./component/panel/team-panel/team-panel.component";
+import {ProjectsPanelComponent} from "./component/panel/projects-panel/projects-panel.component";
+import {ManageTeamsPanelComponent} from "./component/panel/manage-teams-panel/manage-teams-panel.component";
+import {UnitTypesPanelComponent} from "./component/panel/unit-types-panel/unit-types-panel.component";
+import {TasksPanelComponent} from "./component/panel/tasks-panel/tasks-panel.component";
+import {UserAccountsPanelComponent} from "./component/panel/user-accounts-panel/user-accounts-panel.component";
 
 
 const routes: Routes = [

@@ -1,5 +1,5 @@
 //TODO REMOVE
-import {Entry} from "../../model/entry";
+import {Entry} from "../../../model/entry";
 import {Component} from "@angular/core";
 
 export const TEMPENTRIES: Entry[] = [

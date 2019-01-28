@@ -7,11 +7,11 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {Team} from "../../model/team";
-import {TeamSidebarService} from "../../service/team-sidebar.service";
-import {TeamService} from "../../service/team.service";
-import {AddTeamComponent} from "../add-team/add-team.component";
-import {UserAccount} from "../../model/userAccount";
+import {Team} from "../../../model/team";
+import {TeamSidebarService} from "../../../service/team-sidebar.service";
+import {TeamService} from "../../../service/team.service";
+import {AddTeamComponent} from "../../modal/add-team/add-team.component";
+import {UserAccount} from "../../../model/userAccount";
 
 @Component({
   selector: 'app-team-sidebar',
