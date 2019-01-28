@@ -113,6 +113,7 @@ public class TeamController {
     userAccountService.removeAllTeamMembers(id);
     Team team = service.getTeamById(id);
     team.setActive(false);
+    team.setTeamLead(null);
     service.saveTeam(team);
     return ResponseEntity.noContent().build();
   }
