@@ -18,14 +18,14 @@ import {UserAccountService} from "../../service/user-account.service";
 })
 export class AddTeamComponent implements OnInit {
 
-  constructor(private teamSideBarService: TeamSidebarService, public teamService: TeamService, private userAccountService: UserAccountService) { }
+  constructor(private teamSidebarService: TeamSidebarService, public teamService: TeamService, private userAccountService: UserAccountService) { }
 
   /**
    * On initialization of this component, assigns the team service's list of all members.
    */
   ngOnInit() {
-    this.teamService.getAllMembers().subscribe((data: Array<UserAccount>) => {
-      this.teamService.allMembers = data;
+    this.teamService.getAllFreeMembers().subscribe((data: Array<UserAccount>) => {
+      this.teamService.allFreeMembers = data;
     });
   }
 
@@ -40,7 +40,7 @@ export class AddTeamComponent implements OnInit {
     team.leadId = leadId;
 
     this.teamService.save(team).then(value => {
-      this.teamSideBarService.teams.push(value);
+      this.teamSidebarService.teams.push(value);
 
       if(team.leadId !== -1){
         this.teamService.getTeamMemberById(leadId).subscribe((data: UserAccount)=> {
@@ -49,7 +49,7 @@ export class AddTeamComponent implements OnInit {
           this.userAccountService.save(tempAccount);
         });
       }
-      this.teamSideBarService.destroyAddTeamComponent();
+      this.teamSidebarService.destroyAddTeamComponent();
     });
   }
 
@@ -57,7 +57,7 @@ export class AddTeamComponent implements OnInit {
    * Destroys the dynamically created add team component.
    */
   destroyAddTeamComponent(){
-    this.teamSideBarService.destroyAddTeamComponent();
+    this.teamSidebarService.destroyAddTeamComponent();
   }
 
 }

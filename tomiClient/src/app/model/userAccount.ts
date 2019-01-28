@@ -21,7 +21,7 @@ export class UserAccount{
   /** The ID for the team this user account is a part of.*/
   teamId:number;
   /** The list of all projects associated with this user account.*/
-  projects:Object;
+  projects:[];
   /** The list of linked used to communicate with the backennd.*/
   _links: Object;
 

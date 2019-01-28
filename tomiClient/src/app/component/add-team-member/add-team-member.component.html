@@ -10,7 +10,7 @@
       <td>
         <label>New Member
           <select id="selected_member">
-            <option id="team_member_toadd" *ngFor="let member of (this.teamService.allMembers |orderBy: 'id')"
+            <option id="team_member_toadd" *ngFor="let member of (this.teamService.allOutsideMembers |orderBy: 'id')"
                     [value]="member.id">
               {{member.firstName}} {{member.lastName}}
             </option>
