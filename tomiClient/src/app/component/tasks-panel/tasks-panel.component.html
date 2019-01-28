@@ -16,7 +16,10 @@
     </div>
 
 
-  <input type="button" value="New Task"/>
+
+  <div (click)="createAddTaskComponent()" [ngClass]="['add_team', 'btn','btn_padding','rounded_corners']">New Task</div>
+  <template #add_team_container></template>
+
 </div>
 
 
