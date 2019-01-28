@@ -29,7 +29,8 @@ public class TeamResourceAssembler implements ResourceAssembler<Team, Resource<T
       linkTo(methodOn(UserAccountController.class).getAccountsByTeam(team.getId())).withRel("getAccounts"),
       linkTo(methodOn(UserAccountController.class).getTeamLead(team.getId())).withRel("getTeamLead"),
       linkTo(methodOn(TeamController.class).updateTeam(team.getId(), team)).withRel("update"),
-      linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(team.getId())).withRel("getAvailable")
+      linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(team.getId())).withRel("getAvailable"),
+      linkTo(methodOn(UserAccountController.class).getUnassignedUserAccounts()).withRel("getUnassignedAccounts")
     );
 
     return resource;
