@@ -14,7 +14,7 @@ import {AddTeamMemberComponent} from "../add-team-member/add-team-member.compone
 @Component({
   selector: 'app-team',
   templateUrl: './team.component.html',
-  styleUrls: ['./team.component.css', '../../app.component.css']
+  styleUrls: ['./team.component.scss', '../../app.component.scss']
 })
 export class TeamComponent implements OnInit {
 

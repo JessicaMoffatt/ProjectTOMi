@@ -1,3 +1,4 @@
+import {BsDropdownModule} from "ngx-bootstrap";
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -52,7 +53,8 @@ import {UserAccountService} from "./service/user-account.service";
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    OrderModule
+    OrderModule,
+    BsDropdownModule.forRoot()
   ],
   entryComponents:[
     EntryComponent,

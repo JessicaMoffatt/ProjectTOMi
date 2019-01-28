@@ -30,13 +30,15 @@ export class TeamService {
   private userUrl = `http://localhost:8080/user_accounts`;
 
   /** List of all the team members of the selected team.*/
-  teamMembers: UserAccount[] = new Array();
-  /** List of all the active user accounts.*/
-  allMembers: UserAccount[] = new Array();
+  teamMembers: UserAccount[] = [];
+
+  /** List of all the team members not currently on any teams.*/
+  allFreeMembers: UserAccount[] = [];
+
   /** List of all the active user accounts that aren't already appart of the selected team,
    * as well as not a team lead of any other teams.
    */
-  allOutsideMembers: UserAccount[] = new Array();
+  allOutsideMembers: UserAccount[] = [];
   /** The member selected from the list of team members.*/
   private selectedMember: UserAccount;
 
@@ -68,16 +70,41 @@ export class TeamService {
 
     this.userAccountService.save(this.selectedMember);
 
+    if(this.teamSideBarService.selectedTeam.leadId === this.selectedMember.id){
+      this.teamSideBarService.selectedTeam.leadId = -1;
+      this.save(this.teamSideBarService.selectedTeam).then();
+    }
+
     this.selectedMember = null;
   }
 
   /**
-   * Gets all user accounts.
+   * Gets all members who aren't on the team, as well as not a team lead of any other teams.
+   * @param id The ID of the team to be omitted from the selection of user accounts.
    */
-  getAllMembers(): Observable<Array<UserAccount>> {
-    return this.http.get(this.userUrl).pipe(map((response: Response) => response))
+  getAllOutsideMembers(id: number): Observable<Array<UserAccount>> {
+    return this.http.get(`${this.teamUrl}/${id}/available`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
-        return data._embedded.userAccounts as UserAccount[];
+        if (data._embedded !== undefined) {
+          return data._embedded.userAccounts as UserAccount[];
+        } else {
+          return [];
+        }
+      }));
+  }
+
+  /**
+   * Gets all members who aren't on the team, as well as not a team lead of any other teams.
+   * @param id The ID of the team to be omitted from the selection of user accounts.
+   */
+  getAllFreeMembers(): Observable<Array<UserAccount>> {
+    return this.http.get(`${this.teamUrl}/unassigned`).pipe(map((response: Response) => response))
+      .pipe(map((data: any) => {
+        if (data._embedded !== undefined) {
+          return data._embedded.userAccounts as UserAccount[];
+        } else {
+          return [];
+        }
       }));
   }
 
@@ -91,28 +118,10 @@ export class TeamService {
         if (data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];
         } else {
-          let emptyList = new Array();
-          return emptyList;
+          return [];
         }
       }));
   }
-
-  //TODO finish
-  /**
-   * Gets all members who aren't on the team, as well as not a team lead of any other teams.
-   * @param id The ID of the team to be omitted from the selection of user accounts.
-   */
-  // getAllOutsideMembers(id: number): UserAccount[] {
-  //   let temp: UserAccount[];
-  //   this.allMembers.forEach(function (value) {
-  //     console.log(this.teamSidebarService.selectedTeam);
-  //     // if(value.teamId !== this.teamSidebarService.selectedTeam.id){
-  //     //   temp.push(value);
-  //     // }
-  //   });
-  //
-  //   return temp;
-  // }
 
   /**
    * Gets a user account with the specified ID.
@@ -155,18 +164,20 @@ export class TeamService {
     return testTeam;
   }
 
-  //TODO finish
   /**
    * Cancels any changes made to the team name or the team lead.
    * @param team The selected team.
    */
   cancel(team: Team): void {
     (<HTMLInputElement>document.getElementById("team_name")).value = team.teamName;
-    (<HTMLInputElement>document.getElementById("selected_team_lead")).value = team.leadId.toString();
+    if(team.leadId !== null){
+      (<HTMLInputElement>document.getElementById("selected_team_lead")).value = team.leadId.toString();
+    }else{
+      (<HTMLInputElement>document.getElementById("selected_team_lead")).value = "-1";
+    }
   }
 
   //TODO add error handling!!
-  //TODO return something other than null?
   /**
    * Logically deletes the selected team (sets their active status to false.)
    *

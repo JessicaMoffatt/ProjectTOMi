@@ -13,7 +13,7 @@ import {TeamSidebarService} from "../../service/team-sidebar.service";
 @Component({
   selector: 'app-add-team-member',
   templateUrl: './add-team-member.component.html',
-  styleUrls: ['./add-team-member.component.css', '../../app.component.css']
+  styleUrls: ['./add-team-member.component.scss', '../../app.component.scss']
 })
 export class AddTeamMemberComponent implements OnInit {
 
@@ -24,8 +24,8 @@ export class AddTeamMemberComponent implements OnInit {
    * On initialization of this component, assigns the team service's list of all members.
    */
   ngOnInit() {
-    this.teamService.getAllMembers().subscribe((data: Array<UserAccount>) => {
-      this.teamService.allMembers = data;
+    this.teamService.getAllOutsideMembers(this.teamSidebarService.selectedTeam.id).subscribe((data: Array<UserAccount>) => {
+      this.teamService.allOutsideMembers = data;
     });
   }
 

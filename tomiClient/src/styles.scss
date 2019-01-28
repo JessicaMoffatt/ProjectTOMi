@@ -1,0 +1,83 @@
+/*
+@author Jessica Moffatt
+@version 2.0
+ */
+
+@import 'variables';
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+body{
+  font-family:Arial, Helvetica, sans-serif;
+  color:$white;
+  font-size:14pt;
+}
+
+.btn{
+  color:$white;
+  font-weight:bold !important;
+  font-size:16pt !important;
+}
+
+.list_item{
+  padding:5px;
+  list-style-type:none;
+
+  /* make text unselectable */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+.list_item:hover{
+  background-color:$light_grey;
+}
+
+.save_btn{
+  background-color: $green;
+}
+
+.delete_btn{
+  background-color:$red;
+}
+
+.close_btn{
+  background-color:$red;
+  width:$close_btn_size;
+  height:$close_btn_size;
+  float:right;
+}
+
+//TODO fix this so it's not hard coded...?
+.close_btn_txt{
+  font-size:25px !important;
+  position:relative;
+  top:-17px;
+  left:-8px;
+}
+
+.new_btn{
+  background-color:$green;
+}
+
+.add_btn{
+  background-color:$blue;
+}
+
+.cancel_btn{
+  background-color:$red;
+}
+
+.submit{
+  background-color:$green;
+}
+
+.cancel_changes_btn{
+  background-color:$red;
+  width:20px;
+  height:22px;
+}
+
+.inputs{
+  width:20em;
+}

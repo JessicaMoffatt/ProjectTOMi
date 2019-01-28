@@ -10,7 +10,7 @@ import {Entry} from "../../model/entry";
 @Component({
   selector: 'app-entry',
   templateUrl: './entry.component.html',
-  styleUrls: ['./entry.component.css']
+  styleUrls: ['./entry.component.scss']
 })
 export class EntryComponent implements OnInit {
   /** The entry model instance associated with this component. */

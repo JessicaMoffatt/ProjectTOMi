@@ -1,13 +1,15 @@
+@import '../../../variables';
+
 span {
-  background-color: orange;
-  color: white;
+  background-color: $orange;
+  color: $white;
   grid-template-columns: 30%;
   display: inline-block;
   width: 100%;
 }
 
 a, #logo {
-  color: white;
+  color: $white;
   padding: 16px;
   float: left;
 }

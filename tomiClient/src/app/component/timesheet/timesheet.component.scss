@@ -1,7 +1,9 @@
 /*
 @author Jessica Moffatt
-@version 1.0
+@version 2.0
  */
+
+@import '../../../variables';
 
 .main_container{
 
@@ -15,7 +17,7 @@
 }
 
 i {
-  border: solid #3E3E3E;
+  border: solid $grey;
   border-width: 0 4px 4px 0;
 
   padding: 6px;
@@ -33,7 +35,7 @@ i {
 
 .circle:hover{
   transition-delay: .05s;
-  background-color:#EEF0F0;
+  background-color:$light_grey;
 }
 
 .right {
@@ -67,35 +69,30 @@ i {
 }
 
 #submission_status{
-  color:#7A7A7A;
+  color:$dark_grey;
 
   font-weight:bold;
 }
 
-.add_entry{
-  background-color:#009E0F;
-  color:#FFFFFF;
-
-  font-weight:bold;
+.new_entry{
   font-size: 200%;
-  text-align:center;
   line-height:25px;
 
   width:25px;
   height:25px;
   margin:5px;
 
-  border:1px solid #3E3E3E;
+  border:1px solid $grey;
   border-radius:100%;
 }
 
-.add_entry:active{
+.new_entry:active{
   font-size:150%;
 }
 
 /* Tally Container Styles */
 .tally_container{
-  background-color:#EEF0F0;
+  background-color:$light_grey;
   height: 30px;
   position:relative;
   bottom: 0px;
@@ -105,12 +102,7 @@ i {
 
 }
 
-.submit{
-  background-color:#009E0F;
-}
-
-.save{
-  background-color:#3863AE;
+.save_timesheet{
   margin-right:15px;
 }
 
