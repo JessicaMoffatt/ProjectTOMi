@@ -13,7 +13,7 @@ import {TeamSidebarService} from "../../../service/team-sidebar.service";
 @Component({
   selector: 'app-add-team-member',
   templateUrl: './add-team-member.component.html',
-  styleUrls: ['./add-team-member.component.scss', '../../app.component.scss']
+  styleUrls: ['./add-team-member.component.scss']
 })
 export class AddTeamMemberComponent implements OnInit {
 
