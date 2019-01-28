@@ -1,0 +1,18 @@
+#sidebar {
+  width: 20%;
+  height: 100%;
+  position: absolute;
+  background-color: orange;
+}
+
+#mainPanel{
+  position: absolute;
+  left: 20%;
+  width: 80%;
+  height: 100%;
+}
+
+table,th,td {
+  alignment: left;
+  border: solid 1px black;
+}
