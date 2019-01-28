@@ -4,6 +4,7 @@
 -->
 <div *ngIf="teamSideBarService.selectedTeam" [ngClass]="'team_container'">
   <div>
+    <div [ngClass]="'row'">
     <input id="team_name" placeholder="Team Name" value={{teamSideBarService.selectedTeam?.teamName}}
            style="width:20em">
     <span [ngClass]="['btn','save_btn']"
@@ -12,6 +13,8 @@
           (click)="cancel(teamSideBarService.selectedTeam)">O</span>
     <span [ngClass]="['btn','delete_btn']"
           (click)="delete(teamSideBarService.selectedTeam)">Archive</span>
+    </div>
+
     <div>
       <label>Team Lead
         <select id="selected_team_lead">

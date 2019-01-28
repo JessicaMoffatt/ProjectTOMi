@@ -98,7 +98,7 @@ export class TeamService {
    * @param id The ID of the team to be omitted from the selection of user accounts.
    */
   getAllFreeMembers(): Observable<Array<UserAccount>> {
-    return this.http.get(`${this.userUrl}/available`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.teamUrl}/unassigned`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];
