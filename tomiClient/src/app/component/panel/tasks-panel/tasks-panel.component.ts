@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {TeamService} from "../../service/team.service";
+import {TeamService} from "../../../service/team.service";
 
 @Component({
   selector: 'app-tasks-panel',

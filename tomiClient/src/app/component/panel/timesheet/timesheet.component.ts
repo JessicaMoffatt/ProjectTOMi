@@ -2,7 +2,7 @@ import {
   Component,
   OnInit, ViewChild, ViewContainerRef
 } from '@angular/core';
-import {Entry} from "../../model/entry";
+import {Entry} from "../../../model/entry";
 import {TEMPENTRIES} from "../entry/mock_entries";
 
 /**

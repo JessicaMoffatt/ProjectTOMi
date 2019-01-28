@@ -1,9 +1,9 @@
 import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {TeamService} from "../../service/team.service";
-import {Team} from "../../model/team";
-import {UserAccount} from "../../model/userAccount";
-import {TeamSidebarService} from "../../service/team-sidebar.service";
-import {AddTeamMemberComponent} from "../add-team-member/add-team-member.component";
+import {TeamService} from "../../../service/team.service";
+import {Team} from "../../../model/team";
+import {UserAccount} from "../../../model/userAccount";
+import {TeamSidebarService} from "../../../service/team-sidebar.service";
+import {AddTeamMemberComponent} from "../../modal/add-team-member/add-team-member.component";
 
 /**
  * TeamComponent is used to facilitate communication between the view and front end services.
@@ -14,7 +14,7 @@ import {AddTeamMemberComponent} from "../add-team-member/add-team-member.compone
 @Component({
   selector: 'app-team',
   templateUrl: './team.component.html',
-  styleUrls: ['./team.component.scss', '../../app.component.scss']
+  styleUrls: ['./team.component.scss']
 })
 export class TeamComponent implements OnInit {
 

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Entry} from "../../model/entry";
+import {Entry} from "../../../model/entry";
 
 /**
  * EntryComponent is used to facilitate communication between the view and front end services.

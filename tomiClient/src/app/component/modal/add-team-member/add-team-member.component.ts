@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {TeamService} from "../../service/team.service";
-import {UserAccount} from "../../model/userAccount";
-import {UserAccountService} from "../../service/user-account.service";
-import {TeamSidebarService} from "../../service/team-sidebar.service";
+import {TeamService} from "../../../service/team.service";
+import {UserAccount} from "../../../model/userAccount";
+import {UserAccountService} from "../../../service/user-account.service";
+import {TeamSidebarService} from "../../../service/team-sidebar.service";
 
 /**
  * AddTeamMemberComponent is used to facilitate communication between the view and front end services.
@@ -13,7 +13,7 @@ import {TeamSidebarService} from "../../service/team-sidebar.service";
 @Component({
   selector: 'app-add-team-member',
   templateUrl: './add-team-member.component.html',
-  styleUrls: ['./add-team-member.component.scss', '../../app.component.scss']
+  styleUrls: ['./add-team-member.component.scss']
 })
 export class AddTeamMemberComponent implements OnInit {
 
