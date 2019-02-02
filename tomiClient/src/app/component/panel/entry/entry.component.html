@@ -1,0 +1,29 @@
+<!--
+@author Jessica Moffatt
+@version 1.0
+-->
+<div [ngClass]="'entry_container'">
+  <div>
+    <input [(ngModel)]="entry.projectName" placeholder="Project Name" style="width:20em">
+    <span *ngIf="entry.hours">
+          <span *ngFor="let hour of entry.hours; let i = index">
+            <label><strong>{{days[i]}}</strong>
+            <input [ngClass]="'small_number_input'" [(ngModel)]="hour" placeholder="0" type="number" step=".25">
+            </label>
+          </span>
+        </span>
+    <span [ngClass]="['delete_entry', 'btn', 'delete_btn']" (click)="delete()">X</span>
+  </div>
+  <div>
+    <span *ngIf="entry">
+    <input [(ngModel)]="entry.task" placeholder="Task">
+    <input [(ngModel)]="entry.unitType" placeholder="Unit Type">
+    <input [(ngModel)]="entry.component" placeholder="Component" style="width:20em">
+      <!-- TODO replace Units with ACTUAl units, depending on the Unit Type-->
+    <label><input [ngModel]="entry.quantity" placeholder="Quantity"
+                  [ngClass]="'small_number_input'"><strong>Units</strong></label>
+   </span>
+    <span [ngClass]="['copy_entry', 'btn']" (click)="copy()">C</span>
+  </div>
+</div>
+

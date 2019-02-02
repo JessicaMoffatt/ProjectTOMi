@@ -155,7 +155,7 @@ public class UserAccountController {
   }
 
   /**
-   * Gets the {@Link UserAccount}s that are active, not part of the provided Team and not a team lead of any {@Link Team}.
+   * Gets the {@link UserAccount}s that are active, not part of the provided Team and not a team lead of any {@link ca.projectTOMi.tomi.model.Team}.
    * @param teamId the unique identifier for the Team
    * @return List of UserAccounts that are active, not part of the provided Team and not a team lead of any Teams.
    */
@@ -167,4 +167,16 @@ public class UserAccountController {
     return new Resources<>(userAccount,
       linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(teamId)).withSelfRel());
   }
+
+  /**
+   * Gets {@link UserAccount}s that are active but not a part of {@link ca.projectTOMi.tomi.model.Team}.
+   *
+   * @return List of UserAccounts that are active, but not a part of any team
+   */
+  @GetMapping("/teams/unassigned")
+  public Resources<Resource<UserAccount>> getUnassignedUserAccounts(){
+    List<Resource<UserAccount>> available = service.getUnassignedUserAccounts().stream().map(assembler::toResource).collect(Collectors.toList());
+    return new Resources<>(available,
+      linkTo(methodOn(UserAccountController.class).getUnassignedUserAccounts()).withSelfRel());
+}
 }

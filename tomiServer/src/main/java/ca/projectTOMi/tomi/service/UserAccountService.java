@@ -27,7 +27,6 @@ public final class UserAccountService {
     @Autowired private TeamService teamService;
     @Autowired private TimesheetService timesheetService;
 
-
   /**
    * Gets a {@link UserAccount} object with the provided id.
    *
@@ -142,15 +141,16 @@ public final class UserAccountService {
   
    * Removes all the members from a team.
    *
-   * @param teamId the unique identifier for the team.
+   * @param teamId
+   *   the unique identifier for the team.
    */
-  public void removeAllTeamMembers(Long teamId){
-      List<UserAccount> teamMembers = getUserAccountsByTeam(teamId);
-      for(UserAccount member : teamMembers){
-        member.setTeamId(Team.NO_TEAM);
-        repository.save(member);
-      }
+  public void removeAllTeamMembers(Long teamId) {
+    List<UserAccount> teamMembers = getUserAccountsByTeam(teamId);
+    for (UserAccount member : teamMembers) {
+      member.setTeamId(Team.NO_TEAM);
+      repository.save(member);
     }
+  }
 
     /**
      * Gets the {@link UserAccount}s that are not part of the provided {@link ca.projectTOMi.tomi.model.Team} and not team leads.
@@ -166,3 +166,4 @@ public final class UserAccountService {
         return availableUserAccounts;
     }
 }
+

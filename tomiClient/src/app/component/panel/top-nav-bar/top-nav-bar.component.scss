@@ -1,0 +1,20 @@
+@import '../../../../variables';
+
+span {
+  background-color: $orange;
+  color: $white;
+  grid-template-columns: 30%;
+  display: inline-block;
+  width: 100%;
+}
+
+a, #logo {
+  color: $white;
+  padding: 16px;
+  float: left;
+}
+
+#logo{
+  font-weight: bolder;
+  white-space: nowrap;
+}
