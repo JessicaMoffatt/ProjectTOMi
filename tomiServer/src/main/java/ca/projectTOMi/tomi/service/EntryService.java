@@ -55,6 +55,7 @@ public class EntryService {
 
             case REJECTED:
                 Entry rejectedEntry = new Entry();
+                rejectedEntry.setDate(updatedEntry.getDate());
                 rejectedEntry.setComponent(updatedEntry.getComponent());
                 rejectedEntry.setProject(updatedEntry.getProject());
                 rejectedEntry.setQuantity(updatedEntry.getQuantity());
