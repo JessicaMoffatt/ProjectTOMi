@@ -1,21 +1,65 @@
 package ca.projectTOMi.tomi.controller;
 
-import ca.projectTOMi.tomi.persistence.TeamRepository;
-import ca.projectTOMi.tomi.persistence.TimesheetRepository;
+import java.util.List;
+import java.util.stream.Collectors;
+import ca.projectTOMi.tomi.assembler.TimesheetResourceAssembler;
+import ca.projectTOMi.tomi.model.Timesheet;
+import ca.projectTOMi.tomi.service.TimesheetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-/*
-    TimesheetController is used to control the flow of data regarding unit types to/from the view.
+/**
+ *
+ * @author Karol Talbot
+ * @version 1
  */
-
 @RestController
 public class TimesheetController {
+  @Autowired private TimesheetResourceAssembler assembler;
+  @Autowired private TimesheetService service;
 
-    private TimesheetRepository repository;
+  @GetMapping("/timesheets")
+  public Resources<Resource<Timesheet>> getActiveTimesheets(){
+    List<Resource<Timesheet>> expense = service.getActiveTimesheets().stream().map(assembler::toResource).collect(Collectors.toList());
 
-    public TimesheetController(TimesheetRepository repository) {
-        this.repository = repository;
-    }
+    return new Resources<>(expense,
+      linkTo(methodOn(TimesheetController.class).getActiveTimesheets()).withSelfRel());
+  }
+
+  @GetMapping("/timesheets/{id}")
+  public Resource<Timesheet> getTimesheet(@PathVariable  Long id){
+    return assembler.toResource(service.getTimesheetById(id));
+  }
+
+  @PutMapping("/timesheets/{id}")
+  public Resource<Timesheet> updateTimesheet(@PathVariable Long id, @RequestBody Timesheet timesheet){
+    return assembler.toResource(service.updateTimesheet(id, timesheet));
+  }
+
+  @PutMapping("/timesheets/{id}/submit")
+  public Resource<Timesheet> submitTimesheet(@PathVariable Long id){
+    return assembler.toResource(service.submitTimesheet(id));
+  }
+
+  @DeleteMapping("/timesheets/{id}")
+  public ResponseEntity<?> setTimesheetInactive(@PathVariable Long id) {
+
+    return ResponseEntity.noContent().build();
+  }
+
+  @GetMapping("/timesheetEvalTest/{id}")
+  public void evalTimesheet(@PathVariable Long id){
+    service.evaluateTimesheet(id);
+  }
 }

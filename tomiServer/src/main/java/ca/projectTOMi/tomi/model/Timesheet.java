@@ -12,7 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Timesheet {
+public final class Timesheet {
     @Id
     @GeneratedValue(generator = "timesheet_sequence")
     @SequenceGenerator(
@@ -24,7 +24,7 @@ public class Timesheet {
     /*
      * the unique id of the timesheet
      */
-    private Long timesheetId;
+    private Long id;
 
 
     /*
@@ -49,4 +49,12 @@ public class Timesheet {
      */
     private LocalDate submitDate;
 
+    /**
+     * if the timesheet is active.
+     */
+    private boolean active;
+
+    public String getTimesheet(){
+        return this.id + " " + this.startDate + " " + this.userAccount.getFirstName();
+    }
 }

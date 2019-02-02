@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * @version 1
  */
 @Service
-public class UnitTypeService {
+public final class UnitTypeService {
     private UnitTypeRepository repository;
 
     /**

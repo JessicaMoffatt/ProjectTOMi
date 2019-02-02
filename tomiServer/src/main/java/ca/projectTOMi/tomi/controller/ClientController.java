@@ -28,8 +28,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  */
 @RestController
 public class ClientController {
-  ClientService service;
-  ClientResourceAssembler assembler;
+  private ClientService service;
+  private ClientResourceAssembler assembler;
 
   /**
    * Constructor for this ClientController with parameters required for proper function of this

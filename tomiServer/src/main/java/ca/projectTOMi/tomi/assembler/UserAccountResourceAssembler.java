@@ -3,7 +3,6 @@ package ca.projectTOMi.tomi.assembler;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import java.net.URISyntaxException;
 import ca.projectTOMi.tomi.controller.UserAccountController;
 import ca.projectTOMi.tomi.model.UserAccount;
 import org.springframework.hateoas.Resource;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
  * @version 1.1
  */
 @Component
-public class UserAccountResourceAssembler implements ResourceAssembler<UserAccount, Resource<UserAccount>> {
+public final class UserAccountResourceAssembler implements ResourceAssembler<UserAccount, Resource<UserAccount>> {
 
   @Override
   public Resource<UserAccount> toResource(UserAccount userAccount) {

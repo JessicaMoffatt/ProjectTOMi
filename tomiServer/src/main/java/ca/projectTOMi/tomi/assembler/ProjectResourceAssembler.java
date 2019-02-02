@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  * @version 1
  */
 @Component
-public class ProjectResourceAssembler implements ResourceAssembler<Project, Resource<Project>> {
+public final class ProjectResourceAssembler implements ResourceAssembler<Project, Resource<Project>> {
   @Override
   public Resource<Project> toResource(Project project) {
     Resource<Project> resource = new Resource<>(project,

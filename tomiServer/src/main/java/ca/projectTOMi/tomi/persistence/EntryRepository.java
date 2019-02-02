@@ -1,6 +1,7 @@
 package ca.projectTOMi.tomi.persistence;
 
 import ca.projectTOMi.tomi.model.Entry;
+import ca.projectTOMi.tomi.model.Timesheet;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * EntryRepository is used to persist and retrieve data regarding {@Link Entry} from the database.
  *
- * @author Iliya Kiritchkov
+ * @author Iliya Kiritchkov and Karol Talbot
  * @version 1.2
  */
 public interface EntryRepository extends JpaRepository<Entry, Long> {
@@ -21,4 +22,12 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
      * @return List containing all Entries with the provided active state.
      */
     public List<Entry> getAllByActive(boolean active);
+
+    /**
+     * Get all {@Link Entry} objects that are active status and part of the provided {@link Timesheet}.
+     *
+     * @param timesheet the timesheet containing the entry
+     * @return list of entries on the timesheet
+     */
+    public List<Entry> getAllByActiveTrueAndTimesheet(Timesheet timesheet);
 }

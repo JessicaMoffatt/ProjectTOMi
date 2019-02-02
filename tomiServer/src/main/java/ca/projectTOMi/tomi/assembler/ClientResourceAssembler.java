@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
  * @version 1
  */
 @Component
-public class ClientResourceAssembler implements ResourceAssembler<Client, Resource<Client>> {
+public final class ClientResourceAssembler implements ResourceAssembler<Client, Resource<Client>> {
   @Override
   public Resource<Client> toResource(Client client) {
     Resource<Client> resource = new Resource<>(client,
