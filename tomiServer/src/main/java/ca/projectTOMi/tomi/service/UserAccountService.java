@@ -138,8 +138,8 @@ public final class UserAccountService {
   public UserAccount getTeamLead(Long teamId) {
     return teamService.getTeamById(teamId).getTeamLead();
   }
-  
-   * Removes all the members from a team.
+
+   /** Removes all the members from a team.
    *
    * @param teamId
    *   the unique identifier for the team.
@@ -165,5 +165,15 @@ public final class UserAccountService {
 
         return availableUserAccounts;
     }
+
+  /**
+   * Gets {@link UserAccount}s that are not assigned to a {@link Team}.
+   *
+   * @return List of userAccounts that are not part of a Team
+   */
+  public List<UserAccount> getUnassignedUserAccounts() {
+    List<UserAccount> unassignedUserAccounts = repository.getAllByActiveTrueAndTeamIsNull();
+    return unassignedUserAccounts;
+  }
 }
 
