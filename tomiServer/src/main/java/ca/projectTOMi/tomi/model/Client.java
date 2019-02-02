@@ -16,7 +16,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Client {
+public final class Client {
   /**
    * The unique identifier for this Client.
    */

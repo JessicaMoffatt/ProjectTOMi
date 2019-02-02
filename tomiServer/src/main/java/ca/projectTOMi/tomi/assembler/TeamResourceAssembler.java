@@ -3,7 +3,6 @@ package ca.projectTOMi.tomi.assembler;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import java.net.URISyntaxException;
 import ca.projectTOMi.tomi.controller.UserAccountController;
 import ca.projectTOMi.tomi.controller.TeamController;
 import ca.projectTOMi.tomi.model.Team;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
  * @version 1.1
  */
 @Component
-public class TeamResourceAssembler implements ResourceAssembler<Team, Resource<Team>> {
+public final class TeamResourceAssembler implements ResourceAssembler<Team, Resource<Team>> {
 
   @Override
   public Resource<Team> toResource(Team team) {

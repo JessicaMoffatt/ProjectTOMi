@@ -25,7 +25,7 @@ import lombok.Data;
  */
 @Entity
 @Data
-public class Team {
+public final class Team {
   public static final Long NO_TEAM = -1L;
 
   /**

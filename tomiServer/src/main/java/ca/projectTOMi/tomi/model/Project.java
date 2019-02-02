@@ -22,9 +22,7 @@ import lombok.Data;
  */
 @Entity
 @Data
-public class Project {
-
-
+public final class Project {
   /**
    * The unique identifier for this Project.
    */

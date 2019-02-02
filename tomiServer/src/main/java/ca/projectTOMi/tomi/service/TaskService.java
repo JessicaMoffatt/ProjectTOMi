@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * @version 1.1
  */
 @Service
-public class TaskService {
+public final class TaskService {
     private TaskRepository repository;
 
     /**

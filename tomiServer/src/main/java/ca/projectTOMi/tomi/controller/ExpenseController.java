@@ -29,8 +29,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  */
 @RestController
 public class ExpenseController {
-  ExpenseService service;
-  ExpenseResourceAssembler assembler;
+  private ExpenseService service;
+  private ExpenseResourceAssembler assembler;
 
   /**
    * Constructor for this ExpenseController with parameters required for proper function of this

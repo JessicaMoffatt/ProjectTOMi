@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @version 1
  */
 @Service
-public class ProjectService {
+public final class ProjectService {
   private ProjectRepository repository;
 
   /**

@@ -103,7 +103,7 @@ public class UserAccountController {
    */
   @PostMapping ("/user_accounts")
   public ResponseEntity<?> createUserAccount(@RequestBody UserAccount newUserAccount) throws URISyntaxException {
-    Resource<UserAccount> resource = assembler.toResource(service.saveUserAccount(newUserAccount));
+    Resource<UserAccount> resource = assembler.toResource(service.createUserAccount(newUserAccount));
 
     return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
   }
