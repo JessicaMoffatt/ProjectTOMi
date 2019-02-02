@@ -21,7 +21,7 @@
       <td>
         <select id="team_toadd_lead" [ngClass]="'inputs'">
           <option value="-1">None</option>
-          <option *ngFor="let member of (this.teamService.allFreeMembers |orderBy: 'id')" [value]="member.id">
+          <option *ngFor="let member of (this.teamService.allFreeMembers |orderBy: 'firstName')" [value]="member.id">
             {{member.firstName}} {{member.lastName}}
           </option>
         </select>
