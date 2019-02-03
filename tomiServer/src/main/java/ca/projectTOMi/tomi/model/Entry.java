@@ -82,7 +82,7 @@ public final class Entry {
 
 
     @ManyToOne
-    @MapKeyColumn(name="id")
+    @MapKeyColumn(name = "id")
     private Timesheet timesheet;
 
     /**

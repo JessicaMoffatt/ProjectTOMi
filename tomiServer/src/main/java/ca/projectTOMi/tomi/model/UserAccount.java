@@ -6,8 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -25,7 +28,7 @@ import org.hibernate.annotations.OnDeleteAction;
  * A model class that contains information about accounts in the TOMi system.
  *
  * @author Karol Talbot
- * @version 1
+ * @version 1.1
  */
 @Entity
 @Data
@@ -79,6 +82,7 @@ public final class UserAccount {
 
   @ManyToMany
   @JsonBackReference
+  @JoinTable (name = "project_members", joinColumns = @JoinColumn (name= "project_id"), inverseJoinColumns = @JoinColumn(name = "user_account_id"))
   private Set<Project> projects = new HashSet<>();
 
   /**

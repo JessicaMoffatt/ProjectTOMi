@@ -5,11 +5,19 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 /**
@@ -17,8 +25,8 @@ import lombok.Data;
  * (dependent on it's active status.) Projects are worked on by specific {@link UserAccount} lead by
  * a project manager.
  *
- * @author Karol Talbot (Updated by Iliya Kiritchkov)
- * @version 1.1
+ * @author Karol Talbot and Iliya Kiritchkov
+ * @version 1.2
  */
 @Entity
 @Data
@@ -34,12 +42,16 @@ public final class Project {
    * The Client this Project is for.
    */
   @ManyToOne
+  @MapKeyColumn(name = "id")
   private Client client;
 
   /**
    * The UserAccount managing this Project.
    */
   @OneToOne
+  @JsonProperty (value="progectManagerId")
+  @JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+  @JsonIdentityReference (alwaysAsId = true)
   private UserAccount projectManager;
 
   /**
@@ -65,6 +77,8 @@ public final class Project {
    * The Accounts that are members of this Project.
    */
   @ManyToMany
+  @JsonManagedReference
+  @JoinTable(name = "project_members", joinColumns = @JoinColumn(name= "project_id"), inverseJoinColumns = @JoinColumn(name = "user_account_id"))
   private Set<UserAccount> projectMembers = new HashSet<>();
 
   /**
@@ -72,4 +86,14 @@ public final class Project {
    */
   @Column(nullable = false)
   private boolean active;
+
+  @JsonProperty
+  public void setProjectManagerId(Long id){
+    UserAccount projectManager = null;
+    if(id != -1){
+      projectManager = new UserAccount();
+      projectManager.setId(id);
+    }
+    this.projectManager = projectManager;
+  }
 }
