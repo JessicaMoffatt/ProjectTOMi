@@ -27,6 +27,8 @@ import {TasksPanelComponent} from "./component/tasks-panel/tasks-panel.component
 import {UserAccountsPanelComponent} from "./component/user-accounts-panel/user-accounts-panel.component";
 import { AddTeamMemberComponent } from './component/add-team-member/add-team-member.component';
 import {UserAccountService} from "./service/user-account.service";
+import { AddTaskComponent } from './component/add-task/add-task.component';
+import {TaskPanelService} from "./service/task-panel.service";
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import {UserAccountService} from "./service/user-account.service";
     TeamComponent,
     TeamSidebarComponent,
     AddTeamComponent,
-    AddTeamMemberComponent
+    AddTeamMemberComponent,
+    AddTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -57,11 +60,13 @@ import {UserAccountService} from "./service/user-account.service";
   entryComponents:[
     EntryComponent,
     AddTeamComponent,
-    AddTeamMemberComponent
+    AddTeamMemberComponent,
+    AddTaskComponent
   ],
   providers: [
     TeamSidebarService,
-    UserAccountService
+    UserAccountService,
+    TaskPanelService
   ],
   bootstrap: [AppComponent]
 })
