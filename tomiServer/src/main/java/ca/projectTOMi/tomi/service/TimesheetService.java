@@ -4,9 +4,11 @@ import java.time.LocalDate;
 import java.util.List;
 import ca.projectTOMi.tomi.exception.IllegalTimesheetModificationException;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
+import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.model.Status;
 import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.model.UserAccount;
+import ca.projectTOMi.tomi.persistence.EntryRepository;
 import ca.projectTOMi.tomi.persistence.TimesheetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ public final class TimesheetService {
   @Autowired
   private TimesheetRepository repository;
   @Autowired
+  private EntryRepository entryRepository;
+  @Autowired
   private EntryService entryService;
 
   /**
@@ -31,6 +35,12 @@ public final class TimesheetService {
    */
   public List<Timesheet> getActiveTimesheets() {
     return repository.getAllByActive(true);
+  }
+
+
+  public List<Entry> getEntriesByTimesheet(Long timesheeetId){
+    Timesheet timesheet = repository.findById(timesheeetId).orElseThrow(TimesheetNotFoundException::new);
+    return  entryRepository.getAllByActiveTrueAndTimesheet(timesheet);
   }
 
   /**

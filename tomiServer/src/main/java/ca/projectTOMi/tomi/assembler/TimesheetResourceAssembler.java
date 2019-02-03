@@ -3,6 +3,7 @@ package ca.projectTOMi.tomi.assembler;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+import ca.projectTOMi.tomi.controller.EntryController;
 import ca.projectTOMi.tomi.controller.TimesheetController;
 import ca.projectTOMi.tomi.model.Timesheet;
 import org.springframework.hateoas.Resource;
@@ -25,7 +26,8 @@ public final class TimesheetResourceAssembler implements ResourceAssembler<Times
       linkTo(methodOn(TimesheetController.class).getActiveTimesheets()).withRel("timesheets"),
       linkTo(methodOn(TimesheetController.class).updateTimesheet(timesheet.getId(), timesheet)).withRel("update"),
       linkTo(methodOn(TimesheetController.class).setTimesheetInactive(timesheet.getId())).withRel("delete"),
-      linkTo(methodOn(TimesheetController.class).submitTimesheet(timesheet.getId())).withRel("submit")
+      linkTo(methodOn(TimesheetController.class).submitTimesheet(timesheet.getId())).withRel("submit"),
+      linkTo(methodOn(EntryController.class).getAllTimesheetEntries(timesheet.getId())).withRel("getEntries")
     );
   }
 }

@@ -3,6 +3,8 @@ package ca.projectTOMi.tomi.controller;
 import ca.projectTOMi.tomi.assembler.EntryResourceAssembler;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.service.EntryService;
+import ca.projectTOMi.tomi.service.TimesheetService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class EntryController {
     EntryResourceAssembler assembler;
     EntryService service;
+    @Autowired
+    TimesheetService timesheetService;
 
     /**
      * Constructor for this EntryController.
@@ -110,5 +114,13 @@ public class EntryController {
     public ResponseEntity<?> deleteEntry(@PathVariable Long id) {
         service.deleteEntry(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/timesheets/{id}/entries")
+    public Resources<Resource<Entry>> getAllTimesheetEntries(@PathVariable Long id){
+        List<Resource<Entry>> entry = timesheetService.getEntriesByTimesheet(id).stream().map(assembler::toResource).collect(Collectors.toList());
+
+        return new Resources<>(entry,
+          linkTo(methodOn(EntryController.class).getActiveEntries()).withSelfRel());
     }
 }

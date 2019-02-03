@@ -98,12 +98,6 @@ public final class Entry {
     private String component;
 
     /**
-     * The Monday of the week this Entry is for.
-     */
-    @JsonIgnore
-    private LocalDate date;
-
-    /**
      * The hours worked on the Monday of the week for this Entry.
      */
     @Column(name = "monday_hours", scale = 2, nullable = false)
@@ -177,13 +171,4 @@ public final class Entry {
     @Column(nullable = false)
     private boolean active;
 
-    @JsonProperty(value = "date")
-    public String getDate(){
-        return this.date == null ? "" : this.date.toString();
-    }
-
-    @JsonProperty
-    public void setDate(String date){
-        this.date = LocalDate.parse(date);
-    }
 }
