@@ -1,0 +1,14 @@
+<h1>Teams</h1>
+<div>
+  <h2>Active Teams</h2>
+  <div>
+    <ul *ngIf="teamSideBarService.teams">
+      <li *ngFor="let t of (teamSideBarService.teams|orderBy:'id')">
+        <span *ngIf="t" (click)="displayTeam(t)">{{t.teamName}}</span>
+      </li>
+    </ul>
+  </div>
+</div>
+<div (click)="createAddTeamComponent()" [ngClass]="['new_btn', 'btn']">New Team</div>
+<template #add_team_container></template>
+

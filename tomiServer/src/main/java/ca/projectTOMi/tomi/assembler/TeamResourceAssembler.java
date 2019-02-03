@@ -3,7 +3,6 @@ package ca.projectTOMi.tomi.assembler;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import java.net.URISyntaxException;
 import ca.projectTOMi.tomi.controller.UserAccountController;
 import ca.projectTOMi.tomi.controller.TeamController;
 import ca.projectTOMi.tomi.model.Team;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
  * @version 1.1
  */
 @Component
-public class TeamResourceAssembler implements ResourceAssembler<Team, Resource<Team>> {
+public final class TeamResourceAssembler implements ResourceAssembler<Team, Resource<Team>> {
 
   @Override
   public Resource<Team> toResource(Team team) {
@@ -29,7 +28,8 @@ public class TeamResourceAssembler implements ResourceAssembler<Team, Resource<T
       linkTo(methodOn(UserAccountController.class).getAccountsByTeam(team.getId())).withRel("getAccounts"),
       linkTo(methodOn(UserAccountController.class).getTeamLead(team.getId())).withRel("getTeamLead"),
       linkTo(methodOn(TeamController.class).updateTeam(team.getId(), team)).withRel("update"),
-      linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(team.getId())).withRel("getAvailable")
+      linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(team.getId())).withRel("getAvailable"),
+      linkTo(methodOn(UserAccountController.class).getUnassignedUserAccounts()).withRel("getUnassignedAccounts")
     );
 
     return resource;

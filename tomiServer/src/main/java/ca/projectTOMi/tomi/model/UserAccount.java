@@ -12,6 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -28,7 +29,7 @@ import org.hibernate.annotations.OnDeleteAction;
  */
 @Entity
 @Data
-public class UserAccount {
+public final class UserAccount {
   /**
    * The unique identifier for this UserAccount. Used to distinguish between Accounts.
    */
@@ -77,6 +78,7 @@ public class UserAccount {
   private Long salariedRate;
 
   @ManyToMany
+  @JsonBackReference
   private Set<Project> projects = new HashSet<>();
 
   /**

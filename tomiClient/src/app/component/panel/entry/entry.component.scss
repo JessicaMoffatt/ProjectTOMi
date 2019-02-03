@@ -1,0 +1,30 @@
+/*
+@author Jessica Moffatt
+@version 2.0
+ */
+
+@import '../../../../variables';
+
+.small_number_input{
+  width:3.5em;
+}
+
+.entry_container{
+  border: 1px solid $dark_grey;
+  border-radius: 4px;
+  display:inline-block;
+}
+
+.delete_entry{
+  float:right;
+}
+
+.copy_entry{
+  background-color:$blue;
+  float:right;
+}
+
+input{
+  margin:5px;
+  font-size:12pt;
+}

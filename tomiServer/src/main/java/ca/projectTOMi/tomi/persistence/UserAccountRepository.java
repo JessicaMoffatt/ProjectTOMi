@@ -32,4 +32,11 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
    * @return List containing all UserAccounts that are a part of the provided team
    */
   public List<UserAccount> getUserAccountsByTeam(Team team);
+
+  /**
+   * Gets all Active UserAccounts that are not a part of a Team.
+   *
+   * @return List of UserAccount that do not belong to a Team
+   */
+  public List<UserAccount> getAllByActiveTrueAndTeamIsNull();
 }

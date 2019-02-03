@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -24,7 +25,7 @@ import lombok.Data;
  */
 @Entity
 @Data
-public class Team {
+public final class Team {
   public static final Long NO_TEAM = -1L;
 
   /**
@@ -53,6 +54,7 @@ public class Team {
    * The name of this Team.
    */
   @Size (max = 100)
+  @NotBlank
   private String teamName;
 
   /**
