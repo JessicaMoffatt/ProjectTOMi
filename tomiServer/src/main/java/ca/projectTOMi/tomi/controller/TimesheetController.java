@@ -20,7 +20,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @version 1
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin (origins = "http://localhost:4200")
 public class TimesheetController {
   @Autowired private TimesheetResourceAssembler assembler;
   @Autowired private TimesheetService service;

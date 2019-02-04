@@ -23,7 +23,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @version 1.2
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin (origins = "http://localhost:4200")
 public class UnitTypeController {
     private UnitTypeResourceAssembler assembler;
     private UnitTypeService service;
