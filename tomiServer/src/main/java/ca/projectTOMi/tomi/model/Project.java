@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -15,6 +16,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -76,8 +78,7 @@ public final class Project {
   /**
    * The Accounts that are members of this Project.
    */
-  @ManyToMany
-  @JsonManagedReference
+  @ManyToMany(fetch = FetchType.EAGER, targetEntity = UserAccount.class)
   @JoinTable(name = "project_members", joinColumns = @JoinColumn(name= "project_id"), inverseJoinColumns = @JoinColumn(name = "user_account_id"))
   private Set<UserAccount> projectMembers = new HashSet<>();
 

@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
@@ -80,9 +81,8 @@ public final class UserAccount {
   @Min (0)
   private Long salariedRate;
 
-  @ManyToMany
-  @JsonBackReference
-  @JoinTable (name = "project_members", joinColumns = @JoinColumn (name= "project_id"), inverseJoinColumns = @JoinColumn(name = "user_account_id"))
+  @ManyToMany(mappedBy = "projectMembers", targetEntity = Project.class)
+  @JsonIgnore
   private Set<Project> projects = new HashSet<>();
 
   /**
@@ -99,5 +99,10 @@ public final class UserAccount {
       team.setId(id);
     }
     this.setTeam(team);
+  }
+
+  @Override
+  public int hashCode(){
+    return id.intValue();
   }
 }
