@@ -1,0 +1,13 @@
+<h1>Users</h1>
+<div>
+  <h2>View Users</h2>
+  <input [ngClass]="'input_search'" placeholder="search"
+    >
+  <div>
+    <ul *ngIf="userAccountSidebarService.userAccounts">
+      <li *ngFor="let userAccount of (userAccountSidebarService.userAccounts|orderBy:'lastName')">
+        <span *ngIf="userAccount" (click)="displayUserAccount(userAccount)">{{userAccount.firstName}} {{userAccount.lastName}}</span>
+      </li>
+    </ul>
+  </div>
+</div>

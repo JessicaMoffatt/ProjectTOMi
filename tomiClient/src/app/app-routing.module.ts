@@ -7,7 +7,7 @@ import {ProjectsPanelComponent} from "./component/panel/projects-panel/projects-
 import {ManageTeamsPanelComponent} from "./component/panel/manage-teams-panel/manage-teams-panel.component";
 import {UnitTypesPanelComponent} from "./component/panel/unit-types-panel/unit-types-panel.component";
 import {TasksPanelComponent} from "./component/panel/tasks-panel/tasks-panel.component";
-import {UserAccountsPanelComponent} from "./component/panel/user-accounts-panel/user-accounts-panel.component";
+import {UserAccountPanelComponent} from "./component/panel/user-account-panel/user-account-panel.component";
 
 
 const routes: Routes = [
@@ -19,7 +19,7 @@ const routes: Routes = [
   {path: 'manageTeamsPanel', component: ManageTeamsPanelComponent},
   {path: 'unitTypesPanel', component: UnitTypesPanelComponent},
   {path: 'tasksPanel', component: TasksPanelComponent},
-  {path: 'userAccountsPanel', component: UserAccountsPanelComponent}
+  {path: 'userAccountPanel', component: UserAccountPanelComponent}
 ];
 
 @NgModule({
