@@ -81,3 +81,22 @@ body{
 .inputs{
   width:20em;
 }
+
+.user_account_name {
+  font-weight: 700;
+  color: $orange;
+}
+
+.user_account_wrapper {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.input_search {
+  border-color: black;
+  border-width: 1px;
+  border-radius: 5px;
+}

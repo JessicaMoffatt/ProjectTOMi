@@ -28,6 +28,8 @@ import {TasksPanelComponent} from "./component/panel/tasks-panel/tasks-panel.com
 import {UserAccountsPanelComponent} from "./component/panel/user-accounts-panel/user-accounts-panel.component";
 import { AddTeamMemberComponent } from './component/modal/add-team-member/add-team-member.component';
 import {UserAccountService} from "./service/user-account.service";
+import { UserAccountsSidebarComponent } from './component/sidebar/user-accounts-sidebar/user-accounts-sidebar.component';
+import { UserAccountsComponent } from './component/panel/user-accounts/user-accounts.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import {UserAccountService} from "./service/user-account.service";
     TeamComponent,
     TeamSidebarComponent,
     AddTeamComponent,
-    AddTeamMemberComponent
+    AddTeamMemberComponent,
+    UserAccountsSidebarComponent,
+    UserAccountsComponent
   ],
   imports: [
     BrowserModule,
