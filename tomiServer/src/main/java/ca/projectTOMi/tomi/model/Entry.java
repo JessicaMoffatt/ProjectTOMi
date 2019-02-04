@@ -1,5 +1,10 @@
 package ca.projectTOMi.tomi.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.OnDelete;
@@ -95,11 +100,6 @@ public final class Entry {
     private String component;
 
     /**
-     * The Monday of the week this Entry is for.
-     */
-    private LocalDate date;
-
-    /**
      * The hours worked on the Monday of the week for this Entry.
      */
     @Column(name = "monday_hours", scale = 2, nullable = false)
@@ -172,4 +172,5 @@ public final class Entry {
      */
     @Column(nullable = false)
     private boolean active;
+
 }

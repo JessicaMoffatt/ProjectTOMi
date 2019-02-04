@@ -1,5 +1,7 @@
 package ca.projectTOMi.tomi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -30,6 +32,7 @@ public final class Timesheet {
      * The userAccount of the user that the timesheet belongs to.
      */
     @ManyToOne
+    @MapKeyColumn(name = "id")
     private UserAccount userAccount;
 
     /**
@@ -41,17 +44,29 @@ public final class Timesheet {
     /**
      * The day of the week that the timesheet begins on.
      */
+    @JsonIgnore
     private LocalDate startDate;
 
     /**
      * The date that the timesheet was submitted.
      */
+    @JsonIgnore
     private LocalDate submitDate;
 
     /**
      * If the timesheet is active.
      */
     private boolean active;
+
+    @JsonProperty(value="startDate")
+    public String getStartDate(){
+        return this.startDate == null? "" : this.startDate.toString();
+    }
+
+    @JsonProperty(value="submitDate")
+    public String getSubmitDate(){
+        return this.submitDate == null? "" : this.submitDate.toString();
+    }
 
     public String getTimesheet(){
         return this.id + " " + this.startDate + " " + this.userAccount.getFirstName();
