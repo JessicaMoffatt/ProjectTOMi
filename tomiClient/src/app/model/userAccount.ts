@@ -23,7 +23,7 @@ export class UserAccount{
   /** The list of all projects associated with this user account.*/
   projects:[];
   /** The list of linked used to communicate with the backennd.*/
-  _links: Object;
+  _links: [];
 
   constructor(){
     this.id = -1;
@@ -33,5 +33,6 @@ export class UserAccount{
     this.salariedRate = 0;
     this.active = true;
     this.teamId = -1;
+    this._links = [];
   }
 }

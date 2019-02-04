@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Entry} from "../model/entry";
 import {Observable, of} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {catchError, map, tap} from 'rxjs/operators';
+import {map} from "rxjs/operators";
+import {Task} from '../model/task';
+import {UnitType} from "../model/unitType";
 
-const httpOptions ={
-  headers: new HttpHeaders({ 'Content-Type': 'application/json'})
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable({
@@ -13,19 +15,46 @@ const httpOptions ={
 })
 export class EntryService {
 
-  private entriesUrl = 'api/entries';
+  private entriesUrl = 'http://localhost:8080/entries';
+  private tasksUrl = 'http://localhost:8080/tasks';
+  private unitTypeUrl = 'http://localhost:8080/unit_types';
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+  }
 
-  saveEntry(entry: Entry){
+  //TODO add error handling
+  getTasks(): Observable<Array<Task>> {
+    return this.http.get(`${this.tasksUrl}`).pipe(map((response: Response) => response))
+      .pipe(map((data: any) => {
+        if (data._embedded !== undefined) {
+          return data._embedded.tasks as Task[];
+        } else {
+          return [];
+        }
+      }));
+  }
+
+  //TODO add error handling
+  getUnitTypes(): Observable<Array<UnitType>> {
+    return this.http.get(`${this.unitTypeUrl}`).pipe(map((response: Response) => response))
+      .pipe(map((data: any) => {
+        if (data._embedded !== undefined) {
+          return data._embedded.unitTypes as UnitType[];
+        } else {
+          return [];
+        }
+      }));
+  }
+
+  saveEntry(entry: Entry) {
     // return this.http.post<Entry>(this.entriesUrl, entry, httpOptions).pipe(
     //   catchError(this.handleError<Entry>('addEntry'))
     // );
   }
 
-  deleteEntry(entry: Entry | number): Observable<Entry>{
+  deleteEntry(entry: Entry | number): Observable<Entry> {
     // const id = typeof entry === 'number' ? entry : entry.id;
     // const url = `${this.entriesUrl}/${id}`;
 
@@ -33,21 +62,19 @@ export class EntryService {
     return null;
   }
 
-  updateEntry(entry: Entry): Observable<any>{
+  updateEntry(entry: Entry): Observable<any> {
     // return this.http.put()
     return null;
   }
 
-  getEntries(): Observable<Entry[]>{
-    return this.http.get<Entry[]>(this.entriesUrl);
-  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T> (operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
