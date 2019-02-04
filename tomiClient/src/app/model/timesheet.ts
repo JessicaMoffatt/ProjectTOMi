@@ -1,6 +1,14 @@
 import {UserAccount} from "./userAccount";
 import {Status} from "./status";
 
+
+/**
+ * Timesheet represents a single timesheet for a user for a specific week.  Entries (task ,client, hours)
+ * on the timesheet are attached by referencing it.
+ *
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
 export class Timesheet{
 
   /** The unique ID of the timesheet*/
@@ -15,6 +23,8 @@ export class Timesheet{
   submitDate: Date;
   /** If the timesheet is active.*/
   active: boolean;
+  /** The list of links used for communicating with the back end.*/
+  _links: [];
 
   constructor(){
     this.id = -1;
@@ -23,5 +33,6 @@ export class Timesheet{
     this.startDate = null;
     this.submitDate = new Date();
     this.active = true;
+    this._links = [];
   }
 }

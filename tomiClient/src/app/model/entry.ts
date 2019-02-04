@@ -52,6 +52,8 @@ export class Entry{
   quantity: number;
   /** If this Entry is active.*/
   active: boolean;
+  /** The list of links used for communicating with the back end.*/
+  _links: [];
 
   constructor(){
     this.id = -1;
@@ -71,6 +73,8 @@ export class Entry{
     this.saturdayHours = 0;
     this.sundayHours = 0;
     this.totalHours = 0;
+    this.quantity = 0;
     this.active = true;
+    this._links = [];
   }
 }

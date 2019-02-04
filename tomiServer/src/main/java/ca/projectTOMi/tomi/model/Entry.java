@@ -84,7 +84,7 @@ public final class Entry {
      * The timesheet associated with the entry.
      */
     @ManyToOne
-    @MapKeyColumn(name = "id")
+    @MapKeyColumn(name="id")
     private Timesheet timesheet;
 
     /**

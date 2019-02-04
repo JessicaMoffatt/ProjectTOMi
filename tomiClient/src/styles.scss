@@ -43,8 +43,8 @@ body{
 
 .close_btn{
   background-color:$red;
-  width:$close_btn_size;
-  height:$close_btn_size;
+  width:$btn_md;
+  height:$btn_md;
   float:right;
 }
 
@@ -76,8 +76,4 @@ body{
   background-color:$red;
   width:20px;
   height:22px;
-}
-
-.inputs{
-  width:20em;
 }

@@ -1,4 +1,9 @@
-
+/**
+ * A Unit Type is used to distinguish between types of units.
+ *
+ * @author Jessica Moffatt (updated by Iliya Kiritchkov)
+ * @version 1.0
+ */
 export class UnitType{
 
   /** The unique identifier of this Unit Type. Used to distinguish between Unit Types.*/
@@ -11,6 +16,8 @@ export class UnitType{
   weight: number;
   /** Represents whether or not this Unit Type is active.*/
   active: boolean;
+  /** The list of links used for communicating with the back end.*/
+  _links: [];
 
   constructor(){
     this.id = -1;
@@ -18,5 +25,6 @@ export class UnitType{
     this.unit = "";
     this.weight = 0;
     this.active = true;
+    this._links = [];
   }
 }

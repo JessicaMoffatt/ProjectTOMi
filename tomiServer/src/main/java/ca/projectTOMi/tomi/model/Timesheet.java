@@ -10,10 +10,6 @@ import javax.persistence.*;
 /**
  * Timesheet represents a single timesheet for a user for a specific week.  Entries (task ,client, hours)
  * on the timesheet are attached by referencing it.
- *
- * @author James Andrade and Karol Talbot
- * @version 1.1
- *
  */
 
 @Entity
@@ -70,10 +66,6 @@ public final class Timesheet {
     @JsonProperty(value="submitDate")
     public String getSubmitDate(){
         return this.submitDate == null? "" : this.submitDate.toString();
-    }
-
-    public void setSubmitDate(String date){
-        this.submitDate = LocalDate.parse(date);
     }
 
     public String getTimesheet(){

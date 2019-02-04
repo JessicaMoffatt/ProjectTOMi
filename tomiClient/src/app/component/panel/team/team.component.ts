@@ -22,7 +22,8 @@ export class TeamComponent implements OnInit {
   @ViewChild('add_team_member_container', {read: ViewContainerRef})
   add_team_member_container: ViewContainerRef;
 
-  constructor(private resolver: ComponentFactoryResolver, public teamService: TeamService, public teamSideBarService: TeamSidebarService) {
+  constructor(private resolver: ComponentFactoryResolver, public teamService: TeamService,
+              public teamSideBarService: TeamSidebarService) {
   }
 
   ngOnInit() {

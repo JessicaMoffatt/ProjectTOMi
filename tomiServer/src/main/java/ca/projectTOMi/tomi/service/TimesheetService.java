@@ -125,7 +125,7 @@ public final class TimesheetService {
         entryService.submitTimesheetEntries(timesheet);
       }
       timesheet.setStatus(Status.SUBMITTED);
-      timesheet.setSubmitDate(date.toString());
+      timesheet.setSubmitDate(date);
       timesheet = repository.save(timesheet);
     } else {
       throw new IllegalTimesheetModificationException();

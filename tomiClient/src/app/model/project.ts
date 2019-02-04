@@ -1,6 +1,14 @@
 import {Client} from "./client";
 import {UserAccount} from "./userAccount";
 
+/**
+ * A Project represents a project that either needs to be completed, or has been completed
+ * (dependent on it's active status.) Projects are worked on by specific {@link UserAccount} lead by
+ * a project manager.
+ *
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
 export class Project{
 
   /** The unique identifier for this Project.*/
@@ -22,6 +30,8 @@ export class Project{
   projectMembers: UserAccount[];
   /** If this Project is active.*/
   active: boolean;
+  /** The list of links used for communicating with the back end.*/
+  _links: [];
 
   constructor(){
     this.id = -1;
@@ -32,5 +42,6 @@ export class Project{
     this.billableRate = 0;
     this.projectMembers = [];
     this.active = true;
+    this._links = [];
   }
 }
