@@ -3,6 +3,7 @@ package ca.projectTOMi.tomi.persistence;
 import java.util.List;
 import ca.projectTOMi.tomi.model.Status;
 import ca.projectTOMi.tomi.model.Timesheet;
+import ca.projectTOMi.tomi.model.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -37,4 +38,6 @@ public interface TimesheetRepository extends JpaRepository<Timesheet, Long> {
    */
   @Query ("SELECT status FROM Entry WHERE timesheet.id = :timesheetId AND active = true ")
   public List<Status> getEntriesStatusesByTimesheet(@Param ("timesheetId") Long timesheetId);
+
+  public List<Timesheet> getAllByActiveTrueAndUserAccountOrderByStartDateDesc(UserAccount userAccount);
 }

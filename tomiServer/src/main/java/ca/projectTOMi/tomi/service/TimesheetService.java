@@ -27,6 +27,8 @@ public final class TimesheetService {
   private EntryRepository entryRepository;
   @Autowired
   private EntryService entryService;
+  @Autowired
+  private UserAccountService userAccountService;
 
   /**
    * Gets a list of all @{link Timesheet}s that are active.
@@ -154,5 +156,10 @@ public final class TimesheetService {
       }
       repository.save(timesheet);
     }
+  }
+
+  public List<Timesheet> getTimesheetsByUserAccount(Long userAccountId){
+    UserAccount userAccount = userAccountService.getUserAccount(userAccountId);
+    return repository.getAllByActiveTrueAndUserAccountOrderByStartDateDesc(userAccount);
   }
 }
