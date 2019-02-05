@@ -6,7 +6,8 @@ import {Entry} from "../../../model/entry";
 import {TimesheetService} from "../../../service/timesheet.service";
 import {ProjectService} from "../../../service/project.service";
 import {Project} from "../../../model/project";
-import {Observable, of} from "rxjs";
+import {EntryService} from "../../../service/entry.service";
+import {UserAccount} from "../../../model/userAccount";
 
 /**
  * TimesheetComponent is used to facilitate communication between the view and front end services.
@@ -35,7 +36,7 @@ export class TimesheetComponent implements OnInit {
   @ViewChild('componentHolder', {read: ViewContainerRef})
   entry_container: ViewContainerRef;
 
-  constructor(private timesheetService: TimesheetService, private projectService: ProjectService) {
+  constructor(private timesheetService: TimesheetService, private projectService: ProjectService, private entryService: EntryService) {
   }
 
   //TODO remove hard coding!
@@ -66,8 +67,17 @@ export class TimesheetComponent implements OnInit {
   public addEntry(): void {
     let newEntry = new Entry();
 
-    //TODO change
-    this.entries.push(newEntry);
+    //TODO, this cannot be hardcoded!!
+    let temp = new UserAccount();
+    temp.id = 1;
+    newEntry.userAccount = temp;
+    //TODO get the actual timesheet id
+    newEntry.timesheet = this.timesheetService.getCurrentTimesheet();
+
+    this.entryService.save(newEntry).then( (data => {
+      // this.entries.push(data)
+      console.log(data);
+    }));
   }
 
   /**

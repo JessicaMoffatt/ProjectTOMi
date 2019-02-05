@@ -19,10 +19,7 @@ export class EntryService {
   private tasksUrl = 'http://localhost:8080/tasks';
   private unitTypeUrl = 'http://localhost:8080/unit_types';
 
-  constructor(
-    private http: HttpClient
-  ) {
-  }
+  constructor(private http: HttpClient) { }
 
   //TODO add error handling
   getTasks(): Observable<Array<Task>> {
@@ -48,40 +45,31 @@ export class EntryService {
       }));
   }
 
-  saveEntry(entry: Entry) {
-    // return this.http.post<Entry>(this.entriesUrl, entry, httpOptions).pipe(
-    //   catchError(this.handleError<Entry>('addEntry'))
-    // );
-  }
-
-  deleteEntry(entry: Entry | number): Observable<Entry> {
-    // const id = typeof entry === 'number' ? entry : entry.id;
-    // const url = `${this.entriesUrl}/${id}`;
-
-    // return this.http.delete<Entry>(url, httpOptions).pipe(catchError(this.handleError<Entry>('deleteEntry')));
-    return null;
-  }
-
-  updateEntry(entry: Entry): Observable<any> {
-    // return this.http.put()
-    return null;
-  }
-
-
   /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
+   * Saves a specified entry. If the entry is new (ID of -1) an HTTP POST is performed, else a PUT is performed to update the existing team.
+   * @param team The team to update/create.
    */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+  async save(entry: Entry) {
+    let tempEntry: Entry = null;
+    if (entry.id === -1) {
+      await this.http.post<Entry>(this.entriesUrl, JSON.stringify(entry), httpOptions).toPromise().then(response => {
+        tempEntry = response;
+        return response;
+      }).catch((error: any) => {
+        //TODO
+      });
+    } else {
+      const url = entry._links["update"];
+      this.http.put<Entry>(url["href"], JSON.stringify(entry), httpOptions).toPromise().then((response) => {
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
+        tempEntry = response;
+        return response;
+      }).catch((error: any) => {
+        //TODO
+      });
+    }
+
+    return tempEntry;
   }
 }
 

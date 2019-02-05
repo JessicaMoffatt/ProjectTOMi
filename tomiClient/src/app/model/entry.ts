@@ -30,8 +30,6 @@ export class Entry{
   status: Status;
   /** The component worked on for this entry.*/
   component: string;
-  /** The Monday of the week this Entry is for.*/
-  date: Date;
   /** The hours worked on the Monday of the week for this Entry.*/
   mondayHours: number;
   /** The hours worked on the Tuesday of the week for this Entry.*/
@@ -64,7 +62,6 @@ export class Entry{
     this.timesheet = null;
     this.status = Status.LOGGING;
     this.component = "";
-    this.date = null;
     this.mondayHours = 0;
     this.tuesdayHours = 0;
     this.wednesdayHours = 0;

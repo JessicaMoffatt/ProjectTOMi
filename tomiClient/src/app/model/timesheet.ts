@@ -18,9 +18,9 @@ export class Timesheet{
   /** The submission status of the timesheet, one of: logging, submitted, approved, rejected.*/
   status: Status;
   /** The day of the week that the timesheet begins on.*/
-  startDate: Date;
+  startDate: string;
   /** The date that the timesheet was submitted.*/
-  submitDate: Date;
+  submitDate: string;
   /** If the timesheet is active.*/
   active: boolean;
   /** The list of links used for communicating with the back end.*/
@@ -30,8 +30,8 @@ export class Timesheet{
     this.id = -1;
     this.userAccount = null;
     this.status = Status.LOGGING;
-    this.startDate = null;
-    this.submitDate = new Date();
+    this.startDate = "";
+    this.submitDate = "";
     this.active = true;
     this._links = [];
   }

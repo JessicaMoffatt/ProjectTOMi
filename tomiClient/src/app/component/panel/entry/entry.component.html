@@ -55,7 +55,7 @@
                     [ngClass]="'small_number_input'"></label>
     </div>
     <div [ngClass]="'col-xs-4'">
-      <strong>{{entry.unitType.unit}}</strong>
+      <strong>{{entry.unitType ? entry.unitType.unit : 'Units'}}</strong>
     </div>
   </div>
 
