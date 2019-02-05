@@ -8,8 +8,12 @@ import java.time.LocalDate;
 import javax.persistence.*;
 
 /**
- * Timesheet represents a single timesheet for a user for a specific week.  Entries (task ,client, hours)
+ * class representing a single timesheet for a user for a specific week.  Entries (task ,client, hours)
  * on the timesheet are attached by referencing it.
+ *
+ * @author James Andrade and Karol Talbot
+ * @version 1.1
+ *
  */
 
 @Entity
@@ -23,38 +27,39 @@ public final class Timesheet {
             allocationSize = 1
     )
 
-    /**
-     * The unique id of the timesheet.
+    /*
+     * the unique id of the timesheet
      */
     private Long id;
 
-    /**
-     * The userAccount of the user that the timesheet belongs to.
+
+    /*
+     * The userAccount of the user that the timesheet belongs to
      */
     @ManyToOne
     @MapKeyColumn(name = "id")
     private UserAccount userAccount;
 
-    /**
-     * The submission status of the timesheet, one of: logging, submitted, approved, rejected.
+    /*
+     * the submission status of the timesheet, one of: logging, submitted, approved, rejected
      */
     @Enumerated
     private Status status;
 
-    /**
-     * The day of the week that the timesheet begins on.
+    /*
+     * the day of the week that the timesheet begins on
      */
     @JsonIgnore
     private LocalDate startDate;
 
-    /**
-     * The date that the timesheet was submitted.
+    /*
+     * the date that the timesheet was submitted.
      */
     @JsonIgnore
     private LocalDate submitDate;
 
     /**
-     * If the timesheet is active.
+     * if the timesheet is active.
      */
     private boolean active;
 
@@ -66,6 +71,10 @@ public final class Timesheet {
     @JsonProperty(value="submitDate")
     public String getSubmitDate(){
         return this.submitDate == null? "" : this.submitDate.toString();
+    }
+
+    public void setSubmitDate(String date){
+        this.submitDate = LocalDate.parse(date);
     }
 
     public String getTimesheet(){

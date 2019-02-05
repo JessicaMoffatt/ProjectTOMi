@@ -80,11 +80,9 @@ public final class Entry {
     @MapKeyColumn(name = "id")
     private UnitType unitType;
 
-    /**
-     * The timesheet associated with the entry.
-     */
+
     @ManyToOne
-    @MapKeyColumn(name="id")
+    @MapKeyColumn(name = "id")
     private Timesheet timesheet;
 
     /**
