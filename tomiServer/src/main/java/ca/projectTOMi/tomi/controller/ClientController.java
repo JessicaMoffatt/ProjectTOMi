@@ -11,6 +11,7 @@ import ca.projectTOMi.tomi.service.ClientService;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @version 1
  */
 @RestController
+@CrossOrigin (origins = "http://localhost:4200")
 public class ClientController {
   private ClientService service;
   private ClientResourceAssembler assembler;
