@@ -8,6 +8,7 @@ import ca.projectTOMi.tomi.assembler.ProjectResourceAssembler;
 import ca.projectTOMi.tomi.exception.InvalidIDPrefix;
 import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.service.ProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
@@ -32,22 +33,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class ProjectController {
-  ProjectService service;
-  ProjectResourceAssembler assembler;
-
-  /**
-   * Constructor for this ProjectController with parameters required for proper function of this
-   * controller.
-   *
-   * @param assembler
-   *   converts Project objects into resources
-   * @param service
-   *   provides services required for {@link Project} objects
-   */
-  public ProjectController(ProjectResourceAssembler assembler, ProjectService service) {
-    this.assembler = assembler;
-    this.service = service;
-  }
+  @Autowired private ProjectService service;
+  @Autowired private ProjectResourceAssembler assembler;
 
   /**
    * Returns a resource representing the requested {@link Project} to the source of a GET request to

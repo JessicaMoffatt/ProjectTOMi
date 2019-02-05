@@ -8,13 +8,16 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.UserAccountResourceAssembler;
+import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.service.UserAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,22 +34,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class UserAccountController {
+  @Autowired
   private UserAccountResourceAssembler assembler;
+  @Autowired
   private UserAccountService service;
-
-  /**
-   * Constructor for this AccountController with parameters required for proper function of this
-   * controller.
-   *
-   * @param assembler
-   *   converts UserAccount objects into resources
-   * @param service
-   *   provides services required for UserAccount objects
-   */
-  public UserAccountController(UserAccountResourceAssembler assembler, UserAccountService service) {
-    this.assembler = assembler;
-    this.service = service;
-  }
 
   /**
    * Returns a resource representing the requested {@link UserAccount} to the source of a GET
@@ -178,5 +169,10 @@ public class UserAccountController {
     List<Resource<UserAccount>> available = service.getUnassignedUserAccounts().stream().map(assembler::toResource).collect(Collectors.toList());
     return new Resources<>(available,
       linkTo(methodOn(UserAccountController.class).getUnassignedUserAccounts()).withSelfRel());
-}
+  }
+
+  @ExceptionHandler({UserAccountNotFoundException.class})
+  public ResponseEntity<?> handleExceptions(){
+    return ResponseEntity.status(400).build();
+  }
 }

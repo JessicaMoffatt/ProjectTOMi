@@ -1,6 +1,8 @@
 package ca.projectTOMi.tomi.controller;
 
 import ca.projectTOMi.tomi.assembler.EntryResourceAssembler;
+import ca.projectTOMi.tomi.exception.EntryNotFoundException;
+import ca.projectTOMi.tomi.exception.IllegalEntryStateException;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.service.EntryService;
 import ca.projectTOMi.tomi.service.TimesheetService;
@@ -10,6 +12,7 @@ import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,21 +37,12 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class EntryController {
+    @Autowired
     EntryResourceAssembler assembler;
+    @Autowired
     EntryService service;
     @Autowired
     TimesheetService timesheetService;
-
-    /**
-     * Constructor for this EntryController.
-     *
-     * @param assembler Converts {@Link Entry} objects into resources.
-     * @param service   Provides services required for Entry objects.
-     */
-    public EntryController(EntryResourceAssembler assembler, EntryService service) {
-        this.assembler = assembler;
-        this.service = service;
-    }
 
     /**
      * Returns a resource representing the requested {@Link Entry} to the source of a GET request to /entries/id.
@@ -124,5 +118,10 @@ public class EntryController {
 
         return new Resources<>(entry,
           linkTo(methodOn(EntryController.class).getActiveEntries()).withSelfRel());
+    }
+
+    @ExceptionHandler({EntryNotFoundException.class, IllegalEntryStateException.class})
+    public ResponseEntity<?> handleExceptions(){
+        return ResponseEntity.status(400).build();
     }
 }

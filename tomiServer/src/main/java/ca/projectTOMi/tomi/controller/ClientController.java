@@ -6,13 +6,16 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.ClientResourceAssembler;
+import ca.projectTOMi.tomi.exception.ClientNotFoundException;
 import ca.projectTOMi.tomi.model.Client;
 import ca.projectTOMi.tomi.service.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,22 +33,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class ClientController {
-  private ClientService service;
-  private ClientResourceAssembler assembler;
-
-  /**
-   * Constructor for this ClientController with parameters required for proper function of this
-   * controller.
-   *
-   * @param assembler
-   *   converts Client objects into resources
-   * @param service
-   *   provides services required for {@link Client} objects
-   */
-  public ClientController(ClientResourceAssembler assembler, ClientService service) {
-    this.assembler = assembler;
-    this.service = service;
-  }
+  @Autowired private ClientService service;
+  @Autowired private ClientResourceAssembler assembler;
 
   /**
    * Returns a collection of all active {@link Client} the source of a GET request to /clients.
@@ -130,5 +119,10 @@ public class ClientController {
     service.saveClient(client);
 
     return ResponseEntity.noContent().build();
+  }
+
+  @ExceptionHandler({ClientNotFoundException.class})
+  public ResponseEntity<?> handleExceptions(){
+    return ResponseEntity.status(400).build();
   }
 }

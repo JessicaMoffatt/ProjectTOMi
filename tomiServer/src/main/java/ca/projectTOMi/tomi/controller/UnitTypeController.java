@@ -1,13 +1,16 @@
 package ca.projectTOMi.tomi.controller;
 
 import ca.projectTOMi.tomi.assembler.UnitTypeResourceAssembler;
+import ca.projectTOMi.tomi.exception.UnitTypeNotFoundException;
 import ca.projectTOMi.tomi.model.UnitType;
 import ca.projectTOMi.tomi.service.UnitTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,25 +29,16 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 /**
  * Handles HTTP requests for {@Link UnitType} objects in the ProjectTOMi system.
  *
- * @author Karol Talbot (updated by Iliya Kiritchkov)
+ * @author Karol Talbot and Iliya Kiritchkov
  * @version 1.2
  */
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class UnitTypeController {
+    @Autowired
     private UnitTypeResourceAssembler assembler;
+    @Autowired
     private UnitTypeService service;
-
-    /**
-     * Constructor for this UnitTypeController.
-     *
-     * @param assembler Converts {@Link UnitType} objects into resources.
-     * @param service   Provides services required for UnitType objects.
-     */
-    public UnitTypeController(UnitTypeResourceAssembler assembler, UnitTypeService service) {
-        this.assembler = assembler;
-        this.service = service;
-    }
 
     /**
      * Returns a collection of all active {@Link UnitType} objects to the source of a GET request to /unit_types.
@@ -115,5 +109,10 @@ public class UnitTypeController {
         service.saveUnitType(unitType);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @ExceptionHandler({UnitTypeNotFoundException.class})
+    public ResponseEntity<?> handleExceptions(){
+        return ResponseEntity.status(400).build();
     }
 }

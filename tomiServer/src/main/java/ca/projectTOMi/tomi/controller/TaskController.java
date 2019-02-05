@@ -1,13 +1,16 @@
 package ca.projectTOMi.tomi.controller;
 
 import ca.projectTOMi.tomi.assembler.TaskResourceAssembler;
+import ca.projectTOMi.tomi.exception.TaskNotFoundException;
 import ca.projectTOMi.tomi.model.Task;
 import ca.projectTOMi.tomi.service.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,19 +35,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class TaskController {
-    private TaskResourceAssembler assembler;
-    private TaskService service;
-
-    /**
-     * Constructor for this TaskController.
-     *
-     * @param assembler Converts Task objects into resources.
-     * @param service   Provides services required for {@Link Task} objects.
-     */
-    public TaskController(TaskResourceAssembler assembler, TaskService service) {
-        this.assembler = assembler;
-        this.service = service;
-    }
+    @Autowired private TaskResourceAssembler assembler;
+    @Autowired private TaskService service;
 
     /**
      * Returns a collection of all active {@Link Task} objects to the source of a GET request to /tasks.
@@ -141,5 +133,10 @@ public class TaskController {
         service.saveTask(task);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @ExceptionHandler({TaskNotFoundException.class})
+    public ResponseEntity<?> handleExceptions(){
+        return ResponseEntity.status(400).build();
     }
 }
