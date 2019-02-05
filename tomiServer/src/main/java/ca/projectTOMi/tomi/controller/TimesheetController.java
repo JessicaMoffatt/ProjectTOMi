@@ -65,5 +65,11 @@ public class TimesheetController {
     service.evaluateTimesheet(id);
   }
 
+  @GetMapping("/timesheets/userAccount/{id}")
+  public Resources<Resource<Timesheet>> getTimesheetsByUserAccount(@PathVariable Long id){
+    List<Resource<Timesheet>> expense = service.getTimesheetsByUserAccount(id).stream().map(assembler::toResource).collect(Collectors.toList());
 
+    return new Resources<>(expense,
+      linkTo(methodOn(TimesheetController.class).getTimesheetsByUserAccount(id)).withSelfRel());
+  }
 }
