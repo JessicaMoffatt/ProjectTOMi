@@ -1,20 +1,18 @@
 package ca.projectTOMi.tomi.persistence;
 
-import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.EntityManager;
 import ca.projectTOMi.tomi.model.BillableHoursReportLine;
-import ca.projectTOMi.tomi.model.UserAccount;
-import ca.projectTOMi.tomi.model.Timesheet;
-import ca.projectTOMi.tomi.model.Entry;
-import ca.projectTOMi.tomi.model.Project;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ReportRepository {
   @Autowired
   private EntityManager entityManager;
 
-  public List<BillableHoursReportLine> generateBillableHoursReport(LocalDate date){
-    return entityManager.createQuery("SELECT new BillableHoursReportLine(t.startdate) FROM Entry e, Timesheet t, UserAccount u, Project p  WHERE e.timesheet = t and e.project = p and e.userAccount = u", BillableHoursReportLine.class).getResultList();
+  public List<BillableHoursReportLine> generateBillableHoursReport(){
+    return entityManager.createQuery(
+      "SELECT new ca.projectTOMi.tomi.model.BillableHoursReportLine(t.startDate, t.userAccount, SUM( CASE WHEN (e.task.billable = true ) then e.totalHours else 0 end), SUM( CASE WHEN (e.task.billable = false ) then e.totalHours else 0 end) , p) FROM Timesheet t JOIN Entry e on t = e.timesheet JOIN Project p ON e.project = p group by t, p").getResultList();
   }
 }

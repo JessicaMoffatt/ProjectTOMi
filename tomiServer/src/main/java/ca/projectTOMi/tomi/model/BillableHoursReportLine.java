@@ -11,11 +11,11 @@ public class BillableHoursReportLine {
   private UserAccount userAccount;
   private Project project;
 
-  public BillableHoursReportLine(LocalDate date, double billableHours, double nonbillableHours, UserAccount userAccount, Project project) {
+  public BillableHoursReportLine(LocalDate date, UserAccount userAccount, double billableHours, double nonbillableHours, Project project) {
     this.date = date;
+    this.userAccount = userAccount;
     this.billableHours = billableHours;
     this.nonbillableHours = nonbillableHours;
-    this.userAccount = userAccount;
     this.project = project;
   }
 }
