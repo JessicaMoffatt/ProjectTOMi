@@ -30,6 +30,7 @@ public class EntryResourceAssembler implements ResourceAssembler<Entry, Resource
 
         try {
             resource.add(linkTo(methodOn(EntryController.class).updateEntry(entry.getId(), entry)).withRel("update"));
+            resource.add(linkTo(methodOn(EntryController.class).copyEntry(entry.getId())).withRel("copy"));
         } catch (URISyntaxException e) {
             System.out.println(e);
         }

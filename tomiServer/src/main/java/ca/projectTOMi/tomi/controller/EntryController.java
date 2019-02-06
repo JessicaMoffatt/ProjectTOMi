@@ -125,4 +125,11 @@ public class EntryController {
         return new Resources<>(entry,
           linkTo(methodOn(EntryController.class).getActiveEntries()).withSelfRel());
     }
+
+    @PostMapping("/entries/{id}/copy")
+    public ResponseEntity<?> copyEntry(@PathVariable Long id) throws URISyntaxException {
+        Resource<Entry> resource = assembler.toResource(service.copyEntry(id));
+
+        return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
+    }
 }

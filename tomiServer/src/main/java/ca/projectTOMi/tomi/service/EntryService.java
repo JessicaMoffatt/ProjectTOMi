@@ -56,10 +56,10 @@ public class EntryService {
             case REJECTED:
                 Entry rejectedEntry = new Entry();
                 rejectedEntry.setComponent(updatedEntry.getComponent());
-                rejectedEntry.setProject(updatedEntry.getProject());
+                rejectedEntry.setProject(updatedEntry.getProject().getId());
                 rejectedEntry.setQuantity(updatedEntry.getQuantity());
-                rejectedEntry.setTask(updatedEntry.getTask());
-                rejectedEntry.setUnitType(updatedEntry.getUnitType());
+                rejectedEntry.setTask(updatedEntry.getTask().getId());
+                rejectedEntry.setUnitType(updatedEntry.getUnitType().getId());
                 rejectedEntry.setMondayHours(updatedEntry.getMondayHours());
                 rejectedEntry.setTuesdayHours(updatedEntry.getTuesdayHours());
                 rejectedEntry.setWednesdayHours(updatedEntry.getWednesdayHours());
@@ -77,10 +77,10 @@ public class EntryService {
 
             case LOGGING:
                 entry.setComponent(updatedEntry.getComponent());
-                entry.setProject(updatedEntry.getProject());
+                entry.setProject(updatedEntry.getProject().getId());
                 entry.setQuantity(updatedEntry.getQuantity());
-                entry.setTask(updatedEntry.getTask());
-                entry.setUnitType(updatedEntry.getUnitType());
+                entry.setTask(updatedEntry.getTask().getId());
+                entry.setUnitType(updatedEntry.getUnitType().getId());
                 entry.setMondayHours(updatedEntry.getMondayHours());
                 entry.setTuesdayHours(updatedEntry.getTuesdayHours());
                 entry.setWednesdayHours(updatedEntry.getWednesdayHours());
@@ -88,7 +88,7 @@ public class EntryService {
                 entry.setFridayHours(updatedEntry.getFridayHours());
                 entry.setSaturdayHours(updatedEntry.getSaturdayHours());
                 entry.setSundayHours(updatedEntry.getSundayHours());
-                entry.setTimesheet(updatedEntry.getTimesheet());
+                entry.setTimesheet(updatedEntry.getTimesheet().getId());
                 entry.setStatus(Status.LOGGING);
                 entry.setActive(true);
                 repository.save(entry);
@@ -116,6 +116,7 @@ public class EntryService {
      */
     public Entry saveEntry(Entry entry) {
         entry.setStatus(Status.LOGGING);
+        entry.setQuantity(0.0);
         return repository.save(entry);
     }
 
@@ -154,5 +155,25 @@ public class EntryService {
      */
     public List<Entry> getActiveEntries() {
         return repository.getAllByActive(true).stream().collect(Collectors.toList());
+    }
+
+    public Entry copyEntry(Long entryId){
+        Entry copy = repository.findById(entryId).orElseThrow(EntryNotFoundException::new);
+        Entry newEntry = new Entry();
+        newEntry.setStatus(Status.LOGGING);
+        newEntry.setActive(true);
+        newEntry.setTimesheet(copy.getTimesheet().getId());
+        newEntry.setComponent(copy.getComponent());
+        newEntry.setUnitType(copy.getUnitType().getId());
+        newEntry.setTask(copy.getTask().getId());
+        newEntry.setMondayHours(0.0);
+        newEntry.setTuesdayHours(0.0);
+        newEntry.setWednesdayHours(0.0);
+        newEntry.setThursdayHours(0.0);
+        newEntry.setFridayHours(0.0);
+        newEntry.setSaturdayHours(0.0);
+        newEntry.setSundayHours(0.0);
+        newEntry.setQuantity(0.0);
+        return repository.save(newEntry);
     }
 }

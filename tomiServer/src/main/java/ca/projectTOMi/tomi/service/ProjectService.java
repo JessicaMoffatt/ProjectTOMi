@@ -1,10 +1,13 @@
 package ca.projectTOMi.tomi.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
 import ca.projectTOMi.tomi.model.Project;
+import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.ProjectRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 @Service
 public final class ProjectService {
   private ProjectRepository repository;
+  @Autowired private UserAccountService userAccountService;
 
   /**
    * Constructor for the ProjectService service.
@@ -94,5 +98,10 @@ public final class ProjectService {
    */
   public Project saveProject(Project project) {
     return repository.save(project);
+  }
+
+  public List<Project> getProjectByUserAccount(Long userAccountId) {
+    UserAccount userAccount = userAccountService.getUserAccount(userAccountId);
+    return repository.getAllByActiveTrueAndProjectMembersContains(userAccount);
   }
 }
