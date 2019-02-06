@@ -2,6 +2,7 @@ package ca.projectTOMi.tomi.persistence;
 
 import java.util.List;
 import ca.projectTOMi.tomi.model.Project;
+import ca.projectTOMi.tomi.model.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,4 +26,6 @@ public interface ProjectRepository extends JpaRepository<Project, String>{
    * @return List containing all Projects with the provided active state
    */
   public List<Project> getAllByActive(boolean active);
+
+  public List<Project> getAllByActiveTrueAndProjectMembersContains(UserAccount user);
 }

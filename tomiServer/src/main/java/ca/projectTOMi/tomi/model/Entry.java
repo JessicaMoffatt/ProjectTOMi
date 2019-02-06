@@ -48,15 +48,6 @@ public final class Entry {
     private Long id;
 
     /**
-     * The userAccount of the user creating the entry.
-     */
-    @NotNull
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @MapKeyColumn(name = "id")
-    private UserAccount userAccount;
-
-    /**
      * The Project associated with the entry.
      */
     @ManyToOne

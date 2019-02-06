@@ -138,4 +138,11 @@ public class ProjectController {
     return ResponseEntity.noContent().build();
   }
 
+  @GetMapping("/user_accounts/{id}/projects")
+  public Resources<Resource<Project>> getProjectsByUserAccount(@PathVariable Long id) {
+    List<Resource<Project>> project = service.getProjectByUserAccount(id).stream().map(assembler::toResource).collect(Collectors.toList());
+
+    return new Resources<>(project,
+      linkTo(methodOn(ProjectController.class).getActiveProjects()).withSelfRel());
+  }
 }
