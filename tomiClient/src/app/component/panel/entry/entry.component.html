@@ -3,11 +3,10 @@
 @version 2.0
 -->
 <div [ngClass]="['entry_container','rounded']">
-
   <div [ngClass]="'row'">
     <div [ngClass]="'col-xs-12'">
       <label>Component
-        <input [(ngModel)]="entry.component" placeholder="Component">
+        <input [(ngModel)]="entry.component" placeholder="Component" name="component">
       </label>
     </div>
   </div>
@@ -52,7 +51,7 @@
 
     <div [ngClass]="'col-xs-2'">
       <label><input type="number" step=".25" [ngModel]="entry.quantity" placeholder="Quantity"
-                    [ngClass]="'small_number_input'"></label>
+                    [ngClass]="'small_number_input'" name="quantity"></label>
     </div>
     <div [ngClass]="'col-xs-4'">
       <strong>{{entry.unitType ? entry.unitType.unit : 'Units'}}</strong>
@@ -64,37 +63,37 @@
     <div [ngClass]="'col-xs-8'">
       <label><strong>M</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.mondayHours" placeholder="0" type="number"
-               step=".25">
+               step=".25" name="hour">
       </label>
 
       <label><strong>T</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.tuesdayHours" placeholder="0" type="number"
-               step=".25">
+               step=".25" name="hour">
       </label>
 
       <label><strong>W</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.wednesdayHours" placeholder="0" type="number"
-               step=".25">
+               step=".25" name="hour">
       </label>
 
       <label><strong>R</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.thursdayHours" placeholder="0" type="number"
-               step=".25">
+               step=".25" name="hour">
       </label>
 
       <label><strong>F</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.fridayHours" placeholder="0" type="number"
-               step=".25">
+               step=".25" name="hour">
       </label>
 
       <label><strong>S</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.saturdayHours" placeholder="0" type="number"
-               step=".25">
+               step=".25" name="hour">
       </label>
 
       <label><strong>U</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.sundayHours" placeholder="0" type="number"
-               step=".25">
+               step=".25" name="hour">
       </label>
     </div>
     <!-- end of days of week-->
@@ -106,6 +105,5 @@
       <div [ngClass]="['delete_entry', 'btn', 'delete_btn']" (click)="delete()"></div>
     </div>
   </div>
-
 </div>
 

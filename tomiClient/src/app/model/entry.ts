@@ -56,9 +56,9 @@ export class Entry{
   constructor(){
     this.id = -1;
     this.userAccount = null;
-    this.project = new Project();
-    this.task = new Task();
-    this.unitType = new UnitType();
+    this.project = null;
+    this.task = null;
+    this.unitType = null;
     this.timesheet = null;
     this.status = Status.LOGGING;
     this.component = "";

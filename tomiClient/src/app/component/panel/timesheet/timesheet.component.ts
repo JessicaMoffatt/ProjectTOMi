@@ -1,6 +1,7 @@
 import {
+  AfterViewInit,
   Component,
-  OnInit, ViewChild, ViewContainerRef
+  OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef
 } from '@angular/core';
 import {Entry} from "../../../model/entry";
 import {TimesheetService} from "../../../service/timesheet.service";
@@ -8,6 +9,9 @@ import {ProjectService} from "../../../service/project.service";
 import {Project} from "../../../model/project";
 import {EntryService} from "../../../service/entry.service";
 import {UserAccount} from "../../../model/userAccount";
+import {Timesheet} from "../../../model/timesheet";
+import {EntryComponent} from "../entry/entry.component";
+import {NgForm} from "@angular/forms";
 
 /**
  * TimesheetComponent is used to facilitate communication between the view and front end services.
@@ -20,9 +24,9 @@ import {UserAccount} from "../../../model/userAccount";
   templateUrl: './timesheet.component.html',
   styleUrls: ['./timesheet.component.scss']
 })
-export class TimesheetComponent implements OnInit {
+export class TimesheetComponent implements OnInit, AfterViewInit{
 
-  /** List of all entries for this timesheet.*/
+  /** List of all entries for current timesheet.*/
   entries: Entry[] = [];
   /** List of all projects this user is allowed to access.*/
   projects: Project[] = [];
@@ -33,8 +37,10 @@ export class TimesheetComponent implements OnInit {
   tally: number = 0;
 
   /** A view container ref for the template that will be used to house the entry component.*/
-  @ViewChild('componentHolder', {read: ViewContainerRef})
-  entry_container: ViewContainerRef;
+  @ViewChild('entryHolder', {read: ViewContainerRef}) entry_container: ViewContainerRef;
+  @ViewChildren(EntryComponent) thingie: QueryList<'thingie'>;
+
+  entryComponents: EntryComponent[] = [];
 
   constructor(private timesheetService: TimesheetService, private projectService: ProjectService, private entryService: EntryService) {
   }
@@ -44,9 +50,28 @@ export class TimesheetComponent implements OnInit {
    * On initialization, calls getEntries to populate the entries variable as well as the projects variable.
    */
   ngOnInit() {
-    this.getEntries(1);
     //TODO remove hard coded number
-    this.getProjects(1);
+    this.test().then((value)=>{
+      let timesheet = value as Timesheet;
+      this.getEntries(timesheet.id);
+      this.getProjects(1);
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.thingie.changes.subscribe(c => {
+      c.toArray().forEach(item => {
+        this.entryComponents.push(item);
+      });
+    });
+  }
+
+  async test(){
+    let promise = new Promise((resolve, reject) => {
+      resolve(this.timesheetService.populateTimesheets(1))
+    });
+
+    return await promise;
   }
 
   /**
@@ -72,11 +97,11 @@ export class TimesheetComponent implements OnInit {
     temp.id = 1;
     newEntry.userAccount = temp;
     //TODO get the actual timesheet id
+    console.log(this.timesheetService.getCurrentTimesheet());
     newEntry.timesheet = this.timesheetService.getCurrentTimesheet();
 
     this.entryService.save(newEntry).then( (data => {
-      // this.entries.push(data)
-      console.log(data);
+      this.entries.push(data)
     }));
   }
 
@@ -96,11 +121,13 @@ export class TimesheetComponent implements OnInit {
     let index = this.entries.indexOf(entry);
     this.entries.splice(index, 1);
 
-    // this.entryService.deleteEntry(entry).subscribe();
+    this.entryService.delete(entry);
   }
 
   save(){
-
+    this.entryComponents.forEach(item => {
+      item.save();
+    });
   }
 
   // /**

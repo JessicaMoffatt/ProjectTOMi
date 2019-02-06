@@ -30,8 +30,8 @@ export class Timesheet{
     this.id = -1;
     this.userAccount = null;
     this.status = Status.LOGGING;
-    this.startDate = "";
-    this.submitDate = "";
+    this.startDate = null;
+    this.submitDate = null;
     this.active = true;
     this._links = [];
   }

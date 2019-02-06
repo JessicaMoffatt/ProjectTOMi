@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {Entry} from "../model/entry";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Timesheet} from "../model/timesheet";
+import {EntryComponent} from "../component/panel/entry/entry.component";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -17,16 +18,21 @@ const httpOptions = {
 export class TimesheetService {
   /** The link used to get,post, and delete entries. */
   private timesheetUrl = `http://localhost:8080/timesheets`;
+  /** The link used to get all timesheets for a specified user.*/
+  private userTimesheetsUrl = `http://localhost:8080/timesheets/userAccount`;
+
+  timesheets: Timesheet[] = [];
 
   //TODO, this is the position in the array of timesheets that we are currently at
-  private currentTimesheet = new Timesheet();
+  private currentTimesheet = -1;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  getEntries(id:number): Observable<Array<Entry>> {
+  getEntries(id: number): Observable<Array<Entry>> {
     return this.http.get(`${this.timesheetUrl}/${id}/entries`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
-          if (data._embedded !== undefined) {
+        if (data._embedded !== undefined) {
           return data._embedded.entries as Entry[];
         } else {
           return [];
@@ -34,9 +40,29 @@ export class TimesheetService {
       }));
   }
 
-  //TODO change this
-  getCurrentTimesheet(){
-    this.currentTimesheet.id = 1;
-    return this.currentTimesheet;
+  //TODO consider the posibility that currentTimesheet is -1
+  getCurrentTimesheet() {
+    return this.timesheets[this.currentTimesheet];
+  }
+
+  async getAllTimesheets(userId: number) {
+    return this.http.get(`${this.userTimesheetsUrl}/${userId}`).pipe(map((response: Response) => response))
+      .pipe(map((data: any) => {
+        if (data._embedded !== undefined) {
+          return data._embedded.timesheets as Timesheet[];
+        } else {
+          return [];
+        }
+      }));
+  }
+
+  async populateTimesheets(userId: number) {
+    return await this.getAllTimesheets(userId).then((response) => {
+      return response.toPromise().then((data)=>{
+        this.timesheets = data;
+        this.currentTimesheet = this.timesheets.length -1;
+        return this.getCurrentTimesheet();
+      });
+    });
   }
 }

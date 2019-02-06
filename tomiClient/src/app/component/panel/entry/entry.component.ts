@@ -4,6 +4,7 @@ import {EntryService} from "../../../service/entry.service";
 import {Project} from "../../../model/project";
 import {Task} from 'src/app/model/task';
 import {UnitType} from "../../../model/unitType";
+import {TimesheetService} from "../../../service/timesheet.service";
 
 /**
  * EntryComponent is used to facilitate communication between the view and front end services.
@@ -31,7 +32,7 @@ export class EntryComponent implements OnInit {
   /** List of all unit types.*/
   unitTypes: UnitType[];
 
-  constructor(private entryService: EntryService) {
+  constructor(private entryService: EntryService, public timesheetService:TimesheetService) {
   }
 
   ngOnInit() {
@@ -58,5 +59,9 @@ export class EntryComponent implements OnInit {
    */
   delete(): void {
     this.deleteRequested.emit(this.entry);
+  }
+
+  save(){
+    console.log("SAVING...");
   }
 }

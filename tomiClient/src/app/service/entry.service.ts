@@ -5,6 +5,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {Task} from '../model/task';
 import {UnitType} from "../model/unitType";
+import {Team} from "../model/team";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -70,6 +71,14 @@ export class EntryService {
     }
 
     return tempEntry;
+  }
+
+  delete(entry:Entry){
+    const url = entry._links["delete"];
+
+    this.http.delete(url["href"], httpOptions).subscribe((response) => {
+      return response as Team;
+    });
   }
 }
 

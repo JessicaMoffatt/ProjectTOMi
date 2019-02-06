@@ -28,6 +28,7 @@ import {TasksPanelComponent} from "./component/panel/tasks-panel/tasks-panel.com
 import {UserAccountsPanelComponent} from "./component/panel/user-accounts-panel/user-accounts-panel.component";
 import { AddTeamMemberComponent } from './component/modal/add-team-member/add-team-member.component';
 import {UserAccountService} from "./service/user-account.service";
+import {TimesheetService} from "./service/timesheet.service";
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import {UserAccountService} from "./service/user-account.service";
   ],
   providers: [
     TeamSidebarService,
-    UserAccountService
+    UserAccountService,
+    TimesheetService
   ],
   bootstrap: [AppComponent]
 })
