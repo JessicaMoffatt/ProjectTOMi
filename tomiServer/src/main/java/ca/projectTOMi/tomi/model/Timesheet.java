@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * class representing a single timesheet for a user for a specific week.  Entries (task ,client, hours)
@@ -62,6 +63,7 @@ public final class Timesheet {
     /**
      * if the timesheet is active.
      */
+    @NotNull
     private boolean active;
 
     @JsonProperty(value="startDate")
@@ -78,7 +80,7 @@ public final class Timesheet {
         this.submitDate = LocalDate.parse(date);
     }
 
-    public String getTimesheet(){
-        return this.id + " " + this.startDate + " " + this.userAccount.getFirstName();
-    }
+//    public String getTimesheet(){
+//        return this.id + " " + this.startDate + " " + this.userAccount.getFirstName();
+//    }
 }

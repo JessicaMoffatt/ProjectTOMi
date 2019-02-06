@@ -120,6 +120,13 @@ public class EntryController {
           linkTo(methodOn(EntryController.class).getActiveEntries()).withSelfRel());
     }
 
+    @PostMapping("/entries/{id}/copy")
+    public ResponseEntity<?> copyEntry(@PathVariable Long id) throws URISyntaxException {
+        Resource<Entry> resource = assembler.toResource(service.copyEntry(id));
+
+        return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
+    }
+
     @ExceptionHandler({EntryNotFoundException.class, IllegalEntryStateException.class})
     public ResponseEntity<?> handleExceptions(){
         return ResponseEntity.status(400).build();
