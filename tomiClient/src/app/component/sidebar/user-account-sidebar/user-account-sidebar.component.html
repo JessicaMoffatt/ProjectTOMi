@@ -1,13 +1,14 @@
 <h1>Users</h1>
 <div>
   <h2>View Users</h2>
-  <input [ngClass]="'input_search'" placeholder="search"
-    >
+  <input id="user_account_search" [ngClass]="'input_search'" placeholder="search" (keyup)="updateUserAccountSidebarList()">
   <div>
     <ul *ngIf="userAccountSidebarService.userAccounts">
-      <li *ngFor="let userAccount of (userAccountSidebarService.userAccounts|orderBy:'lastName')">
+      <li *ngFor="let userAccount of (userAccountSidebarService.filteredAccounts|orderBy:'lastName')">
         <span *ngIf="userAccount" (click)="displayUserAccount(userAccount)">{{userAccount.firstName}} {{userAccount.lastName}}</span>
       </li>
     </ul>
   </div>
 </div>
+<div (click)="createAddUserAccountComponent()" [ngClass]="['new_btn', 'btn']">New User</div>
+<template #add_user_account_container></template>

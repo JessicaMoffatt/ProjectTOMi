@@ -22,6 +22,7 @@ export class UserAccountSidebarService {
 
   /** List of all UserAccounts */
   userAccounts: UserAccount[];
+  filteredAccounts: UserAccount[];
 
   constructor(private http:HttpClient) { }
 
@@ -49,5 +50,9 @@ export class UserAccountSidebarService {
     this.getAllUserAccounts().subscribe((data: Array<UserAccount>) => {
       this.userAccounts = data;
     });
+  }
+
+  destroyAddUserAccountComponent() {
+    this.ref.destroy();
   }
 }

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {ComponentRef, Injectable} from '@angular/core';
 import {UserAccount} from "../model/userAccount";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UserAccountSidebarService} from "./user-account-sidebar-service";
@@ -44,6 +44,7 @@ export class UserAccountService {
   async save(userAccount: UserAccount) {
     let testUserAccount: UserAccount = null;
     if (userAccount.id === -1) {
+      console.log("did a POST");
       await this.http.post<UserAccount>(this.userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
         testUserAccount = response;
         return response;
@@ -61,9 +62,9 @@ export class UserAccountService {
         //TODO Add an error display
       });
     }
+
+    return testUserAccount;
   }
-
-
 
   /**
    *  Logically deletes the selected user account (sets the active status to false.)
@@ -90,5 +91,9 @@ export class UserAccountService {
   //TODO Unfinished
   cancel(userAccount: UserAccount) {
     (<HTMLInputElement>document.getElementById(""))
+  }
+
+  destroyAddUserAccountComponent() {
+    this.userAccountSidebarService.destroyAddUserAccountComponent();
   }
 }

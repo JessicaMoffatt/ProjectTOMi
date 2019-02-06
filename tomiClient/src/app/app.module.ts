@@ -31,6 +31,7 @@ import {UserAccountComponent } from './component/panel/user-account/user-account
 import {UserAccountSidebarComponent} from "./component/sidebar/user-account-sidebar/user-account-sidebar.component";
 import {UserAccountPanelComponent} from "./component/panel/user-account-panel/user-account-panel.component";
 import {UserAccountSidebarService} from "./service/user-account-sidebar-service";
+import { AddUserAccountComponent } from './component/modal/add-user-account/add-user-account.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import {UserAccountSidebarService} from "./service/user-account-sidebar-service"
     AddTeamComponent,
     AddTeamMemberComponent,
     UserAccountSidebarComponent,
-    UserAccountComponent
+    UserAccountComponent,
+    AddUserAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,8 @@ import {UserAccountSidebarService} from "./service/user-account-sidebar-service"
   entryComponents:[
     EntryComponent,
     AddTeamComponent,
-    AddTeamMemberComponent
+    AddTeamMemberComponent,
+    AddUserAccountComponent
   ],
   providers: [
     TeamSidebarService,
