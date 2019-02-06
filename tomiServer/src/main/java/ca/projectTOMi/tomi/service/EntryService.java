@@ -88,7 +88,7 @@ public class EntryService {
                 entry.setFridayHours(updatedEntry.getFridayHours());
                 entry.setSaturdayHours(updatedEntry.getSaturdayHours());
                 entry.setSundayHours(updatedEntry.getSundayHours());
-                entry.setTimesheet(updatedEntry.getTimesheet());
+                entry.setTimesheet(updatedEntry.getTimesheet().getId());
                 entry.setStatus(Status.LOGGING);
                 entry.setActive(true);
                 repository.save(entry);
@@ -162,7 +162,7 @@ public class EntryService {
         Entry newEntry = new Entry();
         newEntry.setStatus(Status.LOGGING);
         newEntry.setActive(true);
-        newEntry.setTimesheet(copy.getTimesheet());
+        newEntry.setTimesheet(copy.getTimesheet().getId());
         newEntry.setComponent(copy.getComponent());
         newEntry.setUnitType(copy.getUnitType());
         newEntry.setTask(copy.getTask());
