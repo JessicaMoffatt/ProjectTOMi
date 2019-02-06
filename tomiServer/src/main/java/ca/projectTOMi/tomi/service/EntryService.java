@@ -56,10 +56,10 @@ public class EntryService {
             case REJECTED:
                 Entry rejectedEntry = new Entry();
                 rejectedEntry.setComponent(updatedEntry.getComponent());
-                rejectedEntry.setProject(updatedEntry.getProject().getId());
+                rejectedEntry.setProject(updatedEntry.getProject());
                 rejectedEntry.setQuantity(updatedEntry.getQuantity());
-                rejectedEntry.setTask(updatedEntry.getTask().getId());
-                rejectedEntry.setUnitType(updatedEntry.getUnitType().getId());
+                rejectedEntry.setTask(updatedEntry.getTask());
+                rejectedEntry.setUnitType(updatedEntry.getUnitType());
                 rejectedEntry.setMondayHours(updatedEntry.getMondayHours());
                 rejectedEntry.setTuesdayHours(updatedEntry.getTuesdayHours());
                 rejectedEntry.setWednesdayHours(updatedEntry.getWednesdayHours());
@@ -77,10 +77,10 @@ public class EntryService {
 
             case LOGGING:
                 entry.setComponent(updatedEntry.getComponent());
-                entry.setProject(updatedEntry.getProject().getId());
+                entry.setProject(updatedEntry.getProject());
                 entry.setQuantity(updatedEntry.getQuantity());
-                entry.setTask(updatedEntry.getTask().getId());
-                entry.setUnitType(updatedEntry.getUnitType().getId());
+                entry.setTask(updatedEntry.getTask());
+                entry.setUnitType(updatedEntry.getUnitType());
                 entry.setMondayHours(updatedEntry.getMondayHours());
                 entry.setTuesdayHours(updatedEntry.getTuesdayHours());
                 entry.setWednesdayHours(updatedEntry.getWednesdayHours());
@@ -164,8 +164,8 @@ public class EntryService {
         newEntry.setActive(true);
         newEntry.setTimesheet(copy.getTimesheet().getId());
         newEntry.setComponent(copy.getComponent());
-        newEntry.setUnitType(copy.getUnitType().getId());
-        newEntry.setTask(copy.getTask().getId());
+        newEntry.setUnitType(copy.getUnitType());
+        newEntry.setTask(copy.getTask());
         newEntry.setMondayHours(0.0);
         newEntry.setTuesdayHours(0.0);
         newEntry.setWednesdayHours(0.0);
