@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @version 1
  */
 @RestController
+@CrossOrigin (origins = "http://localhost:4200")
 public class TimesheetController {
   @Autowired private TimesheetResourceAssembler assembler;
   @Autowired private TimesheetService service;
@@ -61,5 +63,13 @@ public class TimesheetController {
   @GetMapping("/timesheetEvalTest/{id}")
   public void evalTimesheet(@PathVariable Long id){
     service.evaluateTimesheet(id);
+  }
+
+  @GetMapping("/timesheets/userAccount/{id}")
+  public Resources<Resource<Timesheet>> getTimesheetsByUserAccount(@PathVariable Long id){
+    List<Resource<Timesheet>> expense = service.getTimesheetsByUserAccount(id).stream().map(assembler::toResource).collect(Collectors.toList());
+
+    return new Resources<>(expense,
+      linkTo(methodOn(TimesheetController.class).getTimesheetsByUserAccount(id)).withSelfRel());
   }
 }

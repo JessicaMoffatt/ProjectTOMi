@@ -6,8 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
@@ -25,7 +29,7 @@ import org.hibernate.annotations.OnDeleteAction;
  * A model class that contains information about accounts in the TOMi system.
  *
  * @author Karol Talbot
- * @version 1
+ * @version 1.1
  */
 @Entity
 @Data
@@ -77,8 +81,8 @@ public final class UserAccount {
   @Min (0)
   private Long salariedRate;
 
-  @ManyToMany
-  @JsonBackReference
+  @ManyToMany(mappedBy = "projectMembers", targetEntity = Project.class)
+  @JsonIgnore
   private Set<Project> projects = new HashSet<>();
 
   /**
@@ -95,5 +99,10 @@ public final class UserAccount {
       team.setId(id);
     }
     this.setTeam(team);
+  }
+
+  @Override
+  public int hashCode(){
+    return id.intValue();
   }
 }

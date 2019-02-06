@@ -72,4 +72,8 @@ public final class Team {
     }
     this.setTeamLead(userAccount);
   }
+
+  public int hashCode(){
+    return id.intValue();
+  }
 }
