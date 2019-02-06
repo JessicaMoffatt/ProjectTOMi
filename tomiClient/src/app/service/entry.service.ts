@@ -48,7 +48,7 @@ export class EntryService {
 
   /**
    * Saves a specified entry. If the entry is new (ID of -1) an HTTP POST is performed, else a PUT is performed to update the existing team.
-   * @param team The team to update/create.
+   * @param entry The team to update/create.
    */
   async save(entry: Entry) {
     let tempEntry: Entry = null;

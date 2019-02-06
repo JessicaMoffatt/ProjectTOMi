@@ -11,7 +11,6 @@ import {EntryService} from "../../../service/entry.service";
 import {UserAccount} from "../../../model/userAccount";
 import {Timesheet} from "../../../model/timesheet";
 import {EntryComponent} from "../entry/entry.component";
-import {NgForm} from "@angular/forms";
 
 /**
  * TimesheetComponent is used to facilitate communication between the view and front end services.
@@ -99,9 +98,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     //TODO, this cannot be hardcoded!!
     let temp = new UserAccount();
     temp.id = 1;
-    newEntry.userAccount = temp;
     //TODO get the actual timesheet id
-    newEntry.timesheet = this.timesheetService.getCurrentTimesheet();
+    newEntry.timesheetId = this.timesheetService.getCurrentTimesheet().id;
 
     this.entryService.save(newEntry).then( (data => {
       this.entries.push(data)
