@@ -48,20 +48,14 @@ public final class Entry {
     private Long id;
 
     /**
-     * The userAccount of the user creating the entry.
-     */
-    @NotNull
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @MapKeyColumn(name = "id")
-    private UserAccount userAccount;
-
-    /**
      * The Project associated with the entry.
      */
     @ManyToOne
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @MapKeyColumn(name = "id")
+    @JsonProperty (value="project")
+    @JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference (alwaysAsId = true)
     private Project project;
 
     /**
@@ -70,6 +64,9 @@ public final class Entry {
     @ManyToOne
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @MapKeyColumn(name = "id")
+    @JsonProperty (value="task")
+    @JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference (alwaysAsId = true)
     private Task task;
 
     /**
@@ -78,11 +75,17 @@ public final class Entry {
     @ManyToOne
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @MapKeyColumn(name = "id")
+    @JsonProperty (value="unitType")
+    @JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference (alwaysAsId = true)
     private UnitType unitType;
 
 
     @ManyToOne
     @MapKeyColumn(name = "id")
+    @JsonProperty (value="timesheet")
+    @JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference (alwaysAsId = true)
     private Timesheet timesheet;
 
     /**
@@ -171,4 +174,40 @@ public final class Entry {
     @Column(nullable = false)
     private boolean active;
 
+    @JsonProperty
+    public void setTimesheet(Long id){
+        Timesheet t = new Timesheet();
+        t.setId(id);
+        this.timesheet = t;
+    }
+
+    @JsonProperty
+    public void setTask(Long id){
+        Task t = null;
+        if(this.id != -1) {
+            t = new Task();
+            t.setId(id);
+        }
+        this.task = t;
+    }
+
+    @JsonProperty
+    public void setUnitType(Long id){
+        UnitType t = null;
+        if(this.id != -1) {
+            t = new UnitType();
+            t.setId(id);
+        }
+        this.unitType = t;
+    }
+
+    @JsonProperty
+    public void setProject(String id){
+        Project p = null;
+        if(!this.id.equals("")) {
+            p = new Project();
+            p.setId(id);
+        }
+        this.project = p;
+    }
 }
