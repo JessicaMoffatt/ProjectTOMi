@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -28,6 +29,7 @@ import {TasksPanelComponent} from "./component/panel/tasks-panel/tasks-panel.com
 import {UserAccountsPanelComponent} from "./component/panel/user-accounts-panel/user-accounts-panel.component";
 import { AddTeamMemberComponent } from './component/modal/add-team-member/add-team-member.component';
 import {UserAccountService} from "./service/user-account.service";
+import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
 
 @NgModule({
   declarations: [
@@ -63,7 +65,12 @@ import {UserAccountService} from "./service/user-account.service";
   ],
   providers: [
     TeamSidebarService,
-    UserAccountService
+    UserAccountService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AddHeaderInterceptor,
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent]
 })
