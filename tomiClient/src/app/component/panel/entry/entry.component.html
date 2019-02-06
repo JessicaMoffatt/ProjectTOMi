@@ -6,7 +6,7 @@
   <div [ngClass]="'row'">
     <div [ngClass]="'col-xs-12'">
       <label>Component
-        <input [(ngModel)]="entry.component" placeholder="Component" name="component">
+        <input #componentInput [(ngModel)]="entry.component" placeholder="Component">
       </label>
     </div>
   </div>
@@ -14,7 +14,7 @@
   <div [ngClass]="'row'">
     <div [ngClass]="['col-xs-6']">
       <label>Project
-        <select id="selected_project">
+        <select #projectInput>
           <option value="-1">None</option>
           <option *ngFor="let project of (projects |orderBy: 'projectName')" [value]="project.id"
                   [attr.selected]="project.id === this.entry.project?.id ? 'selected' : null">
@@ -25,7 +25,7 @@
     </div>
     <div [ngClass]="'col-xs-6'">
       <label>Task
-      <select id="selected_task">
+      <select #taskInput>
         <option value="-1">Task</option>
         <option *ngFor="let task of (tasks |orderBy: 'name')" [value]="task.id"
                 [attr.selected]="task.id === this.entry.task?.id ? 'selected' : null">
@@ -39,7 +39,7 @@
   <div [ngClass]="'row'">
     <div [ngClass]="'col-xs-6'">
       <label>Unit Type
-      <select id="selected_unit_type">
+      <select #unitTypeInput>
         <option value="-1">Unit Type</option>
         <option *ngFor="let unitType of (unitTypes |orderBy: 'name')" [value]="unitType.id"
                 [attr.selected]="unitType.id === this.entry.unitType?.id ? 'selected' : null">
@@ -50,8 +50,8 @@
     </div>
 
     <div [ngClass]="'col-xs-2'">
-      <label><input type="number" step=".25" [ngModel]="entry.quantity" placeholder="Quantity"
-                    [ngClass]="'small_number_input'" name="quantity"></label>
+      <label><input #quantityInput type="number" step=".25" [ngModel]="entry.quantity" placeholder="Quantity"
+                    [ngClass]="'small_number_input'"></label>
     </div>
     <div [ngClass]="'col-xs-4'">
       <strong>{{entry.unitType ? entry.unitType.unit : 'Units'}}</strong>
@@ -63,37 +63,37 @@
     <div [ngClass]="'col-xs-8'">
       <label><strong>M</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.mondayHours" placeholder="0" type="number"
-               step=".25" name="hour">
+               step=".25" #mondayInput>
       </label>
 
       <label><strong>T</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.tuesdayHours" placeholder="0" type="number"
-               step=".25" name="hour">
+               step=".25" #tuesdayInput>
       </label>
 
       <label><strong>W</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.wednesdayHours" placeholder="0" type="number"
-               step=".25" name="hour">
+               step=".25" #wednesdayInput>
       </label>
 
       <label><strong>R</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.thursdayHours" placeholder="0" type="number"
-               step=".25" name="hour">
+               step=".25" #thursdayInput>
       </label>
 
       <label><strong>F</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.fridayHours" placeholder="0" type="number"
-               step=".25" name="hour">
+               step=".25" #fridayInput>
       </label>
 
       <label><strong>S</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.saturdayHours" placeholder="0" type="number"
-               step=".25" name="hour">
+               step=".25" #saturdayInput>
       </label>
 
       <label><strong>U</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.sundayHours" placeholder="0" type="number"
-               step=".25" name="hour">
+               step=".25" #sundayInput>
       </label>
     </div>
     <!-- end of days of week-->

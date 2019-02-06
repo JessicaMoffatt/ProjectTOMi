@@ -51,7 +51,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
    */
   ngOnInit() {
     //TODO remove hard coded number
-    this.test().then((value)=>{
+    this.populateTimesheets().then((value)=>{
       let timesheet = value as Timesheet;
       this.getEntries(timesheet.id);
       this.getProjects(1);
@@ -59,6 +59,10 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit(): void {
+    this.getEntryComponents();
+  }
+
+  getEntryComponents(){
     this.thingie.changes.subscribe(c => {
       c.toArray().forEach(item => {
         this.entryComponents.push(item);
@@ -66,7 +70,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     });
   }
 
-  async test(){
+  async populateTimesheets(){
     let promise = new Promise((resolve, reject) => {
       resolve(this.timesheetService.populateTimesheets(1))
     });
@@ -97,12 +101,14 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     temp.id = 1;
     newEntry.userAccount = temp;
     //TODO get the actual timesheet id
-    console.log(this.timesheetService.getCurrentTimesheet());
     newEntry.timesheet = this.timesheetService.getCurrentTimesheet();
 
     this.entryService.save(newEntry).then( (data => {
       this.entries.push(data)
+      this.entryComponents = [];
     }));
+
+
   }
 
   /**
@@ -111,6 +117,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
    */
   copyEntry(entry: Entry): void {
     this.entries.push(entry);
+
+    this.entryComponents = [];
   }
 
   /**
@@ -122,6 +130,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     this.entries.splice(index, 1);
 
     this.entryService.delete(entry);
+
+    this.entryComponents = [];
   }
 
   save(){

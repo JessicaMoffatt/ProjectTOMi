@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Entry} from "../../../model/entry";
 import {EntryService} from "../../../service/entry.service";
 import {Project} from "../../../model/project";
@@ -26,6 +26,19 @@ export class EntryComponent implements OnInit {
   @Output() copyRequested = new EventEmitter<any>();
   /** Event emitter used to notify the parent component that a delete of an entry has been requested. */
   @Output() deleteRequested = new EventEmitter<any>();
+
+  @ViewChild('componentInput') componentInput;
+  @ViewChild('projectInput') projectInput;
+  @ViewChild('taskInput') taskInput;
+  @ViewChild('unitTypeInput') unitTypeInput;
+  @ViewChild('quantityInput') quantityInput;
+  @ViewChild('mondayInput') mondayInput;
+  @ViewChild('tuesdayInput') tuesdayInput;
+  @ViewChild('wednesdayInput') wednesdayInput;
+  @ViewChild('thursdayInput') thursdayInput;
+  @ViewChild('fridayInput') fridayInput;
+  @ViewChild('saturdayInput') saturdayInput;
+  @ViewChild('sundayInput') sundayInput;
 
   /** List of all tasks.*/
   tasks: Task[];
@@ -62,6 +75,19 @@ export class EntryComponent implements OnInit {
   }
 
   save(){
-    console.log("SAVING...");
+    // this.entry.component = this.componentInput.nativeElement.value;
+    // this.entry.project = this.projectInput.nativeElement.value;
+    // this.entry.task = this.taskInput.nativeElement.value;
+    // this.entry.unitType = this.unitTypeInput.nativeElement.value;
+    // this.entry.quantity = this.quantityInput.nativeElement.value;
+    // this.entry.mondayHours = this.mondayInput.nativeElement.value;
+    // this.entry.tuesdayHours = this.tuesdayInput.nativeElement.value;
+    // this.entry.wednesdayHours = this.wednesdayInput.nativeElement.value;
+    // this.entry.thursdayHours = this.thursdayInput.nativeElement.value;
+    // this.entry.fridayHours = this.fridayInput.nativeElement.value;
+    // this.entry.saturdayHours = this.saturdayInput.nativeElement.value;
+    // this.entry.sundayHours = this.sundayInput.nativeElement.value;
+
+    console.log(this.projectInput.nativeElement.value);
   }
 }
