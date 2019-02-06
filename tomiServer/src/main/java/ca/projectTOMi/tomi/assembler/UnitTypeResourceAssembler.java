@@ -24,7 +24,7 @@ public final class UnitTypeResourceAssembler implements ResourceAssembler<UnitTy
     public Resource<UnitType> toResource(UnitType unitType) {
         Resource<UnitType> resource = new Resource<>(unitType,
                 linkTo(methodOn(UnitTypeController.class).getUnitType(unitType.getId())).withSelfRel(),
-                linkTo(methodOn(UnitTypeController.class).getActiveUnitTypes()).withRel("unittypes"),
+                linkTo(methodOn(UnitTypeController.class).getActiveUnitTypes(null)).withRel("unittypes"),
                 linkTo(methodOn(UnitTypeController.class).setUnitTypeInactive(unitType.getId())).withRel("delete")
         );
 

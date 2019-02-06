@@ -7,6 +7,7 @@ import ca.projectTOMi.tomi.service.UnitTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
@@ -43,14 +45,16 @@ public class UnitTypeController {
     /**
      * Returns a collection of all active {@Link UnitType} objects to the source of a GET request to /unit_types.
      *
+     * @param head header component of the HTTP request
+     *
      * @return Collection of resources representing all active UnitTypes.
      */
     @GetMapping("/unit_types")
-    public Resources<Resource<UnitType>> getActiveUnitTypes() {
+    public Resources<Resource<UnitType>> getActiveUnitTypes(@RequestHeader HttpHeaders head) {
         List<Resource<UnitType>> unitType = service.getActiveUnitTypes().stream().map(assembler::toResource).collect(Collectors.toList());
 
         return new Resources<>(unitType,
-                linkTo(methodOn(UnitTypeController.class).getActiveUnitTypes()).withSelfRel());
+                linkTo(methodOn(UnitTypeController.class).getActiveUnitTypes(null)).withSelfRel());
     }
 
     /**
