@@ -3,6 +3,7 @@ package ca.projectTOMi.tomi.controller;
 import java.util.List;
 import ca.projectTOMi.tomi.model.BillableHoursReportLine;
 import ca.projectTOMi.tomi.model.BudgetReport;
+import ca.projectTOMi.tomi.model.ProductivityReportLine;
 import ca.projectTOMi.tomi.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,5 +23,10 @@ public class ReportController {
   @GetMapping("projects/{id}/budget_report")
   public BudgetReport getBudgetReport(@PathVariable String id){
     return reportService.getBudgetReport(id);
+  }
+
+  @GetMapping("user_accounts/{id}/productivity_report")
+  public List<ProductivityReportLine> getProductivityReport(@PathVariable Long id){
+    return reportService.getProductivityReport(id);
   }
 }

@@ -45,7 +45,6 @@ public class EntryService {
      */
     public Entry updateEntry(Long id, Entry updatedEntry) {
         Entry entry = repository.findById(id).orElseThrow(() -> new EntryNotFoundException());
-
         switch (entry.getStatus()) {
             case APPROVED:
                 throw new IllegalEntryStateException();
