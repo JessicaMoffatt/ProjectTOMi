@@ -28,7 +28,7 @@ public class ReportRepository {
   }
 
   public List<ProductivityReportLine> generateProductivityReport(UserAccount userAccount){
-    Query q =entityManager.createQuery("SELECT new ca.projectTOMi.tomi.model.ProductivityReportLine(t.startDate, t.userAccount, u, SUM(e.totalHours), SUM(e.quantity)) FROM Entry e JOIN Timesheet t ON e.timesheet = t JOIN UnitType u ON e.unitType = u WHERE t.userAccount = :userAccount GROUP BY t, u", ProductivityReportLine.class);
+    Query q =entityManager.createQuery("SELECT new ca.projectTOMi.tomi.model.ProductivityReportLine(t.startDate, t.userAccount, u, SUM(CASE WHEN (e.totalHours IS NULL) THEN 0.0 ELSE e.totalHours END), SUM(CASE WHEN (e.quantity IS NULL) THEN 0.0 ELSE e.quantity END)) FROM Entry e JOIN Timesheet t ON e.timesheet = t JOIN UnitType u ON e.unitType = u WHERE t.userAccount = :userAccount GROUP BY t, u", ProductivityReportLine.class);
     return q.setParameter("userAccount", userAccount).getResultList();
   }
 }

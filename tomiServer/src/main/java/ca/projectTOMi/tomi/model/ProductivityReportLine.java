@@ -16,7 +16,7 @@ public class ProductivityReportLine {
     this.userAccount = userAccount;
     this.unitType = unitType;
     this.time = time;
-    this.quantity = quantity == 0 ? 0 : quantity;
-    this.normalizedValues = unitType.getWeight();
+    this.quantity = quantity;
+    this.normalizedValues = this.quantity * (unitType.getWeight()/37.5) * 100;
   }
 }
