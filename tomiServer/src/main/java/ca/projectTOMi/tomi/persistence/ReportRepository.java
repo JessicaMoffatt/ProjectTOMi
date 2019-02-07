@@ -21,7 +21,7 @@ public class ReportRepository {
   }
 
   public BudgetReport generateBudgetReport(Project project){
-    Query q = entityManager.createQuery("SELECT new ca.projectTOMi.tomi.model.BudgetReport(0L, 0L, p) FROM Project p where p = :project", BudgetReport.class);
+    Query q = entityManager.createQuery("SELECT new ca.projectTOMi.tomi.model.BudgetReport( SUM( t.totalHours), SUM(e.amount), p) FROM Project p JOIN Expense e ON e.project = p JOIN Entry t ON t.project = p where p = :project group by p", BudgetReport.class);
     return (BudgetReport) q.setParameter("project", project).getSingleResult();
   }
 }
