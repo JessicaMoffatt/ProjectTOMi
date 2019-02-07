@@ -7,18 +7,21 @@
  * @version 2.0
  */
 import {Status} from "./status";
+import {Project} from "./project";
+import {Task} from "./task";
+import {UnitType} from "./unitType";
 
 export class Entry{
   /** The unique identifier for this entry.*/
   id: number;
   /** The project this entry is for.*/
-  projectId: string;
+  project: Project;
   /** The task this entry is for.*/
-  taskId: number;
+  task: Task;
   /** The unit type corresponding to the component worked on for this entry.*/
-  unitTypeId: number;
+  unitType: UnitType;
   /** The timesheet associated with the entry.*/
-  timesheetId: number;
+  timesheet: number;
   /** Represents whether or not the entry has been approved by the project manager.*/
   status: Status;
   /** The component worked on for this entry.*/
@@ -48,10 +51,10 @@ export class Entry{
 
   constructor(){
     this.id = -1;
-    this.projectId = null;
-    this.taskId = null;
-    this.unitTypeId = null;
-    this.timesheetId = null;
+    this.project = null;
+    this.task = null;
+    this.unitType = null;
+    this.timesheet = null;
     this.status = Status.LOGGING;
     this.component = "";
     this.mondayHours = 0;

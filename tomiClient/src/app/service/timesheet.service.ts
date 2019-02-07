@@ -4,7 +4,6 @@ import {map} from "rxjs/operators";
 import {Entry} from "../model/entry";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Timesheet} from "../model/timesheet";
-import {EntryComponent} from "../component/panel/entry/entry.component";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -41,7 +40,7 @@ export class TimesheetService {
   }
 
   //TODO consider the posibility that currentTimesheet is -1
-  getCurrentTimesheet() {
+  async getCurrentTimesheet() {
     return this.timesheets[this.currentTimesheet];
   }
 
@@ -64,5 +63,23 @@ export class TimesheetService {
         return this.getCurrentTimesheet();
       });
     });
+  }
+
+  async submit(){
+    let tempSheet: Timesheet = null;
+    await this.getCurrentTimesheet().then(
+      (data)=>{
+        const url = data._links["submit"];
+
+        this.http.put<Timesheet>(url["href"],data, httpOptions).toPromise().then(response => {
+          tempSheet = response;
+          return response;
+        }).catch((error: any) => {
+          //TODO
+        });
+
+        return tempSheet;
+      });
+
   }
 }

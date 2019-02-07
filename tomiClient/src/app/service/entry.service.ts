@@ -52,6 +52,7 @@ export class EntryService {
    */
   async save(entry: Entry) {
     let tempEntry: Entry = null;
+
     if (entry.id === -1) {
       await this.http.post<Entry>(this.entriesUrl, JSON.stringify(entry), httpOptions).toPromise().then(response => {
         tempEntry = response;
@@ -59,9 +60,10 @@ export class EntryService {
       }).catch((error: any) => {
         //TODO
       });
-    } else {
+    } else if(entry.id >= 1){
       const url = entry._links["update"];
-      this.http.put<Entry>(url["href"], JSON.stringify(entry), httpOptions).toPromise().then((response) => {
+
+      await this.http.put<Entry>(url["href"], JSON.stringify(entry), httpOptions).toPromise().then((response) => {
 
         tempEntry = response;
         return response;
@@ -69,6 +71,19 @@ export class EntryService {
         //TODO
       });
     }
+
+    return tempEntry;
+  }
+
+  async copy(entry: Entry) {
+    let tempEntry: Entry = null;
+    const url = entry._links["copy"];
+      await this.http.post<Entry>(url["href"],null, httpOptions).toPromise().then(response => {
+        tempEntry = response;
+        return response;
+      }).catch((error: any) => {
+        //TODO
+      });
 
     return tempEntry;
   }

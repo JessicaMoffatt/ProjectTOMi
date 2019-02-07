@@ -25,6 +25,8 @@ import {EntryComponent} from "../entry/entry.component";
 })
 export class TimesheetComponent implements OnInit, AfterViewInit{
 
+  private userId = 1;
+
   /** List of all entries for current timesheet.*/
   entries: Entry[] = [];
   /** List of all projects this user is allowed to access.*/
@@ -53,7 +55,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     this.populateTimesheets().then((value)=>{
       let timesheet = value as Timesheet;
       this.getEntries(timesheet.id);
-      this.getProjects(1);
+      this.getProjects(this.userId);
     });
   }
 
@@ -71,7 +73,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
 
   async populateTimesheets(){
     let promise = new Promise((resolve, reject) => {
-      resolve(this.timesheetService.populateTimesheets(1))
+      resolve(this.timesheetService.populateTimesheets(this.userId))
     });
 
     return await promise;
@@ -86,7 +88,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   }
 
   getProjects(id:number): void{
-    this.projectService.getProjects(id).subscribe((data => this.projects = data));
+    this.projectService.getProjectsForUser(id).subscribe((data => this.projects = data));
   }
 
   /**
@@ -95,18 +97,13 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   public addEntry(): void {
     let newEntry = new Entry();
 
-    //TODO, this cannot be hardcoded!!
-    let temp = new UserAccount();
-    temp.id = 1;
     //TODO get the actual timesheet id
-    newEntry.timesheetId = this.timesheetService.getCurrentTimesheet().id;
+    // newEntry.timesheet = this.timesheetService.getCurrentTimesheet().id;
 
     this.entryService.save(newEntry).then( (data => {
-      this.entries.push(data)
+      this.entries.push(data);
       this.entryComponents = [];
     }));
-
-
   }
 
   /**
@@ -114,7 +111,11 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
    * @param entry The entry to duplicate.
    */
   copyEntry(entry: Entry): void {
-    this.entries.push(entry);
+    this.entryService.copy(entry).then(
+      (data) => {
+        this.entries.push(data);
+      }
+    );
 
     this.entryComponents = [];
   }
@@ -136,6 +137,10 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     this.entryComponents.forEach(item => {
       item.save();
     });
+  }
+
+  submit(){
+    this.timesheetService.submit().then();
   }
 
   // /**
