@@ -1,6 +1,5 @@
 package ca.projectTOMi.tomi.interceptor;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -9,19 +8,18 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 @Component
 @CrossOrigin (origins = "http://localhost:4200")
-public class UnitTypeInterceptor implements HandlerInterceptor {
+public class ProjectAuthorizationInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(
     HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    System.out.println("Hello, it's bean time!");
+    System.out.println("ProjectAuthInterceptor");
     return true;
   }
   @Override
   public void postHandle(
     HttpServletRequest request, HttpServletResponse response, Object handler,
     ModelAndView modelAndView) throws Exception {
-//    response.addCookie(new Cookie("Tracking", "We're watching you"));
-    System.out.println("now that's what I call pod racing!");
+    System.out.println("project auth filtering");
 
   }
 
