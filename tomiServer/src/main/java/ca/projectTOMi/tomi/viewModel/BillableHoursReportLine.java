@@ -1,6 +1,8 @@
-package ca.projectTOMi.tomi.model;
+package ca.projectTOMi.tomi.viewModel;
 
 import java.time.LocalDate;
+import ca.projectTOMi.tomi.model.Project;
+import ca.projectTOMi.tomi.model.UserAccount;
 import lombok.Data;
 
 @Data

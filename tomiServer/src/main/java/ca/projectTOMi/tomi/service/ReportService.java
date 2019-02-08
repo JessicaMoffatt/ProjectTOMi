@@ -1,10 +1,10 @@
 package ca.projectTOMi.tomi.service;
 
-import java.time.LocalDate;
 import java.util.List;
-import ca.projectTOMi.tomi.model.BillableHoursReportLine;
-import ca.projectTOMi.tomi.model.BudgetReport;
-import ca.projectTOMi.tomi.model.ProductivityReportLine;
+import ca.projectTOMi.tomi.viewModel.BillableHoursReportLine;
+import ca.projectTOMi.tomi.viewModel.BudgetReport;
+import ca.projectTOMi.tomi.viewModel.DataDumpReportLine;
+import ca.projectTOMi.tomi.viewModel.ProductivityReportLine;
 import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.ReportRepository;
@@ -30,5 +30,9 @@ public class ReportService {
   public List<ProductivityReportLine> getProductivityReport(Long userAccountId){
     UserAccount userAccount = userAccountService.getUserAccount(userAccountId);
     return reportRepository.generateProductivityReport(userAccount);
+  }
+
+  public List<DataDumpReportLine> getDataDumpReport(){
+    return reportRepository.generateDataDumpReport();
   }
 }
