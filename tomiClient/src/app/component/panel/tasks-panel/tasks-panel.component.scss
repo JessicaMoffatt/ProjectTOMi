@@ -1,23 +1,26 @@
+@import '../../../../variables';
 /*
 @author James Andrade
 @version 1.0
  */
 
 .add_task{
-  background-color:#3863AE;
+  background-color: $blue;
 }
 
 #sidebar {
-  width: 20%;
+  top: 50px;
+  width: 200px;
   height: 100%;
   position: absolute;
-  background-color: orange;
+  background-color: $orange;
 }
 
 #mainPanel{
   position: absolute;
-  left: 20%;
-  width: 80%;
+  left: 220px;
+  top: 70px;
+  width: 100%;
   height: 100%;
 }
 
