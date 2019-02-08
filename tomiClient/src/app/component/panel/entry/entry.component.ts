@@ -80,35 +80,96 @@ export class EntryComponent implements OnInit {
     this.deleteRequested.emit(this.entry);
   }
 
-  save() {
+  async save() {
     this.entry.component = this.componentInput.nativeElement.value;
-    this.entry.quantity = this.quantityInput.nativeElement.value;
-    this.entry.mondayHours = this.mondayInput.nativeElement.value;
-    this.entry.tuesdayHours = this.tuesdayInput.nativeElement.value;
-    this.entry.wednesdayHours = this.wednesdayInput.nativeElement.value;
-    this.entry.thursdayHours = this.thursdayInput.nativeElement.value;
-    this.entry.fridayHours = this.fridayInput.nativeElement.value;
-    this.entry.saturdayHours = this.saturdayInput.nativeElement.value;
-    this.entry.sundayHours = this.sundayInput.nativeElement.value;
 
-    //TODO not sure why I have to do this... inputs get reset, so I have to make sure to set them back.
-    this.populateEntry().then(() => {
+    this.entry.quantity = this.quantityInput.nativeElement.value;
+    if(this.entry.quantity.toString() === ""){
+      this.entry.quantity = 0;
+    }
+
+    this.entry.mondayHours = this.mondayInput.nativeElement.value;
+    if(this.entry.mondayHours.toString() === ""){
+      this.entry.mondayHours = 0;
+    }
+
+    this.entry.tuesdayHours = this.tuesdayInput.nativeElement.value;
+    if(this.entry.tuesdayHours.toString() === ""){
+      this.entry.tuesdayHours = 0;
+    }
+
+    this.entry.wednesdayHours = this.wednesdayInput.nativeElement.value;
+    if(this.entry.wednesdayHours.toString() === ""){
+      this.entry.wednesdayHours = 0;
+    }
+
+    this.entry.thursdayHours = this.thursdayInput.nativeElement.value;
+    if(this.entry.thursdayHours.toString() === ""){
+      this.entry.thursdayHours = 0;
+    }
+
+    this.entry.fridayHours = this.fridayInput.nativeElement.value;
+    if(this.entry.fridayHours.toString() === ""){
+      this.entry.fridayHours = 0;
+    }
+
+    this.entry.saturdayHours = this.saturdayInput.nativeElement.value;
+    if(this.entry.saturdayHours.toString() === ""){
+      this.entry.saturdayHours = 0;
+    }
+
+    this.entry.sundayHours = this.sundayInput.nativeElement.value;
+    if(this.entry.sundayHours.toString() === ""){
+      this.entry.sundayHours = 0;
+    }
+
+    await this.populateEntryPromise().then(() => {
       this.entryService.save(this.entry).then();
     });
   }
 
-  async populateEntry() {
-    await this.projectService.getProjectById(this.projectInput.nativeElement.value).subscribe((data) => {
-      this.entry.project = data;
+  async populateEntryPromise() {
+    let promise = new Promise((resolve, reject) => {
+      resolve(
+        this.populateEntry()
+      )
     });
 
-    await this.taskService.getTaskById(this.taskInput.nativeElement.value).subscribe((data)=>{
+    return await promise;
+  }
 
-      this.entry.task = data;
-    });
+  private populateEntry(){
+      if(this.projectInput.nativeElement.value != "-1"){
 
-    await this.unitTypeService.getUnitTypeById(this.unitTypeInput.nativeElement.value).subscribe((data)=>{
-      this.entry.unitType = data;
-    });
+        let index = this.projects.findIndex((element) => {
+          return (element.id == this.projectInput.nativeElement.value);
+        });
+
+        this.entry.project = this.projects[index];
+      }else{
+        this.entry.project = null;
+      }
+
+      if(this.taskInput.nativeElement.value != -1){
+        let index = this.tasks.findIndex((element) => {
+          return (element.id == this.taskInput.nativeElement.value);
+        });
+
+        this.entry.task = this.tasks[index];
+      }else{
+        this.entry.task = null;
+      }
+
+      if(this.unitTypeInput.nativeElement.value != -1){
+        let index = this.unitTypes.findIndex((element) => {
+          return (element.id == this.unitTypeInput.nativeElement.value);
+        });
+
+        this.entry.unitType = this.unitTypes[index];
+      }else{
+        this.entry.unitType = null;
+      }
+
+      return this.entry;
   }
 }

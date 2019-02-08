@@ -52,7 +52,6 @@ export class EntryService {
    */
   async save(entry: Entry) {
     let tempEntry: Entry = null;
-
     if (entry.id === -1) {
       await this.http.post<Entry>(this.entriesUrl, JSON.stringify(entry), httpOptions).toPromise().then(response => {
         tempEntry = response;

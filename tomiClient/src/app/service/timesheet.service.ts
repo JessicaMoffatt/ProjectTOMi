@@ -28,7 +28,7 @@ export class TimesheetService {
   constructor(private http: HttpClient) {
   }
 
-  getEntries(id: number): Observable<Array<Entry>> {
+  getEntries(id: number): Observable<Array<Entry>>{
     return this.http.get(`${this.timesheetUrl}/${id}/entries`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {

@@ -44,6 +44,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   entryComponents: EntryComponent[] = [];
 
   constructor(private timesheetService: TimesheetService, private projectService: ProjectService, private entryService: EntryService) {
+
   }
 
   //TODO remove hard coding!
@@ -51,7 +52,6 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
    * On initialization, calls getEntries to populate the entries variable as well as the projects variable.
    */
   ngOnInit() {
-    //TODO remove hard coded number
     this.populateTimesheets().then((value)=>{
       let timesheet = value as Timesheet;
       this.getEntries(timesheet.id);
@@ -82,9 +82,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   /**
    * Gets all entries for this timesheet.
    */
-  getEntries(id:number): void {
-    this.timesheetService.getEntries(id).subscribe((data => this.entries = data));
-    // this.updateTally();
+  getEntries(id:number) {
+    this.timesheetService.getEntries(id).subscribe((data) => this.entries = data);
   }
 
   getProjects(id:number): void{
@@ -132,11 +131,15 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     this.entryService.delete(entry);
 
     this.entryComponents = [];
+
+    this.updateTally();
   }
 
   save(){
     this.entryComponents.forEach(item => {
-      item.save();
+      item.save().then(()=>{
+        this.updateTally();
+      });
     });
   }
 
@@ -144,18 +147,15 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     this.timesheetService.submit().then();
   }
 
-  // /**
-  //  * Updates the tally for the total worked hours for the timesheet.
-  //  */
-  // public updateTally(): void {
-  //   //TODO if hours isn't an array need to change this, also change tempentries
-  //   let hours = 0;
-  //   this.entries.forEach(function (entry) {
-  //     entry.hours.forEach(function (hr) {
-  //       hours = hours + hr;
-  //     })
-  //   });
-  //
-  //   this.tally = hours;
-  // }
+  /**
+   * Updates the tally for the total worked hours for the timesheet.
+   */
+  public updateTally(): void {
+    let hours :number = 0;
+    this.entries.forEach(function (entry) {
+      hours += +entry.mondayHours + +entry.tuesdayHours + +entry.wednesdayHours + +entry.thursdayHours + +entry.fridayHours + +entry.saturdayHours + +entry.sundayHours;
+    });
+
+    this.tally = hours;
+  }
 }
