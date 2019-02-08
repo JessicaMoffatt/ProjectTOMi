@@ -13,10 +13,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ReportService {
+  private final ReportRepository reportRepository;
+  private final ProjectService projectService;
+  private final UserAccountService userAccountService;
+
   @Autowired
-  ReportRepository reportRepository;
-  @Autowired ProjectService projectService;
-  @Autowired UserAccountService userAccountService;
+  public ReportService(ReportRepository reportRepository, ProjectService projectService, UserAccountService userAccountService) {
+    this.reportRepository = reportRepository;
+    this.projectService = projectService;
+    this.userAccountService = userAccountService;
+  }
 
   public List<BillableHoursReportLine> getBillableHoursReport(){
     return reportRepository.generateBillableHoursReport();

@@ -6,6 +6,8 @@ import ca.projectTOMi.tomi.exception.IllegalEntryStateException;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.service.EntryService;
 import ca.projectTOMi.tomi.service.TimesheetService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -37,12 +39,17 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class EntryController {
+    private final EntryResourceAssembler assembler;
+    private final EntryService service;
+    private final TimesheetService timesheetService;
+    private Logger logger = LoggerFactory.getLogger("Entry Controller");
+
     @Autowired
-    EntryResourceAssembler assembler;
-    @Autowired
-    EntryService service;
-    @Autowired
-    TimesheetService timesheetService;
+    public EntryController(EntryResourceAssembler assembler, EntryService service, TimesheetService timesheetService) {
+        this.assembler = assembler;
+        this.service = service;
+        this.timesheetService = timesheetService;
+    }
 
     /**
      * Returns a resource representing the requested {@Link Entry} to the source of a GET request to /entries/id.
@@ -128,7 +135,8 @@ public class EntryController {
     }
 
     @ExceptionHandler({EntryNotFoundException.class, IllegalEntryStateException.class})
-    public ResponseEntity<?> handleExceptions(){
+    public ResponseEntity<?> handleExceptions(Exception e){
+        logger.warn("Entry Exception: " + e.getClass());
         return ResponseEntity.status(400).build();
     }
 }

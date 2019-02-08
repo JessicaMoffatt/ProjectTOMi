@@ -6,14 +6,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.ProjectResourceAssembler;
 import ca.projectTOMi.tomi.exception.InvalidIDPrefix;
+import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
 import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.service.ProjectService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,8 +37,15 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class ProjectController {
-  @Autowired private ProjectService service;
-  @Autowired private ProjectResourceAssembler assembler;
+  private final ProjectService service;
+  private final ProjectResourceAssembler assembler;
+  private final Logger logger = LoggerFactory.getLogger("Project Controller");
+
+  @Autowired
+  public ProjectController(ProjectService service, ProjectResourceAssembler assembler) {
+    this.service = service;
+    this.assembler = assembler;
+  }
 
   /**
    * Returns a resource representing the requested {@link Project} to the source of a GET request to
@@ -131,5 +142,11 @@ public class ProjectController {
 
     return new Resources<>(project,
       linkTo(methodOn(ProjectController.class).getActiveProjects()).withSelfRel());
+  }
+
+  @ExceptionHandler({ProjectNotFoundException.class})
+  public ResponseEntity<?> handleExceptions(Exception e){
+    logger.warn("Project Exception: " + e.getClass());
+    return ResponseEntity.status(400).build();
   }
 }

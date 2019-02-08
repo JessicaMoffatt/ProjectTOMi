@@ -23,9 +23,16 @@ import org.springframework.stereotype.Service;
 @Service
 public final class UserAccountService {
 
-    @Autowired private UserAccountRepository repository;
-    @Autowired private TeamService teamService;
-    @Autowired private TimesheetService timesheetService;
+    private final UserAccountRepository repository;
+    private final TeamService teamService;
+    private final TimesheetService timesheetService;
+
+  @Autowired
+  public UserAccountService(UserAccountRepository repository, TeamService teamService, TimesheetService timesheetService) {
+    this.repository = repository;
+    this.teamService = teamService;
+    this.timesheetService = timesheetService;
+  }
 
   /**
    * Gets a {@link UserAccount} object with the provided id.

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public final class UnitTypeService {
-    private UnitTypeRepository repository;
+    private final UnitTypeRepository repository;
 
     /**
      * Constructor for the UnitTypeService component

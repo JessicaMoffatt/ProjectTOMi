@@ -21,14 +21,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public final class TimesheetService {
+  private final TimesheetRepository repository;
+  private final EntryRepository entryRepository;
+  private final EntryService entryService;
+  private final UserAccountService userAccountService;
+
   @Autowired
-  private TimesheetRepository repository;
-  @Autowired
-  private EntryRepository entryRepository;
-  @Autowired
-  private EntryService entryService;
-  @Autowired
-  private UserAccountService userAccountService;
+  public TimesheetService(TimesheetRepository repository, EntryRepository entryRepository, EntryService entryService, UserAccountService userAccountService) {
+    this.repository = repository;
+    this.entryRepository = entryRepository;
+    this.entryService = entryService;
+    this.userAccountService = userAccountService;
+  }
 
   /**
    * Gets a list of all @{link Timesheet}s that are active.

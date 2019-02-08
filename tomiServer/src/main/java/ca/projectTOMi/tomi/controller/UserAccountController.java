@@ -11,6 +11,8 @@ import ca.projectTOMi.tomi.assembler.UserAccountResourceAssembler;
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.service.UserAccountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -34,10 +36,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class UserAccountController {
+  private final UserAccountResourceAssembler assembler;
+  private final UserAccountService service;
+  private final Logger logger = LoggerFactory.getLogger("UserAccount Controller");
+
   @Autowired
-  private UserAccountResourceAssembler assembler;
-  @Autowired
-  private UserAccountService service;
+  public UserAccountController(UserAccountResourceAssembler assembler, UserAccountService service) {
+    this.assembler = assembler;
+    this.service = service;
+  }
 
   /**
    * Returns a resource representing the requested {@link UserAccount} to the source of a GET
@@ -172,7 +179,8 @@ public class UserAccountController {
   }
 
   @ExceptionHandler({UserAccountNotFoundException.class})
-  public ResponseEntity<?> handleExceptions(){
+  public ResponseEntity<?> handleExceptions(Exception e){
+    logger.warn("UserAccount Exception: "+ e.getClass());
     return ResponseEntity.status(400).build();
   }
 }

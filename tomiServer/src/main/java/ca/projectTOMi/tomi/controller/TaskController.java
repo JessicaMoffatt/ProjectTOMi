@@ -4,6 +4,8 @@ import ca.projectTOMi.tomi.assembler.TaskResourceAssembler;
 import ca.projectTOMi.tomi.exception.TaskNotFoundException;
 import ca.projectTOMi.tomi.model.Task;
 import ca.projectTOMi.tomi.service.TaskService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -35,8 +37,15 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class TaskController {
-    @Autowired private TaskResourceAssembler assembler;
-    @Autowired private TaskService service;
+    private final TaskResourceAssembler assembler;
+    private final TaskService service;
+    private Logger logger = LoggerFactory.getLogger("Task Controller");
+
+    @Autowired
+    public TaskController(TaskResourceAssembler assembler, TaskService service) {
+        this.assembler = assembler;
+        this.service = service;
+    }
 
     /**
      * Returns a collection of all active {@Link Task} objects to the source of a GET request to /tasks.
@@ -136,7 +145,8 @@ public class TaskController {
     }
 
     @ExceptionHandler({TaskNotFoundException.class})
-    public ResponseEntity<?> handleExceptions(){
+    public ResponseEntity<?> handleExceptions(Exception e){
+        logger.warn("Task Exception: " + e.getClass());
         return ResponseEntity.status(400).build();
     }
 }

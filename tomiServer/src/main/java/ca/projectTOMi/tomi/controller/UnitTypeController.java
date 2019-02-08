@@ -4,6 +4,8 @@ import ca.projectTOMi.tomi.assembler.UnitTypeResourceAssembler;
 import ca.projectTOMi.tomi.exception.UnitTypeNotFoundException;
 import ca.projectTOMi.tomi.model.UnitType;
 import ca.projectTOMi.tomi.service.UnitTypeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -37,10 +39,15 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class UnitTypeController {
+    private final UnitTypeResourceAssembler assembler;
+    private final UnitTypeService service;
+    private final Logger logger = LoggerFactory.getLogger("UnitType Controller");
+
     @Autowired
-    private UnitTypeResourceAssembler assembler;
-    @Autowired
-    private UnitTypeService service;
+    public UnitTypeController(UnitTypeResourceAssembler assembler, UnitTypeService service) {
+        this.assembler = assembler;
+        this.service = service;
+    }
 
     /**
      * Returns a collection of all active {@Link UnitType} objects to the source of a GET request to /unit_types.
@@ -116,7 +123,8 @@ public class UnitTypeController {
     }
 
     @ExceptionHandler({UnitTypeNotFoundException.class})
-    public ResponseEntity<?> handleExceptions(){
+    public ResponseEntity<?> handleExceptions(Exception e){
+        logger.warn("UnitType Exception: " + e.getClass());
         return ResponseEntity.status(400).build();
     }
 }

@@ -8,6 +8,8 @@ import ca.projectTOMi.tomi.assembler.ExpenseResourceAssembler;
 import ca.projectTOMi.tomi.exception.ExpenseNotFoundException;
 import ca.projectTOMi.tomi.model.Expense;
 import ca.projectTOMi.tomi.service.ExpenseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -34,10 +36,15 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class ExpenseController {
+  private final ExpenseService service;
+  private final ExpenseResourceAssembler assembler;
+  private final Logger logger = LoggerFactory.getLogger("Expense Controller");
+
   @Autowired
-  private ExpenseService service;
-  @Autowired
-  private ExpenseResourceAssembler assembler;
+  public ExpenseController(ExpenseService service, ExpenseResourceAssembler assembler){
+    this.service = service;
+    this.assembler = assembler;
+  }
 
   /**
    * Returns a resource representing the requested {@link Expense} to the source of a GET request to
@@ -125,7 +132,8 @@ public class ExpenseController {
   }
 
   @ExceptionHandler({ExpenseNotFoundException.class})
-  public ResponseEntity<?> handleExceptions(){
+  public ResponseEntity<?> handleExceptions(Exception e){
+    logger.warn("Expense Exception: " + e.getClass());
     return ResponseEntity.status(400).build();
   }
 }

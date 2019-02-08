@@ -9,6 +9,8 @@ import ca.projectTOMi.tomi.assembler.ClientResourceAssembler;
 import ca.projectTOMi.tomi.exception.ClientNotFoundException;
 import ca.projectTOMi.tomi.model.Client;
 import ca.projectTOMi.tomi.service.ClientService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -33,8 +35,15 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class ClientController {
-  @Autowired private ClientService service;
-  @Autowired private ClientResourceAssembler assembler;
+  private final ClientService service;
+  private final ClientResourceAssembler assembler;
+  private final Logger logger = LoggerFactory.getLogger("Client Controller");
+
+  @Autowired
+  public ClientController(ClientService service, ClientResourceAssembler assembler) {
+    this.service = service;
+    this.assembler = assembler;
+  }
 
   /**
    * Returns a collection of all active {@link Client} the source of a GET request to /clients.
@@ -122,7 +131,8 @@ public class ClientController {
   }
 
   @ExceptionHandler({ClientNotFoundException.class})
-  public ResponseEntity<?> handleExceptions(){
+  public ResponseEntity<?> handleExceptions(Exception e){
+    logger.warn("Client Exception: " + e.getClass());
     return ResponseEntity.status(400).build();
   }
 }

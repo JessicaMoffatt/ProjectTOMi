@@ -14,8 +14,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ReportRepository {
+  private final EntityManager entityManager;
+
   @Autowired
-  private EntityManager entityManager;
+  public ReportRepository(EntityManager entityManager) {
+    this.entityManager = entityManager;
+  }
 
   public List<BillableHoursReportLine> generateBillableHoursReport(){
     return entityManager.createQuery(

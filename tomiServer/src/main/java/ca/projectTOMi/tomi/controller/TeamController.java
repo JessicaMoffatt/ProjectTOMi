@@ -13,6 +13,8 @@ import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.service.TeamService;
 import ca.projectTOMi.tomi.service.UserAccountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -39,9 +41,17 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin (origins = "http://localhost:4200")
 public class TeamController {
 
-  @Autowired private TeamResourceAssembler assembler;
-  @Autowired private TeamService service;
-  @Autowired private UserAccountService userAccountService;
+  private final TeamResourceAssembler assembler;
+  private final TeamService service;
+  private final UserAccountService userAccountService;
+  private final Logger logger = LoggerFactory.getLogger("Team Controller");
+
+  @Autowired
+  public TeamController(TeamResourceAssembler assembler, TeamService service, UserAccountService userAccountService) {
+    this.assembler = assembler;
+    this.service = service;
+    this.userAccountService = userAccountService;
+  }
 
   /**
    * Returns a collection of all active teams the source of a GET request to /teams.
@@ -124,7 +134,8 @@ public class TeamController {
   }
 
   @ExceptionHandler({TeamNotFoundException.class})
-  public ResponseEntity<?> handleExceptions(){
+  public ResponseEntity<?> handleExceptions(Exception e){
+    logger.warn("Team Exception: " + e.getClass());
     return ResponseEntity.status(400).build();
   }
 }

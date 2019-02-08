@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public final class ProjectService {
-  private ProjectRepository repository;
-  @Autowired private UserAccountService userAccountService;
+  private final ProjectRepository repository;
+  private final UserAccountService userAccountService;
 
   /**
    * Constructor for the ProjectService service.
@@ -27,8 +27,10 @@ public final class ProjectService {
    * @param repository
    *   Repository responsible for persisting Project instances
    */
-  public ProjectService(ProjectRepository repository) {
+  @Autowired
+  public ProjectService(ProjectRepository repository, UserAccountService userAccountService) {
     this.repository = repository;
+    this.userAccountService = userAccountService;
   }
 
   /**

@@ -7,6 +7,8 @@ import ca.projectTOMi.tomi.exception.IllegalTimesheetModificationException;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
 import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.service.TimesheetService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -31,8 +33,15 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class TimesheetController {
-  @Autowired private TimesheetResourceAssembler assembler;
-  @Autowired private TimesheetService service;
+  private final TimesheetResourceAssembler assembler;
+  private final TimesheetService service;
+  private final Logger logger = LoggerFactory.getLogger("Timesheet Controller");
+
+  @Autowired
+  public TimesheetController(TimesheetResourceAssembler assembler, TimesheetService service) {
+    this.assembler = assembler;
+    this.service = service;
+  }
 
   @GetMapping("/timesheets")
   public Resources<Resource<Timesheet>> getActiveTimesheets(){
@@ -77,7 +86,8 @@ public class TimesheetController {
   }
 
   @ExceptionHandler({IllegalTimesheetModificationException.class, TimesheetNotFoundException.class})
-  public ResponseEntity<?> handleExceptions(){
+  public ResponseEntity<?> handleExceptions(Exception e){
+    logger.warn("Timesheet Exception: " + e.getClass());
     return ResponseEntity.status(400).build();
   }
 }

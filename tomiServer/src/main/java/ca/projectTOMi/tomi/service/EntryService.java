@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class EntryService {
-    private EntryRepository repository;
+    private final EntryRepository repository;
 
     /**
      * Constructor for the EntryService component.
