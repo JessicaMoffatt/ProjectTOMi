@@ -7,6 +7,7 @@ import ca.projectTOMi.tomi.exception.IllegalTimesheetModificationException;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
 import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.service.TimesheetService;
+import ca.projectTOMi.tomi.service.UserAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,14 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class TimesheetController {
   private final TimesheetResourceAssembler assembler;
   private final TimesheetService service;
+  private final UserAccountService userAccountService;
   private final Logger logger = LoggerFactory.getLogger("Timesheet Controller");
 
   @Autowired
-  public TimesheetController(TimesheetResourceAssembler assembler, TimesheetService service) {
+  public TimesheetController(TimesheetResourceAssembler assembler, TimesheetService service, UserAccountService userAccountService) {
     this.assembler = assembler;
     this.service = service;
+    this.userAccountService = userAccountService;
   }
 
   @GetMapping("/timesheets")
@@ -79,7 +82,7 @@ public class TimesheetController {
 
   @GetMapping("/timesheets/userAccount/{id}")
   public Resources<Resource<Timesheet>> getTimesheetsByUserAccount(@PathVariable Long id){
-    List<Resource<Timesheet>> expense = service.getTimesheetsByUserAccount(id).stream().map(assembler::toResource).collect(Collectors.toList());
+    List<Resource<Timesheet>> expense = userAccountService.getTimesheetsByUserAccount(id).stream().map(assembler::toResource).collect(Collectors.toList());
 
     return new Resources<>(expense,
       linkTo(methodOn(TimesheetController.class).getTimesheetsByUserAccount(id)).withSelfRel());
