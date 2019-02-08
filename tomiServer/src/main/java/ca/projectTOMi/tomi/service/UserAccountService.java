@@ -8,6 +8,7 @@ import java.util.Locale;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.Team;
+import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.UserAccountRepository;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -182,5 +183,11 @@ public final class UserAccountService {
     List<UserAccount> unassignedUserAccounts = repository.getAllByActiveTrueAndTeamIsNull();
     return unassignedUserAccounts;
   }
+
+  public List<Timesheet> getTimesheetsByUserAccount(Long userAccountId){
+    UserAccount userAccount = this.getUserAccount(userAccountId);
+    return timesheetService.getTimesheetsByUserAccount(userAccount);
+  }
+
 }
 

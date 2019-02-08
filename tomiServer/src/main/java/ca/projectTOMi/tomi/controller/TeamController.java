@@ -59,12 +59,11 @@ public class TeamController {
    * @return Collection of resources representing all active teams
    */
   @GetMapping ("/teams")
-  public Resources<Resource<Team>> getActiveTeams(@RequestHeader HttpHeaders head) {
-    System.out.println(head.get("authorization"));
+  public Resources<Resource<Team>> getActiveTeams() {
     List<Resource<Team>> team = service.getActiveTeams().stream().map(assembler::toResource).collect(Collectors.toList());
 
     return new Resources<>(team,
-      linkTo(methodOn(TeamController.class).getActiveTeams(null)).withSelfRel());
+      linkTo(methodOn(TeamController.class).getActiveTeams()).withSelfRel());
   }
 
   /**
