@@ -173,6 +173,7 @@ public class EntryService {
         newEntry.setSaturdayHours(0.0);
         newEntry.setSundayHours(0.0);
         newEntry.setQuantity(0.0);
+        newEntry.setProject(copy.getProject());
         return repository.save(newEntry);
     }
 }
