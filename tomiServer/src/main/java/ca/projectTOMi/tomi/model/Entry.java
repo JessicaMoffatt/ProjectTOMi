@@ -48,15 +48,6 @@ public final class Entry {
     private Long id;
 
     /**
-     * The userAccount of the user creating the entry.
-     */
-    @NotNull
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @MapKeyColumn(name = "id")
-    private UserAccount userAccount;
-
-    /**
      * The Project associated with the entry.
      */
     @ManyToOne
@@ -83,6 +74,9 @@ public final class Entry {
 
     @ManyToOne
     @MapKeyColumn(name = "id")
+    @JsonProperty (value="timesheet")
+    @JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference (alwaysAsId = true)
     private Timesheet timesheet;
 
     /**
@@ -171,4 +165,10 @@ public final class Entry {
     @Column(nullable = false)
     private boolean active;
 
+    @JsonProperty
+    public void setTimesheet(Long id){
+        Timesheet t = new Timesheet();
+        t.setId(id);
+        this.timesheet = t;
+    }
 }

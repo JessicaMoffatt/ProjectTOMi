@@ -51,7 +51,7 @@ public final class Project {
    * The UserAccount managing this Project.
    */
   @OneToOne
-  @JsonProperty (value="progectManagerId")
+  @JsonProperty (value="projectManagerId")
   @JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
   @JsonIdentityReference (alwaysAsId = true)
   private UserAccount projectManager;
