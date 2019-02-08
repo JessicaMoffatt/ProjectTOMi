@@ -1,7 +1,8 @@
-import {Component, ComponentFactoryResolver, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserAccountService} from "../../../service/user-account.service";
-import {UserAccountSidebarService} from "../../../service/user-account-sidebar-service";
 import {UserAccount} from "../../../model/userAccount";
+import {TeamService} from "../../../service/team.service";
+import {TeamSidebarService} from "../../../service/team-sidebar.service";
 
 @Component({
   selector: 'app-user-account',
@@ -10,7 +11,7 @@ import {UserAccount} from "../../../model/userAccount";
 })
 export class UserAccountComponent implements OnInit {
 
-  constructor(private resolver: ComponentFactoryResolver, public userAccountService: UserAccountService, public userAccountSidebarService: UserAccountSidebarService) { }
+  constructor(public userAccountService: UserAccountService, public teamSidebarService: TeamSidebarService) { }
 
   ngOnInit() {
 
@@ -38,5 +39,9 @@ export class UserAccountComponent implements OnInit {
    */
   cancel(userAccount: UserAccount):void {
     this.userAccountService.cancel(userAccount);
+  }
+
+  editUserAccount(userAccount) {
+
   }
 }

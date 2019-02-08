@@ -14,36 +14,53 @@ export class UserAccountSidebarComponent implements OnInit {
   @ViewChild('add_user_account_container', {read: ViewContainerRef})
   add_user_account_container: ViewContainerRef;
 
-  constructor(public resolver: ComponentFactoryResolver, public userAccountSidebarService:UserAccountSidebarService, public userAccountService: UserAccountService) { }
+  constructor(public resolver: ComponentFactoryResolver, public userAccountSidebarService: UserAccountSidebarService, public userAccountService: UserAccountService) {
+  }
 
+  /**
+   *
+   */
   ngOnInit() {
+    this.updateUserAccounts();
+  }
 
+  updateUserAccounts() {
     this.userAccountSidebarService.getAllUserAccounts().subscribe((data: Array<UserAccount>) => {
-      this.userAccountSidebarService.userAccounts = data;
-      this.userAccountSidebarService.filteredAccounts = data;
+      this.userAccountSidebarService.reloadUserAccounts();
+      // this.userAccountSidebarService.userAccounts = data;
+      // this.userAccountSidebarService.filteredUserAccounts = data;
       this.userAccountService.userAccounts = data;
     });
   }
 
-  displayUserAccount(userAccount:UserAccount) {
+  /**
+   * Selects the UserAccount that is passed in.
+   * @param userAccount UserAccount to be selected.
+   */
+  displayUserAccount(userAccount: UserAccount) {
     this.userAccountSidebarService.getUserAccountById(userAccount.id).subscribe((data: UserAccount) => {
       this.userAccountSidebarService.selectedUserAccount = data;
     });
   }
 
+  /**
+   * Creates a Modal component for adding a new UserAccount.
+   */
   createAddUserAccountComponent() {
     this.add_user_account_container.clear();
     const factory = this.resolver.resolveComponentFactory(AddUserAccountComponent);
     this.userAccountSidebarService.ref = this.add_user_account_container.createComponent(factory);
   }
 
-  updateUserAccountSidebarList(search) {
-    this.userAccountSidebarService.filteredAccounts =
-      this.userAccountSidebarService.userAccounts.filter(this.filterUserAccounts);
-  }
-
-  filterUserAccounts(user) {
-    return user.firstName.toUpperCase().includes((<HTMLInputElement>document.getElementById("user_account_search")).value.toUpperCase()) ||
-      user.lastName.toUpperCase().includes((<HTMLInputElement>document.getElementById("user_account_search")).value.toUpperCase());
+  /**
+   * Updates the list of UserAccounts in the sidebar whenever the search input is changed.
+   * UserAccounts that do not contain the searched input will be hidden.
+   */
+  updateUserAccountSidebarList() {
+    this.userAccountSidebarService.filteredUserAccounts =
+      this.userAccountSidebarService.userAccounts.filter(function (userAccount) {
+        return userAccount.firstName.toUpperCase().includes((<HTMLInputElement>document.getElementById("user_account_search")).value.toUpperCase()) ||
+          userAccount.lastName.toUpperCase().includes((<HTMLInputElement>document.getElementById("user_account_search")).value.toUpperCase());
+      });
   }
 }

@@ -24,9 +24,6 @@ export class AddUserAccountComponent implements OnInit {
   constructor(private userAccountSidebarService: UserAccountSidebarService, private userAccountService: UserAccountService, private teamSidebarService: TeamSidebarService ) { }
 
   ngOnInit() {
-    this.teamSidebarService.getAllTeams().subscribe((data: Array<Team>) => {
-      this.teams = data;
-    });
   }
 
   /**
@@ -46,6 +43,10 @@ export class AddUserAccountComponent implements OnInit {
     // Validate the first and last names
     if (!nameRegex.test(userAccount.firstName) || !nameRegex.test(userAccount.lastName)) {
       goodUserAccount = false;
+    } else {
+      // Capitalize the first character of the first and last name are capitalized
+      userAccount.firstName = userAccount.firstName.charAt(0).toUpperCase() + userAccount.firstName.substring(1);
+      userAccount.lastName = userAccount.lastName.charAt(0).toUpperCase() + userAccount.lastName.substring(1);
     }
 
     // Validate length of email address
@@ -63,8 +64,8 @@ export class AddUserAccountComponent implements OnInit {
 
     // Validate the team id chosen by comparing to all of the existing team ids.
     let validTeamId = false;
-    for (let i = 0; i < this.teams.length; i++) {
-      if (this.teams[i].id === userAccount.teamId) {
+    for (let i = 0; i < this.userAccountService.teams.length; i++) {
+      if (this.userAccountService.teams[i].id === userAccount.teamId) {
         validTeamId = true;
       }
     }

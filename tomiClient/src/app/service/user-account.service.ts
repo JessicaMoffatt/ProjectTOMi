@@ -1,7 +1,12 @@
-import {ComponentRef, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {UserAccount} from "../model/userAccount";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UserAccountSidebarService} from "./user-account-sidebar-service";
+import {Team} from "../model/team";
+import {TeamSidebarService} from "./team-sidebar.service";
+import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
+import {TeamService} from "./team.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -26,11 +31,31 @@ export class UserAccountService {
   /** The UserAccount selected from the list of UserAccounts.*/
   private selectedUserAccount: UserAccount;
 
-  userAccounts: UserAccount[] = [];
+  userAccounts: Observable<Array<UserAccount>>;
+  teams: Observable<Array<Team>>;
 
-  constructor(private http: HttpClient, private userAccountSidebarService: UserAccountSidebarService) {
+  constructor(private http: HttpClient, private teamService : TeamService) {
+    this.userAccounts = this.GETAllUserAccounts();
+    this.teams = teamService.GETAllTeams();
 
   }
+
+  refreshUserAccounts() {
+    this.userAccounts = this.GETAllUserAccounts();
+  }
+
+
+
+  /**
+   * Gets a List of all UserAccounts.
+   */
+  GETAllUserAccounts(): Observable<Array<UserAccount>> {
+    return this.http.get(this.userAccountUrl).pipe(map((response:Response) => response))
+      .pipe(map((data: any) => {
+        return data._embedded.userAccounts as UserAccount[];
+      }));
+  }
+
 
   setSelectedUserAccount(userAccount: UserAccount) {
     this.selectedUserAccount = userAccount;
@@ -44,8 +69,9 @@ export class UserAccountService {
   async save(userAccount: UserAccount) {
     let testUserAccount: UserAccount = null;
     if (userAccount.id === -1) {
-      console.log("did a POST");
       await this.http.post<UserAccount>(this.userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
+        this.userAccountSidebarService.reloadUserAccounts();
+
         testUserAccount = response;
         return response;
       }).catch((error: any) => {
@@ -71,20 +97,13 @@ export class UserAccountService {
    *
    * @param account The UserAccount to be deleted.
    */
-  delete(account: UserAccount) {
-      let index = this.userAccountSidebarService.userAccounts.findIndex((element) => {
-        return (element.id == account.id);
-      });
-
-      this.userAccountSidebarService.userAccounts.splice(index, 1);
-
-      const url = account._links["delete"];
-
+    delete(accountToDelete:UserAccount) {
+      let url = accountToDelete._links["delete"];
       this.http.delete(url["href"], httpOptions).subscribe((response) => {
-        this.userAccountSidebarService.selectedUserAccount = null;
-        this.userAccounts = [];
-
-        return response as UserAccount;
+        this.userAccounts = this.userAccounts.filter( function(userAccount) {
+          return userAccount.id !== accountToDelete.id;
+        });
+        this.userAccountSidebarService.reloadUserAccounts();
       });
   }
 
@@ -96,4 +115,5 @@ export class UserAccountService {
   destroyAddUserAccountComponent() {
     this.userAccountSidebarService.destroyAddUserAccountComponent();
   }
+
 }

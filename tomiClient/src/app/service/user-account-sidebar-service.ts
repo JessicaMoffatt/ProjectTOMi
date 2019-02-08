@@ -22,7 +22,7 @@ export class UserAccountSidebarService {
 
   /** List of all UserAccounts */
   userAccounts: UserAccount[];
-  filteredAccounts: UserAccount[];
+  filteredUserAccounts: UserAccount[];
 
   constructor(private http:HttpClient) { }
 
@@ -48,6 +48,7 @@ export class UserAccountSidebarService {
    */
   reloadUserAccounts() {
     this.getAllUserAccounts().subscribe((data: Array<UserAccount>) => {
+      this.filteredUserAccounts = data;
       this.userAccounts = data;
     });
   }

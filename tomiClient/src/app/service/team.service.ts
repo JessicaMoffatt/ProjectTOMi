@@ -48,6 +48,11 @@ export class TeamService {
   constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService, private userAccountService: UserAccountService) {
   }
 
+  //TODO Write it to return an observable team object
+  GETAllTeams() {
+
+  }
+
   /**
    * Sets selectedMember to the specified user account.
    * @param account The user account to set selectedMember to.

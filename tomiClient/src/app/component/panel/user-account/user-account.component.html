@@ -12,8 +12,13 @@
           style="list-style: none">
         <div [ngClass]="'user_account_wrapper'">
           <li>
-            <span [ngClass]="['list_item', 'user_account_name']"
+            <input type="text" [disabled]="true" value="hello">
+          </li>
+          <li>
+            <span [id]="'user_account_panel_name'" [ngClass]="['list_item', 'user_account_name']"
                   *ngIf="userAccount">{{userAccount.firstName}} {{userAccount.lastName}}</span>
+            <span [ngClass]="['btn', 'edit_btn']" (click)="editUserAccount(userAccount)">*</span>
+            <span [ngClass]="['btn', 'delete_btn']" (click)="delete(userAccount)">X</span>
           </li>
           <li>
             <span [ngClass]="['list_item']"
@@ -23,20 +28,20 @@
             <span [ngClass]="['list_item']"
               *ngIf="userAccount">Rate ${{(userAccount.salariedRate/100).toFixed(2)}}/hr</span>
           </li>
+          <li>
+            <ng-container *ngIf="userAccount.teamId; then hasTeam else noTeam"></ng-container>
+            <ng-template #hasTeam>
+              <ng-container *ngFor="let team of userAccountService.teams">
+                <span [ngClass]="['list_item']" *ngIf="team.id === userAccount.teamId">Team {{team.teamName}}</span>
+              </ng-container>
+            </ng-template>
+            <ng-template #noTeam>
+              <span [ngClass]="['list_item']">Team None</span>
+            </ng-template>
+          </li>
+
         </div>
       </ul>
     </ul>
   </div>
 </div>
-
-
-<!--<div *ngIf="userAccountSidebarService.selectedUserAccount" [ngClass]="'user_account_container'">-->
-  <!--<div>-->
-    <!--<h2>Users</h2>-->
-    <!--<div [ngClass]="'row'">-->
-
-        <!--<input id="user_account_first_name" placeholder="First Name" value={{userAccountSidebarService.selectedUserAccount?.firstName}}>-->
-        <!--<input id="user_account_last_name" placeholder="Last Name" value={{userAccountSidebarService.selectedUserAccount?.lastName}}>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->

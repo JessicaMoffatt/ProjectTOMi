@@ -3,7 +3,7 @@
   @version 1.0
 -->
 <div [ngClass]="'modal_container'">
-  <div ngClass="['btn', 'close_btn']" (click)="destroyAddUserAccountComponent()">
+  <div [ngClass]="['btn', 'close_btn']" (click)="destroyAddUserAccountComponent()">
     <span [ngClass]="'close_btn_txt'">&times;</span>
   </div>
   <h1>Add New User</h1>
@@ -47,7 +47,7 @@
       <td>
         <select id="user_account_to_add_team" [ngClass]="'inputs'">
           <option value="-1">None</option>
-          <option *ngFor="let team of (this.teams | orderBy: 'teamName')" [value]="team.id">
+          <option *ngFor="let team of (userAccountService.teams | orderBy: 'teamName')" [value]="team.id">
             {{team.teamName}}
           </option>
         </select>
