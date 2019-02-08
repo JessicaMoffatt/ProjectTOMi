@@ -24,14 +24,12 @@ public final class TimesheetService {
   private final TimesheetRepository repository;
   private final EntryRepository entryRepository;
   private final EntryService entryService;
-  private final UserAccountService userAccountService;
 
   @Autowired
-  public TimesheetService(TimesheetRepository repository, EntryRepository entryRepository, EntryService entryService, UserAccountService userAccountService) {
+  public TimesheetService(TimesheetRepository repository, EntryRepository entryRepository, EntryService entryService) {
     this.repository = repository;
     this.entryRepository = entryRepository;
     this.entryService = entryService;
-    this.userAccountService = userAccountService;
   }
 
   /**
@@ -162,8 +160,7 @@ public final class TimesheetService {
     }
   }
 
-  public List<Timesheet> getTimesheetsByUserAccount(Long userAccountId){
-    UserAccount userAccount = userAccountService.getUserAccount(userAccountId);
+  public List<Timesheet> getTimesheetsByUserAccount(UserAccount userAccount){
     return repository.getAllByActiveTrueAndUserAccountOrderByStartDateDesc(userAccount);
   }
 }
