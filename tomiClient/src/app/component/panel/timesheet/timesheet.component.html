@@ -6,13 +6,13 @@
   <span [ngClass]="['arrow', 'rounded-circle']">
     <i [ngClass]="'left'"></i>
   </span>
-  <span [ngClass]="'week_title'">Week of Jan 14, 2019</span>
+  <span [ngClass]="'week_title'">Week of {{this.timesheetService.currentDate}}</span>
   <span [ngClass]="['arrow', 'rounded-circle']">
     <i [ngClass]="'right'"></i>
   </span>
   <!--This is a placeholder -->
   <button [ngClass]="'calendar'"></button>
-  <span id="submission_status">Not Submitted</span>
+  <span id="submission_status">{{this.timesheetService.currentStatus}}</span>
 
   <div [ngClass]="'container'">
     <app-entry *ngFor="let entry of entries" [entry]="entry" [projects]="projects" (copyRequested)="copyEntry($event)"

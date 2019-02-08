@@ -4,6 +4,7 @@ import {map} from "rxjs/operators";
 import {Entry} from "../model/entry";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Timesheet} from "../model/timesheet";
+import {Status} from "../model/status";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -22,8 +23,12 @@ export class TimesheetService {
 
   timesheets: Timesheet[] = [];
 
-  //TODO, this is the position in the array of timesheets that we are currently at
-  private currentTimesheet = -1;
+  //this is the position in the array of timesheets that we are currently at
+  private currentTimesheetIndex = -1;
+
+  public currentDate;
+
+  public currentStatus = "";
 
   constructor(private http: HttpClient) {
   }
@@ -39,9 +44,9 @@ export class TimesheetService {
       }));
   }
 
-  //TODO consider the posibility that currentTimesheet is -1
+  //TODO consider the posibility that currentTimesheetIndex is -1
   async getCurrentTimesheet() {
-    return this.timesheets[this.currentTimesheet];
+    return this.timesheets[this.currentTimesheetIndex];
   }
 
   async getAllTimesheets(userId: number) {
@@ -59,20 +64,41 @@ export class TimesheetService {
     return await this.getAllTimesheets(userId).then((response) => {
       return response.toPromise().then((data)=>{
         this.timesheets = data;
-        this.currentTimesheet = this.timesheets.length -1;
+        this.currentTimesheetIndex = this.timesheets.length -1;
+
+        this.setCurrentDate();
+        this.setCurrentStatus();
         return this.getCurrentTimesheet();
       });
     });
   }
 
+  setCurrentDate(){
+    // force LOCAL time with +'T00:00:00'
+    let tempDay = new Date(this.timesheets[this.currentTimesheetIndex].startDate +'T00:00:00');
+    let options = {
+      year: 'numeric', month: 'long', day: 'numeric'
+    };
+
+    this.currentDate = tempDay.toLocaleString('en-US', options);
+  }
+
+  setCurrentStatus(){
+    if(this.currentTimesheetIndex != -1){
+      this.currentStatus = this.timesheets[this.currentTimesheetIndex].status.toString();
+    }
+  }
+
   async submit(){
     let tempSheet: Timesheet = null;
+
     await this.getCurrentTimesheet().then(
       (data)=>{
         const url = data._links["submit"];
 
         this.http.put<Timesheet>(url["href"],data, httpOptions).toPromise().then(response => {
           tempSheet = response;
+
           return response;
         }).catch((error: any) => {
           //TODO
@@ -80,6 +106,5 @@ export class TimesheetService {
 
         return tempSheet;
       });
-
   }
 }

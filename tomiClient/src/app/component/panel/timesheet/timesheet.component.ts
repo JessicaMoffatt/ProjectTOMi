@@ -1,16 +1,12 @@
-import {
-  AfterViewInit,
-  Component,
-  OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef
-} from '@angular/core';
+import {AfterViewInit, Component, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef} from '@angular/core';
 import {Entry} from "../../../model/entry";
 import {TimesheetService} from "../../../service/timesheet.service";
 import {ProjectService} from "../../../service/project.service";
 import {Project} from "../../../model/project";
 import {EntryService} from "../../../service/entry.service";
-import {UserAccount} from "../../../model/userAccount";
 import {Timesheet} from "../../../model/timesheet";
 import {EntryComponent} from "../entry/entry.component";
+import {Status} from "../../../model/status";
 
 /**
  * TimesheetComponent is used to facilitate communication between the view and front end services.
@@ -83,7 +79,10 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
    * Gets all entries for this timesheet.
    */
   getEntries(id:number) {
-    this.timesheetService.getEntries(id).subscribe((data) => this.entries = data);
+    this.timesheetService.getEntries(id).subscribe((data) => {
+      this.entries = data;
+      this.updateTally();
+    });
   }
 
   getProjects(id:number): void{
@@ -144,7 +143,10 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   }
 
   submit(){
-    this.timesheetService.submit().then();
+    this.timesheetService.submit().then(()=>{
+      //TODO... find way to do this not hard coded.
+     this.timesheetService.currentStatus = "SUBMITTED";
+    });
   }
 
   /**

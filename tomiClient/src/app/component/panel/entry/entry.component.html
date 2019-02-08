@@ -63,37 +63,37 @@
     <div [ngClass]="'col-xs-8'">
       <label><strong>M</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.mondayHours" placeholder="0" type="number"
-               step=".25" #mondayInput>
+               step=".25" min="0" #mondayInput>
       </label>
 
       <label><strong>T</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.tuesdayHours" placeholder="0" type="number"
-               step=".25" #tuesdayInput>
+               step=".25" min="0" #tuesdayInput>
       </label>
 
       <label><strong>W</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.wednesdayHours" placeholder="0" type="number"
-               step=".25" #wednesdayInput>
+               step=".25" min="0" #wednesdayInput>
       </label>
 
       <label><strong>R</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.thursdayHours" placeholder="0" type="number"
-               step=".25" #thursdayInput>
+               step=".25" min="0" #thursdayInput>
       </label>
 
       <label><strong>F</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.fridayHours" placeholder="0" type="number"
-               step=".25" #fridayInput>
+               step=".25" min="0" #fridayInput>
       </label>
 
       <label><strong>S</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.saturdayHours" placeholder="0" type="number"
-               step=".25" #saturdayInput>
+               step=".25" min="0" #saturdayInput>
       </label>
 
       <label><strong>U</strong>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.sundayHours" placeholder="0" type="number"
-               step=".25" #sundayInput>
+               step=".25" min="0" #sundayInput>
       </label>
     </div>
     <!-- end of days of week-->

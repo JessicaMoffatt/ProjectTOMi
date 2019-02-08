@@ -1,13 +1,11 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Entry} from "../../../model/entry";
 import {EntryService} from "../../../service/entry.service";
 import {Project} from "../../../model/project";
 import {Task} from 'src/app/model/task';
 import {UnitType} from "../../../model/unitType";
 import {TimesheetService} from "../../../service/timesheet.service";
-import {ProjectService} from "../../../service/project.service";
-import {TaskService} from "../../../service/task.service";
-import {UnitTypeService} from "../../../service/unit-type.service";
+import {Status} from "../../../model/status";
 
 /**
  * EntryComponent is used to facilitate communication between the view and front end services.
@@ -48,9 +46,9 @@ export class EntryComponent implements OnInit {
   /** List of all unit types.*/
   unitTypes: UnitType[];
 
-  constructor(private entryService: EntryService, public timesheetService: TimesheetService,
-              private projectService: ProjectService, private taskService: TaskService,
-              private unitTypeService: UnitTypeService) {
+  sts = Status;
+
+  constructor(private entryService: EntryService, public timesheetService: TimesheetService) {
   }
 
   ngOnInit() {
