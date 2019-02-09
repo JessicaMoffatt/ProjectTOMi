@@ -24,9 +24,9 @@ export class EntryComponent implements OnInit {
   /** The list of projects this user is allowed to access.*/
   @Input() projects: Project[];
   /** Event emitter used to notify the parent component that a copy of an entry has been requested. */
-  @Output() copyRequested = new EventEmitter<any>();
+  @Output() requestCopy = new EventEmitter<any>();
   /** Event emitter used to notify the parent component that a delete of an entry has been requested. */
-  @Output() deleteRequested = new EventEmitter<any>();
+  @Output() showDeleteModal = new EventEmitter<any>();
 
   @ViewChild('componentInput') componentInput;
   @ViewChild('projectInput') projectInput;
@@ -68,14 +68,32 @@ export class EntryComponent implements OnInit {
    * Emits a request for an entry to be copied.
    */
   copy(): void {
-    this.copyRequested.emit(this.entry);
+    this.requestCopy.emit(this.entry);
   }
 
   /**
    * Emits a request for an entry to be deleted.
    */
   delete(): void {
-    this.deleteRequested.emit(this.entry);
+    this.showDeleteModal.emit(this.entry);
+  }
+
+  validateEntry(): boolean{
+    let valid:boolean = false;
+
+    if(this.componentInput.nativeElement.value != null && this.componentInput.nativeElement.value != ""
+      && this.quantityInput.nativeElement.value != null && this.quantityInput.nativeElement.value != 0
+      && this.mondayInput.nativeElement.value != null && this.tuesdayInput.nativeElement.value != null
+      && this.wednesdayInput.nativeElement.value != null && this.thursdayInput.nativeElement.value != null
+      && this.fridayInput.nativeElement.value != null && this.saturdayInput.nativeElement.value != null
+      && this.sundayInput.nativeElement.value != null && this.projectInput.nativeElement.value != null
+      && this.projectInput.nativeElement.value != "-1" && this.taskInput.nativeElement.value != null
+      && this.taskInput.nativeElement.value != -1 && this.unitTypeInput.nativeElement.value != null
+      && this.unitTypeInput.nativeElement.value != -1){
+      valid = true;
+    }
+
+    return valid;
   }
 
   async save() {
@@ -125,6 +143,8 @@ export class EntryComponent implements OnInit {
       this.entryService.save(this.entry).then();
     });
   }
+
+
 
   async populateEntryPromise() {
     let promise = new Promise((resolve, reject) => {

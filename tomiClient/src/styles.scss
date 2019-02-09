@@ -33,12 +33,26 @@ body{
   background-color:$light_grey;
 }
 
+.confirm_btn{
+  background-color: $green;
+}
+
 .save_btn{
   background-color: $green;
+  background-image: url('~src/assets/img/save.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  height:$btn_md;
+  width:$btn_md;
 }
 
 .delete_btn{
   background-color:$red;
+  background-image: url('~src/assets/img/remove.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  height:$btn_md;
+  width:$btn_md;
 }
 
 .close_btn{
@@ -70,6 +84,11 @@ body{
 
 .submit{
   background-color:$green;
+  background-image: url('~src/assets/img/submit.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  height:$btn_md;
+  width:$btn_md;
 }
 
 .cancel_changes_btn{

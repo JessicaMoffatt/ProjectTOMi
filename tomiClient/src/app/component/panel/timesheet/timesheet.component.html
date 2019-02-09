@@ -3,27 +3,31 @@
 @version 1.0
 -->
 <div [ngClass]="'container'">
-  <span [ngClass]="['arrow', 'rounded-circle']">
-    <i [ngClass]="'left'"></i>
+  <span [ngClass]="['arrow', 'rounded-circle','back']">
   </span>
-  <span [ngClass]="'week_title'">Week of {{this.timesheetService.currentDate}}</span>
-  <span [ngClass]="['arrow', 'rounded-circle']">
-    <i [ngClass]="'right'"></i>
+  <span [ngClass]="'week_title'">Week of {{timesheetService.currentDate}}</span>
+  <span [ngClass]="['arrow', 'rounded-circle','forward']">
   </span>
   <!--This is a placeholder -->
   <button [ngClass]="'calendar'"></button>
-  <span id="submission_status">{{this.timesheetService.currentStatus}}</span>
+  <span id="submission_status">{{timesheetService.currentStatus}}</span>
 
   <div [ngClass]="'container'">
-    <app-entry *ngFor="let entry of entries" [entry]="entry" [projects]="projects" (copyRequested)="copyEntry($event)"
-               (deleteRequested)="deleteEntry($event)"></app-entry>
+    <div *ngFor="let entry of entries">
+      <app-entry *ngIf="getStatusValue(entry.status.toString()) != sts.SUBMITTED" [entry]="entry" [projects]="projects"
+                 (requestCopy)="copyEntry($event)"
+                 (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>
+      <app-entry-submitted *ngIf="getStatusValue(entry.status.toString()) === sts.SUBMITTED" [entry]="entry"></app-entry-submitted>
+    </div>
+
   </div>
 
   <div #entryHolder></div>
   <div (click)="addEntry()" [ngClass]="['new_entry', 'btn', 'new_btn','rounded-circle']"></div>
 </div>
-<div [ngClass]="'tally_container'">
+<div [ngClass]="'timesheet_footer'">
   <span [ngClass]="'hours_tally'">Hours:<strong> {{tally}}</strong></span>
-  <span [ngClass]="['submit', 'btn', 'bottom_btn']" (click)="submit()">Submit</span>
-  <span [ngClass]="['save_timesheet', 'btn', 'bottom_btn', 'save_btn']" (click)="save()">Save</span>
+  <span [ngClass]="['submit', 'btn', 'bottom_btn']" (click)="displaySubmitModal()"></span>
+  <span [ngClass]="['save_timesheet', 'btn', 'bottom_btn', 'save_btn']" (click)="save()"></span>
 </div>
+

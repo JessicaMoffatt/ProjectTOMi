@@ -20,12 +20,6 @@
 }
 
 .delete_entry{
-  height:$btn_md;
-  width:$btn_md;
-  background-image: url('~src/assets/img/x_btn_icon.png');
-  background-size: $btn_md $btn_md;
-  background-position: center;
-  background-repeat: no-repeat;
   flex:50%;
 }
 
@@ -38,8 +32,7 @@
   background-color:$blue;
   height:$btn_md;
   width:$btn_md;
-  background-image: url('~src/assets/img/cpy_btn_icon.png');
-  background-size: $btn_md $btn_md;
+  background-image: url('~src/assets/img/copy.png');
   background-position: center;
   background-repeat: no-repeat;
   flex:50%;

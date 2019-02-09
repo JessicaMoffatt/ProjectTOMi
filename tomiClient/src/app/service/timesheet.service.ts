@@ -37,7 +37,9 @@ export class TimesheetService {
     return this.http.get(`${this.timesheetUrl}/${id}/entries`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
-          return data._embedded.entries as Entry[];
+          let sorted = data._embedded.entries as Entry[];
+          sorted = sorted.sort((entry1,entry2) => entry1.id - entry2.id);
+          return sorted;
         } else {
           return [];
         }
@@ -64,10 +66,10 @@ export class TimesheetService {
     return await this.getAllTimesheets(userId).then((response) => {
       return response.toPromise().then((data)=>{
         this.timesheets = data;
-        this.currentTimesheetIndex = this.timesheets.length -1;
+        this.currentTimesheetIndex = 0;
 
         this.setCurrentDate();
-        this.setCurrentStatus();
+        this.setCurrentStatus().then();
         return this.getCurrentTimesheet();
       });
     });
@@ -83,7 +85,7 @@ export class TimesheetService {
     this.currentDate = tempDay.toLocaleString('en-US', options);
   }
 
-  setCurrentStatus(){
+  async setCurrentStatus(){
     if(this.currentTimesheetIndex != -1){
       this.currentStatus = this.timesheets[this.currentTimesheetIndex].status.toString();
     }

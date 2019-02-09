@@ -1,0 +1,76 @@
+<!--
+@author Jessica Moffatt
+@version 2.0
+-->
+<div [ngClass]="['entry_container','rounded']">
+  <div [ngClass]="'row'">
+    <div [ngClass]="'col-xs-12'">
+      <label><strong>Component:</strong>
+        <span>{{entry.component}}</span>
+      </label>
+    </div>
+  </div>
+
+  <div [ngClass]="'row'">
+    <div [ngClass]="['col-xs-6']">
+      <label><strong>Project:</strong>
+        <span>{{entry.project.projectName}}</span>
+      </label>
+    </div>
+    <div [ngClass]="'col-xs-6'">
+      <label>Task:
+        <span>{{entry.task.name}}</span>
+      </label>
+    </div>
+  </div>
+
+  <div [ngClass]="'row'">
+    <div [ngClass]="'col-xs-6'">
+      <label><strong>Unit Type:</strong>
+        {{entry.unitType.name}}
+      </label>
+    </div>
+
+    <div [ngClass]="'col-xs-2'">
+      {{entry.quantity}}
+    </div>
+    <div [ngClass]="'col-xs-4'">
+      {{entry.unitType}}
+    </div>
+  </div>
+
+  <div [ngClass]="'row'">
+    <!-- days of the week -->
+    <div [ngClass]="'col-xs-8'">
+      <label><strong>M</strong>
+       {{entry.mondayHours}}
+      </label>
+
+      <label><strong>T</strong>
+       {{entry.tuesdayHours}}
+      </label>
+
+      <label><strong>W</strong>
+       {{entry.wednesdayHours}}
+      </label>
+
+      <label><strong>R</strong>
+        {{entry.thursdayHours}}
+      </label>
+
+      <label><strong>F</strong>
+        {{entry.fridayHours}}
+      </label>
+
+      <label><strong>S</strong>
+        {{entry.saturdayHours}}
+      </label>
+
+      <label><strong>U</strong>
+        {{entry.sundayHours}}
+      </label>
+    </div>
+    <!-- end of days of week-->
+  </div>
+ </div>
+
