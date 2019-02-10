@@ -7,13 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopNavBarComponent implements OnInit {
 
-
-
   constructor() { }
 
 
   ngOnInit() {
   }
-
-
 }

@@ -23,6 +23,6 @@ export class Team{
     this.leadId = -1;
     this.active = true;
     this.id = -1;
-    _links: new Array();
+    _links: [];
   }
 }
