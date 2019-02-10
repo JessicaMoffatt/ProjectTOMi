@@ -58,12 +58,14 @@ export class TimesheetService {
       }));
   }
 
-  //TODO consider the posibility that currentTimesheetIndex is -1
   /**
    * Gets the current timesheet.
    */
   async getCurrentTimesheet() {
-    return this.timesheets[this.currentTimesheetIndex];
+    if(this.currentTimesheetIndex != -1){
+      return this.timesheets[this.currentTimesheetIndex];
+    }
+    else return null;
   }
 
   /**
@@ -103,12 +105,14 @@ export class TimesheetService {
    */
   setCurrentDate(){
     // force LOCAL time with +'T00:00:00'
-    let tempDay = new Date(this.timesheets[this.currentTimesheetIndex].startDate +'T00:00:00');
-    let options = {
-      year: 'numeric', month: 'long', day: 'numeric'
-    };
+    if(this.currentTimesheetIndex != -1){
+      let tempDay = new Date(this.timesheets[this.currentTimesheetIndex].startDate +'T00:00:00');
+      let options = {
+        year: 'numeric', month: 'long', day: 'numeric'
+      };
 
-    this.currentDate = tempDay.toLocaleString('en-US', options);
+      this.currentDate = tempDay.toLocaleString('en-US', options);
+    }
   }
 
   /**
@@ -134,11 +138,12 @@ export class TimesheetService {
           tempSheet = response;
 
           return response;
-        }).catch((error: any) => {
-          //TODO
+        }).catch(() => {
+          return null;
         });
 
         return tempSheet;
       });
   }
+
 }

@@ -23,9 +23,9 @@
   </div>
 
   <div #entryHolder></div>
-  <div (click)="addEntry()" [ngClass]="['new_entry', 'btn', 'new_btn','rounded-circle']"></div>
 </div>
 <div [ngClass]="'timesheet_footer'">
+  <div (click)="addEntry()" [ngClass]="['new_entry', 'btn', 'new_btn','rounded-circle']"></div>
   <span [ngClass]="'hours_tally'">Hours:<strong> {{tally}}</strong></span>
   <span [ngClass]="['submit', 'btn', 'bottom_btn']" (click)="displaySubmitModal()"></span>
   <span [ngClass]="['save_timesheet', 'btn', 'bottom_btn', 'save_btn']" (click)="save()"></span>

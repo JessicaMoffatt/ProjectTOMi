@@ -176,7 +176,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   /**
    * Submits the current timesheet.
    */
-  public submitTimesheet(){
+  async submitTimesheet(){
     let valid:boolean = false;
     this.entryComponents.forEach(item => {
       valid = item.validateEntry();
@@ -186,16 +186,45 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     });
 
     if(valid){
-      this.timesheetService.submit().then(()=>{
-        this.timesheetService.setCurrentStatus().then(()=>{
-            this.router.navigateByUrl('/', {skipLocationChange:true}).then(()=>
-            this.router.navigate(["/timesheetPanel"]));
-          }
-        );
+     await this.timesheetService.submit().then(()=>{
+           this.reloadPromise().then();
       });
     }else if(!valid){
       alert("All fields must have a value to submit!");
     }
+  }
+
+  /**
+   * Waits for reloadAfterSerCurrentStatus to compelte.
+   */
+  async reloadPromise(){
+    let promise = new Promise((resolve, reject) => {
+      resolve(this.reloadAfterSetCurrentStatus());
+    });
+
+    return await promise;
+  }
+
+  /**
+   * Reloads the page once setCurrentStatus has completed.
+   */
+  async reloadAfterSetCurrentStatus(){
+    await this.setCurrentStatusPromise().then(()=>{
+        this.router.navigateByUrl('/', {skipLocationChange:true}).then(()=>
+          this.router.navigate(["/timesheetPanel"]));
+      }
+    );
+  }
+
+  /**
+   * Waits for setCurrentStatus to complete.
+   */
+  async setCurrentStatusPromise(){
+    let promise = new Promise((resolve, reject) => {
+      resolve(this.timesheetService.setCurrentStatus());
+    });
+
+    return await promise;
   }
 
   /**
@@ -371,6 +400,6 @@ export class SubmitTimesheetModalComponent implements OnInit {
 
   /** Facilitates submission of the current timesheet.**/
   submitTimesheet(){
-    this.parent.submitTimesheet();
+    this.parent.submitTimesheet().then();
   }
 }

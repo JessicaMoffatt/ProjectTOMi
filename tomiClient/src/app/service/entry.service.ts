@@ -31,7 +31,6 @@ export class EntryService {
 
   constructor(private http: HttpClient) { }
 
-  //TODO add error handling
   /**
    * Gets all tasks.
    */
@@ -46,7 +45,6 @@ export class EntryService {
       }));
   }
 
-  //TODO add error handling
   /**
    * Gets all unit types.
    */
@@ -71,8 +69,8 @@ export class EntryService {
       await this.http.post<Entry>(this.entriesUrl, JSON.stringify(entry), httpOptions).toPromise().then(response => {
         tempEntry = response;
         return response;
-      }).catch((error: any) => {
-        //TODO
+      }).catch(() => {
+        return null;
       });
     } else if(entry.id >= 1){
       const url = entry._links["update"];
@@ -81,8 +79,8 @@ export class EntryService {
 
         tempEntry = response;
         return response;
-      }).catch((error: any) => {
-        //TODO
+      }).catch(() => {
+        return null;
       });
     }
 
@@ -99,8 +97,8 @@ export class EntryService {
       await this.http.post<Entry>(url["href"],null, httpOptions).toPromise().then(response => {
         tempEntry = response;
         return response;
-      }).catch((error: any) => {
-        //TODO
+      }).catch(() => {
+        return null;
       });
 
     return tempEntry;
