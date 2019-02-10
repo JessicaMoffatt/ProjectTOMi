@@ -45,7 +45,7 @@ export class TeamService {
   /** Used to reference the add team member component created by clicking the Add Member button.*/
   ref: ComponentRef<any>;
 
-  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService, private userAccountService: UserAccountService) {
+  constructor(public http: HttpClient, public teamSideBarService: TeamSidebarService, public userAccountService: UserAccountService) {
   }
 
   /**

@@ -8,21 +8,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Component
 public class TOMiInterceptorAppConfig implements WebMvcConfigurer {
-  private final UserAuthorizationInterceptor userAuthorizationInterceptor;
-  private final ProjectAuthorizationInterceptor projectAuthorizationInterceptor;
-  private final TimesheetAuthorizationInterceptor timesheetAuthorizationInterceptor;
+  private final AuthorizationInterceptor authorizationInterceptor;
 
   @Autowired
-  public TOMiInterceptorAppConfig(UserAuthorizationInterceptor userAuthorizationInterceptor, ProjectAuthorizationInterceptor projectAuthorizationInterceptor, TimesheetAuthorizationInterceptor timesheetAuthorizationInterceptor) {
-    this.userAuthorizationInterceptor = userAuthorizationInterceptor;
-    this.projectAuthorizationInterceptor = projectAuthorizationInterceptor;
-    this.timesheetAuthorizationInterceptor = timesheetAuthorizationInterceptor;
+  public TOMiInterceptorAppConfig(AuthorizationInterceptor authorizationInterceptor) {
+    this.authorizationInterceptor = authorizationInterceptor;
   }
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(userAuthorizationInterceptor);
-    registry.addInterceptor(projectAuthorizationInterceptor);
-    registry.addInterceptor(timesheetAuthorizationInterceptor);
+    registry.addInterceptor(authorizationInterceptor);
   }
 }
