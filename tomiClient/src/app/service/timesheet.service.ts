@@ -4,7 +4,6 @@ import {map} from "rxjs/operators";
 import {Entry} from "../model/entry";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Timesheet} from "../model/timesheet";
-import {Status} from "../model/status";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -12,6 +11,12 @@ const httpOptions = {
   })
 };
 
+/**
+ * TimesheetService is used to control the flow of data regarding timesheets to/from the view.
+ *
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -21,18 +26,25 @@ export class TimesheetService {
   /** The link used to get all timesheets for a specified user.*/
   private userTimesheetsUrl = `http://localhost:8080/timesheets/userAccount`;
 
+  /** The list of all timehseets for this user.*/
   timesheets: Timesheet[] = [];
 
-  //this is the position in the array of timesheets that we are currently at
+  /** The position in timesheets for the current timesheet.*/
   private currentTimesheetIndex = -1;
 
+  /** The starting date for the current timesheet.*/
   public currentDate;
 
+  /** The status of the current timesheet.*/
   public currentStatus = "";
 
   constructor(private http: HttpClient) {
   }
 
+  /**
+   * Gets all entries for the specified timesheet.
+   * @param id The ID of the timesheet.
+   */
   getEntries(id: number): Observable<Array<Entry>>{
     return this.http.get(`${this.timesheetUrl}/${id}/entries`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
@@ -47,10 +59,17 @@ export class TimesheetService {
   }
 
   //TODO consider the posibility that currentTimesheetIndex is -1
+  /**
+   * Gets the current timesheet.
+   */
   async getCurrentTimesheet() {
     return this.timesheets[this.currentTimesheetIndex];
   }
 
+  /**
+   * Gets all timesheets for the specified user.
+   * @param userId The ID of the user.
+   */
   async getAllTimesheets(userId: number) {
     return this.http.get(`${this.userTimesheetsUrl}/${userId}`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
@@ -62,6 +81,10 @@ export class TimesheetService {
       }));
   }
 
+  /**
+   * Populates timesheets for specified user.
+   * @param userId The ID of the user.
+   */
   async populateTimesheets(userId: number) {
     return await this.getAllTimesheets(userId).then((response) => {
       return response.toPromise().then((data)=>{
@@ -75,6 +98,9 @@ export class TimesheetService {
     });
   }
 
+  /**
+   * Sets the current date to display.
+   */
   setCurrentDate(){
     // force LOCAL time with +'T00:00:00'
     let tempDay = new Date(this.timesheets[this.currentTimesheetIndex].startDate +'T00:00:00');
@@ -85,12 +111,18 @@ export class TimesheetService {
     this.currentDate = tempDay.toLocaleString('en-US', options);
   }
 
+  /**
+   * Sets the current status to display.
+   */
   async setCurrentStatus(){
     if(this.currentTimesheetIndex != -1){
       this.currentStatus = this.timesheets[this.currentTimesheetIndex].status.toString();
     }
   }
 
+  /**
+   * Submits the current timesheet.
+   */
   async submit(){
     let tempSheet: Timesheet = null;
 

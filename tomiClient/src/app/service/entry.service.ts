@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Entry} from "../model/entry";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {Task} from '../model/task';
@@ -11,18 +11,30 @@ const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
+/**
+ * EntryService is used to control the flow of data regarding entries to/from the view.
+ *
+ * @author Jessica Moffatt
+ * @version 2.0
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class EntryService {
 
+  /** The URL used to get,post, and delete entries. */
   private entriesUrl = 'http://localhost:8080/entries';
+  /** The URL used to get,post, and delete tasks. */
   private tasksUrl = 'http://localhost:8080/tasks';
+  /** The URL used to get,post, and delete unit types. */
   private unitTypeUrl = 'http://localhost:8080/unit_types';
 
   constructor(private http: HttpClient) { }
 
   //TODO add error handling
+  /**
+   * Gets all tasks.
+   */
   getTasks(): Observable<Array<Task>> {
     return this.http.get(`${this.tasksUrl}`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
@@ -35,6 +47,9 @@ export class EntryService {
   }
 
   //TODO add error handling
+  /**
+   * Gets all unit types.
+   */
   getUnitTypes(): Observable<Array<UnitType>> {
     return this.http.get(`${this.unitTypeUrl}`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
@@ -74,6 +89,10 @@ export class EntryService {
     return tempEntry;
   }
 
+  /**
+   * Copies the specified entry.
+   * @param entry The entry to copy.
+   */
   async copy(entry: Entry) {
     let tempEntry: Entry = null;
     const url = entry._links["copy"];
@@ -87,6 +106,10 @@ export class EntryService {
     return tempEntry;
   }
 
+  /**
+   * Deletes the specified entry.
+   * @param entry The entry to delete.
+   */
   delete(entry:Entry){
     const url = entry._links["delete"];
 

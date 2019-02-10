@@ -1,6 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Entry} from "../../../model/entry";
 
+/**
+ * The component used to display entries with a stats of submitted.
+ *
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
 @Component({
   selector: 'app-entry-submitted',
   templateUrl: './entry-submitted.component.html',

@@ -5,13 +5,12 @@ import {Project} from "../../../model/project";
 import {Task} from 'src/app/model/task';
 import {UnitType} from "../../../model/unitType";
 import {TimesheetService} from "../../../service/timesheet.service";
-import {Status} from "../../../model/status";
 
 /**
  * EntryComponent is used to facilitate communication between the view and front end services.
  *
  * @author Jessica Moffatt
- * @version 1.0
+ * @version 2.0
  */
 @Component({
   selector: 'app-entry',
@@ -28,17 +27,29 @@ export class EntryComponent implements OnInit {
   /** Event emitter used to notify the parent component that a delete of an entry has been requested. */
   @Output() showDeleteModal = new EventEmitter<any>();
 
+  /** The input field for the entry's component.*/
   @ViewChild('componentInput') componentInput;
+  /** The input field for the entry's project.*/
   @ViewChild('projectInput') projectInput;
+  /** The input field for the entry's task.*/
   @ViewChild('taskInput') taskInput;
+  /** The input field for the entry's unit type.*/
   @ViewChild('unitTypeInput') unitTypeInput;
+  /** The input field for the entry's quantity.*/
   @ViewChild('quantityInput') quantityInput;
+  /** The input field for the entry's monday hours.*/
   @ViewChild('mondayInput') mondayInput;
+  /** The input field for the entry's tuesday hours.*/
   @ViewChild('tuesdayInput') tuesdayInput;
+  /** The input field for the entry's wednesday hours.*/
   @ViewChild('wednesdayInput') wednesdayInput;
+  /** The input field for the entry's thursday hours.*/
   @ViewChild('thursdayInput') thursdayInput;
+  /** The input field for the entry's friday hours.*/
   @ViewChild('fridayInput') fridayInput;
+  /** The input field for the entry's saturday hours.*/
   @ViewChild('saturdayInput') saturdayInput;
+  /** The input field for the entry's sunday hours.*/
   @ViewChild('sundayInput') sundayInput;
 
   /** List of all tasks.*/
@@ -46,21 +57,22 @@ export class EntryComponent implements OnInit {
   /** List of all unit types.*/
   unitTypes: UnitType[];
 
-  sts = Status;
-
   constructor(private entryService: EntryService, public timesheetService: TimesheetService) {
   }
 
+  /** On initialization, populates the list of tasks and unit types.*/
   ngOnInit() {
-    this.getTasks();
-    this.getUnitTypes();
+    this.populateTasks();
+    this.populateUnitTypes();
   }
 
-  getTasks() {
+  /** Populates tasks.*/
+  populateTasks() {
     this.entryService.getTasks().subscribe((data => this.tasks = data))
   }
 
-  getUnitTypes() {
+  /** Populates unitTypes.*/
+  populateUnitTypes() {
     this.entryService.getUnitTypes().subscribe((data => this.unitTypes = data))
   }
 
@@ -78,6 +90,7 @@ export class EntryComponent implements OnInit {
     this.showDeleteModal.emit(this.entry);
   }
 
+  /** Validates that the entry has no null or empty values.*/
   validateEntry(): boolean{
     let valid:boolean = false;
 
@@ -96,6 +109,9 @@ export class EntryComponent implements OnInit {
     return valid;
   }
 
+  /**
+   * Saves the values of the entry.
+   */
   async save() {
     this.entry.component = this.componentInput.nativeElement.value;
 
@@ -144,8 +160,9 @@ export class EntryComponent implements OnInit {
     });
   }
 
-
-
+  /**
+   * This method uses a promise to force populateEntry to complete before continuing.
+   */
   async populateEntryPromise() {
     let promise = new Promise((resolve, reject) => {
       resolve(
@@ -156,6 +173,9 @@ export class EntryComponent implements OnInit {
     return await promise;
   }
 
+  /**
+   * Populates this entry with project, task and unit type information.
+   */
   private populateEntry(){
       if(this.projectInput.nativeElement.value != "-1"){
 

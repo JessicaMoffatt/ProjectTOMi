@@ -1,9 +1,8 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
-  Component, EventEmitter,
-  OnInit, Output,
-  QueryList, TemplateRef,
+  Component,
+  OnInit,
+  QueryList,
   ViewChild,
   ViewChildren,
   ViewContainerRef
@@ -17,14 +16,13 @@ import {Timesheet} from "../../../model/timesheet";
 import {EntryComponent} from "../entry/entry.component";
 import {Status} from "../../../model/status";
 import {Router} from "@angular/router";
-import {BsModalRef, BsModalService, ModalModule} from "ngx-bootstrap";
-import {ModalContainerComponent} from "ngx-bootstrap/modal";
+import {BsModalRef, BsModalService} from "ngx-bootstrap";
 
 /**
  * TimesheetComponent is used to facilitate communication between the view and front end services.
  *
  * @author Jessica Moffatt
- * @version 1.0
+ * @version 2.0
  */
 @Component({
   selector: 'app-timesheet',
@@ -33,8 +31,10 @@ import {ModalContainerComponent} from "ngx-bootstrap/modal";
 })
 export class TimesheetComponent implements OnInit, AfterViewInit{
 
+  /** The reference to the BSModal, which is used to show either the delete modal or the submit modal.*/
   bsModalRef: BsModalRef;
-
+  //TODO, don't hard code
+  /** The ID of the user.*/
   private userId = 1;
 
   /** List of all entries for current timesheet.*/
@@ -47,19 +47,20 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
    */
   tally: number = 0;
 
+  /** A Status; used to compare against the status of the timesheet.*/
   sts = Status;
 
   /** A view container ref for the template that will be used to house the entry component.*/
   @ViewChild('entryHolder', {read: ViewContainerRef}) entry_container: ViewContainerRef;
   @ViewChildren(EntryComponent) entryComponentsRef: QueryList<'entryComponentsRef'>;
 
+  /** The list of entry components that are children of the timesheet.*/
   entryComponents: EntryComponent[] = [];
 
   constructor( private modalService: BsModalService, private router: Router, public timesheetService: TimesheetService, private projectService: ProjectService, private entryService: EntryService) {
 
   }
 
-  //TODO remove hard coding!
   /**
    * On initialization, calls getEntries to populate the entries variable as well as the projects variable.
    */
@@ -71,10 +72,12 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     });
   }
 
+  /** After the view has initialized, gets all entry components.*/
   ngAfterViewInit(): void {
     this.getEntryComponents();
   }
 
+  /** Gets all the entry components currently on the timesheet.*/
   getEntryComponents(){
     this.entryComponentsRef.changes.subscribe(c => {
       c.toArray().forEach(item => {
@@ -83,6 +86,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     });
   }
 
+  /** Populates the list of timesheets.*/
   async populateTimesheets(){
     let promise = new Promise((resolve, reject) => {
       resolve(this.timesheetService.populateTimesheets(this.userId))
@@ -93,6 +97,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
 
   /**
    * Gets all entries for this timesheet.
+   * @param id The ID of the timesheet we want the entries of.
    */
   getEntries(id:number) {
     this.timesheetService.getEntries(id).subscribe((data) => {
@@ -101,6 +106,10 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     });
   }
 
+  /**
+   * Gets all projects this user is associated with.
+   * @param id The ID of the user.
+   */
   getProjects(id:number): void{
     this.projectService.getProjectsForUser(id).subscribe((data => this.projects = data));
   }
@@ -138,9 +147,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   }
 
   /**
-   * Deletes an entry from the timesheet.
+   * Displays the modal for deleting an entry from the timesheet.
    * @param entry The entry to be deleted.
-   * @param template
    */
   displayDeleteEntryModal(entry: Entry) {
     const initialState = {
@@ -152,6 +160,10 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     this.bsModalRef = this.modalService.show(DeleteEntryModalComponent, {initialState});
   }
 
+  /**
+   * Deletes the specified entry.
+   * @param entry The entry to be deleted.
+   */
   public deleteEntry(entry: Entry){
     let index = this.entries.indexOf(entry);
     this.entries.splice(index, 1);
@@ -161,6 +173,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     this.updateTally();
   }
 
+  /**
+   * Submits the current timesheet.
+   */
   public submitTimesheet(){
     let valid:boolean = false;
     this.entryComponents.forEach(item => {
@@ -183,6 +198,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     }
   }
 
+  /**
+   * Saves the state of all entries for the current timesheet.
+   */
   save(){
     if(this.timesheetService.currentStatus === this.sts[this.sts.LOGGING]){
       this.entryComponents.forEach(item => {
@@ -195,6 +213,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     }
   }
 
+  /**
+   * Displays the submit modal.
+   */
   displaySubmitModal(){
     if(this.timesheetService.currentStatus === this.sts[this.sts.LOGGING]){
       const initialState = {
@@ -218,6 +239,11 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     this.tally = hours;
   }
 
+  /**
+   * Gets the number value of the string that matches in the Status enum.
+   * Used for comparison purposes.
+   * @param statusString String to match to a Status.
+   */
   getStatusValue(statusString: string):number{
     for (let item in Status) {
       if (Status[item] === statusString) {
@@ -226,11 +252,14 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     }
     return null;
   }
-
 }
 
 /* Delete Modal */
 
+/**
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
 @Component({
   selector: 'app-delete-modal',
   template: `
@@ -250,9 +279,18 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   `
 })
 
+/**
+ * DeleteEntryModalComponent is used to get confirmation from the user regarding their desire to delete an entry.
+ *
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
 export class DeleteEntryModalComponent implements OnInit {
+  /** The title of the modal.*/
   title: string;
+  /** The entry to delete if confirmation is obtained.*/
   entry: Entry;
+  /** The parent component which is showing this modal.*/
   parent: TimesheetComponent;
 
   constructor(public bsModalRef: BsModalRef, private entryService: EntryService) {}
@@ -261,16 +299,18 @@ export class DeleteEntryModalComponent implements OnInit {
 
   }
 
+  /** Facilitates the deletion of entry, as well as closes the modal.*/
   confirmDelete():void{
     this.deleteEntry();
     this.bsModalRef.hide();
   }
 
+  /** Closes the modal with no extra actions.*/
   cancelDelete():void{
     this.bsModalRef.hide();
   }
 
-  //TODO check output of delete, change whether or not to emit
+  /** Facilitates deletion on the backend as well as the front end.**/
   deleteEntry(){
     this.entryService.delete(this.entry);
     this.parent.deleteEntry(this.entry);
@@ -278,6 +318,10 @@ export class DeleteEntryModalComponent implements OnInit {
 }
 
 /* Submit Modal */
+/**
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
 @Component({
   selector: 'app-submit-modal',
   template: `
@@ -298,8 +342,13 @@ export class DeleteEntryModalComponent implements OnInit {
   `
 })
 
+/**
+ * SubmitTimesheetModalComponent is used to get confirmation from the user regarding their desire to submit a timesheet.
+ */
 export class SubmitTimesheetModalComponent implements OnInit {
+  /** The title of the modal.*/
   title: string;
+  /** The parent component which is showing this modal.*/
   parent: TimesheetComponent;
 
   constructor(public bsModalRef: BsModalRef) {}
@@ -308,16 +357,19 @@ export class SubmitTimesheetModalComponent implements OnInit {
 
   }
 
+  /** Facilitates the submission of the current timesheet, as well as closes the modal.*/
   confirmSubmission():void{
     this.submitTimesheet();
     this.bsModalRef.hide();
   }
 
+  /** Closes the modal with no extra actions.*/
   cancelDelete():void{
     this.bsModalRef.hide();
   }
 
-  //TODO check output of delete, change whether or not to emit
+
+  /** Facilitates submission of the current timesheet.**/
   submitTimesheet(){
     this.parent.submitTimesheet();
   }
