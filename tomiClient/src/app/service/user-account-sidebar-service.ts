@@ -4,7 +4,6 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {UserAccountService} from "./user-account.service";
-import {subscribeToIterable} from "rxjs/internal-compatibility";
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +38,7 @@ export class UserAccountSidebarService {
   refreshFilteredAccounts(search) {
     console.log(this.filteredUserAccounts);
     this.filteredUserAccounts = this.userAccounts.filter(function (userAccount) {
-      return (userAccount.firstName + " " + userAccount.firstName).toUpperCase().includes(search);
+      return (userAccount.firstName + " " + userAccount.lastName).toUpperCase().includes(search);
     });
   }
 
@@ -49,7 +48,6 @@ export class UserAccountSidebarService {
         return data as UserAccount;
       }));
   }
-
 
   destroyAddUserAccountComponent() {
     this.ref.destroy();

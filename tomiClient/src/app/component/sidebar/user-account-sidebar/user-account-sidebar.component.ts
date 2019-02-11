@@ -18,7 +18,7 @@ export class UserAccountSidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.updateUserAccountSidebarList();
+
   }
 
   /**

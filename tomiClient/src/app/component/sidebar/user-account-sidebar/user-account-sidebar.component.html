@@ -1,11 +1,11 @@
 <h1>Users</h1>
 <div>
   <h2>View Users</h2>
-  <input id="user_account_search" [ngClass]="'input_search'" placeholder="search" (keyup)="updateUserAccountSidebarList()">
+  <input #user_account_search id="user_account_search" [ngClass]="'input_search'" placeholder="search" (keyup)="0">
   <div>
     <ul style="list-style: none">
-      <li *ngFor="let userAccount of (userAccountSidebarService.filteredUserAccounts |orderBy:'lastName')">
-        <span (click)='displayUserAccount(userAccount)'>{{userAccount.firstName}} {{userAccount.lastName}}</span>
+      <li *ngFor="let userAccount of (userAccountService.userAccounts | async | orderBy:'lastName')">
+        <span *ngIf="(userAccount.firstName + ' ' + userAccount.lastName).toUpperCase().includes(user_account_search.value.toUpperCase())" (click)='displayUserAccount(userAccount)'>{{userAccount.firstName}} {{userAccount.lastName}}</span>
       </li>
     </ul>
   </div>
