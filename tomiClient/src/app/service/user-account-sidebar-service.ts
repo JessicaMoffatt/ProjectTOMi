@@ -3,6 +3,8 @@ import {UserAccount} from "../model/userAccount";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {UserAccountService} from "./user-account.service";
+import {subscribeToIterable} from "rxjs/internal-compatibility";
 
 @Injectable({
   providedIn: 'root'
@@ -20,20 +22,25 @@ export class UserAccountSidebarService {
   /** The selected UserAccount in the sidebar. */
   selectedUserAccount: UserAccount;
 
-  /** List of all UserAccounts */
-  userAccounts: UserAccount[];
-  filteredUserAccounts: UserAccount[];
+  /** List of all UserAccounts for search filtering*/
+  filteredUserAccounts: UserAccount[] = [];
+  private userAccounts: UserAccount[] = [];
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, public userAccountService: UserAccountService) {
+    this.userAccountService.GETAllUserAccounts().subscribe( (users : Array<UserAccount>) => {
+      users.forEach( user => {
+          this.userAccounts.push(user);
+        })
+      });
 
-  /**
-   * Gets a List of all UserAccounts.
-   */
-  getAllUserAccounts(): Observable<Array<UserAccount>> {
-    return this.http.get(this.userURL).pipe(map((response:Response) => response))
-      .pipe(map((data: any) => {
-        return data._embedded.userAccounts as UserAccount[];
-    }));
+    this.refreshFilteredAccounts("");
+  }
+
+  refreshFilteredAccounts(search) {
+    console.log(this.filteredUserAccounts);
+    this.filteredUserAccounts = this.userAccounts.filter(function (userAccount) {
+      return (userAccount.firstName + " " + userAccount.firstName).toUpperCase().includes(search);
+    });
   }
 
   getUserAccountById(id: number): Observable<UserAccount> {
@@ -43,15 +50,6 @@ export class UserAccountSidebarService {
       }));
   }
 
-  /**
-   * Reassigns the List of UserAccounts to reflect changes made in the database.
-   */
-  reloadUserAccounts() {
-    this.getAllUserAccounts().subscribe((data: Array<UserAccount>) => {
-      this.filteredUserAccounts = data;
-      this.userAccounts = data;
-    });
-  }
 
   destroyAddUserAccountComponent() {
     this.ref.destroy();

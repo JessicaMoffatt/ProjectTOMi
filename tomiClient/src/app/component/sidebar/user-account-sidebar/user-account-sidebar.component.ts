@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ComponentFactoryResolver, ElementRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {UserAccountSidebarService} from "../../../service/user-account-sidebar-service";
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
@@ -14,23 +14,11 @@ export class UserAccountSidebarComponent implements OnInit {
   @ViewChild('add_user_account_container', {read: ViewContainerRef})
   add_user_account_container: ViewContainerRef;
 
-  constructor(public resolver: ComponentFactoryResolver, public userAccountSidebarService: UserAccountSidebarService, public userAccountService: UserAccountService) {
+  constructor(public resolver: ComponentFactoryResolver, public userAccountSidebarService: UserAccountSidebarService, private userAccountService: UserAccountService) {
   }
 
-  /**
-   *
-   */
   ngOnInit() {
-    this.updateUserAccounts();
-  }
-
-  updateUserAccounts() {
-    this.userAccountSidebarService.getAllUserAccounts().subscribe((data: Array<UserAccount>) => {
-      this.userAccountSidebarService.reloadUserAccounts();
-      // this.userAccountSidebarService.userAccounts = data;
-      // this.userAccountSidebarService.filteredUserAccounts = data;
-      this.userAccountService.userAccounts = data;
-    });
+    this.updateUserAccountSidebarList();
   }
 
   /**
@@ -57,10 +45,7 @@ export class UserAccountSidebarComponent implements OnInit {
    * UserAccounts that do not contain the searched input will be hidden.
    */
   updateUserAccountSidebarList() {
-    this.userAccountSidebarService.filteredUserAccounts =
-      this.userAccountSidebarService.userAccounts.filter(function (userAccount) {
-        return userAccount.firstName.toUpperCase().includes((<HTMLInputElement>document.getElementById("user_account_search")).value.toUpperCase()) ||
-          userAccount.lastName.toUpperCase().includes((<HTMLInputElement>document.getElementById("user_account_search")).value.toUpperCase());
-      });
+    let search = (<HTMLInputElement>document.getElementById("user_account_search")).value.toUpperCase();
+    this.userAccountSidebarService.refreshFilteredAccounts(search);
   }
 }

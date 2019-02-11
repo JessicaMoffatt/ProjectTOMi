@@ -11,7 +11,7 @@ import {TeamSidebarService} from "../../../service/team-sidebar.service";
 })
 export class UserAccountComponent implements OnInit {
 
-  constructor(public userAccountService: UserAccountService, public teamSidebarService: TeamSidebarService) { }
+  constructor(public userAccountService: UserAccountService, public teamService: TeamService) { }
 
   ngOnInit() {
 

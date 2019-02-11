@@ -7,6 +7,7 @@ import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamSidebarService} from "../../../service/team-sidebar.service";
 import {Team} from "../../../model/team";
+import {TeamService} from "../../../service/team.service";
 
 /**
  * AddUserAccountComponent is a modal form used to add a new UserAccount to the database.
@@ -20,8 +21,7 @@ import {Team} from "../../../model/team";
   styleUrls: ['./add-user-account.component.scss']
 })
 export class AddUserAccountComponent implements OnInit {
-  teams: Team[];
-  constructor(private userAccountSidebarService: UserAccountSidebarService, private userAccountService: UserAccountService, private teamSidebarService: TeamSidebarService ) { }
+  constructor(private userAccountSidebarService: UserAccountSidebarService, private userAccountService: UserAccountService, private teamService: TeamService) { }
 
   ngOnInit() {
   }
@@ -64,35 +64,30 @@ export class AddUserAccountComponent implements OnInit {
 
     // Validate the team id chosen by comparing to all of the existing team ids.
     let validTeamId = false;
-    for (let i = 0; i < this.userAccountService.teams.length; i++) {
-      if (this.userAccountService.teams[i].id === userAccount.teamId) {
-        validTeamId = true;
-      }
-    }
-
-    // Validate the team id chosen if it is the new teamId magic number "-1".
-    if (userAccount.teamId === -1) {
-      validTeamId = true;
-    }
-
-    //
-    if (!validTeamId) {
-      goodUserAccount = false;
-    }
+    this.teamService.teamsObservable.subscribe(teams => {
+      teams.forEach( team => {
+        if (userAccount.teamId === team.id) {
+          validTeamId = true;
+        }
+      })
+    });
 
     // Save the new UserAccount if it has been fully validated.
     if (goodUserAccount) {
       this.userAccountService.save(userAccount).then(value => {
-        this.userAccountService.userAccounts.push(value);
         this.destroyAddUserAccountComponent();
       });
+      this.userAccountService.refreshUserAccounts();
     }
   }
 
-  /**
+  /**r
    * Destroys the dynamically created Add UserAccount component.
    */
   destroyAddUserAccountComponent() {
     this.userAccountSidebarService.destroyAddUserAccountComponent();
   }
+
 }
+
+

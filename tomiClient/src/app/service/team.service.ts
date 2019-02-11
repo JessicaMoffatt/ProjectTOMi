@@ -32,6 +32,9 @@ export class TeamService {
   /** List of all the team members of the selected team.*/
   teamMembers: UserAccount[] = [];
 
+  teamsObservable: Observable<Array<Team>>;
+
+
   /** List of all the team members not currently on any teams.*/
   allFreeMembers: UserAccount[] = [];
 
@@ -45,12 +48,22 @@ export class TeamService {
   /** Used to reference the add team member component created by clicking the Add Member button.*/
   ref: ComponentRef<any>;
 
-  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService, private userAccountService: UserAccountService) {
+  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService) {
+    this.teamsObservable = this.GETAllTeams();
   }
 
-  //TODO Write it to return an observable team object
+  /**
+   * Gets a List of all Teams from the server.
+   */
   GETAllTeams() {
+    return this.http.get(this.teamUrl).pipe(map((response:Response) => response))
+      .pipe(map((data: any) => {
+        return data._embedded.teams as Team[];
+      }));
+  }
 
+  refreshTeams() {
+    this.teamsObservable = this.GETAllTeams();
   }
 
   /**
@@ -73,7 +86,8 @@ export class TeamService {
 
     this.selectedMember.teamId = -1;
 
-    this.userAccountService.save(this.selectedMember);
+    // TODO Remove this comment and allow this code
+    // this.userAccountService.save(this.selectedMember);
 
     if(this.teamSideBarService.selectedTeam.leadId === this.selectedMember.id){
       this.teamSideBarService.selectedTeam.leadId = -1;

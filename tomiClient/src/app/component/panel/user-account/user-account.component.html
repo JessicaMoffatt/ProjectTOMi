@@ -5,15 +5,11 @@
 <div>
   <h2>Users</h2>
   <div [ngClass]="'user_account'">
-    <ul
-        *ngIf="userAccountService.userAccounts">
-      <ul *ngFor="let userAccount of userAccountService.userAccounts"
+    <ul *ngIf="userAccountService.userAccounts">
+      <ul *ngFor="let userAccount of userAccountService.userAccounts | async"
           (click)="selectUserAccount(userAccount)"
           style="list-style: none">
         <div [ngClass]="'user_account_wrapper'">
-          <li>
-            <input type="text" [disabled]="true" value="hello">
-          </li>
           <li>
             <span [id]="'user_account_panel_name'" [ngClass]="['list_item', 'user_account_name']"
                   *ngIf="userAccount">{{userAccount.firstName}} {{userAccount.lastName}}</span>
@@ -31,7 +27,7 @@
           <li>
             <ng-container *ngIf="userAccount.teamId; then hasTeam else noTeam"></ng-container>
             <ng-template #hasTeam>
-              <ng-container *ngFor="let team of userAccountService.teams">
+              <ng-container *ngFor="let team of teamService.teamsObservable | async">
                 <span [ngClass]="['list_item']" *ngIf="team.id === userAccount.teamId">Team {{team.teamName}}</span>
               </ng-container>
             </ng-template>
