@@ -1,9 +1,7 @@
 import {
-  Component, ComponentFactory,
+  Component,
   ComponentFactoryResolver,
-  ComponentRef,
-  OnInit, TemplateRef,
-  Type,
+  OnInit,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';

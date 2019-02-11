@@ -19,7 +19,7 @@
       <label>Team Lead
         <select id="selected_team_lead">
           <option value="-1">None</option>
-          <option *ngFor="let member of (this.teamService.teamMembers |orderBy: 'id')" [value]="member.id"
+          <option *ngFor="let member of (this.teamService.teamMembers |orderBy: 'firstName')" [value]="member.id"
                   [attr.selected]="member.id === teamSideBarService.selectedTeam?.leadId ? 'selected' : null">
             {{member.firstName}} {{member.lastName}}
           </option>
@@ -31,7 +31,7 @@
   <h2>Team Members</h2>
   <div [ngClass]="'team_members'">
     <ul *ngIf="teamService.teamMembers">
-      <li *ngFor="let m of teamService.teamMembers">
+      <li *ngFor="let m of teamService.teamMembers | orderBy:'firstName'">
         <span [ngClass]="['list_item']" (click)="selectMember(m)"
               *ngIf="m">{{m.firstName}} {{m.lastName}}</span>
       </li>

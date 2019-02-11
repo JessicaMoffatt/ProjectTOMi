@@ -1,29 +1,109 @@
 <!--
 @author Jessica Moffatt
-@version 1.0
+@version 2.0
 -->
-<div [ngClass]="'entry_container'">
-  <div>
-    <input [(ngModel)]="entry.projectName" placeholder="Project Name" style="width:20em">
-    <span *ngIf="entry.hours">
-          <span *ngFor="let hour of entry.hours; let i = index">
-            <label><strong>{{days[i]}}</strong>
-            <input [ngClass]="'small_number_input'" [(ngModel)]="hour" placeholder="0" type="number" step=".25">
-            </label>
-          </span>
-        </span>
-    <span [ngClass]="['delete_entry', 'btn', 'delete_btn']" (click)="delete()">X</span>
+<div [ngClass]="['entry_container','rounded']">
+  <div [ngClass]="'row'">
+    <div [ngClass]="'col-xs-12'">
+      <label>Component
+        <input #componentInput [(ngModel)]="entry.component" placeholder="Component">
+      </label>
+    </div>
   </div>
-  <div>
-    <span *ngIf="entry">
-    <input [(ngModel)]="entry.task" placeholder="Task">
-    <input [(ngModel)]="entry.unitType" placeholder="Unit Type">
-    <input [(ngModel)]="entry.component" placeholder="Component" style="width:20em">
-      <!-- TODO replace Units with ACTUAl units, depending on the Unit Type-->
-    <label><input [ngModel]="entry.quantity" placeholder="Quantity"
-                  [ngClass]="'small_number_input'"><strong>Units</strong></label>
-   </span>
-    <span [ngClass]="['copy_entry', 'btn']" (click)="copy()">C</span>
+
+  <div [ngClass]="'row'">
+    <div [ngClass]="['col-xs-6']">
+      <label>Project
+        <select #projectInput>
+          <option value="-1">None</option>
+          <option *ngFor="let project of (projects |orderBy: 'projectName')" [value]="project.id"
+                  [attr.selected]="project.id === this.entry.project?.id ? 'selected' : null">
+            {{project.projectName}}
+          </option>
+        </select>
+      </label>
+    </div>
+    <div [ngClass]="'col-xs-6'">
+      <label>Task
+      <select #taskInput>
+        <option value="-1">Task</option>
+        <option *ngFor="let task of (tasks |orderBy: 'name')" [value]="task.id"
+                [attr.selected]="task.id === this.entry.task?.id ? 'selected' : null">
+          {{task.name}}
+        </option>
+      </select>
+      </label>
+    </div>
+  </div>
+
+  <div [ngClass]="'row'">
+    <div [ngClass]="'col-xs-6'">
+      <label>Unit Type
+      <select #unitTypeInput>
+        <option value="-1">Unit Type</option>
+        <option *ngFor="let unitType of (unitTypes |orderBy: 'name')" [value]="unitType.id"
+                [attr.selected]="unitType.id === this.entry.unitType?.id ? 'selected' : null">
+          {{unitType.name}}
+        </option>
+      </select>
+      </label>
+    </div>
+
+    <div [ngClass]="'col-xs-2'">
+      <label><input #quantityInput type="number" step=".25" [ngModel]="entry.quantity" placeholder="0"
+                    [ngClass]="'small_number_input'"></label>
+    </div>
+    <div [ngClass]="'col-xs-4'">
+      <strong>{{entry.unitType ? entry.unitType.unit : 'Units'}}</strong>
+    </div>
+  </div>
+
+  <div [ngClass]="'row'">
+    <!-- days of the week -->
+    <div [ngClass]="'col-xs-8'">
+      <label><strong>M</strong>
+        <input [ngClass]="'small_number_input'" [(ngModel)]="entry.mondayHours" placeholder="0" type="number"
+               step=".25" min="0" #mondayInput>
+      </label>
+
+      <label><strong>T</strong>
+        <input [ngClass]="'small_number_input'" [(ngModel)]="entry.tuesdayHours" placeholder="0" type="number"
+               step=".25" min="0" #tuesdayInput>
+      </label>
+
+      <label><strong>W</strong>
+        <input [ngClass]="'small_number_input'" [(ngModel)]="entry.wednesdayHours" placeholder="0" type="number"
+               step=".25" min="0" #wednesdayInput>
+      </label>
+
+      <label><strong>R</strong>
+        <input [ngClass]="'small_number_input'" [(ngModel)]="entry.thursdayHours" placeholder="0" type="number"
+               step=".25" min="0" #thursdayInput>
+      </label>
+
+      <label><strong>F</strong>
+        <input [ngClass]="'small_number_input'" [(ngModel)]="entry.fridayHours" placeholder="0" type="number"
+               step=".25" min="0" #fridayInput>
+      </label>
+
+      <label><strong>S</strong>
+        <input [ngClass]="'small_number_input'" [(ngModel)]="entry.saturdayHours" placeholder="0" type="number"
+               step=".25" min="0" #saturdayInput>
+      </label>
+
+      <label><strong>U</strong>
+        <input [ngClass]="'small_number_input'" [(ngModel)]="entry.sundayHours" placeholder="0" type="number"
+               step=".25" min="0" #sundayInput>
+      </label>
+    </div>
+    <!-- end of days of week-->
+  </div>
+
+  <div [ngClass]="'row'">
+    <div [ngClass]="['col-xs-4','flex_btn_container']">
+      <div [ngClass]="['copy_entry', 'btn']" (click)="copy()"></div>
+      <div [ngClass]="['delete_entry', 'btn', 'delete_btn']" (click)="delete()"></div>
+    </div>
   </div>
 </div>
 

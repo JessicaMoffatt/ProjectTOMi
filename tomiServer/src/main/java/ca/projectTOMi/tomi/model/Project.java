@@ -79,8 +79,7 @@ public final class Project {
    */
   @ManyToMany(fetch = FetchType.EAGER, targetEntity = UserAccount.class)
   @JoinTable(name = "project_members", joinColumns = @JoinColumn(name= "project_id"), inverseJoinColumns = @JoinColumn(name = "user_account_id"))
-  @JsonIgnore
-  private Set<UserAccount> projectMembers = new HashSet<>();
+  @JsonIgnore private Set<UserAccount> projectMembers = new HashSet<>();
 
   /**
    * If this Project is active.
