@@ -61,7 +61,7 @@ export class TimesheetService {
   /**
    * Gets the current timesheet.
    */
-  async getCurrentTimesheet() {
+  async getCurrentTimesheet(): Promise<Timesheet> {
     if(this.currentTimesheetIndex != -1){
       return this.timesheets[this.currentTimesheetIndex];
     }
@@ -127,23 +127,28 @@ export class TimesheetService {
   /**
    * Submits the current timesheet.
    */
-  async submit(){
+  async submit(): Promise<Timesheet>{
     let tempSheet: Timesheet = null;
 
-    await this.getCurrentTimesheet().then(
+    return await this.getCurrentTimesheet().then(
       (data)=>{
         const url = data._links["submit"];
 
-        this.http.put<Timesheet>(url["href"],data, httpOptions).toPromise().then(response => {
-          tempSheet = response;
-
-          return response;
-        }).catch(() => {
-          return null;
-        });
-
-        return tempSheet;
+        return this.test(data,tempSheet,url).then((data)=>{
+         tempSheet = data;
+          return tempSheet;
+       });
       });
   }
 
+  async test(data:any, tempSheet: Timesheet,url: string[]): Promise<Timesheet>{
+    await this.http.put<Timesheet>(url["href"],data, httpOptions).toPromise().then(response => {
+      tempSheet = response;
+      return response;
+    }).catch(() => {
+      return null;
+    });
+
+    return tempSheet;
+  }
 }
