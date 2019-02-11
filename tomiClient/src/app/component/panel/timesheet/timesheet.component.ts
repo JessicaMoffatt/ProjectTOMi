@@ -186,7 +186,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     });
 
     if(valid){
-     await this.timesheetService.submit().then(()=>{
+     await this.timesheetService.submit().then((data)=>{
            this.reloadPromise().then();
       });
     }else if(!valid){
@@ -209,9 +209,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
    * Reloads the page once setCurrentStatus has completed.
    */
   async reloadAfterSetCurrentStatus(){
-    await this.setCurrentStatusPromise().then(()=>{
-        this.router.navigateByUrl('/', {skipLocationChange:true}).then(()=>
-          this.router.navigate(["/timesheetPanel"]));
+    await this.setCurrentStatusPromise().finally(()=>{
+        this.router.navigateByUrl('/', {skipLocationChange:true}).finally(()=>
+        this.router.navigate(["/timesheetPanel"]));
       }
     );
   }
