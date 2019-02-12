@@ -1,4 +1,4 @@
-import {BsDropdownModule} from "ngx-bootstrap";
+import {BsDropdownModule, BsModalService, ComponentLoaderFactory, ModalModule, PositioningService} from "ngx-bootstrap";
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +13,10 @@ import { AddTeamComponent } from './component/modal/add-team/add-team.component'
 import {TeamSidebarService} from "./service/team-sidebar.service";
 import {OrderModule} from "ngx-order-pipe";
 
-import { TimesheetComponent } from './component/panel/timesheet/timesheet.component';
+import {
+  DeleteEntryModalComponent, SubmitTimesheetModalComponent,
+  TimesheetComponent
+} from './component/panel/timesheet/timesheet.component';
 import { EntryComponent } from './component/panel/entry/entry.component';
 
 import {TeamComponent } from './component/panel/team/team.component';
@@ -34,6 +37,8 @@ import {UserAccountSidebarService} from "./service/user-account-sidebar-service"
 import { AddUserAccountComponent } from './component/modal/add-user-account/add-user-account.component';
 import { EditUserComponent } from './component/panel/edit-user/edit-user.component';
 import { ViewUserComponent } from './component/panel/view-user/view-user.component';
+import {TimesheetService} from "./service/timesheet.service";
+import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry-submitted.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +62,10 @@ import { ViewUserComponent } from './component/panel/view-user/view-user.compone
     UserAccountComponent,
     AddUserAccountComponent,
     EditUserComponent,
-    ViewUserComponent
+    ViewUserComponent,
+    EntrySubmittedComponent,
+    DeleteEntryModalComponent,
+    SubmitTimesheetModalComponent
   ],
   imports: [
     BrowserModule,
@@ -65,18 +73,25 @@ import { ViewUserComponent } from './component/panel/view-user/view-user.compone
     FormsModule,
     HttpClientModule,
     OrderModule,
-    BsDropdownModule.forRoot()
+    ModalModule,
   ],
   entryComponents:[
     EntryComponent,
     AddTeamComponent,
     AddTeamMemberComponent,
-    AddUserAccountComponent
+    AddUserAccountComponent,
+    EntrySubmittedComponent,
+    DeleteEntryModalComponent,
+    SubmitTimesheetModalComponent
   ],
   providers: [
     TeamSidebarService,
     UserAccountService,
-    UserAccountSidebarService
+    UserAccountSidebarService,
+    TimesheetService,
+    BsModalService,
+    ComponentLoaderFactory,
+    PositioningService
   ],
   bootstrap: [AppComponent]
 })

@@ -160,10 +160,10 @@ export class TeamService {
    * @param team The team to update/create.
    */
   async save(team: Team) {
-    let testTeam: Team = null;
+    let tempTeam: Team = null;
     if (team.id === -1) {
       await this.http.post<Team>(this.teamUrl, JSON.stringify(team), httpOptions).toPromise().then(response => {
-        testTeam = response;
+        tempTeam = response;
         return response;
       }).catch((error: any) => {
         //TODO
@@ -173,14 +173,14 @@ export class TeamService {
       this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).toPromise().then((response) => {
         this.teamSideBarService.reloadTeams();
 
-        testTeam = response;
+        tempTeam = response;
         return response;
       }).catch((error: any) => {
         //TODO
       });
     }
 
-    return testTeam;
+    return tempTeam;
   }
 
   /**

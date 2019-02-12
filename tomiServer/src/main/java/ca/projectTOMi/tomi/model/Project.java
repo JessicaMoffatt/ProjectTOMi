@@ -51,7 +51,7 @@ public final class Project {
    * The UserAccount managing this Project.
    */
   @OneToOne
-  @JsonProperty (value="progectManagerId")
+  @JsonProperty (value="projectManagerId")
   @JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
   @JsonIdentityReference (alwaysAsId = true)
   private UserAccount projectManager;
@@ -80,7 +80,7 @@ public final class Project {
    */
   @ManyToMany(fetch = FetchType.EAGER, targetEntity = UserAccount.class)
   @JoinTable(name = "project_members", joinColumns = @JoinColumn(name= "project_id"), inverseJoinColumns = @JoinColumn(name = "user_account_id"))
-  private Set<UserAccount> projectMembers = new HashSet<>();
+  @JsonIgnore private Set<UserAccount> projectMembers = new HashSet<>();
 
   /**
    * If this Project is active.

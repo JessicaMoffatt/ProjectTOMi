@@ -4,43 +4,69 @@
  * as well as the productivity of users.
  *
  * @author Jessica Moffatt
- * @version 1.0
+ * @version 2.0
  */
+import {Status} from "./status";
+import {Project} from "./project";
+import {Task} from "./task";
+import {UnitType} from "./unitType";
+
 export class Entry{
-  //TODO explain what each number means, fix date and hours,
-  // project isn't a string, task isn't a string, unitType isn't a string
-  /** Represents the approval status of this entry.*/
-  approved: number;
-  /** The name of the project this entry is for.*/
-  projectName: string;
-  /** The list of days of the week.*/
-  date: Date[];
-  /** The corresponding hours worked for each day of the week.*/
-  hours: number[];
-  /** The project this entry is for.*/
-  project: string;
-  /** The task this entry is for.*/
-  task: string;
-  /** The component worked on for this entry.*/
-  component: string;
-  /** The number of units produced for this entry.*/
-  quantity: number;
-  /** The unit type corresponding to the component worked on for this entry.*/
-  unitType: string;
   /** The unique identifier for this entry.*/
   id: number;
+  /** The project this entry is for.*/
+  project: Project;
+  /** The task this entry is for.*/
+  task: Task;
+  /** The unit type corresponding to the component worked on for this entry.*/
+  unitType: UnitType;
+  /** The timesheet associated with the entry.*/
+  timesheet: number;
+  /** Represents whether or not the entry has been approved by the project manager.*/
+  status: Status;
+  /** The component worked on for this entry.*/
+  component: string;
+  /** The hours worked on the Monday of the week for this Entry.*/
+  mondayHours: number;
+  /** The hours worked on the Tuesday of the week for this Entry.*/
+  tuesdayHours: number;
+  /** The hours worked on the Wednesday of the week for this Entry.*/
+  wednesdayHours: number;
+  /** The hours worked on the Thursday of the week for this Entry.*/
+  thursdayHours: number;
+  /** The hours worked on the Friday of the week for this Entry.*/
+  fridayHours: number;
+  /** The hours worked on the Saturday of the week for this Entry.*/
+  saturdayHours: number;
+  /** The hours worked on the Sunday of the week for this Entry.*/
+  sundayHours: number;
+  /** The total hours worked for the week for this Entry..*/
+  totalHours: number;
+  /** The quantity of the unit type's unit that was produced.*/
+  quantity: number;
+  /** If this Entry is active.*/
+  active: boolean;
+  /** The list of links used for communicating with the back end.*/
+  _links: [];
 
-  //TODO assign approved to the correct number
   constructor(){
-    this.approved = 1;
-    this.projectName = "";
-    this.date = [];
-    this.hours = [0,0,0,0,0,0,0];
-    this.project = "";
-    this.task = "";
-    this.component = "";
-    this.quantity = 0;
-    this.unitType = "";
     this.id = -1;
+    this.project = null;
+    this.task = null;
+    this.unitType = null;
+    this.timesheet = null;
+    this.status = Status.LOGGING;
+    this.component = "";
+    this.mondayHours = 0;
+    this.tuesdayHours = 0;
+    this.wednesdayHours = 0;
+    this.thursdayHours = 0;
+    this.fridayHours = 0;
+    this.saturdayHours = 0;
+    this.sundayHours = 0;
+    this.totalHours = 0;
+    this.quantity = 0;
+    this.active = true;
+    this._links = [];
   }
 }

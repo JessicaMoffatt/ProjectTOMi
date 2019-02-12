@@ -1,26 +1,33 @@
 <!--
 @author Jessica Moffatt
-@version 1.0
+@version 2.0
 -->
-<div [ngClass]="'main_container'">
-  <span [ngClass]="'circle'">
-    <i [ngClass]="['arrow', 'left']"></i>
+<div [ngClass]="'container'">
+  <span [ngClass]="['arrow', 'rounded-circle','back']">
   </span>
-  <span [ngClass]="'week_title'">Week of Jan 14, 2019</span>
-  <span [ngClass]="'circle'">
-    <i [ngClass]="['arrow', 'right']"></i>
+  <span [ngClass]="'week_title'">Week of {{timesheetService.currentDate}}</span>
+  <span [ngClass]="['arrow', 'rounded-circle','forward']">
   </span>
   <!--This is a placeholder -->
   <button [ngClass]="'calendar'"></button>
-  <span id="submission_status">Not Submitted</span>
+  <span id="submission_status">{{timesheetService.currentStatus}}</span>
 
-  <app-entry *ngFor="let entry of entries" [entry]="entry" (copyRequested)="copyEntry($event)"
-             (deleteRequested)="deleteEntry($event)"></app-entry>
-  <div #componentHolder></div>
-  <div (click)="addEntry()" [ngClass]="['new_entry', 'btn', 'new_btn']">+</div>
+  <div [ngClass]="'container'">
+    <div *ngFor="let entry of entries">
+      <app-entry *ngIf="getStatusValue(entry.status.toString()) != sts.SUBMITTED" [entry]="entry" [projects]="projects"
+                 (requestCopy)="copyEntry($event)"
+                 (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>
+      <app-entry-submitted *ngIf="getStatusValue(entry.status.toString()) === sts.SUBMITTED" [entry]="entry"></app-entry-submitted>
+    </div>
+
+  </div>
+
+  <div #entryHolder></div>
 </div>
-<div [ngClass]="'tally_container'">
+<div [ngClass]="'timesheet_footer'">
+  <div (click)="addEntry()" [ngClass]="['new_entry', 'btn', 'new_btn','rounded-circle']"></div>
   <span [ngClass]="'hours_tally'">Hours:<strong> {{tally}}</strong></span>
-  <span [ngClass]="['submit', 'btn', 'bottom_btn']">Submit</span>
-  <span [ngClass]="['save_timesheet', 'btn', 'bottom_btn', 'save_btn']" (click)="save()">Save</span>
+  <span [ngClass]="['submit', 'btn', 'bottom_btn']" (click)="displaySubmitModal()"></span>
+  <span [ngClass]="['save_timesheet', 'btn', 'bottom_btn', 'save_btn']" (click)="save()"></span>
 </div>
+
