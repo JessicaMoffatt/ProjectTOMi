@@ -134,14 +134,14 @@ export class TimesheetService {
       (data)=>{
         const url = data._links["submit"];
 
-        return this.test(data,tempSheet,url).then((data)=>{
+        return this.putTimesheetRequest(data,tempSheet,url).then((data)=>{
          tempSheet = data;
           return tempSheet;
        });
       });
   }
 
-  async test(data:any, tempSheet: Timesheet,url: string[]): Promise<Timesheet>{
+  async putTimesheetRequest(data:any, tempSheet: Timesheet, url: string[]): Promise<Timesheet>{
     await this.http.put<Timesheet>(url["href"],data, httpOptions).toPromise().then(response => {
       tempSheet = response;
       return response;

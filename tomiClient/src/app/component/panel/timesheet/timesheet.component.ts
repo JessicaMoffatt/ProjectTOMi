@@ -186,7 +186,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
     });
 
     if(valid){
-     await this.timesheetService.submit().then((data)=>{
+     await this.timesheetService.submit().then(()=>{
            this.reloadPromise().then();
       });
     }else if(!valid){
