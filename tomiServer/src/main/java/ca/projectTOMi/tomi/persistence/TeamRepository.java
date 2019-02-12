@@ -19,5 +19,5 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
    *
    * @return List containing all teams with the provided active state
    */
-  public List<Team> getAllByActive(boolean active);
+  public List<Team> getAllByActiveOrderById(boolean active);
 }

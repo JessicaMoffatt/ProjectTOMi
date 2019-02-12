@@ -25,7 +25,7 @@ public interface ProjectRepository extends JpaRepository<Project, String>{
    *
    * @return List containing all Projects with the provided active state
    */
-  public List<Project> getAllByActive(boolean active);
+  public List<Project> getAllByActiveOrderById(boolean active);
 
-  public List<Project> getAllByActiveTrueAndProjectMembersContains(UserAccount user);
+  public List<Project> getAllByActiveTrueAndProjectMembersContainsOrderById(UserAccount user);
 }
