@@ -29,7 +29,7 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap";
   templateUrl: './timesheet.component.html',
   styleUrls: ['./timesheet.component.scss']
 })
-export class TimesheetComponent implements OnInit, AfterViewInit{
+export class TimesheetComponent implements OnInit, AfterViewInit {
 
   /** The reference to the BSModal, which is used to show either the delete modal or the submit modal.*/
   bsModalRef: BsModalRef;
@@ -57,7 +57,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   /** The list of entry components that are children of the timesheet.*/
   entryComponents: EntryComponent[] = [];
 
-  constructor( private modalService: BsModalService, private router: Router, public timesheetService: TimesheetService, private projectService: ProjectService, private entryService: EntryService) {
+  constructor(private modalService: BsModalService, private router: Router, public timesheetService: TimesheetService, private projectService: ProjectService, private entryService: EntryService) {
 
   }
 
@@ -65,7 +65,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
    * On initialization, calls getEntries to populate the entries variable as well as the projects variable.
    */
   ngOnInit() {
-    this.populateTimesheets().then((value)=>{
+    this.populateTimesheets().then((value) => {
       let timesheet = value as Timesheet;
       this.getEntries(timesheet.id);
       this.getProjects(this.userId);
@@ -78,7 +78,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   }
 
   /** Gets all the entry components currently on the timesheet.*/
-  getEntryComponents(){
+  getEntryComponents() {
     this.entryComponentsRef.changes.subscribe(c => {
       c.toArray().forEach(item => {
         this.entryComponents.push(item);
@@ -87,7 +87,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   }
 
   /** Populates the list of timesheets.*/
-  async populateTimesheets(){
+  async populateTimesheets() {
     let promise = new Promise((resolve, reject) => {
       resolve(this.timesheetService.populateTimesheets(this.userId))
     });
@@ -99,7 +99,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
    * Gets all entries for this timesheet.
    * @param id The ID of the timesheet we want the entries of.
    */
-  getEntries(id:number) {
+  getEntries(id: number) {
     this.timesheetService.getEntries(id).subscribe((data) => {
       this.entries = data;
       this.updateTally();
@@ -110,7 +110,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
    * Gets all projects this user is associated with.
    * @param id The ID of the user.
    */
-  getProjects(id:number): void{
+  getProjects(id: number): void {
     this.projectService.getProjectsForUser(id).subscribe((data => this.projects = data));
   }
 
@@ -118,13 +118,13 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
    * Creates an empty entry for the timesheet.
    */
   public addEntry(): void {
-    if(this.timesheetService.currentStatus === this.sts[this.sts.LOGGING]){
+    if (this.timesheetService.currentStatus === this.sts[this.sts.LOGGING]) {
       let newEntry = new Entry();
 
-      this.timesheetService.getCurrentTimesheet().then((data)=>{
+      this.timesheetService.getCurrentTimesheet().then((data) => {
         newEntry.timesheet = data.id;
 
-        this.entryService.save(newEntry).then( (data => {
+        this.entryService.save(newEntry).then((data => {
           this.entries.push(data);
           this.entryComponents = [];
         }));
@@ -164,7 +164,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
    * Deletes the specified entry.
    * @param entry The entry to be deleted.
    */
-  public deleteEntry(entry: Entry){
+  public deleteEntry(entry: Entry) {
     let index = this.entries.indexOf(entry);
     this.entries.splice(index, 1);
 
@@ -176,20 +176,20 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   /**
    * Submits the current timesheet.
    */
-  async submitTimesheet(){
-    let valid:boolean = false;
+  async submitTimesheet() {
+    let valid: boolean = false;
     this.entryComponents.forEach(item => {
       valid = item.validateEntry();
-      if(!valid){
+      if (!valid) {
         return;
       }
     });
 
-    if(valid){
-     await this.timesheetService.submit().then(()=>{
-           this.reloadPromise().then();
+    if (valid) {
+      await this.timesheetService.submit().then(() => {
+        this.reloadPromise().then();
       });
-    }else if(!valid){
+    } else if (!valid) {
       alert("All fields must have a value to submit!");
     }
   }
@@ -197,7 +197,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   /**
    * Waits for reloadAfterSerCurrentStatus to compelte.
    */
-  async reloadPromise(){
+  async reloadPromise() {
     let promise = new Promise((resolve, reject) => {
       resolve(this.reloadAfterSetCurrentStatus());
     });
@@ -208,18 +208,22 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   /**
    * Reloads the page once setCurrentStatus has completed.
    */
-  async reloadAfterSetCurrentStatus(){
-    await this.setCurrentStatusPromise().finally(()=>{
-        this.router.navigateByUrl('/', {skipLocationChange:true}).finally(()=>
-        this.router.navigate(["/timesheetPanel"]));
+  async reloadAfterSetCurrentStatus() {
+    await this.setCurrentStatusPromise().finally(() => {
+        this.navigateToTimesheet();
       }
     );
+  }
+
+  navigateToTimesheet() {
+    this.router.navigateByUrl('/', {skipLocationChange: true}).finally(() =>
+      this.router.navigate(["/timesheetPanel"]));
   }
 
   /**
    * Waits for setCurrentStatus to complete.
    */
-  async setCurrentStatusPromise(){
+  async setCurrentStatusPromise() {
     let promise = new Promise((resolve, reject) => {
       resolve(this.timesheetService.setCurrentStatus());
     });
@@ -230,10 +234,10 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   /**
    * Saves the state of all entries for the current timesheet.
    */
-  save(){
-    if(this.timesheetService.currentStatus === this.sts[this.sts.LOGGING]){
+  save() {
+    if (this.timesheetService.currentStatus === this.sts[this.sts.LOGGING]) {
       this.entryComponents.forEach(item => {
-        item.save().then(()=>{
+        item.save().then(() => {
           this.updateTally();
         });
       });
@@ -245,8 +249,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   /**
    * Displays the submit modal.
    */
-  displaySubmitModal(){
-    if(this.timesheetService.currentStatus === this.sts[this.sts.LOGGING]){
+  displaySubmitModal() {
+    if (this.timesheetService.currentStatus === this.sts[this.sts.LOGGING]) {
       const initialState = {
         title: 'Submit Confirmation',
         parent: this
@@ -260,7 +264,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
    * Updates the tally for the total worked hours for the timesheet.
    */
   public updateTally(): void {
-    let hours :number = 0;
+    let hours: number = 0;
     this.entries.forEach(function (entry) {
       hours += +entry.mondayHours + +entry.tuesdayHours + +entry.wednesdayHours + +entry.thursdayHours + +entry.fridayHours + +entry.saturdayHours + +entry.sundayHours;
     });
@@ -273,13 +277,37 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
    * Used for comparison purposes.
    * @param statusString String to match to a Status.
    */
-  getStatusValue(statusString: string):number{
+  getStatusValue(statusString: string): number {
     for (let item in Status) {
       if (Status[item] === statusString) {
         return parseInt(item);
       }
     }
     return null;
+  }
+
+  displayPrevTimesheet() {
+    let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
+
+    if (currentIndex < this.timesheetService.timesheets.length -1) {
+      let newIndex: number = currentIndex + 1;
+      this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() => {
+          this.navigateToTimesheet();
+        }
+      );
+    }
+  }
+
+  displayNextTimesheet(){
+    let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
+
+    if (currentIndex > 0) {
+      let newIndex: number = currentIndex - 1;
+      this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() => {
+          this.navigateToTimesheet();
+        }
+      );
+    }
   }
 }
 
@@ -299,7 +327,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
       </button>
     </div>
     <div class="modal-body">
-        <span>Confirm deletion of entry</span>
+      <span>Confirm deletion of entry</span>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-default" [ngClass]="'confirm_btn'" (click)="confirmDelete()">DELETE</button>
@@ -322,25 +350,26 @@ export class DeleteEntryModalComponent implements OnInit {
   /** The parent component which is showing this modal.*/
   parent: TimesheetComponent;
 
-  constructor(public bsModalRef: BsModalRef, private entryService: EntryService) {}
+  constructor(public bsModalRef: BsModalRef, private entryService: EntryService) {
+  }
 
   ngOnInit() {
 
   }
 
   /** Facilitates the deletion of entry, as well as closes the modal.*/
-  confirmDelete():void{
+  confirmDelete(): void {
     this.deleteEntry();
     this.bsModalRef.hide();
   }
 
   /** Closes the modal with no extra actions.*/
-  cancelDelete():void{
+  cancelDelete(): void {
     this.bsModalRef.hide();
   }
 
   /** Facilitates deletion on the backend as well as the front end.**/
-  deleteEntry(){
+  deleteEntry() {
     this.entryService.delete(this.entry);
     this.parent.deleteEntry(this.entry);
   }
@@ -380,26 +409,27 @@ export class SubmitTimesheetModalComponent implements OnInit {
   /** The parent component which is showing this modal.*/
   parent: TimesheetComponent;
 
-  constructor(public bsModalRef: BsModalRef) {}
+  constructor(public bsModalRef: BsModalRef) {
+  }
 
   ngOnInit() {
 
   }
 
   /** Facilitates the submission of the current timesheet, as well as closes the modal.*/
-  confirmSubmission():void{
+  confirmSubmission(): void {
     this.submitTimesheet();
     this.bsModalRef.hide();
   }
 
   /** Closes the modal with no extra actions.*/
-  cancelDelete():void{
+  cancelDelete(): void {
     this.bsModalRef.hide();
   }
 
 
   /** Facilitates submission of the current timesheet.**/
-  submitTimesheet(){
+  submitTimesheet() {
     this.parent.submitTimesheet().then();
   }
 }

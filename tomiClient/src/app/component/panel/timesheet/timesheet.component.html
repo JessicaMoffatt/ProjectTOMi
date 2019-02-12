@@ -3,10 +3,10 @@
 @version 2.0
 -->
 <div [ngClass]="'container'">
-  <span [ngClass]="['arrow', 'rounded-circle','back']">
+  <span [ngClass]="['arrow', 'rounded-circle','back']" (click)="displayPrevTimesheet()">
   </span>
   <span [ngClass]="'week_title'">Week of {{timesheetService.currentDate}}</span>
-  <span [ngClass]="['arrow', 'rounded-circle','forward']">
+  <span [ngClass]="['arrow', 'rounded-circle','forward']" (click)="displayNextTimesheet()">
   </span>
   <!--This is a placeholder -->
   <button [ngClass]="'calendar'"></button>

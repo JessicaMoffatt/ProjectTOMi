@@ -30,7 +30,7 @@ export class TimesheetService {
   timesheets: Timesheet[] = [];
 
   /** The position in timesheets for the current timesheet.*/
-  private currentTimesheetIndex = -1;
+  private currentTimesheetIndex = 0;
 
   /** The starting date for the current timesheet.*/
   public currentDate;
@@ -39,6 +39,15 @@ export class TimesheetService {
   public currentStatus = "";
 
   constructor(private http: HttpClient) {
+  }
+
+  getCurrentTimesheetIndex(){
+    return this.currentTimesheetIndex;
+  }
+
+  async setCurrentTimesheetIndex(index: number){
+    this.currentTimesheetIndex = index;
+    return this.currentTimesheetIndex;
   }
 
   /**
@@ -91,7 +100,7 @@ export class TimesheetService {
     return await this.getAllTimesheets(userId).then((response) => {
       return response.toPromise().then((data)=>{
         this.timesheets = data;
-        this.currentTimesheetIndex = 0;
+        // this.currentTimesheetIndex = 0;
 
         this.setCurrentDate();
         this.setCurrentStatus().then();
