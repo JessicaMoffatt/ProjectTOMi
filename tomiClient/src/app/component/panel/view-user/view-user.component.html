@@ -1,0 +1,31 @@
+<!--
+@author Iliya Kiritchkov
+@version 1.0
+-->
+
+<div [ngClass]="view_user_account_container">
+  <div [ngClass]="'user_account_wrapper'">
+    <li>
+      <span [id]="'user_account_panel_name'" [ngClass]="['list_item', 'user_account_name']">{{userAccount.firstName}} {{userAccount.lastName}}</span>
+      <span [ngClass]="['btn', 'edit_btn']" (click)="editUserAccount(userAccount)">EDIT</span>
+      <span [ngClass]="['btn', 'delete_btn']" (click)="delete(userAccount)">DELETE</span>
+    </li>
+    <li>
+      <span [ngClass]="['list_item']">Email {{userAccount.email}}</span>
+    </li>
+    <li>
+      <span [ngClass]="['list_item']">Rate ${{(userAccount.salariedRate/100).toFixed(2)}}/hr</span>
+    </li>
+    <li>
+      <ng-container *ngIf="userAccount.teamId; then hasTeam else noTeam"></ng-container>
+      <ng-template #hasTeam>
+        <ng-container *ngFor="let team of teamService.teamsObservable | async">
+          <span [ngClass]="['list_item']" *ngIf="team.id === userAccount.teamId">Team {{team.teamName}}</span>
+        </ng-container>
+      </ng-template>
+      <ng-template #noTeam>
+        <span [ngClass]="['list_item']">Team None</span>
+      </ng-template>
+    </li>
+  </div>
+</div>

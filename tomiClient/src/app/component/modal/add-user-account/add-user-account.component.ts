@@ -24,6 +24,7 @@ export class AddUserAccountComponent implements OnInit {
   constructor(private userAccountSidebarService: UserAccountSidebarService, private userAccountService: UserAccountService, private teamService: TeamService) { }
 
   ngOnInit() {
+
   }
 
   /**
@@ -61,16 +62,6 @@ export class AddUserAccountComponent implements OnInit {
     } else {
       userAccount.salariedRate *= 100;
     }
-
-    // Validate the team id chosen by comparing to all of the existing team ids.
-    let validTeamId = false;
-    this.teamService.teamsObservable.subscribe(teams => {
-      teams.forEach( team => {
-        if (userAccount.teamId === team.id) {
-          validTeamId = true;
-        }
-      })
-    });
 
     // Save the new UserAccount if it has been fully validated.
     if (goodUserAccount) {

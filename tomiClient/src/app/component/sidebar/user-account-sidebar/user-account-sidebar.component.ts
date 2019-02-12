@@ -39,13 +39,4 @@ export class UserAccountSidebarComponent implements OnInit {
     const factory = this.resolver.resolveComponentFactory(AddUserAccountComponent);
     this.userAccountSidebarService.ref = this.add_user_account_container.createComponent(factory);
   }
-
-  /**
-   * Updates the list of UserAccounts in the sidebar whenever the search input is changed.
-   * UserAccounts that do not contain the searched input will be hidden.
-   */
-  updateUserAccountSidebarList() {
-    let search = (<HTMLInputElement>document.getElementById("user_account_search")).value.toUpperCase();
-    this.userAccountSidebarService.refreshFilteredAccounts(search);
-  }
 }

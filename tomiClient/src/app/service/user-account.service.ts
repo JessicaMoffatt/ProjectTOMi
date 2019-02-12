@@ -35,18 +35,19 @@ export class UserAccountService {
   userAccounts: Observable<Array<UserAccount>>;
 
   public constructor(private http: HttpClient, private teamService : TeamService) {
-    this.userAccounts = this.GETAllUserAccounts();
+    this.refreshUserAccounts();
   }
 
   /**
    * Refresh the List of UserAccounts to keep up-to-date with the server.
    */
   refreshUserAccounts() {
+    let tempList = this.GETAllUserAccounts();
     this.userAccounts = this.GETAllUserAccounts();
   }
 
   /**
-   * Sends a GET message to the server for a list of all UserAccounts.
+   * Sends a GET message to the server for a fresh list of all UserAccounts.
    */
   GETAllUserAccounts(): Observable<Array<UserAccount>> {
     return this.http.get(this.userAccountUrl).pipe(map((response:Response) => response))
@@ -67,12 +68,10 @@ export class UserAccountService {
    */
   async save(userAccount: UserAccount) {
     let testUserAccount: UserAccount = null;
-    console.log("saving...")
     if (userAccount.id === -1) {
       await this.http.post<UserAccount>(this.userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
 
-        testUserAccount = response;
-        return response;
+        this.refreshUserAccounts();
       }).catch((error: any) => {
         //TODO Add an error display
       });
@@ -80,18 +79,14 @@ export class UserAccountService {
       const url = userAccount._links["update"];
       this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
 
-        testUserAccount = response;
-        return response;
+        this.refreshUserAccounts();
       }).catch((error: any) => {
         //TODO Add an error display
       });
     }
-    this.refreshUserAccounts();
 
     return testUserAccount;
   }
-
-
 
   /**
    *  Logically deletes the selected user account (sets the active status to false.)

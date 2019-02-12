@@ -5,24 +5,21 @@
 <div>
   <h2>Users</h2>
   <div [ngClass]="'user_account'">
-    <ul *ngIf="userAccountService.userAccounts">
-      <ul *ngFor="let userAccount of userAccountService.userAccounts | async"
+    <ul>
+      <ul *ngFor="let userAccount of userAccountService.userSubject | async "
           (click)="selectUserAccount(userAccount)"
           style="list-style: none">
         <div [ngClass]="'user_account_wrapper'">
           <li>
-            <span [id]="'user_account_panel_name'" [ngClass]="['list_item', 'user_account_name']"
-                  *ngIf="userAccount">{{userAccount.firstName}} {{userAccount.lastName}}</span>
-            <span [ngClass]="['btn', 'edit_btn']" (click)="editUserAccount(userAccount)">*</span>
-            <span [ngClass]="['btn', 'delete_btn']" (click)="delete(userAccount)">X</span>
+            <span [id]="'user_account_panel_name'" [ngClass]="['list_item', 'user_account_name']">{{userAccount.firstName}} {{userAccount.lastName}}</span>
+            <span [ngClass]="['btn', 'edit_btn']" (click)="editUserAccount(userAccount)">EDIT</span>
+            <span [ngClass]="['btn', 'delete_btn']" (click)="delete(userAccount)">DELETE</span>
           </li>
           <li>
-            <span [ngClass]="['list_item']"
-              *ngIf="userAccount">Email {{userAccount.email}}</span>
+            <span [ngClass]="['list_item']">Email {{userAccount.email}}</span>
           </li>
           <li>
-            <span [ngClass]="['list_item']"
-              *ngIf="userAccount">Rate ${{(userAccount.salariedRate/100).toFixed(2)}}/hr</span>
+            <span [ngClass]="['list_item']">Rate ${{(userAccount.salariedRate/100).toFixed(2)}}/hr</span>
           </li>
           <li>
             <ng-container *ngIf="userAccount.teamId; then hasTeam else noTeam"></ng-container>
@@ -35,7 +32,12 @@
               <span [ngClass]="['list_item']">Team None</span>
             </ng-template>
           </li>
+          <li #edit_user_testing_REMOVE_AFTER>
+            <app-edit-user [userAccount]="userAccount"
+                           (saveRequested)="saveUserAccount($event)" (cancelRequested)="cancelUserAccount($event)">
 
+            </app-edit-user>
+          </li>
         </div>
       </ul>
     </ul>

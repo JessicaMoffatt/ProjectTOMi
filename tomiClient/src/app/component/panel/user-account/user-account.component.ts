@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
-import {TeamSidebarService} from "../../../service/team-sidebar.service";
 
 @Component({
   selector: 'app-user-account',
@@ -10,6 +9,9 @@ import {TeamSidebarService} from "../../../service/team-sidebar.service";
   styleUrls: ['./user-account.component.scss']
 })
 export class UserAccountComponent implements OnInit {
+
+  @ViewChild('componentHolder', {read: ViewContainerRef})
+  entry_container: ViewContainerRef;
 
   constructor(public userAccountService: UserAccountService, public teamService: TeamService) { }
 

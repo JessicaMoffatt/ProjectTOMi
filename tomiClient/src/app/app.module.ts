@@ -32,6 +32,8 @@ import {UserAccountSidebarComponent} from "./component/sidebar/user-account-side
 import {UserAccountPanelComponent} from "./component/panel/user-account-panel/user-account-panel.component";
 import {UserAccountSidebarService} from "./service/user-account-sidebar-service";
 import { AddUserAccountComponent } from './component/modal/add-user-account/add-user-account.component';
+import { EditUserComponent } from './component/panel/edit-user/edit-user.component';
+import { ViewUserComponent } from './component/panel/view-user/view-user.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { AddUserAccountComponent } from './component/modal/add-user-account/add-
     AddTeamMemberComponent,
     UserAccountSidebarComponent,
     UserAccountComponent,
-    AddUserAccountComponent
+    AddUserAccountComponent,
+    EditUserComponent,
+    ViewUserComponent
   ],
   imports: [
     BrowserModule,
