@@ -14,7 +14,6 @@ public final class UserAuthorizationManager implements AuthorizationManager<User
 
   @Override
   public boolean requestAuthorization(String URI, String request) {
-    System.out.println("Security Time!");
     return true;
   }
 

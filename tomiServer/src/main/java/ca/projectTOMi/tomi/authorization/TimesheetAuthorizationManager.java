@@ -2,8 +2,6 @@ package ca.projectTOMi.tomi.authorization;
 
 import java.util.List;
 import ca.projectTOMi.tomi.model.Entry;
-import ca.projectTOMi.tomi.model.Project;
-import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.model.UserAccount;
 
 
@@ -17,7 +15,6 @@ public final class TimesheetAuthorizationManager implements AuthorizationManager
 
   @Override
   public boolean requestAuthorization(String URI, String request) {
-    System.out.println("Security Time!");
     return true;
   }
 

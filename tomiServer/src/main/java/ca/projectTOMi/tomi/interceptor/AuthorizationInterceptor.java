@@ -39,8 +39,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(
     HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    Long start = System.currentTimeMillis();
-
     String authToken = request.getHeader("Authorization");
 
     //TODO Remove Hardcoded UserAccount---------------
@@ -56,9 +54,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     }catch (ClassCastException e){
       return true;
     }
-
-    System.out.print("Controller = " + controller + " ->");
-
     if(controller.matches("TimesheetController|EntryController")) {
       System.out.println("TimesheetAuthManager");
       AuthorizationManager<TimesheetAuthorizationPolicy> authMan;
@@ -78,8 +73,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
       authMan.loadUserPolicies(userAuthRepository.getAllByRequestingUser(user));
       request.setAttribute("authMan", authMan);
     }
-    Long stop = System.currentTimeMillis();
-    System.out.println(stop-start + "ms");
     return ((AuthorizationManager)request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
   }
 
