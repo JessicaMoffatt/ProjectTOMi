@@ -60,7 +60,6 @@ public class TeamController {
   @GetMapping ("/teams")
   public Resources<Resource<Team>> getActiveTeams(HttpServletRequest request) {
     AuthorizationManager authMan = (AuthorizationManager) request.getAttribute("AuthMan");
-    authMan.requestAuthorization("","");
     List<Resource<Team>> team = service.getActiveTeams().stream().map(assembler::toResource).collect(Collectors.toList());
 
     return new Resources<>(team,

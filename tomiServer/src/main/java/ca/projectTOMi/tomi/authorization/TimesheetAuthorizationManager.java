@@ -4,13 +4,15 @@ import java.util.List;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.Timesheet;
+import ca.projectTOMi.tomi.model.UserAccount;
 
 
-public final class TimesheetAuthorizationManager implements AuthorizationManager, AuthorizationFilter<Entry>{
+public final class TimesheetAuthorizationManager implements AuthorizationManager<TimesheetAuthorizationPolicy>, AuthorizationFilter<Entry>{
   private List<TimesheetAuthorizationPolicy> policies;
+  private final UserAccount user;
 
-  public TimesheetAuthorizationManager(List<TimesheetAuthorizationPolicy> policies){
-    this.policies = policies;
+  public TimesheetAuthorizationManager(UserAccount user){
+    this.user = user;
   }
 
   @Override
@@ -24,6 +26,10 @@ public final class TimesheetAuthorizationManager implements AuthorizationManager
     return false;
   }
 
+  @Override
+  public void loadUserPolicies(List<TimesheetAuthorizationPolicy> policies) {
+    this.policies = policies;
+  }
 
   @Override
   public List<Entry> filterList(List<Entry> list) {

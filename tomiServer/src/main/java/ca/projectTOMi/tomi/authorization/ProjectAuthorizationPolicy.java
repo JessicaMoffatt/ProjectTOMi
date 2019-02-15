@@ -35,4 +35,30 @@ public class ProjectAuthorizationPolicy {
 
   @ManyToOne(targetEntity = Project.class, optional = false)
   private Project project;
+
+  @Override
+  public String toString(){
+    String policy = "";
+    policy = String.format("%10S%45S%20S%n", this.requestingUser.getFirstName(), this.project.getProjectName(), this.permission.name());
+    return policy;
+  }
+
+  @Override
+  public int hashCode(){
+    return this.id.hashCode();
+  }
+
+  @Override
+  public boolean equals(Object obj){
+    if(obj.getClass() != ProjectAuthorizationPolicy.class){
+      return false;
+    }else {
+      ProjectAuthorizationPolicy policyB = (ProjectAuthorizationPolicy) obj;
+      boolean equal = true;
+      equal = equal && this.permission == policyB.getPermission();
+      equal = equal && this.project == policyB.getProject();
+      equal = equal && this.requestingUser == policyB.getRequestingUser();
+      return equal;
+    }
+  }
 }

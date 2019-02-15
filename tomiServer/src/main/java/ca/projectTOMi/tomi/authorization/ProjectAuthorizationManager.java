@@ -2,25 +2,41 @@ package ca.projectTOMi.tomi.authorization;
 
 import java.util.List;
 import ca.projectTOMi.tomi.model.Project;
+import ca.projectTOMi.tomi.model.UserAccount;
 
 
-
-public final class ProjectAuthorizationManager implements AuthorizationManager, AuthorizationFilter<Project>{
+public final class ProjectAuthorizationManager implements AuthorizationManager<ProjectAuthorizationPolicy>, AuthorizationFilter<Project>{
   private List<ProjectAuthorizationPolicy> policies;
+  private final UserAccount user;
 
-  public ProjectAuthorizationManager(List<ProjectAuthorizationPolicy> policies){
-    this.policies = policies;
-  }
+  public ProjectAuthorizationManager(UserAccount user){
+    this.user = user;
+  };
 
   @Override
   public boolean requestAuthorization(String URI, String request) {
-    System.out.println("Security Time!");
+    ProjectPermission requestPerm = null;
+    if(request.equals("POST")){
+      requestPerm = ProjectPermission.CREATE;
+
+    }else if(request.equals("PUT") || request.equals("DELETE")){
+      requestPerm = ProjectPermission.WRITE;
+    }else if(request.equals("GET")){
+      requestPerm = ProjectPermission.READ;
+    }
+    System.out.println(requestPerm);
+
     return true;
   }
 
   @Override
   public boolean linkAuthorization(String URI, String request) {
     return false;
+  }
+
+  @Override
+  public void loadUserPolicies(List<ProjectAuthorizationPolicy> policies) {
+    this.policies = policies;
   }
 
 
