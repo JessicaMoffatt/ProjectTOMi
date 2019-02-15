@@ -55,9 +55,9 @@ public class ProjectAuthorizationPolicy {
     }else {
       ProjectAuthorizationPolicy policyB = (ProjectAuthorizationPolicy) obj;
       boolean equal = true;
-      equal = equal && this.permission == policyB.getPermission();
-      equal = equal && this.project == policyB.getProject();
-      equal = equal && this.requestingUser == policyB.getRequestingUser();
+      equal = equal && this.permission.equals(policyB.getPermission());
+      equal = equal && this.project.equals(policyB.getProject());
+      equal = equal && this.requestingUser.equals(policyB.getRequestingUser());
       return equal;
     }
   }

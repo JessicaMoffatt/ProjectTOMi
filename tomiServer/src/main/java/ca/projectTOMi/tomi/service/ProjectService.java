@@ -88,7 +88,7 @@ public final class ProjectService {
     List<String> prefixes = repository.getIds(prefix);
     String top = prefixes.size() == 0? "0": prefixes.get(0).substring(2).trim();
     int i = Integer.parseInt(top)+1;
-    return String.format("%s%05d", id, i);
+    return String.format("%s%04d", id, i);
   }
   /**
    * Persists the provided {@link Project}.

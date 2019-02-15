@@ -96,4 +96,18 @@ public final class Project {
     }
     this.projectManager = projectManager;
   }
+
+  @Override
+  public boolean equals(Object obj){
+    if(obj.getClass() != this.getClass()){
+      return false;
+    }else{
+      return this.getId().equals(((Project)obj).getId());
+    }
+  }
+
+  @Override
+  public int hashCode(){
+    return this.getId().hashCode();
+  }
 }

@@ -105,4 +105,13 @@ public final class UserAccount {
   public int hashCode(){
     return id.intValue();
   }
+
+  @Override
+  public boolean equals(Object obj){
+    if(obj.getClass() != this.getClass()){
+      return false;
+    }else{
+      return this.getId().equals(((UserAccount)obj).getId());
+    }
+  }
 }

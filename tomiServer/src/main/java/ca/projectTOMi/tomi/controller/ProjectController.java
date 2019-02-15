@@ -88,7 +88,7 @@ public class ProjectController {
    */
   @PostMapping ("/projects")
   public ResponseEntity<?> createProject(@RequestBody Project newProject) throws URISyntaxException {
-    if(!newProject.getId().trim().matches("^\\p{Alpha}\\p{Alpha}\\d{0,5}+$")){
+    if(!newProject.getId().trim().matches("^\\p{Alpha}\\p{Alpha}\\d{0,4}+$")){
       throw new InvalidIDPrefix();
     }
     newProject.setId(service.getId(newProject.getId()));

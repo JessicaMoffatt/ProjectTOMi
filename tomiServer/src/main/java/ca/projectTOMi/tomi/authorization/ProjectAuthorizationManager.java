@@ -16,17 +16,29 @@ public final class ProjectAuthorizationManager implements AuthorizationManager<P
   @Override
   public boolean requestAuthorization(String URI, String request) {
     ProjectPermission requestPerm = null;
+    Project requestProject = null;
     if(request.equals("POST")){
-      requestPerm = ProjectPermission.CREATE;
-
+      if(URI.split("/")[1].equals("projects")){
+        requestPerm = ProjectPermission.CREATE;
+        requestProject = new Project();
+        requestProject.setId("CREATE");
+      }else{
+        requestPerm = ProjectPermission.CREATE_EXPENSE;
+        requestProject = new Project();
+        requestProject.setId(URI.split("/")[2]);
+      }
     }else if(request.equals("PUT") || request.equals("DELETE")){
       requestPerm = ProjectPermission.WRITE;
     }else if(request.equals("GET")){
       requestPerm = ProjectPermission.READ;
     }
     System.out.println(requestPerm);
-
-    return true;
+    System.out.println(requestProject);
+    ProjectAuthorizationPolicy requestPolicy = new ProjectAuthorizationPolicy();
+    requestPolicy.setPermission(requestPerm);
+    requestPolicy.setRequestingUser(user);
+    requestPolicy.setProject(requestProject);
+    return this.policies.contains(requestPolicy);
   }
 
   @Override

@@ -8,6 +8,7 @@ import ca.projectTOMi.tomi.assembler.ExpenseResourceAssembler;
 import ca.projectTOMi.tomi.exception.ExpenseNotFoundException;
 import ca.projectTOMi.tomi.model.Expense;
 import ca.projectTOMi.tomi.service.ExpenseService;
+import ca.projectTOMi.tomi.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +38,14 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @CrossOrigin (origins = "http://localhost:4200")
 public class ExpenseController {
   private final ExpenseService service;
+  private final ProjectService projectService;
   private final ExpenseResourceAssembler assembler;
   private final Logger logger = LoggerFactory.getLogger("Expense Controller");
 
   @Autowired
-  public ExpenseController(ExpenseService service, ExpenseResourceAssembler assembler){
+  public ExpenseController(ExpenseService service, ProjectService projectService,ExpenseResourceAssembler assembler){
     this.service = service;
+    this.projectService = projectService;
     this.assembler = assembler;
   }
 
@@ -85,8 +88,9 @@ public class ExpenseController {
    * @throws URISyntaxException
    *   when the created URI is unable to be parsed
    */
-  @PostMapping ("/expenses")
-  public ResponseEntity<?> createExpense(@RequestBody Expense newExpense) throws URISyntaxException {
+  @PostMapping ("/expenses/{projectId}")
+  public ResponseEntity<?> createExpense(@RequestBody Expense newExpense, @PathVariable String projectId) throws URISyntaxException {
+    newExpense.setProject(projectService.getProjectById(projectId));
     Resource<Expense> resource = assembler.toResource(service.saveExpense(newExpense));
 
     return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);

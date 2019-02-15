@@ -6,5 +6,6 @@ public enum ProjectPermission {
   READ_BUDGET,
   WRITE,
   CREATE,
-  EVALUATE_ENTRIES
+  EVALUATE_ENTRIES,
+  CREATE_EXPENSE
 }
