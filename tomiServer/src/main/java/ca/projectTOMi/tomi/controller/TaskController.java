@@ -107,7 +107,7 @@ public class TaskController {
      */
     @PostMapping("/tasks")
     public ResponseEntity<?> createTask(@RequestBody Task newTask) throws URISyntaxException {
-        Resource<Task> resource = assembler.toResource(service.saveTask(newTask));
+        Resource<Task> resource = assembler.toResource(service.createTask(newTask));
 
         return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
     }
