@@ -5,39 +5,49 @@ import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 
 
-public final class ProjectAuthorizationManager implements AuthorizationManager<ProjectAuthorizationPolicy>, AuthorizationFilter<Project>{
+public final class ProjectAuthorizationManager implements AuthorizationManager<ProjectAuthorizationPolicy>, AuthorizationFilter<Project> {
   private List<ProjectAuthorizationPolicy> policies;
   private final UserAccount user;
 
-  public ProjectAuthorizationManager(UserAccount user){
+  public ProjectAuthorizationManager(UserAccount user) {
     this.user = user;
-  };
+  }
+
+  ;
 
   @Override
   public boolean requestAuthorization(String URI, String request) {
-    ProjectPermission requestPerm = null;
-    Project requestProject = null;
-    if(request.equals("POST")){
-      if(URI.split("/")[1].equals("projects")){
-        requestPerm = ProjectPermission.CREATE;
+    ProjectAuthorizationPolicy requestPolicy = new ProjectAuthorizationPolicy();
+    requestPolicy.setRequestingUser(user);
+    Project requestProject;
+    if (request.equals("POST")) {
+      if (URI.split("/")[1].equals("projects")) {
+        requestPolicy.setPermission(ProjectPermission.CREATE);
+
         requestProject = new Project();
         requestProject.setId("CREATE");
-      }else{
-        requestPerm = ProjectPermission.CREATE_EXPENSE;
+        requestPolicy.setProject(requestProject);
+      } else {
+        requestPolicy.setPermission(ProjectPermission.CREATE_EXPENSE);
         requestProject = new Project();
         requestProject.setId(URI.split("/")[2]);
+        requestPolicy.setProject(requestProject);
       }
-    }else if(request.equals("PUT") || request.equals("DELETE")){
-      requestPerm = ProjectPermission.WRITE;
-    }else if(request.equals("GET")){
-      requestPerm = ProjectPermission.READ;
+    } else if (request.equals("PUT") || request.equals("DELETE")) {
+      requestPolicy.setPermission(ProjectPermission.WRITE);
+      requestProject = new Project();
+      requestProject.setId(URI.split("/")[2]);
+      requestPolicy.setProject(requestProject);
+    } else if (request.equals("GET")) {
+      requestPolicy.setPermission(ProjectPermission.READ);
+      requestProject = new Project();
+      try {
+        requestProject.setId(URI.split("/")[2]);
+        requestPolicy.setProject(requestProject);
+      } catch (IndexOutOfBoundsException e) {
+        return true;
+      }
     }
-    System.out.println(requestPerm);
-    System.out.println(requestProject);
-    ProjectAuthorizationPolicy requestPolicy = new ProjectAuthorizationPolicy();
-    requestPolicy.setPermission(requestPerm);
-    requestPolicy.setRequestingUser(user);
-    requestPolicy.setProject(requestProject);
     return this.policies.contains(requestPolicy);
   }
 

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
 @Component
 @CrossOrigin (origins = "http://localhost:4200")
 public class AuthorizationInterceptor implements HandlerInterceptor {
@@ -55,19 +56,16 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
       return true;
     }
     if(controller.matches("TimesheetController|EntryController")) {
-      System.out.println("TimesheetAuthManager");
       AuthorizationManager<TimesheetAuthorizationPolicy> authMan;
       authMan = new TimesheetAuthorizationManager(user);
       authMan.loadUserPolicies(timesheetAuthRepository.getAllByRequestingUser(user));
       request.setAttribute("authMan", authMan);
     }else if(controller.matches("ProjectController|ExpenseController")) {
-      System.out.println("ProjectAuthManager");
       AuthorizationManager<ProjectAuthorizationPolicy> authMan;
       authMan = new ProjectAuthorizationManager(user);
       authMan.loadUserPolicies(projectAuthRepository.getAllByRequestingUser(user));
       request.setAttribute("authMan", authMan);
     }else{
-      System.out.println("UserAuthManager");
       AuthorizationManager<UserAuthorizationPolicy> authMan;
       authMan = new UserAuthorizationManager(user);
       authMan.loadUserPolicies(userAuthRepository.getAllByRequestingUser(user));
