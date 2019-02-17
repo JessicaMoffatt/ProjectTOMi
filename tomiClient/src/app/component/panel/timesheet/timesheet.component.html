@@ -9,7 +9,7 @@
   <span [ngClass]="['arrow', 'rounded-circle','forward']" (click)="displayNextTimesheet()">
   </span>
   <!--This is a placeholder -->
-  <button [ngClass]="'calendar'"></button>
+  <app-date-picker [parent]="this"></app-date-picker>
   <span id="submission_status">{{timesheetService.currentStatus}}</span>
 
   <div [ngClass]="'container'">

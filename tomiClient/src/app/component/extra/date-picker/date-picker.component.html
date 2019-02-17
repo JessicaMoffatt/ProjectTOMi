@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-xs-4 form-group">
+    <input
+      class="form-control"
+      placeholder=""
+      bsDatepicker
+      [bsConfig]="{ selectWeek: true, containerClass: 'theme-blue', selectFromOtherMonth: true}"
+      [maxDate]="maxDate"
+      [minDate]="minDate"
+      (bsValueChange)="onDateChange($event)"
+      (click)="doSetMinDate()"
+      >
+  </div>
+</div>
+

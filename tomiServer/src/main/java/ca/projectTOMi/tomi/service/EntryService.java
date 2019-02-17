@@ -63,7 +63,7 @@ public class EntryService {
                 rejectedEntry.setMondayHours(updatedEntry.getMondayHours());
                 rejectedEntry.setTuesdayHours(updatedEntry.getTuesdayHours());
                 rejectedEntry.setWednesdayHours(updatedEntry.getWednesdayHours());
-                rejectedEntry.setThursdayHours(updatedEntry.getTuesdayHours());
+                rejectedEntry.setThursdayHours(updatedEntry.getThursdayHours());
                 rejectedEntry.setFridayHours(updatedEntry.getFridayHours());
                 rejectedEntry.setSaturdayHours(updatedEntry.getSaturdayHours());
                 rejectedEntry.setSundayHours(updatedEntry.getSundayHours());
@@ -84,7 +84,7 @@ public class EntryService {
                 entry.setMondayHours(updatedEntry.getMondayHours());
                 entry.setTuesdayHours(updatedEntry.getTuesdayHours());
                 entry.setWednesdayHours(updatedEntry.getWednesdayHours());
-                entry.setThursdayHours(updatedEntry.getTuesdayHours());
+                entry.setThursdayHours(updatedEntry.getThursdayHours());
                 entry.setFridayHours(updatedEntry.getFridayHours());
                 entry.setSaturdayHours(updatedEntry.getSaturdayHours());
                 entry.setSundayHours(updatedEntry.getSundayHours());

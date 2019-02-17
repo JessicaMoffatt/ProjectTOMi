@@ -155,8 +155,8 @@ export class EntryComponent implements OnInit {
       this.entry.sundayHours = 0;
     }
 
-    await this.populateEntryPromise().then(() => {
-      this.entryService.save(this.entry).then();
+    return await this.populateEntryPromise().then(() => {
+      return this.entryService.save(this.entry).then();
     });
   }
 

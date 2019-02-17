@@ -6,14 +6,14 @@
   <h2>Tasks</h2>
 
 
-    <div [ngClass]="'team_members'">
-      <ul *ngIf="taskService.teamMembers">
-        <li *ngFor="let m of teamService.teamMembers">
-        <span [ngClass]="['rounded_corners','list_item']" (click)="selectMember(m)"
-              *ngIf="m">{{m.firstName}} {{m.lastName}}</span>
-        </li>
-      </ul>
-    </div>
+    <!--<div [ngClass]="'team_members'">-->
+      <!--<ul *ngIf="taskService.teamMembers">-->
+        <!--<li *ngFor="let m of teamService.teamMembers">-->
+        <!--<span [ngClass]="['rounded_corners','list_item']" (click)="selectMember(m)"-->
+              <!--*ngIf="m">{{m.firstName}} {{m.lastName}}</span>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</div>-->
 
 
   <input type="button" value="New Task"/>

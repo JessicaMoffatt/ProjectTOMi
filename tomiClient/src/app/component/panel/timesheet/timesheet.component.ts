@@ -18,6 +18,7 @@ import {Status} from "../../../model/status";
 import {Router} from "@angular/router";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 
+
 /**
  * TimesheetComponent is used to facilitate communication between the view and front end services.
  *
@@ -177,21 +178,25 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Submits the current timesheet.
    */
   async submitTimesheet() {
-    let valid: boolean = false;
-    this.entryComponents.forEach(item => {
-      valid = item.validateEntry();
-      if (!valid) {
-        return;
-      }
-    });
-
-    if (valid) {
-      await this.timesheetService.submit().then(() => {
-        this.reloadPromise().then();
+     await this.savePromise().then(async()=>{
+       console.log("thening");
+      let valid: boolean = false;
+      this.entryComponents.forEach(item => {
+        valid = item.validateEntry();
+        if (!valid) {
+          return;
+        }
       });
-    } else if (!valid) {
-      alert("All fields must have a value to submit!");
-    }
+
+      if (valid) {
+        await this.timesheetService.submit().then(() => {
+          this.reloadPromise().then();
+        });
+      } else if (!valid) {
+        alert("All fields must have a value to submit!");
+      }
+      }
+    );
   }
 
   /**
@@ -231,18 +236,26 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     return await promise;
   }
 
+  async savePromise(){
+    let promise = new Promise((resolve, reject) => {
+      resolve(this.save());
+    });
+
+    return await promise;
+  }
+
   /**
    * Saves the state of all entries for the current timesheet.
    */
-  save() {
+  async save() {
     if (this.timesheetService.currentStatus === this.sts[this.sts.LOGGING]) {
-      this.entryComponents.forEach(item => {
-        item.save().then(() => {
+      return Promise.all(this.entryComponents.map((comp)=> {
+          return Promise.resolve(comp.save()).then(() => {
           this.updateTally();
         });
-      });
+      }));
       //TODO remove
-      alert("Save complete");
+      // alert("Save complete");
     }
   }
 
@@ -303,6 +316,18 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
     if (currentIndex > 0) {
       let newIndex: number = currentIndex - 1;
+      this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() => {
+          this.navigateToTimesheet();
+        }
+      );
+    }
+  }
+
+  displaySpecifiedTimesheet(index:number){
+    let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
+    let newIndex: number = currentIndex + index;
+
+    if (newIndex < this.timesheetService.timesheets.length) {
       this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() => {
           this.navigateToTimesheet();
         }

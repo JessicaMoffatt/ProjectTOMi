@@ -33,6 +33,8 @@ import { AddTeamMemberComponent } from './component/modal/add-team-member/add-te
 import {UserAccountService} from "./service/user-account.service";
 import {TimesheetService} from "./service/timesheet.service";
 import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry-submitted.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { DatePickerComponent } from './component/extra/date-picker/date-picker.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry
     AddTeamMemberComponent,
     EntrySubmittedComponent,
     DeleteEntryModalComponent,
-    SubmitTimesheetModalComponent
+    SubmitTimesheetModalComponent,
+    DatePickerComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +66,7 @@ import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry
     HttpClientModule,
     OrderModule,
     ModalModule,
+    BsDatepickerModule.forRoot()
   ],
   entryComponents:[
     EntryComponent,

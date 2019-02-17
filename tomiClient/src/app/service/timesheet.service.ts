@@ -160,4 +160,12 @@ export class TimesheetService {
 
     return tempSheet;
   }
+
+  async getEarliestDate(){
+     let promise = new Promise((resolve, reject)=>{
+       resolve(this.timesheets[this.timesheets.length-1].startDate);
+     });
+
+     return await promise;
+  }
 }
