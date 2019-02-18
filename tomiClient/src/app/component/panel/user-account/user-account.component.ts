@@ -39,11 +39,23 @@ export class UserAccountComponent implements OnInit {
    * Passes on the request to cancel changes made to the given UserAccount to the UserAccountService.
    * @param userAccount the UserAccount whose changes are to be canceled.
    */
-  cancel(userAccount: UserAccount):void {
+  cancel(userAccount: UserAccount) {
     this.userAccountService.cancel(userAccount);
   }
 
+  /**
+   *
+   * @param userAccount
+   */
   editUserAccount(userAccount) {
+    console.log(userAccount.firstName + "clicked edit");
+  }
 
+  /**
+   *
+   * @param userAccount
+   */
+  save(userAccount: UserAccount) {
+    this.userAccountService.save(userAccount);
   }
 }

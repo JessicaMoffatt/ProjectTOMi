@@ -3,12 +3,12 @@
 @version 1.0
 -->
 
-<div [ngClass]="view_user_account_container">
+<div [ngClass]="'view_user_account_container'">
   <div [ngClass]="'user_account_wrapper'">
     <li>
       <span [id]="'user_account_panel_name'" [ngClass]="['list_item', 'user_account_name']">{{userAccount.firstName}} {{userAccount.lastName}}</span>
-      <span [ngClass]="['btn', 'edit_btn']" (click)="editUserAccount(userAccount)">EDIT</span>
-      <span [ngClass]="['btn', 'delete_btn']" (click)="delete(userAccount)">DELETE</span>
+      <span [ngClass]="['btn', 'edit_btn']" (click)="edit()">EDIT</span>
+      <span [ngClass]="['btn', 'delete_btn']" (click)="delete()">DELETE</span>
     </li>
     <li>
       <span [ngClass]="['list_item']">Email {{userAccount.email}}</span>

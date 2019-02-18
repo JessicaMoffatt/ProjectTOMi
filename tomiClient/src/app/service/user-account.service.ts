@@ -4,9 +4,10 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UserAccountSidebarService} from "./user-account-sidebar-service";
 import {Team} from "../model/team";
 import {TeamSidebarService} from "./team-sidebar.service";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {TeamService} from "./team.service";
+import {mapChildrenIntoArray} from "@angular/router/src/url_tree";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -33,29 +34,35 @@ export class UserAccountService {
 
   /** Listing of all active UserAccounts */
   userAccounts: Observable<Array<UserAccount>>;
+  //userSubject: BehaviorSubject<Array<UserAccount>>;
 
   public constructor(private http: HttpClient, private teamService : TeamService) {
     this.refreshUserAccounts();
+    //this.userSubject.asObservable();
   }
 
   /**
    * Refresh the List of UserAccounts to keep up-to-date with the server.
    */
   refreshUserAccounts() {
-    let tempList = this.GETAllUserAccounts();
+    // let tempList = this.GETAllUserAccounts();
+    // tempList.forEach( (userArray : UserAccount[]) => {
+    //
+    // })
+    // this.userSubject = this.GETAllUserAccounts();
+    //this.userSubject = this.testGETAllUserAccounts();
     this.userAccounts = this.GETAllUserAccounts();
   }
 
   /**
    * Sends a GET message to the server for a fresh list of all UserAccounts.
    */
-  GETAllUserAccounts(): Observable<Array<UserAccount>> {
+  GETAllUserAccounts() {
     return this.http.get(this.userAccountUrl).pipe(map((response:Response) => response))
       .pipe(map((data: any) => {
         return data._embedded.userAccounts as UserAccount[];
       }));
   }
-
 
   setSelectedUserAccount(userAccount: UserAccount) {
     this.selectedUserAccount = userAccount;
@@ -68,6 +75,8 @@ export class UserAccountService {
    */
   async save(userAccount: UserAccount) {
     let testUserAccount: UserAccount = null;
+
+    console.log(userAccount);
     if (userAccount.id === -1) {
       await this.http.post<UserAccount>(this.userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
 

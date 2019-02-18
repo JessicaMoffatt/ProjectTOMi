@@ -4,21 +4,25 @@
 -->
 
 <div [ngClass]="'edit_user_account_container'">
+  <div [ngClass]="'user_account_wrapper'">
   <span>
     <label for="edit_user_account_first_name">First Name</label>
-    <input id="edit_user_account_first_name" value="{{userAccount.lastName}}" [ngModel]="userAccount.firstName" placeholder="First Name" style="width:20em">
+    <input #editUserFirstName id="edit_user_account_first_name" value="{{userAccount.lastName}}" [ngModel]="userAccount.firstName"
+           placeholder="First Name" style="width:20em">
     <label for="edit_user_account_last_name">Last Name</label>
-    <input id="edit_user_account_last_name"  [ngModel]="userAccount.lastName" placeholder="Last Name" style="width:20em">
+    <input #editUserLastName id="edit_user_account_last_name" [ngModel]="userAccount.lastName" placeholder="Last Name" style="width:20em">
   </span>
-  <span>
+    <span>
     <label for="edit_user_account_email">Email</label>
-    <input id="edit_user_account_email" [ngModel]="userAccount.email" placeholder="jsmith@gmail.com" style="width: 20em">
+    <input id="edit_user_account_email" [ngModel]="userAccount.email" placeholder="jsmith@gmail.com"
+           style="width: 20em">
   </span>
-  <span>
+    <span>
     <label for="edit_user_account_salary">Rate</label>
-    <input type="number" min="0" id="edit_user_account_salary" [ngModel]="userAccount.salariedRate" placeholder="00.00" style="width: 20em">
+    <input type="number" min="0" id="edit_user_account_salary" [ngModel]="userAccount.salariedRate" placeholder="00.00"
+           style="width: 20em">
   </span>
-  <span>
+    <span>
     <label for="edit_user_account_team">Team</label>
     <select id="edit_user_account_team">
       <option [selected]="userAccount.teamId" value="-1">None</option>
@@ -27,6 +31,7 @@
       </ng-container>
     </select>
   </span>
-  <span [ngClass]="['btn', 'edit_btn']" (click)="save()">SAVE</span>
-  <span [ngClass]="['btn', 'delete_btn']" (click)="cancel()">CANCEL</span>
+    <span [ngClass]="['btn', 'edit_btn']" (click)="save()">SAVE</span>
+    <span [ngClass]="['btn', 'delete_btn']" (click)="cancel()">CANCEL</span>
+  </div>
 </div>
