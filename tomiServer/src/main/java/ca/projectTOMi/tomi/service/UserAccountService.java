@@ -93,6 +93,8 @@ public final class UserAccountService {
       userAccount.setSalariedRate(newUserAccount.getSalariedRate());
       userAccount.setProjects(newUserAccount.getProjects());
       userAccount.setActive(newUserAccount.isActive());
+      userAccount.setAdmin(newUserAccount.isAdmin());
+      userAccount.setProgramDirector(newUserAccount.isProgramDirector());
       return repository.save(userAccount);
     }).orElseThrow(UserAccountNotFoundException::new);
   }
