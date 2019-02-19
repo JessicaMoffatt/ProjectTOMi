@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public final class ExpenseService {
-  private ExpenseRepository repository;
+  private final ExpenseRepository repository;
 
   /**
    * Constructor for the {@link Expense} Service.
@@ -32,7 +32,7 @@ public final class ExpenseService {
    * @return List containing all Expense that are active
    */
   public List<Expense> getActiveExpenses() {
-    return repository.getAllByActive(true);
+    return repository.getAllByActiveOrderById(true);
   }
 
   /**

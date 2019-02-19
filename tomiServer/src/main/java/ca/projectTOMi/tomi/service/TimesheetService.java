@@ -21,14 +21,16 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public final class TimesheetService {
+  private final TimesheetRepository repository;
+  private final EntryRepository entryRepository;
+  private final EntryService entryService;
+
   @Autowired
-  private TimesheetRepository repository;
-  @Autowired
-  private EntryRepository entryRepository;
-  @Autowired
-  private EntryService entryService;
-  @Autowired
-  private UserAccountService userAccountService;
+  public TimesheetService(TimesheetRepository repository, EntryRepository entryRepository, EntryService entryService) {
+    this.repository = repository;
+    this.entryRepository = entryRepository;
+    this.entryService = entryService;
+  }
 
   /**
    * Gets a list of all @{link Timesheet}s that are active.
@@ -36,13 +38,13 @@ public final class TimesheetService {
    * @return List containing all Timesheet that are active
    */
   public List<Timesheet> getActiveTimesheets() {
-    return repository.getAllByActive(true);
+    return repository.getAllByActiveOrderById(true);
   }
 
 
   public List<Entry> getEntriesByTimesheet(Long timesheeetId){
     Timesheet timesheet = repository.findById(timesheeetId).orElseThrow(TimesheetNotFoundException::new);
-    return  entryRepository.getAllByActiveTrueAndTimesheet(timesheet);
+    return  entryRepository.getAllByActiveTrueAndTimesheetOrderById(timesheet);
   }
 
   /**
@@ -158,8 +160,7 @@ public final class TimesheetService {
     }
   }
 
-  public List<Timesheet> getTimesheetsByUserAccount(Long userAccountId){
-    UserAccount userAccount = userAccountService.getUserAccount(userAccountId);
+  public List<Timesheet> getTimesheetsByUserAccount(UserAccount userAccount){
     return repository.getAllByActiveTrueAndUserAccountOrderByStartDateDesc(userAccount);
   }
 }

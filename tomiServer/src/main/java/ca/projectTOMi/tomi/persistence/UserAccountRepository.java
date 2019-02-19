@@ -21,7 +21,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
    *
    * @return List containing all accounts with the provided active state
    */
-  public List<UserAccount> getAllByActive(boolean active);
+  public List<UserAccount> getAllByActiveOrderById(boolean active);
 
   /**
    * Gets all {@ling UserAccount}s that are a part of the provided {@link Team}.
@@ -31,12 +31,12 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
    *
    * @return List containing all UserAccounts that are a part of the provided team
    */
-  public List<UserAccount> getUserAccountsByTeam(Team team);
+  public List<UserAccount> getUserAccountsByTeamOrderById(Team team);
 
   /**
    * Gets all Active UserAccounts that are not a part of a Team.
    *
    * @return List of UserAccount that do not belong to a Team
    */
-  public List<UserAccount> getAllByActiveTrueAndTeamIsNull();
+  public List<UserAccount> getAllByActiveTrueAndTeamIsNullOrderById();
 }

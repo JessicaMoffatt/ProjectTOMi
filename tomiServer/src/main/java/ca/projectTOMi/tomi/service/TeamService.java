@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public final class TeamService {
-  private TeamRepository repository;
+  private final TeamRepository repository;
 
   /**
    * Constructor for the TeamService service.
@@ -64,7 +64,7 @@ public final class TeamService {
    * @return List containing all teams that are active
    */
   public List<Team> getActiveTeams() {
-    return repository.getAllByActive(true).stream().collect(Collectors.toList());
+    return repository.getAllByActiveOrderById(true).stream().collect(Collectors.toList());
   }
 
   /**

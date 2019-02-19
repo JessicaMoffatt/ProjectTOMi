@@ -17,7 +17,6 @@ import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
@@ -80,7 +79,8 @@ public final class Project {
    */
   @ManyToMany(fetch = FetchType.EAGER, targetEntity = UserAccount.class)
   @JoinTable(name = "project_members", joinColumns = @JoinColumn(name= "project_id"), inverseJoinColumns = @JoinColumn(name = "user_account_id"))
-  @JsonIgnore private Set<UserAccount> projectMembers = new HashSet<>();
+  @JsonIgnore
+  private Set<UserAccount> projectMembers = new HashSet<>();
 
   /**
    * If this Project is active.

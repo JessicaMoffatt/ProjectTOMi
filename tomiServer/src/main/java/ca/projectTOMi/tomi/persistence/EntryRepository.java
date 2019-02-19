@@ -21,7 +21,7 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
      *
      * @return List containing all Entries with the provided active state.
      */
-    public List<Entry> getAllByActive(boolean active);
+    public List<Entry> getAllByActiveOrderById(boolean active);
 
     /**
      * Get all {@Link Entry} objects that are active status and part of the provided {@link Timesheet}.
@@ -29,5 +29,5 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
      * @param timesheet the timesheet containing the entry
      * @return list of entries on the timesheet
      */
-    public List<Entry> getAllByActiveTrueAndTimesheet(Timesheet timesheet);
+    public List<Entry> getAllByActiveTrueAndTimesheetOrderById(Timesheet timesheet);
 }

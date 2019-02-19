@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class EntryService {
-    private EntryRepository repository;
+    private final EntryRepository repository;
 
     /**
      * Constructor for the EntryService component.
@@ -45,7 +45,6 @@ public class EntryService {
      */
     public Entry updateEntry(Long id, Entry updatedEntry) {
         Entry entry = repository.findById(id).orElseThrow(() -> new EntryNotFoundException());
-
         switch (entry.getStatus()) {
             case APPROVED:
                 throw new IllegalEntryStateException();
@@ -139,7 +138,7 @@ public class EntryService {
     }
 
     public void submitTimesheetEntries(Timesheet timesheet){
-        List<Entry> entries = repository.getAllByActiveTrueAndTimesheet(timesheet);
+        List<Entry> entries = repository.getAllByActiveTrueAndTimesheetOrderById(timesheet);
         for(Entry e: entries){
             if(e.getStatus() != Status.APPROVED) {
                 e.setStatus(Status.SUBMITTED);
@@ -154,7 +153,7 @@ public class EntryService {
      * @return List containing all Entries that are active.
      */
     public List<Entry> getActiveEntries() {
-        return repository.getAllByActive(true).stream().collect(Collectors.toList());
+        return repository.getAllByActiveOrderById(true).stream().collect(Collectors.toList());
     }
 
     public Entry copyEntry(Long entryId){

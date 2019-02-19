@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public final class UnitTypeService {
-    private UnitTypeRepository repository;
+    private final UnitTypeRepository repository;
 
     /**
      * Constructor for the UnitTypeService component
@@ -60,7 +60,7 @@ public final class UnitTypeService {
      * @return List containing all UnitTypes that are active.
      */
     public List<UnitType> getActiveUnitTypes() {
-        return repository.getAllByActive(true).stream().collect(Collectors.toList());
+        return repository.getAllByActiveOrderById(true).stream().collect(Collectors.toList());
     }
 
     /**

@@ -17,8 +17,9 @@ import javax.validation.constraints.NotNull;
  *
  */
 
-@Entity
+
 @Data
+@Entity(name="Timesheet")
 public final class Timesheet {
     @Id
     @GeneratedValue(generator = "timesheet_sequence")

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public final class ClientService {
-  private ClientRepository repository;
+  private final ClientRepository repository;
 
   /**
    * Constructor for the {@link Client} Service.
@@ -32,7 +32,7 @@ public final class ClientService {
    * @return List containing all Clients that are active
    */
   public List<Client> getActiveClients() {
-    return repository.getAllByActive(true);
+    return repository.getAllByActiveOrderById(true);
   }
 
   /**

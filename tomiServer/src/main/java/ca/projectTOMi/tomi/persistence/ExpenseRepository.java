@@ -20,5 +20,5 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
    *
    * @return List containing all Expenses with the provided active state
    */
-  public List<Expense> getAllByActive(boolean active);
+  public List<Expense> getAllByActiveOrderById(boolean active);
 }
