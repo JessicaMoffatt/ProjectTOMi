@@ -25,5 +25,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
      * @param active if the Task is active.
      * @return The list of Tasks that are active.
      */
+    public Task findByName(String name);
+  
     public List<Task> getAllByActiveOrderById(boolean active);
 }

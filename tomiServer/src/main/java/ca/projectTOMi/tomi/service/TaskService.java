@@ -79,5 +79,16 @@ public final class TaskService {
      * @param task Task to be persisted.
      * @return Task that was persisted.
      */
-    public Task saveTask(Task task) { return repository.save(task); }
+    public Task createTask(Task task) {
+        Task taskToSave = repository.findByName(task.getName());
+        taskToSave = taskToSave == null ? new Task() : taskToSave;
+        taskToSave.setActive(true);
+        taskToSave.setBillable(task.isBillable());
+        taskToSave.setName(task.getName());
+        return repository.save(taskToSave);
+    }
+
+    public Task saveTask(Task task){
+        return repository.save(task);
+    }
 }
