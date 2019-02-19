@@ -329,9 +329,12 @@ public class EntryService {
 
 	public boolean evaluateEntry(final Long entryId, final Status status){
 		final Entry entry = this.entryRepository.findById(entryId).orElseThrow(EntryNotFoundException::new);
-		entry.setStatus(status);
-		this.entryRepository.save(entry);
-		this.evaluateTimesheet(entry.getTimesheet().getId());
-		return true;
+		if(entry.getStatus() == Status.SUBMITTED) {
+			entry.setStatus(status);
+			this.entryRepository.save(entry);
+			this.evaluateTimesheet(entry.getTimesheet().getId());
+			return true;
+		}
+		return false;
 	}
 }
