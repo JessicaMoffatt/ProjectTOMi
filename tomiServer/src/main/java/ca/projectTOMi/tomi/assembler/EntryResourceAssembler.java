@@ -1,6 +1,7 @@
 package ca.projectTOMi.tomi.assembler;
 
 import ca.projectTOMi.tomi.controller.EntryController;
+import ca.projectTOMi.tomi.controller.ProjectController;
 import ca.projectTOMi.tomi.model.Entry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,8 @@ public class EntryResourceAssembler implements ResourceAssembler<Entry, Resource
 		final Resource<Entry> resource = new Resource<>(entry,
 			linkTo(methodOn(EntryController.class).getEntry(entry.getId())).withSelfRel(),
 			linkTo(methodOn(EntryController.class).getActiveEntries()).withRel("entries"),
-			linkTo(methodOn(EntryController.class).deleteEntry(entry.getId())).withRel("delete")
+			linkTo(methodOn(EntryController.class).deleteEntry(entry.getId())).withRel("delete"),
+			linkTo(methodOn(ProjectController.class).evaluateEntry(entry.getProject().getId(), entry.getId(), null)).withRel("evaluate")
 		);
 
 		try {

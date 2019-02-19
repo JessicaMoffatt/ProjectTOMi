@@ -10,6 +10,7 @@ import ca.projectTOMi.tomi.exception.InvalidIDPrefix;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.model.Project;
+import ca.projectTOMi.tomi.model.Status;
 import ca.projectTOMi.tomi.service.EntryService;
 import ca.projectTOMi.tomi.service.ProjectService;
 import org.slf4j.Logger;
@@ -169,6 +170,13 @@ public class ProjectController {
 
 		return new Resources<>(entries,
 			linkTo(methodOn(ProjectController.class).getEntriesToEvaluate(projectId)).withSelfRel());
+	}
+
+	@PutMapping("/projects/{projectId}/entries/{entryId}")
+	public ResponseEntity<?> evaluateEntry(@PathVariable final String projectId, @PathVariable final Long entryId, @RequestBody final Status status){
+		if(status != Status.APPROVED && status != Status.REJECTED)
+			return ResponseEntity.badRequest().build();
+		return entryService.evaluateEntry(entryId, status) ? ResponseEntity.accepted().build(): ResponseEntity.badRequest().build();
 	}
 
 	@ExceptionHandler ({ProjectNotFoundException.class})

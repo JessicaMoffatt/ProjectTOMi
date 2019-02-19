@@ -29,7 +29,9 @@ public final class ProjectResourceAssembler implements ResourceAssembler<Project
 		final Resource<Project> resource = new Resource<>(project,
 			linkTo(methodOn(ProjectController.class).getProject(project.getId())).withSelfRel(),
 			linkTo(methodOn(ProjectController.class).getActiveProjects()).withRel("clients"),
-			linkTo(methodOn(ProjectController.class).setProjectInactive(project.getId())).withRel("delete"));
+			linkTo(methodOn(ProjectController.class).setProjectInactive(project.getId())).withRel("delete"),
+			linkTo(methodOn(ProjectController.class).getEntriesToEvaluate(project.getId())).withRel("entries")
+			);
 
 		try {
 			resource.add(linkTo(methodOn(ProjectController.class).updateProject(project.getId(), project)).withRel("update"));

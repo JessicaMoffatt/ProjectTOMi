@@ -326,4 +326,12 @@ public class EntryService {
 	public List<Entry> getEntriesToEvaluate(final Project project) {
 		return this.entryRepository.getAllByActiveTrueAndProjectAndStatus(project, Status.SUBMITTED);
 	}
+
+	public boolean evaluateEntry(final Long entryId, final Status status){
+		final Entry entry = this.entryRepository.findById(entryId).orElseThrow(EntryNotFoundException::new);
+		entry.setStatus(status);
+		this.entryRepository.save(entry);
+		this.evaluateTimesheet(entry.getTimesheet().getId());
+		return true;
+	}
 }
