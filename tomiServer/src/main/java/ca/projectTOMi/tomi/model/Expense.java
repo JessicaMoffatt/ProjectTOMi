@@ -9,6 +9,7 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 /**
@@ -55,6 +56,7 @@ public final class Expense {
 	/**
 	 * If this Expense is active.
 	 */
+	@JsonIgnore
 	@NotNull
 	private boolean active;
 }

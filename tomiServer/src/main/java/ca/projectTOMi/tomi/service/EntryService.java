@@ -70,24 +70,24 @@ public class EntryService {
 				throw new IllegalEntryStateException();
 
 			case REJECTED:
-				final Entry rejectedEntry = new Entry();
-				rejectedEntry.setComponent(updatedEntry.getComponent());
-				rejectedEntry.setProject(updatedEntry.getProject());
-				rejectedEntry.setQuantity(updatedEntry.getQuantity());
-				rejectedEntry.setTask(updatedEntry.getTask());
-				rejectedEntry.setUnitType(updatedEntry.getUnitType());
-				rejectedEntry.setMondayHours(updatedEntry.getMondayHours());
-				rejectedEntry.setTuesdayHours(updatedEntry.getTuesdayHours());
-				rejectedEntry.setWednesdayHours(updatedEntry.getWednesdayHours());
-				rejectedEntry.setThursdayHours(updatedEntry.getTuesdayHours());
-				rejectedEntry.setFridayHours(updatedEntry.getFridayHours());
-				rejectedEntry.setSaturdayHours(updatedEntry.getSaturdayHours());
-				rejectedEntry.setSundayHours(updatedEntry.getSundayHours());
-				rejectedEntry.setStatus(Status.REJECTED);
-				rejectedEntry.setActive(false);
-				this.entryRepository.save(rejectedEntry);
+				final Entry modifiedEntry = new Entry();
+				modifiedEntry.setComponent(updatedEntry.getComponent());
+				modifiedEntry.setProject(updatedEntry.getProject());
+				modifiedEntry.setQuantity(updatedEntry.getQuantity());
+				modifiedEntry.setTask(updatedEntry.getTask());
+				modifiedEntry.setUnitType(updatedEntry.getUnitType());
+				modifiedEntry.setMondayHours(updatedEntry.getMondayHours());
+				modifiedEntry.setTuesdayHours(updatedEntry.getTuesdayHours());
+				modifiedEntry.setWednesdayHours(updatedEntry.getWednesdayHours());
+				modifiedEntry.setThursdayHours(updatedEntry.getTuesdayHours());
+				modifiedEntry.setFridayHours(updatedEntry.getFridayHours());
+				modifiedEntry.setSaturdayHours(updatedEntry.getSaturdayHours());
+				modifiedEntry.setSundayHours(updatedEntry.getSundayHours());
+				modifiedEntry.setStatus(Status.LOGGING);
+				modifiedEntry.setActive(true);
+				this.entryRepository.save(modifiedEntry);
 
-				entry.setStatus(Status.LOGGING);
+				entry.setActive(false);
 				this.entryRepository.save(entry);
 				break;
 
@@ -325,7 +325,7 @@ public class EntryService {
 		return this.timesheetRepository.getAllByActiveTrueAndUserAccountOrderByStartDateDesc(userAccount);
 	}
 
-	public List<Entry> getEntriesToEvaluate(final String projectId){
+	public List<Entry> getEntriesToEvaluate(final String projectId) {
 		Project project = projectService.getProjectById(projectId);
 		return this.entryRepository.getAllByActiveTrueAndProjectAndStatus(project, Status.SUBMITTED);
 	}

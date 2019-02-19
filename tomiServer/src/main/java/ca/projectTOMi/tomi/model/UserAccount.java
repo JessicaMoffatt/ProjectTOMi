@@ -85,6 +85,7 @@ public final class UserAccount {
 	/**
 	 * If this UserAccount is active.
 	 */
+	@JsonIgnore
 	@NotNull
 	private boolean active;
 

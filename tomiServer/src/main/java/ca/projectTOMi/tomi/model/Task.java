@@ -1,5 +1,6 @@
 package ca.projectTOMi.tomi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,6 +48,7 @@ public final class Task {
 	/**
 	 * If this Task is active.
 	 */
+	@JsonIgnore
 	@Column (nullable = false)
 	private boolean active;
 }

@@ -51,7 +51,7 @@ public final class ProjectService {
 			project.setClient(newProject.getClient());
 			project.setProjectManager(newProject.getProjectManager());
 			project.setProjectMembers(newProject.getProjectMembers());
-			project.setActive(newProject.isActive());
+			project.setActive(true);
 			return this.repository.save(project);
 		}).orElseThrow(ProjectNotFoundException::new);
 	}

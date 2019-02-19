@@ -74,7 +74,7 @@ public final class ExpenseService {
 			expense.setNotes(newExpense.getNotes());
 			expense.setProject(newExpense.getProject());
 			expense.setAmount(newExpense.getAmount());
-			expense.setActive(newExpense.isActive());
+			expense.setActive(true);
 			return this.repository.save(expense);
 		}).orElseThrow(() -> new ExpenseNotFoundException());
 	}

@@ -1,5 +1,6 @@
 package ca.projectTOMi.tomi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,6 +55,7 @@ public final class UnitType {
 	/**
 	 * Represents whether or not this Unit Type is active.
 	 */
+	@JsonIgnore
 	@Column (nullable = false)
 	private boolean active;
 }

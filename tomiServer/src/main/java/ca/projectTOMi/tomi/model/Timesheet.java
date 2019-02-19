@@ -61,6 +61,7 @@ public final class Timesheet {
 	/**
 	 * if the timesheet is active.
 	 */
+	@JsonIgnore
 	@NotNull
 	private boolean active;
 

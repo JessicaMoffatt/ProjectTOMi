@@ -85,6 +85,7 @@ public final class Project {
 	/**
 	 * If this Project is active.
 	 */
+	@JsonIgnore
 	@Column (nullable = false)
 	private boolean active;
 

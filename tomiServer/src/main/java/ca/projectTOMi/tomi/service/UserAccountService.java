@@ -101,7 +101,7 @@ public final class UserAccountService {
 			userAccount.setEmail(newUserAccount.getEmail());
 			userAccount.setSalariedRate(newUserAccount.getSalariedRate());
 			userAccount.setProjects(newUserAccount.getProjects());
-			userAccount.setActive(newUserAccount.isActive());
+			userAccount.setActive(true);
 			userAccount.setAdmin(newUserAccount.isAdmin());
 			userAccount.setProgramDirector(newUserAccount.isProgramDirector());
 			return this.repository.save(userAccount);

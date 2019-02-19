@@ -42,7 +42,7 @@ public final class UnitTypeService {
 			unitType.setName(newUnitType.getName());
 			unitType.setUnit(newUnitType.getUnit());
 			unitType.setWeight(newUnitType.getWeight());
-			unitType.setActive(newUnitType.isActive());
+			unitType.setActive(true);
 			return this.repository.save(unitType);
 		}).orElseThrow(UnitTypeNotFoundException::new);
 	}

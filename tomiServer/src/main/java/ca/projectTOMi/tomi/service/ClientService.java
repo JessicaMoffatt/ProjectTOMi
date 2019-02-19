@@ -71,7 +71,7 @@ public final class ClientService {
 	 */
 	public Client updateClient(final Long id, final Client newClient) {
 		return this.clientRepository.findById(id).map(client -> {
-			client.setActive(newClient.isActive());
+			client.setActive(true);
 			client.setName(newClient.getName());
 			return this.clientRepository.save(client);
 		}).orElseThrow(ClientNotFoundException::new);

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.SequenceGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 /**
@@ -38,6 +39,7 @@ public final class Client {
 	/**
 	 * If this Client is active.
 	 */
+	@JsonIgnore
 	@Column (nullable = false)
 	private boolean active;
 }

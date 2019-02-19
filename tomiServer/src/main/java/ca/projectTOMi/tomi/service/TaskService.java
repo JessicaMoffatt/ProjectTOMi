@@ -43,7 +43,7 @@ public final class TaskService {
 		return this.repository.findById(id).map(task -> {
 			task.setName(newTask.getName());
 			task.setBillable(newTask.isBillable());
-			task.setActive(newTask.isActive());
+			task.setActive(true);
 			return this.repository.save(task);
 		}).orElseThrow(TaskNotFoundException::new);
 	}

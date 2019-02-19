@@ -40,7 +40,7 @@ public final class TeamService {
   public Team updateTeam(final Long id, final Team newTeam) {
     return this.repository.findById(id).map(team -> {
       team.setTeamName(newTeam.getTeamName());
-      team.setActive(newTeam.isActive());
+      team.setActive(true);
       team.setTeamLead(newTeam.getTeamLead());
       return this.repository.save(team);
     }).orElseThrow(() -> new TeamNotFoundException());
