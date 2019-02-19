@@ -5,6 +5,7 @@ import ca.projectTOMi.tomi.exception.IllegalEntryStateException;
 import ca.projectTOMi.tomi.exception.IllegalTimesheetModificationException;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
 import ca.projectTOMi.tomi.model.Entry;
+import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.Status;
 import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.model.UserAccount;
@@ -24,6 +25,7 @@ import java.util.List;
  */
 @Service
 public class EntryService {
+	private final ProjectService projectService;
 	private final EntryRepository entryRepository;
 	private final TimesheetRepository timesheetRepository;
 
@@ -33,7 +35,8 @@ public class EntryService {
 	 * @param entryRepository
 	 * 	Repository responsible for persisting {@link Entry} instances.
 	 */
-	public EntryService(final EntryRepository entryRepository, final TimesheetRepository timesheetRepository) {
+	public EntryService(final ProjectService projectService, final EntryRepository entryRepository, final TimesheetRepository timesheetRepository) {
+		this.projectService = projectService;
 		this.entryRepository = entryRepository;
 		this.timesheetRepository = timesheetRepository;
 	}
@@ -320,5 +323,10 @@ public class EntryService {
 
 	List<Timesheet> getTimesheetsByUserAccount(final UserAccount userAccount) {
 		return this.timesheetRepository.getAllByActiveTrueAndUserAccountOrderByStartDateDesc(userAccount);
+	}
+
+	public List<Entry> getEntriesToEvaluate(final String projectId){
+		Project project = projectService.getProjectById(projectId);
+		return this.entryRepository.getAllByActiveTrueAndProjectAndStatus(project, Status.SUBMITTED);
 	}
 }

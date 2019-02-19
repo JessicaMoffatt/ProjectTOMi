@@ -79,11 +79,11 @@ public final class Team {
 	}
 
 	@Override
-	public boolean equals(Object obj){
-		if(obj.getClass() != this.getClass()){
+	public boolean equals(Object obj) {
+		if (obj.getClass() != this.getClass()) {
 			return false;
-		}else{
-			return this.getId().equals(((Team)obj).getId());
+		} else {
+			return this.getId().equals(((Team) obj).getId());
 		}
 	}
 }

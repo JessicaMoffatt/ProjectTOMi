@@ -4,10 +4,13 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
+import ca.projectTOMi.tomi.assembler.EntryResourceAssembler;
 import ca.projectTOMi.tomi.assembler.ProjectResourceAssembler;
 import ca.projectTOMi.tomi.exception.InvalidIDPrefix;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
+import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.model.Project;
+import ca.projectTOMi.tomi.service.EntryService;
 import ca.projectTOMi.tomi.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,13 +42,17 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @CrossOrigin (origins = "http://localhost:4200")
 public class ProjectController {
 	private final ProjectService projectService;
-	private final ProjectResourceAssembler assembler;
+	private final EntryService entryService;
+	private final ProjectResourceAssembler projectResourceAssembler;
+	private final EntryResourceAssembler entryResourceAssembler;
 	private final Logger logger = LoggerFactory.getLogger("Project Controller");
 
 	@Autowired
-	public ProjectController(final ProjectService projectService, final ProjectResourceAssembler assembler) {
+	public ProjectController(final ProjectService projectService, final EntryService entryService, final ProjectResourceAssembler projectResourceAssembler, final EntryResourceAssembler entryResourceAssembler) {
 		this.projectService = projectService;
-		this.assembler = assembler;
+		this.entryService = entryService;
+		this.projectResourceAssembler = projectResourceAssembler;
+		this.entryResourceAssembler = entryResourceAssembler;
 	}
 
 	/**
@@ -59,7 +66,7 @@ public class ProjectController {
 	 */
 	@GetMapping ("/projects/{id}")
 	public Resource<Project> getProject(@PathVariable final String id) {
-		return this.assembler.toResource(this.projectService.getProjectById(id));
+		return this.projectResourceAssembler.toResource(this.projectService.getProjectById(id));
 	}
 
 	/**
@@ -72,7 +79,7 @@ public class ProjectController {
 
 		final List<Resource<Project>> project = this.projectService.getActiveProjects()
 			.stream()
-			.map(this.assembler::toResource)
+			.map(this.projectResourceAssembler::toResource)
 			.collect(Collectors.toList());
 
 		return new Resources<>(project,
@@ -96,7 +103,7 @@ public class ProjectController {
 			throw new InvalidIDPrefix();
 		}
 		newProject.setId(this.projectService.getId(newProject.getId()));
-		final Resource<Project> resource = this.assembler.toResource(this.projectService.saveProject(newProject));
+		final Resource<Project> resource = this.projectResourceAssembler.toResource(this.projectService.saveProject(newProject));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
@@ -118,7 +125,7 @@ public class ProjectController {
 	@PutMapping ("/projects/{id}")
 	public ResponseEntity<?> updateProject(@PathVariable final String id, @RequestBody final Project newProject) throws URISyntaxException {
 		final Project updatedProject = this.projectService.updateProject(id, newProject);
-		final Resource<Project> resource = this.assembler.toResource(updatedProject);
+		final Resource<Project> resource = this.projectResourceAssembler.toResource(updatedProject);
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
@@ -145,11 +152,22 @@ public class ProjectController {
 	public Resources<Resource<Project>> getProjectsByUserAccount(@PathVariable final Long id) {
 		final List<Resource<Project>> project = this.projectService.getProjectByUserAccount(id)
 			.stream()
-			.map(this.assembler::toResource)
+			.map(this.projectResourceAssembler::toResource)
 			.collect(Collectors.toList());
 
 		return new Resources<>(project,
 			linkTo(methodOn(ProjectController.class).getActiveProjects()).withSelfRel());
+	}
+
+	@GetMapping ("/projects/{projectId}/evaluate_entries")
+	public Resources<Resource<Entry>> getEntriesToEvaluate(@PathVariable String projectId){
+		final List<Resource<Entry>> entries = this.entryService.getEntriesToEvaluate(projectId)
+			.stream()
+			.map(this.entryResourceAssembler::toResource)
+			.collect(Collectors.toList());
+
+		return new Resources<>(entries,
+			linkTo(methodOn(ProjectController.class).getEntriesToEvaluate(projectId)).withSelfRel());
 	}
 
 	@ExceptionHandler ({ProjectNotFoundException.class})
