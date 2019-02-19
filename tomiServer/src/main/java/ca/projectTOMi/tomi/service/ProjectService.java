@@ -1,6 +1,5 @@
 package ca.projectTOMi.tomi.service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
@@ -74,7 +73,7 @@ public final class ProjectService {
    * @return List containing all projects that are active
    */
   public List<Project> getActiveProjects() {
-    return repository.getAllByActive(true).stream().collect(Collectors.toList());
+    return repository.getAllByActiveOrderById(true).stream().collect(Collectors.toList());
   }
 
   /**
@@ -104,6 +103,6 @@ public final class ProjectService {
 
   public List<Project> getProjectByUserAccount(Long userAccountId) {
     UserAccount userAccount = userAccountService.getUserAccount(userAccountId);
-    return repository.getAllByActiveTrueAndProjectMembersContains(userAccount);
+    return repository.getAllByActiveTrueAndProjectMembersContainsOrderById(userAccount);
   }
 }

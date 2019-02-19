@@ -10,7 +10,7 @@ export class TimesheetPanelComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("this is a test.  you can delete me");
+
   }
 
 }

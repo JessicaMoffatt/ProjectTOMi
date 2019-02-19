@@ -19,5 +19,5 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
    *
    * @return List containing all Clients with the provided active state
    */
-  public List<Client> getAllByActive(boolean active);
+  public List<Client> getAllByActiveOrderById(boolean active);
 }

@@ -24,7 +24,7 @@ public interface TimesheetRepository extends JpaRepository<Timesheet, Long> {
    *
    * @return List containing all accounts with the provided active state
    */
-  public List<Timesheet> getAllByActive(boolean active);
+  public List<Timesheet> getAllByActiveOrderById(boolean active);
 
 
   /**

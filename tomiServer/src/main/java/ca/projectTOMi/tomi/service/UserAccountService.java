@@ -54,7 +54,7 @@ public final class UserAccountService {
    * @return List containing all UserAccounts that are active
    */
   public List<UserAccount> getActiveUserAccounts() {
-    return repository.getAllByActive(true);
+    return repository.getAllByActiveOrderById(true);
   }
 
   /**
@@ -66,7 +66,7 @@ public final class UserAccountService {
    * @return List containing all UserAccounts for that team
    */
   public List<UserAccount> getUserAccountsByTeam(Long teamId) {
-    return repository.getUserAccountsByTeam(teamService.getTeamById(teamId));
+    return repository.getUserAccountsByTeamOrderById(teamService.getTeamById(teamId));
   }
 
 
@@ -101,6 +101,8 @@ public final class UserAccountService {
       userAccount.setSalariedRate(newUserAccount.getSalariedRate());
       userAccount.setProjects(newUserAccount.getProjects());
       userAccount.setActive(newUserAccount.isActive());
+      userAccount.setAdmin(newUserAccount.isAdmin());
+      userAccount.setProgramDirector(newUserAccount.isProgramDirector());
       return repository.save(userAccount);
     }).orElseThrow(UserAccountNotFoundException::new);
   }
@@ -110,7 +112,7 @@ public final class UserAccountService {
    */
   @Scheduled (cron = "0 0 1 * * MON")
   public void createWeeklyTimesheet() {
-    List<UserAccount> accounts = repository.getAllByActive(true);
+    List<UserAccount> accounts = repository.getAllByActiveOrderById(true);
     LocalDate date = LocalDate.now();
     for (UserAccount a : accounts) {
       timesheetService.createTimesheet(date, a);
@@ -167,7 +169,7 @@ public final class UserAccountService {
      * @return List of UserAccounts that are not part of the Team and not team leads.
      */
     public List<UserAccount> getAvailableUserAccountsForTeam(Long teamId) {
-        List<UserAccount> availableUserAccounts = repository.getAllByActive(true);
+        List<UserAccount> availableUserAccounts = repository.getAllByActiveOrderById(true);
         availableUserAccounts.removeIf(userAccount -> userAccount.getTeam() != null && userAccount.getTeam().getId() == teamId);
         availableUserAccounts.removeIf(userAccount -> userAccount.getTeam() != null && userAccount.getTeam().getTeamLead().getId() == userAccount.getId());
 
@@ -180,7 +182,7 @@ public final class UserAccountService {
    * @return List of userAccounts that are not part of a Team
    */
   public List<UserAccount> getUnassignedUserAccounts() {
-    List<UserAccount> unassignedUserAccounts = repository.getAllByActiveTrueAndTeamIsNull();
+    List<UserAccount> unassignedUserAccounts = repository.getAllByActiveTrueAndTeamIsNullOrderById();
     return unassignedUserAccounts;
   }
 
