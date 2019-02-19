@@ -6,7 +6,7 @@ import ca.projectTOMi.tomi.assembler.TimesheetResourceAssembler;
 import ca.projectTOMi.tomi.exception.IllegalTimesheetModificationException;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
 import ca.projectTOMi.tomi.model.Timesheet;
-import ca.projectTOMi.tomi.service.TimesheetService;
+import ca.projectTOMi.tomi.service.EntryService;
 import ca.projectTOMi.tomi.service.UserAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,70 +27,75 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
- *
  * @author Karol Talbot
  * @version 1
  */
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class TimesheetController {
-  private final TimesheetResourceAssembler assembler;
-  private final TimesheetService service;
-  private final UserAccountService userAccountService;
-  private final Logger logger = LoggerFactory.getLogger("Timesheet Controller");
+	private final TimesheetResourceAssembler assembler;
+	private final EntryService entryService;
+	private final UserAccountService userAccountService;
+	private final Logger logger = LoggerFactory.getLogger("Timesheet Controller");
 
-  @Autowired
-  public TimesheetController(TimesheetResourceAssembler assembler, TimesheetService service, UserAccountService userAccountService) {
-    this.assembler = assembler;
-    this.service = service;
-    this.userAccountService = userAccountService;
-  }
+	@Autowired
+	public TimesheetController(final TimesheetResourceAssembler assembler, final EntryService entryService, final UserAccountService userAccountService) {
+		this.assembler = assembler;
+		this.entryService = entryService;
+		this.userAccountService = userAccountService;
+	}
 
-  @GetMapping("/timesheets")
-  public Resources<Resource<Timesheet>> getActiveTimesheets(){
-    List<Resource<Timesheet>> expense = service.getActiveTimesheets().stream().map(assembler::toResource).collect(Collectors.toList());
+	@GetMapping ("/timesheets")
+	public Resources<Resource<Timesheet>> getActiveTimesheets() {
+		final List<Resource<Timesheet>> expense = this.entryService.getActiveTimesheets()
+			.stream()
+			.map(this.assembler::toResource)
+			.collect(Collectors.toList());
 
-    return new Resources<>(expense,
-      linkTo(methodOn(TimesheetController.class).getActiveTimesheets()).withSelfRel());
-  }
+		return new Resources<>(expense,
+			linkTo(methodOn(TimesheetController.class).getActiveTimesheets()).withSelfRel());
+	}
 
-  @GetMapping("/timesheets/{id}")
-  public Resource<Timesheet> getTimesheet(@PathVariable  Long id){
-    return assembler.toResource(service.getTimesheetById(id));
-  }
+	@GetMapping ("/timesheets/{id}")
+	public Resource<Timesheet> getTimesheet(@PathVariable final Long id) {
+		return this.assembler.toResource(this.entryService.getTimesheetById(id));
+	}
 
-  @PutMapping("/timesheets/{id}")
-  public Resource<Timesheet> updateTimesheet(@PathVariable Long id, @RequestBody Timesheet timesheet){
-    return assembler.toResource(service.updateTimesheet(id, timesheet));
-  }
+	@PutMapping ("/timesheets/{id}")
+	public Resource<Timesheet> updateTimesheet(@PathVariable final Long id, @RequestBody final Timesheet timesheet) {
+		return this.assembler.toResource(this.entryService.updateTimesheet(id, timesheet));
+	}
 
-  @PutMapping("/timesheets/{id}/submit")
-  public Resource<Timesheet> submitTimesheet(@PathVariable Long id){
-    return assembler.toResource(service.submitTimesheet(id));
-  }
+	@PutMapping ("/timesheets/{id}/submit")
+	public Resource<Timesheet> submitTimesheet(@PathVariable final Long id) {
+		return this.assembler.toResource(this.entryService.submitTimesheet(id));
+	}
 
-  @DeleteMapping("/timesheets/{id}")
-  public ResponseEntity<?> setTimesheetInactive(@PathVariable Long id) {
+	@DeleteMapping ("/timesheets/{id}")
+	public ResponseEntity<?> setTimesheetInactive(@PathVariable final Long id) {
 
-    return ResponseEntity.noContent().build();
-  }
+		return ResponseEntity.noContent().build();
+	}
 
-  @GetMapping("/timesheetEvalTest/{id}")
-  public void evalTimesheet(@PathVariable Long id){
-    service.evaluateTimesheet(id);
-  }
+	@GetMapping ("/timesheetEvalTest/{id}")
+	public void evalTimesheet(@PathVariable final Long id) {
+		this.entryService.evaluateTimesheet(id);
+	}
 
-  @GetMapping("/timesheets/userAccount/{id}")
-  public Resources<Resource<Timesheet>> getTimesheetsByUserAccount(@PathVariable Long id){
-    List<Resource<Timesheet>> expense = userAccountService.getTimesheetsByUserAccount(id).stream().map(assembler::toResource).collect(Collectors.toList());
+	@GetMapping ("/timesheets/userAccount/{id}")
+	public Resources<Resource<Timesheet>> getTimesheetsByUserAccount(@PathVariable final Long id) {
+		final List<Resource<Timesheet>> expense = this.userAccountService.getTimesheetsByUserAccount(id)
+			.stream()
+			.map(this.assembler::toResource)
+			.collect(Collectors.toList());
 
-    return new Resources<>(expense,
-      linkTo(methodOn(TimesheetController.class).getTimesheetsByUserAccount(id)).withSelfRel());
-  }
+		return new Resources<>(expense,
+			linkTo(methodOn(TimesheetController.class).getTimesheetsByUserAccount(id)).withSelfRel());
+	}
 
-  @ExceptionHandler({IllegalTimesheetModificationException.class, TimesheetNotFoundException.class})
-  public ResponseEntity<?> handleExceptions(Exception e){
-    logger.warn("Timesheet Exception: " + e.getClass());
-    return ResponseEntity.status(400).build();
-  }
+	@ExceptionHandler ({IllegalTimesheetModificationException.class, TimesheetNotFoundException.class})
+	public ResponseEntity<?> handleExceptions(final Exception e) {
+		this.logger.warn("Timesheet Exception: " + e.getClass());
+		return ResponseEntity.status(400).build();
+	}
 }

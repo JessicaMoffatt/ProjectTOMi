@@ -6,16 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapKeyColumn;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,84 +31,84 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Data
 public final class UserAccount {
-  /**
-   * The unique identifier for this UserAccount. Used to distinguish between Accounts.
-   */
-  @Id
-  @GeneratedValue (generator = "user_account_sequence")
-  @SequenceGenerator (
-    name = "user_account_sequence",
-    sequenceName = "user_account_sequence",
-    allocationSize = 1
-  )
-  private Long id;
+	/**
+	 * The unique identifier for this UserAccount. Used to distinguish between Accounts.
+	 */
+	@Id
+	@GeneratedValue (generator = "user_account_sequence")
+	@SequenceGenerator (
+		name = "user_account_sequence",
+		sequenceName = "user_account_sequence",
+		allocationSize = 1
+	)
+	private Long id;
 
-  /**
-   * The team this UserAccount is a member of.
-   */
-  @ManyToOne
-  @OnDelete (action = OnDeleteAction.NO_ACTION)
-  @JsonProperty(value="teamId")
-  @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-  @JsonIdentityReference(alwaysAsId = true)
-  private Team team;
+	/**
+	 * The team this UserAccount is a member of.
+	 */
+	@ManyToOne
+	@OnDelete (action = OnDeleteAction.NO_ACTION)
+	@JsonProperty (value = "teamId")
+	@JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference (alwaysAsId = true)
+	private Team team;
 
-  /**
-   * This UserAccount holder's first name.
-   */
-  @NotBlank
-  private String firstName;
+	/**
+	 * This UserAccount holder's first name.
+	 */
+	@NotBlank
+	private String firstName;
 
-  /**
-   * This UserAccount holder's last name.
-   */
-  @NotBlank
-  private String lastName;
+	/**
+	 * This UserAccount holder's last name.
+	 */
+	@NotBlank
+	private String lastName;
 
-  /**
-   * The email address for this UserAccount.
-   */
-  @NotBlank
-  @Column (unique = true)
-  private String email;
+	/**
+	 * The email address for this UserAccount.
+	 */
+	@NotBlank
+	@Column (unique = true)
+	private String email;
 
-  /**
-   * The salaried rate of this UserAccount multiplied by 100 to remove decimals.
-   */
-  @Min (0)
-  private Long salariedRate;
+	/**
+	 * The salaried rate of this UserAccount multiplied by 100 to remove decimals.
+	 */
+	@Min (0)
+	private Long salariedRate;
 
-  @ManyToMany(mappedBy = "projectMembers", targetEntity = Project.class)
-  @JsonIgnore
-  private Set<Project> projects = new HashSet<>();
+	@ManyToMany (mappedBy = "projectMembers", targetEntity = Project.class)
+	@JsonIgnore
+	private Set<Project> projects = new HashSet<>();
 
-  /**
-   * If this UserAccount is active.
-   */
-  @NotNull
-  private boolean active;
+	/**
+	 * If this UserAccount is active.
+	 */
+	@NotNull
+	private boolean active;
 
-  @ColumnDefault("false")
-  private boolean programDirector;
+	@ColumnDefault ("false")
+	private boolean programDirector;
 
-  @ColumnDefault("false")
-  private boolean admin;
+	@ColumnDefault ("false")
+	private boolean admin;
 
-  @JsonIgnore
-  private String googleId;
+	@JsonIgnore
+	private String googleId;
 
-  @JsonProperty
-  public void setTeamId(Long id){
-    Team team = null;
-    if(id != -1) {
-      team = new Team();
-      team.setId(id);
-    }
-    this.setTeam(team);
-  }
+	@JsonProperty
+	public void setTeamId(final Long id) {
+		Team team = null;
+		if (id != -1) {
+			team = new Team();
+			team.setId(id);
+		}
+		this.setTeam(team);
+	}
 
-  @Override
-  public int hashCode(){
-    return id.intValue();
-  }
+	@Override
+	public int hashCode() {
+		return this.id.intValue();
+	}
 }

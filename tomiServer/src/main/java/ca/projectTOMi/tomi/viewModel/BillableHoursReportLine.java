@@ -7,17 +7,17 @@ import lombok.Data;
 
 @Data
 public class BillableHoursReportLine {
-  private LocalDate date;
-  private double billableHours;
-  private double nonbillableHours;
-  private UserAccount userAccount;
-  private Project project;
+	private LocalDate date;
+	private double billableHours;
+	private double nonbillableHours;
+	private UserAccount userAccount;
+	private Project project;
 
-  public BillableHoursReportLine(LocalDate date, UserAccount userAccount, double billableHours, double nonbillableHours, Project project) {
-    this.date = date;
-    this.userAccount = userAccount;
-    this.billableHours = billableHours;
-    this.nonbillableHours = nonbillableHours;
-    this.project = project;
-  }
+	public BillableHoursReportLine(final LocalDate date, final UserAccount userAccount, final double billableHours, final double nonbillableHours, final Project project) {
+		this.date = date;
+		this.userAccount = userAccount;
+		this.billableHours = billableHours;
+		this.nonbillableHours = nonbillableHours;
+		this.project = project;
+	}
 }

@@ -13,30 +13,30 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @version 2
  */
 public interface UserAccountRepository extends JpaRepository<UserAccount, Long> {
-  /**
-   * Get all {@link UserAccount}s that have the provided active status.
-   *
-   * @param active
-   *   if the {@link UserAccount} is active
-   *
-   * @return List containing all accounts with the provided active state
-   */
-  public List<UserAccount> getAllByActiveOrderById(boolean active);
+	/**
+	 * Get all {@link UserAccount}s that have the provided active status.
+	 *
+	 * @param active
+	 * 	if the {@link UserAccount} is active
+	 *
+	 * @return List containing all accounts with the provided active state
+	 */
+	List<UserAccount> getAllByActiveOrderById(boolean active);
 
-  /**
-   * Gets all {@ling UserAccount}s that are a part of the provided {@link Team}.
-   *
-   * @param team
-   *   the team to get UserAccounts for
-   *
-   * @return List containing all UserAccounts that are a part of the provided team
-   */
-  public List<UserAccount> getUserAccountsByTeamOrderById(Team team);
+	/**
+	 * Gets all {@ling UserAccount}s that are a part of the provided {@link Team}.
+	 *
+	 * @param team
+	 * 	the team to get UserAccounts for
+	 *
+	 * @return List containing all UserAccounts that are a part of the provided team
+	 */
+	List<UserAccount> getUserAccountsByTeamOrderById(Team team);
 
-  /**
-   * Gets all Active UserAccounts that are not a part of a Team.
-   *
-   * @return List of UserAccount that do not belong to a Team
-   */
-  public List<UserAccount> getAllByActiveTrueAndTeamIsNullOrderById();
+	/**
+	 * Gets all Active UserAccounts that are not a part of a Team.
+	 *
+	 * @return List of UserAccount that do not belong to a Team
+	 */
+	List<UserAccount> getAllByActiveTrueAndTeamIsNullOrderById();
 }

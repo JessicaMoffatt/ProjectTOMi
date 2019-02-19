@@ -36,151 +36,174 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class UserAccountController {
-  private final UserAccountResourceAssembler assembler;
-  private final UserAccountService service;
-  private final Logger logger = LoggerFactory.getLogger("UserAccount Controller");
+	private final UserAccountResourceAssembler assembler;
+	private final UserAccountService userAccountService;
+	private final Logger logger = LoggerFactory.getLogger("UserAccount Controller");
 
-  @Autowired
-  public UserAccountController(UserAccountResourceAssembler assembler, UserAccountService service) {
-    this.assembler = assembler;
-    this.service = service;
-  }
+	@Autowired
+	public UserAccountController(final UserAccountResourceAssembler assembler, final UserAccountService userAccountService) {
+		this.assembler = assembler;
+		this.userAccountService = userAccountService;
+	}
 
-  /**
-   * Returns a resource representing the requested {@link UserAccount} to the source of a GET
-   * request to /accounts/id.
-   *
-   * @param id
-   *   unique identifier for the UserAccount
-   *
-   * @return Resource representing the UserAccount object.
-   */
-  @GetMapping ("/user_accounts/{id}")
-  public Resource<UserAccount> getAccount(@PathVariable Long id) {
-    UserAccount userAccount = service.getUserAccount(id);
-    return assembler.toResource(userAccount);
-  }
+	/**
+	 * Returns a resource representing the requested {@link UserAccount} to the source of a GET
+	 * request to /accounts/id.
+	 *
+	 * @param id
+	 * 	unique identifier for the UserAccount
+	 *
+	 * @return Resource representing the UserAccount object.
+	 */
+	@GetMapping ("/user_accounts/{id}")
+	public Resource<UserAccount> getAccount(@PathVariable final Long id) {
+		final UserAccount userAccount = this.userAccountService.getUserAccount(id);
 
-  /**
-   * Returns a collection of all active accounts the source of a GET request to /accounts.
-   *
-   * @return Collection of resources representing all active accounts
-   */
-  @GetMapping ("/user_accounts")
-  public Resources<Resource<UserAccount>> getActiveAccounts() {
-    List<Resource<UserAccount>> account = service.getActiveUserAccounts().stream().map(assembler::toResource).collect(Collectors.toList());
+		return this.assembler.toResource(userAccount);
+	}
 
-    return new Resources<>(account,
-      linkTo(methodOn(UserAccountController.class).getActiveAccounts()).withSelfRel());
-  }
+	/**
+	 * Returns a collection of all active accounts the source of a GET request to /accounts.
+	 *
+	 * @return Collection of resources representing all active accounts
+	 */
+	@GetMapping ("/user_accounts")
+	public Resources<Resource<UserAccount>> getActiveAccounts() {
+		final List<Resource<UserAccount>> account = this.userAccountService.getActiveUserAccounts()
+			.stream()
+			.map(this.assembler::toResource)
+			.collect(Collectors.toList());
 
-  /**
-   * Returns a collection of all accounts associated with a given team.
-   *
-   * @param teamId
-   *   unique identifier for the team to be retrieved
-   *
-   * @return Collection of resources representing all active accounts on a team
-   */
-  @GetMapping ("/teams/{teamId}/user_accounts")
-  public Resources<Resource<UserAccount>> getAccountsByTeam(@PathVariable Long teamId) {
-    List<Resource<UserAccount>> userAccount = service.getUserAccountsByTeam(teamId).stream().map(assembler::toResource).collect(Collectors.toList());
+		return new Resources<>(account,
+			linkTo(methodOn(UserAccountController.class).getActiveAccounts()).withSelfRel());
+	}
 
-    return new Resources<>(userAccount,
-      linkTo(methodOn(UserAccountController.class).getAccountsByTeam(teamId)).withSelfRel());
-  }
+	/**
+	 * Returns a collection of all accounts associated with a given team.
+	 *
+	 * @param teamId
+	 * 	unique identifier for the team to be retrieved
+	 *
+	 * @return Collection of resources representing all active accounts on a team
+	 */
+	@GetMapping ("/teams/{teamId}/user_accounts")
+	public Resources<Resource<UserAccount>> getAccountsByTeam(@PathVariable final Long teamId) {
+		final List<Resource<UserAccount>> userAccount = this.userAccountService.getUserAccountsByTeam(teamId)
+			.stream()
+			.map(this.assembler::toResource)
+			.collect(Collectors.toList());
 
-  /**
-   * Creates a new {@link UserAccount} with the attributes provided in the POST request to
-   * /accounts.
-   *
-   * @param newUserAccount
-   *   a userAccount object with required information.
-   *
-   * @return the newly created UserAccount
-   */
-  @PostMapping ("/user_accounts")
-  public ResponseEntity<?> createUserAccount(@RequestBody UserAccount newUserAccount) throws URISyntaxException {
-    Resource<UserAccount> resource = assembler.toResource(service.createUserAccount(newUserAccount));
+		return new Resources<>(userAccount,
+			linkTo(methodOn(UserAccountController.class).getAccountsByTeam(teamId)).withSelfRel());
+	}
 
-    return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
-  }
+	/**
+	 * Creates a new {@link UserAccount} with the attributes provided in the POST request to
+	 * /accounts.
+	 *
+	 * @param newUserAccount
+	 * 	a userAccount object with required information.
+	 *
+	 * @return the newly created UserAccount
+	 */
+	@PostMapping ("/user_accounts")
+	public ResponseEntity<?> createUserAccount(@RequestBody final UserAccount newUserAccount) throws URISyntaxException {
+		final Resource<UserAccount> resource = this.assembler.toResource(this.userAccountService.createUserAccount(newUserAccount));
 
-  /**
-   * Updates the attributes for a {@link UserAccount} with the provided id with the attributes
-   * provided in the PUT request to /accounts/id.
-   *
-   * @param id
-   *   the unique identifier for the UserAccount to be updated
-   * @param newUserAccount
-   *   the updated userAccount
-   *
-   * @return the updated userAccount
-   */
-  @PutMapping ("/user_accounts/{id}")
-  public Resource<UserAccount> updateUserAccount(@PathVariable Long id, @RequestBody UserAccount newUserAccount) {
-    UserAccount updatedUserAccount = service.updateUserAccount(id, newUserAccount);
-    Resource<UserAccount> resource = assembler.toResource(updatedUserAccount);
-    return resource;
-  }
+		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
+	}
 
-  /**
-   * Sets the requested userAccount's active attribute false, removing it from the list of active
-   * accounts. Responds to the DELETE requests to /accounts/id.
-   *
-   * @param id
-   *   the unique identifier for the userAccount to be set inactive
-   *
-   * @return a response without any content
-   */
-  @DeleteMapping ("/user_accounts/{id}")
-  public ResponseEntity<?> setUserAccountInactive(@PathVariable Long id) {
-    UserAccount userAccount = service.getUserAccount(id);
-    userAccount.setActive(false);
-    service.saveUserAccount(userAccount);
+	/**
+	 * Updates the attributes for a {@link UserAccount} with the provided id with the attributes
+	 * provided in the PUT request to /accounts/id.
+	 *
+	 * @param id
+	 * 	the unique identifier for the UserAccount to be updated
+	 * @param newUserAccount
+	 * 	the updated userAccount
+	 *
+	 * @return the updated userAccount
+	 */
+	@PutMapping ("/user_accounts/{id}")
+	public Resource<UserAccount> updateUserAccount(@PathVariable final Long id, @RequestBody final UserAccount newUserAccount) {
+		final UserAccount updatedUserAccount = this.userAccountService.updateUserAccount(id, newUserAccount);
 
-    return ResponseEntity.noContent().build();
-  }
+		return this.assembler.toResource(updatedUserAccount);
+	}
 
-  /**
-   * Gets the {@link UserAccount} for a {@link ca.projectTOMi.tomi.model.Team}'s leader.
-   * @param teamId the unique identifier for the Team
-   * @return the team lead's UserAccount
-   */
-  @GetMapping ("/teams/{teamId}/team_lead")
-  public Resource<UserAccount> getTeamLead(@PathVariable Long teamId) {
-    return assembler.toResource(service.getTeamLead(teamId));
-  }
+	/**
+	 * Sets the requested userAccount's active attribute false, removing it from the list of active
+	 * accounts. Responds to the DELETE requests to /accounts/id.
+	 *
+	 * @param id
+	 * 	the unique identifier for the userAccount to be set inactive
+	 *
+	 * @return a response without any content
+	 */
+	@DeleteMapping ("/user_accounts/{id}")
+	public ResponseEntity<?> setUserAccountInactive(@PathVariable final Long id) {
+		final UserAccount userAccount = this.userAccountService.getUserAccount(id);
+		userAccount.setActive(false);
+		this.userAccountService.saveUserAccount(userAccount);
 
-  /**
-   * Gets the {@link UserAccount}s that are active, not part of the provided Team and not a team lead of any {@link ca.projectTOMi.tomi.model.Team}.
-   * @param teamId the unique identifier for the Team
-   * @return List of UserAccounts that are active, not part of the provided Team and not a team lead of any Teams.
-   */
-  @GetMapping ("/teams/{teamId}/available")
-  public Resources<Resource<UserAccount>> getAvailableUserAccountsForTeam(@PathVariable Long teamId) {
+		return ResponseEntity.noContent().build();
+	}
 
-    List<Resource<UserAccount>> userAccount = service.getAvailableUserAccountsForTeam(teamId).stream().map(assembler::toResource).collect(Collectors.toList());
+	/**
+	 * Gets the {@link UserAccount} for a {@link ca.projectTOMi.tomi.model.Team}'s leader.
+	 *
+	 * @param teamId
+	 * 	the unique identifier for the Team
+	 *
+	 * @return the team lead's UserAccount
+	 */
+	@GetMapping ("/teams/{teamId}/team_lead")
+	public Resource<UserAccount> getTeamLead(@PathVariable final Long teamId) {
+		return this.assembler.toResource(this.userAccountService.getTeamLead(teamId));
+	}
 
-    return new Resources<>(userAccount,
-      linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(teamId)).withSelfRel());
-  }
+	/**
+	 * Gets the {@link UserAccount}s that are active, not part of the provided Team and not a team
+	 * lead of any {@link ca.projectTOMi.tomi.model.Team}.
+	 *
+	 * @param teamId
+	 * 	the unique identifier for the Team
+	 *
+	 * @return List of UserAccounts that are active, not part of the provided Team and not a team lead
+	 * of any Teams.
+	 */
+	@GetMapping ("/teams/{teamId}/available")
+	public Resources<Resource<UserAccount>> getAvailableUserAccountsForTeam(@PathVariable final Long teamId) {
+		final List<Resource<UserAccount>> userAccount = this.userAccountService.getAvailableUserAccountsForTeam(teamId)
+			.stream()
+			.map(this.assembler::toResource)
+			.collect(Collectors.toList());
 
-  /**
-   * Gets {@link UserAccount}s that are active but not a part of {@link ca.projectTOMi.tomi.model.Team}.
-   *
-   * @return List of UserAccounts that are active, but not a part of any team
-   */
-  @GetMapping("/teams/unassigned")
-  public Resources<Resource<UserAccount>> getUnassignedUserAccounts(){
-    List<Resource<UserAccount>> available = service.getUnassignedUserAccounts().stream().map(assembler::toResource).collect(Collectors.toList());
-    return new Resources<>(available,
-      linkTo(methodOn(UserAccountController.class).getUnassignedUserAccounts()).withSelfRel());
-  }
+		return new Resources<>(userAccount,
+			linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(teamId)).withSelfRel());
+	}
 
-  @ExceptionHandler({UserAccountNotFoundException.class})
-  public ResponseEntity<?> handleExceptions(Exception e){
-    logger.warn("UserAccount Exception: "+ e.getClass());
-    return ResponseEntity.status(400).build();
-  }
+	/**
+	 * Gets {@link UserAccount}s that are active but not a part of {@link
+	 * ca.projectTOMi.tomi.model.Team}.
+	 *
+	 * @return List of UserAccounts that are active, but not a part of any team
+	 */
+	@GetMapping ("/teams/unassigned")
+	public Resources<Resource<UserAccount>> getUnassignedUserAccounts() {
+		final List<Resource<UserAccount>> available = this.userAccountService.getUnassignedUserAccounts()
+			.stream()
+			.map(this.assembler::toResource)
+			.collect(Collectors.toList());
+
+		return new Resources<>(available,
+			linkTo(methodOn(UserAccountController.class).getUnassignedUserAccounts()).withSelfRel());
+	}
+
+	@ExceptionHandler ({UserAccountNotFoundException.class})
+	public ResponseEntity<?> handleExceptions(final Exception e) {
+		this.logger.warn("UserAccount Exception: " + e.getClass());
+
+		return ResponseEntity.status(400).build();
+	}
 }

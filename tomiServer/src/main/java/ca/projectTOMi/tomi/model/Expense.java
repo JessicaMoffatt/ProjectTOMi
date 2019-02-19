@@ -21,40 +21,40 @@ import lombok.Data;
 @Entity
 @Data
 public final class Expense {
-  /**
-   * Unique identifier for this Expense.
-   */
-  @Id
-  @GeneratedValue (generator = "expense_sequence")
-  @SequenceGenerator (
-    name = "expense_sequence",
-    sequenceName = "expense_sequence",
-    allocationSize = 1
-  )
-  private Long id;
+	/**
+	 * Unique identifier for this Expense.
+	 */
+	@Id
+	@GeneratedValue (generator = "expense_sequence")
+	@SequenceGenerator (
+		name = "expense_sequence",
+		sequenceName = "expense_sequence",
+		allocationSize = 1
+	)
+	private Long id;
 
-  /**
-   * The {@link Project} this Expense belongs to.
-   */
-  @ManyToOne
-  @MapKeyColumn(name = "id")
-  private Project project;
+	/**
+	 * The {@link Project} this Expense belongs to.
+	 */
+	@ManyToOne
+	@MapKeyColumn (name = "id")
+	private Project project;
 
-  /**
-   * The dollar value of this Expense multiplied by 100 to remove decimals.
-   */
-  @Min (0)
-  private Long amount;
+	/**
+	 * The dollar value of this Expense multiplied by 100 to remove decimals.
+	 */
+	@Min (0)
+	private Long amount;
 
-  /**
-   * Notes about this Expense.
-   */
-  @NotBlank
-  private String notes;
+	/**
+	 * Notes about this Expense.
+	 */
+	@NotBlank
+	private String notes;
 
-  /**
-   * If this Expense is active.
-   */
-  @NotNull
-  private boolean active;
+	/**
+	 * If this Expense is active.
+	 */
+	@NotNull
+	private boolean active;
 }
