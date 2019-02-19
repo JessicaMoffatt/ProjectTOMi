@@ -1,0 +1,34 @@
+<!--
+@author Jessica Moffatt
+@version 1.0
+-->
+<div *ngIf="teamMemberTimesheetService.selectedMember">
+  <div>
+    <div [ngClass]="'row'">
+      {{teamMemberTimesheetService.selectedMember.firstName}} {{teamMemberTimesheetService.selectedMember.lastName}}
+    </div>
+
+    <div>
+      <div [ngClass]="'container'">
+  <span [ngClass]="['arrow', 'rounded-circle','back']" (click)="teamMemberTimesheetService.displayPrevTimesheet()">
+  </span>
+        <span [ngClass]="'week_title'">Week of {{timesheetService.currentDate}}</span>
+        <span [ngClass]="['arrow', 'rounded-circle','forward']" (click)="teamMemberTimesheetService.displayNextTimesheet()">
+  </span>
+        <app-date-picker [parent]="this"></app-date-picker>
+        <div [ngClass]="'container'">
+          <div *ngFor="let entry of this.teamMemberTimesheetService.entries">
+            <app-entry-uneditable [ngClass]="'entry'"
+                                  [entry]="entry"></app-entry-uneditable>
+          </div>
+
+        </div>
+      </div>
+      <div [ngClass]="'timesheet_footer'">
+        <span [ngClass]="'hours_tally'">Hours:<strong> {{teamMemberTimesheetService.tally}}</strong></span>
+      </div>
+    </div>
+  </div>
+
+
+

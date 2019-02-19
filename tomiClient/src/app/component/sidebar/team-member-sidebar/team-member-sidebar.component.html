@@ -1,0 +1,8 @@
+<h1>Team Members</h1>
+<div>
+  <ul *ngIf="teamMemberTimesheetService.teamMembers">
+    <li *ngFor="let t of (teamMemberTimesheetService.teamMembers|orderBy:['first_name','last_name'])">
+      <span *ngIf="t" (click)="displayTimesheet(t)">{{t.firstName}} {{t.lastName}}</span>
+    </li>
+  </ul>
+</div>

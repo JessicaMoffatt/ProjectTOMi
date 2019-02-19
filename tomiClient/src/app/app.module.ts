@@ -1,4 +1,4 @@
-import {BsDropdownModule, BsModalService, ComponentLoaderFactory, ModalModule, PositioningService} from "ngx-bootstrap";
+import { BsModalService, ComponentLoaderFactory, ModalModule, PositioningService} from "ngx-bootstrap";
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -32,9 +32,11 @@ import {UserAccountsPanelComponent} from "./component/panel/user-accounts-panel/
 import { AddTeamMemberComponent } from './component/modal/add-team-member/add-team-member.component';
 import {UserAccountService} from "./service/user-account.service";
 import {TimesheetService} from "./service/timesheet.service";
-import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry-submitted.component';
+import { EntryUneditableComponent } from './component/panel/entry-uneditable/entry-uneditable.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DatePickerComponent } from './component/extra/date-picker/date-picker.component';
+import { TeamMemberTimesheetComponent } from './component/panel/team-member-timesheet/team-member-timesheet.component';
+import { TeamMemberSidebarComponent } from './component/sidebar/team-member-sidebar/team-member-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -54,10 +56,12 @@ import { DatePickerComponent } from './component/extra/date-picker/date-picker.c
     TeamSidebarComponent,
     AddTeamComponent,
     AddTeamMemberComponent,
-    EntrySubmittedComponent,
+    EntryUneditableComponent,
     DeleteEntryModalComponent,
     SubmitTimesheetModalComponent,
-    DatePickerComponent
+    DatePickerComponent,
+    TeamMemberTimesheetComponent,
+    TeamMemberSidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +76,7 @@ import { DatePickerComponent } from './component/extra/date-picker/date-picker.c
     EntryComponent,
     AddTeamComponent,
     AddTeamMemberComponent,
-    EntrySubmittedComponent,
+    EntryUneditableComponent,
     DeleteEntryModalComponent,
     SubmitTimesheetModalComponent
   ],

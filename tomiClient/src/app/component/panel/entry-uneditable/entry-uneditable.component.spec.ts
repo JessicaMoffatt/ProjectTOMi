@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EntrySubmittedComponent } from './entry-submitted.component';
+import { EntryUneditableComponent } from './entry-uneditable.component';
 
-describe('EntrySubmittedComponent', () => {
-  let component: EntrySubmittedComponent;
-  let fixture: ComponentFixture<EntrySubmittedComponent>;
+describe('EntryUneditableComponent', () => {
+  let component: EntryUneditableComponent;
+  let fixture: ComponentFixture<EntryUneditableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EntrySubmittedComponent ]
+      declarations: [ EntryUneditableComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EntrySubmittedComponent);
+    fixture = TestBed.createComponent(EntryUneditableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
