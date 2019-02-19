@@ -23,7 +23,7 @@ public final class TeamService {
    * @param repository
    *   Repository responsible for persisting Team instances
    */
-  public TeamService(TeamRepository repository) {
+  public TeamService(final TeamRepository repository) {
     this.repository = repository;
   }
 
@@ -37,12 +37,12 @@ public final class TeamService {
    *
    * @return Team containing the updated attributes
    */
-  public Team updateTeam(Long id, Team newTeam) {
-    return repository.findById(id).map(team -> {
+  public Team updateTeam(final Long id, final Team newTeam) {
+    return this.repository.findById(id).map(team -> {
       team.setTeamName(newTeam.getTeamName());
-      team.setActive(newTeam.isActive());
+      team.setActive(true);
       team.setTeamLead(newTeam.getTeamLead());
-      return repository.save(team);
+      return this.repository.save(team);
     }).orElseThrow(() -> new TeamNotFoundException());
   }
 
@@ -54,8 +54,8 @@ public final class TeamService {
    *
    * @return Team object matching the provided id
    */
-  public Team getTeamById(Long id) {
-    return repository.findById(id).orElseThrow(() -> new TeamNotFoundException());
+  public Team getTeamById(final Long id) {
+    return this.repository.findById(id).orElseThrow(() -> new TeamNotFoundException());
   }
 
   /**
@@ -64,7 +64,7 @@ public final class TeamService {
    * @return List containing all teams that are active
    */
   public List<Team> getActiveTeams() {
-    return repository.getAllByActiveOrderById(true).stream().collect(Collectors.toList());
+    return this.repository.getAllByActiveOrderById(true).stream().collect(Collectors.toList());
   }
 
   /**
@@ -75,8 +75,8 @@ public final class TeamService {
    *
    * @return the Team that was persisted
    */
-  public Team saveTeam(Team team) {
+  public Team saveTeam(final Team team) {
 
-    return repository.save(team);
+    return this.repository.save(team);
   }
 }

@@ -4,10 +4,14 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
+import ca.projectTOMi.tomi.assembler.EntryResourceAssembler;
 import ca.projectTOMi.tomi.assembler.ProjectResourceAssembler;
 import ca.projectTOMi.tomi.exception.InvalidIDPrefix;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
+import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.model.Project;
+import ca.projectTOMi.tomi.model.Status;
+import ca.projectTOMi.tomi.service.EntryService;
 import ca.projectTOMi.tomi.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +33,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
- * Handles HTTP requests for {@link ca.projectTOMi.tomi.model.Project} objects in the ProjectTOMi system.
+ * Handles HTTP requests for {@link ca.projectTOMi.tomi.model.Project} objects in the ProjectTOMi
+ * system.
  *
  * @author Karol Talbot
  * @version 1
@@ -37,116 +42,146 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class ProjectController {
-  private final ProjectService service;
-  private final ProjectResourceAssembler assembler;
-  private final Logger logger = LoggerFactory.getLogger("Project Controller");
+	private final ProjectService projectService;
+	private final EntryService entryService;
+	private final ProjectResourceAssembler projectResourceAssembler;
+	private final EntryResourceAssembler entryResourceAssembler;
+	private final Logger logger = LoggerFactory.getLogger("Project Controller");
 
-  @Autowired
-  public ProjectController(ProjectService service, ProjectResourceAssembler assembler) {
-    this.service = service;
-    this.assembler = assembler;
-  }
+	@Autowired
+	public ProjectController(final ProjectService projectService, final EntryService entryService, final ProjectResourceAssembler projectResourceAssembler, final EntryResourceAssembler entryResourceAssembler) {
+		this.projectService = projectService;
+		this.entryService = entryService;
+		this.projectResourceAssembler = projectResourceAssembler;
+		this.entryResourceAssembler = entryResourceAssembler;
+	}
 
-  /**
-   * Returns a resource representing the requested {@link Project} to the source of a GET request to
-   * /projects/id.
-   *
-   * @param id
-   *   unique identifier for the Project
-   *
-   * @return Resource representing the Project object.
-   */
-  @GetMapping ("/projects/{id}")
-  public Resource<Project> getProject(@PathVariable String id) {
-    return assembler.toResource(service.getProjectById(id));
-  }
+	/**
+	 * Returns a resource representing the requested {@link Project} to the source of a GET request to
+	 * /projects/id.
+	 *
+	 * @param id
+	 * 	unique identifier for the Project
+	 *
+	 * @return Resource representing the Project object.
+	 */
+	@GetMapping ("/projects/{id}")
+	public Resource<Project> getProject(@PathVariable final String id) {
+		return this.projectResourceAssembler.toResource(this.projectService.getProjectById(id));
+	}
 
-  /**
-   * Returns a collection of all active {@link Project} the source of a GET request to /projects.
-   *
-   * @return Collection of resources representing all active Projects
-   */
-  @GetMapping ("/projects")
-  public Resources<Resource<Project>> getActiveProjects() {
+	/**
+	 * Returns a collection of all active {@link Project} the source of a GET request to /projects.
+	 *
+	 * @return Collection of resources representing all active Projects
+	 */
+	@GetMapping ("/projects")
+	public Resources<Resource<Project>> getActiveProjects() {
 
-    List<Resource<Project>> project = service.getActiveProjects().stream().map(assembler::toResource).collect(Collectors.toList());
+		final List<Resource<Project>> project = this.projectService.getActiveProjects()
+			.stream()
+			.map(this.projectResourceAssembler::toResource)
+			.collect(Collectors.toList());
 
-    return new Resources<>(project,
-      linkTo(methodOn(ProjectController.class).getActiveProjects()).withSelfRel());
-  }
+		return new Resources<>(project,
+			linkTo(methodOn(ProjectController.class).getActiveProjects()).withSelfRel());
+	}
 
-  /**
-   * Creates a new {@link Project} with the attributes provided in the POST request to /projects.
-   *
-   * @param newProject
-   *   an Project object with required information.
-   *
-   * @return response containing links to the newly created Project
-   *
-   * @throws URISyntaxException
-   *   when the created URI is unable to be parsed
-   */
-  @PostMapping ("/projects")
-  public ResponseEntity<?> createProject(@RequestBody Project newProject) throws URISyntaxException {
-    if(!newProject.getId().trim().matches("^\\p{Alpha}\\p{Alpha}\\d{0,4}+$")){
-      throw new InvalidIDPrefix();
-    }
-    newProject.setId(service.getId(newProject.getId()));
-    Resource<Project> resource = assembler.toResource(service.saveProject(newProject));
+	/**
+	 * Creates a new {@link Project} with the attributes provided in the POST request to /projects.
+	 *
+	 * @param newProject
+	 * 	an Project object with required information.
+	 *
+	 * @return response containing links to the newly created Project
+	 *
+	 * @throws URISyntaxException
+	 * 	when the created URI is unable to be parsed
+	 */
+	@PostMapping ("/projects")
+	public ResponseEntity<?> createProject(@RequestBody final Project newProject) throws URISyntaxException {
+		if (!newProject.getId().trim().matches("^\\p{Alpha}\\p{Alpha}\\d{0,5}+$")) {
+			throw new InvalidIDPrefix();
+		}
+		newProject.setId(this.projectService.getId(newProject.getId()));
+		final Resource<Project> resource = this.projectResourceAssembler.toResource(this.projectService.saveProject(newProject));
 
-    return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
-  }
+		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
+	}
 
-  /**
-   * Updates the attributes for a {@link Project} with the provided id with the attributes provided
-   * in the PUT request to /projects/id.
-   *
-   * @param id
-   *   the unique identifier for the Project to be updated
-   * @param newProject
-   *   the updated Project
-   *
-   * @return response containing a link to the updated Project
-   *
-   * @throws URISyntaxException
-   *   when the created URI is unable to be parsed
-   */
-  @PutMapping ("/projects/{id}")
-  public ResponseEntity<?> updateProject(@PathVariable String id, @RequestBody Project newProject) throws URISyntaxException {
-    Project updatedProject = service.updateProject(id, newProject);
-    Resource<Project> resource = assembler.toResource(updatedProject);
-    return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
-  }
+	/**
+	 * Updates the attributes for a {@link Project} with the provided id with the attributes provided
+	 * in the PUT request to /projects/id.
+	 *
+	 * @param id
+	 * 	the unique identifier for the Project to be updated
+	 * @param newProject
+	 * 	the updated Project
+	 *
+	 * @return response containing a link to the updated Project
+	 *
+	 * @throws URISyntaxException
+	 * 	when the created URI is unable to be parsed
+	 */
+	@PutMapping ("/projects/{id}")
+	public ResponseEntity<?> updateProject(@PathVariable final String id, @RequestBody final Project newProject) throws URISyntaxException {
+		final Project updatedProject = this.projectService.updateProject(id, newProject);
+		final Resource<Project> resource = this.projectResourceAssembler.toResource(updatedProject);
 
-  /**
-   * Sets the requested {@link Project}'s active attribute false, removing it from the list of
-   * active Projects. Responds to the DELETE requests to /projects/id.
-   *
-   * @param id
-   *   the unique identifier for the Project to be set inactive
-   *
-   * @return a response without any content
-   */
-  @DeleteMapping ("/projects/{id}")
-  public ResponseEntity<?> setProjectInactive(@PathVariable String id) {
-    Project project = service.getProjectById(id);
-    project.setActive(false);
-    service.saveProject(project);
+		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
+	}
 
-    return ResponseEntity.noContent().build();
-  }
+	/**
+	 * Sets the requested {@link Project}'s active attribute false, removing it from the list of
+	 * active Projects. Responds to the DELETE requests to /projects/id.
+	 *
+	 * @param id
+	 * 	the unique identifier for the Project to be set inactive
+	 *
+	 * @return a response without any content
+	 */
+	@DeleteMapping ("/projects/{id}")
+	public ResponseEntity<?> setProjectInactive(@PathVariable final String id) {
+		final Project project = this.projectService.getProjectById(id);
+		project.setActive(false);
+		this.projectService.saveProject(project);
 
-  @GetMapping("/user_accounts/{id}/projects")
-  public Resources<Resource<Project>> getProjectsByUserAccount(@PathVariable Long id) {
-    List<Resource<Project>> project = service.getProjectByUserAccount(id).stream().map(assembler::toResource).collect(Collectors.toList());
+		return ResponseEntity.noContent().build();
+	}
 
-    return new Resources<>(project,
-      linkTo(methodOn(ProjectController.class).getActiveProjects()).withSelfRel());
-  }
+	@GetMapping ("/user_accounts/{id}/projects")
+	public Resources<Resource<Project>> getProjectsByUserAccount(@PathVariable final Long id) {
+		final List<Resource<Project>> project = this.projectService.getProjectByUserAccount(id)
+			.stream()
+			.map(this.projectResourceAssembler::toResource)
+			.collect(Collectors.toList());
 
-  @ExceptionHandler({ProjectNotFoundException.class})
-  public ResponseEntity<?> handleExceptions(Exception e){
-    logger.warn("Project Exception: " + e.getClass());
-    return ResponseEntity.status(400).build();
-  }
+		return new Resources<>(project,
+			linkTo(methodOn(ProjectController.class).getActiveProjects()).withSelfRel());
+	}
+
+	@GetMapping ("/projects/{projectId}/evaluate_entries")
+	public Resources<Resource<Entry>> getEntriesToEvaluate(@PathVariable String projectId){
+		final Project project = projectService.getProjectById(projectId);
+		final List<Resource<Entry>> entries = this.entryService.getEntriesToEvaluate(project)
+			.stream()
+			.map(this.entryResourceAssembler::toResource)
+			.collect(Collectors.toList());
+
+		return new Resources<>(entries,
+			linkTo(methodOn(ProjectController.class).getEntriesToEvaluate(projectId)).withSelfRel());
+	}
+
+	@PutMapping("/projects/{projectId}/entries/{entryId}")
+	public ResponseEntity<?> evaluateEntry(@PathVariable final String projectId, @PathVariable final Long entryId, @RequestBody final Status status){
+		if(status != Status.APPROVED && status != Status.REJECTED)
+			return ResponseEntity.badRequest().build();
+		return entryService.evaluateEntry(entryId, status) ? ResponseEntity.accepted().build(): ResponseEntity.badRequest().build();
+	}
+
+	@ExceptionHandler ({ProjectNotFoundException.class})
+	public ResponseEntity<?> handleExceptions(final Exception e) {
+		this.logger.warn("Project Exception: " + e.getClass());
+		return ResponseEntity.status(400).build();
+	}
 }

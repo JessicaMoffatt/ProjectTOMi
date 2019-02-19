@@ -13,32 +13,32 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ReportService {
-  private final ReportRepository reportRepository;
-  private final ProjectService projectService;
-  private final UserAccountService userAccountService;
+	private final ReportRepository reportRepository;
+	private final ProjectService projectService;
+	private final UserAccountService userAccountService;
 
-  @Autowired
-  public ReportService(ReportRepository reportRepository, ProjectService projectService, UserAccountService userAccountService) {
-    this.reportRepository = reportRepository;
-    this.projectService = projectService;
-    this.userAccountService = userAccountService;
-  }
+	@Autowired
+	public ReportService(final ReportRepository reportRepository, final ProjectService projectService, final UserAccountService userAccountService) {
+		this.reportRepository = reportRepository;
+		this.projectService = projectService;
+		this.userAccountService = userAccountService;
+	}
 
-  public List<BillableHoursReportLine> getBillableHoursReport(){
-    return reportRepository.generateBillableHoursReport();
-  }
+	public List<BillableHoursReportLine> getBillableHoursReport() {
+		return this.reportRepository.generateBillableHoursReport();
+	}
 
-  public BudgetReport getBudgetReport(String projectId){
-    Project project = projectService.getProjectById(projectId);
-    return reportRepository.generateBudgetReport(project);
-  }
+	public BudgetReport getBudgetReport(final String projectId) {
+		final Project project = this.projectService.getProjectById(projectId);
+		return this.reportRepository.generateBudgetReport(project);
+	}
 
-  public List<ProductivityReportLine> getProductivityReport(Long userAccountId){
-    UserAccount userAccount = userAccountService.getUserAccount(userAccountId);
-    return reportRepository.generateProductivityReport(userAccount);
-  }
+	public List<ProductivityReportLine> getProductivityReport(final Long userAccountId) {
+		final UserAccount userAccount = this.userAccountService.getUserAccount(userAccountId);
+		return this.reportRepository.generateProductivityReport(userAccount);
+	}
 
-  public List<DataDumpReportLine> getDataDumpReport(){
-    return reportRepository.generateDataDumpReport();
-  }
+	public List<DataDumpReportLine> getDataDumpReport() {
+		return this.reportRepository.generateDataDumpReport();
+	}
 }

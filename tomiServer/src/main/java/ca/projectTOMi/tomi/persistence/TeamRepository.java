@@ -11,13 +11,13 @@ import java.util.List;
  * @version 1
  */
 public interface TeamRepository extends JpaRepository<Team, Long> {
-  /**
-   * Get all {@link Team}s that have the provided active status.
-   *
-   * @param active
-   *   if the {@link Team} is active
-   *
-   * @return List containing all teams with the provided active state
-   */
-  public List<Team> getAllByActiveOrderById(boolean active);
+	/**
+	 * Get all {@link Team}s that have the provided active status.
+	 *
+	 * @param active
+	 * 	if the {@link Team} is active
+	 *
+	 * @return List containing all teams with the provided active state
+	 */
+	List<Team> getAllByActiveOrderById(boolean active);
 }

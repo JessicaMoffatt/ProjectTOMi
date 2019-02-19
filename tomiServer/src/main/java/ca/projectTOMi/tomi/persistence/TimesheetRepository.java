@@ -16,28 +16,28 @@ import org.springframework.data.repository.query.Param;
  * @version 1
  */
 public interface TimesheetRepository extends JpaRepository<Timesheet, Long> {
-  /**
-   * Get all {@link Timesheet}s that have the provided active status.
-   *
-   * @param active
-   *   if the timesheet is active
-   *
-   * @return List containing all accounts with the provided active state
-   */
-  public List<Timesheet> getAllByActiveOrderById(boolean active);
+	/**
+	 * Get all {@link Timesheet}s that have the provided active status.
+	 *
+	 * @param active
+	 * 	if the timesheet is active
+	 *
+	 * @return List containing all accounts with the provided active state
+	 */
+	List<Timesheet> getAllByActiveOrderById(boolean active);
 
 
-  /**
-   * Gets all the {@link Status} of all active {@link ca.projectTOMi.tomi.model.Entry}s associated
-   * with a provided {@link Timesheet}.
-   *
-   * @param timesheetId
-   *   the unique identifier for the timesheet
-   *
-   * @return List of Status for entries on the timesheet
-   */
-  @Query ("SELECT status FROM Entry WHERE timesheet.id = :timesheetId AND active = true ")
-  public List<Status> getEntriesStatusesByTimesheet(@Param ("timesheetId") Long timesheetId);
+	/**
+	 * Gets all the {@link Status} of all active {@link ca.projectTOMi.tomi.model.Entry}s associated
+	 * with a provided {@link Timesheet}.
+	 *
+	 * @param timesheetId
+	 * 	the unique identifier for the timesheet
+	 *
+	 * @return List of Status for entries on the timesheet
+	 */
+	@Query ("SELECT status FROM Entry WHERE timesheet.id = :timesheetId AND active = true ")
+	List<Status> getEntriesStatusesByTimesheet(@Param ("timesheetId") Long timesheetId);
 
-  public List<Timesheet> getAllByActiveTrueAndUserAccountOrderByStartDateDesc(UserAccount userAccount);
+	List<Timesheet> getAllByActiveTrueAndUserAccountOrderByStartDateDesc(UserAccount userAccount);
 }

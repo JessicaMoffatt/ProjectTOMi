@@ -14,66 +14,66 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public final class ClientService {
-  private final ClientRepository repository;
+	private final ClientRepository clientRepository;
 
-  /**
-   * Constructor for the {@link Client} Service.
-   *
-   * @param repository
-   *   Repository responsible for persisting Client instances
-   */
-  public ClientService(ClientRepository repository) {
-    this.repository = repository;
-  }
+	/**
+	 * Constructor for the {@link Client} Service.
+	 *
+	 * @param clientRepository
+	 * 	Repository responsible for persisting Client instances
+	 */
+	public ClientService(final ClientRepository clientRepository) {
+		this.clientRepository = clientRepository;
+	}
 
-  /**
-   * Gets a list of all {@link Client}s that are active.
-   *
-   * @return List containing all Clients that are active
-   */
-  public List<Client> getActiveClients() {
-    return repository.getAllByActiveOrderById(true);
-  }
+	/**
+	 * Gets a list of all {@link Client}s that are active.
+	 *
+	 * @return List containing all Clients that are active
+	 */
+	public List<Client> getActiveClients() {
+		return this.clientRepository.getAllByActiveOrderById(true);
+	}
 
-  /**
-   * Gets a {@link Client} object with the provided id.
-   *
-   * @param id
-   *   the unique identifier for the Client to be found
-   *
-   * @return Client object matching the provided id
-   */
-  public Client getClient(Long id) {
-    return this.repository.findById(id).orElseThrow(() -> new ClientNotFoundException());
-  }
+	/**
+	 * Gets a {@link Client} object with the provided id.
+	 *
+	 * @param id
+	 * 	the unique identifier for the Client to be found
+	 *
+	 * @return Client object matching the provided id
+	 */
+	public Client getClient(final Long id) {
+		return this.clientRepository.findById(id).orElseThrow(ClientNotFoundException::new);
+	}
 
-  /**
-   * Persists the provided {@link Client}.
-   *
-   * @param client
-   *   Client to be persisted
-   *
-   * @return the Client that was persisted
-   */
-  public Client saveClient(Client client) {
-    return repository.save(client);
-  }
+	/**
+	 * Persists the provided {@link Client}.
+	 *
+	 * @param client
+	 * 	Client to be persisted
+	 *
+	 * @return the Client that was persisted
+	 */
+	public Client saveClient(final Client client) {
+		return this.clientRepository.save(client);
+	}
 
-  /**
-   * Updates the {@link Client} with the provided id with the provided attributes.
-   *
-   * @param id
-   *   the unique identifier for the Client to be updated
-   * @param newClient
-   *   Client object containing the updated attributes
-   *
-   * @return Client containing the updated attributes
-   */
-  public Client updateClient(Long id, Client newClient) {
-    return repository.findById(id).map(client -> {
-      client.setActive(newClient.isActive());
-      client.setName(newClient.getName());
-      return repository.save(client);
-    }).orElseThrow(() -> new ClientNotFoundException());
-  }
+	/**
+	 * Updates the {@link Client} with the provided id with the provided attributes.
+	 *
+	 * @param id
+	 * 	the unique identifier for the Client to be updated
+	 * @param newClient
+	 * 	Client object containing the updated attributes
+	 *
+	 * @return Client containing the updated attributes
+	 */
+	public Client updateClient(final Long id, final Client newClient) {
+		return this.clientRepository.findById(id).map(client -> {
+			client.setActive(true);
+			client.setName(newClient.getName());
+			return this.clientRepository.save(client);
+		}).orElseThrow(ClientNotFoundException::new);
+	}
 }
