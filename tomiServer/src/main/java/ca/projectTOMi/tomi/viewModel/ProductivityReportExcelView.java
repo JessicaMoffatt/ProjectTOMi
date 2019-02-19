@@ -18,7 +18,7 @@ public class ProductivityReportExcelView extends AbstractXlsView {
 
   @Override
   protected void buildExcelDocument(Map<String, Object> map, Workbook workbook, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
-    httpServletResponse.setHeader("Content-Disposition", "attachment;filename=\"ProductivityReport.xls\"");
+    httpServletResponse.setHeader("Content-Disposition", "attachment;filename=\"" +  this.report.get(0).getUserAccount().getLastName()+"ProductivityReport.xls\"");
     Sheet sheet = workbook.createSheet("Productivity Report");
     Row header = sheet.createRow(0);
     header.createCell(0).setCellValue("Date");
