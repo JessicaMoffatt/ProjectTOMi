@@ -114,7 +114,7 @@ public final class UserAccount {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj.getClass() != this.getClass()) {
 			return false;
 		} else {

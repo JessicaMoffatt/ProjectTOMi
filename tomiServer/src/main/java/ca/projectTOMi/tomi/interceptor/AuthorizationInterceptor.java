@@ -30,7 +30,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
   private final UserAccountService service;
 
   @Autowired
-  public AuthorizationInterceptor(UserAuthorizationRepository userAuthRepository, ProjectAuthorizationRepository projectAuthRepository, TimesheetAuthorizationRepository timesheetAuthRepository, UserAccountService service) {
+  public AuthorizationInterceptor(final UserAuthorizationRepository userAuthRepository, final ProjectAuthorizationRepository projectAuthRepository, final TimesheetAuthorizationRepository timesheetAuthRepository, final UserAccountService service) {
     this.projectAuthRepository = projectAuthRepository;
     this.timesheetAuthRepository = timesheetAuthRepository;
     this.userAuthRepository = userAuthRepository;
@@ -39,36 +39,36 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
   @Override
   public boolean preHandle(
-    HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    String authToken = request.getHeader("Authorization");
+	  final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
+    final String authToken = request.getHeader("Authorization");
 
     //TODO Remove Hardcoded UserAccount---------------
-    UserAccount user = service.getUserAccount(1L);
+    final UserAccount user = this.service.getUserAccount(1L);
     //TODO -------------------------------------------
 
-    String requestMethod = request.getMethod();
-    String requestURI = request.getRequestURI();
+    final String requestMethod = request.getMethod();
+    final String requestURI = request.getRequestURI();
     String controller = "";
     try {
       controller = ((HandlerMethod) handler).getMethod().getDeclaringClass().toString();
       controller = controller.replace("class ca.projectTOMi.tomi.controller.", "");
-    }catch (ClassCastException e){
+    }catch (final ClassCastException e){
       return true;
     }
     if(controller.matches("TimesheetController|EntryController")) {
-      AuthorizationManager<TimesheetAuthorizationPolicy> authMan;
+      final AuthorizationManager<TimesheetAuthorizationPolicy> authMan;
       authMan = new TimesheetAuthorizationManager(user);
-      authMan.loadUserPolicies(timesheetAuthRepository.getAllByRequestingUser(user));
+      authMan.loadUserPolicies(this.timesheetAuthRepository.getAllByRequestingUser(user));
       request.setAttribute("authMan", authMan);
     }else if(controller.matches("ProjectController|ExpenseController")) {
-      AuthorizationManager<ProjectAuthorizationPolicy> authMan;
+      final AuthorizationManager<ProjectAuthorizationPolicy> authMan;
       authMan = new ProjectAuthorizationManager(user);
-      authMan.loadUserPolicies(projectAuthRepository.getAllByRequestingUser(user));
+      authMan.loadUserPolicies(this.projectAuthRepository.getAllByRequestingUser(user));
       request.setAttribute("authMan", authMan);
     }else{
-      AuthorizationManager<UserAuthorizationPolicy> authMan;
+      final AuthorizationManager<UserAuthorizationPolicy> authMan;
       authMan = new UserAuthorizationManager(user);
-      authMan.loadUserPolicies(userAuthRepository.getAllByRequestingUser(user));
+      authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
       request.setAttribute("authMan", authMan);
     }
     return ((AuthorizationManager)request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
@@ -76,12 +76,12 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
   @Override
   public void postHandle(
-    HttpServletRequest request, HttpServletResponse response, Object handler,
-    ModelAndView modelAndView) throws Exception {
+	  final HttpServletRequest request, final HttpServletResponse response, final Object handler,
+	  final ModelAndView modelAndView) throws Exception {
   }
 
   @Override
-  public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
-                              Object handler, Exception exception) throws Exception {
+  public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response,
+                              final Object handler, final Exception exception) throws Exception {
   }
 }

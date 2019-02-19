@@ -6,5 +6,5 @@ import ca.projectTOMi.tomi.model.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TimesheetAuthorizationRepository extends JpaRepository<TimesheetAuthorizationPolicy, Long> {
-  public List<TimesheetAuthorizationPolicy> getAllByRequestingUser(UserAccount userAccount);
+  List<TimesheetAuthorizationPolicy> getAllByRequestingUser(UserAccount userAccount);
 }

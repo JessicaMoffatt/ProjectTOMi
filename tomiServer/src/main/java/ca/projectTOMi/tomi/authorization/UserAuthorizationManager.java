@@ -8,22 +8,22 @@ public final class UserAuthorizationManager implements AuthorizationManager<User
   private List<UserAuthorizationPolicy> policies;
   private final UserAccount user;
 
-  public UserAuthorizationManager(UserAccount user){
+  public UserAuthorizationManager(final UserAccount user){
     this.user = user;
   }
 
   @Override
-  public boolean requestAuthorization(String URI, String request) {
+  public boolean requestAuthorization(final String URI, final String request) {
     return true;
   }
 
   @Override
-  public boolean linkAuthorization(String URI, String request) {
+  public boolean linkAuthorization(final String URI, final String request) {
     return false;
   }
 
   @Override
-  public void loadUserPolicies(List<UserAuthorizationPolicy> policies) {
+  public void loadUserPolicies(final List<UserAuthorizationPolicy> policies) {
     this.policies = policies;
   }
 }

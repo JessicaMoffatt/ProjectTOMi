@@ -90,7 +90,7 @@ public final class Project {
 	private boolean active;
 
   @JsonProperty
-  public void setProjectManagerId(Long id){
+  public void setProjectManagerId(final Long id){
     UserAccount projectManager = null;
     if(id != -1){
       projectManager = new UserAccount();
@@ -100,7 +100,7 @@ public final class Project {
   }
 
   @Override
-  public boolean equals(Object obj){
+  public boolean equals(final Object obj){
     if(obj.getClass() != this.getClass()){
       return false;
     }else{

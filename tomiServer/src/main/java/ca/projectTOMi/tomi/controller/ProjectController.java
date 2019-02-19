@@ -161,8 +161,8 @@ public class ProjectController {
 	}
 
 	@GetMapping ("/projects/{projectId}/evaluate_entries")
-	public Resources<Resource<Entry>> getEntriesToEvaluate(@PathVariable String projectId){
-		final Project project = projectService.getProjectById(projectId);
+	public Resources<Resource<Entry>> getEntriesToEvaluate(@PathVariable final String projectId){
+		final Project project = this.projectService.getProjectById(projectId);
 		final List<Resource<Entry>> entries = this.entryService.getEntriesToEvaluate(project)
 			.stream()
 			.map(this.entryResourceAssembler::toResource)
@@ -176,7 +176,7 @@ public class ProjectController {
 	public ResponseEntity<?> evaluateEntry(@PathVariable final String projectId, @PathVariable final Long entryId, @RequestBody final Status status){
 		if(status != Status.APPROVED && status != Status.REJECTED)
 			return ResponseEntity.badRequest().build();
-		return entryService.evaluateEntry(entryId, status) ? ResponseEntity.accepted().build(): ResponseEntity.badRequest().build();
+		return this.entryService.evaluateEntry(entryId, status) ? ResponseEntity.accepted().build(): ResponseEntity.badRequest().build();
 	}
 
 	@ExceptionHandler ({ProjectNotFoundException.class})

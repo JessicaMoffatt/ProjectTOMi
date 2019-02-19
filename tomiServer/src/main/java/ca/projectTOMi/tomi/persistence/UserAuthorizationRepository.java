@@ -6,5 +6,5 @@ import ca.projectTOMi.tomi.model.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserAuthorizationRepository extends JpaRepository<UserAuthorizationPolicy, Long> {
-  public List<UserAuthorizationPolicy> getAllByRequestingUser(UserAccount userAccount);
+  List<UserAuthorizationPolicy> getAllByRequestingUser(UserAccount userAccount);
 }

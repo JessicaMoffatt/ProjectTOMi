@@ -9,32 +9,32 @@ public final class TimesheetAuthorizationManager implements AuthorizationManager
   private List<TimesheetAuthorizationPolicy> policies;
   private final UserAccount user;
 
-  public TimesheetAuthorizationManager(UserAccount user){
+  public TimesheetAuthorizationManager(final UserAccount user){
     this.user = user;
   }
 
   @Override
-  public boolean requestAuthorization(String URI, String request) {
+  public boolean requestAuthorization(final String URI, final String request) {
     return true;
   }
 
   @Override
-  public boolean linkAuthorization(String URI, String request) {
+  public boolean linkAuthorization(final String URI, final String request) {
     return false;
   }
 
   @Override
-  public void loadUserPolicies(List<TimesheetAuthorizationPolicy> policies) {
+  public void loadUserPolicies(final List<TimesheetAuthorizationPolicy> policies) {
     this.policies = policies;
   }
 
   @Override
-  public List<Entry> filterList(List<Entry> list) {
+  public List<Entry> filterList(final List<Entry> list) {
     return null;
   }
 
   @Override
-  public Entry filterFields(Entry toFilter) {
+  public Entry filterFields(final Entry toFilter) {
     return null;
   }
 }

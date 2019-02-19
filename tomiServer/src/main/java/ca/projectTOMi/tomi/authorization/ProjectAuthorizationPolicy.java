@@ -49,11 +49,11 @@ public class ProjectAuthorizationPolicy {
   }
 
   @Override
-  public boolean equals(Object obj){
+  public boolean equals(final Object obj){
     if(obj.getClass() != ProjectAuthorizationPolicy.class){
       return false;
     }else {
-      ProjectAuthorizationPolicy policyB = (ProjectAuthorizationPolicy) obj;
+      final ProjectAuthorizationPolicy policyB = (ProjectAuthorizationPolicy) obj;
       boolean equal = true;
       equal = equal && this.permission.equals(policyB.getPermission());
       equal = equal && this.project.equals(policyB.getProject());

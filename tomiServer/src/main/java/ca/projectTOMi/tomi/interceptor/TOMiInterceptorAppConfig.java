@@ -11,12 +11,12 @@ public class TOMiInterceptorAppConfig implements WebMvcConfigurer {
   private final AuthorizationInterceptor authorizationInterceptor;
 
   @Autowired
-  public TOMiInterceptorAppConfig(AuthorizationInterceptor authorizationInterceptor) {
+  public TOMiInterceptorAppConfig(final AuthorizationInterceptor authorizationInterceptor) {
     this.authorizationInterceptor = authorizationInterceptor;
   }
 
   @Override
-  public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(authorizationInterceptor);
+  public void addInterceptors(final InterceptorRegistry registry) {
+    registry.addInterceptor(this.authorizationInterceptor);
   }
 }

@@ -10,7 +10,7 @@ public interface AuthorizationFilter<E> {
    *
    * @return List of filtered Items
    */
-  public List<E> filterList(List<E> list);
+  List<E> filterList(List<E> list);
 
   /**
    * Filters fields from an object E that a UserAccount does not have permission to view.
@@ -20,5 +20,5 @@ public interface AuthorizationFilter<E> {
    *
    * @return filtered item E
    */
-  public E filterFields(E toFilter);
+  E filterFields(E toFilter);
 }
