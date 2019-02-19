@@ -25,7 +25,6 @@ import java.util.List;
  */
 @Service
 public class EntryService {
-	private final ProjectService projectService;
 	private final EntryRepository entryRepository;
 	private final TimesheetRepository timesheetRepository;
 
@@ -35,8 +34,7 @@ public class EntryService {
 	 * @param entryRepository
 	 * 	Repository responsible for persisting {@link Entry} instances.
 	 */
-	public EntryService(final ProjectService projectService, final EntryRepository entryRepository, final TimesheetRepository timesheetRepository) {
-		this.projectService = projectService;
+	public EntryService(final EntryRepository entryRepository, final TimesheetRepository timesheetRepository) {
 		this.entryRepository = entryRepository;
 		this.timesheetRepository = timesheetRepository;
 	}
@@ -325,8 +323,7 @@ public class EntryService {
 		return this.timesheetRepository.getAllByActiveTrueAndUserAccountOrderByStartDateDesc(userAccount);
 	}
 
-	public List<Entry> getEntriesToEvaluate(final String projectId) {
-		Project project = projectService.getProjectById(projectId);
+	public List<Entry> getEntriesToEvaluate(final Project project) {
 		return this.entryRepository.getAllByActiveTrueAndProjectAndStatus(project, Status.SUBMITTED);
 	}
 }

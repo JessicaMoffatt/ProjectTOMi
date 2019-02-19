@@ -161,7 +161,8 @@ public class ProjectController {
 
 	@GetMapping ("/projects/{projectId}/evaluate_entries")
 	public Resources<Resource<Entry>> getEntriesToEvaluate(@PathVariable String projectId){
-		final List<Resource<Entry>> entries = this.entryService.getEntriesToEvaluate(projectId)
+		final Project project = projectService.getProjectById(projectId);
+		final List<Resource<Entry>> entries = this.entryService.getEntriesToEvaluate(project)
 			.stream()
 			.map(this.entryResourceAssembler::toResource)
 			.collect(Collectors.toList());
