@@ -6,14 +6,14 @@
   <h2>Users</h2>
   <div [ngClass]="'user_account'">
     <ul>
-      <ul *ngFor="let userAccount of userAccountService.userAccounts | async | orderBy:'lastName'"
-          (click)="selectUserAccount(userAccount)"
+      <ul (click)="selectUserAccount(userAccount)"
+          *ngFor="let userAccount of userAccountService.userAccounts | async | orderBy:'lastName'"
           style="list-style: none">
         <ng-container>
-          <app-view-user [userAccount]="userAccount" (deleteRequested)="delete($event)"
-                         (editRequested)="editUserAccount($event)"></app-view-user>
-          <app-edit-user [userAccount]="userAccount" (cancelRequested)="cancel($event)"
-          (saveRequested)="save($event)"></app-edit-user>
+          <app-view-user id="view_user_account{{userAccount.id}}" #viewUserComponent (deleteRequested)="delete($event)" (editRequested)="editUserAccount($event)"
+                         [userAccount]="userAccount"></app-view-user>
+          <app-edit-user id="edit_user_account{{userAccount.id}}" class="edit_user_hidden" #editUserComponent (cancelRequested)="cancel($event)" (saveRequested)="save($event)"
+                         [userAccount]="userAccount"></app-edit-user>
         </ng-container>
       </ul>
     </ul>

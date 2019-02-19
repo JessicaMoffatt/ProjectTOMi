@@ -1,7 +1,8 @@
-import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
+import set = Reflect.set;
 
 @Component({
   selector: 'app-user-account',
@@ -12,6 +13,10 @@ export class UserAccountComponent implements OnInit {
 
   @ViewChild('componentHolder', {read: ViewContainerRef})
   entry_container: ViewContainerRef;
+
+  @ViewChild('viewUserComponent') viewUserComponent : ElementRef;
+
+  @ViewChild('editUserComponent') editUserComponent : ElementRef;
 
   constructor(public userAccountService: UserAccountService, public teamService: TeamService) { }
 
@@ -40,7 +45,8 @@ export class UserAccountComponent implements OnInit {
    * @param userAccount the UserAccount whose changes are to be canceled.
    */
   cancel(userAccount: UserAccount) {
-    this.userAccountService.cancel(userAccount);
+    document.getElementById('view_user_account' + userAccount.id).className = "view_user_visible";
+    document.getElementById('edit_user_account' + userAccount.id).className = "edit_user_hidden";
   }
 
   /**
@@ -48,7 +54,8 @@ export class UserAccountComponent implements OnInit {
    * @param userAccount
    */
   editUserAccount(userAccount) {
-    console.log(userAccount.firstName + "clicked edit");
+    document.getElementById('view_user_account' + userAccount.id).className = "view_user_hidden";
+    document.getElementById('edit_user_account' + userAccount.id).className = "edit_user_visible";
   }
 
   /**

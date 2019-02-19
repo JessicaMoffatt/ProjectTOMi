@@ -26,7 +26,16 @@ export class EditUserComponent implements OnInit {
   @ViewChild('editUserFirstName') editUserFirstName;
 
   /** The input field for the UserAccount's last name.*/
-  @ViewChild('editUserFirstName') editUserLastName;
+  @ViewChild('editUserLastName') editUserLastName;
+
+  /** The input field for the UserAccount's email address.*/
+  @ViewChild('editUserEmail') editUserEmail;
+
+  /** The input field for the UserAccount's salaried rate.*/
+  @ViewChild('editUserSalariedRate') editUserSalariedRate;
+
+  /** The select field for the UserAccount's team id.*/
+  @ViewChild('editUserTeamId') editUserTeamId;
 
   constructor(public teamService: TeamService) { }
 
@@ -40,9 +49,9 @@ export class EditUserComponent implements OnInit {
   save():void {
     this.userAccount.firstName = this.editUserFirstName.nativeElement.value;
     this.userAccount.lastName = this.editUserLastName.nativeElement.value;
-    this.userAccount.email = (<HTMLInputElement>document.getElementById("edit_user_account_email")).value;
-    this.userAccount.salariedRate = Number((<HTMLInputElement>document.getElementById("edit_user_account_salary")).value);
-    this.userAccount.teamId = Number((<HTMLInputElement>document.getElementById("edit_user_account_team")).value);
+    this.userAccount.email = this.editUserEmail.nativeElement.value;
+    this.userAccount.salariedRate = Number (this.editUserSalariedRate.nativeElement.value);
+    this.userAccount.teamId = this.editUserTeamId.nativeElement.value;
     this.saveRequested.emit(this.userAccount);
 
     let goodUserAccount = true;
