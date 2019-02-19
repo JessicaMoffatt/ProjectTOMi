@@ -55,7 +55,7 @@ public final class TaskService {
      * @return List containing all Tasks that are active.
      */
     public List<Task> getActiveTasks() {
-        return repository.getAllByActive(true).stream().collect(Collectors.toList());
+        return repository.getAllByActiveOrderById(true).stream().collect(Collectors.toList());
     }
 
     /**
@@ -63,7 +63,7 @@ public final class TaskService {
      * @return List containing all Tasks that are active and billable.
      */
     public List<Task> getActiveAndBillable() {
-        return repository.getAllByBillableAndActive(true, true).stream().collect(Collectors.toList());
+        return repository.getAllByBillableAndActiveOrderById(true, true).stream().collect(Collectors.toList());
     }
 
     /**
@@ -71,7 +71,7 @@ public final class TaskService {
      * @return List containing all Tasks that are active and non-billable.
      */
     public List<Task> getActiveAndNonBillable() {
-        return repository.getAllByBillableAndActive(false, true).stream().collect(Collectors.toList());
+        return repository.getAllByBillableAndActiveOrderById(false, true).stream().collect(Collectors.toList());
     }
 
     /**

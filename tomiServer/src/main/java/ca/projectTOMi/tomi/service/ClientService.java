@@ -32,7 +32,7 @@ public final class ClientService {
    * @return List containing all Clients that are active
    */
   public List<Client> getActiveClients() {
-    return repository.getAllByActive(true);
+    return repository.getAllByActiveOrderById(true);
   }
 
   /**
