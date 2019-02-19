@@ -8,6 +8,7 @@ import java.util.Locale;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.Team;
+import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.UserAccountRepository;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,9 +24,16 @@ import org.springframework.stereotype.Service;
 @Service
 public final class UserAccountService {
 
-    @Autowired private UserAccountRepository repository;
-    @Autowired private TeamService teamService;
-    @Autowired private TimesheetService timesheetService;
+    private final UserAccountRepository repository;
+    private final TeamService teamService;
+    private final TimesheetService timesheetService;
+
+  @Autowired
+  public UserAccountService(UserAccountRepository repository, TeamService teamService, TimesheetService timesheetService) {
+    this.repository = repository;
+    this.teamService = teamService;
+    this.timesheetService = timesheetService;
+  }
 
   /**
    * Gets a {@link UserAccount} object with the provided id.
@@ -176,6 +184,11 @@ public final class UserAccountService {
   public List<UserAccount> getUnassignedUserAccounts() {
     List<UserAccount> unassignedUserAccounts = repository.getAllByActiveTrueAndTeamIsNullOrderById();
     return unassignedUserAccounts;
+  }
+
+  public List<Timesheet> getTimesheetsByUserAccount(Long userAccountId){
+    UserAccount userAccount = this.getUserAccount(userAccountId);
+    return timesheetService.getTimesheetsByUserAccount(userAccount);
   }
 }
 

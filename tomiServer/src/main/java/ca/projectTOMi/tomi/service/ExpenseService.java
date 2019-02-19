@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public final class ExpenseService {
-  private ExpenseRepository repository;
+  private final ExpenseRepository repository;
 
   /**
    * Constructor for the {@link Expense} Service.

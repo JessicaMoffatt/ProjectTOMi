@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class EntryService {
-    private EntryRepository repository;
+    private final EntryRepository repository;
 
     /**
      * Constructor for the EntryService component.
@@ -45,7 +45,6 @@ public class EntryService {
      */
     public Entry updateEntry(Long id, Entry updatedEntry) {
         Entry entry = repository.findById(id).orElseThrow(() -> new EntryNotFoundException());
-
         switch (entry.getStatus()) {
             case APPROVED:
                 throw new IllegalEntryStateException();

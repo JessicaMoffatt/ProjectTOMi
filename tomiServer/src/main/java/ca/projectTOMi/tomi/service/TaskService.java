@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public final class TaskService {
-    private TaskRepository repository;
+    private final TaskRepository repository;
 
     /**
      * Constructor for the TaskService component.

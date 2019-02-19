@@ -1,15 +1,20 @@
 package ca.projectTOMi.tomi.controller;
 
 import ca.projectTOMi.tomi.assembler.EntryResourceAssembler;
+import ca.projectTOMi.tomi.exception.EntryNotFoundException;
+import ca.projectTOMi.tomi.exception.IllegalEntryStateException;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.service.EntryService;
 import ca.projectTOMi.tomi.service.TimesheetService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,20 +39,16 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class EntryController {
-    EntryResourceAssembler assembler;
-    EntryService service;
-    @Autowired
-    TimesheetService timesheetService;
+    private final EntryResourceAssembler assembler;
+    private final EntryService service;
+    private final TimesheetService timesheetService;
+    private Logger logger = LoggerFactory.getLogger("Entry Controller");
 
-    /**
-     * Constructor for this EntryController.
-     *
-     * @param assembler Converts {@Link Entry} objects into resources.
-     * @param service   Provides services required for Entry objects.
-     */
-    public EntryController(EntryResourceAssembler assembler, EntryService service) {
+    @Autowired
+    public EntryController(EntryResourceAssembler assembler, EntryService service, TimesheetService timesheetService) {
         this.assembler = assembler;
         this.service = service;
+        this.timesheetService = timesheetService;
     }
 
     /**
@@ -131,5 +132,11 @@ public class EntryController {
         Resource<Entry> resource = assembler.toResource(service.copyEntry(id));
 
         return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
+    }
+
+    @ExceptionHandler({EntryNotFoundException.class, IllegalEntryStateException.class})
+    public ResponseEntity<?> handleExceptions(Exception e){
+        logger.warn("Entry Exception: " + e.getClass());
+        return ResponseEntity.status(400).build();
     }
 }

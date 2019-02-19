@@ -8,21 +8,27 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.TeamResourceAssembler;
+import ca.projectTOMi.tomi.exception.TeamNotFoundException;
 import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.service.TeamService;
 import ca.projectTOMi.tomi.service.UserAccountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -35,9 +41,17 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin (origins = "http://localhost:4200")
 public class TeamController {
 
-  @Autowired TeamResourceAssembler assembler;
-  @Autowired TeamService service;
-  @Autowired UserAccountService userAccountService;
+  private final TeamResourceAssembler assembler;
+  private final TeamService service;
+  private final UserAccountService userAccountService;
+  private final Logger logger = LoggerFactory.getLogger("Team Controller");
+
+  @Autowired
+  public TeamController(TeamResourceAssembler assembler, TeamService service, UserAccountService userAccountService) {
+    this.assembler = assembler;
+    this.service = service;
+    this.userAccountService = userAccountService;
+  }
 
   /**
    * Returns a collection of all active teams the source of a GET request to /teams.
@@ -45,11 +59,12 @@ public class TeamController {
    * @return Collection of resources representing all active teams
    */
   @GetMapping ("/teams")
-  public Resources<Resource<Team>> getActiveTeams() {
+  public Resources<Resource<Team>> getActiveTeams(@RequestHeader HttpHeaders head) {
+    System.out.println(head.get("authorization"));
     List<Resource<Team>> team = service.getActiveTeams().stream().map(assembler::toResource).collect(Collectors.toList());
 
     return new Resources<>(team,
-      linkTo(methodOn(TeamController.class).getActiveTeams()).withSelfRel());
+      linkTo(methodOn(TeamController.class).getActiveTeams(null)).withSelfRel());
   }
 
   /**
@@ -116,5 +131,11 @@ public class TeamController {
     team.setTeamLead(null);
     service.saveTeam(team);
     return ResponseEntity.noContent().build();
+  }
+
+  @ExceptionHandler({TeamNotFoundException.class})
+  public ResponseEntity<?> handleExceptions(Exception e){
+    logger.warn("Team Exception: " + e.getClass());
+    return ResponseEntity.status(400).build();
   }
 }
