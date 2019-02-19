@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -90,6 +91,15 @@ public final class UserAccount {
    */
   @NotNull
   private boolean active;
+
+  @ColumnDefault("false")
+  private boolean programDirector;
+
+  @ColumnDefault("false")
+  private boolean admin;
+
+  @JsonIgnore
+  private String googleId;
 
   @JsonProperty
   public void setTeamId(Long id){

@@ -38,13 +38,13 @@ public final class TimesheetService {
    * @return List containing all Timesheet that are active
    */
   public List<Timesheet> getActiveTimesheets() {
-    return repository.getAllByActive(true);
+    return repository.getAllByActiveOrderById(true);
   }
 
 
   public List<Entry> getEntriesByTimesheet(Long timesheeetId){
     Timesheet timesheet = repository.findById(timesheeetId).orElseThrow(TimesheetNotFoundException::new);
-    return  entryRepository.getAllByActiveTrueAndTimesheet(timesheet);
+    return  entryRepository.getAllByActiveTrueAndTimesheetOrderById(timesheet);
   }
 
   /**

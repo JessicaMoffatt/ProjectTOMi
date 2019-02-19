@@ -55,7 +55,7 @@ public final class TaskService {
      * @return List containing all Tasks that are active.
      */
     public List<Task> getActiveTasks() {
-        return repository.getAllByActive(true).stream().collect(Collectors.toList());
+        return repository.getAllByActiveOrderById(true).stream().collect(Collectors.toList());
     }
 
     /**
@@ -63,7 +63,7 @@ public final class TaskService {
      * @return List containing all Tasks that are active and billable.
      */
     public List<Task> getActiveAndBillable() {
-        return repository.getAllByBillableAndActive(true, true).stream().collect(Collectors.toList());
+        return repository.getAllByBillableAndActiveOrderById(true, true).stream().collect(Collectors.toList());
     }
 
     /**
@@ -71,7 +71,7 @@ public final class TaskService {
      * @return List containing all Tasks that are active and non-billable.
      */
     public List<Task> getActiveAndNonBillable() {
-        return repository.getAllByBillableAndActive(false, true).stream().collect(Collectors.toList());
+        return repository.getAllByBillableAndActiveOrderById(false, true).stream().collect(Collectors.toList());
     }
 
     /**
@@ -79,5 +79,16 @@ public final class TaskService {
      * @param task Task to be persisted.
      * @return Task that was persisted.
      */
-    public Task saveTask(Task task) { return repository.save(task); }
+    public Task createTask(Task task) {
+        Task taskToSave = repository.findByName(task.getName());
+        taskToSave = taskToSave == null ? new Task() : taskToSave;
+        taskToSave.setActive(true);
+        taskToSave.setBillable(task.isBillable());
+        taskToSave.setName(task.getName());
+        return repository.save(taskToSave);
+    }
+
+    public Task saveTask(Task task){
+        return repository.save(task);
+    }
 }

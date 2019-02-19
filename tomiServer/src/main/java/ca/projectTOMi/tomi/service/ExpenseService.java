@@ -32,7 +32,7 @@ public final class ExpenseService {
    * @return List containing all Expense that are active
    */
   public List<Expense> getActiveExpenses() {
-    return repository.getAllByActive(true);
+    return repository.getAllByActiveOrderById(true);
   }
 
   /**
