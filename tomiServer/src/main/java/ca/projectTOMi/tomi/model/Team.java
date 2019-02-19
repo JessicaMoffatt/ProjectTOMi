@@ -73,7 +73,17 @@ public final class Team {
 		this.setTeamLead(userAccount);
 	}
 
+	@Override
 	public int hashCode() {
 		return this.id.intValue();
+	}
+
+	@Override
+	public boolean equals(Object obj){
+		if(obj.getClass() != this.getClass()){
+			return false;
+		}else{
+			return this.getId().equals(((Team)obj).getId());
+		}
 	}
 }
