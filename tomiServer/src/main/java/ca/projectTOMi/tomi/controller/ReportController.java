@@ -19,53 +19,53 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ReportController {
-  private final Logger logger = LoggerFactory.getLogger("Report Controller");
-  private final ReportService reportService;
+public final class ReportController {
+	private final Logger logger = LoggerFactory.getLogger("Report Controller");
+	private final ReportService reportService;
 
-  @Autowired
-  public ReportController(ReportService reportService) {
-    this.reportService = reportService;
-  }
+	@Autowired
+	public ReportController(final ReportService reportService) {
+		this.reportService = reportService;
+	}
 
-  @GetMapping("/billable_hours_report")
-  public List<BillableHoursReportLine> getBillableHoursReport(){
-    return reportService.getBillableHoursReport();
-  }
+	@GetMapping ("/billable_hours_report")
+	public List<BillableHoursReportLine> getBillableHoursReport() {
+		return this.reportService.getBillableHoursReport();
+	}
 
-  @GetMapping("/billable_hours_report/xls")
-  public BillableHoursReportExcelView getBillableHoursReportExcel(){
-    return new BillableHoursReportExcelView(reportService.getBillableHoursReport());
-  }
+	@GetMapping ("/billable_hours_report/xls")
+	public BillableHoursReportExcelView getBillableHoursReportExcel() {
+		return new BillableHoursReportExcelView(this.reportService.getBillableHoursReport());
+	}
 
-  @GetMapping("/projects/{id}/budget_report")
-  public BudgetReport getBudgetReport(@PathVariable String id){
-    return reportService.getBudgetReport(id);
-  }
+	@GetMapping ("/projects/{id}/budget_report")
+	public BudgetReport getBudgetReport(@PathVariable final String id) {
+		return this.reportService.getBudgetReport(id);
+	}
 
-  @GetMapping("/user_accounts/{id}/productivity_report")
-  public List<ProductivityReportLine> getProductivityReport(@PathVariable Long id){
-    return reportService.getProductivityReport(id);
-  }
+	@GetMapping ("/user_accounts/{id}/productivity_report")
+	public List<ProductivityReportLine> getProductivityReport(@PathVariable final Long id) {
+		return this.reportService.getProductivityReport(id);
+	}
 
-  @GetMapping("/user_accounts/{id}/productivity_report/xls")
-  public ProductivityReportExcelView getProductivityReportExcel(@PathVariable Long id){
-    return new ProductivityReportExcelView(reportService.getProductivityReport(id));
-  }
+	@GetMapping ("/user_accounts/{id}/productivity_report/xls")
+	public ProductivityReportExcelView getProductivityReportExcel(@PathVariable final Long id) {
+		return new ProductivityReportExcelView(this.reportService.getProductivityReport(id));
+	}
 
-  @GetMapping("/data_dump_report")
-  public List<DataDumpReportLine> getDataDumpReport(){
-    return reportService.getDataDumpReport();
-  }
+	@GetMapping ("/data_dump_report")
+	public List<DataDumpReportLine> getDataDumpReport() {
+		return this.reportService.getDataDumpReport();
+	}
 
-  @GetMapping("/data_dump_report/xls")
-  public DataDumpReportExcelView getDataDumpReportExcel(){
-    return new DataDumpReportExcelView(reportService.getDataDumpReport());
-  }
+	@GetMapping ("/data_dump_report/xls")
+	public DataDumpReportExcelView getDataDumpReportExcel() {
+		return new DataDumpReportExcelView(this.reportService.getDataDumpReport());
+	}
 
-  @ExceptionHandler({Exception.class})
-  public ResponseEntity<?> handleExceptions(Exception e){
-    logger.warn("Report Exception: " + e.getClass());
-    return ResponseEntity.status(400).build();
-  }
+	@ExceptionHandler ({Exception.class})
+	public ResponseEntity<?> handleExceptions(final Exception e) {
+		this.logger.warn("Report Exception: " + e.getClass());
+		return ResponseEntity.status(400).build();
+	}
 }
