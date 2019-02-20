@@ -91,7 +91,7 @@ export class TeamMemberTimesheetService {
     if (currentIndex < this.timesheetService.timesheets.length -1) {
       let newIndex: number = currentIndex + 1;
       this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() => {
-          this.navigateToTimesheet();
+        this.displayTimesheet();
         }
       );
     }
@@ -103,14 +103,21 @@ export class TeamMemberTimesheetService {
     if (currentIndex > 0) {
       let newIndex: number = currentIndex - 1;
       this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() => {
-          this.navigateToTimesheet();
+          this.displayTimesheet();
         }
       );
     }
   }
 
-  navigateToTimesheet() {
-    this.router.navigateByUrl('/', {skipLocationChange: true}).finally(() =>
-      this.router.navigate(["/timesheetPanel"]));
+  displaySpecifiedTimesheet(index:number){
+    let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
+    let newIndex: number = currentIndex + index;
+
+    if (newIndex < this.timesheetService.timesheets.length) {
+      this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() => {
+          this.displayTimesheet();
+        }
+      );
+    }
   }
 }

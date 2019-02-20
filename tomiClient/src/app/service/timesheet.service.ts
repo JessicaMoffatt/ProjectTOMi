@@ -100,7 +100,6 @@ export class TimesheetService {
     return await this.getAllTimesheets(userId).then((response) => {
       return response.toPromise().then((data)=>{
         this.timesheets = data;
-        // this.currentTimesheetIndex = 0;
 
         this.setCurrentDate();
         this.setCurrentStatus().then();

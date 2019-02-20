@@ -13,7 +13,8 @@
   <span [ngClass]="['arrow', 'rounded-circle','back']" (click)="teamMemberTimesheetService.displayPrevTimesheet()">
   </span>
         <span [ngClass]="'week_title'">Week of {{timesheetService.currentDate}}</span>
-        <span [ngClass]="['arrow', 'rounded-circle','forward']" (click)="teamMemberTimesheetService.displayNextTimesheet()">
+        <span [ngClass]="['arrow', 'rounded-circle','forward']"
+              (click)="teamMemberTimesheetService.displayNextTimesheet()">
   </span>
         <app-date-picker [parent]="this"></app-date-picker>
         <div [ngClass]="'container'">

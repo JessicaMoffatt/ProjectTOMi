@@ -37,6 +37,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DatePickerComponent } from './component/extra/date-picker/date-picker.component';
 import { TeamMemberTimesheetComponent } from './component/panel/team-member-timesheet/team-member-timesheet.component';
 import { TeamMemberSidebarComponent } from './component/sidebar/team-member-sidebar/team-member-sidebar.component';
+import { ProjectEntriesComponent } from './component/panel/project-entries/project-entries.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { TeamMemberSidebarComponent } from './component/sidebar/team-member-side
     SubmitTimesheetModalComponent,
     DatePickerComponent,
     TeamMemberTimesheetComponent,
-    TeamMemberSidebarComponent
+    TeamMemberSidebarComponent,
+    ProjectEntriesComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,33 @@
+2019-02-19 16:23:13.366  INFO 3872 --- [main] ca.projectTOMi.tomi.TomiApplication      : Starting TomiApplication on elf7it218917 with PID 3872 (C:\Users\756732\Documents\GitHub\ProjectTOMi\tomiServer\target\classes started by 756732 in C:\Users\756732\Documents\GitHub\ProjectTOMi)
+2019-02-19 16:23:13.366  INFO 3872 --- [main] ca.projectTOMi.tomi.TomiApplication      : No active profile set, falling back to default profiles: default
+2019-02-19 16:23:14.565  INFO 3872 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-02-19 16:23:14.706  INFO 3872 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 141ms. Found 9 repository interfaces.
+2019-02-19 16:23:15.123  INFO 3872 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$e67d4d65] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-02-19 16:23:15.154  INFO 3872 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$65fd9a97] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-02-19 16:23:15.420  INFO 3872 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-02-19 16:23:15.435  INFO 3872 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-02-19 16:23:15.435  INFO 3872 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/9.0.13
+2019-02-19 16:23:15.451  INFO 3872 --- [main] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk1.8.0_144\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Python27\;C:\Python27\Scripts;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Toshiba\Bluetooth Toshiba Stack\sys\;C:\Program Files (x86)\Toshiba\Bluetooth Toshiba Stack\sys\x64\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Users\756732\AppData\Local\Microsoft\WindowsApps;C:\Users\756732\AppData\Local\GitHubDesktop\bin;C:\Program Files\JetBrains\IntelliJ IDEA 2018.3.2\bin;;C:\Users\756732\AppData\Roaming\npm;C:\Users\756732\AppData\Local\Programs\Microsoft VS Code\bin;.]
+2019-02-19 16:23:15.529  INFO 3872 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-02-19 16:23:15.529  INFO 3872 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2101 ms
+2019-02-19 16:23:15.654  INFO 3872 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-02-19 16:23:15.717  INFO 3872 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-02-19 16:23:15.778  INFO 3872 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-02-19 16:23:15.948  INFO 3872 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.7.Final}
+2019-02-19 16:23:15.948  INFO 3872 --- [main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2019-02-19 16:23:16.058  INFO 3872 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-02-19 16:23:16.207  INFO 3872 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2019-02-19 16:23:16.301  INFO 3872 --- [main] o.h.e.j.e.i.LobCreatorBuilderImpl        : HHH000421: Disabling contextual LOB creation as hibernate.jdbc.lob.non_contextual_creation is true
+2019-02-19 16:23:16.316  INFO 3872 --- [main] org.hibernate.type.BasicTypeRegistry     : HHH000270: Type registration [java.util.UUID] overrides previous : org.hibernate.type.UUIDBinaryType@4832f03b
+2019-02-19 16:23:16.901  INFO 3872 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-02-19 16:23:17.223  INFO 3872 --- [main] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+2019-02-19 16:23:17.582  INFO 3872 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-02-19 16:23:17.614  WARN 3872 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-02-19 16:23:17.776  INFO 3872 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2019-02-19 16:23:17.838  INFO 3872 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2019-02-19 16:23:17.838  INFO 3872 --- [main] ca.projectTOMi.tomi.TomiApplication      : Started TomiApplication in 5.035 seconds (JVM running for 6.232)
+2019-02-19 16:24:10.614  INFO 3872 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-02-19 16:24:10.614  INFO 3872 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-02-19 16:24:10.629  INFO 3872 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 15 ms

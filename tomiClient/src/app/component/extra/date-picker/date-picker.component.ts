@@ -14,7 +14,7 @@ export class DatePickerComponent{
   maxDate: Date;
   minDate: Date;
   selectedDate: Date;
-  @Input() parent: TimesheetComponent;
+  @Input() parent;
 
 
   constructor(private timesheetService: TimesheetService){

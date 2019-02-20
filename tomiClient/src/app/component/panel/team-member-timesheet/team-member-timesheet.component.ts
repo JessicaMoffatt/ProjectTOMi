@@ -12,9 +12,13 @@ import {TimesheetService} from "../../../service/timesheet.service";
 })
 export class TeamMemberTimesheetComponent implements OnInit {
 
-  constructor(public teamMemberTimesheetService: TeamMemberTimesheetService, private timesheetService:TimesheetService) { }
+  constructor(public teamMemberTimesheetService: TeamMemberTimesheetService, public timesheetService:TimesheetService) { }
 
   ngOnInit() {
 
+  }
+
+  displaySpecifiedTimesheet(index:number){
+    this.teamMemberTimesheetService.displaySpecifiedTimesheet(index);
   }
 }
