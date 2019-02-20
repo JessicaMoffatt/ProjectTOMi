@@ -6,9 +6,9 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import ca.projectTOMi.tomi.controller.ClientController;
-import ca.projectTOMi.tomi.controller.ExpenseController;
 import ca.projectTOMi.tomi.model.Client;
-import ca.projectTOMi.tomi.model.Expense;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.stereotype.Component;
@@ -22,19 +22,22 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public final class ClientResourceAssembler implements ResourceAssembler<Client, Resource<Client>> {
-  @Override
-  public Resource<Client> toResource(Client client) {
-    Resource<Client> resource = new Resource<>(client,
-      linkTo(methodOn(ClientController.class).getClient(client.getId())).withSelfRel(),
-      linkTo(methodOn(ClientController.class).getActiveClients()).withRel("clients"),
-      linkTo(methodOn(ClientController.class).setClientInactive(client.getId())).withRel("delete"));
+	private final Logger logger = LoggerFactory.getLogger("Client Assembler");
 
-    try {
-      resource.add(linkTo(methodOn(ClientController.class).updateClient(client.getId(), client)).withRel("update"));
-    } catch (URISyntaxException e) {
-      System.out.println(e);
-    }
-    return resource;
-  }
+	@Override
+	public Resource<Client> toResource(final Client client) {
+		final Resource<Client> resource = new Resource<>(client,
+			linkTo(methodOn(ClientController.class).getClient(client.getId())).withSelfRel(),
+			linkTo(methodOn(ClientController.class).getActiveClients()).withRel("clients"),
+			linkTo(methodOn(ClientController.class).setClientInactive(client.getId())).withRel("delete"));
+
+		try {
+			resource.add(linkTo(methodOn(ClientController.class).updateClient(client.getId(), client)).withRel("update"));
+		} catch (final URISyntaxException e) {
+			this.logger.warn(e.getMessage());
+		}
+
+		return resource;
+	}
 }
 

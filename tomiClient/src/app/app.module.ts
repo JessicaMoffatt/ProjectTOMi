@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -37,6 +38,7 @@ import {UserAccountSidebarService} from "./service/user-account-sidebar-service"
 import { AddUserAccountComponent } from './component/modal/add-user-account/add-user-account.component';
 import { EditUserComponent } from './component/panel/edit-user/edit-user.component';
 import { ViewUserComponent } from './component/panel/view-user/view-user.component';
+import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
 import {TimesheetService} from "./service/timesheet.service";
 import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry-submitted.component';
 
@@ -88,6 +90,11 @@ import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry
     TeamSidebarService,
     UserAccountService,
     UserAccountSidebarService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AddHeaderInterceptor,
+      multi: true
+    },
     TimesheetService,
     BsModalService,
     ComponentLoaderFactory,

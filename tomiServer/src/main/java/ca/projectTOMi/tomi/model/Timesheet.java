@@ -2,84 +2,80 @@ package ca.projectTOMi.tomi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-
 import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import lombok.Data;
 
 /**
- * class representing a single timesheet for a user for a specific week.  Entries (task ,client, hours)
- * on the timesheet are attached by referencing it.
+ * class representing a single timesheet for a user for a specific week.  Entries (task ,client,
+ * hours) on the timesheet are attached by referencing it.
  *
  * @author James Andrade and Karol Talbot
  * @version 1.1
- *
  */
 
-@Entity
+
 @Data
+@Entity (name = "Timesheet")
 public final class Timesheet {
-    @Id
-    @GeneratedValue(generator = "timesheet_sequence")
-    @SequenceGenerator(
-            name = "timesheet_sequence",
-            sequenceName = "timesheet_sequence",
-            allocationSize = 1
-    )
+	@Id
+	@GeneratedValue (generator = "timesheet_sequence")
+	@SequenceGenerator (
+		name = "timesheet_sequence",
+		sequenceName = "timesheet_sequence",
+		allocationSize = 1
+	)
 
-    /*
-     * the unique id of the timesheet
-     */
-    private Long id;
+	/*
+	 * the unique id of the timesheet
+	 */
+	private Long id;
 
 
-    /*
-     * The userAccount of the user that the timesheet belongs to
-     */
-    @ManyToOne
-    @MapKeyColumn(name = "id")
-    private UserAccount userAccount;
+	/*
+	 * The userAccount of the user that the timesheet belongs to
+	 */
+	@ManyToOne
+	@MapKeyColumn (name = "id")
+	private UserAccount userAccount;
 
-    /*
-     * the submission status of the timesheet, one of: logging, submitted, approved, rejected
-     */
-    @Enumerated
-    private Status status;
+	/*
+	 * the submission status of the timesheet, one of: logging, submitted, approved, rejected
+	 */
+	@Enumerated
+	private Status status;
 
-    /*
-     * the day of the week that the timesheet begins on
-     */
-    @JsonIgnore
-    private LocalDate startDate;
+	/*
+	 * the day of the week that the timesheet begins on
+	 */
+	@JsonIgnore
+	private LocalDate startDate;
 
-    /*
-     * the date that the timesheet was submitted.
-     */
-    @JsonIgnore
-    private LocalDate submitDate;
+	/*
+	 * the date that the timesheet was submitted.
+	 */
+	@JsonIgnore
+	private LocalDate submitDate;
 
-    /**
-     * if the timesheet is active.
-     */
-    @NotNull
-    private boolean active;
+	/**
+	 * if the timesheet is active.
+	 */
+	@JsonIgnore
+	@NotNull
+	private boolean active;
 
-    @JsonProperty(value="startDate")
-    public String getStartDate(){
-        return this.startDate == null? "" : this.startDate.toString();
-    }
+	@JsonProperty (value = "startDate")
+	public String getStartDate() {
+		return this.startDate == null ? "" : this.startDate.toString();
+	}
 
-    @JsonProperty(value="submitDate")
-    public String getSubmitDate(){
-        return this.submitDate == null? "" : this.submitDate.toString();
-    }
+	@JsonProperty (value = "submitDate")
+	public String getSubmitDate() {
+		return this.submitDate == null ? "" : this.submitDate.toString();
+	}
 
-    public void setSubmitDate(String date){
-        this.submitDate = LocalDate.parse(date);
-    }
-
-//    public String getTimesheet(){
-//        return this.id + " " + this.startDate + " " + this.userAccount.getFirstName();
-//    }
+	public void setSubmitDate(final String date) {
+		this.submitDate = LocalDate.parse(date);
+	}
 }
