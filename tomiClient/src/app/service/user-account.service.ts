@@ -76,7 +76,6 @@ export class UserAccountService {
   async save(userAccount: UserAccount) {
     let testUserAccount: UserAccount = null;
 
-    console.log(userAccount);
     if (userAccount.id === -1) {
       await this.http.post<UserAccount>(this.userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
 
@@ -108,10 +107,4 @@ export class UserAccountService {
         this.refreshUserAccounts();
       });
   }
-
-  //TODO Unfinished
-  cancel(userAccount: UserAccount) {
-    (<HTMLInputElement>document.getElementById(""))
-  }
-
 }

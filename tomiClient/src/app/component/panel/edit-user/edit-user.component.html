@@ -32,6 +32,14 @@
               <option [selected]="userAccount.teamId === team.id" value="{{team.id}}">{{team.teamName}}</option>
       </ng-container>
     </select>
+  <span>
+    <label for="edit_user_account_program_director{{userAccount.id}}">Program Director</label>
+    <input #editUserProgramDirector id="edit_user_account_program_director{{userAccount.id}}" type="checkbox" [checked]="userAccount.programDirector">
+  </span>
+  <span>
+    <label for="edit_user_account_admin{{userAccount.id}}">Admin</label>
+    <input #editUserAdmin id="edit_user_account_admin{{userAccount.id}}" type="checkbox" [checked]="userAccount.admin">
+  </span>
   </span>
     <span [ngClass]="['btn', 'edit_btn']" (click)="save()">SAVE</span>
     <span [ngClass]="['btn', 'delete_btn']" (click)="cancel()">CANCEL</span>

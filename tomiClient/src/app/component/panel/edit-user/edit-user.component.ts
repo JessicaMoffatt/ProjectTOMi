@@ -37,6 +37,12 @@ export class EditUserComponent implements OnInit {
   /** The select field for the UserAccount's team id.*/
   @ViewChild('editUserTeamId') editUserTeamId;
 
+  /** The input checkbox for the UserAccount's Program Director status.*/
+  @ViewChild('editUserProgramDirector') editUserProgramDirector;
+
+  /** The input checkbox for the UserAccount's Admin status.*/
+  @ViewChild('editUserAdmin') editUserAdmin;
+
   constructor(public teamService: TeamService) { }
 
   ngOnInit() {
@@ -50,9 +56,10 @@ export class EditUserComponent implements OnInit {
     this.userAccount.firstName = this.editUserFirstName.nativeElement.value;
     this.userAccount.lastName = this.editUserLastName.nativeElement.value;
     this.userAccount.email = this.editUserEmail.nativeElement.value;
-    this.userAccount.salariedRate = Number (this.editUserSalariedRate.nativeElement.value);
+    this.userAccount.salariedRate = Number (this.editUserSalariedRate.nativeElement.value * 100);
     this.userAccount.teamId = this.editUserTeamId.nativeElement.value;
-    this.saveRequested.emit(this.userAccount);
+    this.userAccount.programDirector = this.editUserProgramDirector.nativeElement.checked;
+    this.userAccount.admin = this.editUserAdmin.nativeElement.checked;
 
     let goodUserAccount = true;
     let nameRegex = /^[a-zA-Z ]{1,255}$/;
@@ -61,7 +68,7 @@ export class EditUserComponent implements OnInit {
     if (!nameRegex.test(this.userAccount.firstName) || !nameRegex.test(this.userAccount.lastName)) {
       goodUserAccount = false;
     } else {
-      // Capitalize the first character of the first and last name are capitalized
+      // Capitalize the first character of the first and last name
       this.userAccount.firstName = this.userAccount.firstName.charAt(0).toUpperCase() + this.userAccount.firstName.substring(1);
       this.userAccount.lastName = this.userAccount.lastName.charAt(0).toUpperCase() + this.userAccount.lastName.substring(1);
     }
@@ -75,8 +82,6 @@ export class EditUserComponent implements OnInit {
     // If valid, multiply by 100 to change from pennies to dollars.
     if (!(this.userAccount.salariedRate > 0)) {
       goodUserAccount = false;
-    } else {
-      this.userAccount.salariedRate *= 100;
     }
 
     // Save the new UserAccount if it has been fully validated.
