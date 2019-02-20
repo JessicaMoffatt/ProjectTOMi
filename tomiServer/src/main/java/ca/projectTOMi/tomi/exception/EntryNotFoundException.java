@@ -7,4 +7,5 @@ package ca.projectTOMi.tomi.exception;
  * @version 1
  */
 public class EntryNotFoundException extends RuntimeException {
+
 }

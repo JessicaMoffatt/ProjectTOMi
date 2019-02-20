@@ -8,24 +8,25 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 /**
- * ProjectRepository is used to persist and retrieve data regarding {@link Project} from the database.
+ * ProjectRepository is used to persist and retrieve data regarding {@link Project} from the
+ * database.
  *
  * @author Karol Talbot
  * @version 1
  */
-public interface ProjectRepository extends JpaRepository<Project, String>{
-  @Query ("SELECT id FROM Project WHERE id LIKE CONCAT('%',:prefix,'%') ORDER BY id DESC")
-  public List<String> getIds(@Param ("prefix") String prefix);
+public interface ProjectRepository extends JpaRepository<Project, String> {
+	@Query ("SELECT id FROM Project WHERE id LIKE CONCAT('%',:prefix,'%') ORDER BY id DESC")
+	List<String> getIds(@Param ("prefix") String prefix);
 
-  /**
-   * Get all {@link Project}s that have the provided active status.
-   *
-   * @param active
-   *   if the Project is active
-   *
-   * @return List containing all Projects with the provided active state
-   */
-  public List<Project> getAllByActive(boolean active);
+	/**
+	 * Get all {@link Project}s that have the provided active status.
+	 *
+	 * @param active
+	 * 	if the Project is active
+	 *
+	 * @return List containing all Projects with the provided active state
+	 */
+	List<Project> getAllByActiveOrderById(boolean active);
 
-  public List<Project> getAllByActiveTrueAndProjectMembersContains(UserAccount user);
+	List<Project> getAllByActiveTrueAndProjectMembersContainsOrderById(UserAccount user);
 }
