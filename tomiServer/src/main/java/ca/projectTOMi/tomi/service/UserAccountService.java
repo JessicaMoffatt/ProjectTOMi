@@ -130,6 +130,7 @@ public final class UserAccountService {
 	 * @return the created and saved userAccount
 	 */
 	public UserAccount createUserAccount(final UserAccount userAccount) {
+		userAccount.setActive(true);
 		final UserAccount newUserAccount = this.repository.save(userAccount);
 		final TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
 		final LocalDate date = LocalDate.now().with(fieldISO, 1);

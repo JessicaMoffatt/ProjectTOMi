@@ -125,6 +125,7 @@ public class ProjectController {
 	 */
 	@PutMapping ("/projects/{id}")
 	public ResponseEntity<?> updateProject(@PathVariable final String id, @RequestBody final Project newProject) throws URISyntaxException {
+		newProject.setActive(true);
 		final Project updatedProject = this.projectService.updateProject(id, newProject);
 		final Resource<Project> resource = this.projectResourceAssembler.toResource(updatedProject);
 

@@ -89,6 +89,7 @@ public class ExpenseController {
 	 */
 	@PostMapping ("/expenses")
 	public ResponseEntity<?> createExpense(@RequestBody final Expense newExpense) throws URISyntaxException {
+		newExpense.setActive(true);
 		final Resource<Expense> resource = this.assembler.toResource(this.expenseService.saveExpense(newExpense));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
