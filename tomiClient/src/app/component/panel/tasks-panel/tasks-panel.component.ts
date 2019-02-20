@@ -1,16 +1,21 @@
-
-import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {TaskPanelService} from "../../service/task-panel.service";
-import {Task} from "../../model/task";
-
-import {UserAccount} from "../../model/userAccount";
-import {AddTaskComponent} from "../add-task/add-task.component";
-import {Team} from "../../model/team";
-
-// import {AddTaskComponent} from "../add-team-member/add-task.component";
+import {
+  Component,
+  ChangeDetectorRef,
+  ComponentFactoryResolver,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
+import {TaskPanelService} from "../../../service/task-panel.service";
+import {Task} from "../../../model/task";
+import {AddTaskComponent} from "../../modal/add-task/add-task.component";
+import {EditTaskComponent} from "../../modal/edit-task/edit-task.component";
 
 /**
  * Tasks is used to facilitate communication between the view and front end services.
+ *
+ * Note: confirmation box for delete() must be styled
  *
  * @author James Andrade
  * @version 1.0
@@ -19,43 +24,28 @@ import {Team} from "../../model/team";
 @Component({
   selector: 'app-tasks-panel',
   templateUrl: './tasks-panel.component.html',
-  styleUrls: ['./tasks-panel.component.css','../../app.component.css']
+  styleUrls: ['./tasks-panel.component.scss', '../../../app.component.scss']
 })
 
-export class TasksPanelComponent implements OnInit {
+export class TasksPanelComponent implements OnInit{
 
   /** A view container ref for the template that will be used to house the add task member component. */
-   @ViewChild('add_task_container', {read: ViewContainerRef})
-   add_task_container: ViewContainerRef;
+  @Input() @ViewChild('add_task_container', {read: ViewContainerRef})
+  add_task_container: ViewContainerRef;
 
-  constructor(private resolver: ComponentFactoryResolver, public taskPanelService: TaskPanelService) { }
+  /** A view container ref for the template that will be used to house the edit task member component. */
+  @Input() @ViewChild('edit_task_container', {read: ViewContainerRef})
+  edit_task_container: ViewContainerRef;
+
+  constructor(private ref: ChangeDetectorRef, private resolver: ComponentFactoryResolver, public taskPanelService: TaskPanelService) {
+  }
 
   ngOnInit() {
-    this.taskPanelService.getAllTasks().subscribe((data: Array<Task>) => {
-      this.taskPanelService.tasks = data;
-    });
   }
 
-
   /**
-   * Sets the selected team member.
-   * @param account The user account whom has been selected.
+   * Dynamically creates the add-task component, which will be housed in the template with the id of 'add_task_container'.
    */
-  setSelectedTask(task: Task) {
-    this.taskPanelService.setSelectedTask(task);
-  }
-
-  /**
-   * Removes the selected member from the team.
-
-  removeMember() {
-    this.teamService.removeMember();
-  }
-*/
-
-  /**
-   * Dynamically creates the task component, which will be housed in the template with the id of 'add_team_member_container'.
-  */
   createAddTaskComponent() {
     this.add_task_container.clear();
     const factory = this.resolver.resolveComponentFactory(AddTaskComponent);
@@ -63,23 +53,32 @@ export class TasksPanelComponent implements OnInit {
   }
 
   /**
-   * Passes on the request to save a given team to the team service.
-   *
-   * @param team The team to be saved.
-
-  save(team: Team) {
-    team.teamName = (<HTMLInputElement>document.getElementById("team_name")).value;
-    let leadId = Number((<HTMLInputElement>document.getElementById("selected_team_lead")).value);
-    team.leadId = leadId;
-    this.teamService.save(team).then();
-  } */
+   * Dynamically creates the edit-task component, which will be housed in the template with the id of 'edit_task_container'.
+   */
+  createEditTaskComponent(task: Task) {
+    this.taskPanelService.setSelectedTask(task);
+    this.edit_task_container.clear();
+    const factory = this.resolver.resolveComponentFactory(EditTaskComponent);
+    this.taskPanelService.ref = this.edit_task_container.createComponent(factory);
+  }
 
   /**
-   * Passes on the request to delete a given team to the team service.
-   * @param team The team to be deleted.
+   * Changes the billable status of a task to the opposite of it's current value
+   * @param task the task for which the billable status is to be toggled
+   */
+  toggleBillable(task: Task) {
+    task.billable = !task.billable;
+    this.taskPanelService.save(task);
+  }
 
-  delete(team: Team) {
-    this.teamService.delete(team);
-  } */
+  /**
+   * deletes the provided task via TaskPanelService
+   * @param task the task to be deleted
+   */
+  delete(task: Task) {
+    if (confirm("Delete " + task.name + " ?")) {
+      this.taskPanelService.delete(task);
+    }
+  }
 
 }

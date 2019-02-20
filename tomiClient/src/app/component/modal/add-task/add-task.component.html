@@ -1,0 +1,36 @@
+<!--
+@author James Andrade
+@version 1.0
+-->
+<div [ngClass]="'modal_container'">
+  <div [ngClass]="['btn','close_btn','btn_padding']" (click)="destroyAddTaskComponent()">X</div>
+  <h1>Add New Task</h1>
+  <table>
+    <tr>
+      <td>
+        <label for="new_task_name">Task Name</label>
+      </td>
+      <td>
+        <input id="new_task_name" [ngClass]="'inputs'">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="new_task_is_billable">Is Billable</label>
+      </td>
+      <td>
+        <input type="checkbox" id="new_task_is_billable" [ngClass]="'inputs'">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div [ngClass]="'modal_btns_container'">
+          <div [ngClass]="['btn','add_btn','rounded_corners','btn_padding']" (click)="addTask()">Add</div>
+          <div (click)="destroyAddTaskComponent()" [ngClass]="['btn','cancel_btn','rounded_corners','btn_padding']">
+            Cancel
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
