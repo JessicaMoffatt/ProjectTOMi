@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserAccountsPanelComponent } from './user-accounts-panel.component';
+import { UserAccountPanelComponent } from './user-account-panel.component';
 
-describe('UserAccountsPanelComponent', () => {
-  let component: UserAccountsPanelComponent;
-  let fixture: ComponentFixture<UserAccountsPanelComponent>;
+describe('UserAccountPanelComponent', () => {
+  let component: UserAccountPanelComponent;
+  let fixture: ComponentFixture<UserAccountPanelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserAccountsPanelComponent ]
+      declarations: [ UserAccountPanelComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserAccountsPanelComponent);
+    fixture = TestBed.createComponent(UserAccountPanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

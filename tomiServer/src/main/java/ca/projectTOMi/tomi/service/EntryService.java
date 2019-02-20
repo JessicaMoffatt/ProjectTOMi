@@ -134,6 +134,7 @@ public class EntryService {
 	 */
 	public Entry saveEntry(final Entry entry) {
 		entry.setStatus(Status.LOGGING);
+		entry.setActive(true);
 		entry.setQuantity(0.0);
 		return this.entryRepository.save(entry);
 	}

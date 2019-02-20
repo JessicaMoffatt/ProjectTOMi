@@ -1,0 +1,65 @@
+<!--
+  @author Iliya Kiritchkov
+  @version 1.0
+-->
+<div [ngClass]="'modal_container'">
+  <div [ngClass]="['btn', 'close_btn']" (click)="destroyAddUserAccountComponent()">
+    <span [ngClass]="'close_btn_txt'">&times;</span>
+  </div>
+  <h1>Add New User</h1>
+  <table>
+    <tr>
+      <td>
+        <label for="user_account_to_add_first_name">First Name</label>
+      </td>
+      <td>
+        <input id="user_account_to_add_first_name" [ngClass]="'inputs'">
+      </td>
+      <td>
+        <label for="user_account_to_add_last_name">Last Name</label>
+      </td>
+      <td>
+        <input id="user_account_to_add_last_name" [ngClass]="'inputs'">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="user_account_to_add_email">Email</label>
+      </td>
+      <td>
+        <input type="email" id="user_account_to_add_email" [ngClass]="'inputs'">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="user_account_to_add_rate">Salaried Rate</label>
+      </td>
+      <td>
+        <input type="number" id="user_account_to_add_rate" [ngClass]="'inputs'">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="user_account_to_add_team">Team</label>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <select id="user_account_to_add_team" [ngClass]="'inputs'">
+          <option value="-1">None</option>
+          <option *ngFor="let team of (teamService.teamsObservable | async | orderBy: 'teamName')" [value]="team.id">
+            {{team.teamName}}
+          </option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div [ngClass]="'modal_btns_container'">
+          <div [ngClass]="['btn', 'add_btn']" (click)="addUserAccount()">Add</div>
+          <div [ngClass]="['btn', 'cancel_btn']" (click)="destroyAddUserAccountComponent()">Cancel</div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

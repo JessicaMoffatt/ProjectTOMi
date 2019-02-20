@@ -1,0 +1,21 @@
+<!--
+@author Iliya Kiritchkov
+@version 1.0
+-->
+<div>
+  <h2>Users</h2>
+  <div [ngClass]="'user_account'">
+    <ul>
+      <ul (click)="selectUserAccount(userAccount)"
+          *ngFor="let userAccount of userAccountService.userAccounts | async | orderBy:'lastName'"
+          style="list-style: none">
+        <ng-container>
+          <app-view-user id="view_user_account{{userAccount.id}}" #viewUserComponent (deleteRequested)="delete($event)" (editRequested)="editUserAccount($event)"
+                         [userAccount]="userAccount"></app-view-user>
+          <app-edit-user id="edit_user_account{{userAccount.id}}" class="edit_user_hidden" #editUserComponent (cancelRequested)="cancel($event)" (saveRequested)="save($event)"
+                         [userAccount]="userAccount"></app-edit-user>
+        </ng-container>
+      </ul>
+    </ul>
+  </div>
+</div>
