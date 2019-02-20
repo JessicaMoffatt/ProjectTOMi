@@ -33,18 +33,32 @@ body{
   background-color:$light_grey;
 }
 
+.confirm_btn{
+  background-color: $green;
+}
+
 .save_btn{
   background-color: $green;
+  background-image: url('~src/assets/img/save.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  height:$btn_md;
+  width:$btn_md;
 }
 
 .delete_btn{
   background-color:$red;
+  background-image: url('~src/assets/img/remove.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  height:$btn_md;
+  width:$btn_md;
 }
 
 .close_btn{
   background-color:$red;
-  width:$close_btn_size;
-  height:$close_btn_size;
+  width:$btn_md;
+  height:$btn_md;
   float:right;
 }
 
@@ -64,12 +78,21 @@ body{
   background-color:$blue;
 }
 
+.edit_btn{
+  background-color: $purple;
+}
+
 .cancel_btn{
   background-color:$red;
 }
 
 .submit{
   background-color:$green;
+  background-image: url('~src/assets/img/submit.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  height:$btn_md;
+  width:$btn_md;
 }
 
 .cancel_changes_btn{
@@ -100,5 +123,25 @@ li.sidebar_list:hover{
 .highlighted{
   background-color: $blue;
   color: white;
+}
+
+
+.user_account_name {
+  font-weight: 700;
+  color: $orange;
+}
+
+.user_account_wrapper {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.input_search {
+  border-color: black;
+  border-width: 1px;
+  border-radius: 5px;
 }
 

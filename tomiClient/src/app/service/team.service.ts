@@ -32,6 +32,9 @@ export class TeamService {
   /** List of all the team members of the selected team.*/
   teamMembers: UserAccount[] = [];
 
+  teamsObservable: Observable<Array<Team>>;
+
+
   /** List of all the team members not currently on any teams.*/
   allFreeMembers: UserAccount[] = [];
 
@@ -45,7 +48,22 @@ export class TeamService {
   /** Used to reference the add team member component created by clicking the Add Member button.*/
   ref: ComponentRef<any>;
 
-  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService, private userAccountService: UserAccountService) {
+  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService) {
+    this.teamsObservable = this.GETAllTeams();
+  }
+
+  /**
+   * Gets a List of all Teams from the server.
+   */
+  GETAllTeams() {
+    return this.http.get(this.teamUrl).pipe(map((response:Response) => response))
+      .pipe(map((data: any) => {
+        return data._embedded.teams as Team[];
+      }));
+  }
+
+  refreshTeams() {
+    this.teamsObservable = this.GETAllTeams();
   }
 
   /**
@@ -68,7 +86,8 @@ export class TeamService {
 
     this.selectedMember.teamId = -1;
 
-    this.userAccountService.save(this.selectedMember);
+    // TODO Remove this comment and allow this code
+    // this.userAccountService.save(this.selectedMember);
 
     if(this.teamSideBarService.selectedTeam.leadId === this.selectedMember.id){
       this.teamSideBarService.selectedTeam.leadId = -1;
@@ -141,10 +160,10 @@ export class TeamService {
    * @param team The team to update/create.
    */
   async save(team: Team) {
-    let testTeam: Team = null;
+    let tempTeam: Team = null;
     if (team.id === -1) {
       await this.http.post<Team>(this.teamUrl, JSON.stringify(team), httpOptions).toPromise().then(response => {
-        testTeam = response;
+        tempTeam = response;
         return response;
       }).catch((error: any) => {
         //TODO
@@ -154,14 +173,14 @@ export class TeamService {
       this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).toPromise().then((response) => {
         this.teamSideBarService.reloadTeams();
 
-        testTeam = response;
+        tempTeam = response;
         return response;
       }).catch((error: any) => {
         //TODO
       });
     }
 
-    return testTeam;
+    return tempTeam;
   }
 
   /**

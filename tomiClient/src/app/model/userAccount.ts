@@ -3,7 +3,7 @@
  * A UserAccount represents a user of the application.
  *
  * @author Jessica Moffatt
- * @version 1.0
+ * @version 1.1
  */
 export class UserAccount{
   /** The unique identifier for the user account.*/
@@ -20,10 +20,14 @@ export class UserAccount{
   active:boolean;
   /** The ID for the team this user account is a part of.*/
   teamId:number;
+  /** The admin status for this user account.*/
+  admin:boolean;
+  /** The program director status for this user account.*/
+  programDirector:boolean;
   /** The list of all projects associated with this user account.*/
   projects:[];
   /** The list of linked used to communicate with the backennd.*/
-  _links: Object;
+  _links: [];
 
   constructor(){
     this.id = -1;
@@ -33,5 +37,8 @@ export class UserAccount{
     this.salariedRate = 0;
     this.active = true;
     this.teamId = -1;
+    this.admin = false;
+    this.programDirector=false;
+    this._links = [];
   }
 }

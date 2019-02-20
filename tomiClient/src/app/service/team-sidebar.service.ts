@@ -4,6 +4,9 @@ import {Team} from "../model/team";
 import {map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 
+
+
+
 /**
  * TeamSidebarService is used to control the flow of data regarding teams to/from the view.
  *
@@ -29,6 +32,9 @@ export class TeamSidebarService {
 
   constructor(private http: HttpClient) {
   }
+
+
+
 
   /**
    * Gets a list of all the teams.
