@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.ExpenseResourceAssembler;
 import ca.projectTOMi.tomi.exception.ExpenseNotFoundException;
 import ca.projectTOMi.tomi.model.Expense;
+import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.service.ExpenseService;
-import ca.projectTOMi.tomi.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,18 +47,10 @@ public class ExpenseController {
 		this.assembler = assembler;
 	}
 
-	/**
-	 * Returns a resource representing the requested {@link Expense} to the source of a GET request to
-	 * /expenses/id.
-	 *
-	 * @param id
-	 * 	unique identifier for the Expense
-	 *
-	 * @return Resource representing the Expense object.
-	 */
-	@GetMapping ("/expenses/{id}")
-	public Resource<Expense> getExpense(@PathVariable final Long id) {
-		return this.assembler.toResource(this.expenseService.getExpenseById(id));
+
+	@GetMapping ("/projects/{projectId}/expenses/{expenseId}")
+	public Resource<Expense> getExpense(@PathVariable final Long expenseId, @PathVariable final String projectId) {
+		return this.assembler.toResource(this.expenseService.getExpenseById(expenseId));
 	}
 
 	/**
@@ -66,15 +58,15 @@ public class ExpenseController {
 	 *
 	 * @return Collection of resources representing all active Expenses
 	 */
-	@GetMapping ("/expenses")
-	public Resources<Resource<Expense>> getActiveExpenses() {
-		final List<Resource<Expense>> expense = this.expenseService.getActiveExpenses()
+	@GetMapping ("/projects/{projectId}/expenses")
+	public Resources<Resource<Expense>> getActiveExpenses(@PathVariable final String projectId) {
+		final List<Resource<Expense>> expense = this.expenseService.getActiveExpensesByProject(projectId)
 			.stream()
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
 		return new Resources<>(expense,
-			linkTo(methodOn(ExpenseController.class).getActiveExpenses()).withSelfRel());
+			linkTo(methodOn(ExpenseController.class).getActiveExpenses(projectId)).withSelfRel());
 	}
 
 	/**
@@ -88,47 +80,28 @@ public class ExpenseController {
 	 * @throws URISyntaxException
 	 * 	when the created URI is unable to be parsed
 	 */
-	@PostMapping ("/expenses")
-	public ResponseEntity<?> createExpense(@RequestBody final Expense newExpense) throws URISyntaxException {
+	@PostMapping ("/projects/{projectId}/expenses")
+	public ResponseEntity<?> createExpense(@RequestBody final Expense newExpense, @PathVariable final String projectId) throws URISyntaxException {
+		newExpense.setActive(true);
+		Project p = new Project();
+		p.setId(projectId);
+		newExpense.setProject(p);
 		final Resource<Expense> resource = this.assembler.toResource(this.expenseService.saveExpense(newExpense));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 
-	/**
-	 * Updates the attributes for a {@link Expense} with the provided id with the attributes provided
-	 * in the PUT request to /expenses/id.
-	 *
-	 * @param id
-	 * 	the unique identifier for the Expense to be updated
-	 * @param newExpense
-	 * 	the updated Expense
-	 *
-	 * @return response containing a link to the updated Expense
-	 *
-	 * @throws URISyntaxException
-	 * 	when the created URI is unable to be parsed
-	 */
-	@PutMapping ("/expenses/{id}")
-	public ResponseEntity<?> updateExpense(@PathVariable final Long id, @RequestBody final Expense newExpense) throws URISyntaxException {
-		final Expense updatedExpense = this.expenseService.updateExpense(id, newExpense);
+	@PutMapping ("/projects/{projectId}/expenses/{expenseId}")
+	public ResponseEntity<?> updateExpense(@PathVariable final Long expenseId, @PathVariable final String projectId, @RequestBody final Expense newExpense) throws URISyntaxException {
+		final Expense updatedExpense = this.expenseService.updateExpense(expenseId, newExpense);
 		final Resource<Expense> resource = this.assembler.toResource(updatedExpense);
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 
-	/**
-	 * Sets the requested {@link Expense}'s active attribute false, removing it from the list of
-	 * active Expenses. Responds to the DELETE requests to /expenses/id.
-	 *
-	 * @param id
-	 * 	the unique identifier for the Expense to be set inactive
-	 *
-	 * @return a response without any content
-	 */
-	@DeleteMapping ("/expenses/{id}")
-	public ResponseEntity<?> setExpenseInactive(@PathVariable final Long id) {
-		final Expense expense = this.expenseService.getExpenseById(id);
+	@DeleteMapping ("/projects/{projectId}/expenses/{expenseId}")
+	public ResponseEntity<?> setExpenseInactive(@PathVariable final Long expenseId, @PathVariable final String projectId) {
+		final Expense expense = this.expenseService.getExpenseById(expenseId);
 		expense.setActive(false);
 		this.expenseService.saveExpense(expense);
 

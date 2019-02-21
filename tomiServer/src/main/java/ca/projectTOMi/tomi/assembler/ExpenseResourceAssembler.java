@@ -23,12 +23,12 @@ public final class ExpenseResourceAssembler implements ResourceAssembler<Expense
 	@Override
 	public Resource<Expense> toResource(final Expense expense) {
 		final Resource<Expense> resource = new Resource<>(expense,
-			linkTo(methodOn(ExpenseController.class).getExpense(expense.getId())).withSelfRel(),
-			linkTo(methodOn(ExpenseController.class).getActiveExpenses()).withRel("expenses"),
-			linkTo(methodOn(ExpenseController.class).setExpenseInactive(expense.getId())).withRel("delete"));
+			linkTo(methodOn(ExpenseController.class).getExpense(expense.getId(), expense.getProject().getId())).withSelfRel(),
+			linkTo(methodOn(ExpenseController.class).getActiveExpenses(expense.getProject().getId())).withRel("expenses"),
+			linkTo(methodOn(ExpenseController.class).setExpenseInactive(expense.getId(), expense.getProject().getId())).withRel("delete"));
 
 		try {
-			resource.add(linkTo(methodOn(ExpenseController.class).updateExpense(expense.getId(), expense)).withRel("update"));
+			resource.add(linkTo(methodOn(ExpenseController.class).updateExpense(expense.getId(), expense.getProject().getId(), expense)).withRel("update"));
 		} catch (final URISyntaxException e) {
 			System.out.println(e);
 		}
