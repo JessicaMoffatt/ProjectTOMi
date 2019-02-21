@@ -12,4 +12,5 @@ export class TeamPanelComponent implements OnInit {
   ngOnInit() {
   }
 
+
 }
