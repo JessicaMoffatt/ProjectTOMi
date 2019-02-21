@@ -32,8 +32,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 /**
  * Handles HTTP requests for {@link Entry} objects in the ProjectTOMi system.
  *
- * @author Iliya Kiritchkov
- * @version 1.1
+ * @author Iliya Kiritchkov and Karol Talbot
+ * @version 1.2
  */
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
@@ -48,36 +48,11 @@ public class EntryController {
 		this.entryService = entryService;
 	}
 
-	/**
-	 * Returns a resource representing the requested {@link Entry} to the source of a GET request to
-	 * /entries/id.
-	 *
-	 * @param id
-	 * 	unique identifier for the Entry.
-	 *
-	 * @return Resource representing the Entry object.
-	 */
-	@GetMapping ("/entries/{id}")
-	public Resource<Entry> getEntry(@PathVariable final Long id) {
-		final Entry entry = this.entryService.getEntry(id);
+	@GetMapping ("/user_accounts/{userAccountId}/entries/{entryId}")
+	public Resource<Entry> getEntry(@PathVariable final Long entryId, @PathVariable final Long userAccountId) {
+		final Entry entry = this.entryService.getEntry(entryId);
 
 		return this.assembler.toResource(entry);
-	}
-
-	/**
-	 * Returns a collection of all active {@link Entry} objects to the source of a GET request to
-	 * /entries.
-	 *
-	 * @return Collection of resources representing all active Entries.
-	 */
-	@GetMapping ("/entries")
-	public Resources<Resource<Entry>> getActiveEntries() {
-		final List<Resource<Entry>> entry = this.entryService.getActiveEntries()
-			.stream()
-			.map(this.assembler::toResource)
-			.collect(Collectors.toList());
-
-		return new Resources<>(entry, linkTo(methodOn(EntryController.class).getActiveEntries()).withSelfRel());
 	}
 
 	/**
@@ -91,30 +66,17 @@ public class EntryController {
 	 * @throws URISyntaxException
 	 * 	when the created URI is unable to be parsed.
 	 */
-	@PostMapping ("/entries")
-	public ResponseEntity<?> createEntry(@RequestBody final Entry newEntry) throws URISyntaxException {
+	@PostMapping ("/user_accounts/{userAccountId}/timesheets/{timesheetId}/entries")
+	public ResponseEntity<?> createEntry(@RequestBody final Entry newEntry, @PathVariable final Long userAccountId, @PathVariable final Long timesheetId) throws URISyntaxException {
+		newEntry.setTimesheet(timesheetId);
 		final Resource<Entry> resource = this.assembler.toResource(this.entryService.saveEntry(newEntry));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 
-	/**
-	 * Updates the attributes for a {@link Entry} with the provided id with the attributes provided in
-	 * the PUT request to /entries/id.
-	 *
-	 * @param id
-	 * 	the unique identifier for the Entry to update.
-	 * @param newEntry
-	 * 	the updated Entry.
-	 *
-	 * @return response containing a link to the updated Entry.
-	 *
-	 * @throws URISyntaxException
-	 * 	when the created URI is unable to be parsed.
-	 */
-	@PutMapping ("/entries/{id}")
-	public ResponseEntity<?> updateEntry(@PathVariable final Long id, @RequestBody final Entry newEntry) throws URISyntaxException {
-		final Entry updatedEntry = this.entryService.updateEntry(id, newEntry);
+	@PutMapping ("/user_accounts/{userAccountId}/entries/{entryId}")
+	public ResponseEntity<?> updateEntry(@PathVariable final Long entryId, @PathVariable final Long userAccountId, @RequestBody final Entry newEntry) throws URISyntaxException {
+		final Entry updatedEntry = this.entryService.updateEntry(entryId, newEntry);
 		final Resource<Entry> resource = this.assembler.toResource(updatedEntry);
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
@@ -123,30 +85,31 @@ public class EntryController {
 	 * Deletes the {@link Entry} with the provided id. The EntryService determines how to properly
 	 * delete the Entry object. Responds to the DELETE requests to /entries/id.
 	 *
-	 * @param id
+	 * @param entryId
 	 * 	the unique identifier for the Entry to be deleted or set inactive.
 	 *
 	 * @return a response without any content.
 	 */
-	@DeleteMapping ("/entries/{id}")
-	public ResponseEntity<?> deleteEntry(@PathVariable final Long id) {
-		this.entryService.deleteEntry(id);
+	@DeleteMapping ("/user_accounts/{userAccountId}/entries/{entryId}")
+	public ResponseEntity<?> deleteEntry(@PathVariable final Long entryId, @PathVariable final Long userAccountId) {
+		this.entryService.deleteEntry(entryId);
+
 		return ResponseEntity.noContent().build();
 	}
 
-	@GetMapping ("/timesheets/{id}/entries")
-	public Resources<Resource<Entry>> getAllTimesheetEntries(@PathVariable final Long id) {
-		final List<Resource<Entry>> entry = this.entryService.getEntriesByTimesheet(id)
+	@GetMapping ("/user_accounts/{userAccountId}/timesheets/{timesheetId}/entries")
+	public Resources<Resource<Entry>> getAllTimesheetEntries(@PathVariable final Long timesheetId, @PathVariable final Long userAccountId) {
+		final List<Resource<Entry>> entry = this.entryService.getEntriesByTimesheet(timesheetId)
 			.stream()
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
-		return new Resources<>(entry, linkTo(methodOn(EntryController.class).getActiveEntries()).withSelfRel());
+		return new Resources<>(entry, linkTo(methodOn(EntryController.class).getAllTimesheetEntries(timesheetId, userAccountId)).withSelfRel());
 	}
 
-	@PostMapping ("/entries/{id}/copy")
-	public ResponseEntity<?> copyEntry(@PathVariable final Long id) throws URISyntaxException {
-		final Resource<Entry> resource = this.assembler.toResource(this.entryService.copyEntry(id));
+	@PostMapping ("/user_accounts/{userAccountId}/entries/{entryId}/copy")
+	public ResponseEntity<?> copyEntry(@PathVariable final Long entryId, @PathVariable final Long userAccountId) throws URISyntaxException {
+		final Resource<Entry> resource = this.assembler.toResource(this.entryService.copyEntry(entryId));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}

@@ -102,7 +102,7 @@ public class EntryService {
 				entry.setFridayHours(updatedEntry.getFridayHours());
 				entry.setSaturdayHours(updatedEntry.getSaturdayHours());
 				entry.setSundayHours(updatedEntry.getSundayHours());
-				entry.setTimesheet(updatedEntry.getTimesheet().getId());
+				entry.setTimesheet(timesheetRepository.findById(entry.getTimesheet().getId()).orElse(entry.getTimesheet()));
 				entry.setStatus(Status.LOGGING);
 				entry.setActive(true);
 				this.entryRepository.save(entry);
@@ -136,6 +136,7 @@ public class EntryService {
 		entry.setStatus(Status.LOGGING);
 		entry.setActive(true);
 		entry.setQuantity(0.0);
+		entry.setTimesheet(timesheetRepository.findById(entry.getTimesheet().getId()).orElse(entry.getTimesheet()));
 		return this.entryRepository.save(entry);
 	}
 

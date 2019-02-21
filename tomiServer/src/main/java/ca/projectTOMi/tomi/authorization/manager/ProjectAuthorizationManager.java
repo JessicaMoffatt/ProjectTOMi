@@ -41,8 +41,10 @@ public final class ProjectAuthorizationManager implements AuthorizationManager<P
 			requestPolicy.setProject(requestProject);
 		} else if ("GET".equals(request)) {
 			try {
-			if ("evaluate_entries".equals(URI.split("/")[3])) {
+				if ("evaluate_entries".equals(URI.split("/")[3])) {
 					requestPolicy.setPermission(ProjectPermission.EVALUATE_ENTRIES);
+				} else if ("user_accounts".equals(URI.split("/")[1])) {
+					return handleListReads();
 				} else {
 					requestPolicy.setPermission(ProjectPermission.READ);
 				}
@@ -50,15 +52,19 @@ public final class ProjectAuthorizationManager implements AuthorizationManager<P
 				requestProject.setId(URI.split("/")[2]);
 				requestPolicy.setProject(requestProject);
 			} catch (final IndexOutOfBoundsException e) {
-				boolean hasAnyReadPermission = false;
-				for (final ProjectAuthorizationPolicy policy : this.policies) {
-					final boolean hasReadPermission = policy.getPermission() == ProjectPermission.READ;
-					hasAnyReadPermission = Boolean.logicalOr(hasAnyReadPermission, hasReadPermission);
-				}
-				return hasAnyReadPermission;
+				return handleListReads();
 			}
 		}
 		return this.policies.contains(requestPolicy);
+	}
+
+	private boolean handleListReads() {
+		boolean hasAnyReadPermission = false;
+		for (final ProjectAuthorizationPolicy policy : this.policies) {
+			final boolean hasReadPermission = policy.getPermission() == ProjectPermission.READ;
+			hasAnyReadPermission = Boolean.logicalOr(hasAnyReadPermission, hasReadPermission);
+		}
+		return hasAnyReadPermission;
 	}
 
 	@Override

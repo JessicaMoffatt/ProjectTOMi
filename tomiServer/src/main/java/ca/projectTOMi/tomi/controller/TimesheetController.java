@@ -45,52 +45,25 @@ public class TimesheetController {
 		this.userAccountService = userAccountService;
 	}
 
-	@GetMapping ("/timesheets")
-	public Resources<Resource<Timesheet>> getActiveTimesheets() {
-		final List<Resource<Timesheet>> expense = this.entryService.getActiveTimesheets()
+	@GetMapping ("/user_accounts/{userAccountId}/timesheets/{timesheetId}")
+	public Resource<Timesheet> getTimesheet(@PathVariable final Long timesheetId, @PathVariable final Long userAccountId) {
+		return this.assembler.toResource(this.entryService.getTimesheetById(timesheetId));
+	}
+
+	@PutMapping ("/user_accounts/{userAccountId}/timesheets/{timesheetId}/submit")
+	public Resource<Timesheet> submitTimesheet(@PathVariable final Long timesheetId, @PathVariable final Long userAccountId) {
+		return this.assembler.toResource(this.entryService.submitTimesheet(timesheetId));
+	}
+
+	@GetMapping ("/user_accounts/{userAccountId}/timesheets")
+	public Resources<Resource<Timesheet>> getTimesheetsByUserAccount(@PathVariable final Long userAccountId) {
+		final List<Resource<Timesheet>> expense = this.userAccountService.getTimesheetsByUserAccount(userAccountId)
 			.stream()
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
 		return new Resources<>(expense,
-			linkTo(methodOn(TimesheetController.class).getActiveTimesheets()).withSelfRel());
-	}
-
-	@GetMapping ("/timesheets/{id}")
-	public Resource<Timesheet> getTimesheet(@PathVariable final Long id) {
-		return this.assembler.toResource(this.entryService.getTimesheetById(id));
-	}
-
-	@PutMapping ("/timesheets/{id}")
-	public Resource<Timesheet> updateTimesheet(@PathVariable final Long id, @RequestBody final Timesheet timesheet) {
-		return this.assembler.toResource(this.entryService.updateTimesheet(id, timesheet));
-	}
-
-	@PutMapping ("/timesheets/{id}/submit")
-	public Resource<Timesheet> submitTimesheet(@PathVariable final Long id) {
-		return this.assembler.toResource(this.entryService.submitTimesheet(id));
-	}
-
-	@DeleteMapping ("/timesheets/{id}")
-	public ResponseEntity<?> setTimesheetInactive(@PathVariable final Long id) {
-
-		return ResponseEntity.noContent().build();
-	}
-
-	@GetMapping ("/timesheetEvalTest/{id}")
-	public void evalTimesheet(@PathVariable final Long id) {
-		this.entryService.evaluateTimesheet(id);
-	}
-
-	@GetMapping ("/timesheets/userAccount/{id}")
-	public Resources<Resource<Timesheet>> getTimesheetsByUserAccount(@PathVariable final Long id) {
-		final List<Resource<Timesheet>> expense = this.userAccountService.getTimesheetsByUserAccount(id)
-			.stream()
-			.map(this.assembler::toResource)
-			.collect(Collectors.toList());
-
-		return new Resources<>(expense,
-			linkTo(methodOn(TimesheetController.class).getTimesheetsByUserAccount(id)).withSelfRel());
+			linkTo(methodOn(TimesheetController.class).getTimesheetsByUserAccount(userAccountId)).withSelfRel());
 	}
 
 	@ExceptionHandler ({IllegalTimesheetModificationException.class, TimesheetNotFoundException.class})

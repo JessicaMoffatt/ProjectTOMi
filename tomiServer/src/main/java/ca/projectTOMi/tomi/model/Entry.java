@@ -13,6 +13,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -70,7 +71,7 @@ public final class Entry {
 	private UnitType unitType;
 
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@MapKeyColumn (name = "id")
 	@JsonProperty (value = "timesheet")
 	@JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -169,5 +170,10 @@ public final class Entry {
 		final Timesheet t = new Timesheet();
 		t.setId(id);
 		this.timesheet = t;
+	}
+
+	@JsonIgnore
+	public void setTimesheet(final Timesheet timesheet){
+		this.timesheet = timesheet;
 	}
 }
