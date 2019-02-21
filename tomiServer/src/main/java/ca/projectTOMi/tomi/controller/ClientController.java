@@ -88,6 +88,7 @@ public class ClientController {
 	 */
 	@PostMapping ("/clients")
 	public ResponseEntity<?> createClient(@RequestBody final Client newClient) throws URISyntaxException {
+		newClient.setActive(true);
 		final Resource<Client> resource = this.assembler.toResource(this.service.saveClient(newClient));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);

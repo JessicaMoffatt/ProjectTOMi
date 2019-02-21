@@ -99,6 +99,7 @@ public class UnitTypeController {
 	 */
 	@PostMapping ("/unit_types")
 	public ResponseEntity<?> createUnitType(@RequestBody final UnitType newUnitType) throws URISyntaxException {
+		newUnitType.setActive(true);
 		final Resource<UnitType> resource = this.assembler.toResource(this.unitTypeService.saveUnitType(newUnitType));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
