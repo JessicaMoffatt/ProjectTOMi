@@ -2,34 +2,26 @@ package ca.projectTOMi.tomi.authorization;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.NotNull;
 import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 import lombok.Data;
 
 @Data
 @Entity
+@IdClass(ProjectAuthId.class)
 public class ProjectAuthorizationPolicy {
 	@Id
-	@GeneratedValue (generator = "project_auth_sequence")
-	@SequenceGenerator (
-		name = "project_auth_sequence",
-		sequenceName = "project_auth_sequence",
-		allocationSize = 1
-	)
-	private Long id;
-
 	@ManyToOne (targetEntity = UserAccount.class, optional = false)
 	private UserAccount requestingUser;
 
+	@Id
 	@Enumerated
-	@NotNull
 	private ProjectPermission permission;
 
+	@Id
 	@ManyToOne (targetEntity = Project.class, optional = false)
 	private Project project;
 
@@ -40,7 +32,7 @@ public class ProjectAuthorizationPolicy {
 
 	@Override
 	public int hashCode() {
-		return this.id.hashCode();
+		return this.project.hashCode() + this.permission.hashCode();
 	}
 
 	@Override

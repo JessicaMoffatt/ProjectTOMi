@@ -2,34 +2,41 @@ package ca.projectTOMi.tomi.authorization;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.NotNull;
-import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 import lombok.Data;
 
 @Data
 @Entity
+@IdClass(TimesheetAuthId.class)
 public class TimesheetAuthorizationPolicy {
-  @Id
-  @GeneratedValue (generator = "timesheet_auth_sequence")
-  @SequenceGenerator (
-    name = "timesheet_auth_sequence",
-    sequenceName = "timesheet_auth_sequence",
-    allocationSize = 1
-  )
-  private Long id;
 
+  @Id
   @ManyToOne (targetEntity = UserAccount.class, optional = false)
   private UserAccount requestingUser;
 
+  @Id
   @Enumerated
-  @NotNull
   private TimesheetPermission permission;
 
+  @Id
   @ManyToOne (targetEntity = UserAccount.class, optional = false)
   private UserAccount timesheetOwner;
+
+  @Override
+  public int hashCode() {
+    return this.timesheetOwner.hashCode() + this.permission.hashCode();
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (obj.getClass() != TimesheetAuthorizationPolicy.class) {
+      return false;
+    } else {
+      final TimesheetAuthorizationPolicy policyB = (TimesheetAuthorizationPolicy) obj;
+      return this.permission == policyB.getPermission() && this.timesheetOwner.equals(policyB.getTimesheetOwner()) && this.requestingUser.equals(policyB.getRequestingUser());
+    }
+  }
 }
