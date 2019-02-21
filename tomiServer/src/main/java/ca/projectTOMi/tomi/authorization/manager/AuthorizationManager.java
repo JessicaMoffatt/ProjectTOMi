@@ -1,4 +1,4 @@
-package ca.projectTOMi.tomi.authorization;
+package ca.projectTOMi.tomi.authorization.manager;
 
 import java.util.List;
 import ca.projectTOMi.tomi.model.UserAccount;

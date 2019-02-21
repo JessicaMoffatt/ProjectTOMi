@@ -1,6 +1,8 @@
-package ca.projectTOMi.tomi.authorization;
+package ca.projectTOMi.tomi.authorization.manager;
 
 import java.util.List;
+import ca.projectTOMi.tomi.authorization.policy.ProjectAuthorizationPolicy;
+import ca.projectTOMi.tomi.authorization.permission.ProjectPermission;
 import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 

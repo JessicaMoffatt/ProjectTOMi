@@ -1,4 +1,4 @@
-package ca.projectTOMi.tomi.authorization;
+package ca.projectTOMi.tomi.authorization.permission;
 
 public enum TimesheetPermission {
   READ,

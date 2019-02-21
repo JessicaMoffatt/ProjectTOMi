@@ -1,10 +1,12 @@
-package ca.projectTOMi.tomi.authorization;
+package ca.projectTOMi.tomi.authorization.policy;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
+import ca.projectTOMi.tomi.authorization.policy.id.ProjectAuthId;
+import ca.projectTOMi.tomi.authorization.permission.ProjectPermission;
 import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 import lombok.Data;

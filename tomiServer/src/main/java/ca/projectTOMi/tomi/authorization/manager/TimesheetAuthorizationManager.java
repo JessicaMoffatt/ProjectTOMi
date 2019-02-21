@@ -1,11 +1,12 @@
-package ca.projectTOMi.tomi.authorization;
+package ca.projectTOMi.tomi.authorization.manager;
 
 import java.util.List;
+import ca.projectTOMi.tomi.authorization.policy.TimesheetAuthorizationPolicy;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.model.UserAccount;
 
 
-public final class TimesheetAuthorizationManager implements AuthorizationManager<TimesheetAuthorizationPolicy>, AuthorizationFilter<Entry>{
+public final class TimesheetAuthorizationManager implements AuthorizationManager<TimesheetAuthorizationPolicy>, AuthorizationFilter<Entry> {
   private List<TimesheetAuthorizationPolicy> policies;
   private final UserAccount user;
 

@@ -1,6 +1,8 @@
-package ca.projectTOMi.tomi.authorization;
+package ca.projectTOMi.tomi.authorization.permission;
 
 public enum UserPermission {
+  READ_LISTS,
+
   // Unit type
   READ_UNIT_TYPE,
   WRITE_UNIT_TYPE,
@@ -25,7 +27,7 @@ public enum UserPermission {
   CREATE_TEAM,
   DELETE_TEAM,
 
-  //User account
+  // User account
   READ_USER_ACCOUNT,
   WRITE_USER_ACCOUNT,
   CREATE_USER_ACCOUNT,

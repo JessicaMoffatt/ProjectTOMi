@@ -1,8 +1,8 @@
 package ca.projectTOMi.tomi.persistence;
 
 import java.util.List;
-import ca.projectTOMi.tomi.authorization.UserAuthId;
-import ca.projectTOMi.tomi.authorization.UserAuthorizationPolicy;
+import ca.projectTOMi.tomi.authorization.policy.id.UserAuthId;
+import ca.projectTOMi.tomi.authorization.policy.UserAuthorizationPolicy;
 import ca.projectTOMi.tomi.model.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 

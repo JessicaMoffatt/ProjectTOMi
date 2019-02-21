@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import ca.projectTOMi.tomi.assembler.TeamResourceAssembler;
-import ca.projectTOMi.tomi.authorization.AuthorizationManager;
+import ca.projectTOMi.tomi.authorization.manager.AuthorizationManager;
 import ca.projectTOMi.tomi.exception.TeamNotFoundException;
 import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.service.TeamService;

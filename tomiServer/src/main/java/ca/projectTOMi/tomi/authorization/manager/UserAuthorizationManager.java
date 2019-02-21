@@ -1,10 +1,12 @@
-package ca.projectTOMi.tomi.authorization;
+package ca.projectTOMi.tomi.authorization.manager;
 
 import java.util.List;
+import ca.projectTOMi.tomi.authorization.policy.UserAuthorizationPolicy;
+import ca.projectTOMi.tomi.authorization.permission.UserPermission;
 import ca.projectTOMi.tomi.model.UserAccount;
 
 
-public final class UserAuthorizationManager implements AuthorizationManager<UserAuthorizationPolicy>{
+public final class UserAuthorizationManager implements AuthorizationManager<UserAuthorizationPolicy> {
   private List<UserAuthorizationPolicy> policies;
   private final UserAccount user;
 
