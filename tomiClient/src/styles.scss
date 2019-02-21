@@ -105,6 +105,27 @@ body{
   width:20em;
 }
 
+/**
+*   @author: James Andrade
+ */
+
+.sidebar_list{
+  list-style: none; //removes bullets
+  padding-left: 0;
+  color: black;
+}
+
+li.sidebar_list:hover{
+  color: white;
+}
+
+// for highlighting selected items, that are NOT sidebar
+.highlighted{
+  background-color: $blue;
+  color: white;
+}
+
+
 .user_account_name {
   font-weight: 700;
   color: $orange;

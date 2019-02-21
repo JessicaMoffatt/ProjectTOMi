@@ -41,6 +41,9 @@ import { ViewUserComponent } from './component/panel/view-user/view-user.compone
 import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
 import {TimesheetService} from "./service/timesheet.service";
 import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry-submitted.component';
+import { AddTaskComponent } from './component/modal/add-task/add-task.component';
+import {TaskPanelService} from "./service/task-panel.service";
+import { EditTaskComponent } from './component/modal/edit-task/edit-task.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +63,9 @@ import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry
     TeamSidebarComponent,
     AddTeamComponent,
     AddTeamMemberComponent,
+    AddTaskComponent,
+    EditTaskComponent,
+    AddTeamMemberComponent,
     UserAccountSidebarComponent,
     UserAccountComponent,
     AddUserAccountComponent,
@@ -76,6 +82,7 @@ import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry
     HttpClientModule,
     OrderModule,
     ModalModule,
+    OrderModule
   ],
   entryComponents:[
     EntryComponent,
@@ -84,7 +91,10 @@ import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry
     AddUserAccountComponent,
     EntrySubmittedComponent,
     DeleteEntryModalComponent,
-    SubmitTimesheetModalComponent
+    SubmitTimesheetModalComponent,
+    AddTeamMemberComponent,
+    AddTaskComponent,
+    EditTaskComponent
   ],
   providers: [
     TeamSidebarService,
@@ -98,7 +108,9 @@ import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry
     TimesheetService,
     BsModalService,
     ComponentLoaderFactory,
-    PositioningService
+    PositioningService,
+    UserAccountService,
+    TaskPanelService
   ],
   bootstrap: [AppComponent]
 })
