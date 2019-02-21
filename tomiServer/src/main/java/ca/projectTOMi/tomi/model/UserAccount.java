@@ -121,4 +121,9 @@ public final class UserAccount {
 			return this.getId().equals(((UserAccount) obj).getId());
 		}
 	}
+
+	@Override
+	public String toString() {
+		return this.firstName + " " + this.lastName;
+	}
 }

@@ -100,7 +100,7 @@ public class ProjectController {
 	 */
 	@PostMapping ("/projects")
 	public ResponseEntity<?> createProject(@RequestBody final Project newProject) throws URISyntaxException {
-		if (!newProject.getId().trim().matches("^\\p{Alpha}\\p{Alpha}\\d{0,5}+$")) {
+		if (newProject.getId() == null || !newProject.getId().trim().matches("^\\p{Alpha}\\p{Alpha}\\d{0,5}+$")) {
 			throw new InvalidIDPrefix();
 		}
 		newProject.setId(this.projectService.getId(newProject.getId()));
@@ -179,7 +179,7 @@ public class ProjectController {
 		return this.entryService.evaluateEntry(entryId, status) ? ResponseEntity.accepted().build(): ResponseEntity.badRequest().build();
 	}
 
-	@ExceptionHandler ({ProjectNotFoundException.class})
+	@ExceptionHandler ({ProjectNotFoundException.class, InvalidIDPrefix.class})
 	public ResponseEntity<?> handleExceptions(final Exception e) {
 		this.logger.warn("Project Exception: " + e.getClass());
 		return ResponseEntity.status(400).build();

@@ -18,32 +18,34 @@ public final class ProjectAuthorizationManager implements AuthorizationManager<P
     final ProjectAuthorizationPolicy requestPolicy = new ProjectAuthorizationPolicy();
     requestPolicy.setRequestingUser(this.user);
     final Project requestProject;
-    if (request.equals("POST")) {
-      if (URI.split("/")[1].equals("projects")) {
-        requestPolicy.setPermission(ProjectPermission.CREATE);
-
-        requestProject = new Project();
-        requestProject.setId("CREATE");
-        requestPolicy.setProject(requestProject);
-      } else {
-        requestPolicy.setPermission(ProjectPermission.CREATE_EXPENSE);
-        requestProject = new Project();
-        requestProject.setId(URI.split("/")[2]);
-        requestPolicy.setProject(requestProject);
-      }
-    } else if (request.equals("PUT") || request.equals("DELETE")) {
+    if ("POST".equals(request)) {
+      requestPolicy.setPermission(ProjectPermission.CREATE_EXPENSE);
+      requestProject = new Project();
+      requestProject.setId(URI.split("/")[2]);
+      requestPolicy.setProject(requestProject);
+    } else if ("PUT".equals(request)) {
       requestPolicy.setPermission(ProjectPermission.WRITE);
       requestProject = new Project();
       requestProject.setId(URI.split("/")[2]);
       requestPolicy.setProject(requestProject);
-    } else if (request.equals("GET")) {
+    } else if ("DELETE".equals(request)) {
+      requestPolicy.setPermission(ProjectPermission.DELETE_EXPENSE);
+      requestProject = new Project();
+      requestProject.setId(URI.split("/")[2]);
+      requestPolicy.setProject(requestProject);
+    }else if ("GET".equals(request)) {
       requestPolicy.setPermission(ProjectPermission.READ);
       requestProject = new Project();
       try {
         requestProject.setId(URI.split("/")[2]);
         requestPolicy.setProject(requestProject);
       } catch (final IndexOutOfBoundsException e) {
-        return true;
+        boolean hasAnyReadPermission = false;
+        for (final ProjectAuthorizationPolicy policy : this.policies) {
+          final boolean hasReadPermission = policy.getPermission() == ProjectPermission.READ;
+          hasAnyReadPermission = Boolean.logicalOr(hasAnyReadPermission, hasReadPermission);
+        }
+        return hasAnyReadPermission;
       }
     }
     return this.policies.contains(requestPolicy);

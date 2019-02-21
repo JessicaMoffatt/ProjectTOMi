@@ -30,4 +30,19 @@ public class UserAuthorizationPolicy {
   @NotNull
   private UserPermission permission;
 
+  @Override
+  public int hashCode() {
+    return this.id.hashCode();
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (obj.getClass() != UserAuthorizationPolicy.class) {
+      return false;
+    } else {
+      final UserAuthorizationPolicy policyB = (UserAuthorizationPolicy) obj;
+      boolean equal = this.permission == policyB.getPermission();
+      return equal && this.requestingUser.equals(policyB.getRequestingUser());
+    }
+  }
 }

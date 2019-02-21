@@ -1,11 +1,16 @@
 package ca.projectTOMi.tomi.authorization;
 
 public enum ProjectPermission {
-  READ_NAME,
   READ,
-  READ_BUDGET,
   WRITE,
-  CREATE,
+
+  // Entry
   EVALUATE_ENTRIES,
-  CREATE_EXPENSE
+
+  // Expense
+  CREATE_EXPENSE,
+  DELETE_EXPENSE,
+
+  // Budget
+  READ_BUDGET
 }

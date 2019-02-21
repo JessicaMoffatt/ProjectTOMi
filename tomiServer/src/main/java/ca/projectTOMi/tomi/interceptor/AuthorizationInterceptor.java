@@ -24,64 +24,76 @@ import org.springframework.web.servlet.ModelAndView;
 @Component
 @CrossOrigin (origins = "http://localhost:4200")
 public class AuthorizationInterceptor implements HandlerInterceptor {
-  private final ProjectAuthorizationRepository projectAuthRepository;
-  private final TimesheetAuthorizationRepository timesheetAuthRepository;
-  private final UserAuthorizationRepository userAuthRepository;
-  private final UserAccountService service;
+	private final ProjectAuthorizationRepository projectAuthRepository;
+	private final TimesheetAuthorizationRepository timesheetAuthRepository;
+	private final UserAuthorizationRepository userAuthRepository;
+	private final UserAccountService service;
 
-  @Autowired
-  public AuthorizationInterceptor(final UserAuthorizationRepository userAuthRepository, final ProjectAuthorizationRepository projectAuthRepository, final TimesheetAuthorizationRepository timesheetAuthRepository, final UserAccountService service) {
-    this.projectAuthRepository = projectAuthRepository;
-    this.timesheetAuthRepository = timesheetAuthRepository;
-    this.userAuthRepository = userAuthRepository;
-    this.service = service;
-  }
+	@Autowired
+	public AuthorizationInterceptor(final UserAuthorizationRepository userAuthRepository, final ProjectAuthorizationRepository projectAuthRepository, final TimesheetAuthorizationRepository timesheetAuthRepository, final UserAccountService service) {
+		this.projectAuthRepository = projectAuthRepository;
+		this.timesheetAuthRepository = timesheetAuthRepository;
+		this.userAuthRepository = userAuthRepository;
+		this.service = service;
+	}
 
-  @Override
-  public boolean preHandle(
-	  final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
-    final String authToken = request.getHeader("Authorization");
+	@Override
+	public boolean preHandle(
+		final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
+		final String authToken = request.getHeader("Authorization");
 
-    //TODO Remove Hardcoded UserAccount---------------
-    final UserAccount user = this.service.getUserAccount(1L);
-    //TODO -------------------------------------------
+		//TODO Remove Hardcoded UserAccount---------------
+		final UserAccount user = this.service.getUserAccount(1L);
+		//TODO -------------------------------------------
 
-    final String requestMethod = request.getMethod();
-    final String requestURI = request.getRequestURI();
-    String controller = "";
-    try {
-      controller = ((HandlerMethod) handler).getMethod().getDeclaringClass().toString();
-      controller = controller.replace("class ca.projectTOMi.tomi.controller.", "");
-    }catch (final ClassCastException e){
-      return true;
-    }
-    if(controller.matches("TimesheetController|EntryController")) {
-      final AuthorizationManager<TimesheetAuthorizationPolicy> authMan;
-      authMan = new TimesheetAuthorizationManager(user);
-      authMan.loadUserPolicies(this.timesheetAuthRepository.getAllByRequestingUser(user));
-      request.setAttribute("authMan", authMan);
-    }else if(controller.matches("ProjectController|ExpenseController")) {
-      final AuthorizationManager<ProjectAuthorizationPolicy> authMan;
-      authMan = new ProjectAuthorizationManager(user);
-      authMan.loadUserPolicies(this.projectAuthRepository.getAllByRequestingUser(user));
-      request.setAttribute("authMan", authMan);
-    }else{
-      final AuthorizationManager<UserAuthorizationPolicy> authMan;
-      authMan = new UserAuthorizationManager(user);
-      authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
-      request.setAttribute("authMan", authMan);
-    }
-    return ((AuthorizationManager)request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
-  }
+		final String requestMethod = request.getMethod();
+		final String requestURI = request.getRequestURI();
+		String controller = "";
+		try {
+			controller = ((HandlerMethod) handler).getMethod().getDeclaringClass().toString();
+			controller = controller.replace("class ca.projectTOMi.tomi.controller.", "");
+		} catch (final ClassCastException e) {
+			return true;
+		}
+		if ("TimesheetController".matches(controller) || "EntryController".matches(controller)) {
+			final AuthorizationManager<TimesheetAuthorizationPolicy> authMan;
+			authMan = new TimesheetAuthorizationManager(user);
+			authMan.loadUserPolicies(this.timesheetAuthRepository.getAllByRequestingUser(user));
+			request.setAttribute("authMan", authMan);
+		} else if ("ProjectController".matches(controller)) {
+			if ("POST".equals(requestMethod) || "DELETE".equals(requestMethod)) {
+				final AuthorizationManager<UserAuthorizationPolicy> authMan;
+				authMan = new UserAuthorizationManager(user);
+				authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
+				request.setAttribute("authMan", authMan);
+			} else {
+				final AuthorizationManager<ProjectAuthorizationPolicy> authMan;
+				authMan = new ProjectAuthorizationManager(user);
+				authMan.loadUserPolicies(this.projectAuthRepository.getAllByRequestingUser(user));
+				request.setAttribute("authMan", authMan);
+			}
+		} else if ("ExpenseController".matches(controller)) {
+			final AuthorizationManager<ProjectAuthorizationPolicy> authMan;
+			authMan = new ProjectAuthorizationManager(user);
+			authMan.loadUserPolicies(this.projectAuthRepository.getAllByRequestingUser(user));
+			request.setAttribute("authMan", authMan);
+		} else {
+			final AuthorizationManager<UserAuthorizationPolicy> authMan;
+			authMan = new UserAuthorizationManager(user);
+			authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
+			request.setAttribute("authMan", authMan);
+		}
+		return ((AuthorizationManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
+	}
 
-  @Override
-  public void postHandle(
-	  final HttpServletRequest request, final HttpServletResponse response, final Object handler,
-	  final ModelAndView modelAndView) throws Exception {
-  }
+	@Override
+	public void postHandle(
+		final HttpServletRequest request, final HttpServletResponse response, final Object handler,
+		final ModelAndView modelAndView) throws Exception {
+	}
 
-  @Override
-  public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response,
-                              final Object handler, final Exception exception) throws Exception {
-  }
+	@Override
+	public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response,
+	                            final Object handler, final Exception exception) throws Exception {
+	}
 }

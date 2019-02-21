@@ -14,7 +14,15 @@ public final class UserAuthorizationManager implements AuthorizationManager<User
 
   @Override
   public boolean requestAuthorization(final String URI, final String request) {
-    return true;
+    final UserAuthorizationPolicy requestPolicy = new UserAuthorizationPolicy();
+    requestPolicy.setRequestingUser(this.user);
+    if ("POST".equals(request)) {
+      String uriHead = URI.split("/")[1];
+      if("projects".matches(uriHead)){
+        requestPolicy.setPermission(UserPermission.CREATE_PROJECT);
+      }
+    }
+    return this.policies.contains(requestPolicy);
   }
 
   @Override
