@@ -7,37 +7,118 @@ import ca.projectTOMi.tomi.model.UserAccount;
 
 
 public final class UserAuthorizationManager implements AuthorizationManager<UserAuthorizationPolicy> {
-  private List<UserAuthorizationPolicy> policies;
-  private final UserAccount user;
+	private List<UserAuthorizationPolicy> policies;
+	private final UserAccount user;
 
-  public UserAuthorizationManager(final UserAccount user){
-    this.user = user;
-  }
+	public UserAuthorizationManager(final UserAccount user) {
+		this.user = user;
+	}
 
-  @Override
-  public boolean requestAuthorization(final String URI, final String request) {
-    final UserAuthorizationPolicy requestPolicy = new UserAuthorizationPolicy();
-    requestPolicy.setRequestingUser(this.user);
-    final String uriHead = URI.split("/")[1];
-    if ("POST".equals(request)) {
-      if("projects".matches(uriHead)){
-        requestPolicy.setPermission(UserPermission.CREATE_PROJECT);
-      }
-    }else if("DELETE".equals(request)){
-      if("projects".matches(uriHead)){
-        requestPolicy.setPermission(UserPermission.DELETE_PROJECT);
-      }
-    }
-    return this.policies.contains(requestPolicy);
-  }
+	@Override
+	public boolean requestAuthorization(final String URI, final String request) {
+		final UserAuthorizationPolicy requestPolicy = new UserAuthorizationPolicy();
+		requestPolicy.setRequestingUser(this.user);
+		final String uriHead = URI.split("/")[1];
+		if ("POST".equals(request)) {
+			switch (uriHead) {
+				case "projects":
+					requestPolicy.setPermission(UserPermission.CREATE_PROJECT);
+					break;
+				case "user_accounts":
+					requestPolicy.setPermission(UserPermission.CREATE_USER_ACCOUNT);
+					break;
+				case "teams":
+					requestPolicy.setPermission(UserPermission.CREATE_TEAM);
+					break;
+				case "tasks":
+					requestPolicy.setPermission(UserPermission.CREATE_TASK);
+					break;
+				case "unit_types":
+					requestPolicy.setPermission(UserPermission.CREATE_UNIT_TYPE);
+					break;
+				case "clients":
+					requestPolicy.setPermission(UserPermission.CREATE_CLIENT);
+					break;
+				default:
+					return false;
+			}
+		} else if ("DELETE".equals(request)) {
+			switch (uriHead) {
+				case "projects":
+					requestPolicy.setPermission(UserPermission.DELETE_PROJECT);
+					break;
+				case "user_accounts":
+					requestPolicy.setPermission(UserPermission.DELETE_USER_ACCOUNT);
+					break;
+				case "teams":
+					requestPolicy.setPermission(UserPermission.DELETE_TEAM);
+					break;
+				case "tasks":
+					requestPolicy.setPermission(UserPermission.DELETE_TASK);
+					break;
+				case "unit_types":
+					requestPolicy.setPermission(UserPermission.DELETE_UNIT_TYPE);
+					break;
+				case "clients":
+					requestPolicy.setPermission(UserPermission.DELETE_CLIENT);
+					break;
+				default:
+					return false;
+			}
+		} else if ("PUT".equals(request)) {
+			switch (uriHead) {
+				case "user_accounts":
+					requestPolicy.setPermission(UserPermission.WRITE_USER_ACCOUNT);
+					break;
+				case "teams":
+					requestPolicy.setPermission(UserPermission.WRITE_TEAM);
+					break;
+				case "tasks":
+					requestPolicy.setPermission(UserPermission.WRITE_TASK);
+					break;
+				case "unit_types":
+					requestPolicy.setPermission(UserPermission.WRITE_UNIT_TYPE);
+					break;
+				case "clients":
+					requestPolicy.setPermission(UserPermission.WRITE_CLIENT);
+					break;
+				default:
+					return false;
+			}
+		} else if ("GET".equals(request)) {
+			switch (uriHead) {
+				case "user_accounts":
+					requestPolicy.setPermission(UserPermission.READ_USER_ACCOUNT);
+					break;
+				case "teams":
+					requestPolicy.setPermission(UserPermission.READ_TEAM);
+					break;
+				case "tasks":
+					requestPolicy.setPermission(UserPermission.READ_TASK);
+					break;
+				case "unit_types":
+					requestPolicy.setPermission(UserPermission.READ_UNIT_TYPE);
+					break;
+				case "clients":
+					requestPolicy.setPermission(UserPermission.READ_CLIENT);
+					break;
+				default:
+					return false;
+			}
+			if (URI.split("/").length < 3) {
+				requestPolicy.setPermission(UserPermission.READ_LISTS);
+			}
+		}
+		return this.policies.contains(requestPolicy);
+	}
 
-  @Override
-  public boolean linkAuthorization(final String URI, final String request) {
-    return false;
-  }
+	@Override
+	public boolean linkAuthorization(final String URI, final String request) {
+		return false;
+	}
 
-  @Override
-  public void loadUserPolicies(final List<UserAuthorizationPolicy> policies) {
-    this.policies = policies;
-  }
+	@Override
+	public void loadUserPolicies(final List<UserAuthorizationPolicy> policies) {
+		this.policies = policies;
+	}
 }
