@@ -1,5 +1,10 @@
 package ca.projectTOMi.tomi.authorization.permission;
 
+/**
+ *
+ * @author Karol Talbot
+ * @version 1
+ */
 public enum ProjectPermission {
   READ,
   WRITE,

@@ -14,7 +14,7 @@ import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.stereotype.Component;
 
 /**
- * ClientResourceAssembler is responsible for creating a standard resource for {@link Project}
+ * ProjectResourceAssembler is responsible for creating a standard resource for {@link Project}
  * objects.
  *
  * @author Karol Talbot
@@ -27,14 +27,14 @@ public final class ProjectResourceAssembler implements ResourceAssembler<Project
 	@Override
 	public Resource<Project> toResource(final Project project) {
 		final Resource<Project> resource = new Resource<>(project,
-			linkTo(methodOn(ProjectController.class).getProject(project.getId())).withSelfRel(),
-			linkTo(methodOn(ProjectController.class).getActiveProjects()).withRel("clients"),
+			linkTo(methodOn(ProjectController.class).getProject(project.getId(), null)).withSelfRel(),
+			linkTo(methodOn(ProjectController.class).getActiveProjects(null)).withRel("projects"),
 			linkTo(methodOn(ProjectController.class).setProjectInactive(project.getId())).withRel("delete"),
 			linkTo(methodOn(ProjectController.class).getEntriesToEvaluate(project.getId())).withRel("entries")
 			);
 
 		try {
-			resource.add(linkTo(methodOn(ProjectController.class).updateProject(project.getId(), project)).withRel("update"));
+			resource.add(linkTo(methodOn(ProjectController.class).updateProject(project.getId(), project, null)).withRel("update"));
 		} catch (final URISyntaxException e) {
 			this.logger.warn(e.getMessage());
 		}

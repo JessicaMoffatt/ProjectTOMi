@@ -4,8 +4,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
 import ca.projectTOMi.tomi.assembler.EntryResourceAssembler;
 import ca.projectTOMi.tomi.assembler.ProjectResourceAssembler;
+import ca.projectTOMi.tomi.authorization.manager.ProjectAuthorizationManager;
 import ca.projectTOMi.tomi.exception.InvalidIDPrefix;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
 import ca.projectTOMi.tomi.model.Entry;
@@ -37,7 +39,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * system.
  *
  * @author Karol Talbot
- * @version 1
+ * @version 1.1
  */
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
@@ -66,8 +68,9 @@ public class ProjectController {
 	 * @return Resource representing the Project object.
 	 */
 	@GetMapping ("/projects/{id}")
-	public Resource<Project> getProject(@PathVariable final String id) {
-		return this.projectResourceAssembler.toResource(this.projectService.getProjectById(id));
+	public Resource<Project> getProject(@PathVariable final String id, final HttpServletRequest request) {
+		final ProjectAuthorizationManager authMan = (ProjectAuthorizationManager) request.getAttribute("authMan");
+		return this.projectResourceAssembler.toResource(authMan.filterFields(this.projectService.getProjectById(id)));
 	}
 
 	/**
@@ -76,15 +79,16 @@ public class ProjectController {
 	 * @return Collection of resources representing all active Projects
 	 */
 	@GetMapping ("/projects")
-	public Resources<Resource<Project>> getActiveProjects() {
-
-		final List<Resource<Project>> project = this.projectService.getActiveProjects()
+	public Resources<Resource<Project>> getActiveProjects(final HttpServletRequest request) {
+		final ProjectAuthorizationManager authMan = (ProjectAuthorizationManager) request.getAttribute("authMan");
+		final List<Project> projects = this.projectService.getActiveProjects();
+		final	List<Resource<Project>> projectResources = authMan.filterList(projects)
 			.stream()
 			.map(this.projectResourceAssembler::toResource)
 			.collect(Collectors.toList());
 
-		return new Resources<>(project,
-			linkTo(methodOn(ProjectController.class).getActiveProjects()).withSelfRel());
+		return new Resources<>(projectResources,
+			linkTo(methodOn(ProjectController.class).getActiveProjects(request)).withSelfRel());
 	}
 
 	/**
@@ -99,12 +103,13 @@ public class ProjectController {
 	 * 	when the created URI is unable to be parsed
 	 */
 	@PostMapping ("/projects")
-	public ResponseEntity<?> createProject(@RequestBody final Project newProject) throws URISyntaxException {
+	public ResponseEntity<?> createProject(@RequestBody final Project newProject, final HttpServletRequest request) throws URISyntaxException {
+		final ProjectAuthorizationManager authMan = (ProjectAuthorizationManager) request.getAttribute("authMan");
 		if (newProject.getId() == null || !newProject.getId().trim().matches("^\\p{Alpha}\\p{Alpha}\\d{0,5}+$")) {
 			throw new InvalidIDPrefix();
 		}
 		newProject.setId(this.projectService.getId(newProject.getId()));
-		final Resource<Project> resource = this.projectResourceAssembler.toResource(this.projectService.saveProject(newProject));
+		final Resource<Project> resource = this.projectResourceAssembler.toResource(authMan.filterFields(this.projectService.saveProject(newProject)));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
@@ -124,9 +129,10 @@ public class ProjectController {
 	 * 	when the created URI is unable to be parsed
 	 */
 	@PutMapping ("/projects/{id}")
-	public ResponseEntity<?> updateProject(@PathVariable final String id, @RequestBody final Project newProject) throws URISyntaxException {
+	public ResponseEntity<?> updateProject(@PathVariable final String id, @RequestBody final Project newProject, final HttpServletRequest request) throws URISyntaxException {
+		final ProjectAuthorizationManager authMan = (ProjectAuthorizationManager) request.getAttribute("authMan");
 		newProject.setActive(true);
-		final Project updatedProject = this.projectService.updateProject(id, newProject);
+		final Project updatedProject = authMan.filterFields(this.projectService.updateProject(id, newProject));
 		final Resource<Project> resource = this.projectResourceAssembler.toResource(updatedProject);
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
@@ -150,15 +156,17 @@ public class ProjectController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@GetMapping ("/user_accounts/{id}/projects")
-	public Resources<Resource<Project>> getProjectsByUserAccount(@PathVariable final Long id) {
-		final List<Resource<Project>> project = this.projectService.getProjectByUserAccount(id)
+	@GetMapping ("/user_accounts/{userAccountId}/projects")
+	public Resources<Resource<Project>> getProjectsByUserAccount(@PathVariable final Long userAccountId, final HttpServletRequest request) {
+		final ProjectAuthorizationManager authMan = (ProjectAuthorizationManager) request.getAttribute("authMan");
+		final List<Project> projects = this.projectService.getProjectByUserAccount(userAccountId);
+		final	List<Resource<Project>> projectResources = authMan.filterList(projects)
 			.stream()
 			.map(this.projectResourceAssembler::toResource)
 			.collect(Collectors.toList());
 
-		return new Resources<>(project,
-			linkTo(methodOn(ProjectController.class).getActiveProjects()).withSelfRel());
+		return new Resources<>(projectResources,
+			linkTo(methodOn(ProjectController.class).getProjectsByUserAccount(userAccountId, request)).withSelfRel());
 	}
 
 	@GetMapping ("/projects/{projectId}/evaluate_entries")
@@ -175,8 +183,9 @@ public class ProjectController {
 
 	@PutMapping("/projects/{projectId}/entries/{entryId}")
 	public ResponseEntity<?> evaluateEntry(@PathVariable final String projectId, @PathVariable final Long entryId, @RequestBody final Status status){
-		if(status != Status.APPROVED && status != Status.REJECTED)
+		if(status != Status.APPROVED && status != Status.REJECTED) {
 			return ResponseEntity.badRequest().build();
+		}
 		return this.entryService.evaluateEntry(entryId, status) ? ResponseEntity.accepted().build(): ResponseEntity.badRequest().build();
 	}
 

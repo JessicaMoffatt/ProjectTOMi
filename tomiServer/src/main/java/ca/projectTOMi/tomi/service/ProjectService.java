@@ -46,8 +46,12 @@ public final class ProjectService {
 	public Project updateProject(final String id, final Project newProject) {
 		return this.repository.findById(id).map(project -> {
 			project.setProjectName(newProject.getProjectName());
-			project.setBillableRate(newProject.getBillableRate());
-			project.setBudget(newProject.getBudget());
+			if (newProject.getBillableRate() != null) {
+				project.setBillableRate(newProject.getBillableRate());
+			}
+			if (newProject.getBudget() != null) {
+				project.setBudget(newProject.getBudget());
+			}
 			project.setClient(newProject.getClient());
 			project.setProjectManager(newProject.getProjectManager());
 			project.setProjectMembers(newProject.getProjectMembers());

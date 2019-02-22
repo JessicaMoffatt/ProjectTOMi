@@ -1,5 +1,6 @@
 package ca.projectTOMi.tomi.authorization.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 import ca.projectTOMi.tomi.authorization.policy.ProjectAuthorizationPolicy;
 import ca.projectTOMi.tomi.authorization.permission.ProjectPermission;
@@ -26,7 +27,7 @@ public final class ProjectAuthorizationManager implements AuthorizationManager<P
 			requestProject.setId(URI.split("/")[2]);
 			requestPolicy.setProject(requestProject);
 		} else if ("PUT".equals(request)) {
-			if ("entries".equals(URI.split("/")[3])) {
+			if (URI.split("/").length > 3 && "entries".equals(URI.split("/")[3])) {
 				requestPolicy.setPermission(ProjectPermission.EVALUATE_ENTRIES);
 			} else {
 				requestPolicy.setPermission(ProjectPermission.WRITE);
@@ -80,11 +81,30 @@ public final class ProjectAuthorizationManager implements AuthorizationManager<P
 
 	@Override
 	public List<Project> filterList(final List<Project> list) {
-		return null;
+		final List<Project> resultList = new ArrayList<>();
+		final ProjectAuthorizationPolicy authorizationPolicy = new ProjectAuthorizationPolicy();
+		authorizationPolicy.setPermission(ProjectPermission.READ);
+		authorizationPolicy.setRequestingUser(this.user);
+		for (Project p : list) {
+			p = this.filterFields(p);
+			authorizationPolicy.setProject(p);
+			if (this.policies.contains(authorizationPolicy)) {
+				resultList.add(p);
+			}
+		}
+		return resultList;
 	}
 
 	@Override
 	public Project filterFields(final Project toFilter) {
-		return null;
+		final ProjectAuthorizationPolicy authorizationPolicy = new ProjectAuthorizationPolicy();
+		authorizationPolicy.setPermission(ProjectPermission.READ_BUDGET);
+		authorizationPolicy.setRequestingUser(this.user);
+		authorizationPolicy.setProject(toFilter);
+		if (!this.policies.contains(authorizationPolicy)) {
+			toFilter.setBudget(null);
+			toFilter.setBillableRate(null);
+		}
+		return toFilter;
 	}
 }

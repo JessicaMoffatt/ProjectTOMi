@@ -27,7 +27,7 @@ public final class UserAccountResourceAssembler implements ResourceAssembler<Use
 			linkTo(methodOn(UserAccountController.class).getActiveAccounts()).withRel("accounts"),
 			linkTo(methodOn(UserAccountController.class).setUserAccountInactive(userAccount.getId())).withRel("delete"),
 			linkTo(methodOn(UserAccountController.class).updateUserAccount(userAccount.getId(), userAccount)).withRel("update"),
-			linkTo(methodOn(ProjectController.class).getProjectsByUserAccount(userAccount.getId())).withRel("projects")
+			linkTo(methodOn(ProjectController.class).getProjectsByUserAccount(userAccount.getId(), null)).withRel("projects")
 		);
 
 		return resource;
