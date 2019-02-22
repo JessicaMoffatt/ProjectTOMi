@@ -57,7 +57,7 @@ public class ClientController {
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
-		return new Resources<>(account, linkTo(methodOn(UserAccountController.class).getActiveAccounts()).withSelfRel());
+		return new Resources<>(account, linkTo(methodOn(ClientController.class).getActiveClients()).withSelfRel());
 	}
 
 	/**
