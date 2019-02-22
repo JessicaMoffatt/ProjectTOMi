@@ -102,7 +102,7 @@ public class EntryService {
 				entry.setFridayHours(updatedEntry.getFridayHours());
 				entry.setSaturdayHours(updatedEntry.getSaturdayHours());
 				entry.setSundayHours(updatedEntry.getSundayHours());
-				entry.setTimesheet(timesheetRepository.findById(entry.getTimesheet().getId()).orElse(entry.getTimesheet()));
+				entry.setTimesheet(updatedEntry.getTimesheet().getId());
 				entry.setStatus(Status.LOGGING);
 				entry.setActive(true);
 				this.entryRepository.save(entry);
@@ -136,7 +136,6 @@ public class EntryService {
 		entry.setStatus(Status.LOGGING);
 		entry.setActive(true);
 		entry.setQuantity(0.0);
-		entry.setTimesheet(timesheetRepository.findById(entry.getTimesheet().getId()).orElse(entry.getTimesheet()));
 		return this.entryRepository.save(entry);
 	}
 
@@ -308,7 +307,7 @@ public class EntryService {
 	 * @param id
 	 * 	the unique identifier for the timesheet
 	 */
-	public void evaluateTimesheet(final Long id) {
+	private void evaluateTimesheet(final Long id) {
 		final List<Status> statuses = this.timesheetRepository.getEntriesStatusesByTimesheet(id);
 		final Timesheet timesheet = this.timesheetRepository.findById(id).orElseThrow(TimesheetNotFoundException::new);
 		if (!statuses.contains(Status.SUBMITTED) && !statuses.contains(Status.LOGGING)) {

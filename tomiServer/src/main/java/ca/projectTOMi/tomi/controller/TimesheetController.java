@@ -45,17 +45,17 @@ public class TimesheetController {
 		this.userAccountService = userAccountService;
 	}
 
-	@GetMapping ("/user_accounts/{userAccountId}/timesheets/{timesheetId}")
-	public Resource<Timesheet> getTimesheet(@PathVariable final Long timesheetId, @PathVariable final Long userAccountId) {
-		return this.assembler.toResource(this.entryService.getTimesheetById(timesheetId));
+	@GetMapping ("/timesheets/{id}")
+	public Resource<Timesheet> getTimesheet(@PathVariable final Long id) {
+		return this.assembler.toResource(this.entryService.getTimesheetById(id));
 	}
 
-	@PutMapping ("/user_accounts/{userAccountId}/timesheets/{timesheetId}/submit")
-	public Resource<Timesheet> submitTimesheet(@PathVariable final Long timesheetId, @PathVariable final Long userAccountId) {
-		return this.assembler.toResource(this.entryService.submitTimesheet(timesheetId));
+	@PutMapping ("/timesheets/{id}/submit")
+	public Resource<Timesheet> submitTimesheet(@PathVariable final Long id) {
+		return this.assembler.toResource(this.entryService.submitTimesheet(id));
 	}
 
-	@GetMapping ("/user_accounts/{userAccountId}/timesheets")
+	@GetMapping ("/timesheets/user_accounts/{userAccountId}")
 	public Resources<Resource<Timesheet>> getTimesheetsByUserAccount(@PathVariable final Long userAccountId) {
 		final List<Resource<Timesheet>> expense = this.userAccountService.getTimesheetsByUserAccount(userAccountId)
 			.stream()

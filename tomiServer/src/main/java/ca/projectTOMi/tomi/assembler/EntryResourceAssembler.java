@@ -27,11 +27,10 @@ public class EntryResourceAssembler implements ResourceAssembler<Entry, Resource
 
 	@Override
 	public Resource<Entry> toResource(final Entry entry) {
-		final Long userAccountId = entry.getTimesheet().getUserAccount().getId();
 		final Resource<Entry> resource = new Resource<>(entry,
-			linkTo(methodOn(EntryController.class).getEntry(entry.getId(), userAccountId)).withSelfRel(),
-			linkTo(methodOn(EntryController.class).getAllTimesheetEntries(entry.getTimesheet().getId(), userAccountId)).withRel("entries"),
-			linkTo(methodOn(EntryController.class).deleteEntry(entry.getId(), userAccountId)).withRel("delete")
+			linkTo(methodOn(EntryController.class).getEntry(entry.getId())).withSelfRel(),
+			linkTo(methodOn(EntryController.class).getAllTimesheetEntries(entry.getTimesheet().getId())).withRel("entries"),
+			linkTo(methodOn(EntryController.class).deleteEntry(entry.getId())).withRel("delete")
 		);
 
 		if(entry.getStatus() == Status.SUBMITTED){
@@ -39,8 +38,8 @@ public class EntryResourceAssembler implements ResourceAssembler<Entry, Resource
 		}
 
 		try {
-			resource.add(linkTo(methodOn(EntryController.class).updateEntry(entry.getId(), userAccountId, entry)).withRel("update"));
-			resource.add(linkTo(methodOn(EntryController.class).copyEntry(entry.getId(), userAccountId)).withRel("copy"));
+			resource.add(linkTo(methodOn(EntryController.class).updateEntry(entry.getId(), entry)).withRel("update"));
+			resource.add(linkTo(methodOn(EntryController.class).copyEntry(entry.getId())).withRel("copy"));
 		} catch (final URISyntaxException e) {
 			this.logger.warn(e.getMessage());
 		}

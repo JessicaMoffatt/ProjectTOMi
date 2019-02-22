@@ -23,9 +23,9 @@ public final class TimesheetResourceAssembler implements ResourceAssembler<Times
 	@Override
 	public Resource<Timesheet> toResource(final Timesheet timesheet) {
 		return new Resource<>(timesheet,
-			linkTo(methodOn(TimesheetController.class).getTimesheet(timesheet.getId(), timesheet.getUserAccount().getId())).withSelfRel(),
-			linkTo(methodOn(TimesheetController.class).submitTimesheet(timesheet.getId(), timesheet.getUserAccount().getId())).withRel("submit"),
-			linkTo(methodOn(EntryController.class).getAllTimesheetEntries(timesheet.getId(), timesheet.getUserAccount().getId())).withRel("getEntries"),
+			linkTo(methodOn(TimesheetController.class).getTimesheet(timesheet.getId())).withSelfRel(),
+			linkTo(methodOn(TimesheetController.class).submitTimesheet(timesheet.getId())).withRel("submit"),
+			linkTo(methodOn(EntryController.class).getAllTimesheetEntries(timesheet.getId())).withRel("getEntries"),
 			linkTo(methodOn(TimesheetController.class).getTimesheetsByUserAccount(timesheet.getUserAccount().getId())).withRel("timesheets")
 		);
 	}

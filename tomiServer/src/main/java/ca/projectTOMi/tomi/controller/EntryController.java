@@ -48,9 +48,9 @@ public class EntryController {
 		this.entryService = entryService;
 	}
 
-	@GetMapping ("/user_accounts/{userAccountId}/entries/{entryId}")
-	public Resource<Entry> getEntry(@PathVariable final Long entryId, @PathVariable final Long userAccountId) {
-		final Entry entry = this.entryService.getEntry(entryId);
+	@GetMapping ("/entries/{id}")
+	public Resource<Entry> getEntry(@PathVariable final Long id) {
+		final Entry entry = this.entryService.getEntry(id);
 
 		return this.assembler.toResource(entry);
 	}
@@ -66,50 +66,40 @@ public class EntryController {
 	 * @throws URISyntaxException
 	 * 	when the created URI is unable to be parsed.
 	 */
-	@PostMapping ("/user_accounts/{userAccountId}/timesheets/{timesheetId}/entries")
-	public ResponseEntity<?> createEntry(@RequestBody final Entry newEntry, @PathVariable final Long userAccountId, @PathVariable final Long timesheetId) throws URISyntaxException {
-		newEntry.setTimesheet(timesheetId);
+	@PostMapping ("/entries")
+	public ResponseEntity<?> createEntry(@RequestBody final Entry newEntry) throws URISyntaxException {
 		final Resource<Entry> resource = this.assembler.toResource(this.entryService.saveEntry(newEntry));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 
-	@PutMapping ("/user_accounts/{userAccountId}/entries/{entryId}")
-	public ResponseEntity<?> updateEntry(@PathVariable final Long entryId, @PathVariable final Long userAccountId, @RequestBody final Entry newEntry) throws URISyntaxException {
-		final Entry updatedEntry = this.entryService.updateEntry(entryId, newEntry);
+	@PutMapping ("/entries/{id}")
+	public ResponseEntity<?> updateEntry(@PathVariable final Long id, @RequestBody final Entry newEntry) throws URISyntaxException {
+		final Entry updatedEntry = this.entryService.updateEntry(id, newEntry);
 		final Resource<Entry> resource = this.assembler.toResource(updatedEntry);
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 
-	/**
-	 * Deletes the {@link Entry} with the provided id. The EntryService determines how to properly
-	 * delete the Entry object. Responds to the DELETE requests to /entries/id.
-	 *
-	 * @param entryId
-	 * 	the unique identifier for the Entry to be deleted or set inactive.
-	 *
-	 * @return a response without any content.
-	 */
-	@DeleteMapping ("/user_accounts/{userAccountId}/entries/{entryId}")
-	public ResponseEntity<?> deleteEntry(@PathVariable final Long entryId, @PathVariable final Long userAccountId) {
-		this.entryService.deleteEntry(entryId);
+	@DeleteMapping ("/entries/{id}")
+	public ResponseEntity<?> deleteEntry(@PathVariable final Long id) {
+		this.entryService.deleteEntry(id);
 
 		return ResponseEntity.noContent().build();
 	}
 
-	@GetMapping ("/user_accounts/{userAccountId}/timesheets/{timesheetId}/entries")
-	public Resources<Resource<Entry>> getAllTimesheetEntries(@PathVariable final Long timesheetId, @PathVariable final Long userAccountId) {
-		final List<Resource<Entry>> entry = this.entryService.getEntriesByTimesheet(timesheetId)
+	@GetMapping ("/timesheets/{id}/entries")
+	public Resources<Resource<Entry>> getAllTimesheetEntries(@PathVariable final Long id) {
+		final List<Resource<Entry>> entry = this.entryService.getEntriesByTimesheet(id)
 			.stream()
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
-		return new Resources<>(entry, linkTo(methodOn(EntryController.class).getAllTimesheetEntries(timesheetId, userAccountId)).withSelfRel());
+		return new Resources<>(entry, linkTo(methodOn(EntryController.class).getAllTimesheetEntries(id)).withSelfRel());
 	}
 
-	@PostMapping ("/user_accounts/{userAccountId}/entries/{entryId}/copy")
-	public ResponseEntity<?> copyEntry(@PathVariable final Long entryId, @PathVariable final Long userAccountId) throws URISyntaxException {
-		final Resource<Entry> resource = this.assembler.toResource(this.entryService.copyEntry(entryId));
+	@PostMapping ("/entries/{id}/copy")
+	public ResponseEntity<?> copyEntry(@PathVariable final Long id) throws URISyntaxException {
+		final Resource<Entry> resource = this.assembler.toResource(this.entryService.copyEntry(id));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}

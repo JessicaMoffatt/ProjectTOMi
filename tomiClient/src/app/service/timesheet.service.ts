@@ -24,7 +24,7 @@ export class TimesheetService {
   /** The link used to get,post, and delete entries. */
   private timesheetUrl = `http://localhost:8080/timesheets`;
   /** The link used to get all timesheets for a specified user.*/
-  private userTimesheetsUrl = `http://localhost:8080/user_accounts`;
+  private userTimesheetsUrl = `http://localhost:8080/timesheets/userAccount`;
 
   /** The list of all timehseets for this user.*/
   timesheets: Timesheet[] = [];
@@ -73,7 +73,7 @@ export class TimesheetService {
    * @param userId The ID of the user.
    */
   async getAllTimesheets(userId: number) {
-    return this.http.get(`${this.userTimesheetsUrl}/${userId}/timesheets`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.userTimesheetsUrl}/${userId}`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.timesheets as Timesheet[];

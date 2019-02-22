@@ -6,24 +6,24 @@ import ca.projectTOMi.tomi.authorization.policy.TimesheetAuthorizationPolicy;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.model.UserAccount;
+import ca.projectTOMi.tomi.service.EntryService;
 
 
 public final class TimesheetAuthorizationManager implements AuthorizationManager<TimesheetAuthorizationPolicy>, AuthorizationFilter<Entry> {
 	private List<TimesheetAuthorizationPolicy> policies;
 	private final UserAccount user;
+	private final UserAccount owner;
 
-	public TimesheetAuthorizationManager(final UserAccount user) {
+	public TimesheetAuthorizationManager(final UserAccount user, final UserAccount owner) {
 		this.user = user;
+		this.owner = owner;
 	}
 
 	@Override
 	public boolean requestAuthorization(final String URI, final String request) {
 		final TimesheetAuthorizationPolicy requestPolicy = new TimesheetAuthorizationPolicy();
 		requestPolicy.setRequestingUser(this.user);
-		final String uriHead = URI.split("/")[2];
-		UserAccount owner = new UserAccount();
-		owner.setId(Long.parseLong(uriHead));
-		requestPolicy.setTimesheetOwner(owner);
+		requestPolicy.setTimesheetOwner(this.owner);
 		if ("POST".equals(request)) {
 			requestPolicy.setPermission(TimesheetPermission.CREATE);
 		} else if ("PUT".equals(request)) {
