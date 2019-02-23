@@ -12,7 +12,7 @@ import {UserAccount} from "./userAccount";
 export class Project{
 
   /** The unique identifier for this Project.*/
-  id: number;
+  id: string;
   /** The Client this Project is for.*/
   client: Client;
   /** The UserAccount managing this Project.*/
@@ -34,7 +34,7 @@ export class Project{
   _links: [];
 
   constructor(){
-    this.id = -1;
+    this.id = "";
     this.client = new Client();
     this.projectManager = new UserAccount();
     this.projectName = "";

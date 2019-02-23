@@ -5,7 +5,6 @@ import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {UserAccount} from "../model/userAccount";
 import {TeamSidebarService} from "./team-sidebar.service";
-import {UserAccountService} from "./user-account.service";
 
 const httpOptions = {
   headers: new HttpHeaders({

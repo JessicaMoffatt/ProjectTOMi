@@ -45,7 +45,14 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DatePickerComponent } from './component/extra/date-picker/date-picker.component';
 import { TeamMemberTimesheetComponent } from './component/panel/team-member-timesheet/team-member-timesheet.component';
 import { TeamMemberSidebarComponent } from './component/sidebar/team-member-sidebar/team-member-sidebar.component';
-import { ProjectEntriesComponent } from './component/panel/project-entries/project-entries.component';
+import {
+  ProjectEntriesComponent,
+  SubmitApprovalModalComponent
+} from './component/panel/project-entries/project-entries.component';
+import { ProjectEntriesSidebarComponent } from './component/sidebar/project-entries-sidebar/project-entries-sidebar.component';
+import {ProjectEntriesService} from "./service/project-entries.service";
+import {ProjectService} from "./service/project.service";
+import { EntryApproveComponent } from './component/panel/entry-approve/entry-approve.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +83,10 @@ import { ProjectEntriesComponent } from './component/panel/project-entries/proje
     DatePickerComponent,
     TeamMemberTimesheetComponent,
     TeamMemberSidebarComponent,
-    ProjectEntriesComponent
+    ProjectEntriesComponent,
+    ProjectEntriesSidebarComponent,
+    EntryApproveComponent,
+    SubmitApprovalModalComponent
   ],
   imports: [
     BrowserModule,
@@ -94,7 +104,8 @@ import { ProjectEntriesComponent } from './component/panel/project-entries/proje
     EntryUneditableComponent,
     AddUserAccountComponent,
     DeleteEntryModalComponent,
-    SubmitTimesheetModalComponent
+    SubmitTimesheetModalComponent,
+    SubmitApprovalModalComponent
   ],
   providers: [
     TeamSidebarService,
@@ -108,7 +119,8 @@ import { ProjectEntriesComponent } from './component/panel/project-entries/proje
     TimesheetService,
     BsModalService,
     ComponentLoaderFactory,
-    PositioningService
+    PositioningService,
+    ProjectEntriesService
   ],
   bootstrap: [AppComponent]
 })

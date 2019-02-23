@@ -107,4 +107,11 @@ export class UserAccountService {
         this.refreshUserAccounts();
       });
   }
+
+    getUserById(id:number): Observable<UserAccount>{
+      return this.http.get(`${this.userAccountUrl}/${id}`).pipe(map((response:Response) => response))
+        .pipe(map((data: any) => {
+          return data as UserAccount;
+        }));
+    }
 }

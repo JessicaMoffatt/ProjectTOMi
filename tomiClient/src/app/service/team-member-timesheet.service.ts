@@ -9,6 +9,7 @@ import {Timesheet} from "../model/timesheet";
 import {TimesheetService} from "./timesheet.service";
 import {Entry} from "../model/entry";
 import {Router} from "@angular/router";
+import {UserAccountService} from "./user-account.service";
 
 @Injectable({
   providedIn: 'root'
@@ -26,10 +27,7 @@ export class TeamMemberTimesheetService {
 
   tally: number = 0;
 
- //TODO, get this from the user object from header
-  private userUrl = `http://localhost:8080/user_accounts/`;
-
-  constructor(private http: HttpClient, private router: Router, private teamService:TeamService, public timesheetService: TimesheetService) {
+  constructor(private http: HttpClient, private router: Router, private userAccountService:UserAccountService, private teamService:TeamService, public timesheetService: TimesheetService) {
 
   }
 
@@ -37,12 +35,8 @@ export class TeamMemberTimesheetService {
     return this.teamService.getTeamMembers(this.teamid);
   }
 
-  //TODO, replace with Iliya's version in user_account_service
   getMemberById(id: number): Observable<UserAccount> {
-    return this.http.get(`${this.userUrl}/${id}`).pipe(map((response: Response) => response))
-      .pipe(map((data: any) => {
-        return data as UserAccount;
-      }));
+    return this.userAccountService.getUserById(id);
   }
 
   /**
@@ -57,7 +51,7 @@ export class TeamMemberTimesheetService {
   displayTimesheet(){
     this.populateTimesheets().then((value) => {
       let timesheet = value as Timesheet;
-      this.getEntries(timesheet.id);
+      this.populateEntries(timesheet.id);
     });
   }
 
@@ -69,7 +63,7 @@ export class TeamMemberTimesheetService {
     return await promise;
   }
 
-  private getEntries(id: number) {
+  private populateEntries(id: number) {
     this.timesheetService.getEntries(id).subscribe((data) => {
       this.entries = data;
       this.updateTally();

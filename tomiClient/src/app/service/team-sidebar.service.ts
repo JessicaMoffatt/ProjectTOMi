@@ -33,9 +33,6 @@ export class TeamSidebarService {
   constructor(private http: HttpClient) {
   }
 
-
-
-
   /**
    * Gets a list of all the teams.
    */

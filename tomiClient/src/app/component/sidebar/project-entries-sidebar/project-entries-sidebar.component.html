@@ -1,0 +1,10 @@
+<div [ngClass]="['container','h-100','']">
+  <h1>Projects</h1>
+  <div>
+    <ul *ngIf="projectEntriesService.projects">
+      <li *ngFor="let p of (projectEntriesService.projects|orderBy:'project_name')">
+        <span *ngIf="p" (click)="displayProjectEntries(p)">{{p.projectName}}</span>
+      </li>
+    </ul>
+  </div>
+</div>

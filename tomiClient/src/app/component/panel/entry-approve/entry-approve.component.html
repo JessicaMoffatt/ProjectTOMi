@@ -1,0 +1,89 @@
+<!--
+@author Jessica Moffatt
+@version 1.0
+-->
+<div [ngClass]="{'approved': entry.status === sts.APPROVED,'rejected': entry.status === sts.REJECTED,'entry_container':true,'rounded':true}">
+  <div [ngClass]="'row'">
+    <div [ngClass]="'col-xs-6'">
+    {{userName}}
+    </div>
+  </div>
+  <div [ngClass]="'row'">
+    <div [ngClass]="'col-xs-12'">
+      <label><strong>Component:</strong>
+        <span>{{entry.component}}</span>
+      </label>
+    </div>
+  </div>
+
+  <div [ngClass]="'row'">
+    <div [ngClass]="['col-xs-6']">
+      <label><strong>Project:</strong>
+        <span>{{entry.project.projectName}}</span>
+      </label>
+    </div>
+    <div [ngClass]="'col-xs-6'">
+      <label>Task:
+        <span>{{entry.task.name}}</span>
+      </label>
+    </div>
+  </div>
+
+  <div [ngClass]="'row'">
+    <div [ngClass]="'col-xs-6'">
+      <label><strong>Unit Type:</strong>
+        {{entry.unitType.name}}
+      </label>
+    </div>
+
+    <div [ngClass]="'col-xs-2'">
+      {{entry.quantity}}
+    </div>
+    <div [ngClass]="'col-xs-4'">
+      {{entry.unitType.unit}}
+    </div>
+  </div>
+
+  <div [ngClass]="'row'">
+    <!-- days of the week -->
+    <div [ngClass]="'col-xs-8'">
+      <label><strong>M</strong>
+        {{entry.mondayHours}}
+      </label>
+
+      <label><strong>T</strong>
+        {{entry.tuesdayHours}}
+      </label>
+
+      <label><strong>W</strong>
+        {{entry.wednesdayHours}}
+      </label>
+
+      <label><strong>R</strong>
+        {{entry.thursdayHours}}
+      </label>
+
+      <label><strong>F</strong>
+        {{entry.fridayHours}}
+      </label>
+
+      <label><strong>S</strong>
+        {{entry.saturdayHours}}
+      </label>
+
+      <label><strong>U</strong>
+        {{entry.sundayHours}}
+      </label>
+    </div>
+    <!-- end of days of week-->
+  </div>
+
+  <div [ngClass]="'row'">
+    <div [ngClass]="['col-xs-4','flex_btn_container']">
+      <div [ngClass]="['approve_entry', 'btn']" (click)="approve()"></div>
+      <div [ngClass]="['reject_entry', 'btn']" (click)="reject()"></div>
+    </div>
+  </div>
+
+</div>
+

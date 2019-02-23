@@ -179,7 +179,6 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    */
   async submitTimesheet() {
      await this.savePromise().then(async()=>{
-       console.log("thening");
       let valid: boolean = false;
       this.entryComponents.forEach(item => {
         valid = item.validateEntry();
@@ -255,7 +254,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
         });
       }));
       //TODO remove
-      // alert("Save complete");
+      alert("Save complete");
     }
   }
 
@@ -420,7 +419,7 @@ export class DeleteEntryModalComponent implements OnInit {
     <div class="modal-footer">
       <button type="button" class="btn btn-default" [ngClass]="'confirm_btn'" (click)="confirmSubmission()">SUBMIT
       </button>
-      <button type="button" class="btn btn-default" [ngClass]="'cancel_btn'" (click)="cancelDelete()">CANCEL</button>
+      <button type="button" class="btn btn-default" [ngClass]="'cancel_btn'" (click)="cancel()">CANCEL</button>
     </div>
   `
 })
@@ -448,7 +447,7 @@ export class SubmitTimesheetModalComponent implements OnInit {
   }
 
   /** Closes the modal with no extra actions.*/
-  cancelDelete(): void {
+  cancel(): void {
     this.bsModalRef.hide();
   }
 

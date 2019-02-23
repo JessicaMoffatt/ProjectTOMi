@@ -4,6 +4,7 @@ import {map} from "rxjs/operators";
 import {Entry} from "../model/entry";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Timesheet} from "../model/timesheet";
+import {Team} from "../model/team";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -166,5 +167,12 @@ export class TimesheetService {
      });
 
      return await promise;
+  }
+
+  getTimesheetById(timesheetId:number):Observable<Timesheet>{
+    return this.http.get(`http://localhost:8080/timesheets/${timesheetId}`).pipe(map((response:Response) => response))
+      .pipe(map((data: any) => {
+        return data as Timesheet;
+      }));
   }
 }
