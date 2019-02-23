@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import ca.projectTOMi.tomi.assembler.EntryResourceAssembler;
 import ca.projectTOMi.tomi.assembler.ProjectResourceAssembler;
-import ca.projectTOMi.tomi.authorization.manager.ProjectAuthorizationManager;
+import ca.projectTOMi.tomi.authorization.manager.ProjectAuthManager;
 import ca.projectTOMi.tomi.exception.InvalidIDPrefix;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
 import ca.projectTOMi.tomi.model.Entry;
@@ -69,7 +69,7 @@ public class ProjectController {
 	 */
 	@GetMapping ("/projects/{id}")
 	public Resource<Project> getProject(@PathVariable final String id, final HttpServletRequest request) {
-		final ProjectAuthorizationManager authMan = (ProjectAuthorizationManager) request.getAttribute("authMan");
+		final ProjectAuthManager authMan = (ProjectAuthManager) request.getAttribute("authMan");
 		return this.projectResourceAssembler.toResource(authMan.filterFields(this.projectService.getProjectById(id)));
 	}
 
@@ -80,7 +80,7 @@ public class ProjectController {
 	 */
 	@GetMapping ("/projects")
 	public Resources<Resource<Project>> getActiveProjects(final HttpServletRequest request) {
-		final ProjectAuthorizationManager authMan = (ProjectAuthorizationManager) request.getAttribute("authMan");
+		final ProjectAuthManager authMan = (ProjectAuthManager) request.getAttribute("authMan");
 		final List<Project> projects = this.projectService.getActiveProjects();
 		final	List<Resource<Project>> projectResources = authMan.filterList(projects)
 			.stream()
@@ -104,7 +104,7 @@ public class ProjectController {
 	 */
 	@PostMapping ("/projects")
 	public ResponseEntity<?> createProject(@RequestBody final Project newProject, final HttpServletRequest request) throws URISyntaxException {
-		final ProjectAuthorizationManager authMan = (ProjectAuthorizationManager) request.getAttribute("authMan");
+		final ProjectAuthManager authMan = (ProjectAuthManager) request.getAttribute("authMan");
 		if (newProject.getId() == null || !newProject.getId().trim().matches("^\\p{Alpha}\\p{Alpha}\\d{0,5}+$")) {
 			throw new InvalidIDPrefix();
 		}
@@ -130,7 +130,7 @@ public class ProjectController {
 	 */
 	@PutMapping ("/projects/{id}")
 	public ResponseEntity<?> updateProject(@PathVariable final String id, @RequestBody final Project newProject, final HttpServletRequest request) throws URISyntaxException {
-		final ProjectAuthorizationManager authMan = (ProjectAuthorizationManager) request.getAttribute("authMan");
+		final ProjectAuthManager authMan = (ProjectAuthManager) request.getAttribute("authMan");
 		newProject.setActive(true);
 		final Project updatedProject = authMan.filterFields(this.projectService.updateProject(id, newProject));
 		final Resource<Project> resource = this.projectResourceAssembler.toResource(updatedProject);
@@ -158,7 +158,7 @@ public class ProjectController {
 
 	@GetMapping ("/user_accounts/{userAccountId}/projects")
 	public Resources<Resource<Project>> getProjectsByUserAccount(@PathVariable final Long userAccountId, final HttpServletRequest request) {
-		final ProjectAuthorizationManager authMan = (ProjectAuthorizationManager) request.getAttribute("authMan");
+		final ProjectAuthManager authMan = (ProjectAuthManager) request.getAttribute("authMan");
 		final List<Project> projects = this.projectService.getProjectByUserAccount(userAccountId);
 		final	List<Resource<Project>> projectResources = authMan.filterList(projects)
 			.stream()

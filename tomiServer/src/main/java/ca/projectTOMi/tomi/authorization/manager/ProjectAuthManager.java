@@ -8,11 +8,11 @@ import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 
 
-public final class ProjectAuthorizationManager implements AuthorizationManager<ProjectAuthorizationPolicy>, AuthorizationFilter<Project> {
+public final class ProjectAuthManager implements AuthorizationManager<ProjectAuthorizationPolicy>, AuthorizationFilter<Project> {
 	private List<ProjectAuthorizationPolicy> policies;
 	private final UserAccount user;
 
-	public ProjectAuthorizationManager(final UserAccount user) {
+	public ProjectAuthManager(final UserAccount user) {
 		this.user = user;
 	}
 

@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.UserAccountResourceAssembler;
+import ca.projectTOMi.tomi.authorization.manager.UserAuthManager;
+import ca.projectTOMi.tomi.authorization.wrapper.UserAuthLinkWrapper;
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.service.UserAccountService;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -56,10 +59,11 @@ public class UserAccountController {
 	 * @return Resource representing the UserAccount object.
 	 */
 	@GetMapping ("/user_accounts/{id}")
-	public Resource<UserAccount> getAccount(@PathVariable final Long id) {
+	public Resource<UserAccount> getAccount(@PathVariable final Long id,
+	                                        @RequestAttribute final UserAuthManager authMan) {
 		final UserAccount userAccount = this.userAccountService.getUserAccount(id);
 
-		return this.assembler.toResource(userAccount);
+		return this.assembler.toResource(new UserAuthLinkWrapper<>(userAccount, authMan));
 	}
 
 	/**
@@ -68,14 +72,15 @@ public class UserAccountController {
 	 * @return Collection of resources representing all active accounts
 	 */
 	@GetMapping ("/user_accounts")
-	public Resources<Resource<UserAccount>> getActiveAccounts() {
-		final List<Resource<UserAccount>> account = this.userAccountService.getActiveUserAccounts()
+	public Resources<Resource<UserAccount>> getActiveAccounts(@RequestAttribute final UserAuthManager authMan) {
+		final List<Resource<UserAccount>> accountList = this.userAccountService.getActiveUserAccounts()
 			.stream()
+			.map(userAccount -> new UserAuthLinkWrapper<>(userAccount, authMan))
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
-		return new Resources<>(account,
-			linkTo(methodOn(UserAccountController.class).getActiveAccounts()).withSelfRel());
+		return new Resources<>(accountList,
+			linkTo(methodOn(UserAccountController.class).getActiveAccounts(authMan)).withSelfRel());
 	}
 
 	/**
@@ -87,14 +92,16 @@ public class UserAccountController {
 	 * @return Collection of resources representing all active accounts on a team
 	 */
 	@GetMapping ("/teams/{teamId}/user_accounts")
-	public Resources<Resource<UserAccount>> getAccountsByTeam(@PathVariable final Long teamId) {
-		final List<Resource<UserAccount>> userAccount = this.userAccountService.getUserAccountsByTeam(teamId)
+	public Resources<Resource<UserAccount>> getAccountsByTeam(@PathVariable final Long teamId,
+	                                                          @RequestAttribute final UserAuthManager authMan) {
+		final List<Resource<UserAccount>> accountList = this.userAccountService.getUserAccountsByTeam(teamId)
 			.stream()
+			.map(userAccount -> new UserAuthLinkWrapper<>(userAccount, authMan))
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
-		return new Resources<>(userAccount,
-			linkTo(methodOn(UserAccountController.class).getAccountsByTeam(teamId)).withSelfRel());
+		return new Resources<>(accountList,
+			linkTo(methodOn(UserAccountController.class).getAccountsByTeam(teamId, authMan)).withSelfRel());
 	}
 
 	/**
@@ -107,8 +114,9 @@ public class UserAccountController {
 	 * @return the newly created UserAccount
 	 */
 	@PostMapping ("/user_accounts")
-	public ResponseEntity<?> createUserAccount(@RequestBody final UserAccount newUserAccount) throws URISyntaxException {
-		final Resource<UserAccount> resource = this.assembler.toResource(this.userAccountService.createUserAccount(newUserAccount));
+	public ResponseEntity<?> createUserAccount(@RequestBody final UserAccount newUserAccount,
+	                                           @RequestAttribute final UserAuthManager authMan) throws URISyntaxException {
+		final Resource<UserAccount> resource = this.assembler.toResource(new UserAuthLinkWrapper<>(this.userAccountService.createUserAccount(newUserAccount), authMan));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
@@ -125,10 +133,12 @@ public class UserAccountController {
 	 * @return the updated userAccount
 	 */
 	@PutMapping ("/user_accounts/{id}")
-	public Resource<UserAccount> updateUserAccount(@PathVariable final Long id, @RequestBody final UserAccount newUserAccount) {
+	public Resource<UserAccount> updateUserAccount(@PathVariable final Long id,
+	                                               @RequestBody final UserAccount newUserAccount,
+	                                               @RequestAttribute final UserAuthManager authMan) {
 		final UserAccount updatedUserAccount = this.userAccountService.updateUserAccount(id, newUserAccount);
 
-		return this.assembler.toResource(updatedUserAccount);
+		return this.assembler.toResource(new UserAuthLinkWrapper<>(updatedUserAccount, authMan));
 	}
 
 	/**
@@ -158,8 +168,9 @@ public class UserAccountController {
 	 * @return the team lead's UserAccount
 	 */
 	@GetMapping ("/teams/{teamId}/team_lead")
-	public Resource<UserAccount> getTeamLead(@PathVariable final Long teamId) {
-		return this.assembler.toResource(this.userAccountService.getTeamLead(teamId));
+	public Resource<UserAccount> getTeamLead(@PathVariable final Long teamId,
+	                                         @RequestAttribute final UserAuthManager authMan) {
+		return this.assembler.toResource(new UserAuthLinkWrapper<>(this.userAccountService.getTeamLead(teamId), authMan));
 	}
 
 	/**
@@ -173,14 +184,16 @@ public class UserAccountController {
 	 * of any Teams.
 	 */
 	@GetMapping ("/teams/{teamId}/available")
-	public Resources<Resource<UserAccount>> getAvailableUserAccountsForTeam(@PathVariable final Long teamId) {
-		final List<Resource<UserAccount>> userAccount = this.userAccountService.getAvailableUserAccountsForTeam(teamId)
+	public Resources<Resource<UserAccount>> getAvailableUserAccountsForTeam(@PathVariable final Long teamId,
+	                                                                        @RequestAttribute final UserAuthManager authMan) {
+		final List<Resource<UserAccount>> accountList = this.userAccountService.getAvailableUserAccountsForTeam(teamId)
 			.stream()
+			.map(userAccount -> new UserAuthLinkWrapper<>(userAccount, authMan))
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
-		return new Resources<>(userAccount,
-			linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(teamId)).withSelfRel());
+		return new Resources<>(accountList,
+			linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(teamId, authMan)).withSelfRel());
 	}
 
 	/**
@@ -190,14 +203,15 @@ public class UserAccountController {
 	 * @return List of UserAccounts that are active, but not a part of any team
 	 */
 	@GetMapping ("/teams/unassigned")
-	public Resources<Resource<UserAccount>> getUnassignedUserAccounts() {
+	public Resources<Resource<UserAccount>> getUnassignedUserAccounts(@RequestAttribute final UserAuthManager authMan) {
 		final List<Resource<UserAccount>> available = this.userAccountService.getUnassignedUserAccounts()
 			.stream()
+			.map(userAccount -> new UserAuthLinkWrapper<>(userAccount, authMan))
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
 		return new Resources<>(available,
-			linkTo(methodOn(UserAccountController.class).getUnassignedUserAccounts()).withSelfRel());
+			linkTo(methodOn(UserAccountController.class).getUnassignedUserAccounts(authMan)).withSelfRel());
 	}
 
 	@ExceptionHandler ({UserAccountNotFoundException.class})

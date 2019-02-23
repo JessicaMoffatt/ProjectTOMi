@@ -6,12 +6,12 @@ import ca.projectTOMi.tomi.authorization.policy.TimesheetAuthorizationPolicy;
 import ca.projectTOMi.tomi.model.UserAccount;
 
 
-public final class TimesheetAuthorizationManager implements AuthorizationManager<TimesheetAuthorizationPolicy> {
+public final class TimesheetAuthManager implements AuthorizationManager<TimesheetAuthorizationPolicy> {
 	private List<TimesheetAuthorizationPolicy> policies;
 	private final UserAccount user;
 	private final UserAccount owner;
 
-	public TimesheetAuthorizationManager(final UserAccount user, final UserAccount owner) {
+	public TimesheetAuthManager(final UserAccount user, final UserAccount owner) {
 		this.user = user;
 		this.owner = owner;
 	}

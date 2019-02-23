@@ -7,11 +7,11 @@ import ca.projectTOMi.tomi.authorization.permission.UserPermission;
 import ca.projectTOMi.tomi.model.UserAccount;
 
 
-public final class UserAuthorizationManager implements AuthorizationManager<UserAuthorizationPolicy> {
+public final class UserAuthManager implements AuthorizationManager<UserAuthorizationPolicy> {
 	private List<UserAuthorizationPolicy> policies;
 	private final UserAccount user;
 
-	public UserAuthorizationManager(final UserAccount user) {
+	public UserAuthManager(final UserAccount user) {
 		this.user = user;
 	}
 
