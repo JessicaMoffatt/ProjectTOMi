@@ -8,7 +8,7 @@ import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 
 
-public final class ProjectAuthManager implements AuthorizationManager<ProjectAuthorizationPolicy>, AuthorizationFilter<Project> {
+public final class ProjectAuthManager implements AuthManager<ProjectAuthorizationPolicy>, AuthorizationFilter<Project> {
 	private List<ProjectAuthorizationPolicy> policies;
 	private final UserAccount user;
 

@@ -1,6 +1,8 @@
 package ca.projectTOMi.tomi.controller;
 
 import ca.projectTOMi.tomi.assembler.EntryResourceAssembler;
+import ca.projectTOMi.tomi.authorization.manager.TimesheetAuthManager;
+import ca.projectTOMi.tomi.authorization.wrapper.TimesheetAuthLinkWrapper;
 import ca.projectTOMi.tomi.exception.EntryNotFoundException;
 import ca.projectTOMi.tomi.exception.IllegalEntryStateException;
 import ca.projectTOMi.tomi.model.Entry;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,10 +52,11 @@ public class EntryController {
 	}
 
 	@GetMapping ("/entries/{id}")
-	public Resource<Entry> getEntry(@PathVariable final Long id) {
+	public Resource<Entry> getEntry(@PathVariable final Long id,
+	                                @RequestAttribute final TimesheetAuthManager authMan) {
 		final Entry entry = this.entryService.getEntry(id);
 
-		return this.assembler.toResource(entry);
+		return this.assembler.toResource(new TimesheetAuthLinkWrapper<>(entry, authMan));
 	}
 
 	/**
@@ -67,16 +71,19 @@ public class EntryController {
 	 * 	when the created URI is unable to be parsed.
 	 */
 	@PostMapping ("/entries")
-	public ResponseEntity<?> createEntry(@RequestBody final Entry newEntry) throws URISyntaxException {
-		final Resource<Entry> resource = this.assembler.toResource(this.entryService.saveEntry(newEntry));
+	public ResponseEntity<?> createEntry(@RequestBody final Entry newEntry,
+	                                     @RequestAttribute final TimesheetAuthManager authMan) throws URISyntaxException {
+		final Resource<Entry> resource = this.assembler.toResource(new TimesheetAuthLinkWrapper<>(this.entryService.saveEntry(newEntry), authMan));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 
 	@PutMapping ("/entries/{id}")
-	public ResponseEntity<?> updateEntry(@PathVariable final Long id, @RequestBody final Entry newEntry) throws URISyntaxException {
+	public ResponseEntity<?> updateEntry(@PathVariable final Long id,
+	                                     @RequestBody final Entry newEntry,
+	                                     @RequestAttribute final TimesheetAuthManager authMan) throws URISyntaxException {
 		final Entry updatedEntry = this.entryService.updateEntry(id, newEntry);
-		final Resource<Entry> resource = this.assembler.toResource(updatedEntry);
+		final Resource<Entry> resource = this.assembler.toResource(new TimesheetAuthLinkWrapper<>(updatedEntry, authMan));
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 
@@ -88,18 +95,21 @@ public class EntryController {
 	}
 
 	@GetMapping ("/timesheets/{id}/entries")
-	public Resources<Resource<Entry>> getAllTimesheetEntries(@PathVariable final Long id) {
-		final List<Resource<Entry>> entry = this.entryService.getEntriesByTimesheet(id)
+	public Resources<Resource<Entry>> getAllTimesheetEntries(@PathVariable final Long id,
+	                                                         @RequestAttribute final TimesheetAuthManager authMan) {
+		final List<Resource<Entry>> entryList = this.entryService.getEntriesByTimesheet(id)
 			.stream()
+			.map((entry -> new TimesheetAuthLinkWrapper<>(entry, authMan)))
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
-		return new Resources<>(entry, linkTo(methodOn(EntryController.class).getAllTimesheetEntries(id)).withSelfRel());
+		return new Resources<>(entryList, linkTo(methodOn(EntryController.class).getAllTimesheetEntries(id, authMan)).withSelfRel());
 	}
 
 	@PostMapping ("/entries/{id}/copy")
-	public ResponseEntity<?> copyEntry(@PathVariable final Long id) throws URISyntaxException {
-		final Resource<Entry> resource = this.assembler.toResource(this.entryService.copyEntry(id));
+	public ResponseEntity<?> copyEntry(@PathVariable final Long id,
+	                                   @RequestAttribute final TimesheetAuthManager authMan) throws URISyntaxException {
+		final Resource<Entry> resource = this.assembler.toResource(new TimesheetAuthLinkWrapper<>(this.entryService.copyEntry(id), authMan));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}

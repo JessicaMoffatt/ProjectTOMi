@@ -1,4 +1,4 @@
-package ca.projectTOMi.tomi.interceptor;
+package ca.projectTOMi.tomi.authorization.interceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -6,7 +6,7 @@ import ca.projectTOMi.tomi.authorization.policy.TimesheetAuthorizationPolicy;
 import ca.projectTOMi.tomi.model.UserAccount;
 
 
-public final class TimesheetAuthManager implements AuthorizationManager<TimesheetAuthorizationPolicy> {
+public final class TimesheetAuthManager implements AuthManager<TimesheetAuthorizationPolicy> {
 	private List<TimesheetAuthorizationPolicy> policies;
 	private final UserAccount user;
 	private final UserAccount owner;

@@ -1,8 +1,8 @@
-package ca.projectTOMi.tomi.interceptor;
+package ca.projectTOMi.tomi.authorization.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ca.projectTOMi.tomi.authorization.manager.AuthorizationManager;
+import ca.projectTOMi.tomi.authorization.manager.AuthManager;
 import ca.projectTOMi.tomi.authorization.manager.ProjectAuthManager;
 import ca.projectTOMi.tomi.authorization.policy.ProjectAuthorizationPolicy;
 import ca.projectTOMi.tomi.authorization.manager.TimesheetAuthManager;
@@ -63,34 +63,34 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			return true;
 		}
 		if ("TimesheetController".matches(controller) || "EntryController".matches(controller)) {
-			final AuthorizationManager<TimesheetAuthorizationPolicy> authMan;
+			final AuthManager<TimesheetAuthorizationPolicy> authMan;
 			authMan = new TimesheetAuthManager(user, getOwner(requestURI, requestMethod, user));
 			authMan.loadUserPolicies(this.timesheetAuthRepository.getAllByRequestingUser(user));
 			request.setAttribute("authMan", authMan);
 		} else if ("ProjectController".matches(controller)) {
 			if ("POST".equals(requestMethod) || "DELETE".equals(requestMethod)) {
-				final AuthorizationManager<UserAuthorizationPolicy> authMan;
+				final AuthManager<UserAuthorizationPolicy> authMan;
 				authMan = new UserAuthManager(user);
 				authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
 				request.setAttribute("authMan", authMan);
 			} else {
-				final AuthorizationManager<ProjectAuthorizationPolicy> authMan;
+				final AuthManager<ProjectAuthorizationPolicy> authMan;
 				authMan = new ProjectAuthManager(user);
 				authMan.loadUserPolicies(this.projectAuthRepository.getAllByRequestingUser(user));
 				request.setAttribute("authMan", authMan);
 			}
 		} else if ("ExpenseController".matches(controller)) {
-			final AuthorizationManager<ProjectAuthorizationPolicy> authMan;
+			final AuthManager<ProjectAuthorizationPolicy> authMan;
 			authMan = new ProjectAuthManager(user);
 			authMan.loadUserPolicies(this.projectAuthRepository.getAllByRequestingUser(user));
 			request.setAttribute("authMan", authMan);
 		} else {
-			final AuthorizationManager<UserAuthorizationPolicy> authMan;
+			final AuthManager<UserAuthorizationPolicy> authMan;
 			authMan = new UserAuthManager(user);
 			authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
 			request.setAttribute("authMan", authMan);
 		}
-		return ((AuthorizationManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
+		return ((AuthManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
 	}
 
 	@Override

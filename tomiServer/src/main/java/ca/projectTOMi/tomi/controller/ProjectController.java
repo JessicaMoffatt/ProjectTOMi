@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import ca.projectTOMi.tomi.assembler.EntryResourceAssembler;
 import ca.projectTOMi.tomi.assembler.ProjectResourceAssembler;
 import ca.projectTOMi.tomi.authorization.manager.ProjectAuthManager;
+import ca.projectTOMi.tomi.authorization.wrapper.TimesheetAuthLinkWrapper;
 import ca.projectTOMi.tomi.exception.InvalidIDPrefix;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
 import ca.projectTOMi.tomi.model.Entry;
@@ -174,6 +175,7 @@ public class ProjectController {
 		final Project project = this.projectService.getProjectById(projectId);
 		final List<Resource<Entry>> entries = this.entryService.getEntriesToEvaluate(project)
 			.stream()
+			.map(entry -> (new TimesheetAuthLinkWrapper<>(entry, null)))
 			.map(this.entryResourceAssembler::toResource)
 			.collect(Collectors.toList());
 

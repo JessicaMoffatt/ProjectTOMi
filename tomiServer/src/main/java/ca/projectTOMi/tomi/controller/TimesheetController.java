@@ -3,6 +3,8 @@ package ca.projectTOMi.tomi.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.TimesheetResourceAssembler;
+import ca.projectTOMi.tomi.authorization.manager.TimesheetAuthManager;
+import ca.projectTOMi.tomi.authorization.wrapper.TimesheetAuthLinkWrapper;
 import ca.projectTOMi.tomi.exception.IllegalTimesheetModificationException;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
 import ca.projectTOMi.tomi.model.Timesheet;
@@ -15,12 +17,11 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -46,24 +47,28 @@ public class TimesheetController {
 	}
 
 	@GetMapping ("/timesheets/{id}")
-	public Resource<Timesheet> getTimesheet(@PathVariable final Long id) {
-		return this.assembler.toResource(this.entryService.getTimesheetById(id));
+	public Resource<Timesheet> getTimesheet(@PathVariable final Long id,
+	                                        @RequestAttribute final TimesheetAuthManager authMan) {
+		return this.assembler.toResource(new TimesheetAuthLinkWrapper<>(this.entryService.getTimesheetById(id), authMan));
 	}
 
 	@PutMapping ("/timesheets/{id}/submit")
-	public Resource<Timesheet> submitTimesheet(@PathVariable final Long id) {
-		return this.assembler.toResource(this.entryService.submitTimesheet(id));
+	public Resource<Timesheet> submitTimesheet(@PathVariable final Long id,
+	                                           @RequestAttribute final TimesheetAuthManager authMan) {
+		return this.assembler.toResource(new TimesheetAuthLinkWrapper<>(this.entryService.submitTimesheet(id), authMan));
 	}
 
 	@GetMapping ("/timesheets/user_accounts/{userAccountId}")
-	public Resources<Resource<Timesheet>> getTimesheetsByUserAccount(@PathVariable final Long userAccountId) {
-		final List<Resource<Timesheet>> expense = this.userAccountService.getTimesheetsByUserAccount(userAccountId)
+	public Resources<Resource<Timesheet>> getTimesheetsByUserAccount(@PathVariable final Long userAccountId,
+	                                                                 @RequestAttribute final TimesheetAuthManager authMan) {
+		final List<Resource<Timesheet>> timesheetList = this.userAccountService.getTimesheetsByUserAccount(userAccountId)
 			.stream()
+			.map(timesheet -> (new TimesheetAuthLinkWrapper<>(timesheet, authMan)))
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
-		return new Resources<>(expense,
-			linkTo(methodOn(TimesheetController.class).getTimesheetsByUserAccount(userAccountId)).withSelfRel());
+		return new Resources<>(timesheetList,
+			linkTo(methodOn(TimesheetController.class).getTimesheetsByUserAccount(userAccountId, authMan)).withSelfRel());
 	}
 
 	@ExceptionHandler ({IllegalTimesheetModificationException.class, TimesheetNotFoundException.class})
