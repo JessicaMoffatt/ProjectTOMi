@@ -3,13 +3,10 @@ package ca.projectTOMi.tomi.authorization.manager;
 import java.util.List;
 import ca.projectTOMi.tomi.authorization.permission.TimesheetPermission;
 import ca.projectTOMi.tomi.authorization.policy.TimesheetAuthorizationPolicy;
-import ca.projectTOMi.tomi.model.Entry;
-import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.model.UserAccount;
-import ca.projectTOMi.tomi.service.EntryService;
 
 
-public final class TimesheetAuthorizationManager implements AuthorizationManager<TimesheetAuthorizationPolicy>, AuthorizationFilter<Entry> {
+public final class TimesheetAuthorizationManager implements AuthorizationManager<TimesheetAuthorizationPolicy> {
 	private List<TimesheetAuthorizationPolicy> policies;
 	private final UserAccount user;
 	private final UserAccount owner;
@@ -20,7 +17,7 @@ public final class TimesheetAuthorizationManager implements AuthorizationManager
 	}
 
 	@Override
-	public boolean requestAuthorization(final String URI, final String request) {
+	public boolean requestAuthorization(final String uri, final String request) {
 		final TimesheetAuthorizationPolicy requestPolicy = new TimesheetAuthorizationPolicy();
 		requestPolicy.setRequestingUser(this.user);
 		requestPolicy.setTimesheetOwner(this.owner);
@@ -48,22 +45,13 @@ public final class TimesheetAuthorizationManager implements AuthorizationManager
 	}
 
 	@Override
-	public boolean linkAuthorization(final String URI, final String request) {
-		return false;
+	public boolean linkAuthorization(final String url, final String request) {
+		final String uri = url.substring(url.indexOf("/", 7));
+		return requestAuthorization(uri, request);
 	}
 
 	@Override
 	public void loadUserPolicies(final List<TimesheetAuthorizationPolicy> policies) {
 		this.policies = policies;
-	}
-
-	@Override
-	public List<Entry> filterList(final List<Entry> list) {
-		return null;
-	}
-
-	@Override
-	public Entry filterFields(final Entry toFilter) {
-		return null;
 	}
 }

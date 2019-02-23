@@ -17,40 +17,40 @@ public final class ProjectAuthorizationManager implements AuthorizationManager<P
 	}
 
 	@Override
-	public boolean requestAuthorization(final String URI, final String request) {
+	public boolean requestAuthorization(final String uri, final String request) {
 		final ProjectAuthorizationPolicy requestPolicy = new ProjectAuthorizationPolicy();
 		requestPolicy.setRequestingUser(this.user);
 		final Project requestProject;
 		if ("POST".equals(request)) {
 			requestPolicy.setPermission(ProjectPermission.CREATE_EXPENSE);
 			requestProject = new Project();
-			requestProject.setId(URI.split("/")[2]);
+			requestProject.setId(uri.split("/")[2]);
 			requestPolicy.setProject(requestProject);
 		} else if ("PUT".equals(request)) {
-			if (URI.split("/").length > 3 && "entries".equals(URI.split("/")[3])) {
+			if (uri.split("/").length > 3 && "entries".equals(uri.split("/")[3])) {
 				requestPolicy.setPermission(ProjectPermission.EVALUATE_ENTRIES);
 			} else {
 				requestPolicy.setPermission(ProjectPermission.WRITE);
 			}
 			requestProject = new Project();
-			requestProject.setId(URI.split("/")[2]);
+			requestProject.setId(uri.split("/")[2]);
 			requestPolicy.setProject(requestProject);
 		} else if ("DELETE".equals(request)) {
 			requestPolicy.setPermission(ProjectPermission.DELETE_EXPENSE);
 			requestProject = new Project();
-			requestProject.setId(URI.split("/")[2]);
+			requestProject.setId(uri.split("/")[2]);
 			requestPolicy.setProject(requestProject);
 		} else if ("GET".equals(request)) {
 			try {
-				if ("evaluate_entries".equals(URI.split("/")[3])) {
+				if ("evaluate_entries".equals(uri.split("/")[3])) {
 					requestPolicy.setPermission(ProjectPermission.EVALUATE_ENTRIES);
-				} else if ("user_accounts".equals(URI.split("/")[1])) {
+				} else if ("user_accounts".equals(uri.split("/")[1])) {
 					return handleListReads();
 				} else {
 					requestPolicy.setPermission(ProjectPermission.READ);
 				}
 				requestProject = new Project();
-				requestProject.setId(URI.split("/")[2]);
+				requestProject.setId(uri.split("/")[2]);
 				requestPolicy.setProject(requestProject);
 			} catch (final IndexOutOfBoundsException e) {
 				return handleListReads();
@@ -69,8 +69,9 @@ public final class ProjectAuthorizationManager implements AuthorizationManager<P
 	}
 
 	@Override
-	public boolean linkAuthorization(final String URI, final String request) {
-		return false;
+	public boolean linkAuthorization(final String url, final String request) {
+		final String uri = url.substring(url.indexOf("/", 7));
+		return requestAuthorization(uri, request);
 	}
 
 	@Override

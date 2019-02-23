@@ -1,5 +1,6 @@
 package ca.projectTOMi.tomi.authorization.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 import ca.projectTOMi.tomi.authorization.policy.UserAuthorizationPolicy;
 import ca.projectTOMi.tomi.authorization.permission.UserPermission;
@@ -15,10 +16,10 @@ public final class UserAuthorizationManager implements AuthorizationManager<User
 	}
 
 	@Override
-	public boolean requestAuthorization(final String URI, final String request) {
+	public boolean requestAuthorization(final String uri, final String request) {
 		final UserAuthorizationPolicy requestPolicy = new UserAuthorizationPolicy();
 		requestPolicy.setRequestingUser(this.user);
-		final String uriHead = URI.split("/")[1];
+		final String uriHead = uri.split("/")[1];
 		if ("POST".equals(request)) {
 			switch (uriHead) {
 				case "projects":
@@ -105,7 +106,7 @@ public final class UserAuthorizationManager implements AuthorizationManager<User
 				default:
 					return false;
 			}
-			if (URI.split("/").length < 3) {
+			if (uri.split("/").length < 3) {
 				requestPolicy.setPermission(UserPermission.READ_LISTS);
 			}
 		}
@@ -113,12 +114,17 @@ public final class UserAuthorizationManager implements AuthorizationManager<User
 	}
 
 	@Override
-	public boolean linkAuthorization(final String URI, final String request) {
-		return false;
+	public boolean linkAuthorization(final String url, final String request) {
+		final String uri = url.substring(url.indexOf("/", 7));
+		return requestAuthorization(uri, request);
 	}
 
 	@Override
 	public void loadUserPolicies(final List<UserAuthorizationPolicy> policies) {
 		this.policies = policies;
+	}
+
+	public List<UserAuthorizationPolicy> getPolicies(){
+		return this.policies;
 	}
 }
