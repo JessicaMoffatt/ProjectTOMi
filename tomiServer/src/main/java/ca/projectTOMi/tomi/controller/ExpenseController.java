@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.ExpenseResourceAssembler;
+import ca.projectTOMi.tomi.authorization.manager.ProjectAuthManager;
+import ca.projectTOMi.tomi.authorization.wrapper.ProjectAuthLinkWrapper;
 import ca.projectTOMi.tomi.exception.ExpenseNotFoundException;
 import ca.projectTOMi.tomi.model.Expense;
 import ca.projectTOMi.tomi.model.Project;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,8 +52,10 @@ public class ExpenseController {
 
 
 	@GetMapping ("/projects/{projectId}/expenses/{expenseId}")
-	public Resource<Expense> getExpense(@PathVariable final Long expenseId, @PathVariable final String projectId) {
-		return this.assembler.toResource(this.expenseService.getExpenseById(expenseId));
+	public Resource<Expense> getExpense(@PathVariable final Long expenseId,
+	                                    @PathVariable final String projectId,
+	                                    @RequestAttribute final ProjectAuthManager authMan) {
+		return this.assembler.toResource(new ProjectAuthLinkWrapper<>(this.expenseService.getExpenseById(expenseId), authMan));
 	}
 
 	/**
@@ -59,14 +64,16 @@ public class ExpenseController {
 	 * @return Collection of resources representing all active Expenses
 	 */
 	@GetMapping ("/projects/{projectId}/expenses")
-	public Resources<Resource<Expense>> getActiveExpenses(@PathVariable final String projectId) {
-		final List<Resource<Expense>> expense = this.expenseService.getActiveExpensesByProject(projectId)
+	public Resources<Resource<Expense>> getActiveExpenses(@PathVariable final String projectId,
+	                                                      @RequestAttribute final ProjectAuthManager authMan) {
+		final List<Resource<Expense>> expenseList = this.expenseService.getActiveExpensesByProject(projectId)
 			.stream()
+			.map(expense -> (new ProjectAuthLinkWrapper<>(expense, authMan)))
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
-		return new Resources<>(expense,
-			linkTo(methodOn(ExpenseController.class).getActiveExpenses(projectId)).withSelfRel());
+		return new Resources<>(expenseList,
+			linkTo(methodOn(ExpenseController.class).getActiveExpenses(projectId, authMan)).withSelfRel());
 	}
 
 	/**
@@ -81,26 +88,32 @@ public class ExpenseController {
 	 * 	when the created URI is unable to be parsed
 	 */
 	@PostMapping ("/projects/{projectId}/expenses")
-	public ResponseEntity<?> createExpense(@RequestBody final Expense newExpense, @PathVariable final String projectId) throws URISyntaxException {
+	public ResponseEntity<?> createExpense(@RequestBody final Expense newExpense,
+	                                       @PathVariable final String projectId,
+	                                       @RequestAttribute final ProjectAuthManager authMan) throws URISyntaxException {
 		newExpense.setActive(true);
-		Project p = new Project();
+		final Project p = new Project();
 		p.setId(projectId);
 		newExpense.setProject(p);
-		final Resource<Expense> resource = this.assembler.toResource(this.expenseService.saveExpense(newExpense));
+		final Resource<Expense> resource = this.assembler.toResource(new ProjectAuthLinkWrapper<>(this.expenseService.saveExpense(newExpense), authMan));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 
 	@PutMapping ("/projects/{projectId}/expenses/{expenseId}")
-	public ResponseEntity<?> updateExpense(@PathVariable final Long expenseId, @PathVariable final String projectId, @RequestBody final Expense newExpense) throws URISyntaxException {
+	public ResponseEntity<?> updateExpense(@PathVariable final Long expenseId,
+	                                       @PathVariable final String projectId,
+	                                       @RequestBody final Expense newExpense,
+	                                       @RequestAttribute final ProjectAuthManager authMan) throws URISyntaxException {
 		final Expense updatedExpense = this.expenseService.updateExpense(expenseId, newExpense);
-		final Resource<Expense> resource = this.assembler.toResource(updatedExpense);
+		final Resource<Expense> resource = this.assembler.toResource(new ProjectAuthLinkWrapper<>(updatedExpense, authMan));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 
 	@DeleteMapping ("/projects/{projectId}/expenses/{expenseId}")
-	public ResponseEntity<?> setExpenseInactive(@PathVariable final Long expenseId, @PathVariable final String projectId) {
+	public ResponseEntity<?> setExpenseInactive(@PathVariable final Long expenseId,
+	                                            @PathVariable final String projectId) {
 		final Expense expense = this.expenseService.getExpenseById(expenseId);
 		expense.setActive(false);
 		this.expenseService.saveExpense(expense);
