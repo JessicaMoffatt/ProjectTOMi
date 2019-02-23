@@ -1,5 +1,6 @@
 package ca.projectTOMi.tomi.model;
 
+import ca.projectTOMi.tomi.viewModel.ProjectViewModel;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -52,6 +53,7 @@ public final class Entry {
 	@ManyToOne
 	@OnDelete (action = OnDeleteAction.NO_ACTION)
 	@MapKeyColumn (name = "id")
+	@JsonIgnore
 	private Project project;
 
 	/**
@@ -175,5 +177,17 @@ public final class Entry {
 	@JsonIgnore
 	public void setTimesheet(final Timesheet timesheet){
 		this.timesheet = timesheet;
+	}
+
+	@JsonProperty
+	public void setProject(final ProjectViewModel project){
+		final Project p = new Project();
+		p.setId(project.getId());
+		this.project = p;
+	}
+
+	@JsonProperty
+	public ProjectViewModel getProject(){
+		return new ProjectViewModel(this.project);
 	}
 }
