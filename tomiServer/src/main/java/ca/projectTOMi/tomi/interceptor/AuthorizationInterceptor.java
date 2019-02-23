@@ -114,6 +114,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			owner = this.userAccountService.getUserAccount(Long.parseLong(URI.split("/")[3]));
 		}else if(URI.matches("^/entries/[0-9]+/{0,1}$|^/entries/[0-9]+/copy")){
 			owner = this.entryService.getEntry(Long.parseLong(URI.split("/")[2])).getTimesheet().getUserAccount();
+		}else if(URI.matches("^/timesheets/[0-9]+/submit/{0,1}$")){
+			owner = this.entryService.getTimesheetById(Long.parseLong(URI.split("/")[2])).getUserAccount();
 		}
 		return owner;
 	}

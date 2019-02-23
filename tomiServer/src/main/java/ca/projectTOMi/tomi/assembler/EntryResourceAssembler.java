@@ -33,8 +33,8 @@ public class EntryResourceAssembler implements ResourceAssembler<Entry, Resource
 			linkTo(methodOn(EntryController.class).deleteEntry(entry.getId())).withRel("delete")
 		);
 
-		if(entry.getStatus() == Status.SUBMITTED){
-			linkTo(methodOn(ProjectController.class).evaluateEntry(entry.getProject() == null ? entry.getProject().getId() : null, entry.getId(), null)).withRel("evaluate");
+		if(Status.SUBMITTED == entry.getStatus() ){
+			resource.add(linkTo(methodOn(ProjectController.class).evaluateEntry(entry.getProject() != null ? entry.getProject().getId() : null, entry.getId(), null)).withRel("evaluate"));
 		}
 
 		try {
