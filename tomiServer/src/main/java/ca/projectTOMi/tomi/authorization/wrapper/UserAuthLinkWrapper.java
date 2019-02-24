@@ -3,6 +3,10 @@ package ca.projectTOMi.tomi.authorization.wrapper;
 import ca.projectTOMi.tomi.authorization.manager.UserAuthManager;
 import lombok.Getter;
 
+/**
+ * @author Karol Talbot
+ * @param <E>
+ */
 @Getter
 public final class UserAuthLinkWrapper<E> {
 	private final E modelObject;

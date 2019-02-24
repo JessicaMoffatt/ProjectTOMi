@@ -4,9 +4,11 @@ import java.io.Serializable;
 import ca.projectTOMi.tomi.authorization.permission.UserPermission;
 import ca.projectTOMi.tomi.model.UserAccount;
 import lombok.Data;
-
+/**
+ * @author Karol Talbot
+ */
 @Data
 public class UserAuthId implements Serializable {
-	private UserAccount requestingUser;
+	private Long requestingUser;
 	private UserPermission permission;
 }

@@ -6,6 +6,9 @@ import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 import lombok.Data;
 
+/**
+ * @author Karol Talbot
+ */
 @Data
 public class DataDumpReportLine {
 	private LocalDate date;

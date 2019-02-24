@@ -5,10 +5,12 @@ import ca.projectTOMi.tomi.authorization.permission.ProjectPermission;
 import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 import lombok.Data;
-
+/**
+ * @author Karol Talbot
+ */
 @Data
 public class ProjectAuthId implements Serializable {
-	private UserAccount requestingUser;
+	private Long requestingUser;
 	private ProjectPermission permission;
-	private Project project;
+	private String project;
 }

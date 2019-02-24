@@ -1,6 +1,10 @@
 package ca.projectTOMi.tomi.authorization.manager;
 
 import java.util.List;
+/**
+ * @author Karol Talbot
+ * @param <E>
+ */
 public interface AuthorizationFilter<E> {
 	/**
 	 * Removes items from a list that a UserAccount does not have permission to view.

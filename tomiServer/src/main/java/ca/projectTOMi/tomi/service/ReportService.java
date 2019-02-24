@@ -11,6 +11,9 @@ import ca.projectTOMi.tomi.persistence.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author Karol Talbot
+ */
 @Service
 public class ReportService {
 	private final ReportRepository reportRepository;

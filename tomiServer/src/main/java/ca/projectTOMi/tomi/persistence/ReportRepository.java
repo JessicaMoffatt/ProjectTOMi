@@ -11,7 +11,9 @@ import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
+/**
+ * @author Karol Talbot
+ */
 @Repository
 public class ReportRepository {
 	private final EntityManager entityManager;

@@ -4,10 +4,12 @@ import java.io.Serializable;
 import ca.projectTOMi.tomi.authorization.permission.TimesheetPermission;
 import ca.projectTOMi.tomi.model.UserAccount;
 import lombok.Data;
-
+/**
+ * @author Karol Talbot
+ */
 @Data
 public class TimesheetAuthId implements Serializable {
-	private UserAccount requestingUser;
+	private Long requestingUser;
 	private TimesheetPermission permission;
-	private UserAccount timesheetOwner;
+	private Long timesheetOwner;
 }

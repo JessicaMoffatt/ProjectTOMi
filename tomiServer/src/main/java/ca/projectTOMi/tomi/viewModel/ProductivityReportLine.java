@@ -5,6 +5,9 @@ import ca.projectTOMi.tomi.model.UnitType;
 import ca.projectTOMi.tomi.model.UserAccount;
 import lombok.Data;
 
+/**
+ * @author Karol Talbot
+ */
 @Data
 public class ProductivityReportLine {
 	private LocalDate date;

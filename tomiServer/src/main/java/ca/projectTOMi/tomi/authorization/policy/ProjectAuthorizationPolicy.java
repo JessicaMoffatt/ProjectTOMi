@@ -11,6 +11,9 @@ import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 import lombok.Data;
 
+/**
+ * @author Karol Talbot
+ */
 @Data
 @Entity
 @IdClass(ProjectAuthId.class)

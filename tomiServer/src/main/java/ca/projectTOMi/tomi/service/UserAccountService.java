@@ -28,12 +28,17 @@ public final class UserAccountService {
 	private final UserAccountRepository repository;
 	private final TeamService teamService;
 	private final EntryService entryService;
+	private final UserAuthService userAuthService;
 
 	@Autowired
-	public UserAccountService(final UserAccountRepository repository, final TeamService teamService, final EntryService entryService) {
+	public UserAccountService(final UserAccountRepository repository,
+	                          final TeamService teamService,
+	                          final EntryService entryService,
+	                          final UserAuthService userAuthService) {
 		this.repository = repository;
 		this.teamService = teamService;
 		this.entryService = entryService;
+		this.userAuthService = userAuthService;
 	}
 
 	/**
@@ -137,6 +142,7 @@ public final class UserAccountService {
 		if (!this.entryService.createTimesheet(date, newUserAccount)) {
 			throw new TimesheetNotFoundException();
 		}
+		this.userAuthService.setNewUserAccountPolicy(newUserAccount);
 		return newUserAccount;
 	}
 

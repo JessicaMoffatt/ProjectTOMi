@@ -1,13 +1,16 @@
 package ca.projectTOMi.tomi.authorization.manager;
 
+import java.util.HashSet;
 import java.util.List;
 import ca.projectTOMi.tomi.authorization.permission.TimesheetPermission;
 import ca.projectTOMi.tomi.authorization.policy.TimesheetAuthorizationPolicy;
 import ca.projectTOMi.tomi.model.UserAccount;
 
-
+/**
+ * @author Karol Talbot
+ */
 public final class TimesheetAuthManager implements AuthManager<TimesheetAuthorizationPolicy> {
-	private List<TimesheetAuthorizationPolicy> policies;
+	private HashSet<TimesheetAuthorizationPolicy> policies;
 	private final UserAccount user;
 	private final UserAccount owner;
 
@@ -52,6 +55,6 @@ public final class TimesheetAuthManager implements AuthManager<TimesheetAuthoriz
 
 	@Override
 	public void loadUserPolicies(final List<TimesheetAuthorizationPolicy> policies) {
-		this.policies = policies;
+		this.policies = new HashSet<>(policies);
 	}
 }

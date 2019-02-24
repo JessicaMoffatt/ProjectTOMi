@@ -9,7 +9,9 @@ import ca.projectTOMi.tomi.authorization.policy.id.TimesheetAuthId;
 import ca.projectTOMi.tomi.authorization.permission.TimesheetPermission;
 import ca.projectTOMi.tomi.model.UserAccount;
 import lombok.Data;
-
+/**
+ * @author Karol Talbot
+ */
 @Data
 @Entity
 @IdClass(TimesheetAuthId.class)

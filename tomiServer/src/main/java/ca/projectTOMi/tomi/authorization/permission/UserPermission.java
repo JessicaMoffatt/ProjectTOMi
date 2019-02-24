@@ -1,5 +1,8 @@
 package ca.projectTOMi.tomi.authorization.permission;
 
+/**
+ * @author Karol Talbot
+ */
 public enum UserPermission {
   READ_LISTS,
 

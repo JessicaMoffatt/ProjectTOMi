@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
+/**
+ * @author Karol Talbot
+ */
 @Component
 @CrossOrigin (origins = "http://localhost:4200")
 public class AuthorizationInterceptor implements HandlerInterceptor {
@@ -30,6 +32,9 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	private final UserAuthorizationRepository userAuthRepository;
 	private final UserAccountService userAccountService;
 	private final EntryService entryService;
+	private Long start;
+	private Long stop;
+	private int i = 0;
 
 	@Autowired
 	public AuthorizationInterceptor(final UserAuthorizationRepository userAuthRepository,
@@ -45,8 +50,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	}
 
 	@Override
-	public boolean preHandle(
-		final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
+	public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
+		this.start = System.currentTimeMillis();
 		final String authToken = request.getHeader("Authorization");
 
 		//TODO Remove Hardcoded UserAccount---------------
@@ -102,6 +107,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	@Override
 	public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response,
 	                            final Object handler, final Exception exception) throws Exception {
+		this.stop = System.currentTimeMillis();
+		System.out.println("time"+ i++ +": " +(stop-start) + "ms");
 	}
 
 	private UserAccount getOwner(final String URI, final String requestMethod, final UserAccount requestingUser) {

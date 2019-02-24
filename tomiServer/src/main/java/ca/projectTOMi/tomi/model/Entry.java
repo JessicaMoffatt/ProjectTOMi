@@ -181,13 +181,15 @@ public final class Entry {
 
 	@JsonProperty
 	public void setProject(final ProjectViewModel project){
-		final Project p = new Project();
-		p.setId(project.getId());
-		this.project = p;
+		if(project != null) {
+			final Project p = new Project();
+			p.setId(project.getId());
+			this.project = p;
+		}
 	}
 
 	@JsonProperty
 	public ProjectViewModel getProject(){
-		return new ProjectViewModel(this.project);
+		return this.project == null ? null : new ProjectViewModel(this.project);
 	}
 }

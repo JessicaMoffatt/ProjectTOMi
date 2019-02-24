@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-
+/**
+ * @author Karol Talbot
+ */
 @Component
 public class TOMiInterceptorAppConfig implements WebMvcConfigurer {
   private final AuthorizationInterceptor authorizationInterceptor;

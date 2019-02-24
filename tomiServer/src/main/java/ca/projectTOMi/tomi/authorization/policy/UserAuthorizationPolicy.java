@@ -10,7 +10,9 @@ import ca.projectTOMi.tomi.authorization.permission.UserPermission;
 import ca.projectTOMi.tomi.model.UserAccount;
 import lombok.Data;
 
-
+/**
+ * @author Karol Talbot
+ */
 @Data
 @Entity
 @IdClass(UserAuthId.class)
