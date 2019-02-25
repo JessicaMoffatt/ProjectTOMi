@@ -4,6 +4,9 @@ import {TimesheetComponent} from "../../panel/timesheet/timesheet.component";
 
 const millisecondsToDays:number = 86400000;
 
+/**
+ * DatePickerComponent is used to display the datepicker used for timesheet selection.
+ */
 @Component({
   selector: 'app-date-picker',
   templateUrl: './date-picker.component.html',
@@ -11,22 +14,39 @@ const millisecondsToDays:number = 86400000;
 })
 export class DatePickerComponent{
 
+  /**
+   * The latest date that can be selected.
+   */
   maxDate: Date;
+  /**
+   * The earliest date that can be selected.
+   */
   minDate: Date;
+  /**
+   * The selected date.
+   */
   selectedDate: Date;
+  /**
+   * The parent component of this component.
+   */
   @Input() parent;
-
 
   constructor(private timesheetService: TimesheetService){
     this.maxDate = new Date();
   }
 
+  /**
+   * Determines if the minimum date should be set.
+   */
   doSetMinDate(){
     if(this.minDate === undefined || this.minDate === null){
       this.setMinDate().then();
     }
   }
 
+  /**
+   * Sets the minimum date accordingly.
+   */
   async setMinDate(){
     await this.timesheetService.getEarliestDate().then((data)=>{
       let dateString = data.toString().replace(/-/g, '\/').replace(/T.+/, '');
@@ -36,6 +56,10 @@ export class DatePickerComponent{
     });
   }
 
+  /**
+   * Changes the selected date and displays the corresponding timesheet.
+   * @param value The date selected.
+   */
   onDateChange(value: Date):void{
     let day = value.getDay();
     if(day === 0){

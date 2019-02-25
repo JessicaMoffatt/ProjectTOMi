@@ -119,7 +119,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Creates an empty entry for the timesheet.
    */
   public addEntry(): void {
-    if (this.timesheetService.currentStatus === this.sts[this.sts.LOGGING]) {
+    if ((this.timesheetService.currentStatus === this.sts[this.sts.LOGGING])||(this.timesheetService.currentStatus === this.sts[this.sts.REJECTED])) {
       let newEntry = new Entry();
 
       this.timesheetService.getCurrentTimesheet().then((data) => {
@@ -247,7 +247,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Saves the state of all entries for the current timesheet.
    */
   async save() {
-    if (this.timesheetService.currentStatus === this.sts[this.sts.LOGGING]) {
+    if ((this.timesheetService.currentStatus === this.sts[this.sts.LOGGING])||(this.timesheetService.currentStatus === this.sts[this.sts.REJECTED])) {
       return Promise.all(this.entryComponents.map((comp)=> {
           return Promise.resolve(comp.save()).then(() => {
           this.updateTally();
@@ -258,11 +258,15 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     }
   }
 
+  async test(){
+    return Promise.resolve(this.timesheetService.currentStatus = this.sts[this.sts.LOGGING]);
+  }
+
   /**
    * Displays the submit modal.
    */
   displaySubmitModal() {
-    if (this.timesheetService.currentStatus === this.sts[this.sts.LOGGING]) {
+    if ((this.timesheetService.currentStatus === this.sts[this.sts.LOGGING])||(this.timesheetService.currentStatus === this.sts[this.sts.REJECTED])) {
       const initialState = {
         title: 'Submit Confirmation',
         parent: this

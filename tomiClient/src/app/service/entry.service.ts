@@ -6,6 +6,7 @@ import {map} from "rxjs/operators";
 import {Task} from '../model/task';
 import {UnitType} from "../model/unitType";
 import {Team} from "../model/team";
+import {Status} from "../model/status";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})

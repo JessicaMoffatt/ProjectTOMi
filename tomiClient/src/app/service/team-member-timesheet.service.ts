@@ -11,11 +11,18 @@ import {Entry} from "../model/entry";
 import {Router} from "@angular/router";
 import {UserAccountService} from "./user-account.service";
 
+/**
+ * TeamMemberTimesheetService is used to control the flow of data regarding timesheets to/from the view.
+ *
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class TeamMemberTimesheetService {
 
+  /** The list of team members for this team lead's team.*/
   teamMembers: UserAccount[];
   /** The team member selected in the sidebar.*/
   selectedMember: UserAccount;
@@ -23,18 +30,27 @@ export class TeamMemberTimesheetService {
   //TODO, dont hardcode, should come from header
  teamid: number = 1;
 
+ /** The list of entries for the displaying timesheet*/
   entries: Entry[] = [];
 
+  /** The total number of hours worked for the displaying timesheet*/
   tally: number = 0;
 
   constructor(private http: HttpClient, private router: Router, private userAccountService:UserAccountService, private teamService:TeamService, public timesheetService: TimesheetService) {
 
   }
 
+  /**
+   * Gets all the team members for this team lead's team.
+   */
   getAllTeamMembers(): Observable<Array<UserAccount>> {
     return this.teamService.getTeamMembers(this.teamid);
   }
 
+  /**
+   * Gets the team member with the specified ID.
+   * @param id The ID of the team member to get.
+   */
   getMemberById(id: number): Observable<UserAccount> {
     return this.userAccountService.getUserById(id);
   }
@@ -48,6 +64,9 @@ export class TeamMemberTimesheetService {
     });
   }
 
+  /**
+   * Displays the most recent timesheet.
+   */
   displayTimesheet(){
     this.populateTimesheets().then((value) => {
       let timesheet = value as Timesheet;
@@ -55,6 +74,9 @@ export class TeamMemberTimesheetService {
     });
   }
 
+  /**
+   * Populates the list of timesheets in timesheet service.
+   */
   private async populateTimesheets() {
     let promise = new Promise((resolve, reject) => {
       resolve(this.timesheetService.populateTimesheets(this.selectedMember.id))
@@ -63,6 +85,10 @@ export class TeamMemberTimesheetService {
     return await promise;
   }
 
+  /**
+   * Populates the list of entries for the specified timesheet.
+   * @param id The ID of the timesheet to display entries for.
+   */
   private populateEntries(id: number) {
     this.timesheetService.getEntries(id).subscribe((data) => {
       this.entries = data;
@@ -70,6 +96,9 @@ export class TeamMemberTimesheetService {
     });
   }
 
+  /**
+   * Updates the tally.
+   */
   public updateTally(): void {
     let hours: number = 0;
     this.entries.forEach(function (entry) {
@@ -79,6 +108,9 @@ export class TeamMemberTimesheetService {
     this.tally = hours;
   }
 
+  /**
+   * Displays the previous timesheet.
+   */
   displayPrevTimesheet() {
     let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
 
@@ -91,6 +123,9 @@ export class TeamMemberTimesheetService {
     }
   }
 
+  /**
+   * Displays the next timesheet.
+   */
   displayNextTimesheet(){
     let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
 
@@ -103,6 +138,10 @@ export class TeamMemberTimesheetService {
     }
   }
 
+  /**
+   * Displays the specified timesheet.
+   * @param index The index of the timesheet to display.
+   */
   displaySpecifiedTimesheet(index:number){
     let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
     let newIndex: number = currentIndex + index;

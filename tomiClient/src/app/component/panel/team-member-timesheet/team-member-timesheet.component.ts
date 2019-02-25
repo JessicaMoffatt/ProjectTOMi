@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {TeamMemberTimesheetService} from "../../../service/team-member-timesheet.service";
-import {UserAccount} from "../../../model/userAccount";
-import {Timesheet} from "../../../model/timesheet";
-import {Entry} from "../../../model/entry";
 import {TimesheetService} from "../../../service/timesheet.service";
 
+/**
+ * TeamMemberTimesheetComponent is used to facilitate communication between the view and front end services.
+ *
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
 @Component({
   selector: 'app-team-member-timesheet',
   templateUrl: './team-member-timesheet.component.html',
@@ -18,6 +21,10 @@ export class TeamMemberTimesheetComponent implements OnInit {
 
   }
 
+  /**
+   * Displays the specified timesheet.
+   * @param index The index of the timesheet to display.
+   */
   displaySpecifiedTimesheet(index:number){
     this.teamMemberTimesheetService.displaySpecifiedTimesheet(index);
   }

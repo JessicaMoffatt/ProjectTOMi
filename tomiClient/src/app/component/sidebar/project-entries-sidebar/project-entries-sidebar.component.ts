@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {ProjectEntriesService} from "../../../service/project-entries.service";
 import {Project} from "../../../model/project";
-import {UserAccount} from "../../../model/userAccount";
-import {ProjectService} from "../../../service/project.service";
 
+/**
+ * ProjectEntriesSidebarComponent is used to display the list of projects for a user to interact with when viewing entries for approval.
+ *
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
 @Component({
   selector: 'app-project-entries-sidebar',
   templateUrl: './project-entries-sidebar.component.html',
@@ -11,7 +15,7 @@ import {ProjectService} from "../../../service/project.service";
 })
 export class ProjectEntriesSidebarComponent implements OnInit {
 
-  constructor(public projectEntriesService: ProjectEntriesService, public projectService:ProjectService) { }
+  constructor(public projectEntriesService: ProjectEntriesService) { }
 
   ngOnInit() {
     this.projectEntriesService.getAllProjects().subscribe((data: Array<Project>) => {
@@ -19,12 +23,15 @@ export class ProjectEntriesSidebarComponent implements OnInit {
     });
   }
 
+  /**
+   * Displays the entries for a specified project.
+   * @param project The project to display entries for.
+   */
   displayProjectEntries(project: Project){
     this.projectEntriesService.getProjectById(project.id).subscribe((data:Project) => {
       this.projectEntriesService.selectedProject = data;
 
-      this.projectEntriesService.displayProjectEntries();
+      this.projectEntriesService.displayProjectEntries().then();
     });
   }
-
 }

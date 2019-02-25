@@ -53,6 +53,7 @@ import { ProjectEntriesSidebarComponent } from './component/sidebar/project-entr
 import {ProjectEntriesService} from "./service/project-entries.service";
 import {ProjectService} from "./service/project.service";
 import { EntryApproveComponent } from './component/panel/entry-approve/entry-approve.component';
+import {TeamService} from "./service/team.service";
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import { EntryApproveComponent } from './component/panel/entry-approve/entry-app
   ],
   providers: [
     TeamSidebarService,
+    TeamService,
     UserAccountService,
     UserAccountSidebarService,
     {

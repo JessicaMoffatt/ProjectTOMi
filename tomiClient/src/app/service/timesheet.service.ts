@@ -4,7 +4,6 @@ import {map} from "rxjs/operators";
 import {Entry} from "../model/entry";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Timesheet} from "../model/timesheet";
-import {Team} from "../model/team";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -16,7 +15,7 @@ const httpOptions = {
  * TimesheetService is used to control the flow of data regarding timesheets to/from the view.
  *
  * @author Jessica Moffatt
- * @version 1.0
+ * @version 2.0
  */
 @Injectable({
   providedIn: 'root'
@@ -42,10 +41,17 @@ export class TimesheetService {
   constructor(private http: HttpClient) {
   }
 
+  /**
+   * Returns the current timesheet index.
+   */
   getCurrentTimesheetIndex(){
     return this.currentTimesheetIndex;
   }
 
+  /**
+   * Asynchronously sets the current timesheet index to the specified number.
+   * @param index The number to set the index to.
+   */
   async setCurrentTimesheetIndex(index: number){
     this.currentTimesheetIndex = index;
     return this.currentTimesheetIndex;
@@ -150,6 +156,12 @@ export class TimesheetService {
       });
   }
 
+  /**
+   * Does a PUT for the specified timesheet.
+   * @param data The data to be sent as the body of the request.
+   * @param tempSheet The timesheet to set the response to, as well as return.
+   * @param url The PUT url for the timesheet..
+   */
   async putTimesheetRequest(data:any, tempSheet: Timesheet, url: string[]): Promise<Timesheet>{
     await this.http.put<Timesheet>(url["href"],data, httpOptions).toPromise().then(response => {
       tempSheet = response;
@@ -161,6 +173,9 @@ export class TimesheetService {
     return tempSheet;
   }
 
+  /**
+   * Gets the earliest date for selection from the date picker.
+   */
   async getEarliestDate(){
      let promise = new Promise((resolve, reject)=>{
        resolve(this.timesheets[this.timesheets.length-1].startDate);
@@ -169,6 +184,10 @@ export class TimesheetService {
      return await promise;
   }
 
+  /**
+   * Gets the specified timesheet.
+   * @param timesheetId The ID of the timesheet to get.
+   */
   getTimesheetById(timesheetId:number):Observable<Timesheet>{
     return this.http.get(`http://localhost:8080/timesheets/${timesheetId}`).pipe(map((response:Response) => response))
       .pipe(map((data: any) => {

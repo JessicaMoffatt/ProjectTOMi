@@ -2,6 +2,7 @@
 @author Jessica Moffatt
 @version 1.0
 -->
+<div [ngClass]="'container'">
 <div *ngIf="projectEntriesService.selectedProject">
   <div>
     <div [ngClass]="'row'">
@@ -18,6 +19,7 @@
     </div>
   </div>
 </div>
-<div [ngClass]="'timesheet_footer'">
+</div>
+<div [ngClass]="'project_entries_footer'">
   <span [ngClass]="['submit', 'btn', 'bottom_btn']" (click)="displaySubmitModal()"></span>
 </div>

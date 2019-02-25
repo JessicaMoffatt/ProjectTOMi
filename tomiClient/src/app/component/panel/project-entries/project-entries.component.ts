@@ -9,6 +9,12 @@ import {EntryService} from "../../../service/entry.service";
 import {EntryComponent} from "../entry/entry.component";
 import {EntryApproveComponent} from "../entry-approve/entry-approve.component";
 
+/**
+ * ProjectEntriesComponent is used to facilitate communication between the view and front end services.
+ *
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
 @Component({
   selector: 'app-project-entries',
   templateUrl: './project-entries.component.html',
@@ -31,6 +37,9 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
     this.getEntryComponents();
   }
 
+  /**
+   * Gets the entries to be displayed for approval.
+   */
   getEntryComponents() {
     this.entryComponentsRef.changes.subscribe(c => {
       c.toArray().forEach(item => {
@@ -51,10 +60,10 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
     this.bsModalRef = this.modalService.show(SubmitApprovalModalComponent, {initialState});
   }
 
+  /**
+   * Submits the entries for approval/rejection.
+   */
   async submitApproval() {
-    // await this.projectEntriesService.submit().finally(() => {
-    //   this.projectEntriesService.displayProjectEntries().then();
-    // });
     let promise = new Promise((resolve,reject)=>{
       resolve(this.projectEntriesService.submit());
     });
@@ -62,7 +71,6 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
     return await promise;
   }
 }
-
 
 /* Approval Modal */
 /**
@@ -90,7 +98,7 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
 })
 
 /**
- * SubmitTimesheetModalComponent is used to get confirmation from the user regarding their desire to submit a timesheet.
+ * SubmitApprovalModalComponent is used to get confirmation from the user regarding their desire to submit entries for approval.
  */
 export class SubmitApprovalModalComponent implements OnInit {
   /** The title of the modal.*/
@@ -107,7 +115,7 @@ export class SubmitApprovalModalComponent implements OnInit {
 
   /** Facilitates the submission of the current timesheet, as well as closes the modal.*/
   confirmSubmission(): void {
-    this.submitApproval();
+    this.submitApproval().then();
     this.bsModalRef.hide();
   }
 
@@ -120,15 +128,14 @@ export class SubmitApprovalModalComponent implements OnInit {
   /** Facilitates submission of the current timesheet.**/
   async submitApproval() {
     await this.parent.submitApproval().then(()=>{
-      // console.log(this.parent.projectEntriesService.count);
-      this.test().then(()=>{
-        // console.log(this.parent.projectEntriesService.count);
-      });
-
+      this.displayProjectEntries().then();
     });
   }
 
-  async test(){
+  /**
+   * Displays the project's entries.
+   */
+  async displayProjectEntries(){
     await this.parent.projectEntriesService.displayProjectEntries().then();
   }
 }

@@ -28,8 +28,7 @@ export class ProjectEntriesService {
 
   count:number = 0;
 
-  constructor(private projectService: ProjectService, private http: HttpClient,
-              private timesheetService: TimesheetService, private userAccountService: UserAccountService) {
+  constructor(private projectService: ProjectService, private http: HttpClient) {
 
   }
 
