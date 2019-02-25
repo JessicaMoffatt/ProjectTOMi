@@ -1,14 +1,16 @@
-<h1>Users</h1>
-<div>
-  <h2>View Users</h2>
-  <input #user_account_search id="user_account_search" [ngClass]="'input_search'" placeholder="search" (keyup)="0">
+<div id="sidebar">
+  <h1>Users</h1>
   <div>
-    <ul style="list-style: none">
-      <li *ngFor="let userAccount of (userAccountService.userAccounts | async | orderBy:'lastName')">
-        <span *ngIf="(userAccount.firstName + ' ' + userAccount.lastName).toUpperCase().includes(user_account_search.value.toUpperCase())" (click)='displayUserAccount(userAccount)'>{{userAccount.firstName}} {{userAccount.lastName}}</span>
-      </li>
-    </ul>
+    <input #user_account_search id="user_account_search" [ngClass]="'input_search'" placeholder="search" (keyup)="0">
+    <div>
+      <ul [ngClass]="'sidebar_list'">
+        <li [ngClass]="'sidebar_list'" *ngFor="let userAccount of (userAccountService.userSubject | async | orderBy:'lastName')">
+          <span *ngIf="(userAccount.firstName + ' ' + userAccount.lastName).toUpperCase().includes(user_account_search.value.toUpperCase())" (click)='displayUserAccount(userAccount)'>{{userAccount.firstName}} {{userAccount.lastName}}</span>
+        </li>
+      </ul>
+    </div>
   </div>
+  <div (click)="createAddUserAccountComponent()" [ngClass]="['new_btn', 'btn']">New User</div>
+  <template #add_user_account_container></template>
 </div>
-<div (click)="createAddUserAccountComponent()" [ngClass]="['new_btn', 'btn']">New User</div>
-<template #add_user_account_container></template>
+

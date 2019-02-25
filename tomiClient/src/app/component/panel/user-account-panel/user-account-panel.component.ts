@@ -13,8 +13,6 @@ export class UserAccountPanelComponent implements OnInit {
   constructor(private userAccountService: UserAccountService, private teamService: TeamService) { }
 
   ngOnInit() {
-    this.userAccountService.refreshUserAccounts();
-    this.teamService.refreshTeams();
-  }
 
+  }
 }
