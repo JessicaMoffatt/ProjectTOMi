@@ -22,6 +22,10 @@ export class EntryComponent implements OnInit {
   @Input() entry: Entry;
   /** The list of projects this user is allowed to access.*/
   @Input() projects: Project[];
+  /** The list of unit types this user is allowed to access.*/
+  @Input() unitTypes: UnitType[];
+  /** The list of tasks this user is allowed to access.*/
+  @Input() tasks: Task[];
   /** Event emitter used to notify the parent component that a copy of an entry has been requested. */
   @Output() requestCopy = new EventEmitter<any>();
   /** Event emitter used to notify the parent component that a delete of an entry has been requested. */
@@ -52,28 +56,13 @@ export class EntryComponent implements OnInit {
   /** The input field for the entry's sunday hours.*/
   @ViewChild('sundayInput') sundayInput;
 
-  /** List of all tasks.*/
-  tasks: Task[];
-  /** List of all unit types.*/
-  unitTypes: UnitType[];
 
   constructor(private entryService: EntryService, public timesheetService: TimesheetService) {
   }
 
   /** On initialization, populates the list of tasks and unit types.*/
   ngOnInit() {
-    this.populateTasks();
-    this.populateUnitTypes();
-  }
 
-  /** Populates tasks.*/
-  populateTasks() {
-    this.entryService.getTasks().subscribe((data => this.tasks = data))
-  }
-
-  /** Populates unitTypes.*/
-  populateUnitTypes() {
-    this.entryService.getUnitTypes().subscribe((data => this.unitTypes = data))
   }
 
   /**

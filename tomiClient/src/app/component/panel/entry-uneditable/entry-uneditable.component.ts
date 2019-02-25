@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Entry} from "../../../model/entry";
+import {TimesheetComponent} from "../timesheet/timesheet.component";
 
 /**
  * The component used to display entries with a stats of submitted.

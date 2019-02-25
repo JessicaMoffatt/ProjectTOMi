@@ -17,6 +17,8 @@ import {EntryComponent} from "../entry/entry.component";
 import {Status} from "../../../model/status";
 import {Router} from "@angular/router";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
+import {Task} from "../../../model/task";
+import {UnitType} from "../../../model/unitType";
 
 
 /**
@@ -42,6 +44,11 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   entries: Entry[] = [];
   /** List of all projects this user is allowed to access.*/
   projects: Project[] = [];
+
+  /** List of all tasks.*/
+  tasks: Task[];
+  /** List of all unit types.*/
+  unitTypes: UnitType[];
 
   /**
    * Holds the total number of hours worked this week.
@@ -70,12 +77,24 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
       let timesheet = value as Timesheet;
       this.getEntries(timesheet.id);
       this.getProjects(this.userId);
+      this.populateTasks();
+      this.populateUnitTypes();
     });
   }
 
   /** After the view has initialized, gets all entry components.*/
   ngAfterViewInit(): void {
     this.getEntryComponents();
+  }
+
+  /** Populates tasks.*/
+  populateTasks() {
+    this.entryService.getTasks().subscribe((data => this.tasks = data))
+  }
+
+  /** Populates unitTypes.*/
+  populateUnitTypes() {
+    this.entryService.getUnitTypes().subscribe((data => this.unitTypes = data))
   }
 
   /** Gets all the entry components currently on the timesheet.*/

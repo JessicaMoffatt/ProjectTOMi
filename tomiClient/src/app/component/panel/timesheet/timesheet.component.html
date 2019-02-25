@@ -13,10 +13,10 @@
 
   <div [ngClass]="'container'">
     <div *ngFor="let entry of entries">
-      <app-entry [ngClass]="'entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.LOGGING" [entry]="entry" [projects]="projects"
+      <app-entry [ngClass]="'entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.LOGGING" [entry]="entry" [projects]="projects" [unitTypes]="unitTypes" [tasks]="tasks"
                  (requestCopy)="copyEntry($event)"
                  (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>
-      <app-entry [ngClass]="'rejected_entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.REJECTED" [entry]="entry" [projects]="projects"
+      <app-entry [ngClass]="'rejected_entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.REJECTED" [entry]="entry" [projects]="projects" [unitTypes]="unitTypes" [tasks]="tasks"
                  (requestCopy)="copyEntry($event)"
                  (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>
       <app-entry-uneditable [ngClass]="'submitted_entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.SUBMITTED" [entry]="entry"></app-entry-uneditable>

@@ -33,7 +33,6 @@ export class TeamService {
 
   teamsObservable: Observable<Array<Team>>;
 
-
   /** List of all the team members not currently on any teams.*/
   allFreeMembers: UserAccount[] = [];
 

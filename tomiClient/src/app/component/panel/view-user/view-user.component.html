@@ -20,9 +20,9 @@
     <li>
       <ng-container *ngIf="userAccount.teamId; then hasTeam else noTeam"></ng-container>
       <ng-template #hasTeam>
-        <ng-container *ngFor="let team of teamService.teamsObservable | async">
-          <span *ngIf="team.id === userAccount.teamId" [ngClass]="['list_item']">Team {{team.teamName}}</span>
-        </ng-container>
+        <!--<ng-container *ngFor="let team of teamService.teamsObservable | async">-->
+          <!--<span *ngIf="team.id === userAccount.teamId" [ngClass]="['list_item']">Team {{team.teamName}}</span>-->
+        <!--</ng-container>-->
       </ng-template>
       <ng-template #noTeam>
         <span [ngClass]="['list_item']">Team None</span>
