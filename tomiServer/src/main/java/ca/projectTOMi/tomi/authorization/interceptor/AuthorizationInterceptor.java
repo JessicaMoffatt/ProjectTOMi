@@ -53,7 +53,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		request.setAttribute("start", start);
 		if(request.getRequestURL().toString().equals("http://localhost:8080") || request.getRequestURL().toString().equals("http://localhost:8080/tokensignin")){
 			return true;
-		}else if(request.getMethod().equals("OPTION")){
+		}else if("OPTION".equals(request.getMethod())){
 			return true;
 		}
 		final String authToken = request.getHeader("Authorization");
@@ -114,7 +114,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		Long start = (Long) request.getAttribute("start");
 		String requestURI = request.getRequestURI();
 		Long stop = System.currentTimeMillis();
-		System.out.printf("Call %d: %s executed in %dms%n", i++, requestURI,stop-start );
+		System.out.printf("Call %d%s: %s executed in %dms%n", i++, requestURI, request.getMethod(),stop-start );
 	}
 
 	@Override

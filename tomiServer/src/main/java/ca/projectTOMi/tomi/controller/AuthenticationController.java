@@ -12,18 +12,31 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-
+/**
+ * @author Karol Talbot
+ */
 @RestController
 public class AuthenticationController {
 	private final static String CLIENT_ID_1 = "730191725836-os1al23f91okt57uactu0renuordqo1c.apps.googleusercontent.com";
 	private final static String CLIENT_ID_2= " 730191725836-6pv3tlbl520hai1tnl96nr0du79b7sfp.apps.googleusercontent.com ";
+	private static GooglePublicKeysManager googlePublicKeysManager;
+
+
+	public AuthenticationController(){
+		try{
+		googlePublicKeysManager = new GooglePublicKeysManager(GoogleNetHttpTransport.newTrustedTransport(), JacksonFactory.getDefaultInstance());
+		}catch (IOException|GeneralSecurityException e){
+
+		}
+	}
 
 	@PostMapping("/tokensignin")
-	public String[] getToken(@RequestParam String idtoken) throws IOException, GeneralSecurityException {
-		final String[] results = new String[2];
+	public String getToken(@RequestParam String idtoken) throws IOException, GeneralSecurityException {
+		Long start = System.currentTimeMillis();
+		String results = new String();
 
-		final GooglePublicKeysManager googlePublicKeysManager = new GooglePublicKeysManager(GoogleNetHttpTransport.newTrustedTransport(), JacksonFactory.getDefaultInstance());
-		final GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(googlePublicKeysManager)
+
+		final GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(this.googlePublicKeysManager)
 			.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2))
 			.build();
 
@@ -43,14 +56,13 @@ public class AuthenticationController {
 			String familyName = (String) payload.get("family_name");
 			String givenName = (String) payload.get("given_name");
 
-			results[0] = name;
-			results[1] = pictureUrl;
+			results = pictureUrl;
 
 		} else {
 			System.out.println("Invalid ID token.");
 		}
 
-
+		System.out.println("token time: " + (System.currentTimeMillis()-start));
 		return results;
 	}
 }

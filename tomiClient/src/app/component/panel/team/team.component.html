@@ -2,7 +2,7 @@
 @author Jessica Moffatt
 @version 1.0
 -->
-<div style="padding-top: 10vh" *ngIf="teamSideBarService.selectedTeam" [ngClass]="'team_container'">
+<div *ngIf="teamSideBarService.selectedTeam" [ngClass]="'team_container'">
   <div>
     <div [ngClass]="'row'">
     <input id="team_name" placeholder="Team Name" value={{teamSideBarService.selectedTeam?.teamName}}

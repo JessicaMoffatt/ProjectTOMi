@@ -44,6 +44,7 @@ import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry
 import { AddTaskComponent } from './component/modal/add-task/add-task.component';
 import {TaskPanelService} from "./service/task-panel.service";
 import { EditTaskComponent } from './component/modal/edit-task/edit-task.component';
+import {TeamService} from "./service/team.service";
 
 @NgModule({
   declarations: [
@@ -105,6 +106,7 @@ import { EditTaskComponent } from './component/modal/edit-task/edit-task.compone
       useClass: AddHeaderInterceptor,
       multi: true
     },
+    TeamService,
     TimesheetService,
     BsModalService,
     ComponentLoaderFactory,
