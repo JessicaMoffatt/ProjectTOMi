@@ -65,6 +65,6 @@ export class AddUnitTypeComponent implements OnInit {
    * Destroy the AddUnitType modal.
    */
   destroyAddUnitTypeComponent() {
-    this.unitTypeSidebarService.destroyAddUserAccountComponent();
+    this.unitTypeSidebarService.destroyAddUnitTypeComponent();
   }
 }

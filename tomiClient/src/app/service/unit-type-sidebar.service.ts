@@ -10,7 +10,7 @@ export class UnitTypeSidebarService {
 
   constructor() { }
 
-  destroyAddUserAccountComponent() {
+  destroyAddUnitTypeComponent() {
     this.ref.destroy();
   }
 }
