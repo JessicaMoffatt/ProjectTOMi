@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public final class TeamService {
   private final TeamRepository repository;
+  private final ProjectAuthService projectAuthService;
 
   /**
    * Constructor for the TeamService service.
@@ -23,8 +24,10 @@ public final class TeamService {
    * @param repository
    *   Repository responsible for persisting Team instances
    */
-  public TeamService(final TeamRepository repository) {
+  public TeamService(final TeamRepository repository,
+                     final ProjectAuthService projectAuthService) {
     this.repository = repository;
+    this.projectAuthService = projectAuthService;
   }
 
   /**

@@ -4,6 +4,8 @@ import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.model.Team;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * UserAccountRepository is used to persist and retrieve data regarding {@link UserAccount} from the
@@ -39,4 +41,13 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
 	 * @return List of UserAccount that do not belong to a Team
 	 */
 	List<UserAccount> getAllByActiveTrueAndTeamIsNullOrderById();
+	List<UserAccount> getAllByActiveTrueAndTeamNot(Team team);
+
+	@Query ("SELECT count(id) FROM UserAccount WHERE admin = true")
+	int getAdminCount();
+
+	@Query ("SELECT count(id) FROM UserAccount WHERE programDirector = true")
+	int getDirectorCount();
+
+	List<UserAccount> getAllByActiveTrueAndProgramDirectorTrue();
 }

@@ -32,8 +32,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	private final UserAuthorizationRepository userAuthRepository;
 	private final UserAccountService userAccountService;
 	private final EntryService entryService;
-	private Long start;
-	private Long stop;
 	private int i = 0;
 
 	@Autowired
@@ -51,7 +49,13 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
-		this.start = System.currentTimeMillis();
+		Long start = System.currentTimeMillis();
+		request.setAttribute("start", start);
+		if(request.getRequestURL().toString().equals("http://localhost:8080") || request.getRequestURL().toString().equals("http://localhost:8080/tokensignin")){
+			return true;
+		}else if(request.getMethod().equals("OPTION")){
+			return true;
+		}
 		final String authToken = request.getHeader("Authorization");
 
 		//TODO Remove Hardcoded UserAccount---------------
@@ -89,26 +93,33 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			authMan = new ProjectAuthManager(user);
 			authMan.loadUserPolicies(this.projectAuthRepository.getAllByRequestingUser(user));
 			request.setAttribute("authMan", authMan);
-		} else {
+		} else if("ReportController".matches(controller)){
+			// TODO Handle report permissions
+			return true;
+		}else {
 			final AuthManager<UserAuthorizationPolicy> authMan;
 			authMan = new UserAuthManager(user);
 			authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
 			request.setAttribute("authMan", authMan);
 		}
-		return ((AuthManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
+		final boolean authorized = ((AuthManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
+
+		return authorized;
 	}
 
 	@Override
 	public void postHandle(
 		final HttpServletRequest request, final HttpServletResponse response, final Object handler,
 		final ModelAndView modelAndView) throws Exception {
+		Long start = (Long) request.getAttribute("start");
+		String requestURI = request.getRequestURI();
+		Long stop = System.currentTimeMillis();
+		System.out.printf("Call %d: %s executed in %dms%n", i++, requestURI,stop-start );
 	}
 
 	@Override
 	public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response,
 	                            final Object handler, final Exception exception) throws Exception {
-		this.stop = System.currentTimeMillis();
-		System.out.println("time"+ i++ +": " +(stop-start) + "ms");
 	}
 
 	private UserAccount getOwner(final String URI, final String requestMethod, final UserAccount requestingUser) {

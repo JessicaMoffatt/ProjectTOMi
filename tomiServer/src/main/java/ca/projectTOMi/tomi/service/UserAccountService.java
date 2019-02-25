@@ -6,6 +6,8 @@ import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import ca.projectTOMi.tomi.exception.MinimumAdminAccountException;
+import ca.projectTOMi.tomi.exception.MinimumProgramDirectorAccountException;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.Team;
@@ -29,16 +31,22 @@ public final class UserAccountService {
 	private final TeamService teamService;
 	private final EntryService entryService;
 	private final UserAuthService userAuthService;
+	private final TimesheetAuthService timesheetAuthService;
+	private final ProjectAuthService projectAuthService;
 
 	@Autowired
 	public UserAccountService(final UserAccountRepository repository,
 	                          final TeamService teamService,
 	                          final EntryService entryService,
-	                          final UserAuthService userAuthService) {
+	                          final UserAuthService userAuthService,
+	                          final TimesheetAuthService timesheetAuthService,
+	                          final ProjectAuthService projectAuthService) {
 		this.repository = repository;
 		this.teamService = teamService;
 		this.entryService = entryService;
 		this.userAuthService = userAuthService;
+		this.timesheetAuthService = timesheetAuthService;
+		this.projectAuthService = projectAuthService;
 	}
 
 	/**
@@ -75,17 +83,15 @@ public final class UserAccountService {
 		return this.repository.getUserAccountsByTeamOrderById(this.teamService.getTeamById(teamId));
 	}
 
-
-	/**
-	 * Persists the provided {@link UserAccount}.
-	 *
-	 * @param userAccount
-	 * 	UserAccount to be persisted
-	 *
-	 * @return the UserAccount that was persisted
-	 */
-	public UserAccount saveUserAccount(final UserAccount userAccount) {
-		return this.repository.save(userAccount);
+	public void deleteUserAccount(final UserAccount userAccount) {
+		final UserAccount temp = new UserAccount();
+		this.checkAdmins(userAccount, temp);
+		this.checkProgramDirectors(userAccount, temp);
+		userAccount.setProgramDirector(false);
+		userAccount.setAdmin(false);
+		userAccount.setActive(false);
+		final UserAccount deletedAccount = this.repository.save(userAccount);
+		this.userAuthService.updatedUserAccount(deletedAccount);
 	}
 
 	/**
@@ -99,7 +105,9 @@ public final class UserAccountService {
 	 * @return UserAccount containing the updated attributes
 	 */
 	public UserAccount updateUserAccount(final Long id, final UserAccount newUserAccount) {
-		return this.repository.findById(id).map(userAccount -> {
+		final UserAccount account = this.repository.findById(id).map(userAccount -> {
+			this.checkAdmins(userAccount, newUserAccount);
+			this.checkProgramDirectors(userAccount, newUserAccount);
 			userAccount.setFirstName(newUserAccount.getFirstName());
 			userAccount.setLastName(newUserAccount.getLastName());
 			userAccount.setTeam(newUserAccount.getTeam());
@@ -108,9 +116,17 @@ public final class UserAccountService {
 			userAccount.setProjects(newUserAccount.getProjects());
 			userAccount.setActive(true);
 			userAccount.setAdmin(newUserAccount.isAdmin());
+			if(newUserAccount.isProgramDirector() && !userAccount.isProgramDirector()){
+				this.projectAuthService.newProgramDirector(newUserAccount);
+			}else if(!newUserAccount.isProgramDirector() && userAccount.isProgramDirector()){
+				this.projectAuthService.removeProgramDirector(newUserAccount);
+			}
 			userAccount.setProgramDirector(newUserAccount.isProgramDirector());
 			return this.repository.save(userAccount);
 		}).orElseThrow(UserAccountNotFoundException::new);
+
+		this.userAuthService.updatedUserAccount(account);
+		return account;
 	}
 
 	/**
@@ -143,6 +159,10 @@ public final class UserAccountService {
 			throw new TimesheetNotFoundException();
 		}
 		this.userAuthService.setNewUserAccountPolicy(newUserAccount);
+		this.timesheetAuthService.setNewUserAccountPolicy(newUserAccount);
+		if(newUserAccount.isProgramDirector()){
+			this.projectAuthService.newProgramDirector(newUserAccount);
+		}
 		return newUserAccount;
 	}
 
@@ -182,10 +202,8 @@ public final class UserAccountService {
 	 * @return List of UserAccounts that are not part of the Team and not team leads.
 	 */
 	public List<UserAccount> getAvailableUserAccountsForTeam(final Long teamId) {
+		//TODO fix this monstrosity
 		final List<UserAccount> availableUserAccounts = this.repository.getAllByActiveOrderById(true);
-		availableUserAccounts.removeIf(userAccount -> userAccount.getTeam() != null && Objects.equals(userAccount.getTeam().getId(), teamId));
-		availableUserAccounts.removeIf(userAccount -> userAccount.getTeam() != null && Objects.equals(userAccount.getTeam().getTeamLead().getId(), userAccount.getId()));
-
 		return availableUserAccounts;
 	}
 
@@ -202,5 +220,22 @@ public final class UserAccountService {
 		final UserAccount userAccount = this.getUserAccount(userAccountId);
 		return this.entryService.getTimesheetsByUserAccount(userAccount);
 	}
-}
 
+	private void checkAdmins(final UserAccount oldUserAccount, final UserAccount newUserAccount) {
+		final int adminCount = this.repository.getAdminCount();
+		if (adminCount < 2) {
+			if (oldUserAccount.isAdmin() && !newUserAccount.isAdmin()) {
+				throw new MinimumAdminAccountException();
+			}
+		}
+	}
+
+	private void checkProgramDirectors(final UserAccount oldUserAccount, final UserAccount newUserAccount) {
+		final int directorCount = this.repository.getDirectorCount();
+		if (directorCount < 2) {
+			if (oldUserAccount.isProgramDirector() && !newUserAccount.isProgramDirector()) {
+				throw new MinimumProgramDirectorAccountException();
+			}
+		}
+	}
+}

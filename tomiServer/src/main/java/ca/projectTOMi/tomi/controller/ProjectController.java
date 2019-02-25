@@ -10,11 +10,13 @@ import ca.projectTOMi.tomi.authorization.manager.ProjectAuthManager;
 import ca.projectTOMi.tomi.authorization.wrapper.ProjectAuthLinkWrapper;
 import ca.projectTOMi.tomi.authorization.wrapper.TimesheetAuthLinkWrapper;
 import ca.projectTOMi.tomi.exception.InvalidIDPrefix;
+import ca.projectTOMi.tomi.exception.ProjectManagerException;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.Status;
 import ca.projectTOMi.tomi.service.EntryService;
+import ca.projectTOMi.tomi.service.ProjectAuthService;
 import ca.projectTOMi.tomi.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,11 +55,15 @@ public class ProjectController {
 	private final Logger logger = LoggerFactory.getLogger("Project Controller");
 
 	@Autowired
-	public ProjectController(final ProjectService projectService, final EntryService entryService, final ProjectResourceAssembler projectResourceAssembler, final EntryResourceAssembler entryResourceAssembler) {
+	public ProjectController(final ProjectService projectService,
+	                         final EntryService entryService,
+	                         final ProjectResourceAssembler projectResourceAssembler,
+	                         final EntryResourceAssembler entryResourceAssembler) {
 		this.projectService = projectService;
 		this.entryService = entryService;
 		this.projectResourceAssembler = projectResourceAssembler;
 		this.entryResourceAssembler = entryResourceAssembler;
+
 	}
 
 	/**
@@ -111,7 +117,7 @@ public class ProjectController {
 			throw new InvalidIDPrefix();
 		}
 		newProject.setId(this.projectService.getId(newProject.getId()));
-		final Resource<Project> resource = this.projectResourceAssembler.toResource(new ProjectAuthLinkWrapper<>(authMan.filterFields(this.projectService.saveProject(newProject)), authMan));
+		final Resource<Project> resource = this.projectResourceAssembler.toResource(new ProjectAuthLinkWrapper<>(authMan.filterFields(this.projectService.createProject(newProject)), authMan));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
@@ -153,8 +159,7 @@ public class ProjectController {
 	@DeleteMapping ("/projects/{id}")
 	public ResponseEntity<?> setProjectInactive(@PathVariable final String id) {
 		final Project project = this.projectService.getProjectById(id);
-		project.setActive(false);
-		this.projectService.saveProject(project);
+		this.projectService.deleteProject(project);
 
 		return ResponseEntity.noContent().build();
 	}
@@ -196,7 +201,19 @@ public class ProjectController {
 		return this.entryService.evaluateEntry(entryId, status) ? ResponseEntity.accepted().build(): ResponseEntity.badRequest().build();
 	}
 
-	@ExceptionHandler ({ProjectNotFoundException.class, InvalidIDPrefix.class})
+	@PutMapping("/projects/{projectId}/add_member/{userAccountId}")
+	public ResponseEntity<?> addTeamMember(@PathVariable final String projectId, @PathVariable final Long userAccountId){
+		this.projectService.addTeamMember(projectId, userAccountId);
+		return ResponseEntity.accepted().build();
+	}
+
+	@PutMapping("/projects/{projectId}/remove_member/{userAccountId}")
+	public ResponseEntity<?> removeTeamMember(@PathVariable final String projectId, @PathVariable final Long userAccountId){
+		this.projectService.removeTeamMember(projectId, userAccountId);
+		return ResponseEntity.accepted().build();
+	}
+
+	@ExceptionHandler ({ProjectNotFoundException.class, InvalidIDPrefix.class, ProjectManagerException.class})
 	public ResponseEntity<?> handleExceptions(final Exception e) {
 		this.logger.warn("Project Exception: " + e.getClass());
 		return ResponseEntity.status(400).build();

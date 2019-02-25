@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.UserAccountResourceAssembler;
 import ca.projectTOMi.tomi.authorization.manager.UserAuthManager;
 import ca.projectTOMi.tomi.authorization.wrapper.UserAuthLinkWrapper;
+import ca.projectTOMi.tomi.exception.MinimumAdminAccountException;
+import ca.projectTOMi.tomi.exception.MinimumProgramDirectorAccountException;
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.service.UserAccountService;
@@ -153,8 +155,7 @@ public class UserAccountController {
 	@DeleteMapping ("/user_accounts/{id}")
 	public ResponseEntity<?> setUserAccountInactive(@PathVariable final Long id) {
 		final UserAccount userAccount = this.userAccountService.getUserAccount(id);
-		userAccount.setActive(false);
-		this.userAccountService.saveUserAccount(userAccount);
+		this.userAccountService.deleteUserAccount(userAccount);
 
 		return ResponseEntity.noContent().build();
 	}
@@ -219,5 +220,12 @@ public class UserAccountController {
 		this.logger.warn("UserAccount Exception: " + e.getClass());
 
 		return ResponseEntity.status(400).build();
+	}
+
+	@ExceptionHandler({MinimumProgramDirectorAccountException.class, MinimumAdminAccountException.class})
+	public ResponseEntity<?> handleMinimumAccountExceptions(final Exception e){
+		this.logger.warn("UserAccount Exception: " + e.getClass());
+
+		return ResponseEntity.unprocessableEntity().build();
 	}
 }
