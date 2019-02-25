@@ -51,7 +51,6 @@ import {
 } from './component/panel/project-entries/project-entries.component';
 import { ProjectEntriesSidebarComponent } from './component/sidebar/project-entries-sidebar/project-entries-sidebar.component';
 import {ProjectEntriesService} from "./service/project-entries.service";
-import {ProjectService} from "./service/project.service";
 import { EntryApproveComponent } from './component/panel/entry-approve/entry-approve.component';
 import {TeamService} from "./service/team.service";
 
@@ -74,6 +73,7 @@ import {TeamService} from "./service/team.service";
     AddTeamComponent,
     AddTeamMemberComponent,
     EntryUneditableComponent,
+    AddTeamMemberComponent,
     UserAccountSidebarComponent,
     UserAccountComponent,
     AddUserAccountComponent,
@@ -96,7 +96,8 @@ import {TeamService} from "./service/team.service";
     HttpClientModule,
     OrderModule,
     ModalModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    OrderModule
   ],
   entryComponents:[
     EntryComponent,
@@ -122,7 +123,8 @@ import {TeamService} from "./service/team.service";
     BsModalService,
     ComponentLoaderFactory,
     PositioningService,
-    ProjectEntriesService
+    ProjectEntriesService,
+    UserAccountService
   ],
   bootstrap: [AppComponent]
 })

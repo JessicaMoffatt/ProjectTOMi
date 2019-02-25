@@ -1,0 +1,36 @@
+<!--
+@author James Andrade
+@version 1.0
+-->
+<div [ngClass]="'modal_container'">
+  <div [ngClass]="['btn','close_btn','btn_padding']" (click)="destroyEditTaskComponent()">X</div>
+  <h1>Edit Task</h1>
+  <table>
+    <tr>
+      <td>
+         <label for="task_name">Task Name</label>
+      </td>
+      <td>
+        <input id="task_name" [ngClass]="'inputs'" value="{{this.taskPanelService.selectedTask.name}}">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="task_is_billable" >Is Billable</label>
+      </td>
+      <td>
+        <input type="checkbox" id="task_is_billable" [ngClass]="'inputs'" [checked]="this.taskPanelService.selectedTask.billable">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div [ngClass]="'modal_btns_container'">
+          <div [ngClass]="['btn','add_btn','rounded_corners','btn_padding']" (click)="updateTask()">Save</div>
+          <div (click)="destroyEditTaskComponent()" [ngClass]="['btn','cancel_btn','rounded_corners','btn_padding']">
+            Cancel
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
