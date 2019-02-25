@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {UnitTypeService} from "../../../service/unit-type.service";
 
 @Component({
   selector: 'app-unit-types-panel',
@@ -7,9 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UnitTypesPanelComponent implements OnInit {
 
-  constructor() { }
+  constructor(public unitTypeService: UnitTypeService) { }
 
   ngOnInit() {
   }
-
 }

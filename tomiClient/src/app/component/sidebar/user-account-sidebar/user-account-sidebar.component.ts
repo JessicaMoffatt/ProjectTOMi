@@ -12,7 +12,7 @@ import {AddUserAccountComponent} from "../../modal/add-user-account/add-user-acc
 export class UserAccountSidebarComponent implements OnInit {
 
   @ViewChild('add_user_account_container', {read: ViewContainerRef})
-  add_user_account_container: ViewContainerRef;
+  public add_user_account_container: ViewContainerRef;
 
   constructor(public resolver: ComponentFactoryResolver, public userAccountSidebarService: UserAccountSidebarService, private userAccountService: UserAccountService) {
   }

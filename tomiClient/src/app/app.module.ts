@@ -44,6 +44,9 @@ import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry
 import { AddTaskComponent } from './component/modal/add-task/add-task.component';
 import {TaskPanelService} from "./service/task-panel.service";
 import { EditTaskComponent } from './component/modal/edit-task/edit-task.component';
+import { UnitTypeSidebarComponent } from './component/sidebar/unit-type-sidebar/unit-type-sidebar.component';
+import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
+import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-unit-type.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +76,10 @@ import { EditTaskComponent } from './component/modal/edit-task/edit-task.compone
     ViewUserComponent,
     EntrySubmittedComponent,
     DeleteEntryModalComponent,
-    SubmitTimesheetModalComponent
+    SubmitTimesheetModalComponent,
+    UnitTypeSidebarComponent,
+    AddUnitTypeComponent,
+    EditUnitTypeComponent
   ],
   imports: [
     BrowserModule,
@@ -94,7 +100,8 @@ import { EditTaskComponent } from './component/modal/edit-task/edit-task.compone
     SubmitTimesheetModalComponent,
     AddTeamMemberComponent,
     AddTaskComponent,
-    EditTaskComponent
+    EditTaskComponent,
+    AddUnitTypeComponent
   ],
   providers: [
     TeamSidebarService,

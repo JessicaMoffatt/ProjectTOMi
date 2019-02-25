@@ -1,0 +1,25 @@
+<!--
+@author Iliya Kiritchkov
+@version 1.0
+-->
+<div [ngClass]="'modal_container'">
+  <h1>Add New Unit Type</h1>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Unit</th>
+      <th>Weight</th>
+    </tr>
+    <tr>
+      <td><input #name type="text" placeholder="Ex.: Animation (Silver)"></td>
+      <td><input #unit type="text" placeholder="Ex.: Seconds"></td>
+      <td><input #weight type="number" placeholder="Ex.: 1.25"></td>
+    </tr>
+    <tr>
+      <td>
+        <div [ngClass]="['btn','add_btn']" (click)="addUnitType()">Add</div>
+        <div [ngClass]="['btn', 'cancel_btn']" (click)="destroyAddUnitTypeComponent()">Cancel</div>
+      </td>
+    </tr>
+  </table>
+</div>

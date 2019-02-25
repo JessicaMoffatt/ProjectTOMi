@@ -1,0 +1,13 @@
+<div id="sidebar">
+  <h1>Unit Types</h1>
+  <div>
+    <input #unit_type_search [ngClass]="'input_search'" placeholder="search" (keyup)="0">
+    <li [ngClass]="'sidebar_list'" *ngFor="let unitType of unitTypeService.unitTypes | async | orderBy:'name'">
+      <span *ngIf="unitType.name.toUpperCase().includes(unit_type_search.value.toUpperCase())">
+        {{unitType.name}}
+      </span>
+    </li>
+  </div>
+  <div (click)="createAddUnitTypeComponent()" [ngClass]="['new_btn', 'btn']">New Unit Type</div>
+  <template #add_unit_type></template>
+</div>
