@@ -11,7 +11,7 @@
   <div [ngClass]="'row'">
     <div [ngClass]="'col-xs-12'">
       <label><strong>Component:</strong>
-        <span>{{entry.component}}</span>
+        <span *ngIf="entry.component">{{entry.component}}</span>
       </label>
     </div>
   </div>
@@ -19,27 +19,27 @@
   <div [ngClass]="'row'">
     <div [ngClass]="['col-xs-6']">
       <label><strong>Project:</strong>
-        <span>{{entry.project.projectName}}</span>
+        <span *ngIf="entry.project">{{entry.project.projectName}}</span>
       </label>
     </div>
     <div [ngClass]="'col-xs-6'">
       <label>Task:
-        <span>{{entry.task.name}}</span>
+        <span *ngIf="entry.task">{{entry.task.name}}</span>
       </label>
     </div>
   </div>
 
   <div [ngClass]="'row'">
     <div [ngClass]="'col-xs-6'">
-      <label><strong>Unit Type:</strong>
+      <label *ngIf="entry.unitType"><strong>Unit Type:</strong>
         {{entry.unitType.name}}
       </label>
     </div>
 
-    <div [ngClass]="'col-xs-2'">
+    <div [ngClass]="'col-xs-2'" *ngIf="entry.quantity">
       {{entry.quantity}}
     </div>
-    <div [ngClass]="'col-xs-4'">
+    <div [ngClass]="'col-xs-4'" *ngIf="entry.unitType">
       {{entry.unitType.unit}}
     </div>
   </div>
