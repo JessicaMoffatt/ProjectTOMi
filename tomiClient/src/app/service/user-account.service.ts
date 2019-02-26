@@ -1,13 +1,9 @@
 import {Injectable} from '@angular/core';
 import {UserAccount} from "../model/userAccount";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {UserAccountSidebarService} from "./user-account-sidebar-service";
-import {Team} from "../model/team";
-import {TeamSidebarService} from "./team-sidebar.service";
 import {BehaviorSubject, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {TeamService} from "./team.service";
-import {mapChildrenIntoArray} from "@angular/router/src/url_tree";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -34,24 +30,59 @@ export class UserAccountService {
 
   /** Listing of all active UserAccounts */
   userAccounts: Observable<Array<UserAccount>>;
-  //userSubject: BehaviorSubject<Array<UserAccount>>;
+  userSubject: BehaviorSubject<Array<UserAccount>>;
 
   public constructor(private http: HttpClient, private teamService : TeamService) {
-    this.refreshUserAccounts();
-    //this.userSubject.asObservable();
+    this.GETAllUserAccounts().forEach( users => {
+      this.userSubject = new BehaviorSubject<Array<UserAccount>>(users);
+    });
   }
 
   /**
    * Refresh the List of UserAccounts to keep up-to-date with the server.
    */
   refreshUserAccounts() {
-    // let tempList = this.GETAllUserAccounts();
-    // tempList.forEach( (userArray : UserAccount[]) => {
-    //
-    // })
-    // this.userSubject = this.GETAllUserAccounts();
-    //this.userSubject = this.testGETAllUserAccounts();
-    this.userAccounts = this.GETAllUserAccounts();
+    let freshUsersObs = this.GETAllUserAccounts();
+
+    // Replace all users with fresh user data
+    freshUsersObs.forEach(freshUsers => {
+      freshUsers.forEach( freshUser => {
+
+        let index = this.userSubject.getValue().findIndex((staleUser) => {
+          return (staleUser.id === freshUser.id);
+        });
+
+        // If the id didn't match any of the existing ids then add it to the list.
+        if (index === -1) {
+          this.userSubject.getValue().push(freshUser);
+
+          // id was found and this UserAccount will be replaced with fresh data
+        } else {
+          this.userSubject.getValue().splice(index, 1, freshUser);
+        }
+
+      });
+    });
+
+    // Check for any deleted userAccounts
+    this.userSubject.getValue().forEach(staleUser => {
+
+      freshUsersObs.forEach( freshUsers => {
+        let index = freshUsers.findIndex((freshUser) => {
+          return (freshUser.id === staleUser.id);
+        });
+
+        //If the id wasn't found, then the userAccount has been deleted and is removed from the BehaviourSubject list.
+        if (index === -1) {
+          let indexToBeRemoved = this.userSubject.getValue().findIndex( (userToBeRemoved) => {
+            return (userToBeRemoved.id === staleUser.id);
+          });
+
+          this.userSubject.getValue().splice(indexToBeRemoved, 1);
+        }
+      });
+    });
+
   }
 
   /**
