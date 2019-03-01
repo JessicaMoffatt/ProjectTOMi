@@ -33,8 +33,7 @@ export class TeamService {
   /** List of all the team members of the selected team.*/
   teamMembers: UserAccount[] = [];
 
-  teamsObservable: Observable<Array<Team>>;
-
+  teamsObservable: Team[];
 
   /** List of all the team members not currently on any teams.*/
   allFreeMembers: UserAccount[] = [];
@@ -50,7 +49,7 @@ export class TeamService {
   ref: ComponentRef<any>;
 
   constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService) {
-    this.teamsObservable = this.GETAllTeams();
+    this.refreshTeams();
   }
 
   /**
@@ -64,7 +63,9 @@ export class TeamService {
   }
 
   refreshTeams() {
-    this.teamsObservable = this.GETAllTeams();
+    this.GETAllTeams().subscribe((data)=>{
+      this.teamsObservable = data;
+    });
   }
 
   /**
