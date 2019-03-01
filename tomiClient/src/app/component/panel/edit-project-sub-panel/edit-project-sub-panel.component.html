@@ -1,0 +1,97 @@
+<div id="project_detail_area">
+
+  <mat-form-field>
+    <input type="text" placeholder="Project Name" aria-label="Project Name" matInput [formControl]="myControl">
+  </mat-form-field>
+  <br/>
+
+  <mat-form-field class="example-full-width">
+    <input type="text" placeholder="Company" aria-label="Company" matInput [formControl]="myControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let c of this.clientService.clients | async" [value]="c.name">
+        {{c.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <br/>
+
+  <div *ngIf="this.projectService.selected != null">
+    <td colspan="2">id goes here</td>
+  </div>
+  <div *ngIf="this.projectService.selected == null">
+    <mat-form-field>
+      <input type="text" placeholder="Account Manager" aria-label="Account Manager" matInput [formControl]="myControl">
+    </mat-form-field>
+    <br/>
+  </div>
+
+  <mat-form-field>
+    <input type="text" placeholder="Billing Rate" aria-label="Billing Rate" matInput [formControl]="myControl">
+  </mat-form-field>
+  <br/>
+
+  <mat-form-field>
+    <input id="budget_total" type="text" placeholder="Budget Total" aria-label="Budget Total" matInput
+           [formControl]="myControl">
+  </mat-form-field>
+  <br/>
+
+  <button mat-raised-button color="primary">SAVE</button>
+</div>
+
+<div id="expense_list">
+
+  <!--mat-list dense class="mat-elevation-z8">
+
+    <h3 matSubheader>Expenses</h3>
+    <mat-list-item *ngFor="let expense of this.expenseService.expenses | async">
+
+      <h4 matLine>{{expense.notes}}...{{expense.amount}}kjshfkjsakjf  s lksjl s ksj f slkjdj  slkjsklf slkdj flksaj </h4>
+      <p matLine class="demo-2"> {{folder.updated}} </p>
+    </mat-list-item>
+  </mat-list-->
+
+  <!--table mat-table [dataSource]="this.expenses" class="mat-elevation-z8">
+    < Item Column >
+    <ng-container matColumnDef="notes">
+      <th mat-header-cell *matHeaderCellDef> Notes </th>
+      <td mat-cell *cdkCellDef="let row"> {{row.notes}} </td>
+      <td mat-footer-cell *matFooterCellDef> Total </td>
+    </ng-container>
+
+    < Cost Column >
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef> Cost </th>
+      <td mat-cell *cdkCellDef="let row"> {{row.amount | currency}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr mat-footer-row *matFooterRowDef="['notes', 'amount']"></tr>
+  </table-->
+
+</div>
+
+
+
+<div id="button_area">
+  <div (click)="editProject()" [ngClass]="['add_btn', 'btn','btn_padding','rounded_corners']">Edit
+  </div>
+  <div (click)="archiveProject()" [ngClass]="['add_btn', 'btn','btn_padding','rounded_corners']">Archive
+  </div> <!-- if the project is archived, does this become a 're-activate; button? -->
+  <div (click)="deleteProject()" [ngClass]="['cancel_btn','btn','btn_padding','rounded_corners']">Delete</div>
+</div>
+
+<span dropdown (onShown)="onShown()" (onHidden)="onHidden()" (isOpenChange)="isOpenChange()">
+            <a href id="basic-link" dropdownToggle (click)="false"
+               aria-controls="basic-link-dropdown">Click me for a dropdown, yo!
+            </a>
+            <ul id="basic-link-dropdown" *dropdownMenu class="dropdown-menu"
+                role="menu" aria-labelledby="basic-link">
+
+            </ul>
+          </span>
+

@@ -24,9 +24,9 @@ export class AddTeamMemberComponent implements OnInit {
    * On initialization of this component, assigns the team service's list of all members.
    */
   ngOnInit() {
-    this.teamService.getAllOutsideMembers(this.teamSidebarService.selectedTeam.id).subscribe((data: Array<UserAccount>) => {
-      this.teamService.allOutsideMembers = data;
-    });
+  //  this.teamService.getAllOutsideMembers(this.teamSidebarService.selectedTeam.id).subscribe((data: Array<UserAccount>) => {
+   //   this.teamService.allOutsideMembers = data;
+  //  });
   }
 
   //TODO add error handling

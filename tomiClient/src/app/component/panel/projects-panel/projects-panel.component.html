@@ -1,3 +1,52 @@
-<p>
-  projects-panel works!
-</p>
+<!-- James Andrade, Jan 27,2019 -->
+
+
+<div id="sidebar">
+  <h1>Projects</h1>
+  <!-- the keyup function below is used to trigger an update -->
+  <input #box (keyup)="0" id="search_value" type="text" placeholder="Search"/>
+  <h2>Tasks</h2>
+  <button (click)="viewProductivityReport()" mat-raised-button color="primary">
+    VIEW PRODUCTIVITY REPORT
+  </button>
+
+
+  <div>
+    <h3>Active Projects</h3>
+    <ul [ngClass]="['sidebar_list']">
+      <!--orderBy:'projectName'"-->
+      <!--  [class.highlighted]="p.id === this.projectService.selected.id" -->
+      <li *ngFor="let p of this.projectService.projects|async|orderBy:'projectName'"
+
+          [ngClass]="['sidebar_list']">
+        <span *ngIf="p.projectName.includes(box.value) && p.active===true"
+              (click)="this.projectService.setSelected(p)">{{p.name}}</span>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <h3>Archived Projects</h3>
+    <ul [ngClass]="['sidebar_list']">
+
+      <!--  [class.highlighted]="p.id === this.projectService.selected.id" -->
+      <li *ngFor="let p of this.projectService.projects|async|orderBy:'projectName'"
+
+          [ngClass]="['sidebar_list']">
+        <span *ngIf="p.projectName.includes(box.value) && p.active===false"
+              (click)="this.projectService.setSelected(p)">{{p.name}}</span>
+      </li>
+    </ul>
+  </div>
+  <button (click)="displayBlankProject()" mat-raised-button color="primary">NEW PROJECT</button>
+</div>
+
+<div id="mainPanel">
+
+  <template #edit_project_container></template>
+  <template #display_project_container></template>
+  <div *ngIf="this.subPanelDisplay=='newProject'">
+    <app-new-project-panel > </app-new-project-panel>
+  </div>
+
+</div>
+

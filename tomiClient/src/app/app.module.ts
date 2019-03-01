@@ -1,7 +1,13 @@
-import {BsDropdownModule, BsModalService, ComponentLoaderFactory, ModalModule, PositioningService} from "ngx-bootstrap";
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatTableModule} from '@angular/material/table';
+import {MatInputModule} from '@angular/material/input';
+import {MatListModule} from '@angular/material/list';
+//import {MatFormField} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AlertModule, BsDropdownModule, BsModalService, ComponentLoaderFactory, ModalModule, PositioningService} from "ngx-bootstrap";
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -37,6 +43,7 @@ import {UserAccountPanelComponent} from "./component/panel/user-account-panel/us
 import {UserAccountSidebarService} from "./service/user-account-sidebar-service";
 import { AddUserAccountComponent } from './component/modal/add-user-account/add-user-account.component';
 import { EditUserComponent } from './component/panel/edit-user/edit-user.component';
+import {MatButtonModule} from '@angular/material/button';
 import { ViewUserComponent } from './component/panel/view-user/view-user.component';
 import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
 import {TimesheetService} from "./service/timesheet.service";
@@ -44,6 +51,9 @@ import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry
 import { AddTaskComponent } from './component/modal/add-task/add-task.component';
 import {TaskPanelService} from "./service/task-panel.service";
 import { EditTaskComponent } from './component/modal/edit-task/edit-task.component';
+import {ProjectService} from "./service/project.service";
+import { EditProjectSubPanelComponent } from './component/panel/edit-project-sub-panel/edit-project-sub-panel.component';
+import {MatFormFieldModule, MatInput} from "@angular/material";
 
 @NgModule({
   declarations: [
@@ -73,9 +83,20 @@ import { EditTaskComponent } from './component/modal/edit-task/edit-task.compone
     ViewUserComponent,
     EntrySubmittedComponent,
     DeleteEntryModalComponent,
-    SubmitTimesheetModalComponent
+    SubmitTimesheetModalComponent,
+    EditProjectSubPanelComponent
   ],
   imports: [
+    MatTableModule,
+    MatListModule,
+    MatButtonModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    AlertModule.forRoot(),
+    BsDropdownModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -110,7 +131,8 @@ import { EditTaskComponent } from './component/modal/edit-task/edit-task.compone
     ComponentLoaderFactory,
     PositioningService,
     UserAccountService,
-    TaskPanelService
+    TaskPanelService,
+    ProjectService
   ],
   bootstrap: [AppComponent]
 })
