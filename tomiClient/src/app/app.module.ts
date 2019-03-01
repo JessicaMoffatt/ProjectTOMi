@@ -53,6 +53,7 @@ import { ProjectEntriesSidebarComponent } from './component/sidebar/project-entr
 import {ProjectEntriesService} from "./service/project-entries.service";
 import { EntryApproveComponent } from './component/panel/entry-approve/entry-approve.component';
 import {TeamService} from "./service/team.service";
+import { BudgetReportComponent } from './component/extra/budget-report/budget-report.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import {TeamService} from "./service/team.service";
     ProjectEntriesComponent,
     ProjectEntriesSidebarComponent,
     EntryApproveComponent,
-    SubmitApprovalModalComponent
+    SubmitApprovalModalComponent,
+    BudgetReportComponent
   ],
   imports: [
     BrowserModule,

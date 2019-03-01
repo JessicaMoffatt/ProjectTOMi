@@ -56,7 +56,6 @@ export class EntryComponent implements OnInit {
   /** The input field for the entry's sunday hours.*/
   @ViewChild('sundayInput') sundayInput;
 
-
   constructor(private entryService: EntryService, public timesheetService: TimesheetService) {
   }
 
