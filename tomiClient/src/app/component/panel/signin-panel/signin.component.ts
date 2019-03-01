@@ -13,10 +13,10 @@ const httpOptions = {
 })
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  templateUrl: './signin.component.html',
+  styleUrls: ['./signin.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class SigninComponent implements OnInit {
   signIn:SignInService;
 
   constructor( private http: HttpClient, ngZone: NgZone, signIn:SignInService) {

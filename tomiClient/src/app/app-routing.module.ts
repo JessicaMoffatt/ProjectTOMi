@@ -8,10 +8,11 @@ import {ManageTeamsPanelComponent} from "./component/panel/manage-teams-panel/ma
 import {UnitTypesPanelComponent} from "./component/panel/unit-types-panel/unit-types-panel.component";
 import {TasksPanelComponent} from "./component/panel/tasks-panel/tasks-panel.component";
 import {UserAccountPanelComponent} from "./component/panel/user-account-panel/user-account-panel.component";
+import {SigninComponent} from "./component/panel/signin-panel/signin.component";
 
 
 const routes: Routes = [
- // { path: '', redirectTo: '/timesheet', pathMatch: 'full' },
+  { path: '', redirectTo: '/signInPanel', pathMatch: 'full' },
   {path: 'timesheetPanel', component: TimesheetComponent },
   {path: 'approvePanel', component: ApprovePanelComponent},
   {path: 'teamPanel', component: TeamPanelComponent},
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path: 'manageTeamsPanel', component: ManageTeamsPanelComponent},
   {path: 'unitTypesPanel', component: UnitTypesPanelComponent},
   {path: 'tasksPanel', component: TasksPanelComponent},
-  {path: 'userAccountPanel', component: UserAccountPanelComponent}
+  {path: 'userAccountPanel', component: UserAccountPanelComponent},
+  {path: 'signInPanel', component: SigninComponent},
 ];
 
 @NgModule({

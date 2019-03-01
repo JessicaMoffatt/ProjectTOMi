@@ -45,7 +45,7 @@ import { AddTaskComponent } from './component/modal/add-task/add-task.component'
 import {TaskPanelService} from "./service/task-panel.service";
 import { EditTaskComponent } from './component/modal/edit-task/edit-task.component';
 import {TeamService} from "./service/team.service";
-import { LoginComponent } from './component/panel/login/login.component';
+import { SigninComponent } from './component/panel/signin-panel/signin.component';
 import {SignInService} from "./service/sign-in.service";
 
 @NgModule({
@@ -77,7 +77,7 @@ import {SignInService} from "./service/sign-in.service";
     EntrySubmittedComponent,
     DeleteEntryModalComponent,
     SubmitTimesheetModalComponent,
-    LoginComponent
+    SigninComponent
   ],
   imports: [
     BrowserModule,
