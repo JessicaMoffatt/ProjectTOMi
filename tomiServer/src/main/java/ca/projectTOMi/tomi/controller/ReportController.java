@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Karol Talbot
  */
 @RestController
-public final class ReportController {
+public class ReportController {
 	private final Logger logger = LoggerFactory.getLogger("Report Controller");
 	private final ReportService reportService;
 

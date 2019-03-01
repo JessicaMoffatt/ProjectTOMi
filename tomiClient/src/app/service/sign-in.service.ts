@@ -16,6 +16,6 @@ export class SignInService {
 
   getToken():string{
     let userToken = this.user.getAuthResponse().id_token;
-    return userToken.getName();
+    return userToken;
   }
 }

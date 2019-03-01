@@ -30,6 +30,11 @@ public class AuthenticationController {
 	@Autowired
 	public AuthenticationController(UserAuthenticationService userAuthenticationService) {
 		this.userAuthenticationService = userAuthenticationService;
+		try {
+			googlePublicKeysManager = new GooglePublicKeysManager(GoogleNetHttpTransport.newTrustedTransport(), JacksonFactory.getDefaultInstance());
+		} catch (IOException | GeneralSecurityException e) {
+
+		}
 	}
 
 	@PostMapping ("/tokensignin")
@@ -59,7 +64,7 @@ public class AuthenticationController {
 			String givenName = (String) payload.get("given_name");
 
 			results = pictureUrl;
-//			System.out.println(name);
+			System.out.println(name);
 		} else {
 			System.out.println("Invalid ID token.");
 		}

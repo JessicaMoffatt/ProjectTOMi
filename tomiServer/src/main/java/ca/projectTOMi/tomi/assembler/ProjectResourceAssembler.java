@@ -7,6 +7,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import ca.projectTOMi.tomi.authorization.wrapper.ProjectAuthLinkWrapper;
 import ca.projectTOMi.tomi.controller.ProjectController;
+import ca.projectTOMi.tomi.controller.ReportController;
 import ca.projectTOMi.tomi.model.Project;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,8 @@ public final class ProjectResourceAssembler implements ResourceAssembler<Project
 			linkTo(methodOn(ProjectController.class).getProject(project.getId(), projectAuthLinkWrapper.getManager())).withSelfRel(),
 			linkTo(methodOn(ProjectController.class).getActiveProjects(projectAuthLinkWrapper.getManager())).withRel("projects"),
 			linkTo(methodOn(ProjectController.class).setProjectInactive(project.getId())).withRel("delete"),
-			linkTo(methodOn(ProjectController.class).getEntriesToEvaluate(project.getId())).withRel("entries")
+			linkTo(methodOn(ProjectController.class).getEntriesToEvaluate(project.getId())).withRel("entries"),
+			linkTo(methodOn(ReportController.class).getBudgetReport(project.getId())).withRel("budget")
 		);
 
 		try {
