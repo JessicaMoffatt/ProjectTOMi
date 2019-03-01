@@ -28,7 +28,7 @@
     <label for="edit_user_account_team">Team</label>
     <select #editUserTeamId id="edit_user_account_team">
       <option [selected]="userAccount.teamId" value="-1">None</option>
-      <ng-container *ngFor="let team of teamService.teamsObservable | async ">
+      <ng-container *ngFor="let team of teamService.teamsObservable ">
               <option [selected]="userAccount.teamId === team.id" value="{{team.id}}">{{team.teamName}}</option>
       </ng-container>
     </select>
