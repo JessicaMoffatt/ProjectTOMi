@@ -26,7 +26,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
 	List<UserAccount> getAllByActiveOrderById(boolean active);
 
 	/**
-	 * Gets all {@ling UserAccount}s that are a part of the provided {@link Team}.
+	 * Gets all {@link UserAccount}s that are a part of the provided {@link Team}.
 	 *
 	 * @param team
 	 * 	the team to get UserAccounts for

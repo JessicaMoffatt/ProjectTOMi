@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, NgModule, OnInit, Output, ViewChild} from '@angular/core';
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
 
@@ -8,6 +8,9 @@ import {TeamService} from "../../../service/team.service";
  * @author Iliya Kiritchkov
  * @version 1.0
  */
+@NgModule({
+  providers: [TeamService]
+})
 @Component({
   selector: 'app-view-user',
   templateUrl: './view-user.component.html',

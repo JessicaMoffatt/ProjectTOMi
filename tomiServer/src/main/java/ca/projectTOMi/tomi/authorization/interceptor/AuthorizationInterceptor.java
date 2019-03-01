@@ -51,12 +51,14 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
 		Long start = System.currentTimeMillis();
 		request.setAttribute("start", start);
-		if(request.getRequestURL().toString().equals("http://localhost:8080") || request.getRequestURL().toString().equals("http://localhost:8080/tokensignin")){
+		final String authToken = request.getHeader("SignIn");
+		System.out.println(authToken);
+
+		if("/tokensignin".equals(request.getRequestURI().toString())){
 			return true;
 		}else if("OPTION".equals(request.getMethod())){
 			return true;
 		}
-		final String authToken = request.getHeader("Authorization");
 
 		//TODO Remove Hardcoded UserAccount---------------
 		final UserAccount user = this.userAccountService.getUserAccount(1L);

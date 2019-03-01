@@ -1,35 +1,4 @@
-<head>
-  <meta charset="UTF-8">
-  <meta name="google-signin-client_id"
-        content="730191725836-os1al23f91okt57uactu0renuordqo1c.apps.googleusercontent.com">
-  <title>Crimeboy</title>
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
-</head>
-<body>
-<h1>Nasty Crime town</h1>
+<h1>ProjectTOMi</h1>
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
-<div id="pic"></div>
-<script type="application/javascript">
-  function onSignIn(googleUser) {
-    var id_token = googleUser.getAuthResponse().id_token;
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:8080/tokensignin');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function () {
-      var i = xhr.responseText;
-      var img = document.createElement("img");
-      img.src = i;
-      document.getElementById("pic").appendChild(img);
-    };
-    xhr.send('idtoken=' + id_token);
-  }
+<button (click)="signOut()">Logout</button>
 
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
-</script>
-
-</body>

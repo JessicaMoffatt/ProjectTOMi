@@ -46,6 +46,7 @@ import {TaskPanelService} from "./service/task-panel.service";
 import { EditTaskComponent } from './component/modal/edit-task/edit-task.component';
 import {TeamService} from "./service/team.service";
 import { LoginComponent } from './component/panel/login/login.component';
+import {SignInService} from "./service/sign-in.service";
 
 @NgModule({
   declarations: [
@@ -114,7 +115,8 @@ import { LoginComponent } from './component/panel/login/login.component';
     ComponentLoaderFactory,
     PositioningService,
     UserAccountService,
-    TaskPanelService
+    TaskPanelService,
+    SignInService
   ],
   bootstrap: [AppComponent]
 })

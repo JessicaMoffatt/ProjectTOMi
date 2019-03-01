@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ElementRef, NgModule, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
@@ -8,6 +8,9 @@ import set = Reflect.set;
   selector: 'app-user-account',
   templateUrl: './user-account.component.html',
   styleUrls: ['./user-account.component.scss']
+})
+@NgModule({
+  providers: [TeamService]
 })
 export class UserAccountComponent implements OnInit {
 
