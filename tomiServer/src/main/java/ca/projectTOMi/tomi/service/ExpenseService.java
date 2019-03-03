@@ -4,6 +4,7 @@ import java.util.List;
 import ca.projectTOMi.tomi.exception.ExpenseNotFoundException;
 import ca.projectTOMi.tomi.model.Expense;
 import ca.projectTOMi.tomi.model.Project;
+import ca.projectTOMi.tomi.persistence.ExpenseRepository;
 import org.springframework.stereotype.Service;
 
 /**
