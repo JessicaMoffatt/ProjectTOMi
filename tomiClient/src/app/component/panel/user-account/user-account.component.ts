@@ -64,5 +64,6 @@ export class UserAccountComponent implements OnInit {
    */
   save(userAccount: UserAccount) {
     this.userAccountService.save(userAccount);
+    this.cancel(userAccount);
   }
 }

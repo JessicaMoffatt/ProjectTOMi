@@ -35,6 +35,9 @@ export class UserAccountService {
 
   }
 
+  /**
+   *
+   */
   initializeUserAccounts() {
     this.GETAllUserAccounts().forEach( users => {
       this.userSubject = new BehaviorSubject<Array<UserAccount>>(users);
@@ -59,13 +62,13 @@ export class UserAccountService {
    * Refresh the List of UserAccounts to keep up-to-date with the server.
    */
   refreshUserAccounts() {
+    let freshUsers :UserAccount[];
 
-    let freshUsersObs = this.GETAllUserAccounts();
+    this.GETAllUserAccounts().forEach(users => {
+      freshUsers = users;
 
-    // Replace all users with fresh user data
-    freshUsersObs.forEach(freshUsers => {
+      //Replace all users with fresh user data
       freshUsers.forEach( freshUser => {
-
         let index = this.userSubject.getValue().findIndex((staleUser) => {
           return (staleUser.id === freshUser.id);
         });
@@ -78,29 +81,23 @@ export class UserAccountService {
         } else {
           this.userSubject.getValue().splice(index, 1, freshUser);
         }
-
       });
-    });
 
-    // Check for any deleted userAccounts
-    this.userSubject.getValue().forEach(staleUser => {
-
-      freshUsersObs.forEach( freshUsers => {
-        let index = freshUsers.findIndex((freshUser) => {
-          return (freshUser.id === staleUser.id);
+      // Check for any deleted userAccounts
+      this.userSubject.getValue().forEach( oldUser => {
+        let index = freshUsers.findIndex(newUser => {
+          return (newUser.id === oldUser.id);
         });
 
-        //If the id wasn't found, then the userAccount has been deleted and is removed from the BehaviourSubject list.
         if (index === -1) {
           let indexToBeRemoved = this.userSubject.getValue().findIndex( (userToBeRemoved) => {
-            return (userToBeRemoved.id === staleUser.id);
+            return (userToBeRemoved.id === oldUser.id);
           });
 
-          this.userSubject.getValue().splice(indexToBeRemoved, 1);
+           this.userSubject.getValue().splice(indexToBeRemoved, 1);
         }
       });
     });
-
     this.sortUserAccounts();
   }
 
@@ -126,11 +123,11 @@ export class UserAccountService {
    * @param account The UserAccount to be created/updated.
    */
   async save(userAccount: UserAccount) {
+    console.log("service save run once");
     let testUserAccount: UserAccount = null;
 
     if (userAccount.id === -1) {
       await this.http.post<UserAccount>(this.userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
-
         this.refreshUserAccounts();
       }).catch((error: any) => {
         //TODO Add an error display
@@ -138,7 +135,6 @@ export class UserAccountService {
     } else {
       const url = userAccount._links["update"];
       this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
-
         this.refreshUserAccounts();
       }).catch((error: any) => {
         //TODO Add an error display

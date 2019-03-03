@@ -67,7 +67,6 @@ export class AddUserAccountComponent implements OnInit {
     if (goodUserAccount) {
       this.userAccountService.save(userAccount).then(value => {
         this.destroyAddUserAccountComponent();
-        this.userAccountService.refreshUserAccounts();
       });
     }
   }

@@ -1,8 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
-import {UserAccountService} from "../../../service/user-account.service";
-import {Team} from "../../../model/team";
 
 /**
  * EditUserComponent is an individual, editable entry for a UserAccount.
