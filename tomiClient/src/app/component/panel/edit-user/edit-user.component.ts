@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
+import {UserAccountService} from "../../../service/user-account.service";
+import {Team} from "../../../model/team";
 
 /**
  * EditUserComponent is an individual, editable entry for a UserAccount.
@@ -43,7 +45,9 @@ export class EditUserComponent implements OnInit {
   /** The input checkbox for the UserAccount's Admin status.*/
   @ViewChild('editUserAdmin') editUserAdmin;
 
-  constructor(public teamService: TeamService) { }
+  constructor(public teamService: TeamService) {
+
+  }
 
   ngOnInit() {
 
@@ -57,7 +61,7 @@ export class EditUserComponent implements OnInit {
     this.userAccount.lastName = this.editUserLastName.nativeElement.value;
     this.userAccount.email = this.editUserEmail.nativeElement.value;
     this.userAccount.salariedRate = Number (this.editUserSalariedRate.nativeElement.value * 100);
-    this.userAccount.teamId = this.editUserTeamId.nativeElement.value;
+    this.userAccount.teamId = Number (this.editUserTeamId.nativeElement.value);
     this.userAccount.programDirector = this.editUserProgramDirector.nativeElement.checked;
     this.userAccount.admin = this.editUserAdmin.nativeElement.checked;
 
@@ -88,14 +92,19 @@ export class EditUserComponent implements OnInit {
     if (goodUserAccount) {
       this.saveRequested.emit(this.userAccount);
     }
-
   }
 
   /**
    * Emits a request for this UserAccount's changes to be cancelled.
    */
   cancel():void {
+    this.editUserFirstName.nativeElement.value = this.userAccount.firstName;
+    this.editUserLastName.nativeElement.value = this.userAccount.lastName;
+    this.editUserEmail.nativeElement.value = this.userAccount.email;
+    this.editUserSalariedRate.nativeElement.value = (this.userAccount.salariedRate/100).toFixed(2);
+    this.editUserTeamId.nativeElement.value = this.userAccount.teamId;
+    this.editUserAdmin.nativeElement.checked = this.userAccount.admin;
+    this.editUserProgramDirector.nativeElement.checked = this.userAccount.programDirector;
     this.cancelRequested.emit(this.userAccount);
   }
-
 }

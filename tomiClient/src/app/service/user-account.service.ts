@@ -3,7 +3,6 @@ import {UserAccount} from "../model/userAccount";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {TeamService} from "./team.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -32,9 +31,27 @@ export class UserAccountService {
   userAccounts: Observable<Array<UserAccount>>;
   userSubject: BehaviorSubject<Array<UserAccount>>;
 
-  public constructor(private http: HttpClient, private teamService : TeamService) {
+  public constructor(private http: HttpClient) {
+
+  }
+
+  initializeUserAccounts() {
     this.GETAllUserAccounts().forEach( users => {
       this.userSubject = new BehaviorSubject<Array<UserAccount>>(users);
+      this.sortUserAccounts();
+    });
+  }
+
+  /**
+   *
+   */
+  sortUserAccounts() {
+    this.userSubject.getValue().sort((user1, user2) => {
+      let name1 = user1.lastName.toLowerCase();
+      let name2 = user2.lastName.toLowerCase();
+      if (name1 > name2) { return 1; }
+      if (name1 < name2) { return -1; }
+      return 0;
     });
   }
 
@@ -42,6 +59,7 @@ export class UserAccountService {
    * Refresh the List of UserAccounts to keep up-to-date with the server.
    */
   refreshUserAccounts() {
+
     let freshUsersObs = this.GETAllUserAccounts();
 
     // Replace all users with fresh user data
@@ -83,16 +101,19 @@ export class UserAccountService {
       });
     });
 
+    this.sortUserAccounts();
   }
 
   /**
    * Sends a GET message to the server for a fresh list of all UserAccounts.
    */
   GETAllUserAccounts() {
-    return this.http.get(this.userAccountUrl).pipe(map((response:Response) => response))
+    let obsUsers : Observable<Array<UserAccount>>;
+    obsUsers = this.http.get(this.userAccountUrl).pipe(map((response:Response) => response))
       .pipe(map((data: any) => {
         return data._embedded.userAccounts as UserAccount[];
       }));
+    return obsUsers;
   }
 
   setSelectedUserAccount(userAccount: UserAccount) {

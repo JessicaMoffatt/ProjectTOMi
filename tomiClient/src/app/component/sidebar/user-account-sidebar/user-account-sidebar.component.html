@@ -4,7 +4,7 @@
     <input #user_account_search id="user_account_search" [ngClass]="'input_search'" placeholder="search" (keyup)="0">
     <div>
       <ul [ngClass]="'sidebar_list'">
-        <li [ngClass]="'sidebar_list'" *ngFor="let userAccount of (userAccountService.userSubject | async | orderBy:'lastName')">
+        <li [ngClass]="'sidebar_list'" *ngFor="let userAccount of (userAccountService.userSubject | async )">
           <span *ngIf="(userAccount.firstName + ' ' + userAccount.lastName).toUpperCase().includes(user_account_search.value.toUpperCase())" (click)='displayUserAccount(userAccount)'>{{userAccount.firstName}} {{userAccount.lastName}}</span>
         </li>
       </ul>

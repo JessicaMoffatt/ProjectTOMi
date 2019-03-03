@@ -22,6 +22,7 @@ export class AddUnitTypeComponent implements OnInit {
   constructor(private unitTypeSidebarService: UnitTypeSidebarService, private unitTypeService: UnitTypeService) { }
 
   ngOnInit() {
+
   }
 
   /**

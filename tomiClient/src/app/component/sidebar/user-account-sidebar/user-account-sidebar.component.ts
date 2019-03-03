@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, ElementRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {UserAccountSidebarService} from "../../../service/user-account-sidebar-service";
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";

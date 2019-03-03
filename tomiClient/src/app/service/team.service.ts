@@ -48,7 +48,7 @@ export class TeamService {
   ref: ComponentRef<any>;
 
   constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService) {
-    this.refreshTeams();
+
   }
 
   /**
