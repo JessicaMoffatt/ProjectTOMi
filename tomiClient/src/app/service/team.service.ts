@@ -36,11 +36,11 @@ export class TeamService {
 
   /** List of all the team members not currently on any teams.*/
   allFreeMembers: UserAccount[] = [];
-
-  /** List of all the active user accounts that aren't already appart of the selected team,
-   * as well as not a team lead of any other teams.
-   */
-  allOutsideMembers: UserAccount[] = [];
+  //
+  // /** List of all the active user accounts that aren't already a part of the selected team,
+  //  * as well as not a team lead of any other teams.
+  //  */
+  // allOutsideMembers: UserAccount[] = [];
   /** The members selected from the list of team members.*/
   private selectedMembers: UserAccount[];
 
@@ -226,12 +226,5 @@ export class TeamService {
 
       return response as Team;
     });
-  }
-
-  /**
-   * Destroys the dynamically created add member component.
-   */
-  destroyAddMemberComponent() {
-    this.ref.destroy();
   }
 }

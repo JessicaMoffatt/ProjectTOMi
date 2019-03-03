@@ -15,15 +15,14 @@
 
     <div>
       <mat-form-field [ngClass]="'input_full_width'">
-        <input matInput id="team_name" placeholder="Team Name" value={{teamSideBarService.selectedTeam?.teamName}}>
+        <input matInput  placeholder="Team Name" [(ngModel)]="teamSideBarService.selectedTeam.teamName">
       </mat-form-field>
 
       <div>
           <mat-form-field>
-          <mat-select id="selected_team_lead" placeholder="Team Lead">
+          <mat-select placeholder="Team Lead" [(ngModel)]="teamSideBarService.selectedTeam.leadId">
             <mat-option value="-1">None</mat-option>
-            <mat-option *ngFor="let member of (this.teamService.teamMembers |orderBy: 'firstName')" [value]="member.id"
-                    [attr.selected]="member.id === teamSideBarService.selectedTeam?.leadId ? 'selected' : null">
+            <mat-option *ngFor="let member of (this.teamService.teamMembers |orderBy: 'firstName')" [value]="member.id">
               {{member.firstName}} {{member.lastName}}
             </mat-option>
           </mat-select>
@@ -39,13 +38,11 @@
         </mat-list-option>
       </mat-selection-list>
     </div>
-    <button mat-button [ngClass]="['add_btn']" (click)="createAddMemberComponent()">Add
+    <button mat-button [ngClass]="['add_btn']" (click)="displayAddMemberModal()">Add
       Member
     </button>
     <button mat-button [ngClass]="['delete_btn']" (click)="removeMembers()">
     </button>
-
-    <template #add_team_member_container></template>
   </mat-card>
 </div>
 

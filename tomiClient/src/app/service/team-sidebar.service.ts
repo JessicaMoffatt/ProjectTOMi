@@ -4,9 +4,6 @@ import {Team} from "../model/team";
 import {map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 
-
-
-
 /**
  * TeamSidebarService is used to control the flow of data regarding teams to/from the view.
  *
@@ -21,9 +18,6 @@ export class TeamSidebarService {
   /** The link used to get,post, and delete teams. */
   private teamUrl = `http://localhost:8080/teams/`;
 
-  /** Used to reference the add team component created by clicking the Add Team button.*/
-  ref: ComponentRef<any>;
-
   /** The team selected in the sidebar.*/
   selectedTeam: Team;
 
@@ -32,9 +26,6 @@ export class TeamSidebarService {
 
   constructor(private http: HttpClient) {
   }
-
-
-
 
   /**
    * Gets a list of all the teams.
@@ -64,12 +55,5 @@ export class TeamSidebarService {
     this.getAllTeams().subscribe((data: Array<Team>) => {
       this.teams = data;
     });
-  }
-
-  /**
-   * Destroys the dynamically created add team component.
-   */
-  destroyAddTeamComponent() {
-    this.ref.destroy();
   }
 }
