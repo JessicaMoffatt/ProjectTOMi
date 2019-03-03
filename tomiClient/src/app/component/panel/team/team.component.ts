@@ -145,7 +145,7 @@ export class AddTeamMemberComponent implements OnInit {
   addMember(): void {
     let memberId = this.member;
 
-    if(memberId != null && memberId != undefined){
+    if(memberId != null){
       let toAdd: UserAccount = new UserAccount();
 
       this.teamService.getTeamMemberById(memberId).subscribe((data: UserAccount) => {
