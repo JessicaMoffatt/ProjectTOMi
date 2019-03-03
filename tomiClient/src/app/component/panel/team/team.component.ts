@@ -10,7 +10,7 @@ import {UserAccountService} from "../../../service/user-account.service";
  * TeamComponent is used to facilitate communication between the view and front end services.
  *
  * @author Jessica Moffatt
- * @version 1.0
+ * @version 2.0
  */
 @Component({
   selector: 'app-team',
@@ -168,7 +168,7 @@ export class AddTeamMemberComponent implements OnInit {
   }
 
   /**
-   * Destroys the dynamically created add member component.
+   * Closes the add member component.
    */
   closeAddMemberComponent(): void {
     this.dialogRef.close();

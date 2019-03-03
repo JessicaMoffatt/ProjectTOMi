@@ -197,12 +197,9 @@ export class TeamService {
    * @param team The selected team.
    */
   cancel(team: Team): void {
-    (<HTMLInputElement>document.getElementById("team_name")).value = team.teamName;
-    if(team.leadId !== null){
-      (<HTMLInputElement>document.getElementById("selected_team_lead")).value = team.leadId.toString();
-    }else{
-      (<HTMLInputElement>document.getElementById("selected_team_lead")).value = "-1";
-    }
+    this.teamSideBarService.getTeamById(team.id).subscribe((data)=>{
+      this.teamSideBarService.selectedTeam = data;
+    });
   }
 
   //TODO add error handling!!
