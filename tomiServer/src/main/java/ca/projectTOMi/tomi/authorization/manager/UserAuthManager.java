@@ -105,6 +105,10 @@ public final class UserAuthManager implements AuthManager<UserAuthorizationPolic
 				case "clients":
 					requestPolicy.setPermission(UserPermission.READ_CLIENT);
 					break;
+				case "billable_hours_report":
+				case "data_dump_report":
+					requestPolicy.setPermission(UserPermission.CREATE_PROJECT);
+					break;
 				default:
 					return false;
 			}

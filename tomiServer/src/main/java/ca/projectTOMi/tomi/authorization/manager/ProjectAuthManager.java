@@ -49,6 +49,8 @@ public final class ProjectAuthManager implements AuthManager<ProjectAuthorizatio
 					requestPolicy.setPermission(ProjectPermission.EVALUATE_ENTRIES);
 				} else if ("user_accounts".equals(uri.split("/")[1])) {
 					return handleListReads();
+				} else if ("budget_report".equals(uri.split("/")[3])) {
+					requestPolicy.setPermission(ProjectPermission.READ_BUDGET);
 				} else {
 					requestPolicy.setPermission(ProjectPermission.READ);
 				}

@@ -37,4 +37,5 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
 	List<Entry> getAllByActiveTrueAndTimesheetOrderById(Timesheet timesheet);
 
 	List<Entry> getAllByActiveTrueAndProjectAndStatus(Project project, Status status);
+	List<Entry> getAllByActiveTrueAndProject(Project project);
 }

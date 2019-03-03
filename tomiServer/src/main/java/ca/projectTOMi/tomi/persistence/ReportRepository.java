@@ -3,6 +3,7 @@ package ca.projectTOMi.tomi.persistence;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.viewModel.BillableHoursReportLine;
 import ca.projectTOMi.tomi.viewModel.BudgetReport;
 import ca.projectTOMi.tomi.viewModel.DataDumpReportLine;
@@ -38,10 +39,8 @@ public class ReportRepository {
 
 	public BudgetReport generateBudgetReport(final Project project) {
 		final Query q = this.entityManager.createQuery(
-			"SELECT NEW ca.projectTOMi.tomi.viewModel.BudgetReport( SUM( t.totalHours), SUM(e.amount), p) " +
+			"SELECT NEW ca.projectTOMi.tomi.viewModel.BudgetReport(p as project) " +
 				"FROM Project p " +
-				"JOIN Expense e ON e.project = p " +
-				"JOIN Entry t ON t.project = p " +
 				"WHERE p = :project " +
 				"GROUP BY p", BudgetReport.class);
 

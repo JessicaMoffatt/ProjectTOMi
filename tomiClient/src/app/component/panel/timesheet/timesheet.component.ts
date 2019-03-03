@@ -211,7 +211,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   async reloadAfterSetCurrentStatus(){
     await this.setCurrentStatusPromise().finally(()=>{
         this.router.navigateByUrl('/', {skipLocationChange:true}).finally(()=>
-        this.router.navigate(["/timesheetPanel"]));
+        this.router.navigate(["/timesheets"]));
       }
     );
   }

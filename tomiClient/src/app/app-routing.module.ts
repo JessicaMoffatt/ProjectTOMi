@@ -12,16 +12,16 @@ import {SigninComponent} from "./component/panel/signin-panel/signin.component";
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/signInPanel', pathMatch: 'full' },
-  {path: 'timesheetPanel', component: TimesheetComponent },
-  {path: 'approvePanel', component: ApprovePanelComponent},
-  {path: 'teamPanel', component: TeamPanelComponent},
-  {path: 'projectsPanel', component: ProjectsPanelComponent},
-  {path: 'manageTeamsPanel', component: ManageTeamsPanelComponent},
-  {path: 'unitTypesPanel', component: UnitTypesPanelComponent},
-  {path: 'tasksPanel', component: TasksPanelComponent},
-  {path: 'userAccountPanel', component: UserAccountPanelComponent},
-  {path: 'signInPanel', component: SigninComponent},
+  { path: '', redirectTo: '/signIn', pathMatch: 'full' },
+  {path: 'timesheets', component: TimesheetComponent },
+  {path: 'approveTimesheets', component: ApprovePanelComponent},
+  {path: 'teams', component: TeamPanelComponent},
+  {path: 'projects', component: ProjectsPanelComponent},
+  {path: 'manageTeams', component: ManageTeamsPanelComponent},
+  {path: 'mangeUnitTypes', component: UnitTypesPanelComponent},
+  {path: 'manageTasks', component: TasksPanelComponent},
+  {path: 'manageUserAccount', component: UserAccountPanelComponent},
+  {path: 'signIn', component: SigninComponent},
 ];
 
 @NgModule({

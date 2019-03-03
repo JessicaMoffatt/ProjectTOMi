@@ -11,7 +11,7 @@ import ca.projectTOMi.tomi.authorization.manager.UserAuthManager;
 import ca.projectTOMi.tomi.authorization.policy.UserAuthorizationPolicy;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.ProjectAuthorizationRepository;
-import ca.projectTOMi.tomi.persistence.TimesheetAuthorizationRepository;
+import ca.projectTOMi.tomi.persistence.TimesheetAuthRepository;
 import ca.projectTOMi.tomi.persistence.UserAuthorizationRepository;
 import ca.projectTOMi.tomi.service.EntryService;
 import ca.projectTOMi.tomi.service.UserAccountService;
@@ -28,7 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 @CrossOrigin (origins = "http://localhost:4200")
 public class AuthorizationInterceptor implements HandlerInterceptor {
 	private final ProjectAuthorizationRepository projectAuthRepository;
-	private final TimesheetAuthorizationRepository timesheetAuthRepository;
+	private final TimesheetAuthRepository timesheetAuthRepository;
 	private final UserAuthorizationRepository userAuthRepository;
 	private final UserAccountService userAccountService;
 	private final EntryService entryService;
@@ -37,7 +37,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	@Autowired
 	public AuthorizationInterceptor(final UserAuthorizationRepository userAuthRepository,
 	                                final ProjectAuthorizationRepository projectAuthRepository,
-	                                final TimesheetAuthorizationRepository timesheetAuthRepository,
+	                                final TimesheetAuthRepository timesheetAuthRepository,
 	                                final UserAccountService userAccountService,
 	                                final EntryService entryService) {
 		this.projectAuthRepository = projectAuthRepository;
@@ -48,14 +48,14 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	}
 
 	@Override
-	public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
-		Long start = System.currentTimeMillis();
+	public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) {
+		final Long start = System.currentTimeMillis();
 		request.setAttribute("start", start);
 		final String authToken = request.getHeader("SignIn");
 
-		if("/tokensignin".equals(request.getRequestURI().toString())){
+		if ("/tokensignin".equals(request.getRequestURI())) {
 			return true;
-		}else if("OPTION".equals(request.getMethod())){
+		} else if ("OPTION".equals(request.getMethod())) {
 			return true;
 		}
 
@@ -65,7 +65,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
 		final String requestMethod = request.getMethod();
 		final String requestURI = request.getRequestURI();
-		String controller = "";
+		String controller;
 		try {
 			controller = ((HandlerMethod) handler).getMethod().getDeclaringClass().toString();
 			controller = controller.replace("class ca.projectTOMi.tomi.controller.", "");
@@ -74,7 +74,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		}
 		if ("TimesheetController".matches(controller) || "EntryController".matches(controller)) {
 			final AuthManager<TimesheetAuthorizationPolicy> authMan;
-			authMan = new TimesheetAuthManager(user, getOwner(requestURI, requestMethod, user));
+			authMan = new TimesheetAuthManager(user, this.getOwner(requestURI, requestMethod, user));
 			authMan.loadUserPolicies(this.timesheetAuthRepository.getAllByRequestingUser(user));
 			request.setAttribute("authMan", authMan);
 		} else if ("ProjectController".matches(controller)) {
@@ -94,46 +94,61 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			authMan = new ProjectAuthManager(user);
 			authMan.loadUserPolicies(this.projectAuthRepository.getAllByRequestingUser(user));
 			request.setAttribute("authMan", authMan);
-		} else if("ReportController".matches(controller)){
-			// TODO Handle report permissions
-			return true;
-		}else {
+		} else if ("ReportController".matches(controller)) {
+			if (requestURI.contains("budget")) {
+				final AuthManager<ProjectAuthorizationPolicy> authMan;
+				authMan = new ProjectAuthManager(user);
+				authMan.loadUserPolicies(this.projectAuthRepository.getAllByRequestingUser(user));
+				request.setAttribute("authMan", authMan);
+			} else if (requestURI.contains("data_dump_report")|| requestURI.contains("billable_hours_report")) {
+				final AuthManager<UserAuthorizationPolicy> authMan;
+				authMan = new UserAuthManager(user);
+				authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
+				request.setAttribute("authMan", authMan);
+			} else if(requestURI.contains("productivity_report")){
+				final AuthManager<TimesheetAuthorizationPolicy> authMan;
+				final UserAccount owner = this.userAccountService.getUserAccount(Long.parseLong(requestURI.split("/")[2]));
+				authMan = new TimesheetAuthManager(user,owner);
+				authMan.loadUserPolicies(this.timesheetAuthRepository.getAllByRequestingUser(user));
+				request.setAttribute("authMan", authMan);
+			}else {
+				return false;
+			}
+		} else {
 			final AuthManager<UserAuthorizationPolicy> authMan;
 			authMan = new UserAuthManager(user);
 			authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
 			request.setAttribute("authMan", authMan);
 		}
-		final boolean authorized = ((AuthManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
-
-		return authorized;
+		return ((AuthManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
 	}
 
 	@Override
 	public void postHandle(
 		final HttpServletRequest request, final HttpServletResponse response, final Object handler,
-		final ModelAndView modelAndView) throws Exception {
-		Long start = (Long) request.getAttribute("start");
-		String requestURI = request.getRequestURI();
-		Long stop = System.currentTimeMillis();
-		System.out.printf("Call %d %s: %s executed in %dms%n", i++, requestURI, request.getMethod(),stop-start );
+		final ModelAndView modelAndView) {
+		final Long start = (Long) request.getAttribute("start");
+		final String requestURI = request.getRequestURI();
+		final Long stop = System.currentTimeMillis();
+		System.out.printf("Call %d %s: %s executed in %dms%n", this.i++, requestURI, request.getMethod(), stop - start);
 	}
 
 	@Override
 	public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response,
-	                            final Object handler, final Exception exception) throws Exception {
+	                            final Object handler, final Exception exception) {
 	}
 
 	private UserAccount getOwner(final String URI, final String requestMethod, final UserAccount requestingUser) {
 		UserAccount owner = null;
-		if("POST".equals(requestMethod)){
+		if ("POST".equals(requestMethod)) {
 			owner = requestingUser;
-		} else if (URI.matches("^/timesheets/[0-9]+/{0,1}$|^/timesheets/[0-9]+/entries$")) {
+		} else if (URI.matches("^/timesheets/[0-9]+/?$|^/timesheets/[0-9]+/entries$")) {
 			owner = this.entryService.getTimesheetById(Long.parseLong(URI.split("/")[2])).getUserAccount();
-		} else if (URI.matches("^/timesheets/user_accounts/[0-9]+/{0,1}$")) {
+		} else if (URI.matches("^/timesheets/user_accounts/[0-9]+/?$")) {
 			owner = this.userAccountService.getUserAccount(Long.parseLong(URI.split("/")[3]));
-		}else if(URI.matches("^/entries/[0-9]+/{0,1}$|^/entries/[0-9]+/copy")){
+		} else if (URI.matches("^/entries/[0-9]+/?$|^/entries/[0-9]+/copy")) {
 			owner = this.entryService.getEntry(Long.parseLong(URI.split("/")[2])).getTimesheet().getUserAccount();
-		}else if(URI.matches("^/timesheets/[0-9]+/submit/{0,1}$")){
+		} else if (URI.matches("^/timesheets/[0-9]+/submit/?$")) {
 			owner = this.entryService.getTimesheetById(Long.parseLong(URI.split("/")[2])).getUserAccount();
 		}
 		return owner;

@@ -338,4 +338,8 @@ public class EntryService {
 		}
 		return false;
 	}
+
+	public List<Entry> getEntriesByProject(Project project) {
+		return entryRepository.getAllByActiveTrueAndProject(project);
+	}
 }
