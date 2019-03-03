@@ -16,8 +16,8 @@ const httpOptions = {
 /**
  * TeamService is used to control the flow of data regarding teams to/from the view.
  *
- * @author Jessica Moffatt
- * @version 1.0
+ * @author Jessica Moffatt, Iliya Kiritchkov
+ * @version 2.0
  */
 @Injectable({
   providedIn: 'root'
@@ -55,7 +55,7 @@ export class TeamService {
    * Gets a List of all Teams from the server.
    */
   GETAllTeams() {
-    return this.http.get(this.teamUrl).pipe(map((response:Response) => response))
+    return this.http.get(this.teamUrl)
       .pipe(map((data: any) => {
         return data._embedded.teams as Team[];
       }));
@@ -67,6 +67,10 @@ export class TeamService {
     });
   }
 
+  /**
+   * Populates teamMembers with the members of the selected team.
+   * @param team The selected team.
+   */
   populateTeamMembers(team:Team){
     this.getTeamMembers(team.id).subscribe((data: Array<UserAccount>) => {
       this.teamMembers = data;
@@ -111,7 +115,7 @@ export class TeamService {
    * @param id The ID of the team to be omitted from the selection of user accounts.
    */
   getAllOutsideMembers(id: number): Observable<Array<UserAccount>> {
-    return this.http.get(`${this.teamUrl}/${id}/available`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.teamUrl}/${id}/available`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];
@@ -126,7 +130,7 @@ export class TeamService {
    * @param id The ID of the team to be omitted from the selection of user accounts.
    */
   getAllFreeMembers(): Observable<Array<UserAccount>> {
-    return this.http.get(`${this.teamUrl}/unassigned`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.teamUrl}/unassigned`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];
@@ -141,7 +145,7 @@ export class TeamService {
    * @param id The ID of the team whose members are to be gotten.
    */
   getTeamMembers(id: number): Observable<Array<UserAccount>> {
-    return this.http.get(`${this.teamUrl}/${id}/user_accounts`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.teamUrl}/${id}/user_accounts`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];
@@ -157,7 +161,7 @@ export class TeamService {
    * @param id The ID of the user account to get.
    */
   getTeamMemberById(id: number): Observable<UserAccount> {
-    return this.http.get(`${this.userUrl}/${id}`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.userUrl}/${id}`)
       .pipe(map((data: any) => {
         return data as UserAccount;
       }));

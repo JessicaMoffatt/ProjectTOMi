@@ -1,9 +1,7 @@
 import {
   Component,
   ComponentFactoryResolver,
-  OnInit,
-  ViewChild,
-  ViewContainerRef
+  OnInit
 } from '@angular/core';
 import {Team} from "../../../model/team";
 import {TeamSidebarService} from "../../../service/team-sidebar.service";
@@ -11,6 +9,13 @@ import {TeamService} from "../../../service/team.service";
 import {UserAccount} from "../../../model/userAccount";
 import {UserAccountService} from "../../../service/user-account.service";
 import {MatDialog, MatDialogRef} from "@angular/material";
+
+/**
+ * TeamSideBarComponent is used to house the list of teams to be managed.
+ *
+ * @author Jessica Moffatt
+ * @version 2.0
+ */
 
 @Component({
   selector: 'app-team-sidebar',
@@ -29,6 +34,10 @@ export class TeamSidebarComponent implements OnInit {
     });
   }
 
+  /**
+   * Displays the team in the team component.
+   * @param team The team to display.
+   */
   displayTeam(team: Team) {
     this.teamSideBarService.getTeamById(team.id).subscribe((data: Team) => {
       this.teamSideBarService.selectedTeam = data;
@@ -38,6 +47,9 @@ export class TeamSidebarComponent implements OnInit {
     this.teamService.populateTeamMembers(team);
   }
 
+  /**
+   * Displays the add team modal.
+   */
   displayAddTeamModal(): void {
     const dialogRef = this.dialog.open(AddTeamComponent, {
       width: '400px'
