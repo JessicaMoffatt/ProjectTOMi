@@ -17,7 +17,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 
-import {AddTeamComponent, TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
+import {TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
 import {TeamSidebarService} from "./service/team-sidebar.service";
 import {OrderModule} from "ngx-order-pipe";
 
@@ -27,7 +27,7 @@ import {
 } from './component/panel/timesheet/timesheet.component';
 import { EntryComponent } from './component/panel/entry/entry.component';
 
-import {AddTeamMemberComponent, TeamComponent} from './component/panel/team/team.component';
+import {TeamComponent} from './component/panel/team/team.component';
 import {TopNavBarComponent} from "./component/panel/top-nav-bar/top-nav-bar.component";
 import {ApprovePanelComponent} from "./component/panel/approve-panel/approve-panel.component";
 import {TimesheetPanelComponent} from "./component/panel/timesheet-panel/timesheet-panel.component";
@@ -67,8 +67,6 @@ import { EditTaskComponent } from './component/modal/edit-task/edit-task.compone
     EntryComponent,
     TeamComponent,
     TeamSidebarComponent,
-    AddTeamComponent,
-    AddTeamMemberComponent,
     AddTaskComponent,
     EditTaskComponent,
     UserAccountSidebarComponent,
@@ -96,8 +94,6 @@ import { EditTaskComponent } from './component/modal/edit-task/edit-task.compone
   ],
   entryComponents:[
     EntryComponent,
-    AddTeamComponent,
-    AddTeamMemberComponent,
     AddUserAccountComponent,
     EntrySubmittedComponent,
     DeleteEntryModalComponent,
