@@ -50,4 +50,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
 	int getDirectorCount();
 
 	List<UserAccount> getAllByActiveTrueAndProgramDirectorTrue();
+
+	UserAccount getByActiveTrueAndGoogleId(String id);
+	UserAccount getByActiveTrueAndEmail(String email);
 }

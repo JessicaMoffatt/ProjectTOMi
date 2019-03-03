@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public final class TeamService {
   private final TeamRepository repository;
-  private final ProjectAuthService projectAuthService;
+  private final TimesheetAuthService timesheetAuthService;
 
   /**
    * Constructor for the TeamService service.
@@ -25,9 +25,9 @@ public final class TeamService {
    *   Repository responsible for persisting Team instances
    */
   public TeamService(final TeamRepository repository,
-                     final ProjectAuthService projectAuthService) {
+                     final TimesheetAuthService timesheetAuthService) {
     this.repository = repository;
-    this.projectAuthService = projectAuthService;
+    this.timesheetAuthService = timesheetAuthService;
   }
 
   /**
@@ -44,6 +44,12 @@ public final class TeamService {
     return this.repository.findById(id).map(team -> {
       team.setTeamName(newTeam.getTeamName());
       team.setActive(true);
+	    if(team.getTeamLead() != null){
+		    timesheetAuthService.removeTeamLead(team.getTeamLead(), team);
+	    }
+      if(newTeam.getTeamLead() != null){
+        this.timesheetAuthService.setTeamLead(newTeam.getTeamLead(),team);
+      }
       team.setTeamLead(newTeam.getTeamLead());
       return this.repository.save(team);
     }).orElseThrow(TeamNotFoundException::new);
@@ -78,8 +84,16 @@ public final class TeamService {
    *
    * @return the Team that was persisted
    */
-  public Team saveTeam(final Team team) {
-
+  public Team createTeam(final Team team) {
+		team.setActive(true);
     return this.repository.save(team);
+  }
+
+  public void deleteTeam(final Long teamId){
+
+	  final Team team = this.getTeamById(teamId);
+	  team.setActive(false);
+	  team.setTeamLead(null);
+	  this.repository.delete(team);
   }
 }

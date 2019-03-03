@@ -12,24 +12,24 @@ export class SignInService {
 
   constructor() { }
 
-  isSignedIn():boolean{
-    return this.user == null;
-  }
 
   setUser(user:any):any{
     this.user = user;
-    this.isUserLoggedIn.next(true);
     return true;
+  }
+
+  setLoggedIn(){
+    this.isUserLoggedIn.next(true);
   }
 
   signOut() {
     let auth2 = gapi.auth2.getAuthInstance();
 
-    auth2.signOut().then(this.signOutStuff()
+    auth2.signOut().then(this.signOutOperations()
     );
   }
 
-  signOutStuff() {
+  signOutOperations() {
     this.setUser(null);
     this.isUserLoggedIn.next(false);
   }

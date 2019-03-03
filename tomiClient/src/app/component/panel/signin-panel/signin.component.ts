@@ -22,18 +22,20 @@ const httpOptions = {
 export class SigninComponent implements OnInit {
   signIn: SignInService;
   document:any;
+  meta:Meta;
 
-  constructor(@Inject(DOCUMENT) document, private meta: Meta, private http: HttpClient, ngZone: NgZone, signIn: SignInService, private router: Router, private elementRef: ElementRef) {
-    window['onSignIn'] = (user) => ngZone.run(() => this.onSignIn(user));
+  constructor(@Inject(DOCUMENT) document, meta:Meta, private http: HttpClient, ngZone: NgZone, signIn: SignInService, private router: Router, private elementRef: ElementRef) {
     this.signIn = signIn;
     this.document = document;
-    meta.addTag({name:'google-signin-client_id', content:'730191725836-6pv3tlbl520hai1tnl96nr0du79b7sfp.apps.googleusercontent.com'});
+    this.meta = meta;
+    window['onSignIn'] = (user) => ngZone.run(() => this.onSignIn(user));
   }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
+    this.meta.addTag({name:'google-signin-client_id', content:'730191725836-6pv3tlbl520hai1tnl96nr0du79b7sfp.apps.googleusercontent.com'});
     let s = this.document.createElement("script");
     s.type = "text/javascript";
     s.src = "https://apis.google.com/js/platform.js";
@@ -45,9 +47,13 @@ export class SigninComponent implements OnInit {
     let id_token: string;
     id_token = googleUser.getAuthResponse().id_token;
     this.http.post("http://localhost:8080/tokensignin", id_token, httpOptions).toPromise().then(response => {
-      this.router.navigate(['/timesheets']);
+      if(response){
+        this.router.navigate(['/timesheets']);
+        this.signIn.setLoggedIn();
+      }
       return response;
     }).catch(() => {
+      this.signIn.signOutOperations();
       return null;
     });
   }

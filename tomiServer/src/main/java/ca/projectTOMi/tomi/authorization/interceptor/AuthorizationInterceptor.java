@@ -15,6 +15,7 @@ import ca.projectTOMi.tomi.persistence.TimesheetAuthRepository;
 import ca.projectTOMi.tomi.persistence.UserAuthorizationRepository;
 import ca.projectTOMi.tomi.service.EntryService;
 import ca.projectTOMi.tomi.service.UserAccountService;
+import ca.projectTOMi.tomi.service.UserAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,6 +33,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	private final UserAuthorizationRepository userAuthRepository;
 	private final UserAccountService userAccountService;
 	private final EntryService entryService;
+	private final UserAuthenticationService userAuthenticationService;
 	private int i = 0;
 
 	@Autowired
@@ -39,12 +41,14 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	                                final ProjectAuthorizationRepository projectAuthRepository,
 	                                final TimesheetAuthRepository timesheetAuthRepository,
 	                                final UserAccountService userAccountService,
-	                                final EntryService entryService) {
+	                                final EntryService entryService,
+	                                final UserAuthenticationService userAuthenticationService) {
 		this.projectAuthRepository = projectAuthRepository;
 		this.timesheetAuthRepository = timesheetAuthRepository;
 		this.userAuthRepository = userAuthRepository;
 		this.userAccountService = userAccountService;
 		this.entryService = entryService;
+		this.userAuthenticationService = userAuthenticationService;
 	}
 
 	@Override
@@ -53,19 +57,31 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		request.setAttribute("start", start);
 		final String authToken = request.getHeader("SignIn");
 
+		// Initial Login
 		if ("/tokensignin".equals(request.getRequestURI())) {
 			return true;
-		} else if ("OPTION".equals(request.getMethod())) {
+		} else if (request.getMethod().matches("OPTIONS")) {
 			return true;
 		}
 
+
+		final UserAccount user;
 		//TODO Remove Hardcoded UserAccount---------------
-		final UserAccount user = this.userAccountService.getUserAccount(1L);
+		try {
+			user = this.userAuthenticationService.checkLogin(authToken);
+		}catch (final Exception e){
+			System.out.println(request.getMethod() + " " +e);
+			return false;
+		}
+		if(user == null){
+			return false;
+		}
 		//TODO -------------------------------------------
 
 		final String requestMethod = request.getMethod();
 		final String requestURI = request.getRequestURI();
 		String controller;
+		System.out.println("got Useraccount");
 		try {
 			controller = ((HandlerMethod) handler).getMethod().getDeclaringClass().toString();
 			controller = controller.replace("class ca.projectTOMi.tomi.controller.", "");

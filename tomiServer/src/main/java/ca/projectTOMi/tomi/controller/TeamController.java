@@ -97,8 +97,7 @@ public class TeamController {
 	@PostMapping ("/teams")
 	public ResponseEntity<?> createTeam(@RequestBody final Team newTeam,
 	                                    @RequestAttribute final UserAuthManager authMan) throws URISyntaxException {
-		newTeam.setActive(true);
-		final Resource<Team> team = this.assembler.toResource(new UserAuthLinkWrapper<>(this.teamService.saveTeam(newTeam), authMan));
+		final Resource<Team> team = this.assembler.toResource(new UserAuthLinkWrapper<>(this.teamService.createTeam(newTeam), authMan));
 
 		return ResponseEntity.created(new URI(team.getId().expand().getHref())).body(team);
 
@@ -136,10 +135,7 @@ public class TeamController {
 	@DeleteMapping ("/teams/{teamId}")
 	public ResponseEntity<?> setTeamInactive(@PathVariable final Long teamId) {
 		this.userAccountService.removeAllTeamMembers(teamId);
-		final Team team = this.teamService.getTeamById(teamId);
-		team.setActive(false);
-		team.setTeamLead(null);
-		this.teamService.saveTeam(team);
+		this.teamService.deleteTeam(teamId);
 
 		return ResponseEntity.noContent().build();
 	}

@@ -110,6 +110,12 @@ public final class UserAccountService {
 			this.checkProgramDirectors(userAccount, newUserAccount);
 			userAccount.setFirstName(newUserAccount.getFirstName());
 			userAccount.setLastName(newUserAccount.getLastName());
+			if(userAccount.getTeam() != null){
+				this.timesheetAuthService.removeMemberFromTeam(userAccount, userAccount.getTeam());
+			}
+			if(newUserAccount.getTeam() != null){
+				this.timesheetAuthService.addMemberToTeam(newUserAccount, newUserAccount.getTeam());
+			}
 			userAccount.setTeam(newUserAccount.getTeam());
 			userAccount.setEmail(newUserAccount.getEmail());
 			userAccount.setSalariedRate(newUserAccount.getSalariedRate());
