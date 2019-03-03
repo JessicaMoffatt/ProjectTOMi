@@ -69,8 +69,7 @@ export class TeamComponent implements OnInit {
     if(team.id == undefined){
       team.leadId = -1;
     }
-
-    console.log(team);
+    
     this.teamService.save(team).then();
   }
 
