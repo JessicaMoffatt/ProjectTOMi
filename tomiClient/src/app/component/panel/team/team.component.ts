@@ -1,9 +1,10 @@
-import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {AfterViewInit, Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {TeamService} from "../../../service/team.service";
 import {Team} from "../../../model/team";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamSidebarService} from "../../../service/team-sidebar.service";
 import {AddTeamMemberComponent} from "../../modal/add-team-member/add-team-member.component";
+import {MatSelectionList, MatSelectionListChange} from "@angular/material";
 
 /**
  * TeamComponent is used to facilitate communication between the view and front end services.
@@ -22,26 +23,34 @@ export class TeamComponent implements OnInit {
   @ViewChild('add_team_member_container', {read: ViewContainerRef})
   add_team_member_container: ViewContainerRef;
 
+  @ViewChild('teamMemberList') teamMemberList: MatSelectionList;
+
   constructor(private resolver: ComponentFactoryResolver, public teamService: TeamService,
               public teamSideBarService: TeamSidebarService) {
   }
 
   ngOnInit() {
+
   }
 
   /**
-   * Sets the selected team member.
-   * @param account The user account whom has been selected.
+   * Sets the selected team members.
+   * @param event The event to be captured.
+   * @param selectedMembers The selected values.
    */
-  selectMember(account: UserAccount) {
-    this.teamService.setSelectMember(account);
+  onSelection(event, selectedMembers) {
+    let tempList: UserAccount[] = [];
+    for(let m of selectedMembers) {
+      tempList.push(m.value);
+    }
+    this.teamService.setSelectMembers(tempList);
   }
 
   /**
    * Removes the selected member from the team.
    */
-  removeMember() {
-    this.teamService.removeMember();
+  removeMembers() {
+    this.teamService.removeMembers();
   }
 
   /**
@@ -60,8 +69,15 @@ export class TeamComponent implements OnInit {
    */
   save(team: Team) {
     team.teamName = (<HTMLInputElement>document.getElementById("team_name")).value;
-    let leadId = Number((<HTMLInputElement>document.getElementById("selected_team_lead")).value);
-    team.leadId = leadId;
+
+    let leadText = (<HTMLInputElement>document.getElementById("selected_team_lead")).value;
+
+    if(leadText == undefined){
+      team.leadId = -1;
+    }else{
+      team.leadId = Number(leadText);
+    }
+    
     this.teamService.save(team).then();
   }
 

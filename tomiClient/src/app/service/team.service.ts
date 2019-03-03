@@ -41,13 +41,13 @@ export class TeamService {
    * as well as not a team lead of any other teams.
    */
   allOutsideMembers: UserAccount[] = [];
-  /** The member selected from the list of team members.*/
-  private selectedMember: UserAccount;
+  /** The members selected from the list of team members.*/
+  private selectedMembers: UserAccount[];
 
   /** Used to reference the add team member component created by clicking the Add Member button.*/
   ref: ComponentRef<any>;
 
-  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService) {
+  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService, private userAccountService:UserAccountService) {
     this.refreshTeams();
   }
 
@@ -67,35 +67,43 @@ export class TeamService {
     });
   }
 
+  populateTeamMembers(team:Team){
+    this.getTeamMembers(team.id).subscribe((data: Array<UserAccount>) => {
+      this.teamMembers = data;
+    });
+  }
+
   /**
    * Sets selectedMember to the specified user account.
-   * @param account The user account to set selectedMember to.
+   * @param members The user accounts to set selectedMembers to.
    */
-  setSelectMember(account: UserAccount) {
-    this.selectedMember = account;
+  setSelectMembers(members:UserAccount[]) {
+    this.selectedMembers = members as UserAccount[];
   }
 
   /**
    * Removes a member from the selected team.
    */
-  removeMember() {
-    let index = this.teamMembers.findIndex((element) => {
-      return (element.id == this.selectedMember.id);
-    });
+  async removeMembers() {
+    if(this.selectedMembers.length > 0){
+      for(let m of this.selectedMembers){
+        let index = this.teamMembers.findIndex((element) => {
+          return (element.id == m.id);
+        });
 
-    this.teamMembers.splice(index, 1);
+        this.teamMembers.splice(index, 1);
 
-    this.selectedMember.teamId = -1;
+        m.teamId = -1;
+        await this.userAccountService.save(m).then(()=>{
+          if(this.teamSideBarService.selectedTeam.leadId === m.id){
+            this.teamSideBarService.selectedTeam.leadId = -1;
+            this.save(this.teamSideBarService.selectedTeam).then();
+          }
+        });
+      }
 
-    // TODO Remove this comment and allow this code
-    // this.userAccountService.save(this.selectedMember);
-
-    if(this.teamSideBarService.selectedTeam.leadId === this.selectedMember.id){
-      this.teamSideBarService.selectedTeam.leadId = -1;
-      this.save(this.teamSideBarService.selectedTeam).then();
+      this.selectedMembers = [];
     }
-
-    this.selectedMember = null;
   }
 
   /**

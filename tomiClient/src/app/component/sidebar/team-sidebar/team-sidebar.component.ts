@@ -35,9 +35,8 @@ export class TeamSidebarComponent implements OnInit {
       this.teamSideBarService.selectedTeam = data;
     });
 
-    this.teamService.getTeamMembers(team.id).subscribe((data: Array<UserAccount>) => {
-      this.teamService.teamMembers = data;
-    });
+    this.teamService.setSelectMembers([]);
+    this.teamService.populateTeamMembers(team);
   }
 
   createAddTeamComponent(){

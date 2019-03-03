@@ -1,4 +1,3 @@
-import {BsDropdownModule, BsModalService, ComponentLoaderFactory, ModalModule, PositioningService} from "ngx-bootstrap";
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +7,15 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+
+//Material Imports
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButtonModule} from '@angular/material';
+import {MatListModule} from '@angular/material/list';
+import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+
 
 import { TeamSidebarComponent } from './component/sidebar/team-sidebar/team-sidebar.component';
 import { AddTeamComponent } from './component/modal/add-team/add-team.component';
@@ -81,8 +89,12 @@ import { EditTaskComponent } from './component/modal/edit-task/edit-task.compone
     FormsModule,
     HttpClientModule,
     OrderModule,
-    ModalModule,
-    OrderModule
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatListModule,
+    MatCardModule,
+    MatInputModule,
+    MatSelectModule
   ],
   entryComponents:[
     EntryComponent,
@@ -106,12 +118,16 @@ import { EditTaskComponent } from './component/modal/edit-task/edit-task.compone
       multi: true
     },
     TimesheetService,
-    BsModalService,
-    ComponentLoaderFactory,
-    PositioningService,
     UserAccountService,
     TaskPanelService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    MatButtonModule,
+    MatListModule,
+    MatCardModule,
+    MatInputModule,
+    MatSelectModule
+  ]
 })
 export class AppModule { }
