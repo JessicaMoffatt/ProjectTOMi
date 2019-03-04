@@ -81,7 +81,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		final String requestMethod = request.getMethod();
 		final String requestURI = request.getRequestURI();
 		String controller;
-		System.out.println("got Useraccount");
 		try {
 			controller = ((HandlerMethod) handler).getMethod().getDeclaringClass().toString();
 			controller = controller.replace("class ca.projectTOMi.tomi.controller.", "");

@@ -46,7 +46,7 @@ import { EditUserComponent } from './component/panel/edit-user/edit-user.compone
 import { ViewUserComponent } from './component/panel/view-user/view-user.component';
 import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
 import {TimesheetService} from "./service/timesheet.service";
-import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry-submitted.component';
+// import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry-submitted.component';
 import { AddTaskComponent } from './component/modal/add-task/add-task.component';
 import {TaskPanelService} from "./service/task-panel.service";
 import { EditTaskComponent } from './component/modal/edit-task/edit-task.component';
