@@ -3,7 +3,6 @@ import {UserAccount} from "../model/userAccount";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {TeamService} from "./team.service";
 
 const httpOptions = {
   headers: new HttpHeaders({

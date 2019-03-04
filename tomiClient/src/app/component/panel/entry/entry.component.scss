@@ -10,8 +10,9 @@
   //display:inline-block;
   padding:1rem 2rem 1rem 2rem;
   margin-bottom:.25rem;
-  margin-top:.25rem;
-  max-width:100rem;
+  margin-top:.5rem;
+  margin-left:10rem;
+  max-width:50rem;
   //font-size:1.25rem;
   //position:relative;
 }
@@ -22,11 +23,6 @@
 
 .small_number_input{
   width:3.5rem;
-}
-
-.flex_btn_container{
-  display:flex;
-  width:100%;
 }
 
 .copy_entry{

@@ -245,16 +245,13 @@ html,body{
   border-radius: 5px;
 }
 
-.project_entries_footer{
-  background-color:$light_grey;
-  height:$btn_md;
-  position:fixed;
+.project_entries_footer {
+  background-color: $light_grey;
+  height: $btn_md;
+  position: fixed;
   bottom: 0px;
-  right:0px;
+  right: 0px;
   font-size: 1.5rem;
-  
-.main_container{
-  padding-top:15%;
 }
 
 .manage_card{

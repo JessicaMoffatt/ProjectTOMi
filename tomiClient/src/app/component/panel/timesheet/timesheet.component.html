@@ -2,18 +2,18 @@
 @author Jessica Moffatt
 @version 2.0
 -->
-<div [ngClass]="'container'">
-  <span [ngClass]="['arrow', 'rounded-circle','back']" (click)="displayPrevTimesheet()">
+<div>
+  <span [ngClass]="['arrow', 'back']" (click)="displayPrevTimesheet()">
   </span>
   <span [ngClass]="'week_title'">Week of {{timesheetService.currentDate}}</span>
-  <span [ngClass]="['arrow', 'rounded-circle','forward']" (click)="displayNextTimesheet()">
+  <span [ngClass]="['arrow', 'forward']" (click)="displayNextTimesheet()">
   </span>
   <!--TODO FIX THIS-->
   <!--<app-date-picker [parent]="this"></app-date-picker>-->
 
   <span id="submission_status">{{timesheetService.currentStatus}}</span>
 
-  <div [ngClass]="'container'">
+  <div>
     <div *ngFor="let entry of entries">
       <app-entry [ngClass]="'entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.LOGGING" [entry]="entry" [projects]="projects" [unitTypes]="unitTypes" [tasks]="tasks"
                  (requestCopy)="copyEntry($event)"
