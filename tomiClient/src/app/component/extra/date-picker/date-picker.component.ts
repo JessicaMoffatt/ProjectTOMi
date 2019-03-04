@@ -76,4 +76,11 @@ export class DatePickerComponent{
 
     this.parent.displaySpecifiedTimesheet(weeks);
   }
+
+  temp(){
+    let span = document.getElementById("fish");
+    console.log("Doing Stuff");
+    span.removeEventListener('onmouseover', this.temp,  false);
+    span.setAttribute("style", "");
+  }
 }
