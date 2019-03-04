@@ -22,7 +22,7 @@ export class TeamSidebarService {
   selectedTeam: Team;
 
   /** List of all the teams.*/
-  teams: Team[];
+  teams: Team[] = [];
 
   constructor(private http: HttpClient) {
   }
