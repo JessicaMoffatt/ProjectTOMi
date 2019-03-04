@@ -9,18 +9,19 @@ import {UnitTypesPanelComponent} from "./component/panel/unit-types-panel/unit-t
 import {TasksPanelComponent} from "./component/panel/tasks-panel/tasks-panel.component";
 import {UserAccountPanelComponent} from "./component/panel/user-account-panel/user-account-panel.component";
 import {SigninComponent} from "./component/panel/signin-panel/signin.component";
+import {AccessGuard} from "./AccessGuard";
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/signIn', pathMatch: 'full' },
-  {path: 'timesheets', component: TimesheetComponent },
-  {path: 'approveTimesheets', component: ApprovePanelComponent},
-  {path: 'teams', component: TeamPanelComponent},
-  {path: 'projects', component: ProjectsPanelComponent},
-  {path: 'manageTeams', component: ManageTeamsPanelComponent},
-  {path: 'mangeUnitTypes', component: UnitTypesPanelComponent},
-  {path: 'manageTasks', component: TasksPanelComponent},
-  {path: 'manageUserAccount', component: UserAccountPanelComponent},
+  {path: '', redirectTo: '/signIn', pathMatch: 'full' },
+  {path: 'timesheets', component: TimesheetComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'approveTimesheets', component: ApprovePanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'teams', component: TeamPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'projects', component: ProjectsPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'manageTeams', component: ManageTeamsPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'mangeUnitTypes', component: UnitTypesPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'manageTasks', component: TasksPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'manageUserAccount', component: UserAccountPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
   {path: 'signIn', component: SigninComponent},
 ];
 

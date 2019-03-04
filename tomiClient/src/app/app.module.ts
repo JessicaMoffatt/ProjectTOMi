@@ -69,6 +69,7 @@ import {BudgetReportComponent} from './component/extra/budget-report/budget-repo
 import { UnitTypeSidebarComponent } from './component/sidebar/unit-type-sidebar/unit-type-sidebar.component';
 import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
 import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-unit-type.component';
+import {AccessGuard} from "./AccessGuard";
 
 @NgModule({
   declarations: [
@@ -160,7 +161,8 @@ import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-uni
     UserAccountService,
     TaskPanelService,
     SignInService,
-    MatDatepickerModule
+    MatDatepickerModule,
+    AccessGuard
   ],
   bootstrap: [AppComponent],
   exports: [
