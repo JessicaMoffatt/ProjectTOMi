@@ -108,7 +108,9 @@ import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-uni
     BudgetReportComponent,
     UnitTypeSidebarComponent,
     AddUnitTypeComponent,
-    EditUnitTypeComponent
+    EditUnitTypeComponent,
+    EditTaskComponent,
+    AddTaskComponent
   ],
   imports: [
     BrowserModule,
