@@ -25,17 +25,22 @@ export class SignInService {
     this.isUserLoggedIn.next(true);
   }
 
-  signOut() {
+  async signOut() {
     let auth2 = gapi.auth2.getAuthInstance();
 
-    auth2.signOut().then(this.signOutOperations()
-    );
+    let promise = new Promise((resolve, reject)=>{
+      resolve(auth2.signOut());
+    });
+
+    await promise.then(()=>{
+      return this.signOutOperations();
+    });
   }
 
   signOutOperations() {
     this.setUser(null);
     this.isUserLoggedIn.next(false);
-    this.router.navigate(['/']);
+    return this.router.navigate(['/']);
   }
 
   getToken():string{
