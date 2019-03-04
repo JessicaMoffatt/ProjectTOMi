@@ -4,33 +4,27 @@ span {
   background-color: $orange;
   color: $white;
   position: absolute;
-  // grid-template-columns: 30%;
-  //display: inline-block;
-  height: 56px;
+  height: 9vh;
   left: 0;
   top: 0;
-  width: 100%;
-  box-shadow: 0 0 8px black;
+  padding-left: 10vw;
+  width: 90vw;
+  box-shadow: 0 0 1vh black;
   z-index: 2;
 }
 
 img {
   position: absolute;
-  top: 20px;
-  left: 16px;
+  top: 3vh;
+  left: 2vw;
 }
 
 a{
   position: relative;
-  left: 200px;
+  width: 8vw !important;
+  text-align: center;
+  padding: 1vw;
   color: $white;
-  padding: 16px;
   float: left;
-}
-
-.logout{
-  position: absolute;
-  top: 0vh;
-  left: 94vw;
 }
 
