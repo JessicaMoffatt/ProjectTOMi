@@ -20,6 +20,10 @@ export class SignInService {
     return true;
   }
 
+  isLoggedIn(){
+    return this.isUserLoggedIn;
+  }
+
   setLoggedIn(){
     this.isUserLoggedIn.next(true);
   }
