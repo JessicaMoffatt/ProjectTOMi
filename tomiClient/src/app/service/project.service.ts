@@ -1,14 +1,24 @@
 import { Injectable } from '@angular/core';
 import {map} from "rxjs/operators";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Project} from "../model/project";
+import {Client} from "../model/client";
+import {UserAccount} from "../model/userAccount";
 
 /**
  * Project service provides services relates to Projects.
  * @author Jessica Moffatt
  * @version 1.0
  */
+
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -81,5 +91,39 @@ export class ProjectService {
           return null;
         }
       }));
+  }
+
+
+  // @ts-ignore
+  async projectNameIsAvailable(projectName: string): boolean {
+
+    this.projects.subscribe(projects => {
+        for (let c of projects) {
+          if (c.projectName === projectName) {
+            return false;
+          }
+        }
+        return true;
+      }
+    );
+  }
+
+  async save(project: Project) {
+    if (project.id.length == 2) {
+      await this.http.post<Project>(this.projectsUrl, JSON.stringify(project), httpOptions).toPromise().then(response => {
+
+        // this.refreshClients();
+      }).catch((error: any) => {
+        //TODO Add an error display
+      });
+    } else {
+      const url = project._links["update"];
+      this.http.put<UserAccount>(url["href"], JSON.stringify(project), httpOptions).toPromise().then(response => {
+
+        //  this.refreshClients();
+      }).catch((error: any) => {
+        //TODO Add an error display
+      });
+    }
   }
 }

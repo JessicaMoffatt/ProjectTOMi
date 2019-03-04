@@ -36,6 +36,7 @@ export class UserAccountService {
     this.GETAllUserAccounts().forEach( users => {
       this.userSubject = new BehaviorSubject<Array<UserAccount>>(users);
     });
+    this.userAccounts = this.GETAllUserAccounts();
   }
 
   /**

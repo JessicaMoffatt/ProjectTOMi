@@ -12,11 +12,11 @@ import {UserAccount} from "./userAccount";
 export class Project{
 
   /** The unique identifier for this Project.*/
-  id: number;
+  id: string;
   /** The Client this Project is for.*/
   client: Client;
-  /** The UserAccount managing this Project.*/
-  projectManager: UserAccount;
+  /** The ID of the UserAccount managing this Project.*/
+  projectManager: number;
   /** The name of this Project.*/
   projectName: string;
   /** The budget assigned to this Project multiplied by 100 to remove decimals.*/
@@ -34,9 +34,9 @@ export class Project{
   _links: [];
 
   constructor(){
-    this.id = -1;
+    this.id = "";
     this.client = new Client();
-    this.projectManager = new UserAccount();
+    this.projectManager = -1;
     this.projectName = "";
     this.budget = 0;
     this.billableRate = 0;

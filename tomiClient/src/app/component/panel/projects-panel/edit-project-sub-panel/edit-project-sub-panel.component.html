@@ -1,0 +1,77 @@
+<mat-card id="project_details">
+
+  <form>
+
+  <mat-form-field>
+    <input id="project_name" value="{{this.projectService.selected}}" type="text" placeholder="Project Name" aria-label="Project Name" matInput [formControl]="myControl">
+  </mat-form-field>
+  <br/>
+
+  <mat-form-field>
+    <input id="client_name" type="text" placeholder="Client" aria-label="Client" matInput [formControl]="myControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let c of this.clientService.clients | async" [value]="c.name">
+        {{c.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <br/>
+
+  <mat-form-field>
+    <input id="project_manager" type="text" placeholder="Project Manager" aria-label="Project Manager" matInput [formControl]="myControl"
+           [matAutocomplete]="auto2">
+    <mat-autocomplete #auto2="matAutocomplete">
+      <mat-option *ngFor="let u of this.userAccountService.userAccounts | async" [value]="u.firstName">
+        {{u.firstName}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <br/>
+
+
+  <div *ngIf="this.projectService.selected != null">
+    <td colspan="2">id goes here</td>
+  </div>
+  <div *ngIf="this.projectService.selected == null">
+    <mat-form-field>
+      <input id="account_manager" type="text" placeholder="Account Manager" aria-label="Account Manager" matInput> <!-- [formControl]="myControl"-->
+    </mat-form-field>
+    <br/>
+  </div>
+
+  <mat-form-field>
+    <input id="billing_rate" type="text" placeholder="Billing Rate" aria-label="Billing Rate" matInput> <!-- [formControl]="myControl"-->
+  </mat-form-field>
+  <br/>
+
+  <mat-form-field>
+    <input id="budget_total" type="text" placeholder="Budget Total" aria-label="Budget Total" matInput
+           [formControl]="myControl">
+  </mat-form-field>
+  <br/>
+
+  <div style="display: flex; justify-content: flex-end">
+    <button mat-button color="primary" style="order: 1">CLEAR</button>
+    <button (click)="save()" mat-button color="primary" style="order: 2">SAVE</button>
+  </div>
+
+  </form>
+
+</mat-card>
+
+<app-team-member-list></app-team-member-list>
+
+<br>
+
+<app-expense-list></app-expense-list>
+
+<div id="button_area">
+  <div (click)="editProject()" [ngClass]="['add_btn', 'btn','btn_padding','rounded_corners']">Edit
+  </div>
+  <div (click)="archiveProject()" [ngClass]="['add_btn', 'btn','btn_padding','rounded_corners']">Archive
+  </div> <!-- if the project is archived, does this become a 're-activate; button? -->
+  <div (click)="deleteProject()" [ngClass]="['cancel_btn','btn','btn_padding','rounded_corners']">Delete</div>
+</div>
+
+
