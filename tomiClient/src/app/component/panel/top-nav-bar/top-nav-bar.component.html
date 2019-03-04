@@ -1,17 +1,14 @@
-<span>
+<mat-toolbar>
   <img src="../../../../assets/tomiLogo.png"/>
   <ng-template [ngIf]="isUserLoggedIn">
-    <nav mat-tab-nav-bar>
-      <a [routerLink]="'/timesheets'">Timesheets</a>
-      <a [routerLink]="'/approveTimesheets'">Approve</a>
-      <a [routerLink]="'/teams'">Team</a>
-      <a [routerLink]="'/projects'">Projects</a>
-      <a [routerLink]="'/manageTeams'">Manage Teams</a>
-      <a [routerLink]="'/mangeUnitTypes'">Unit Types</a>
-      <a [routerLink]="'/manageTasks'">Tasks</a>
-      <a [routerLink]="'/manageUserAccount'">Users</a>
-      <a (click)="signInService.signOut()" routerLink="/signIn">Logout</a>
-    </nav>
-
+      <a class="link" [routerLink]="'/timesheets'">Timesheets</a>
+      <a class="link" [routerLink]="'/approveTimesheets'">Approve</a>
+      <a class="link" [routerLink]="'/teams'">Team</a>
+      <a class="link" [routerLink]="'/projects'">Projects</a>
+      <a class="link" [routerLink]="'/manageTeams'">Manage Teams</a>
+      <a class="link" [routerLink]="'/mangeUnitTypes'">Unit Types</a>
+      <a class="link" [routerLink]="'/manageTasks'">Tasks</a>
+      <a class="link" [routerLink]="'/manageUserAccount'">Users</a>
+      <a class="link" (click)="signInService.signOut()" routerLink="/signIn">Logout</a>
   </ng-template>
-</span>
+</mat-toolbar>

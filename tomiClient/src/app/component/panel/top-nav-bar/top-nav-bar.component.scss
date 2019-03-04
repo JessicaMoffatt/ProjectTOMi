@@ -1,6 +1,7 @@
 @import '../../../../variables';
 
-span {
+
+mat-toolbar {
   background-color: $orange;
   color: $white;
   position: absolute;
@@ -8,23 +9,27 @@ span {
   left: 0;
   top: 0;
   padding-left: 10vw;
-  width: 90vw;
+  width: 100vw;
   box-shadow: 0 0 1vh black;
   z-index: 2;
+  img{
+    position:absolute;
+    top:0;
+    left:0;
+    margin:1.5vw;
+  }
 }
 
-img {
-  position: absolute;
-  top: 3vh;
-  left: 2vw;
-}
 
-a{
-  position: relative;
+.link{
   width: 8vw !important;
-  text-align: center;
   padding: 1vw;
-  color: $white;
-  float: left;
+  text-decoration: none;
+  font-size: 1rem;
+  color: #FFFFFF;
+  text-align:center;
 }
 
+.link:hover{
+  background-color: $nav_highlight;
+}
