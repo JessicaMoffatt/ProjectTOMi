@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 
 //Material Imports
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule} from '@angular/material';
+import {MatButtonModule,MatDatepickerModule,MatNativeDateModule} from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
@@ -110,7 +110,9 @@ import { BudgetReportComponent } from './component/extra/budget-report/budget-re
     MatCardModule,
     MatInputModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   entryComponents:[
     EntryComponent,
@@ -134,7 +136,8 @@ import { BudgetReportComponent } from './component/extra/budget-report/budget-re
     },
     TimesheetService,
     ProjectEntriesService,
-    UserAccountService
+    UserAccountService,
+    MatDatepickerModule
   ],
   bootstrap: [AppComponent],
   exports: [
@@ -142,7 +145,9 @@ import { BudgetReportComponent } from './component/extra/budget-report/budget-re
     MatListModule,
     MatCardModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class AppModule { }

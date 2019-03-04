@@ -12,7 +12,7 @@ export class BudgetReportComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.project);
+    // console.log(this.project);
   }
 
 

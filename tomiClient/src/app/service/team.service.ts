@@ -56,7 +56,6 @@ export class TeamService {
   GETAllTeams() {
     return this.http.get(this.teamUrl)
       .pipe(map((data: any) => {
-        console.log(data);
         return data._embedded.teams as Team[];
       }));
   }

@@ -12,7 +12,6 @@ const millisecondsToDays:number = 86400000;
   styleUrls: ['./date-picker.component.scss']
 })
 export class DatePickerComponent{
-
   /**
    * The latest date that can be selected.
    */

@@ -1,10 +1,12 @@
-import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {ProjectEntriesService} from "../../../service/project-entries.service";
-import {Router} from "@angular/router";
-import {TimesheetService} from "../../../service/timesheet.service";
-import {ProjectService} from "../../../service/project.service";
-import {EntryService} from "../../../service/entry.service";
 import {EntryApproveComponent} from "../entry-approve/entry-approve.component";
+import {DeleteEntryModalComponent, TimesheetComponent} from "../timesheet/timesheet.component";
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
+
+export interface DialogData {
+  parent: ProjectEntriesComponent;
+}
 
 /**
  * ProjectEntriesComponent is used to facilitate communication between the view and front end services.
@@ -22,9 +24,7 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
   @ViewChildren(EntryApproveComponent) entryComponentsRef: QueryList<'entryComponentsRef'>;
   entryComponents: EntryApproveComponent[] = [];
 
-  constructor(public projectEntriesService: ProjectEntriesService, private router: Router,
-              public timesheetService: TimesheetService, private projectService: ProjectService,
-              private entryService: EntryService) {
+  constructor(public projectEntriesService: ProjectEntriesService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -49,12 +49,13 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
    * Displays the submit modal.
    */
   displaySubmitModal() {
-    const initialState = {
-      title: 'Submit Confirmation',
-      parent: this
-    };
+    const dialogRef = this.dialog.open(SubmitApprovalModalComponent, {
+      width: '400px',
+      data: {parent: this}
+    });
 
-    // this.bsModalRef = this.modalService.show(SubmitApprovalModalComponent, {initialState});
+    dialogRef.afterClosed().subscribe(result => {
+    })
   }
 
   /**
@@ -77,19 +78,12 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
 @Component({
   selector: 'app-approval-modal',
   template: `
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">{{title}}</h4>
-      <!--<button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">-->
-        <!--<span aria-hidden="true">&times;</span>-->
-      <!--</button>-->
-    </div>
-    <div class="modal-body">
-      <span>Confirm SUBMISSION of APPROVAL/REJECTION for entries</span>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" [ngClass]="'confirm_btn'" (click)="confirmSubmission()">SUBMIT
-      </button>
-      <button type="button" class="btn btn-default" [ngClass]="'cancel_btn'" (click)="cancel()">CANCEL</button>
+
+    <h1 mat-dialog-title>Submit Timesheet</h1>
+    <div mat-dialog-content>
+      <p>Confirm SUBMISSION of APPROVAL/REJECTION for entries</p>
+      <button mat-button [ngClass]="'confirm_button'" (click)="confirmSubmission()">SUBMIT</button>
+      <button mat-button [ngClass]="'cancel_btn'" (click)="cancel()">CANCEL</button>
     </div>
   `
 })
@@ -98,12 +92,8 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
  * SubmitApprovalModalComponent is used to get confirmation from the user regarding their desire to submit entries for approval.
  */
 export class SubmitApprovalModalComponent implements OnInit {
-  /** The title of the modal.*/
-  title: string;
-  /** The parent component which is showing this modal.*/
-  parent: ProjectEntriesComponent;
-
-  constructor() {
+  constructor(public dialogRef: MatDialogRef<DeleteEntryModalComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: DialogData) {
   }
 
   ngOnInit() {
@@ -113,18 +103,18 @@ export class SubmitApprovalModalComponent implements OnInit {
   /** Facilitates the submission of the current timesheet, as well as closes the modal.*/
   confirmSubmission(): void {
     this.submitApproval().then();
-    // this.bsModalRef.hide();
+    this.dialogRef.close();
   }
 
   /** Closes the modal with no extra actions.*/
   cancel(): void {
-    // this.bsModalRef.hide();
+    this.dialogRef.close();
   }
 
 
   /** Facilitates submission of the current timesheet.**/
   async submitApproval() {
-    await this.parent.submitApproval().then(()=>{
+    await this.data.parent.submitApproval().then(()=>{
       this.displayProjectEntries().then();
     });
   }
@@ -133,6 +123,6 @@ export class SubmitApprovalModalComponent implements OnInit {
    * Displays the project's entries.
    */
   async displayProjectEntries(){
-    await this.parent.projectEntriesService.displayProjectEntries().then();
+    await this.data.parent.projectEntriesService.displayProjectEntries().then();
   }
 }

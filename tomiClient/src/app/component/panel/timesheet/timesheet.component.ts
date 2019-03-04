@@ -280,10 +280,6 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     }
   }
 
-  async test(){
-    return Promise.resolve(this.timesheetService.currentStatus = this.sts[this.sts.LOGGING]);
-  }
-
   /**
    * Displays the submit modal.
    */

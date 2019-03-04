@@ -5,8 +5,6 @@ import {ProjectService} from "./project.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {Entry} from "../model/entry";
-import {TimesheetService} from "./timesheet.service";
-import {UserAccountService} from "./user-account.service";
 import {Status} from "../model/status";
 
 const headers = new HttpHeaders({
@@ -25,8 +23,6 @@ export class ProjectEntriesService {
   entries: Entry[];
 
   selectedProject: Project;
-
-  count:number = 0;
 
   constructor(private projectService: ProjectService, private http: HttpClient) {
 
@@ -88,8 +84,7 @@ export class ProjectEntriesService {
     let temp = null;
     await this.http.put(url,'"APPROVED"', {headers:headers, observe:"response"}).toPromise().then(response => {
       temp = response;
-      this.count++;
-      console.log(this.count);
+
       return response;
     }).catch(() => {
       return null;

@@ -5,21 +5,19 @@
 <div [ngClass]="'container'">
 <div *ngIf="projectEntriesService.selectedProject">
   <div>
-    <div [ngClass]="'row'">
+    <div>
       {{projectEntriesService.selectedProject.projectName}}
     </div>
 
     <div>
-        <div [ngClass]="'container'">
           <div *ngFor="let entry of this.projectEntriesService.entries">
             <app-entry-approve [ngClass]="'entry'"
                                   [entry]="entry"></app-entry-approve>
           </div>
-        </div>
     </div>
   </div>
 </div>
 </div>
 <div [ngClass]="'project_entries_footer'">
-  <span [ngClass]="['submit', 'btn', 'bottom_btn']" (click)="displaySubmitModal()"></span>
+  <button mat-button [ngClass]="['submit', 'bottom_btn']" (click)="displaySubmitModal()"></button>
 </div>

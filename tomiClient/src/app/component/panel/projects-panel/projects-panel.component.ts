@@ -15,7 +15,6 @@ export class ProjectsPanelComponent implements OnInit {
 
   ngOnInit() {
     this.temp.getProjectById('JM1001').subscribe((data)=>{
-      console.log(data);
       this.project = data;
     });
   }
