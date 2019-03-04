@@ -80,5 +80,4 @@ export class TasksPanelComponent implements OnInit{
       this.taskPanelService.delete(task);
     }
   }
-z
 }
