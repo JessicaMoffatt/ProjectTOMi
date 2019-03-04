@@ -1,12 +1,9 @@
 import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {ProjectEntriesService} from "../../../service/project-entries.service";
-import {SubmitTimesheetModalComponent, TimesheetComponent} from "../timesheet/timesheet.component";
-import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Router} from "@angular/router";
 import {TimesheetService} from "../../../service/timesheet.service";
 import {ProjectService} from "../../../service/project.service";
 import {EntryService} from "../../../service/entry.service";
-import {EntryComponent} from "../entry/entry.component";
 import {EntryApproveComponent} from "../entry-approve/entry-approve.component";
 
 /**
@@ -21,13 +18,13 @@ import {EntryApproveComponent} from "../entry-approve/entry-approve.component";
   styleUrls: ['./project-entries.component.scss']
 })
 export class ProjectEntriesComponent implements OnInit, AfterViewInit {
-  /** The reference to the BSModal, which is used to show either the delete modal or the submit modal.*/
-  bsModalRef: BsModalRef;
 
   @ViewChildren(EntryApproveComponent) entryComponentsRef: QueryList<'entryComponentsRef'>;
   entryComponents: EntryApproveComponent[] = [];
 
-  constructor(public projectEntriesService: ProjectEntriesService, private modalService: BsModalService, private router: Router, public timesheetService: TimesheetService, private projectService: ProjectService, private entryService: EntryService) {
+  constructor(public projectEntriesService: ProjectEntriesService, private router: Router,
+              public timesheetService: TimesheetService, private projectService: ProjectService,
+              private entryService: EntryService) {
   }
 
   ngOnInit() {
@@ -57,7 +54,7 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
       parent: this
     };
 
-    this.bsModalRef = this.modalService.show(SubmitApprovalModalComponent, {initialState});
+    // this.bsModalRef = this.modalService.show(SubmitApprovalModalComponent, {initialState});
   }
 
   /**
@@ -82,9 +79,9 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
   template: `
     <div class="modal-header">
       <h4 class="modal-title pull-left">{{title}}</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <!--<button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">-->
+        <!--<span aria-hidden="true">&times;</span>-->
+      <!--</button>-->
     </div>
     <div class="modal-body">
       <span>Confirm SUBMISSION of APPROVAL/REJECTION for entries</span>
@@ -106,7 +103,7 @@ export class SubmitApprovalModalComponent implements OnInit {
   /** The parent component which is showing this modal.*/
   parent: ProjectEntriesComponent;
 
-  constructor(public bsModalRef: BsModalRef) {
+  constructor() {
   }
 
   ngOnInit() {
@@ -116,12 +113,12 @@ export class SubmitApprovalModalComponent implements OnInit {
   /** Facilitates the submission of the current timesheet, as well as closes the modal.*/
   confirmSubmission(): void {
     this.submitApproval().then();
-    this.bsModalRef.hide();
+    // this.bsModalRef.hide();
   }
 
   /** Closes the modal with no extra actions.*/
   cancel(): void {
-    this.bsModalRef.hide();
+    // this.bsModalRef.hide();
   }
 
 

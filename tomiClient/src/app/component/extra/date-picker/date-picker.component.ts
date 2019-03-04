@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {TimesheetService} from "../../../service/timesheet.service";
-import {TimesheetComponent} from "../../panel/timesheet/timesheet.component";
 
 const millisecondsToDays:number = 86400000;
 

@@ -28,9 +28,9 @@
   <div #entryHolder></div>
 </div>
 <div [ngClass]="'timesheet_footer'">
-  <div (click)="addEntry()" [ngClass]="['new_entry', 'btn', 'new_btn','rounded-circle']"></div>
+  <button mat-button (click)="addEntry()" [ngClass]="['new_entry', 'new_btn']"></button>
   <span [ngClass]="'hours_tally'">Hours:<strong> {{tally}}</strong></span>
-  <span [ngClass]="['submit', 'btn', 'bottom_btn']" (click)="displaySubmitModal()"></span>
-  <span [ngClass]="['save_timesheet', 'btn', 'bottom_btn', 'save_btn']" (click)="save().then()"></span>
+  <button mat-button [ngClass]="['submit','bottom_btn']" (click)="displaySubmitModal()"></button>
+  <button mat-button [ngClass]="['save_timesheet', 'bottom_btn', 'save_btn']" (click)="save().then()"></button>
 </div>
 

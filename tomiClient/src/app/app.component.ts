@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {BsLocaleService, defineLocale, enGbLocale, setTheme} from "ngx-bootstrap";
 
 @Component({
   selector: 'app-root',
@@ -9,11 +8,11 @@ import {BsLocaleService, defineLocale, enGbLocale, setTheme} from "ngx-bootstrap
 export class AppComponent implements OnInit {
   title = 'static';
 
-  constructor(private localeService: BsLocaleService){
-    defineLocale('en-gb', enGbLocale);
-  }
+  // constructor(private localeService: BsLocaleService){
+  //   defineLocale('en-gb', enGbLocale);
+  // }
 
   ngOnInit(){
-    this.localeService.use('en-gb');
+    // this.localeService.use('en-gb');
   }
 }

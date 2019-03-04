@@ -1,4 +1,3 @@
-import { BsModalService, ComponentLoaderFactory, ModalModule, PositioningService} from "ngx-bootstrap";
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +7,15 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+
+//Material Imports
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButtonModule} from '@angular/material';
+import {MatListModule} from '@angular/material/list';
+import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { TeamSidebarComponent } from './component/sidebar/team-sidebar/team-sidebar.component';
 import { AddTeamComponent } from './component/modal/add-team/add-team.component';
@@ -41,7 +49,6 @@ import { ViewUserComponent } from './component/panel/view-user/view-user.compone
 import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
 import {TimesheetService} from "./service/timesheet.service";
 import { EntryUneditableComponent } from './component/panel/entry-uneditable/entry-uneditable.component';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DatePickerComponent } from './component/extra/date-picker/date-picker.component';
 import { TeamMemberTimesheetComponent } from './component/panel/team-member-timesheet/team-member-timesheet.component';
 import { TeamMemberSidebarComponent } from './component/sidebar/team-member-sidebar/team-member-sidebar.component';
@@ -97,9 +104,13 @@ import { BudgetReportComponent } from './component/extra/budget-report/budget-re
     FormsModule,
     HttpClientModule,
     OrderModule,
-    ModalModule,
-    BsDatepickerModule.forRoot(),
-    OrderModule
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatListModule,
+    MatCardModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDialogModule
   ],
   entryComponents:[
     EntryComponent,
@@ -122,12 +133,16 @@ import { BudgetReportComponent } from './component/extra/budget-report/budget-re
       multi: true
     },
     TimesheetService,
-    BsModalService,
-    ComponentLoaderFactory,
-    PositioningService,
     ProjectEntriesService,
     UserAccountService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    MatButtonModule,
+    MatListModule,
+    MatCardModule,
+    MatInputModule,
+    MatSelectModule
+  ]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import {
   AfterViewInit,
-  Component,
+  Component, Inject,
   OnInit,
   QueryList,
   ViewChild,
@@ -16,10 +16,15 @@ import {Timesheet} from "../../../model/timesheet";
 import {EntryComponent} from "../entry/entry.component";
 import {Status} from "../../../model/status";
 import {Router} from "@angular/router";
-import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Task} from "../../../model/task";
 import {UnitType} from "../../../model/unitType";
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
 
+
+export interface DialogData {
+  entry: Entry;
+  parent: TimesheetComponent;
+}
 
 /**
  * TimesheetComponent is used to facilitate communication between the view and front end services.
@@ -34,8 +39,6 @@ import {UnitType} from "../../../model/unitType";
 })
 export class TimesheetComponent implements OnInit, AfterViewInit {
 
-  /** The reference to the BSModal, which is used to show either the delete modal or the submit modal.*/
-  bsModalRef: BsModalRef;
   //TODO, don't hard code
   /** The ID of the user.*/
   private userId = 1;
@@ -65,7 +68,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   /** The list of entry components that are children of the timesheet.*/
   entryComponents: EntryComponent[] = [];
 
-  constructor(private modalService: BsModalService, private router: Router, public timesheetService: TimesheetService, private projectService: ProjectService, private entryService: EntryService) {
+  constructor(private router: Router, public timesheetService: TimesheetService,
+              private projectService: ProjectService, private entryService: EntryService,
+              public dialog: MatDialog) {
 
   }
 
@@ -171,13 +176,13 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * @param entry The entry to be deleted.
    */
   displayDeleteEntryModal(entry: Entry) {
-    const initialState = {
-      title: 'Delete Confirmation',
-      entry: entry,
-      parent: this
-    };
+    const dialogRef = this.dialog.open(DeleteEntryModalComponent, {
+      width: '400px',
+      data: {entry: entry, parent: this}
+    });
 
-    this.bsModalRef = this.modalService.show(DeleteEntryModalComponent, {initialState});
+    dialogRef.afterClosed().subscribe(result => {
+    })
   }
 
   /**
@@ -272,8 +277,6 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
           this.updateTally();
         });
       }));
-      //TODO remove
-      alert("Save complete");
     }
   }
 
@@ -286,12 +289,13 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    */
   displaySubmitModal() {
     if ((this.timesheetService.currentStatus === this.sts[this.sts.LOGGING])||(this.timesheetService.currentStatus === this.sts[this.sts.REJECTED])) {
-      const initialState = {
-        title: 'Submit Confirmation',
-        parent: this
-      };
+      const dialogRef = this.dialog.open(SubmitTimesheetModalComponent, {
+        width: '400px',
+        data: {parent: this}
+      });
 
-      this.bsModalRef = this.modalService.show(SubmitTimesheetModalComponent, {initialState});
+      dialogRef.afterClosed().subscribe(result => {
+      })
     }
   }
 
@@ -367,19 +371,14 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 @Component({
   selector: 'app-delete-modal',
   template: `
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">{{title}}</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
+    
+    <h1 mat-dialog-title>Delete Entry</h1>
+    <div mat-dialog-content>
+      <p>Confirm DELETION of entry</p>
+      <button mat-button [ngClass]="'confirm_button'" (click)="confirmDelete()">DELETE</button>
+      <button mat-button [ngClass]="'cancel_btn'" (click)="cancelDelete()">CANCEL</button>
     </div>
-    <div class="modal-body">
-      <span>Confirm deletion of entry</span>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" [ngClass]="'confirm_btn'" (click)="confirmDelete()">DELETE</button>
-      <button type="button" class="btn btn-default" [ngClass]="'cancel_btn'" (click)="cancelDelete()">CANCEL</button>
-    </div>
+
   `
 })
 
@@ -390,14 +389,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
  * @version 1.0
  */
 export class DeleteEntryModalComponent implements OnInit {
-  /** The title of the modal.*/
-  title: string;
-  /** The entry to delete if confirmation is obtained.*/
-  entry: Entry;
-  /** The parent component which is showing this modal.*/
-  parent: TimesheetComponent;
-
-  constructor(public bsModalRef: BsModalRef, private entryService: EntryService) {
+  constructor(private entryService: EntryService, public dialogRef: MatDialogRef<DeleteEntryModalComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: DialogData) {
   }
 
   ngOnInit() {
@@ -407,18 +400,18 @@ export class DeleteEntryModalComponent implements OnInit {
   /** Facilitates the deletion of entry, as well as closes the modal.*/
   confirmDelete(): void {
     this.deleteEntry();
-    this.bsModalRef.hide();
+    this.dialogRef.close();
   }
 
   /** Closes the modal with no extra actions.*/
   cancelDelete(): void {
-    this.bsModalRef.hide();
+    this.dialogRef.close();
   }
 
   /** Facilitates deletion on the backend as well as the front end.**/
   deleteEntry() {
-    this.entryService.delete(this.entry);
-    this.parent.deleteEntry(this.entry);
+    this.entryService.delete(this.data.entry);
+    this.data.parent.deleteEntry(this.data.entry);
   }
 }
 
@@ -430,19 +423,13 @@ export class DeleteEntryModalComponent implements OnInit {
 @Component({
   selector: 'app-submit-modal',
   template: `
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">{{title}}</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <span>Confirm SUBMISSION of timesheet</span>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" [ngClass]="'confirm_btn'" (click)="confirmSubmission()">SUBMIT
-      </button>
-      <button type="button" class="btn btn-default" [ngClass]="'cancel_btn'" (click)="cancel()">CANCEL</button>
+
+
+    <h1 mat-dialog-title>Submit Timesheet</h1>
+    <div mat-dialog-content>
+      <p>Confirm SUBMISSION of Timesheet</p>
+      <button mat-button [ngClass]="'confirm_button'" (click)="confirmSubmission()">SUBMIT</button>
+      <button mat-button [ngClass]="'cancel_btn'" (click)="cancel()">CANCEL</button>
     </div>
   `
 })
@@ -451,12 +438,8 @@ export class DeleteEntryModalComponent implements OnInit {
  * SubmitTimesheetModalComponent is used to get confirmation from the user regarding their desire to submit a timesheet.
  */
 export class SubmitTimesheetModalComponent implements OnInit {
-  /** The title of the modal.*/
-  title: string;
-  /** The parent component which is showing this modal.*/
-  parent: TimesheetComponent;
-
-  constructor(public bsModalRef: BsModalRef) {
+  constructor(public dialogRef: MatDialogRef<DeleteEntryModalComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: DialogData) {
   }
 
   ngOnInit() {
@@ -466,17 +449,17 @@ export class SubmitTimesheetModalComponent implements OnInit {
   /** Facilitates the submission of the current timesheet, as well as closes the modal.*/
   confirmSubmission(): void {
     this.submitTimesheet();
-    this.bsModalRef.hide();
+    this.dialogRef.close();
   }
 
   /** Closes the modal with no extra actions.*/
   cancel(): void {
-    this.bsModalRef.hide();
+    this.dialogRef.close();
   }
 
 
   /** Facilitates submission of the current timesheet.**/
   submitTimesheet() {
-    this.parent.submitTimesheet().then();
+    this.data.parent.submitTimesheet().then();
   }
 }
