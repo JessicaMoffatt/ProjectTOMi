@@ -2,7 +2,6 @@ import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from '@angul
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
-import set = Reflect.set;
 
 @Component({
   selector: 'app-user-account',

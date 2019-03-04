@@ -101,7 +101,8 @@ import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-uni
     AddTeamMemberComponent,
     AddTaskComponent,
     EditTaskComponent,
-    AddUnitTypeComponent
+    AddUnitTypeComponent,
+    EditUnitTypeComponent
   ],
   providers: [
     TeamSidebarService,

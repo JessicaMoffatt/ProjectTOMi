@@ -123,7 +123,6 @@ export class UserAccountService {
    * @param account The UserAccount to be created/updated.
    */
   async save(userAccount: UserAccount) {
-    console.log("service save run once");
     let testUserAccount: UserAccount = null;
 
     if (userAccount.id === -1) {
@@ -134,7 +133,7 @@ export class UserAccountService {
       });
     } else {
       const url = userAccount._links["update"];
-      this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
+      await this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
         this.refreshUserAccounts();
       }).catch((error: any) => {
         //TODO Add an error display

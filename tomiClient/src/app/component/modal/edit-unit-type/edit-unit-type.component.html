@@ -1,3 +1,25 @@
-<p>
-  view-unit-type works!
-</p>
+<!--
+@author Iliya Kiritchkov
+@version 1.0
+-->
+<div [ngClass]="'modal_container'">
+  <h1>Edit Unit Type</h1>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Unit</th>
+      <th>Weight</th>
+    </tr>
+    <tr>
+      <td><input #editUnitTypeName type="text" placeholder="Ex.: Animation (Silver)" value="{{unitTypePanelService.selectedUnitType.name}}"></td>
+      <td><input #editUnitTypeUnit type="text" placeholder="Ex.: Seconds" value="{{unitTypePanelService.selectedUnitType.unit}}"></td>
+      <td><input #editUnitTypeWeight type="number" placeholder="Ex.: 1.25" value="{{unitTypePanelService.selectedUnitType.weight}}"></td>
+    </tr>
+    <tr>
+      <td>
+        <div [ngClass]="['btn','add_btn']" (click)="saveUnitType()">Save</div>
+        <div [ngClass]="['btn','cancel_btn']" (click)="destroyEditUnitTypeComponent()">Cancel</div>
+      </td>
+    </tr>
+  </table>
+</div>

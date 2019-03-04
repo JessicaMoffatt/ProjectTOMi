@@ -13,7 +13,7 @@
         <th>Unit</th>
         <th>Weight</th>
       </tr>
-      <ng-container *ngFor="let unitType of unitTypeService.unitTypes | async | orderBy: 'name'">
+      <ng-container *ngFor="let unitType of unitTypeService.unitTypes | async">
         <tr>
           <td>{{unitType.name}}</td>
           <td>{{unitType.unit}}</td>

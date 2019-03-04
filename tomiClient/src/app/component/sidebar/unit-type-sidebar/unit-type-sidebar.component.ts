@@ -10,7 +10,6 @@ import {UnitTypeSidebarService} from "../../../service/unit-type-sidebar.service
 })
 export class UnitTypeSidebarComponent implements OnInit {
 
-
   @ViewChild('add_unit_type', {read: ViewContainerRef})
   add_unit_type: ViewContainerRef;
 
