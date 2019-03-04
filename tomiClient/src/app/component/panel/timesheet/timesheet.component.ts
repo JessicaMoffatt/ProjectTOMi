@@ -16,7 +16,6 @@ import {Timesheet} from "../../../model/timesheet";
 import {EntryComponent} from "../entry/entry.component";
 import {Status} from "../../../model/status";
 import {Router} from "@angular/router";
-import {BsModalRef, BsModalService} from "ngx-bootstrap";
 
 /**
  * TimesheetComponent is used to facilitate communication between the view and front end services.
@@ -31,8 +30,8 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap";
 })
 export class TimesheetComponent implements OnInit, AfterViewInit{
 
-  /** The reference to the BSModal, which is used to show either the delete modal or the submit modal.*/
-  bsModalRef: BsModalRef;
+  // /** The reference to the BSModal, which is used to show either the delete modal or the submit modal.*/
+  // bsModalRef: BsModalRef;
   //TODO, don't hard code
   /** The ID of the user.*/
   private userId = 1;
@@ -57,7 +56,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   /** The list of entry components that are children of the timesheet.*/
   entryComponents: EntryComponent[] = [];
 
-  constructor( private modalService: BsModalService, private router: Router, public timesheetService: TimesheetService, private projectService: ProjectService, private entryService: EntryService) {
+  constructor(private router: Router, public timesheetService: TimesheetService, private projectService: ProjectService, private entryService: EntryService) {
 
   }
 
@@ -156,8 +155,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
       entry: entry,
       parent: this
     };
-
-    this.bsModalRef = this.modalService.show(DeleteEntryModalComponent, {initialState});
+    //
+    // this.bsModalRef = this.modalService.show(DeleteEntryModalComponent, {initialState});
   }
 
   /**
@@ -251,8 +250,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
         title: 'Submit Confirmation',
         parent: this
       };
-
-      this.bsModalRef = this.modalService.show(SubmitTimesheetModalComponent, {initialState});
+      //
+      // this.bsModalRef = this.modalService.show(SubmitTimesheetModalComponent, {initialState});
     }
   }
 
@@ -294,9 +293,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit{
   template: `
     <div class="modal-header">
       <h4 class="modal-title pull-left">{{title}}</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <!--<button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">-->
+        <!--<span aria-hidden="true">&times;</span>-->
+      <!--</button>-->
     </div>
     <div class="modal-body">
         <span>Confirm deletion of entry</span>
@@ -322,7 +321,7 @@ export class DeleteEntryModalComponent implements OnInit {
   /** The parent component which is showing this modal.*/
   parent: TimesheetComponent;
 
-  constructor(public bsModalRef: BsModalRef, private entryService: EntryService) {}
+  constructor(private entryService: EntryService) {}
 
   ngOnInit() {
 
@@ -331,12 +330,12 @@ export class DeleteEntryModalComponent implements OnInit {
   /** Facilitates the deletion of entry, as well as closes the modal.*/
   confirmDelete():void{
     this.deleteEntry();
-    this.bsModalRef.hide();
+    // this.bsModalRef.hide();
   }
 
   /** Closes the modal with no extra actions.*/
   cancelDelete():void{
-    this.bsModalRef.hide();
+    // this.bsModalRef.hide();
   }
 
   /** Facilitates deletion on the backend as well as the front end.**/
@@ -356,9 +355,9 @@ export class DeleteEntryModalComponent implements OnInit {
   template: `
     <div class="modal-header">
       <h4 class="modal-title pull-left">{{title}}</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <!--<button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">-->
+        <!--<span aria-hidden="true">&times;</span>-->
+      <!--</button>-->
     </div>
     <div class="modal-body">
       <span>Confirm SUBMISSION of timesheet</span>
@@ -380,7 +379,7 @@ export class SubmitTimesheetModalComponent implements OnInit {
   /** The parent component which is showing this modal.*/
   parent: TimesheetComponent;
 
-  constructor(public bsModalRef: BsModalRef) {}
+  constructor() {}
 
   ngOnInit() {
 
@@ -389,12 +388,12 @@ export class SubmitTimesheetModalComponent implements OnInit {
   /** Facilitates the submission of the current timesheet, as well as closes the modal.*/
   confirmSubmission():void{
     this.submitTimesheet();
-    this.bsModalRef.hide();
+    // this.bsModalRef.hide();
   }
 
   /** Closes the modal with no extra actions.*/
   cancelDelete():void{
-    this.bsModalRef.hide();
+    // this.bsModalRef.hide();
   }
 
 

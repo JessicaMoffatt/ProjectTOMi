@@ -300,7 +300,7 @@ public class EntryService {
 
 	/**
 	 * Evaluates the {@link Status} of the timesheet with the provided id. If all {@link
-	 * ca.projectTOMi.tomi.model.Entry}s are approved the timesheet is given the approved status. If
+	 * Entry}s are approved the timesheet is given the approved status. If
 	 * all entries are approved or rejected the timesheet is given the rejected status. Otherwise,
 	 * it's status remains unchanged.
 	 *

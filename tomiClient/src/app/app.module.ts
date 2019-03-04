@@ -1,6 +1,5 @@
-import {BsDropdownModule, BsModalService, ComponentLoaderFactory, ModalModule, PositioningService} from "ngx-bootstrap";
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {InjectionToken, NgModule} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -9,8 +8,16 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 
-import { TeamSidebarComponent } from './component/sidebar/team-sidebar/team-sidebar.component';
-import { AddTeamComponent } from './component/modal/add-team/add-team.component';
+//Material Imports
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButtonModule} from '@angular/material';
+import {MatListModule} from '@angular/material/list';
+import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDialogModule} from '@angular/material/dialog';
+
+import {AddTeamComponent, TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
 import {TeamSidebarService} from "./service/team-sidebar.service";
 import {OrderModule} from "ngx-order-pipe";
 
@@ -20,7 +27,7 @@ import {
 } from './component/panel/timesheet/timesheet.component';
 import { EntryComponent } from './component/panel/entry/entry.component';
 
-import {TeamComponent } from './component/panel/team/team.component';
+import {AddTeamMemberComponent, TeamComponent} from './component/panel/team/team.component';
 import {TopNavBarComponent} from "./component/panel/top-nav-bar/top-nav-bar.component";
 import {ApprovePanelComponent} from "./component/panel/approve-panel/approve-panel.component";
 import {TimesheetPanelComponent} from "./component/panel/timesheet-panel/timesheet-panel.component";
@@ -29,7 +36,6 @@ import {ProjectsPanelComponent} from "./component/panel/projects-panel/projects-
 import {ManageTeamsPanelComponent} from "./component/panel/manage-teams-panel/manage-teams-panel.component";
 import {UnitTypesPanelComponent} from "./component/panel/unit-types-panel/unit-types-panel.component";
 import {TasksPanelComponent} from "./component/panel/tasks-panel/tasks-panel.component";
-import {AddTeamMemberComponent } from './component/modal/add-team-member/add-team-member.component';
 import {UserAccountService} from "./service/user-account.service";
 import {UserAccountComponent } from './component/panel/user-account/user-account.component';
 import {UserAccountSidebarComponent} from "./component/sidebar/user-account-sidebar/user-account-sidebar.component";
@@ -68,7 +74,6 @@ import {SignInService} from "./service/sign-in.service";
     AddTeamMemberComponent,
     AddTaskComponent,
     EditTaskComponent,
-    AddTeamMemberComponent,
     UserAccountSidebarComponent,
     UserAccountComponent,
     AddUserAccountComponent,
@@ -85,8 +90,13 @@ import {SignInService} from "./service/sign-in.service";
     FormsModule,
     HttpClientModule,
     OrderModule,
-    ModalModule,
-    OrderModule
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatListModule,
+    MatCardModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDialogModule
   ],
   entryComponents:[
     EntryComponent,
@@ -95,8 +105,6 @@ import {SignInService} from "./service/sign-in.service";
     AddUserAccountComponent,
     EntrySubmittedComponent,
     DeleteEntryModalComponent,
-    SubmitTimesheetModalComponent,
-    AddTeamMemberComponent,
     AddTaskComponent,
     EditTaskComponent
   ],
@@ -111,13 +119,17 @@ import {SignInService} from "./service/sign-in.service";
     },
     TeamService,
     TimesheetService,
-    BsModalService,
-    ComponentLoaderFactory,
-    PositioningService,
     UserAccountService,
     TaskPanelService,
     SignInService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    MatButtonModule,
+    MatListModule,
+    MatCardModule,
+    MatInputModule,
+    MatSelectModule
+  ]
 })
 export class AppModule { }
