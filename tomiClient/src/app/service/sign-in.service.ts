@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import {TopNavBarComponent} from "../component/panel/top-nav-bar/top-nav-bar.component";
+import {Router} from "@angular/router";
 declare let gapi:any;
 
 @Injectable({
@@ -9,8 +10,10 @@ declare let gapi:any;
 export class SignInService {
   user:any;
   public isUserLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
-  constructor() { }
+  router:Router;
+  constructor(router:Router) {
+    this.router = router;
+  }
 
 
   setUser(user:any):any{
@@ -32,6 +35,7 @@ export class SignInService {
   signOutOperations() {
     this.setUser(null);
     this.isUserLoggedIn.next(false);
+    this.router.navigate(['/']);
   }
 
   getToken():string{
