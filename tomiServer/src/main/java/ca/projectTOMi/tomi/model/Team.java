@@ -68,7 +68,7 @@ public final class Team {
 	@JsonProperty
 	public void setLeadId(final Long id) {
 		UserAccount userAccount = null;
-		if (id != NO_TEAM) {
+		if (!id.equals(NO_TEAM)) {
 			userAccount = new UserAccount();
 			userAccount.setId(id);
 		}
@@ -81,7 +81,7 @@ public final class Team {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj.getClass() != this.getClass()) {
 			return false;
 		} else {

@@ -8,7 +8,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.servlet.view.document.AbstractXlsView;
-
+/**
+ * @author Karol Talbot
+ */
 public class DataDumpReportExcelView extends AbstractXlsView {
 	private final List<DataDumpReportLine> report;
 

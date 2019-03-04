@@ -300,14 +300,14 @@ public class EntryService {
 
 	/**
 	 * Evaluates the {@link Status} of the timesheet with the provided id. If all {@link
-	 * ca.projectTOMi.tomi.model.Entry}s are approved the timesheet is given the approved status. If
+	 * Entry}s are approved the timesheet is given the approved status. If
 	 * all entries are approved or rejected the timesheet is given the rejected status. Otherwise,
 	 * it's status remains unchanged.
 	 *
 	 * @param id
 	 * 	the unique identifier for the timesheet
 	 */
-	public void evaluateTimesheet(final Long id) {
+	private void evaluateTimesheet(final Long id) {
 		final List<Status> statuses = this.timesheetRepository.getEntriesStatusesByTimesheet(id);
 		final Timesheet timesheet = this.timesheetRepository.findById(id).orElseThrow(TimesheetNotFoundException::new);
 		if (!statuses.contains(Status.SUBMITTED) && !statuses.contains(Status.LOGGING)) {
@@ -337,5 +337,9 @@ public class EntryService {
 			return true;
 		}
 		return false;
+	}
+
+	public List<Entry> getEntriesByProject(Project project) {
+		return entryRepository.getAllByActiveTrueAndProject(project);
 	}
 }

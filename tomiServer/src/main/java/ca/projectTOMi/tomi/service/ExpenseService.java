@@ -3,6 +3,7 @@ package ca.projectTOMi.tomi.service;
 import java.util.List;
 import ca.projectTOMi.tomi.exception.ExpenseNotFoundException;
 import ca.projectTOMi.tomi.model.Expense;
+import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.persistence.ExpenseRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +15,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public final class ExpenseService {
-	private final ExpenseRepository repository;
+	private final ExpenseRepository expenseRepository;
+	private final ProjectService projectService;
 
 	/**
 	 * Constructor for the {@link Expense} Service.
 	 *
-	 * @param repository
+	 * @param expenseRepository
 	 * 	Repository responsible for persisting Expense instances
 	 */
-	public ExpenseService(final ExpenseRepository repository) {
-		this.repository = repository;
+	public ExpenseService(final ExpenseRepository expenseRepository, final ProjectService projectService) {
+		this.expenseRepository = expenseRepository;
+		this.projectService = projectService;
 	}
 
 	/**
@@ -31,8 +34,9 @@ public final class ExpenseService {
 	 *
 	 * @return List containing all Expense that are active
 	 */
-	public List<Expense> getActiveExpenses() {
-		return this.repository.getAllByActiveOrderById(true);
+	public List<Expense> getActiveExpensesByProject(final String projectId) {
+		Project project = projectService.getProjectById(projectId);
+		return this.expenseRepository.getAllByActiveTrueAndProjectOrderById(project);
 	}
 
 	/**
@@ -44,7 +48,7 @@ public final class ExpenseService {
 	 * @return Expense object matching the provided id
 	 */
 	public Expense getExpenseById(final Long id) {
-		return this.repository.findById(id).orElseThrow(() -> new ExpenseNotFoundException());
+		return this.expenseRepository.findById(id).orElseThrow(() -> new ExpenseNotFoundException());
 	}
 
 	/**
@@ -56,7 +60,7 @@ public final class ExpenseService {
 	 * @return the Expense that was persisted
 	 */
 	public Expense saveExpense(final Expense expense) {
-		return this.repository.save(expense);
+		return this.expenseRepository.save(expense);
 	}
 
 	/**
@@ -70,12 +74,12 @@ public final class ExpenseService {
 	 * @return Expense containing the updated attributes
 	 */
 	public Expense updateExpense(final Long id, final Expense newExpense) {
-		return this.repository.findById(id).map(expense -> {
+		return this.expenseRepository.findById(id).map(expense -> {
 			expense.setNotes(newExpense.getNotes());
 			expense.setProject(newExpense.getProject());
 			expense.setAmount(newExpense.getAmount());
 			expense.setActive(true);
-			return this.repository.save(expense);
+			return this.expenseRepository.save(expense);
 		}).orElseThrow(() -> new ExpenseNotFoundException());
 	}
 }
