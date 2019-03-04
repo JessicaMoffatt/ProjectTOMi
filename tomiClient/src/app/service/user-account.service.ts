@@ -32,7 +32,7 @@ export class UserAccountService {
   userAccounts: Observable<Array<UserAccount>>;
   userSubject: BehaviorSubject<Array<UserAccount>>;
 
-  public constructor(private http: HttpClient, private teamService : TeamService) {
+  public constructor(private http: HttpClient) {
     this.GETAllUserAccounts().forEach( users => {
       this.userSubject = new BehaviorSubject<Array<UserAccount>>(users);
     });
@@ -123,7 +123,6 @@ export class UserAccountService {
         //TODO Add an error display
       });
     }
-
     return testUserAccount;
   }
 

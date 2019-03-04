@@ -16,8 +16,8 @@ const httpOptions = {
 /**
  * TeamService is used to control the flow of data regarding teams to/from the view.
  *
- * @author Jessica Moffatt
- * @version 1.0
+ * @author Jessica Moffatt, Iliya Kiritchkov
+ * @version 2.0
  */
 @Injectable({
   providedIn: 'root'
@@ -36,18 +36,18 @@ export class TeamService {
 
   /** List of all the team members not currently on any teams.*/
   allFreeMembers: UserAccount[] = [];
-
-  /** List of all the active user accounts that aren't already appart of the selected team,
-   * as well as not a team lead of any other teams.
-   */
-  allOutsideMembers: UserAccount[] = [];
-  /** The member selected from the list of team members.*/
-  private selectedMember: UserAccount;
+  //
+  // /** List of all the active user accounts that aren't already a part of the selected team,
+  //  * as well as not a team lead of any other teams.
+  //  */
+  // allOutsideMembers: UserAccount[] = [];
+  /** The members selected from the list of team members.*/
+  private selectedMembers: UserAccount[];
 
   /** Used to reference the add team member component created by clicking the Add Member button.*/
   ref: ComponentRef<any>;
 
-  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService) {
+  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService, private userAccountService:UserAccountService) {
     this.refreshTeams();
   }
 
@@ -55,7 +55,7 @@ export class TeamService {
    * Gets a List of all Teams from the server.
    */
   GETAllTeams() {
-    return this.http.get(this.teamUrl).pipe(map((response:Response) => response))
+    return this.http.get(this.teamUrl)
       .pipe(map((data: any) => {
         return data._embedded.teams as Team[];
       }));
@@ -68,34 +68,46 @@ export class TeamService {
   }
 
   /**
-   * Sets selectedMember to the specified user account.
-   * @param account The user account to set selectedMember to.
+   * Populates teamMembers with the members of the selected team.
+   * @param team The selected team.
    */
-  setSelectMember(account: UserAccount) {
-    this.selectedMember = account;
+  populateTeamMembers(team:Team){
+    this.getTeamMembers(team.id).subscribe((data: Array<UserAccount>) => {
+      this.teamMembers = data;
+    });
+  }
+
+  /**
+   * Sets selectedMember to the specified user account.
+   * @param members The user accounts to set selectedMembers to.
+   */
+  setSelectMembers(members:UserAccount[]) {
+    this.selectedMembers = members as UserAccount[];
   }
 
   /**
    * Removes a member from the selected team.
    */
-  removeMember() {
-    let index = this.teamMembers.findIndex((element) => {
-      return (element.id == this.selectedMember.id);
-    });
+  async removeMembers() {
+    if(this.selectedMembers.length > 0){
+      for(let m of this.selectedMembers){
+        let index = this.teamMembers.findIndex((element) => {
+          return (element.id == m.id);
+        });
 
-    this.teamMembers.splice(index, 1);
+        this.teamMembers.splice(index, 1);
 
-    this.selectedMember.teamId = -1;
+        m.teamId = -1;
+        await this.userAccountService.save(m).then(()=>{
+          if(this.teamSideBarService.selectedTeam.leadId === m.id){
+            this.teamSideBarService.selectedTeam.leadId = -1;
+            this.save(this.teamSideBarService.selectedTeam).then();
+          }
+        });
+      }
 
-    // TODO Remove this comment and allow this code
-    // this.userAccountService.save(this.selectedMember);
-
-    if(this.teamSideBarService.selectedTeam.leadId === this.selectedMember.id){
-      this.teamSideBarService.selectedTeam.leadId = -1;
-      this.save(this.teamSideBarService.selectedTeam).then();
+      this.selectedMembers = [];
     }
-
-    this.selectedMember = null;
   }
 
   /**
@@ -103,7 +115,7 @@ export class TeamService {
    * @param id The ID of the team to be omitted from the selection of user accounts.
    */
   getAllOutsideMembers(id: number): Observable<Array<UserAccount>> {
-    return this.http.get(`${this.teamUrl}/${id}/available`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.teamUrl}/${id}/available`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];
@@ -118,7 +130,7 @@ export class TeamService {
    * @param id The ID of the team to be omitted from the selection of user accounts.
    */
   getAllFreeMembers(): Observable<Array<UserAccount>> {
-    return this.http.get(`${this.teamUrl}/unassigned`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.teamUrl}/unassigned`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];
@@ -133,7 +145,7 @@ export class TeamService {
    * @param id The ID of the team whose members are to be gotten.
    */
   getTeamMembers(id: number): Observable<Array<UserAccount>> {
-    return this.http.get(`${this.teamUrl}/${id}/user_accounts`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.teamUrl}/${id}/user_accounts`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];
@@ -149,7 +161,7 @@ export class TeamService {
    * @param id The ID of the user account to get.
    */
   getTeamMemberById(id: number): Observable<UserAccount> {
-    return this.http.get(`${this.userUrl}/${id}`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.userUrl}/${id}`)
       .pipe(map((data: any) => {
         return data as UserAccount;
       }));
@@ -189,12 +201,9 @@ export class TeamService {
    * @param team The selected team.
    */
   cancel(team: Team): void {
-    (<HTMLInputElement>document.getElementById("team_name")).value = team.teamName;
-    if(team.leadId !== null){
-      (<HTMLInputElement>document.getElementById("selected_team_lead")).value = team.leadId.toString();
-    }else{
-      (<HTMLInputElement>document.getElementById("selected_team_lead")).value = "-1";
-    }
+    this.teamSideBarService.getTeamById(team.id).subscribe((data)=>{
+      this.teamSideBarService.selectedTeam = data;
+    });
   }
 
   //TODO add error handling!!
@@ -218,12 +227,5 @@ export class TeamService {
 
       return response as Team;
     });
-  }
-
-  /**
-   * Destroys the dynamically created add member component.
-   */
-  destroyAddMemberComponent() {
-    this.ref.destroy();
   }
 }

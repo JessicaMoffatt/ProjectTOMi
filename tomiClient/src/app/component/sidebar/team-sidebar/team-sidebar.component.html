@@ -1,14 +1,16 @@
-<h1>Teams</h1>
-<div>
-  <h2>Active Teams</h2>
-  <div>
-    <ul *ngIf="teamSideBarService.teams">
-      <li *ngFor="let t of (teamSideBarService.teams|orderBy:'teamName')">
-        <span *ngIf="t" (click)="displayTeam(t)">{{t.teamName}}</span>
-      </li>
-    </ul>
-  </div>
-</div>
-<div (click)="createAddTeamComponent()" [ngClass]="['new_btn', 'btn']">New Team</div>
-<template #add_team_container></template>
+<!--
+@author Jessica Moffatt
+@version 2.0
+-->
 
+<div [ngClass]="'main_container'">
+<h1>Teams</h1>
+  <div>
+    <mat-action-list *ngIf="teamSideBarService.teams">
+      <span *ngFor="let t of (teamSideBarService.teams|orderBy:'teamName')">
+        <button mat-list-item *ngIf="t" (click)="displayTeam(t)">{{t.teamName}}</button>
+      </span>
+    </mat-action-list>
+  </div>
+<button mat-button (click)="displayAddTeamModal()">New Team</button>
+</div>
