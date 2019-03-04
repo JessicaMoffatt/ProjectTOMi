@@ -1,5 +1,6 @@
 package ca.projectTOMi.tomi.model;
 
+import ca.projectTOMi.tomi.viewModel.ProjectViewModel;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,6 +14,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -51,6 +53,7 @@ public final class Entry {
 	@ManyToOne
 	@OnDelete (action = OnDeleteAction.NO_ACTION)
 	@MapKeyColumn (name = "id")
+	@JsonIgnore
 	private Project project;
 
 	/**
@@ -70,7 +73,7 @@ public final class Entry {
 	private UnitType unitType;
 
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@MapKeyColumn (name = "id")
 	@JsonProperty (value = "timesheet")
 	@JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -169,5 +172,24 @@ public final class Entry {
 		final Timesheet t = new Timesheet();
 		t.setId(id);
 		this.timesheet = t;
+	}
+
+	@JsonIgnore
+	public void setTimesheet(final Timesheet timesheet){
+		this.timesheet = timesheet;
+	}
+
+	@JsonProperty
+	public void setProject(final ProjectViewModel project){
+		if(project != null) {
+			final Project p = new Project();
+			p.setId(project.getId());
+			this.project = p;
+		}
+	}
+
+	@JsonProperty
+	public ProjectViewModel getProject(){
+		return this.project == null ? null : new ProjectViewModel(this.project);
 	}
 }

@@ -3,9 +3,11 @@ package ca.projectTOMi.tomi.assembler;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+import ca.projectTOMi.tomi.authorization.wrapper.UserAuthLinkWrapper;
 import ca.projectTOMi.tomi.controller.UserAccountController;
 import ca.projectTOMi.tomi.controller.TeamController;
 import ca.projectTOMi.tomi.model.Team;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.stereotype.Component;
@@ -17,20 +19,29 @@ import org.springframework.stereotype.Component;
  * @version 1.1
  */
 @Component
-public final class TeamResourceAssembler implements ResourceAssembler<Team, Resource<Team>> {
+public final class TeamResourceAssembler implements ResourceAssembler<UserAuthLinkWrapper<Team>, Resource<Team>> {
 
 	@Override
-	public Resource<Team> toResource(final Team team) {
+	public Resource<Team> toResource(final UserAuthLinkWrapper<Team> authLinkWrapper) {
+		final Team team = authLinkWrapper.getModelObject();
 		final Resource<Team> resource = new Resource<>(team,
-			linkTo(methodOn(TeamController.class).getTeam(team.getId())).withSelfRel(),
-			linkTo(methodOn(TeamController.class).getActiveTeams(null)).withRel("teams"),
-			linkTo(methodOn(TeamController.class).setTeamInactive(team.getId())).withRel("delete"),
-			linkTo(methodOn(UserAccountController.class).getAccountsByTeam(team.getId())).withRel("getAccounts"),
-			linkTo(methodOn(UserAccountController.class).getTeamLead(team.getId())).withRel("getTeamLead"),
-			linkTo(methodOn(TeamController.class).updateTeam(team.getId(), team)).withRel("update"),
-			linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(team.getId())).withRel("getAvailable"),
-			linkTo(methodOn(UserAccountController.class).getUnassignedUserAccounts()).withRel("getUnassignedAccounts")
+			linkTo(methodOn(TeamController.class).getTeam(team.getId(), authLinkWrapper.getManager())).withSelfRel(),
+			linkTo(methodOn(TeamController.class).getActiveTeams(authLinkWrapper.getManager())).withRel("teams"),
+			linkTo(methodOn(UserAccountController.class).getAccountsByTeam(team.getId(), authLinkWrapper.getManager())).withRel("getAccounts"),
+			linkTo(methodOn(UserAccountController.class).getTeamLead(team.getId(), authLinkWrapper.getManager())).withRel("getTeamLead"),
+			linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(team.getId(),authLinkWrapper.getManager())).withRel("getAvailable"),
+			linkTo(methodOn(UserAccountController.class).getUnassignedUserAccounts(authLinkWrapper.getManager())).withRel("getUnassignedAccounts")
 		);
+
+		final Link deleteLink = linkTo(methodOn(TeamController.class).setTeamInactive(team.getId())).withRel("delete");
+		if (authLinkWrapper.getManager().linkAuthorization(deleteLink.getHref(), "DELETE")) {
+			resource.add(deleteLink);
+		}
+
+		final Link updateLink = linkTo(methodOn(TeamController.class).updateTeam(team.getId(), team, authLinkWrapper.getManager())).withRel("update");
+		if (authLinkWrapper.getManager().linkAuthorization(updateLink.getHref(), "PUT")) {
+			resource.add(updateLink);
+		}
 
 		return resource;
 	}

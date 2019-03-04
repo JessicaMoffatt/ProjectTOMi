@@ -6,9 +6,11 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.ClientResourceAssembler;
+import ca.projectTOMi.tomi.authorization.manager.UserAuthManager;
 import ca.projectTOMi.tomi.exception.ClientNotFoundException;
 import ca.projectTOMi.tomi.model.Client;
 import ca.projectTOMi.tomi.service.ClientService;
+import ca.projectTOMi.tomi.authorization.wrapper.UserAuthLinkWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,13 +54,14 @@ public class ClientController {
 	 * @return Collection of resources representing all active Client
 	 */
 	@GetMapping ("/clients")
-	public Resources<Resource<Client>> getActiveClients() {
-		final List<Resource<Client>> account = this.service.getActiveClients()
+	public Resources<Resource<Client>> getActiveClients(@RequestAttribute final UserAuthManager authMan) {
+		final List<Resource<Client>> clientList = this.service.getActiveClients()
 			.stream()
+			.map(client -> new UserAuthLinkWrapper<>(client, authMan))
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
-		return new Resources<>(account, linkTo(methodOn(UserAccountController.class).getActiveAccounts()).withSelfRel());
+		return new Resources<>(clientList, linkTo(methodOn(ClientController.class).getActiveClients(authMan)).withSelfRel());
 	}
 
 	/**
@@ -70,9 +74,9 @@ public class ClientController {
 	 * @return Resource representing the Client object.
 	 */
 	@GetMapping ("/clients/{id}")
-	public Resource<Client> getClient(@PathVariable final Long id) {
-		final Client client = this.service.getClient(id);
-		return this.assembler.toResource(client);
+	public Resource<Client> getClient(@PathVariable final Long id,
+	                                  @RequestAttribute final UserAuthManager authMan) {
+		return this.assembler.toResource(new UserAuthLinkWrapper<>(this.service.getClient(id), authMan));
 	}
 
 	/**
@@ -87,9 +91,11 @@ public class ClientController {
 	 * 	when the created URI is unable to be parsed
 	 */
 	@PostMapping ("/clients")
-	public ResponseEntity<?> createClient(@RequestBody final Client newClient) throws URISyntaxException {
+	public ResponseEntity<?> createClient(@RequestBody final Client newClient,
+	                                      @RequestAttribute final UserAuthManager authMan) throws URISyntaxException {
 		newClient.setActive(true);
-		final Resource<Client> resource = this.assembler.toResource(this.service.saveClient(newClient));
+		final Resource<Client> resource = this.assembler.toResource(
+			new UserAuthLinkWrapper<>(this.service.saveClient(newClient), authMan));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
@@ -109,9 +115,10 @@ public class ClientController {
 	 * 	when the created URI is unable to be parsed
 	 */
 	@PutMapping ("/clients/{id}")
-	public ResponseEntity<?> updateClient(@PathVariable final Long id, @RequestBody final Client newClient) throws URISyntaxException {
-		final Client updatedClient = this.service.updateClient(id, newClient);
-		final Resource<Client> resource = this.assembler.toResource(updatedClient);
+	public ResponseEntity<?> updateClient(@PathVariable final Long id,
+	                                      @RequestBody final Client newClient,
+	                                      @RequestAttribute final UserAuthManager authMan) throws URISyntaxException {
+		final Resource<Client> resource = this.assembler.toResource(new UserAuthLinkWrapper<>(this.service.updateClient(id, newClient), authMan));
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 

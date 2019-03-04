@@ -17,7 +17,7 @@ export class ProjectService {
   /** The URL for accessing projects.*/
   private projectsUrl = 'http://localhost:8080/projects';
   /** The URL for accessing user accounts.*/
-  private userAccountProjectsUrl = 'http://localhost:8080/user_accounts/';
+  private userAccountProjectsUrl = 'http://localhost:8080/user_accounts';
 
   constructor(private http: HttpClient) { }
 

@@ -1,4 +1,4 @@
-import {ComponentRef, Injectable} from '@angular/core';
+import {ComponentRef, Injectable, NgModule} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Team} from "../model/team";
 import {Observable} from "rxjs";
@@ -6,6 +6,7 @@ import {map} from "rxjs/operators";
 import {UserAccount} from "../model/userAccount";
 import {TeamSidebarService} from "./team-sidebar.service";
 import {UserAccountService} from "./user-account.service";
+import {SignInService} from "./sign-in.service";
 
 const httpOptions = {
   headers: new HttpHeaders({

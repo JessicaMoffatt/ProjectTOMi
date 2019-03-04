@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 public final class ProjectService {
 	private final ProjectRepository repository;
 	private final UserAccountService userAccountService;
+	private final ProjectAuthService projectAuthService;
 
 	/**
 	 * Constructor for the ProjectService service.
@@ -30,9 +31,11 @@ public final class ProjectService {
 	 */
 	@Autowired
 	public ProjectService(final ProjectRepository repository,
-	                      final UserAccountService userAccountService) {
+	                      final UserAccountService userAccountService,
+	                      final ProjectAuthService projectAuthService) {
 		this.repository = repository;
 		this.userAccountService = userAccountService;
+		this.projectAuthService = projectAuthService;
 	}
 
 	/**
@@ -58,6 +61,7 @@ public final class ProjectService {
 
 			// Change Project Permissions
 			newProject.setId(project.getId());
+			this.projectAuthService.changeProjectManager(project, newProject);
 
 			project.setProjectManager(newProject.getProjectManager());
 			project.setProjectMembers(newProject.getProjectMembers());
@@ -117,7 +121,7 @@ public final class ProjectService {
 
 	public Project createProject(final Project project){
 		final Project savedProject = this.repository.save(project);
-
+		this.projectAuthService.newProjectPolicies(savedProject);
 		return savedProject;
 	}
 
@@ -132,7 +136,7 @@ public final class ProjectService {
 
 		if(!project.getProjectMembers().contains(userAccount)) {
 			project.getProjectMembers().add(userAccount);
-
+			this.projectAuthService.addProjectMember(userAccount, project);
 		}
 		this.repository.save(project);
 	}

@@ -5,6 +5,9 @@ import ca.projectTOMi.tomi.model.Project;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+/**
+ * @author Karol Talbot
+ */
 @Data
 public class BudgetReport {
 	@JsonIgnore
@@ -17,8 +20,8 @@ public class BudgetReport {
 	public BudgetReport(final Project project) {
 		this.date = LocalDate.now();
 		this.budget = project.getBudget();
-		this.expenseCost = 0L;
 		this.hourCost = 0L;
+		this.expenseCost = 0L;
 		this.project = project;
 	}
 

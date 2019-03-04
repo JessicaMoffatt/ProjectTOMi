@@ -1,6 +1,8 @@
 package ca.projectTOMi.tomi.controller;
 
 import ca.projectTOMi.tomi.assembler.UnitTypeResourceAssembler;
+import ca.projectTOMi.tomi.authorization.manager.UserAuthManager;
+import ca.projectTOMi.tomi.authorization.wrapper.UserAuthLinkWrapper;
 import ca.projectTOMi.tomi.exception.UnitTypeNotFoundException;
 import ca.projectTOMi.tomi.model.UnitType;
 import ca.projectTOMi.tomi.service.UnitTypeService;
@@ -9,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,8 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
@@ -27,11 +28,12 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
- * Handles HTTP requests for {@Link UnitType} objects in the ProjectTOMi system.
+ * Handles HTTP requests for {@link UnitType} objects in the ProjectTOMi system.
  *
  * @author Karol Talbot and Iliya Kiritchkov
  * @version 1.2
@@ -49,28 +51,21 @@ public class UnitTypeController {
 		this.unitTypeService = unitTypeService;
 	}
 
-	/**
-	 * Returns a collection of all active {@Link UnitType} objects to the source of a GET request to
-	 * /unit_types.
-	 *
-	 * @param head
-	 * 	header component of the HTTP request
-	 *
-	 * @return Collection of resources representing all active UnitTypes.
-	 */
+
 	@GetMapping ("/unit_types")
-	public Resources<Resource<UnitType>> getActiveUnitTypes(@RequestHeader final HttpHeaders head) {
-		final List<Resource<UnitType>> unitType = this.unitTypeService.getActiveUnitTypes()
+	public Resources<Resource<UnitType>> getActiveUnitTypes(@RequestAttribute final UserAuthManager authMan) {
+		final List<Resource<UnitType>> unitTypeList = this.unitTypeService.getActiveUnitTypes()
 			.stream()
+			.map(unitType -> new UserAuthLinkWrapper<>(unitType, authMan))
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
-		return new Resources<>(unitType,
-			linkTo(methodOn(UnitTypeController.class).getActiveUnitTypes(null)).withSelfRel());
+		return new Resources<>(unitTypeList,
+			linkTo(methodOn(UnitTypeController.class).getActiveUnitTypes(authMan)).withSelfRel());
 	}
 
 	/**
-	 * Returns a resource representing the requested {@Link UnitType} to the source of a GET request
+	 * Returns a resource representing the requested {@link UnitType} to the source of a GET request
 	 * to /unit_types/id.
 	 *
 	 * @param id
@@ -79,14 +74,14 @@ public class UnitTypeController {
 	 * @return Resource representing the UnitType object.
 	 */
 	@GetMapping ("unit_types/{id}")
-	public Resource<UnitType> getUnitType(@PathVariable final Long id) {
-		final UnitType unitType = this.unitTypeService.getUnitType(id);
-
-		return this.assembler.toResource(unitType);
+	public Resource<UnitType> getUnitType(@PathVariable final Long id,
+	                                      @RequestAttribute final UserAuthManager authMan) {
+		return this.assembler.toResource(
+			new UserAuthLinkWrapper<>(this.unitTypeService.getUnitType(id), authMan));
 	}
 
 	/**
-	 * Creates a new {@Link UnitType} with the attributes provided in the POST request to
+	 * Creates a new {@link UnitType} with the attributes provided in the POST request to
 	 * /unit_types.
 	 *
 	 * @param newUnitType
@@ -98,15 +93,17 @@ public class UnitTypeController {
 	 * 	when the created URI is unable to be parsed.
 	 */
 	@PostMapping ("/unit_types")
-	public ResponseEntity<?> createUnitType(@RequestBody final UnitType newUnitType) throws URISyntaxException {
+	public ResponseEntity<?> createUnitType(@RequestBody final UnitType newUnitType,
+	                                        @RequestAttribute final UserAuthManager authMan) throws URISyntaxException {
 		newUnitType.setActive(true);
-		final Resource<UnitType> resource = this.assembler.toResource(this.unitTypeService.saveUnitType(newUnitType));
+		final Resource<UnitType> resource = this.assembler.toResource(
+			new UserAuthLinkWrapper<>(this.unitTypeService.saveUnitType(newUnitType), authMan));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 
 	/**
-	 * Updates the attributes for a {@Link UnitType} with the provided id with the attributes provided
+	 * Updates the attributes for a {@link UnitType} with the provided id with the attributes provided
 	 * in the PUT request to /unit_types/id.
 	 *
 	 * @param id
@@ -120,15 +117,18 @@ public class UnitTypeController {
 	 * 	when the created URI is unable to be parsed.
 	 */
 	@PutMapping ("/unit_types/{id}")
-	public ResponseEntity<?> updateUnitType(@PathVariable final Long id, @RequestBody final UnitType newUnitType) throws URISyntaxException {
+	public ResponseEntity<?> updateUnitType(@PathVariable final Long id,
+	                                        @RequestBody final UnitType newUnitType,
+	                                        @RequestAttribute final UserAuthManager authMan) throws URISyntaxException {
 		final UnitType updatedUnitType = this.unitTypeService.updateUnitType(id, newUnitType);
-		final Resource<UnitType> resource = this.assembler.toResource(updatedUnitType);
+		final Resource<UnitType> resource = this.assembler.toResource(
+			new UserAuthLinkWrapper<>(updatedUnitType, authMan));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 
 	/**
-	 * Sets the requested {@Link UnitType}'s active attribute to false, removing it from the list of
+	 * Sets the requested {@link UnitType}'s active attribute to false, removing it from the list of
 	 * active UnitTypes. Responds to the DELETE requests to /unit_types/id.
 	 *
 	 * @param id

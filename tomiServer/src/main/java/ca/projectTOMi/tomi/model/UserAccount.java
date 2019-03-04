@@ -114,11 +114,16 @@ public final class UserAccount {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj.getClass() != this.getClass()) {
 			return false;
 		} else {
 			return this.getId().equals(((UserAccount) obj).getId());
 		}
+	}
+
+	@Override
+	public String toString() {
+		return this.firstName + " " + this.lastName;
 	}
 }

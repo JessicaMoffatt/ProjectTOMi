@@ -89,13 +89,27 @@ public final class Project {
 	@Column (nullable = false)
 	private boolean active;
 
-	@JsonProperty
-	public void setProjectManagerId(final Long id) {
-		UserAccount projectManager = null;
-		if (id != -1) {
-			projectManager = new UserAccount();
-			projectManager.setId(id);
-		}
-		this.projectManager = projectManager;
-	}
+  @JsonProperty
+  public void setProjectManagerId(final Long id){
+    UserAccount projectManager = null;
+    if(id != -1){
+      projectManager = new UserAccount();
+      projectManager.setId(id);
+    }
+    this.projectManager = projectManager;
+  }
+
+  @Override
+  public boolean equals(final Object obj){
+    if(obj.getClass() != this.getClass()){
+      return false;
+    }else{
+      return this.getId().equals(((Project)obj).getId());
+    }
+  }
+
+  @Override
+  public int hashCode(){
+    return this.getId().hashCode();
+  }
 }

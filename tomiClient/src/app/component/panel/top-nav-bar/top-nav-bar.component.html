@@ -1,11 +1,14 @@
-<span>
+<mat-toolbar>
   <img src="../../../../assets/tomiLogo.png"/>
-  <a routerLink="/timesheetPanel">Timesheet</a>
-  <a routerLink="/approvePanel">Approve</a>
-  <a routerLink="/teamPanel">Team</a>
-  <a routerLink="/projectsPanel">Projects</a>
-  <a routerLink="/manageTeamsPanel">Manage Teams</a>
-  <a routerLink="/unitTypesPanel">Unit Types</a>
-  <a routerLink="/tasksPanel">Tasks</a>
-  <a routerLink="/userAccountPanel">Users</a>
-</span>
+  <ng-template [ngIf]="isUserLoggedIn">
+      <a class="link" [routerLink]="'/timesheets'">Timesheets</a>
+      <a class="link" [routerLink]="'/approveTimesheets'">Approve</a>
+      <a class="link" [routerLink]="'/teams'">Team</a>
+      <a class="link" [routerLink]="'/projects'">Projects</a>
+      <a class="link" [routerLink]="'/manageTeams'">Manage Teams</a>
+      <a class="link" [routerLink]="'/mangeUnitTypes'">Unit Types</a>
+      <a class="link" [routerLink]="'/manageTasks'">Tasks</a>
+      <a class="link" [routerLink]="'/manageUserAccount'">Users</a>
+      <a class="link" (click)="signInService.signOut()" routerLink="/signIn">Logout</a>
+  </ng-template>
+</mat-toolbar>

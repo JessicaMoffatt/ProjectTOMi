@@ -24,7 +24,7 @@ export class TimesheetService {
   /** The link used to get,post, and delete entries. */
   private timesheetUrl = `http://localhost:8080/timesheets`;
   /** The link used to get all timesheets for a specified user.*/
-  private userTimesheetsUrl = `http://localhost:8080/timesheets/userAccount`;
+  private userTimesheetsUrl = `http://localhost:8080/timesheets/user_accounts`;
 
   /** The list of all timehseets for this user.*/
   timesheets: Timesheet[] = [];
