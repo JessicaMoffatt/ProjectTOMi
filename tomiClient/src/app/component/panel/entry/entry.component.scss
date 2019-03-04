@@ -5,27 +5,24 @@
 
 @import '../../../../variables';
 
-.entry_container{
-  border:1px solid $medium_grey;
-  display:inline-block;
+.entry_card{
+  //border:1px solid $medium_grey;
+  //display:inline-block;
   padding:1rem 2rem 1rem 2rem;
   margin-bottom:.25rem;
-  margin-top:.25rem;
-  font-size:1.25rem;
-  position:relative;
+  margin-top:.5rem;
+  margin-left:10rem;
+  max-width:50rem;
+  //font-size:1.25rem;
+  //position:relative;
+}
+
+.entry_btn_container{
+
 }
 
 .small_number_input{
   width:3.5rem;
-}
-
-.delete_entry{
-  flex:50%;
-}
-
-.flex_btn_container{
-  display:flex;
-  width:100%;
 }
 
 .copy_entry{
@@ -35,7 +32,6 @@
   background-image: url('~src/assets/img/copy.png');
   background-position: center;
   background-repeat: no-repeat;
-  flex:50%;
 }
 
 select,input{

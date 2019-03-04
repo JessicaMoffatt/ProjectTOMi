@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddTeamComponent } from './add-team.component';
+import { EntryApproveComponent } from './entry-approve.component';
 
-describe('AddTeamComponent', () => {
-  let component: AddTeamComponent;
-  let fixture: ComponentFixture<AddTeamComponent>;
+describe('EntryApproveComponent', () => {
+  let component: EntryApproveComponent;
+  let fixture: ComponentFixture<EntryApproveComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddTeamComponent ]
+      declarations: [ EntryApproveComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddTeamComponent);
+    fixture = TestBed.createComponent(EntryApproveComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

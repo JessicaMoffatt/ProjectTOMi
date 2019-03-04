@@ -1,0 +1,30 @@
+
+@import '../../../../variables';
+
+.approve_entry{
+  background-color:$blue;
+  height:$btn_md;
+  width:$btn_md;
+  background-image: url('~src/assets/img/check.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  flex:50%;
+}
+
+.reject_entry{
+  background-color:$red;
+  height:$btn_md;
+  width:$btn_md;
+  background-image: url('~src/assets/img/x.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  flex:50%;
+}
+
+.approved{
+  background-color:green;
+}
+
+.rejected{
+  background-color:red;
+}

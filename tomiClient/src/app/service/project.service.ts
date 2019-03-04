@@ -27,7 +27,7 @@ export class ProjectService {
   /** The URL for accessing projects.*/
   private projectsUrl = 'http://localhost:8080/projects';
   /** The URL for accessing user accounts.*/
-  private userAccountProjectsUrl = 'http://localhost:8080/user_accounts/';
+  private userAccountProjectsUrl = 'http://localhost:8080/user_accounts';
 
   /** tracks which project is selected in project-panel component and manage-project modal */
   selected: Project; // added by: James Andrade
@@ -42,7 +42,7 @@ export class ProjectService {
   /**
    * Gets all projects.
    */
-  getProjects(): Observable<Array<Project>>{
+  getAllProjects(): Observable<Array<Project>>{
     return this.http.get(`${this.projectsUrl}`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
@@ -82,7 +82,7 @@ export class ProjectService {
    * Gets a project with the specified ID.
    * @param id The ID of the project to get.
    */
-   getProjectById(id:number){
+   getProjectById(id:string){
      return this.http.get(`${this.projectsUrl}/${id}`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data !== undefined) {

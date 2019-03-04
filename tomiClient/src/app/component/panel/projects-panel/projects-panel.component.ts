@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Project} from "../../../model/project";
+import {ProjectService} from "../../../service/project.service";
 import {ProjectService} from "../../../service/project.service";
 import {ClientService} from "../../../service/client.service";
 import {Client} from "../../../model/client";
@@ -12,12 +14,17 @@ import {Client} from "../../../model/client";
 
 export class ProjectsPanelComponent implements OnInit {
 
-  constructor(public projectService: ProjectService, public clientService: ClientService) { }
+  constructor(public temp: ProjectService, public clientService: ClientService) { }
 
   /** tracks which sub-panel: new project panel, existing project panel, or report panel will be displayed */
   subPanelDisplay: string = "newProject";
 
+  project:Project;
+
   ngOnInit() {
+    this.temp.getProjectById('JM1001').subscribe((data)=>{
+      this.project = data;
+    });
   }
 
   viewProductivityReport() {

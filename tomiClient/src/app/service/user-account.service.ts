@@ -3,7 +3,6 @@ import {UserAccount} from "../model/userAccount";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {TeamService} from "./team.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -32,7 +31,7 @@ export class UserAccountService {
   userAccounts: Observable<Array<UserAccount>>;
   userSubject: BehaviorSubject<Array<UserAccount>>;
 
-  public constructor(private http: HttpClient, private teamService : TeamService) {
+  public constructor(private http: HttpClient) {
     this.GETAllUserAccounts().forEach( users => {
       this.userSubject = new BehaviorSubject<Array<UserAccount>>(users);
     });
@@ -124,7 +123,6 @@ export class UserAccountService {
         //TODO Add an error display
       });
     }
-
     return testUserAccount;
   }
 
@@ -139,4 +137,11 @@ export class UserAccountService {
         this.refreshUserAccounts();
       });
   }
+
+    getUserById(id:number): Observable<UserAccount>{
+      return this.http.get(`${this.userAccountUrl}/${id}`).pipe(map((response:Response) => response))
+        .pipe(map((data: any) => {
+          return data as UserAccount;
+        }));
+    }
 }
