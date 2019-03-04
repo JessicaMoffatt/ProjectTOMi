@@ -66,6 +66,9 @@ import {ProjectEntriesSidebarComponent} from './component/sidebar/project-entrie
 import {ProjectEntriesService} from "./service/project-entries.service";
 import {EntryApproveComponent} from './component/panel/entry-approve/entry-approve.component';
 import {BudgetReportComponent} from './component/extra/budget-report/budget-report.component';
+import { UnitTypeSidebarComponent } from './component/sidebar/unit-type-sidebar/unit-type-sidebar.component';
+import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
+import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-unit-type.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +105,10 @@ import {BudgetReportComponent} from './component/extra/budget-report/budget-repo
     ProjectEntriesSidebarComponent,
     EntryApproveComponent,
     SubmitApprovalModalComponent,
-    BudgetReportComponent
+    BudgetReportComponent,
+    UnitTypeSidebarComponent,
+    AddUnitTypeComponent,
+    EditUnitTypeComponent
   ],
   imports: [
     BrowserModule,
@@ -129,7 +135,12 @@ import {BudgetReportComponent} from './component/extra/budget-report/budget-repo
     AddUserAccountComponent,
     DeleteEntryModalComponent,
     SubmitTimesheetModalComponent,
-    SubmitApprovalModalComponent
+    SubmitApprovalModalComponent,
+    AddTeamMemberComponent,
+    AddTaskComponent,
+    EditTaskComponent,
+    AddUnitTypeComponent,
+    EditUnitTypeComponent
   ],
   providers: [
     TeamSidebarService,

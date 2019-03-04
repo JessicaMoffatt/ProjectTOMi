@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserAccountService} from "../../../service/user-account.service";
 import {TeamService} from "../../../service/team.service";
-import {UserAccount} from "../../../model/userAccount";
 
 @Component({
   selector: 'app-user-account-panel',
@@ -13,6 +12,7 @@ export class UserAccountPanelComponent implements OnInit {
   constructor(private userAccountService: UserAccountService, private teamService: TeamService) { }
 
   ngOnInit() {
-
+    this.teamService.refreshTeams();
+    this.userAccountService.initializeUserAccounts();
   }
 }

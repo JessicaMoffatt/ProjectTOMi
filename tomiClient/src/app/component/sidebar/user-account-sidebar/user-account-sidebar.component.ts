@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, ElementRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {UserAccountSidebarService} from "../../../service/user-account-sidebar-service";
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
@@ -12,23 +12,13 @@ import {AddUserAccountComponent} from "../../modal/add-user-account/add-user-acc
 export class UserAccountSidebarComponent implements OnInit {
 
   @ViewChild('add_user_account_container', {read: ViewContainerRef})
-  add_user_account_container: ViewContainerRef;
+  public add_user_account_container: ViewContainerRef;
 
   constructor(public resolver: ComponentFactoryResolver, public userAccountSidebarService: UserAccountSidebarService, private userAccountService: UserAccountService) {
   }
 
   ngOnInit() {
 
-  }
-
-  /**
-   * Selects the UserAccount that is passed in.
-   * @param userAccount UserAccount to be selected.
-   */
-  displayUserAccount(userAccount: UserAccount) {
-    this.userAccountSidebarService.getUserAccountById(userAccount.id).subscribe((data: UserAccount) => {
-      this.userAccountSidebarService.selectedUserAccount = data;
-    });
   }
 
   /**

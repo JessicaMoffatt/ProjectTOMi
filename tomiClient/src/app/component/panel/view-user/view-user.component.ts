@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, NgModule, OnInit, Output, ViewChild} from '@angular/core';
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
+import {UserAccountService} from "../../../service/user-account.service";
 
 /**
  * ViewUserComponent is an individual read-only entry for a UserAccount.

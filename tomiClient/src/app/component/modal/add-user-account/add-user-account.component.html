@@ -47,7 +47,7 @@
       <td>
         <select id="user_account_to_add_team" [ngClass]="'inputs'">
           <option value="-1">None</option>
-          <option *ngFor="let team of (teamService.teamsObservable | async | orderBy: 'teamName')" [value]="team.id">
+          <option *ngFor="let team of teamService.teamsObservable" [value]="team.id">
             {{team.teamName}}
           </option>
         </select>

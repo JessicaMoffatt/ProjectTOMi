@@ -1,3 +1,27 @@
-<p>
-  unit-types-panel works!
-</p>
+<!--
+@author Iliya Kiritchkov
+@version 1.0
+-->
+<app-unit-type-sidebar></app-unit-type-sidebar>
+<div>
+  <h2>Unit Types</h2>
+  <div>
+    <template #edit_unit_type_container></template>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Unit</th>
+        <th>Weight</th>
+      </tr>
+      <ng-container *ngFor="let unitType of unitTypeService.unitTypes | async">
+        <tr>
+          <td>{{unitType.name}}</td>
+          <td>{{unitType.unit}}</td>
+          <td>{{unitType.weight}}</td>
+          <td [ngClass]="['btn', 'edit_btn']" (click)="editUnitType(unitType)">Edit</td>
+          <td [ngClass]="['btn', 'cancel_btn']" (click)="deleteUnitType(unitType)">Delete</td>
+        </tr>
+      </ng-container>
+    </table>
+  </div>
+</div>
