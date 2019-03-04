@@ -12,6 +12,7 @@ import ca.projectTOMi.tomi.authorization.manager.UserAuthManager;
 import ca.projectTOMi.tomi.authorization.wrapper.UserAuthLinkWrapper;
 import ca.projectTOMi.tomi.exception.MinimumAdminAccountException;
 import ca.projectTOMi.tomi.exception.MinimumProgramDirectorAccountException;
+import ca.projectTOMi.tomi.exception.TeamNotFoundException;
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.service.UserAccountService;
@@ -222,7 +223,7 @@ public class UserAccountController {
 		return ResponseEntity.status(400).build();
 	}
 
-	@ExceptionHandler({MinimumProgramDirectorAccountException.class, MinimumAdminAccountException.class})
+	@ExceptionHandler({MinimumProgramDirectorAccountException.class, MinimumAdminAccountException.class, TeamNotFoundException.class})
 	public ResponseEntity<?> handleMinimumAccountExceptions(final Exception e){
 		this.logger.warn("UserAccount Exception: " + e.getClass());
 
