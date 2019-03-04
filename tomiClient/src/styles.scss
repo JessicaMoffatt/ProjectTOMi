@@ -12,7 +12,7 @@
 // Define your application's custom theme.
 $primary: mat-palette($mat-orange);
 $accent:  mat-palette($mat-blue, A200, A100, A400);
-$theme: mat-dark-theme($primary, $accent);
+$theme: mat-light-theme($primary, $accent);
 
 // Include theme styles for Angular Material components.
 @include angular-material-theme($theme);
