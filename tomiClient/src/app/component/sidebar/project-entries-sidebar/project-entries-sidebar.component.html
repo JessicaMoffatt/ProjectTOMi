@@ -1,0 +1,10 @@
+<div [ngClass]="['container','h-100','']">
+  <h1>Projects</h1>
+  <div>
+    <mat-action-list *ngIf="projectEntriesService.projects">
+      <span *ngFor="let p of (projectEntriesService.projects|orderBy:'project_name')">
+        <button mat-list-item *ngIf="p" (click)="displayProjectEntries(p)">{{p.projectName}}</button>
+      </span>
+    </mat-action-list>
+  </div>
+</div>

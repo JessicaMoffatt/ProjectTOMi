@@ -93,6 +93,7 @@ public class EntryController {
 	 */
 	@PostMapping ("/entries")
 	public ResponseEntity<?> createEntry(@RequestBody final Entry newEntry) throws URISyntaxException {
+		newEntry.setActive(true);
 		final Resource<Entry> resource = this.assembler.toResource(this.entryService.saveEntry(newEntry));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);

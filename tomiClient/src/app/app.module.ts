@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 
 //Material Imports
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule} from '@angular/material';
+import {MatButtonModule,MatDatepickerModule,MatNativeDateModule} from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
@@ -46,10 +46,19 @@ import { EditUserComponent } from './component/panel/edit-user/edit-user.compone
 import { ViewUserComponent } from './component/panel/view-user/view-user.component';
 import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
 import {TimesheetService} from "./service/timesheet.service";
-import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry-submitted.component';
-import { AddTaskComponent } from './component/modal/add-task/add-task.component';
-import {TaskPanelService} from "./service/task-panel.service";
-import { EditTaskComponent } from './component/modal/edit-task/edit-task.component';
+import { EntryUneditableComponent } from './component/panel/entry-uneditable/entry-uneditable.component';
+import { DatePickerComponent } from './component/extra/date-picker/date-picker.component';
+import { TeamMemberTimesheetComponent } from './component/panel/team-member-timesheet/team-member-timesheet.component';
+import { TeamMemberSidebarComponent } from './component/sidebar/team-member-sidebar/team-member-sidebar.component';
+import {
+  ProjectEntriesComponent,
+  SubmitApprovalModalComponent
+} from './component/panel/project-entries/project-entries.component';
+import { ProjectEntriesSidebarComponent } from './component/sidebar/project-entries-sidebar/project-entries-sidebar.component';
+import {ProjectEntriesService} from "./service/project-entries.service";
+import { EntryApproveComponent } from './component/panel/entry-approve/entry-approve.component';
+import {TeamService} from "./service/team.service";
+import { BudgetReportComponent } from './component/extra/budget-report/budget-report.component';
 
 @NgModule({
   declarations: [
@@ -69,16 +78,23 @@ import { EditTaskComponent } from './component/modal/edit-task/edit-task.compone
     TeamSidebarComponent,
     AddTeamComponent,
     AddTeamMemberComponent,
-    AddTaskComponent,
-    EditTaskComponent,
+    EntryUneditableComponent,
+    AddTeamMemberComponent,
     UserAccountSidebarComponent,
     UserAccountComponent,
     AddUserAccountComponent,
     EditUserComponent,
     ViewUserComponent,
-    EntrySubmittedComponent,
     DeleteEntryModalComponent,
-    SubmitTimesheetModalComponent
+    SubmitTimesheetModalComponent,
+    DatePickerComponent,
+    TeamMemberTimesheetComponent,
+    TeamMemberSidebarComponent,
+    ProjectEntriesComponent,
+    ProjectEntriesSidebarComponent,
+    EntryApproveComponent,
+    SubmitApprovalModalComponent,
+    BudgetReportComponent
   ],
   imports: [
     BrowserModule,
@@ -92,20 +108,23 @@ import { EditTaskComponent } from './component/modal/edit-task/edit-task.compone
     MatCardModule,
     MatInputModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   entryComponents:[
     EntryComponent,
     AddTeamComponent,
     AddTeamMemberComponent,
+    EntryUneditableComponent,
     AddUserAccountComponent,
-    EntrySubmittedComponent,
     DeleteEntryModalComponent,
-    AddTaskComponent,
-    EditTaskComponent
+    SubmitTimesheetModalComponent,
+    SubmitApprovalModalComponent
   ],
   providers: [
     TeamSidebarService,
+    TeamService,
     UserAccountService,
     UserAccountSidebarService,
     {
@@ -114,8 +133,9 @@ import { EditTaskComponent } from './component/modal/edit-task/edit-task.compone
       multi: true
     },
     TimesheetService,
+    ProjectEntriesService,
     UserAccountService,
-    TaskPanelService
+    MatDatepickerModule
   ],
   bootstrap: [AppComponent],
   exports: [
@@ -123,7 +143,9 @@ import { EditTaskComponent } from './component/modal/edit-task/edit-task.compone
     MatListModule,
     MatCardModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class AppModule { }

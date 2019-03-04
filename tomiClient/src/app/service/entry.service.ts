@@ -35,7 +35,7 @@ export class EntryService {
    * Gets all tasks.
    */
   getTasks(): Observable<Array<Task>> {
-    return this.http.get(`${this.tasksUrl}`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.tasksUrl}`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.tasks as Task[];
@@ -49,7 +49,7 @@ export class EntryService {
    * Gets all unit types.
    */
   getUnitTypes(): Observable<Array<UnitType>> {
-    return this.http.get(`${this.unitTypeUrl}`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.unitTypeUrl}`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.unitTypes as UnitType[];

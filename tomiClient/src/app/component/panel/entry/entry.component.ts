@@ -22,6 +22,10 @@ export class EntryComponent implements OnInit {
   @Input() entry: Entry;
   /** The list of projects this user is allowed to access.*/
   @Input() projects: Project[];
+  /** The list of unit types this user is allowed to access.*/
+  @Input() unitTypes: UnitType[];
+  /** The list of tasks this user is allowed to access.*/
+  @Input() tasks: Task[];
   /** Event emitter used to notify the parent component that a copy of an entry has been requested. */
   @Output() requestCopy = new EventEmitter<any>();
   /** Event emitter used to notify the parent component that a delete of an entry has been requested. */
@@ -52,28 +56,13 @@ export class EntryComponent implements OnInit {
   /** The input field for the entry's sunday hours.*/
   @ViewChild('sundayInput') sundayInput;
 
-  /** List of all tasks.*/
-  tasks: Task[];
-  /** List of all unit types.*/
-  unitTypes: UnitType[];
-
   constructor(private entryService: EntryService, public timesheetService: TimesheetService) {
+
   }
 
   /** On initialization, populates the list of tasks and unit types.*/
   ngOnInit() {
-    this.populateTasks();
-    this.populateUnitTypes();
-  }
 
-  /** Populates tasks.*/
-  populateTasks() {
-    this.entryService.getTasks().subscribe((data => this.tasks = data))
-  }
-
-  /** Populates unitTypes.*/
-  populateUnitTypes() {
-    this.entryService.getUnitTypes().subscribe((data => this.unitTypes = data))
   }
 
   /**
@@ -94,15 +83,15 @@ export class EntryComponent implements OnInit {
   validateEntry(): boolean{
     let valid:boolean = false;
 
-    if(this.componentInput.nativeElement.value != null && this.componentInput.nativeElement.value != ""
-      && this.quantityInput.nativeElement.value != null && this.quantityInput.nativeElement.value != 0
+    if(this.entry.component != null && this.entry.component != ""
+      && this.entry.quantity != null && this.entry.quantity != 0
       && this.mondayInput.nativeElement.value != null && this.tuesdayInput.nativeElement.value != null
       && this.wednesdayInput.nativeElement.value != null && this.thursdayInput.nativeElement.value != null
       && this.fridayInput.nativeElement.value != null && this.saturdayInput.nativeElement.value != null
-      && this.sundayInput.nativeElement.value != null && this.projectInput.nativeElement.value != null
-      && this.projectInput.nativeElement.value != "-1" && this.taskInput.nativeElement.value != null
-      && this.taskInput.nativeElement.value != -1 && this.unitTypeInput.nativeElement.value != null
-      && this.unitTypeInput.nativeElement.value != -1){
+      && this.sundayInput.nativeElement.value != null
+      && this.projectInput.selected.value != null && this.projectInput.selected.value != "-1"
+      && this.taskInput.selected.value != null && this.taskInput.selected.value != -1
+      && this.unitTypeInput.selected.value != null && this.unitTypeInput.selected.value != -1){
       valid = true;
     }
 
@@ -113,9 +102,6 @@ export class EntryComponent implements OnInit {
    * Saves the values of the entry.
    */
   async save() {
-    this.entry.component = this.componentInput.nativeElement.value;
-
-    this.entry.quantity = this.quantityInput.nativeElement.value;
     if(this.entry.quantity.toString() === ""){
       this.entry.quantity = 0;
     }
@@ -155,8 +141,8 @@ export class EntryComponent implements OnInit {
       this.entry.sundayHours = 0;
     }
 
-    await this.populateEntryPromise().then(() => {
-      this.entryService.save(this.entry).then();
+    return await this.populateEntryPromise().then(() => {
+      return this.entryService.save(this.entry).then();
     });
   }
 
@@ -177,10 +163,10 @@ export class EntryComponent implements OnInit {
    * Populates this entry with project, task and unit type information.
    */
   private populateEntry(){
-      if(this.projectInput.nativeElement.value != "-1"){
+      if(this.projectInput.selected &&  this.projectInput.selected.value != "-1"){
 
         let index = this.projects.findIndex((element) => {
-          return (element.id == this.projectInput.nativeElement.value);
+          return (element.id == this.projectInput.selected.value);
         });
 
         this.entry.project = this.projects[index];
@@ -188,9 +174,9 @@ export class EntryComponent implements OnInit {
         this.entry.project = null;
       }
 
-      if(this.taskInput.nativeElement.value != -1){
+      if(this.taskInput.selected && this.taskInput.selected.value != -1){
         let index = this.tasks.findIndex((element) => {
-          return (element.id == this.taskInput.nativeElement.value);
+          return (element.id == this.taskInput.selected.value);
         });
 
         this.entry.task = this.tasks[index];
@@ -198,9 +184,9 @@ export class EntryComponent implements OnInit {
         this.entry.task = null;
       }
 
-      if(this.unitTypeInput.nativeElement.value != -1){
+      if(this.unitTypeInput.selected && this.unitTypeInput.selected.value != -1){
         let index = this.unitTypes.findIndex((element) => {
-          return (element.id == this.unitTypeInput.nativeElement.value);
+          return (element.id == this.unitTypeInput.selected.value);
         });
 
         this.entry.unitType = this.unitTypes[index];
@@ -209,5 +195,11 @@ export class EntryComponent implements OnInit {
       }
 
       return this.entry;
+  }
+
+  validateNumber(event){
+    if(event.key === '-' || event.key === '+'){
+      return false;
+    }
   }
 }

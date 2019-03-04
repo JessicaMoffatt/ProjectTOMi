@@ -2,46 +2,38 @@
 @author Jessica Moffatt
 @version 1.0
 -->
-<div [ngClass]="['entry_container','rounded']">
-  <div [ngClass]="'row'">
-    <div [ngClass]="'col-xs-12'">
+<mat-card [ngClass]="['entry_card']">
+  <mat-card-content>
       <label><strong>Component:</strong>
-        <span>{{entry.component}}</span>
+        <span *ngIf="entry.component">{{entry.component}}</span>
       </label>
-    </div>
-  </div>
 
-  <div [ngClass]="'row'">
-    <div [ngClass]="['col-xs-6']">
+    <br/>
       <label><strong>Project:</strong>
-        <span>{{entry.project.projectName}}</span>
+        <span *ngIf="entry.project">{{entry.project.projectName}}</span>
       </label>
-    </div>
-    <div [ngClass]="'col-xs-6'">
-      <label>Task:
-        <span>{{entry.task.name}}</span>
-      </label>
-    </div>
-  </div>
 
-  <div [ngClass]="'row'">
-    <div [ngClass]="'col-xs-6'">
-      <label><strong>Unit Type:</strong>
+    <br/>
+    <div>
+      <label><strong>Task:</strong>
+        <span *ngIf="entry.task">{{entry.task.name}}</span>
+      </label>
+    </div>
+
+    <div>
+      <label *ngIf="entry.unitType"><strong>Unit Type:</strong>
         {{entry.unitType.name}}
       </label>
-    </div>
-
-    <div [ngClass]="'col-xs-2'">
+      <span *ngIf="entry.quantity">
+        ,
       {{entry.quantity}}
-    </div>
-    <div [ngClass]="'col-xs-4'">
+    </span>
+      <span *ngIf="entry.unitType">
       {{entry.unitType.unit}}
+    </span>
     </div>
-  </div>
 
-  <div [ngClass]="'row'">
     <!-- days of the week -->
-    <div [ngClass]="'col-xs-8'">
       <label><strong>M</strong>
        {{entry.mondayHours}}
       </label>
@@ -69,8 +61,8 @@
       <label><strong>U</strong>
         {{entry.sundayHours}}
       </label>
-    </div>
+
     <!-- end of days of week-->
-  </div>
- </div>
+  </mat-card-content>
+</mat-card>
 

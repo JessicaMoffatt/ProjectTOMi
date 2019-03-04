@@ -10,10 +10,15 @@ body{
   font-family:Arial, Helvetica, sans-serif;
   color:$grey;
   font-size:14pt;
+  padding-top:10vh;
+}
+
+html,body{
+  height:100%;
+  margin:0;
 }
 
 .btn{
-  color:$white;
   font-weight:bold !important;
   font-size:16pt !important;
 }
@@ -94,6 +99,109 @@ body{
   height:22px;
 }
 
+
+.entry{
+  background-color:grey;
+}
+
+.rejected_entry{
+  background-color: firebrick;
+}
+
+.approved_entry{
+  background-color:dodgerblue;
+}
+
+.submitted_entry{
+  background-color:orange;
+}
+
+/**Timesheet styles*/
+.week_title{
+  font-size:2rem;
+}
+
+.arrow{
+  display:inline-block;
+  position:relative;
+  margin-left:1rem;
+  margin-right:1rem;
+  top:.5rem;
+
+  width:$btn_md;
+  height:$btn_md;
+}
+
+.arrow:hover{
+  transition-delay: .05s;
+  background-color:$light_grey;
+}
+
+.forward {
+  background-image: url('~src/assets/img/arrow_forward.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  height:$btn_md;
+  width:$btn_md;
+}
+
+.back {
+  background-image: url('~src/assets/img/arrow_back.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  height:$btn_md;
+  width:$btn_md;
+}
+
+.calendar{
+  background-image: url('~src/assets/img/calendar.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  height:$btn_md;
+  width:$btn_md;
+
+  margin-left:15px;
+  margin-right:15px;
+}
+
+#submission_status{
+  color:$dark_grey;
+
+  font-weight:bold;
+}
+
+.new_entry{
+  width:$btn_md;
+  height:$btn_md;
+  margin:1rem;
+
+  background-image: url('~src/assets/img/add.png');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Timesheet Footer Styles */
+.timesheet_footer{
+  background-color:$light_grey;
+  height:$btn_md;
+  position:relative;
+  bottom: 0px;
+  font-size: 1.5rem;
+}
+
+.hours_tally{
+
+}
+
+.save_timesheet{
+  margin-right:15px;
+}
+
+.bottom_btn{
+  padding:3px 5px 3px 5px;
+  border-radius:4px;
+  float:right;
+}
 .inputs{
   width:20em;
 }
@@ -108,14 +216,9 @@ body{
   color: black;
 }
 
-li.sidebar_list:hover{
-  color: white;
-}
-
 // for highlighting selected items, that are NOT sidebar
 .highlighted{
   background-color: $blue;
-  color: white;
 }
 
 
@@ -142,8 +245,13 @@ li.sidebar_list:hover{
   border-radius: 5px;
 }
 
-.main_container{
-  padding-top:15%;
+.project_entries_footer {
+  background-color: $light_grey;
+  height: $btn_md;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  font-size: 1.5rem;
 }
 
 .manage_card{
@@ -152,4 +260,12 @@ li.sidebar_list:hover{
 
 .input_full_width{
   width: 100%;
+}
+
+.select_width_half{
+  width:50%;
+}
+
+.select_width_quarter{
+  width:25%;
 }

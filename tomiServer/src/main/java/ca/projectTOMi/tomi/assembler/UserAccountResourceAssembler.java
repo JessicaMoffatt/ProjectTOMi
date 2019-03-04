@@ -4,6 +4,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import ca.projectTOMi.tomi.controller.ProjectController;
+import ca.projectTOMi.tomi.controller.ReportController;
 import ca.projectTOMi.tomi.controller.UserAccountController;
 import ca.projectTOMi.tomi.model.UserAccount;
 import org.springframework.hateoas.Resource;
@@ -27,7 +28,9 @@ public final class UserAccountResourceAssembler implements ResourceAssembler<Use
 			linkTo(methodOn(UserAccountController.class).getActiveAccounts()).withRel("accounts"),
 			linkTo(methodOn(UserAccountController.class).setUserAccountInactive(userAccount.getId())).withRel("delete"),
 			linkTo(methodOn(UserAccountController.class).updateUserAccount(userAccount.getId(), userAccount)).withRel("update"),
-			linkTo(methodOn(ProjectController.class).getProjectsByUserAccount(userAccount.getId())).withRel("projects")
+			linkTo(methodOn(ProjectController.class).getProjectsByUserAccount(userAccount.getId())).withRel("projects"),
+			linkTo(methodOn(ReportController.class).getProductivityReport(userAccount.getId())).withRel("productivityreport"),
+			linkTo(methodOn(ReportController.class).getProductivityReportExcel(userAccount.getId())).withRel("productivityreportexcel")
 		);
 
 		return resource;
