@@ -170,7 +170,7 @@ import {AccessGuard} from "./AccessGuard";
     SignInService,
     MatDatepickerModule,
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-    { provide: DateAdapter, useClass: CustomDateAdapter }
+    { provide: DateAdapter, useClass: CustomDateAdapter },
     AccessGuard
   ],
   bootstrap: [AppComponent],
