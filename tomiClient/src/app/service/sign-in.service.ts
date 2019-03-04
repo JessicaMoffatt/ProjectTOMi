@@ -15,7 +15,6 @@ export class SignInService {
     this.router = router;
   }
 
-
   setUser(user:any):any{
     this.user = user;
     return true;
