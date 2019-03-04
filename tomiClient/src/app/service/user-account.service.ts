@@ -97,8 +97,9 @@ export class UserAccountService {
            this.userSubject.getValue().splice(indexToBeRemoved, 1);
         }
       });
+    }).then(value => {
+      this.sortUserAccounts();
     });
-    this.sortUserAccounts();
   }
 
   /**

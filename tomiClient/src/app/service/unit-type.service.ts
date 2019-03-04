@@ -158,8 +158,8 @@ export class UnitTypeService {
           this.unitTypes.getValue().splice(indexToBeRemoved, 1);
         }
       });
+    }).then(value => {
+      this.sortUnitTypes();
     });
-
-    this.sortUnitTypes();
   }
 }

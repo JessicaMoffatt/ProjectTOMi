@@ -22,16 +22,6 @@ export class UserAccountSidebarComponent implements OnInit {
   }
 
   /**
-   * Selects the UserAccount that is passed in.
-   * @param userAccount UserAccount to be selected.
-   */
-  displayUserAccount(userAccount: UserAccount) {
-    this.userAccountSidebarService.getUserAccountById(userAccount.id).subscribe((data: UserAccount) => {
-      this.userAccountSidebarService.selectedUserAccount = data;
-    });
-  }
-
-  /**
    * Creates a Modal component for adding a new UserAccount.
    */
   createAddUserAccountComponent() {
