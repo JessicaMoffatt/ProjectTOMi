@@ -67,14 +67,6 @@ html,body{
   float:right;
 }
 
-//TODO fix this so it's not hard coded...?
-.close_btn_txt{
-  font-size:25px !important;
-  position:relative;
-  top:-17px;
-  left:-8px;
-}
-
 .new_btn{
   background-color:$green;
 }
@@ -102,6 +94,7 @@ html,body{
 
 .cancel_changes_btn{
   background-color:$red;
+  //background-image: url('~src/assets/img/x.png');
   width:20px;
   height:22px;
 }
@@ -229,6 +222,10 @@ html,body{
 }
 
 
+/**
+ * @author: Iliya Kiritchkov
+ */
+
 .user_account_name {
   font-weight: 700;
   color: $orange;
@@ -255,6 +252,9 @@ html,body{
   bottom: 0px;
   right:0px;
   font-size: 1.5rem;
+  
+.main_container{
+  padding-top:15%;
 }
 
 .manage_card{

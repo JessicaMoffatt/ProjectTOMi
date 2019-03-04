@@ -77,11 +77,6 @@ public class TimesheetController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@GetMapping ("/timesheetEvalTest/{id}")
-	public void evalTimesheet(@PathVariable final Long id) {
-		this.entryService.evaluateTimesheet(id);
-	}
-
 	@GetMapping ("/timesheets/userAccount/{id}")
 	public Resources<Resource<Timesheet>> getTimesheetsByUserAccount(@PathVariable final Long id) {
 		final List<Resource<Timesheet>> expense = this.userAccountService.getTimesheetsByUserAccount(id)

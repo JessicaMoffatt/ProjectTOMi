@@ -1,0 +1,9 @@
+@import '../../../../variables';
+
+#sidebar {
+  top: 50px;
+  width: 200px;
+  height: 100%;
+  position: absolute;
+  background-color: $orange;
+}

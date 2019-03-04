@@ -104,7 +104,7 @@ public class ProjectController {
 			throw new InvalidIDPrefix();
 		}
 		newProject.setId(this.projectService.getId(newProject.getId()));
-		final Resource<Project> resource = this.projectResourceAssembler.toResource(this.projectService.saveProject(newProject));
+		final Resource<Project> resource = this.projectResourceAssembler.toResource(this.projectService.createProject(newProject));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
@@ -145,7 +145,7 @@ public class ProjectController {
 	public ResponseEntity<?> setProjectInactive(@PathVariable final String id) {
 		final Project project = this.projectService.getProjectById(id);
 		project.setActive(false);
-		this.projectService.saveProject(project);
+		this.projectService.deleteProject(project);
 
 		return ResponseEntity.noContent().build();
 	}

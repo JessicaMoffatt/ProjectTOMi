@@ -24,7 +24,6 @@ public final class ExpenseResourceAssembler implements ResourceAssembler<Expense
 	public Resource<Expense> toResource(final Expense expense) {
 		final Resource<Expense> resource = new Resource<>(expense,
 			linkTo(methodOn(ExpenseController.class).getExpense(expense.getId())).withSelfRel(),
-			linkTo(methodOn(ExpenseController.class).getActiveExpenses()).withRel("expenses"),
 			linkTo(methodOn(ExpenseController.class).setExpenseInactive(expense.getId())).withRel("delete"));
 
 		try {

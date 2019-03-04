@@ -61,22 +61,6 @@ public class ExpenseController {
 	}
 
 	/**
-	 * Returns a collection of all active {@link Expense} the source of a GET request to /expenses.
-	 *
-	 * @return Collection of resources representing all active Expenses
-	 */
-	@GetMapping ("/expenses")
-	public Resources<Resource<Expense>> getActiveExpenses() {
-		final List<Resource<Expense>> expense = this.expenseService.getActiveExpenses()
-			.stream()
-			.map(this.assembler::toResource)
-			.collect(Collectors.toList());
-
-		return new Resources<>(expense,
-			linkTo(methodOn(ExpenseController.class).getActiveExpenses()).withSelfRel());
-	}
-
-	/**
 	 * Creates a new {@link Expense} with the attributes provided in the POST request to /expenses.
 	 *
 	 * @param newExpense

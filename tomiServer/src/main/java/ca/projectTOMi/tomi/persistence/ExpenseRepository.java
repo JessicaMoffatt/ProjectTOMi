@@ -2,6 +2,7 @@ package ca.projectTOMi.tomi.persistence;
 
 import java.util.List;
 import ca.projectTOMi.tomi.model.Expense;
+import ca.projectTOMi.tomi.model.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -12,13 +13,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @version 1
  */
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
-	/**
-	 * Get all {@link Expense}s that have the provided active status.
-	 *
-	 * @param active
-	 * 	if the Expense is active
-	 *
-	 * @return List containing all Expenses with the provided active state
-	 */
-	List<Expense> getAllByActiveOrderById(boolean active);
+
+	List<Expense> getAllByActiveTrueAndProjectOrderById(Project project);
 }

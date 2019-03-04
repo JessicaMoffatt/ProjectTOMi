@@ -1,15 +1,16 @@
-import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {AfterViewInit, Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {TeamService} from "../../../service/team.service";
 import {Team} from "../../../model/team";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamSidebarService} from "../../../service/team-sidebar.service";
-import {AddTeamMemberComponent} from "../../modal/add-team-member/add-team-member.component";
+import {MatDialog, MatDialogRef, MatSelectionList, MatSelectionListChange} from "@angular/material";
+import {UserAccountService} from "../../../service/user-account.service";
 
 /**
  * TeamComponent is used to facilitate communication between the view and front end services.
  *
  * @author Jessica Moffatt
- * @version 1.0
+ * @version 2.0
  */
 @Component({
   selector: 'app-team',
@@ -18,39 +19,45 @@ import {AddTeamMemberComponent} from "../../modal/add-team-member/add-team-membe
 })
 export class TeamComponent implements OnInit {
 
-  /** A view container ref for the template that will be used to house the add team member component.*/
-  @ViewChild('add_team_member_container', {read: ViewContainerRef})
-  add_team_member_container: ViewContainerRef;
+  @ViewChild('teamMemberList') teamMemberList: MatSelectionList;
 
-  constructor(private resolver: ComponentFactoryResolver, public teamService: TeamService,
-              public teamSideBarService: TeamSidebarService) {
+  constructor(public teamService: TeamService,
+              public teamSideBarService: TeamSidebarService,public dialog: MatDialog) {
   }
 
   ngOnInit() {
   }
 
   /**
-   * Sets the selected team member.
-   * @param account The user account whom has been selected.
+   * Sets the selected team members.
+   * @param event The event to be captured.
+   * @param selectedMembers The selected values.
    */
-  selectMember(account: UserAccount) {
-    this.teamService.setSelectMember(account);
+  onSelection(event, selectedMembers) {
+    let tempList: UserAccount[] = [];
+    for(let m of selectedMembers) {
+      tempList.push(m.value);
+    }
+    this.teamService.setSelectMembers(tempList);
   }
 
   /**
    * Removes the selected member from the team.
    */
-  removeMember() {
-    this.teamService.removeMember();
+  removeMembers() {
+    this.teamService.removeMembers().then();
   }
 
   /**
    * Dynamically creates the add team member component, which will be housed in the template with the id of 'add_team_member_container'.
    */
-  createAddMemberComponent() {
-    this.add_team_member_container.clear();
-    const factory = this.resolver.resolveComponentFactory(AddTeamMemberComponent);
-    this.teamService.ref = this.add_team_member_container.createComponent(factory);
+  displayAddMemberModal():void {
+    const dialogRef = this.dialog.open(AddTeamMemberComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    })
   }
 
   /**
@@ -59,9 +66,10 @@ export class TeamComponent implements OnInit {
    * @param team The team to be saved.
    */
   save(team: Team) {
-    team.teamName = (<HTMLInputElement>document.getElementById("team_name")).value;
-    let leadId = Number((<HTMLInputElement>document.getElementById("selected_team_lead")).value);
-    team.leadId = leadId;
+    if(team.id == undefined){
+      team.leadId = -1;
+    }
+    
     this.teamService.save(team).then();
   }
 
@@ -79,5 +87,89 @@ export class TeamComponent implements OnInit {
    */
   cancel(team: Team): void {
     this.teamService.cancel(team);
+  }
+}
+
+/**
+ * AddTeamMemberComponent is used to facilitate communication between the view and front end services.
+ *
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
+@Component({
+  selector: 'app-add-team-member',
+  template: `    
+      <button mat-icon-button [ngClass]="['close_btn']" (click)="closeAddMemberComponent()"></button>
+      <h1 mat-dialog-title>Add Member To Team</h1>
+      <div  mat-dialog-content>
+
+        <mat-form-field>
+          <mat-select [(ngModel)]="member" placeholder="New Member">
+            <mat-option *ngFor="let member of (this.teamService.allFreeMembers  |orderBy: 'firstName')"
+                        [value]="member.id">
+              {{member.firstName}} {{member.lastName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+            <div [ngClass]="'modal_btns_container'">
+              <button mat-button [ngClass]="['btn','add_btn']" (click)="addMember()">Add</button>
+              <button mat-button [ngClass]="['btn','cancel_btn']" (click)="closeAddMemberComponent()">
+                Cancel
+              </button>
+            </div>
+      </div>
+  `
+})
+export class AddTeamMemberComponent implements OnInit {
+
+  member:number;
+
+  constructor(public teamService: TeamService, private teamSidebarService: TeamSidebarService,
+              private userAccountService: UserAccountService, public dialogRef: MatDialogRef<AddTeamMemberComponent>) {
+  }
+
+  /**
+   * On initialization of this component, assigns the team service's list of all members.
+   */
+  ngOnInit() {
+    this.teamService.getAllFreeMembers().subscribe((data: Array<UserAccount>) => {
+      this.teamService.allFreeMembers = data;
+    });
+  }
+
+  //TODO add error handling
+  /**
+   * Adds the selected team member to the team. Passes on requests to save this information to the user account service and team service.
+   */
+  addMember(): void {
+    let memberId = this.member;
+
+    if(memberId != null){
+      let toAdd: UserAccount = new UserAccount();
+
+      this.teamService.getTeamMemberById(memberId).subscribe((data: UserAccount) => {
+        toAdd = data;
+        toAdd.teamId = this.teamSidebarService.selectedTeam.id;
+
+        this.userAccountService.save(toAdd).then(()=>{
+          this.teamService.teamMembers.push(toAdd);
+
+          let index = this.teamService.allFreeMembers.findIndex((element) => {
+            return (element.id == toAdd.id);
+          });
+
+          this.teamService.allFreeMembers.splice(index, 1);
+          this.member = null;
+        });
+      });
+    }
+  }
+
+  /**
+   * Closes the add member component.
+   */
+  closeAddMemberComponent(): void {
+    this.dialogRef.close();
   }
 }
