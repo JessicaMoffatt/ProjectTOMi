@@ -25,8 +25,6 @@ export class ViewUserComponent implements OnInit {
   /** Event Emitter used to notify the UserAccountComponent parent that the ViewUserComponent delete had been requested. */
   @Output() deleteRequested = new EventEmitter<any>();
 
-
-
   constructor(public teamService: TeamService) { }
 
   ngOnInit() {

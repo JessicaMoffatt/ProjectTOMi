@@ -1,0 +1,25 @@
+<!--
+@author Jessica Moffatt
+@verison 1.0
+-->
+<mat-form-field>
+  <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="Choose a date">
+  <mat-datepicker-toggle matSuffix [for]="picker"  (click)="doSetMinDate()"></mat-datepicker-toggle>
+  <mat-datepicker #picker  (click)="doSetMinDate()"></mat-datepicker>
+</mat-form-field>
+
+<div class="row">
+  <div class="col-xs-4 form-group">
+    <!--<input-->
+      <!--class="form-control"-->
+      <!--placeholder=""-->
+      <!--bsDatepicker-->
+      <!--[bsConfig]="{ selectWeek: true, containerClass: 'theme-blue', selectFromOtherMonth: true}"-->
+      <!--[maxDate]="maxDate"-->
+      <!--[minDate]="minDate"-->
+      <!--(bsValueChange)="onDateChange($event)"-->
+      <!--(click)="doSetMinDate()"-->
+      <!--&gt;-->
+  </div>
+</div>
+

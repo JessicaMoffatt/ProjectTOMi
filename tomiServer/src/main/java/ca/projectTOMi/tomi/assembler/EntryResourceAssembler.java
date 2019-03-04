@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.net.URISyntaxException;
 
+
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
@@ -34,7 +35,6 @@ public class EntryResourceAssembler implements ResourceAssembler<TimesheetAuthLi
 			linkTo(methodOn(EntryController.class).getEntry(entry.getId(), timesheetAuthLinkWrapper.getManager())).withSelfRel(),
 			linkTo(methodOn(EntryController.class).getAllTimesheetEntries(entry.getTimesheet().getId(), timesheetAuthLinkWrapper.getManager())).withRel("entries")
 		);
-
 		if (Status.SUBMITTED == entry.getStatus()) {
 			resource.add(linkTo(methodOn(ProjectController.class).evaluateEntry(entry.getProject() != null ? entry.getProject().getId() : null, entry.getId(), null)).withRel("evaluate"));
 		}

@@ -1,0 +1,10 @@
+<div [ngClass]="'main_container'">
+  <h1>Team Members</h1>
+  <div>
+    <mat-action-list *ngIf="teamMemberTimesheetService.teamMembers">
+      <span *ngFor="let t of (teamMemberTimesheetService.teamMembers|orderBy:['first_name','last_name'])">
+        <button mat-list-item *ngIf="t" (click)="displayTimesheet(t)">{{t.firstName}} {{t.lastName}}</button>
+      </span>
+    </mat-action-list>
+  </div>
+</div>

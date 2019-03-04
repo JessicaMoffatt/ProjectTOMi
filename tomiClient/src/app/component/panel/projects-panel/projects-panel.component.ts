@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Project} from "../../../model/project";
+import {ProjectService} from "../../../service/project.service";
 
 @Component({
   selector: 'app-projects-panel',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectsPanelComponent implements OnInit {
 
-  constructor() { }
+  constructor(private temp:ProjectService) { }
+
+  project:Project;
 
   ngOnInit() {
+    this.temp.getProjectById('JM1001').subscribe((data)=>{
+      this.project = data;
+    });
   }
 
 }

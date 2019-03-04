@@ -1,0 +1,75 @@
+<!--
+@author Jessica Moffatt
+@version 1.0
+-->
+<mat-card [ngClass]="{'approved': entry.status === sts.APPROVED,'rejected': entry.status === sts.REJECTED,'entry_card':true}">
+  <mat-card-content>
+    <label><strong>Component:</strong>
+      <span *ngIf="entry.component">{{entry.component}}</span>
+    </label>
+
+    <br/>
+    <label><strong>Project:</strong>
+      <span *ngIf="entry.project">{{entry.project.projectName}}</span>
+    </label>
+
+    <br/>
+    <div>
+      <label><strong>Task:</strong>
+        <span *ngIf="entry.task">{{entry.task.name}}</span>
+      </label>
+    </div>
+
+    <div>
+      <label *ngIf="entry.unitType"><strong>Unit Type:</strong>
+        {{entry.unitType.name}}
+      </label>
+      <span *ngIf="entry.quantity">
+        ,
+        {{entry.quantity}}
+    </span>
+      <span *ngIf="entry.unitType">
+      {{entry.unitType.unit}}
+    </span>
+    </div>
+
+    <!-- days of the week -->
+    <label><strong>M</strong>
+      {{entry.mondayHours}}
+    </label>
+
+    <label><strong>T</strong>
+      {{entry.tuesdayHours}}
+    </label>
+
+    <label><strong>W</strong>
+      {{entry.wednesdayHours}}
+    </label>
+
+    <label><strong>R</strong>
+      {{entry.thursdayHours}}
+    </label>
+
+    <label><strong>F</strong>
+      {{entry.fridayHours}}
+    </label>
+
+    <label><strong>S</strong>
+      {{entry.saturdayHours}}
+    </label>
+
+    <label><strong>U</strong>
+      {{entry.sundayHours}}
+    </label>
+
+    <!-- end of days of week-->
+
+    <div [ngClass]="'row'">
+      <div [ngClass]="['col-xs-4','flex_btn_container']">
+        <div [ngClass]="['approve_entry', 'btn']" (click)="approve()"></div>
+        <div [ngClass]="['reject_entry', 'btn']" (click)="reject()"></div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
