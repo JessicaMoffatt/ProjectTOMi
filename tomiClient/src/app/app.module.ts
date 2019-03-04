@@ -2,6 +2,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
+import {MatCardModule, MatCheckboxModule} from "@angular/material";
+
 //import {MatFormField} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AlertModule, BsDropdownModule, BsModalService, ComponentLoaderFactory, ModalModule, PositioningService} from "ngx-bootstrap";
@@ -52,8 +54,10 @@ import { AddTaskComponent } from './component/modal/add-task/add-task.component'
 import {TaskPanelService} from "./service/task-panel.service";
 import { EditTaskComponent } from './component/modal/edit-task/edit-task.component';
 import {ProjectService} from "./service/project.service";
-import { EditProjectSubPanelComponent } from './component/panel/edit-project-sub-panel/edit-project-sub-panel.component';
+import { EditProjectSubPanelComponent } from './component/panel/projects-panel/edit-project-sub-panel/edit-project-sub-panel.component';
 import {MatFormFieldModule, MatInput} from "@angular/material";
+import { ExpenseListComponent } from './component/panel/projects-panel/expense-list/expense-list.component';
+import { TeamMemberListComponent } from './component/panel/projects-panel/team-member-list/team-member-list.component';
 
 @NgModule({
   declarations: [
@@ -84,9 +88,13 @@ import {MatFormFieldModule, MatInput} from "@angular/material";
     EntrySubmittedComponent,
     DeleteEntryModalComponent,
     SubmitTimesheetModalComponent,
-    EditProjectSubPanelComponent
+    EditProjectSubPanelComponent,
+    ExpenseListComponent,
+    TeamMemberListComponent
   ],
   imports: [
+    MatCardModule,
+    MatCheckboxModule,
     MatTableModule,
     MatListModule,
     MatButtonModule,
