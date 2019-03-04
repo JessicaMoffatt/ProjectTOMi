@@ -1,35 +1,16 @@
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import {MatListModule} from '@angular/material/list';
-import {MatCardModule, MatCheckboxModule} from "@angular/material";
-
-//import {MatFormField} from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AlertModule, BsDropdownModule, BsModalService, ComponentLoaderFactory, ModalModule, PositioningService} from "ngx-bootstrap";
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import {BrowserModule} from '@angular/platform-browser';
-import {InjectionToken, NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
-
 import {AppRoutingModule} from './app-routing.module';
-
 import {AppComponent} from './app.component';
 
 //Material Imports
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatDatepickerModule, MatNativeDateModule, MatTabsModule} from '@angular/material';
+import {MatCheckboxModule, MatDatepickerModule, MatNativeDateModule, MatTabsModule} from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from "@angular/material";
 
 import {AddTeamComponent, TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
@@ -55,12 +36,7 @@ import {UserAccountService} from "./service/user-account.service";
 import {UserAccountComponent} from './component/panel/user-account/user-account.component';
 import {UserAccountSidebarComponent} from "./component/sidebar/user-account-sidebar/user-account-sidebar.component";
 import {UserAccountPanelComponent} from "./component/panel/user-account-panel/user-account-panel.component";
-import {UserAccountSidebarService} from "./service/user-account-sidebar-service";
-import {AddUserAccountComponent} from './component/modal/add-user-account/add-user-account.component';
-import {EditUserComponent} from './component/panel/edit-user/edit-user.component';
-import {ViewUserComponent} from './component/panel/view-user/view-user.component';
-import { AddUserAccountComponent } from './component/modal/add-user-account/add-user-account.component';
-import { EditUserComponent } from './component/panel/edit-user/edit-user.component';
+import {UserAccountSidebarService} from "./service/user-account-sidebar-service";;
 import {MatButtonModule} from '@angular/material/button';
 import { ViewUserComponent } from './component/panel/view-user/view-user.component';
 import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
@@ -68,7 +44,6 @@ import {TimesheetService} from "./service/timesheet.service";
 // import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry-submitted.component';
 import {AddTaskComponent} from './component/modal/add-task/add-task.component';
 import {TaskPanelService} from "./service/task-panel.service";
-import {EditTaskComponent} from './component/modal/edit-task/edit-task.component';
 import {TeamService} from "./service/team.service";
 import {SigninComponent} from './component/panel/signin-panel/signin.component';
 import {SignInService} from "./service/sign-in.service";
@@ -90,6 +65,14 @@ import { EditProjectSubPanelComponent } from './component/panel/projects-panel/e
 import {MatFormFieldModule, MatInput} from "@angular/material";
 import { ExpenseListComponent } from './component/panel/projects-panel/expense-list/expense-list.component';
 import { TeamMemberListComponent } from './component/panel/projects-panel/team-member-list/team-member-list.component';
+import { UnitTypeSidebarComponent } from './component/sidebar/unit-type-sidebar/unit-type-sidebar.component';
+import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
+import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-unit-type.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {NgModule} from "@angular/core";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {BrowserModule} from "@angular/platform-browser";
+import {AddUserAccountComponent} from "./component/modal/add-user-account/add-user-account.component";
 
 @NgModule({
   declarations: [
@@ -113,8 +96,6 @@ import { TeamMemberListComponent } from './component/panel/projects-panel/team-m
     AddTeamMemberComponent,
     UserAccountSidebarComponent,
     UserAccountComponent,
-    AddUserAccountComponent,
-    EditUserComponent,
     ViewUserComponent,
     DeleteEntryModalComponent,
     SubmitTimesheetModalComponent,
@@ -130,7 +111,13 @@ import { TeamMemberListComponent } from './component/panel/projects-panel/team-m
     SubmitTimesheetModalComponent,
     EditProjectSubPanelComponent,
     ExpenseListComponent,
-    TeamMemberListComponent
+    TeamMemberListComponent,
+    BudgetReportComponent,
+    UnitTypeSidebarComponent,
+    AddUnitTypeComponent,
+    EditUnitTypeComponent,
+    EditTaskComponent,
+    AddTaskComponent
   ],
   imports: [
     MatCardModule,
@@ -143,8 +130,6 @@ import { TeamMemberListComponent } from './component/panel/projects-panel/team-m
     MatFormFieldModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    AlertModule.forRoot(),
-    BsDropdownModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -169,7 +154,12 @@ import { TeamMemberListComponent } from './component/panel/projects-panel/team-m
     AddUserAccountComponent,
     DeleteEntryModalComponent,
     SubmitTimesheetModalComponent,
-    SubmitApprovalModalComponent
+    SubmitApprovalModalComponent,
+    AddTeamMemberComponent,
+    AddTaskComponent,
+    EditTaskComponent,
+    AddUnitTypeComponent,
+    EditUnitTypeComponent
   ],
   providers: [
     TeamSidebarService,
