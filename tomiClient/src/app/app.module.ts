@@ -10,7 +10,14 @@ import {AppComponent} from './app.component';
 
 //Material Imports
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatDatepickerModule, MatNativeDateModule, MatTabsModule} from '@angular/material';
+import {
+  DateAdapter,
+  MAT_DATE_LOCALE,
+  MatButtonModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatTabsModule
+} from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
@@ -55,7 +62,7 @@ import {TeamService} from "./service/team.service";
 import {SigninComponent} from './component/panel/signin-panel/signin.component';
 import {SignInService} from "./service/sign-in.service";
 import {EntryUneditableComponent} from './component/panel/entry-uneditable/entry-uneditable.component';
-import {DatePickerComponent} from './component/extra/date-picker/date-picker.component';
+import {CustomDateAdapter, DatePickerComponent} from './component/extra/date-picker/date-picker.component';
 import {TeamMemberTimesheetComponent} from './component/panel/team-member-timesheet/team-member-timesheet.component';
 import {TeamMemberSidebarComponent} from './component/sidebar/team-member-sidebar/team-member-sidebar.component';
 import {
@@ -160,7 +167,9 @@ import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-uni
     UserAccountService,
     TaskPanelService,
     SignInService,
-    MatDatepickerModule
+    MatDatepickerModule,
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    { provide: DateAdapter, useClass: CustomDateAdapter }
   ],
   bootstrap: [AppComponent],
   exports: [

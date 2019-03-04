@@ -27,6 +27,11 @@ export class TeamMemberTimesheetService {
   /** The team member selected in the sidebar.*/
   selectedMember: UserAccount;
 
+  /**
+   * The earliest date that can be selected.
+   */
+  minDate: Date;
+
   //TODO, dont hardcode, should come from header
  teamid: number = 1;
 
@@ -38,6 +43,27 @@ export class TeamMemberTimesheetService {
 
   constructor(private http: HttpClient, private router: Router, private userAccountService:UserAccountService, private teamService:TeamService, public timesheetService: TimesheetService) {
 
+  }
+
+  /**
+   * Determines if the minimum date should be set.
+   */
+  doSetMinDate(){
+    if(this.minDate === undefined || this.minDate === null){
+      this.setMinDate().then();
+    }
+  }
+
+  /**
+   * Sets the minimum date accordingly.
+   */
+  async setMinDate(){
+    await this.timesheetService.getEarliestDate().then((data)=>{
+      let dateString = data.toString().replace(/-/g, '\/').replace(/T.+/, '');
+
+      this.minDate = new Date(dateString);
+      return this.minDate;
+    });
   }
 
   /**

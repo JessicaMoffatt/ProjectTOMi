@@ -17,7 +17,7 @@
               (click)="teamMemberTimesheetService.displayNextTimesheet()">
   </span>
         <!--TODO FIX THIS-->
-        <app-date-picker [parent]="this"></app-date-picker>
+        <app-date-picker [parent]="this" [minDate]="teamMemberTimesheetService.minDate"></app-date-picker>
         <div [ngClass]="'container'">
           <div *ngFor="let entry of this.teamMemberTimesheetService.entries">
             <app-entry-uneditable [ngClass]="'entry'"

@@ -1,5 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Input} from '@angular/core';
 import {TimesheetService} from "../../../service/timesheet.service";
+import {TeamMemberTimesheetService} from "../../../service/team-member-timesheet.service";
+import {NativeDateAdapter} from "@angular/material";
 
 const millisecondsToDays:number = 86400000;
 
@@ -19,7 +21,8 @@ export class DatePickerComponent{
   /**
    * The earliest date that can be selected.
    */
-  minDate: Date;
+  @Input() minDate: Date;
+
   /**
    * The selected date.
    */
@@ -29,29 +32,12 @@ export class DatePickerComponent{
    */
   @Input() parent;
 
-  constructor(private timesheetService: TimesheetService){
+  constructor(private timesheetService: TimesheetService, private teamMemberTimesheetService:TeamMemberTimesheetService){
     this.maxDate = new Date();
   }
 
-  /**
-   * Determines if the minimum date should be set.
-   */
   doSetMinDate(){
-    if(this.minDate === undefined || this.minDate === null){
-      this.setMinDate().then();
-    }
-  }
-
-  /**
-   * Sets the minimum date accordingly.
-   */
-  async setMinDate(){
-    await this.timesheetService.getEarliestDate().then((data)=>{
-      let dateString = data.toString().replace(/-/g, '\/').replace(/T.+/, '');
-
-      this.minDate = new Date(dateString);
-      return this.minDate;
-    });
+    this.teamMemberTimesheetService.doSetMinDate();
   }
 
   /**
@@ -76,11 +62,11 @@ export class DatePickerComponent{
 
     this.parent.displaySpecifiedTimesheet(weeks);
   }
+}
 
-  temp(){
-    let span = document.getElementById("fish");
-    console.log("Doing Stuff");
-    span.removeEventListener('onmouseover', this.temp,  false);
-    span.setAttribute("style", "");
+export class CustomDateAdapter extends NativeDateAdapter{
+
+  getFirstDayOfWeek(): number {
+    return 1;
   }
 }

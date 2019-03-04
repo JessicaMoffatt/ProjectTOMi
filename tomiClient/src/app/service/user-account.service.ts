@@ -128,14 +128,18 @@ export class UserAccountService {
 
     if (userAccount.id === -1) {
       await this.http.post<UserAccount>(this.userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
-        this.refreshUserAccounts();
+       if(this.userSubject){
+         this.refreshUserAccounts();
+       }
       }).catch((error: any) => {
         //TODO Add an error display
       });
     } else {
       const url = userAccount._links["update"];
       await this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
-        this.refreshUserAccounts();
+        if(this.userSubject){
+          this.refreshUserAccounts();
+        }
       }).catch((error: any) => {
         //TODO Add an error display
       });

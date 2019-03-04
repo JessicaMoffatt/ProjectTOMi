@@ -30,7 +30,7 @@ export class TeamMemberSidebarComponent implements OnInit {
   displayTimesheet(teamMember: UserAccount){
     this.teamMemberTimesheetService.getMemberById(teamMember.id).subscribe((data:UserAccount) => {
       this.teamMemberTimesheetService.selectedMember = data;
-
+      this.teamMemberTimesheetService.minDate = null;
       this.teamMemberTimesheetService.displayTimesheet();
       this.teamMemberTimesheetService.reloadTeamMembers();
     });
