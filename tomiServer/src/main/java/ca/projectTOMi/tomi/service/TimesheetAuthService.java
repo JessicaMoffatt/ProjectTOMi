@@ -53,7 +53,7 @@ public class TimesheetAuthService {
 
 	public void removeMemberFromTeam(UserAccount oldMember, Team team){
 		team = this.teamRepository.findById(team.getId()).orElseThrow(TeamNotFoundException::new);
-		if(team.getTeamLead() != null) {
+		if(team.getTeamLead() != null && !oldMember.equals(team.getTeamLead())) {
 			TimesheetAuthorizationPolicy authPolicy = new TimesheetAuthorizationPolicy();
 			authPolicy.setTimesheetOwner(oldMember);
 			authPolicy.setRequestingUser(team.getTeamLead());
