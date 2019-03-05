@@ -47,9 +47,6 @@ mat-toolbar {
 }
 
 #iconDiv{
-  position: absolute;
-  right: -2.5vh;
-  top: 1vh;
   height: 7vh;
   width: 7vh;
   border-radius: 7vh;
@@ -59,10 +56,16 @@ mat-toolbar {
 
 
 #userName{
+  position: absolute;
+  right: 1vh;
+  top: 1vh;
   height:9vh;
   width: available;
   background: none;
   border: none;
+  top: 1vh;
+  height: 7vh;
+  width: 7vh;
   font-size: 1rem;
   color: #FFFFFF;
   z-index: 3;

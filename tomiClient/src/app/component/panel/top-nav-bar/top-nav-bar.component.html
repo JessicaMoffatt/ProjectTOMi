@@ -12,8 +12,7 @@
     <mat-menu #appMenu="matMenu">
       <button mat-menu-item id="menu" (click)="signInService.signOut()">Logout</button>
     </mat-menu>
-    <button id="userName" [matMenuTriggerFor]="appMenu">
-      <label>{{signInService.user.getBasicProfile().getName()}}</label>
+    <button id="userName" mat-icon-button [matMenuTriggerFor]="appMenu">
       <span id="iconDiv">
         <img id="icon" [src]="signInService.getIcon()"/>
       </span>
