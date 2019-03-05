@@ -13,16 +13,16 @@ import {AccessGuard} from "./AccessGuard";
 
 
 const routes: Routes = [
-  {path: '', redirectTo: '/signIn', pathMatch: 'full' },
-  {path: 'timesheets', component: TimesheetComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
-  {path: 'approveTimesheets', component: ApprovePanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
-  {path: 'teams', component: TeamPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
-  {path: 'projects', component: ProjectsPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
-  {path: 'manageTeams', component: ManageTeamsPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
-  {path: 'mangeUnitTypes', component: UnitTypesPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
-  {path: 'manageTasks', component: TasksPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
-  {path: 'manageUserAccount', component: UserAccountPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
-  {path: 'signIn', component: SigninComponent},
+  {path: '', redirectTo: '/sign_in', pathMatch: 'full' },
+  {path: 'my_timesheets', component: TimesheetComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'approve_timesheets', component: ApprovePanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'my_team', component: TeamPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'manage_projects', component: ProjectsPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'manage_teams', component: ManageTeamsPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'manage_unit_types', component: UnitTypesPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'manage_tasks', component: TasksPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'manage_user_accounts', component: UserAccountPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'sign_in', component: SigninComponent},
 ];
 
 @NgModule({

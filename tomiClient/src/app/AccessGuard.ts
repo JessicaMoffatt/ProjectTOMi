@@ -18,7 +18,7 @@ export class AccessGuard implements CanActivate {
       if(this.signInService.isUserLoggedIn.getValue()) {
         return true;
       }else{
-        this.router.navigate(['/signIn']);
+        this.router.navigate(['/sign_in']);
         return false;
       }
     }

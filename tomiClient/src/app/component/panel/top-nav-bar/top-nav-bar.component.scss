@@ -12,11 +12,14 @@ mat-toolbar {
   width: 100%;
   box-shadow: 0 0 1vh black;
   z-index: 2;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 1rem;
   img{
     position:absolute;
-    top:0;
-    left:0;
-    margin:1.5vw;
+    top:3.25vh;
+    left:3.25vh;
+    padding:0;
+
   }
 }
 
@@ -38,32 +41,19 @@ mat-toolbar {
   color: $orange;
 }
 #icon{
-  position: absolute;
-  right: -2.5vh;
+  position: inherit;
   height: 7vh;
   width: 7vh;
   border-radius: 7vh;
   margin: 0;
 }
 
-#iconDiv{
-  height: 7vh;
-  width: 7vh;
-  border-radius: 7vh;
-  margin: 0;
-  z-index: -1;
-}
-
-
-#userName{
+#menuButton{
   position: absolute;
   right: 1vh;
   top: 1vh;
-  height:9vh;
-  width: available;
   background: none;
   border: none;
-  top: 1vh;
   height: 7vh;
   width: 7vh;
   font-size: 1rem;
@@ -74,4 +64,9 @@ mat-toolbar {
 #userName:hover{
   background: $nav_highlight;
   background-blend-mode: screen;
+}
+
+#logo{
+  height:2.5vh;
+  width: auto;
 }

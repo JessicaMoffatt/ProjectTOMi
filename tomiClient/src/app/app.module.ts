@@ -12,10 +12,9 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
-  MatDatepickerModule, MatIconModule,
+  MatDatepickerModule, MatGridListModule, MatIconModule,
   MatMenuModule,
-  MatNativeDateModule,
-  MatTabsModule
+  MatNativeDateModule, MatSnackBarModule
 } from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
@@ -136,7 +135,9 @@ import {AccessGuard} from "./AccessGuard";
     MatDatepickerModule,
     MatNativeDateModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule,
+    MatGridListModule
   ],
   entryComponents: [
     EntryComponent,
