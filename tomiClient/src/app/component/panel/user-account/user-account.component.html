@@ -7,7 +7,7 @@
   <div [ngClass]="'user_account'">
     <ul>
       <ul (click)="selectUserAccount(userAccount)"
-          *ngFor="let userAccount of userAccountService.userSubject | async | orderBy:'lastName'"
+          *ngFor="let userAccount of userAccountService.userSubject | async"
           style="list-style: none">
         <ng-container>
           <app-view-user id="view_user_account{{userAccount.id}}" #viewUserComponent (deleteRequested)="delete($event)" (editRequested)="editUserAccount($event)"

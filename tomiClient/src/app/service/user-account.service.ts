@@ -32,8 +32,29 @@ export class UserAccountService {
   userSubject: BehaviorSubject<Array<UserAccount>>;
 
   public constructor(private http: HttpClient) {
+
+  }
+
+  /**
+   *
+   */
+  initializeUserAccounts() {
     this.GETAllUserAccounts().forEach( users => {
       this.userSubject = new BehaviorSubject<Array<UserAccount>>(users);
+      this.sortUserAccounts();
+    });
+  }
+
+  /**
+   *
+   */
+  sortUserAccounts() {
+    this.userSubject.getValue().sort((user1, user2) => {
+      let name1 = user1.lastName.toLowerCase();
+      let name2 = user2.lastName.toLowerCase();
+      if (name1 > name2) { return 1; }
+      if (name1 < name2) { return -1; }
+      return 0;
     });
     this.userAccounts = this.GETAllUserAccounts();
   }
@@ -42,12 +63,13 @@ export class UserAccountService {
    * Refresh the List of UserAccounts to keep up-to-date with the server.
    */
   refreshUserAccounts() {
-    let freshUsersObs = this.GETAllUserAccounts();
+    let freshUsers :UserAccount[];
 
-    // Replace all users with fresh user data
-    freshUsersObs.forEach(freshUsers => {
+    this.GETAllUserAccounts().forEach(users => {
+      freshUsers = users;
+
+      //Replace all users with fresh user data
       freshUsers.forEach( freshUser => {
-
         let index = this.userSubject.getValue().findIndex((staleUser) => {
           return (staleUser.id === freshUser.id);
         });
@@ -60,39 +82,37 @@ export class UserAccountService {
         } else {
           this.userSubject.getValue().splice(index, 1, freshUser);
         }
-
       });
-    });
 
-    // Check for any deleted userAccounts
-    this.userSubject.getValue().forEach(staleUser => {
-
-      freshUsersObs.forEach( freshUsers => {
-        let index = freshUsers.findIndex((freshUser) => {
-          return (freshUser.id === staleUser.id);
+      // Check for any deleted userAccounts
+      this.userSubject.getValue().forEach( oldUser => {
+        let index = freshUsers.findIndex(newUser => {
+          return (newUser.id === oldUser.id);
         });
 
-        //If the id wasn't found, then the userAccount has been deleted and is removed from the BehaviourSubject list.
         if (index === -1) {
           let indexToBeRemoved = this.userSubject.getValue().findIndex( (userToBeRemoved) => {
-            return (userToBeRemoved.id === staleUser.id);
+            return (userToBeRemoved.id === oldUser.id);
           });
 
-          this.userSubject.getValue().splice(indexToBeRemoved, 1);
+           this.userSubject.getValue().splice(indexToBeRemoved, 1);
         }
       });
+    }).then(value => {
+      this.sortUserAccounts();
     });
-
   }
 
   /**
    * Sends a GET message to the server for a fresh list of all UserAccounts.
    */
   GETAllUserAccounts() {
-    return this.http.get(this.userAccountUrl).pipe(map((response:Response) => response))
+    let obsUsers : Observable<Array<UserAccount>>;
+    obsUsers = this.http.get(this.userAccountUrl).pipe(map((response:Response) => response))
       .pipe(map((data: any) => {
         return data._embedded.userAccounts as UserAccount[];
       }));
+    return obsUsers;
   }
 
   setSelectedUserAccount(userAccount: UserAccount) {
@@ -109,15 +129,13 @@ export class UserAccountService {
 
     if (userAccount.id === -1) {
       await this.http.post<UserAccount>(this.userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
-
         this.refreshUserAccounts();
       }).catch((error: any) => {
         //TODO Add an error display
       });
     } else {
       const url = userAccount._links["update"];
-      this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
-
+      await this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
         this.refreshUserAccounts();
       }).catch((error: any) => {
         //TODO Add an error display

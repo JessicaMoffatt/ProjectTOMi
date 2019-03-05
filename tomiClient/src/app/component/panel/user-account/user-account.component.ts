@@ -2,7 +2,6 @@ import {Component, ElementRef, NgModule, OnInit, ViewChild, ViewContainerRef} fr
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
-import set = Reflect.set;
 
 @Component({
   selector: 'app-user-account',
@@ -67,5 +66,6 @@ export class UserAccountComponent implements OnInit {
    */
   save(userAccount: UserAccount) {
     this.userAccountService.save(userAccount);
+    this.cancel(userAccount);
   }
 }

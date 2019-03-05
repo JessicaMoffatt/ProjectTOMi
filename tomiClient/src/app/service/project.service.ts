@@ -36,7 +36,7 @@ export class ProjectService {
   projects: Observable<Array<Project>>; // added by: James Andrade
 
   constructor(private http: HttpClient) {
-    this.projects = this.getProjects(); // added by: James Andrade
+    this.projects = this.getAllProjects(); // added by: James Andrade
   }
 
   /**

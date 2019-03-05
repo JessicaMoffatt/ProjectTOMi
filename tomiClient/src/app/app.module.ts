@@ -73,9 +73,12 @@ import {NgModule} from "@angular/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {AddUserAccountComponent} from "./component/modal/add-user-account/add-user-account.component";
+import {EditUserComponent} from "./component/panel/edit-user/edit-user.component";
 
 @NgModule({
   declarations: [
+    EditUserComponent,
+    AddUserAccountComponent,
     AppComponent,
     TopNavBarComponent,
     ApprovePanelComponent,

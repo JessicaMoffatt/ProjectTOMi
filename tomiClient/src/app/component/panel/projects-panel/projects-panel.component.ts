@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Project} from "../../../model/project";
 import {ProjectService} from "../../../service/project.service";
-import {ProjectService} from "../../../service/project.service";
 import {ClientService} from "../../../service/client.service";
 import {Client} from "../../../model/client";
 
