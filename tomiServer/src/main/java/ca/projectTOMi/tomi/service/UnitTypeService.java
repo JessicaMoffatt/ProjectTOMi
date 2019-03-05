@@ -76,7 +76,18 @@ public final class UnitTypeService {
 	 *
 	 * @return the UnitType that was persisted.
 	 */
-	public UnitType saveUnitType(final UnitType unitType) {
+	public UnitType createUnitType(final UnitType unitType) {
+		UnitType unitTypeToSave = this.repository.findByName(unitType.getName());
+		unitTypeToSave = unitTypeToSave == null ? new UnitType() : unitTypeToSave;
+		unitTypeToSave.setActive(true);
+		unitTypeToSave.setUnit(unitType.getUnit());
+		unitTypeToSave.setWeight(unitType.getWeight());
+		unitTypeToSave.setName(unitType.getName());
+		return this.repository.save(unitTypeToSave);
+	}
+
+	public UnitType deleteUnitType(final UnitType unitType) {
+		unitType.setActive(false);
 		return this.repository.save(unitType);
 	}
 }

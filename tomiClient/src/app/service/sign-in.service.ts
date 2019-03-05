@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import {TopNavBarComponent} from "../component/panel/top-nav-bar/top-nav-bar.component";
 import {Router} from "@angular/router";
 declare let gapi:any;
 
@@ -49,5 +48,9 @@ export class SignInService {
   getToken():string{
     let userToken = this.user.getAuthResponse().id_token;
     return userToken;
+  }
+
+  getIcon():string{
+    return this.user.getBasicProfile().getImageUrl();
   }
 }

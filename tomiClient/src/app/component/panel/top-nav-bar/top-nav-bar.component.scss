@@ -4,12 +4,12 @@
 mat-toolbar {
   background-color: $orange;
   color: $white;
-  position: absolute;
+  position: fixed;
   height: 9vh;
   left: 0;
   top: 0;
   padding-left: 10vw;
-  width: 100vw;
+  width: 100%;
   box-shadow: 0 0 1vh black;
   z-index: 2;
   img{
@@ -32,4 +32,44 @@ mat-toolbar {
 
 .link:hover{
   background-color: $nav_highlight;
+}
+
+#menu{
+  color: $orange;
+}
+#icon{
+  position: absolute;
+  right: -2.5vh;
+  height: 7vh;
+  width: 7vh;
+  border-radius: 7vh;
+  margin: 0;
+}
+
+#iconDiv{
+  position: absolute;
+  right: -2.5vh;
+  top: 1vh;
+  height: 7vh;
+  width: 7vh;
+  border-radius: 7vh;
+  margin: 0;
+  z-index: -1;
+}
+
+
+#userName{
+  height:9vh;
+  width: available;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #FFFFFF;
+  z-index: 3;
+  overflow: scroll;
+}
+
+#userName:hover{
+  background: $nav_highlight;
+  background-blend-mode: screen;
 }

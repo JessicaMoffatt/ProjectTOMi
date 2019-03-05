@@ -10,7 +10,13 @@ import {AppComponent} from './app.component';
 
 //Material Imports
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatDatepickerModule, MatNativeDateModule, MatTabsModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatDatepickerModule, MatIconModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatTabsModule
+} from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
@@ -128,7 +134,9 @@ import {AccessGuard} from "./AccessGuard";
     MatDialogModule,
     MatToolbarModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatMenuModule,
+    MatIconModule
   ],
   entryComponents: [
     EntryComponent,

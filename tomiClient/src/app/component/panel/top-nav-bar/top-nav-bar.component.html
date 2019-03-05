@@ -9,6 +9,14 @@
       <a class="link" [routerLink]="'/mangeUnitTypes'">Unit Types</a>
       <a class="link" [routerLink]="'/manageTasks'">Tasks</a>
       <a class="link" [routerLink]="'/manageUserAccount'">Users</a>
-      <a class="link" (click)="signInService.signOut()">Logout</a>
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item id="menu" (click)="signInService.signOut()">Logout</button>
+    </mat-menu>
+    <button id="userName" [matMenuTriggerFor]="appMenu">
+      <label>{{signInService.user.getBasicProfile().getName()}}</label>
+      <span id="iconDiv">
+        <img id="icon" [src]="signInService.getIcon()"/>
+      </span>
+    </button>
   </ng-template>
 </mat-toolbar>

@@ -78,9 +78,11 @@ public class TimesheetAuthService {
 		final List<UserAccount> teamMembers = this.userAccountRepository.getUserAccountsByTeamOrderById(team);
 		authPolicy.setRequestingUser(oldTeamLead);
 		authPolicy.setPermission(TimesheetPermission.READ);
-		for(final UserAccount member: teamMembers){
-			authPolicy.setTimesheetOwner(member);
-			this.timesheetAuthRepository.delete(authPolicy);
+		for(final UserAccount member: teamMembers) {
+			if (!member.equals(oldTeamLead)) {
+				authPolicy.setTimesheetOwner(member);
+				this.timesheetAuthRepository.delete(authPolicy);
+			}
 		}
 	}
 }
