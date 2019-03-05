@@ -3,12 +3,12 @@
   <form>
 
   <mat-form-field>
-    <input id="project_name" value="{{this.projectService.selected}}" type="text" placeholder="Project Name" aria-label="Project Name" matInput [formControl]="myControl">
+    <input id="project_name" value="{{this.projectService.selected}}" type="text" placeholder="Project Name" aria-label="Project Name" matInput [formControl]="this.myControl">
   </mat-form-field>
   <br/>
 
   <mat-form-field>
-    <input id="client_name" type="text" placeholder="Client" aria-label="Client" matInput [formControl]="myControl"
+    <input id="client_name" type="text" placeholder="Client" aria-label="Client" matInput [formControl]="this.myControl"
            [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let c of this.clientService.clients | async" [value]="c.name">
@@ -19,7 +19,7 @@
   <br/>
 
   <mat-form-field>
-    <input id="project_manager" type="text" placeholder="Project Manager" aria-label="Project Manager" matInput [formControl]="myControl"
+    <input id="project_manager" type="text" placeholder="Project Manager" aria-label="Project Manager" matInput [formControl]="this.myControl"
            [matAutocomplete]="auto2">
     <mat-autocomplete #auto2="matAutocomplete">
       <mat-option *ngFor="let u of this.userAccountService.userAccounts | async" [value]="u.firstName">
@@ -47,7 +47,7 @@
 
   <mat-form-field>
     <input id="budget_total" type="text" placeholder="Budget Total" aria-label="Budget Total" matInput
-           [formControl]="myControl">
+           [formControl]="this.myControl">
   </mat-form-field>
   <br/>
 

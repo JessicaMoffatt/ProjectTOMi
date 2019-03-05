@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ProjectService} from "../../../../service/project.service";
 import {ClientService} from "../../../../service/client.service";
-
 import {Project} from "../../../../model/project";
 import {FormControl} from "@angular/forms";
 import {ExpenseService} from "../../../../service/expense.service";
@@ -10,7 +9,7 @@ import {UserAccountService} from "../../../../service/user-account.service";
 
 
 @Component({
-  selector: 'app-new-project-panel',
+  selector: 'app-edit-project-sub-panel',
   templateUrl: './edit-project-sub-panel.component.html',
   styleUrls: ['./edit-project-sub-panel.component.scss']
 })

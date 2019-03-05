@@ -4,7 +4,13 @@ import {AppComponent} from './app.component';
 
 //Material Imports
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatCheckboxModule, MatDatepickerModule, MatNativeDateModule, MatTabsModule} from '@angular/material';
+import {
+  MatCheckboxModule,
+  MatDatepickerModule, MatGridListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatTabsModule
+} from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
@@ -123,6 +129,8 @@ import {EditUserComponent} from "./component/panel/edit-user/edit-user.component
     AddTaskComponent
   ],
   imports: [
+    MatGridListModule,
+    MatMenuModule,
     MatCardModule,
     MatCheckboxModule,
     MatTableModule,

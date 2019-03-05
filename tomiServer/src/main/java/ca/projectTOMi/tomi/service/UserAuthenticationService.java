@@ -30,7 +30,7 @@ public class UserAuthenticationService {
 		}
 	}
 
-	public UserAccount checkLogin(final String idToken) throws Exception{
+	public UserAccount checkLogin(final String idToken) throws GeneralSecurityException, IOException{
 		final GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(UserAuthenticationService.googlePublicKeysManager)
 			.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2))
 			.build();

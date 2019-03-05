@@ -48,7 +48,7 @@ export class SigninComponent implements OnInit {
     id_token = googleUser.getAuthResponse().id_token;
     this.http.post("http://localhost:8080/tokensignin", id_token, httpOptions).toPromise().then(response => {
       if(response){
-        this.router.navigate(['/timesheets']);
+        this.router.navigate(['/my_timesheets']);
         this.signIn.setLoggedIn();
       }
       return response;
@@ -58,4 +58,5 @@ export class SigninComponent implements OnInit {
     });
   }
 }
+
 
