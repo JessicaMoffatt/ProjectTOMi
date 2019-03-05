@@ -10,7 +10,12 @@ import {AppComponent} from './app.component';
 
 //Material Imports
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatDatepickerModule, MatNativeDateModule, MatTabsModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatDatepickerModule, MatGridListModule, MatIconModule,
+  MatMenuModule,
+  MatNativeDateModule, MatSnackBarModule
+} from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
@@ -69,6 +74,7 @@ import {BudgetReportComponent} from './component/extra/budget-report/budget-repo
 import { UnitTypeSidebarComponent } from './component/sidebar/unit-type-sidebar/unit-type-sidebar.component';
 import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
 import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-unit-type.component';
+import {AccessGuard} from "./AccessGuard";
 
 @NgModule({
   declarations: [
@@ -127,7 +133,11 @@ import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-uni
     MatDialogModule,
     MatToolbarModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatMenuModule,
+    MatIconModule,
+    MatSnackBarModule,
+    MatGridListModule
   ],
   entryComponents: [
     EntryComponent,
@@ -160,7 +170,8 @@ import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-uni
     UserAccountService,
     TaskPanelService,
     SignInService,
-    MatDatepickerModule
+    MatDatepickerModule,
+    AccessGuard
   ],
   bootstrap: [AppComponent],
   exports: [

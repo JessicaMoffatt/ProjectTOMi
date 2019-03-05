@@ -4,19 +4,22 @@
 mat-toolbar {
   background-color: $orange;
   color: $white;
-  position: absolute;
+  position: fixed;
   height: 9vh;
   left: 0;
   top: 0;
   padding-left: 10vw;
-  width: 100vw;
+  width: 100%;
   box-shadow: 0 0 1vh black;
   z-index: 2;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 1rem;
   img{
     position:absolute;
-    top:0;
-    left:0;
-    margin:1.5vw;
+    top:3.25vh;
+    left:3.25vh;
+    padding:0;
+
   }
 }
 
@@ -32,4 +35,38 @@ mat-toolbar {
 
 .link:hover{
   background-color: $nav_highlight;
+}
+
+#menu{
+  color: $orange;
+}
+#icon{
+  position: inherit;
+  height: 7vh;
+  width: 7vh;
+  border-radius: 7vh;
+  margin: 0;
+}
+
+#menuButton{
+  position: absolute;
+  right: 1vh;
+  top: 1vh;
+  background: none;
+  border: none;
+  height: 7vh;
+  width: 7vh;
+  font-size: 1rem;
+  color: #FFFFFF;
+  z-index: 3;
+}
+
+#userName:hover{
+  background: $nav_highlight;
+  background-blend-mode: screen;
+}
+
+#logo{
+  height:2.5vh;
+  width: auto;
 }
