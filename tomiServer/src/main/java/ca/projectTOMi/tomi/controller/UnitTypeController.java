@@ -97,7 +97,7 @@ public class UnitTypeController {
 	                                        @RequestAttribute final UserAuthManager authMan) throws URISyntaxException {
 		newUnitType.setActive(true);
 		final Resource<UnitType> resource = this.assembler.toResource(
-			new UserAuthLinkWrapper<>(this.unitTypeService.saveUnitType(newUnitType), authMan));
+			new UserAuthLinkWrapper<>(this.unitTypeService.createUnitType(newUnitType), authMan));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
@@ -139,8 +139,7 @@ public class UnitTypeController {
 	@DeleteMapping ("/unit_types/{id}")
 	public ResponseEntity<?> setUnitTypeInactive(@PathVariable final Long id) {
 		final UnitType unitType = this.unitTypeService.getUnitType(id);
-		unitType.setActive(false);
-		this.unitTypeService.saveUnitType(unitType);
+		this.unitTypeService.deleteUnitType(unitType);
 
 		return ResponseEntity.noContent().build();
 	}

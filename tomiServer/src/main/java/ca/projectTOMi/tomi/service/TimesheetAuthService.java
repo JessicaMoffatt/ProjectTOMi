@@ -53,7 +53,7 @@ public class TimesheetAuthService {
 
 	public void removeMemberFromTeam(UserAccount oldMember, Team team){
 		team = this.teamRepository.findById(team.getId()).orElseThrow(TeamNotFoundException::new);
-		if(team.getTeamLead() != null) {
+		if(team.getTeamLead() != null && !oldMember.equals(team.getTeamLead())) {
 			TimesheetAuthorizationPolicy authPolicy = new TimesheetAuthorizationPolicy();
 			authPolicy.setTimesheetOwner(oldMember);
 			authPolicy.setRequestingUser(team.getTeamLead());
@@ -78,9 +78,11 @@ public class TimesheetAuthService {
 		final List<UserAccount> teamMembers = this.userAccountRepository.getUserAccountsByTeamOrderById(team);
 		authPolicy.setRequestingUser(oldTeamLead);
 		authPolicy.setPermission(TimesheetPermission.READ);
-		for(final UserAccount member: teamMembers){
-			authPolicy.setTimesheetOwner(member);
-			this.timesheetAuthRepository.delete(authPolicy);
+		for(final UserAccount member: teamMembers) {
+			if (!member.equals(oldTeamLead)) {
+				authPolicy.setTimesheetOwner(member);
+				this.timesheetAuthRepository.delete(authPolicy);
+			}
 		}
 	}
 }

@@ -15,11 +15,10 @@ export class AccessGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean>|Promise<boolean>|boolean {
     const requiresLogin = route.data.requiresLogin || false;
     if (requiresLogin) {
-      console.log(this.signInService.isUserLoggedIn.getValue());
       if(this.signInService.isUserLoggedIn.getValue()) {
         return true;
       }else{
-        this.router.navigate(['/signIn']);
+        this.router.navigate(['/sign_in']);
         return false;
       }
     }
