@@ -3,6 +3,18 @@
 @version 1.0
 -->
 
+<form >
+  <mat-form-field>
+    <input matInput placeholder="First Name" [formControl]="firstNameControl" value="{{userAccount.firstName}}"
+    [errorStateMatcher]="firstNameMatcher">
+    <mat-hint>Errors appear instantly!</mat-hint>
+    <mat-error *ngIf="firstNameControl.hasError('required') && !firstNameControl.hasError('pattern')">First name is <strong>required</strong></mat-error>
+    <mat-error *ngIf="firstNameControl.hasError('pattern')">Please enter a valid name</mat-error>
+  </mat-form-field>
+
+</form>
+
+
 <div [ngClass]="'edit_user_account_container'">
   <div [ngClass]="'user_account_wrapper'">
   <span>

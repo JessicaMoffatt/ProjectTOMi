@@ -1,6 +1,17 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {ReactiveFormsModule, FormControl, Validators, FormGroupDirective, NgForm} from "@angular/forms";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
+import {ErrorStateMatcher} from "@angular/material";
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
+
 
 /**
  * EditUserComponent is an individual, editable entry for a UserAccount.
@@ -14,6 +25,13 @@ import {TeamService} from "../../../service/team.service";
   styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent implements OnInit {
+
+  firstNameControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern(/^[a-zA-Z ]{1,255}$/)
+  ]);
+
+  firstNameMatcher = new MyErrorStateMatcher();
 
   /** The UserAccount model associated with this component. */
   @Input() userAccount: UserAccount;
