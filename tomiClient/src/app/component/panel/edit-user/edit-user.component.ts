@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {ReactiveFormsModule, FormControl, Validators, FormGroupDirective, NgForm} from "@angular/forms";
+import {FormControl, Validators, FormGroupDirective, NgForm} from "@angular/forms";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
 import {ErrorStateMatcher} from "@angular/material";
@@ -8,7 +8,7 @@ import {ErrorStateMatcher} from "@angular/material";
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+    return !!(control && control.invalid && (control.dirty || isSubmitted));
   }
 }
 
@@ -26,12 +26,30 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class EditUserComponent implements OnInit {
 
-  firstNameControl = new FormControl('', [
+  userAccountFirstNameControl = new FormControl('', [
     Validators.required,
     Validators.pattern(/^[a-zA-Z ]{1,255}$/)
   ]);
 
-  firstNameMatcher = new MyErrorStateMatcher();
+  userAccountLastNameControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern(/^[a-zA-Z ]{1,255}$/)
+  ]);
+
+  userAccountEmailControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+    Validators.pattern(/^[\w\W]+@[Gg][Mm][Aa][Ii][Ll]\.[Cc][Oo][Mm]$/)
+  ]);
+
+  userAccountRateControl = new FormControl('', [
+    Validators.required,
+    Validators.min(1)
+  ])
+
+  userAccountNameMatcher = new MyErrorStateMatcher();
+  userAccountEmailCatcher = new MyErrorStateMatcher();
+  userAccountRateCatcher = new MyErrorStateMatcher();
 
   /** The UserAccount model associated with this component. */
   @Input() userAccount: UserAccount;

@@ -22,6 +22,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatToolbarModule} from "@angular/material";
+import {MatCheckboxModule } from '@angular/material/checkbox';
 
 import {AddTeamComponent, TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
 import {TeamSidebarService} from "./service/team-sidebar.service";
@@ -133,6 +134,7 @@ import {AccessGuard} from "./AccessGuard";
     MatSelectModule,
     MatDialogModule,
     MatToolbarModule,
+    MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatMenuModule,
