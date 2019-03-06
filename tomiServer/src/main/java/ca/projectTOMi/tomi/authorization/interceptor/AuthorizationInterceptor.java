@@ -87,7 +87,13 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		} catch (final ClassCastException e) {
 			return true;
 		}
-		if ("TimesheetController".matches(controller) || "EntryController".matches(controller)) {
+		if(requestURI.contains("build_nav_bar")){
+			final AuthManager<UserAuthorizationPolicy> authMan;
+			authMan = new UserAuthManager(user);
+			authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
+			request.setAttribute("authMan", authMan);
+			return true;
+		}else if ("TimesheetController".matches(controller) || "EntryController".matches(controller)) {
 			final AuthManager<TimesheetAuthorizationPolicy> authMan;
 			authMan = new TimesheetAuthManager(user, this.getOwner(requestURI, requestMethod, user));
 			authMan.loadUserPolicies(this.timesheetAuthRepository.getAllByRequestingUser(user));
