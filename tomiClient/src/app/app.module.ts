@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {InjectionToken, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
@@ -11,6 +11,8 @@ import {AppComponent} from './app.component';
 //Material Imports
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
+  DateAdapter,
+  MAT_DATE_LOCALE,
   MatButtonModule,
   MatDatepickerModule, MatGridListModule, MatIconModule,
   MatMenuModule,
@@ -52,7 +54,6 @@ import {EditUserComponent} from './component/panel/edit-user/edit-user.component
 import {ViewUserComponent} from './component/panel/view-user/view-user.component';
 import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
 import {TimesheetService} from "./service/timesheet.service";
-// import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry-submitted.component';
 import {AddTaskComponent} from './component/modal/add-task/add-task.component';
 import {TaskPanelService} from "./service/task-panel.service";
 import {EditTaskComponent} from './component/modal/edit-task/edit-task.component';

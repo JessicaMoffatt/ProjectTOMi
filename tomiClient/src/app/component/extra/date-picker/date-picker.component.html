@@ -4,8 +4,8 @@
 -->
 
 <mat-form-field>
-  <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="Choose a date"/>
-  <span id="calendar" style="background:red; z-index: 9000" (mouseenter)="doSetMinDate()">
+  <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="Choose a date" (dateChange)="onDateChange($event)"/>
+  <span id="calendar" (mouseenter)="doSetMinDate()">
   <mat-datepicker-toggle matSuffix [for]="picker"  (click)="doSetMinDate()"></mat-datepicker-toggle>
   <mat-datepicker #picker  (click)="doSetMinDate()"></mat-datepicker>
   </span>

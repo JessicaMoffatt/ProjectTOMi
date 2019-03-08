@@ -1,7 +1,7 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {TimesheetService} from "../../../service/timesheet.service";
 import {TeamMemberTimesheetService} from "../../../service/team-member-timesheet.service";
-import {NativeDateAdapter} from "@angular/material";
+import {MatDatepickerInputEvent, NativeDateAdapter} from "@angular/material";
 
 const millisecondsToDays: number = 86400000;
 
@@ -13,7 +13,7 @@ const millisecondsToDays: number = 86400000;
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss']
 })
-export class DatePickerComponent {
+export class DatePickerComponent implements OnInit{
   horse: boolean;
   /**
    * The latest date that can be selected.
@@ -38,22 +38,26 @@ export class DatePickerComponent {
     this.horse = true;
   }
 
+  ngOnInit(): void {
+    console.log("HERE");
+  }
+
   doSetMinDate(){
-    this.teamMemberTimesheetService.doSetMinDate();
+    this.timesheetService.doSetMinDate();
   }
 
   /**
    * Changes the selected date and displays the corresponding timesheet.
-   * @param value The date selected.
+   * @param event The date selected.
    */
-  onDateChange(value: Date): void {
-    let day = value.getDay();
+  onDateChange(event: MatDatepickerInputEvent<Date>): void {
+    let day = event.value.getDay();
     if (day === 0) {
       day = 7;
     }
-    let selectedMonday = value.getDate() - day + 1;
+    let selectedMonday = event.value.getDate() - day + 1;
 
-    this.selectedDate = new Date(value);
+    this.selectedDate = new Date(event.value);
     this.selectedDate.setDate(selectedMonday);
     this.selectedDate.setHours(0, 0, 0, 0);
 
