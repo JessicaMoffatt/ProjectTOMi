@@ -37,7 +37,7 @@ mat-toolbar {
   background-color: $nav_highlight;
 }
 
-#menu{
+.menu{
   color: $orange;
 }
 #icon{
@@ -69,4 +69,25 @@ mat-toolbar {
 #logo{
   height:2.5vh;
   width: auto;
+}
+
+#menuButton2{
+  position: absolute;
+  right: 1vh;
+  top: 1vh;
+  background: none;
+  border: none;
+  height: 7vh;
+  width: 7vh;
+  font-size: 1rem;
+  color: #FFFFFF;
+  z-index: 3;
+}
+
+#icon2{
+  position: inherit;
+  height: 7vh;
+  width: 7vh;
+  border-radius: 7vh;
+  margin: 0;
 }
