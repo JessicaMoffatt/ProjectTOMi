@@ -1,5 +1,5 @@
 <mat-toolbar>
-  <img id="logo" src="../../../../assets/tomiLogo.png"/>
+  <img id="logo" src="../../../../assets/tomiLogo.png" alt="Logo"/>
   <ng-template [ngIf]="isUserLoggedIn">
     <ng-template [ngIf]="signInService.navList['my_timesheets']">
       <a class="link" [routerLink]="'/my_timesheets'">Timesheets</a>
@@ -32,9 +32,11 @@
     <ng-template [ngIf]="signInService.navList['manage_user_accounts']">
       <a class="link" [routerLink]="'/manage_user_accounts'">Users</a>
     </ng-template>
+
     <mat-menu #appMenu="matMenu">
       <button mat-menu-item id="menu" (click)="signInService.signOut()">Logout</button>
     </mat-menu>
+
     <button id="menuButton" mat-icon-button [matMenuTriggerFor]="appMenu">
       <img id="icon" [src]="signInService.getIcon()"/>
     </button>

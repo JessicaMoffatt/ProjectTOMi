@@ -35,6 +35,7 @@ export class SignInService {
   async setLoggedIn(){
     let promise = new Promise((resolve, reject)=>{
       resolve(this.getNavBarList());
+
     });
     this.isUserLoggedIn.next(true);
   }

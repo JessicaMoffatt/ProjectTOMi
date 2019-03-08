@@ -50,14 +50,14 @@ import {UserAccountSidebarService} from "./service/user-account-sidebar-service"
 import {AddUserAccountComponent} from './component/modal/add-user-account/add-user-account.component';
 import {EditUserComponent} from './component/panel/edit-user/edit-user.component';
 import {ViewUserComponent} from './component/panel/view-user/view-user.component';
-import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
+import {AddHeaderInterceptor} from "./add-header-interceptor";
 import {TimesheetService} from "./service/timesheet.service";
 // import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry-submitted.component';
 import {AddTaskComponent} from './component/modal/add-task/add-task.component';
 import {TaskPanelService} from "./service/task-panel.service";
 import {EditTaskComponent} from './component/modal/edit-task/edit-task.component';
 import {TeamService} from "./service/team.service";
-import {SigninComponent} from './component/panel/signin-panel/signin.component';
+import {SignInComponent} from './component/panel/sign-in-panel/sign-in.component';
 import {SignInService} from "./service/sign-in.service";
 import {EntryUneditableComponent} from './component/panel/entry-uneditable/entry-uneditable.component';
 import {DatePickerComponent} from './component/extra/date-picker/date-picker.component';
@@ -74,7 +74,7 @@ import {BudgetReportComponent} from './component/extra/budget-report/budget-repo
 import { UnitTypeSidebarComponent } from './component/sidebar/unit-type-sidebar/unit-type-sidebar.component';
 import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
 import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-unit-type.component';
-import {AccessGuard} from "./AccessGuard";
+import {AccessGuard} from "./access-guard";
 
 @NgModule({
   declarations: [
@@ -103,7 +103,7 @@ import {AccessGuard} from "./AccessGuard";
     ViewUserComponent,
     DeleteEntryModalComponent,
     SubmitTimesheetModalComponent,
-    SigninComponent,
+    SignInComponent,
     DatePickerComponent,
     TeamMemberTimesheetComponent,
     TeamMemberSidebarComponent,

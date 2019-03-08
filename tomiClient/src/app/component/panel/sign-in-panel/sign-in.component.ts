@@ -15,11 +15,11 @@ const httpOptions = {
   providers: [SignInService],
 })
 @Component({
-  selector: 'app-login',
-  templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.scss']
+  selector: 'app-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.scss']
 })
-export class SigninComponent implements OnInit {
+export class SignInComponent implements OnInit {
   signIn: SignInService;
   document:any;
   meta:Meta;
