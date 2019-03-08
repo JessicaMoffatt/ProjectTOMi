@@ -8,7 +8,7 @@ import {
   MatCheckboxModule,
   MatDatepickerModule, MatGridListModule,
   MatMenuModule,
-  MatNativeDateModule,
+  MatNativeDateModule, MatSnackBarModule,
   MatTabsModule
 } from '@angular/material';
 import {MatListModule} from '@angular/material/list';
@@ -68,7 +68,7 @@ import {BudgetReportComponent} from './component/extra/budget-report/budget-repo
 import { EditTaskComponent } from './component/modal/edit-task/edit-task.component';
 import {ProjectService} from "./service/project.service";
 import { EditProjectSubPanelComponent } from './component/panel/projects-panel/edit-project-sub-panel/edit-project-sub-panel.component';
-import {MatFormFieldModule, MatInput} from "@angular/material";
+import {MatFormFieldModule, MatInput } from "@angular/material";
 import { ExpenseListComponent } from './component/panel/projects-panel/expense-list/expense-list.component';
 import { TeamMemberListComponent } from './component/panel/projects-panel/team-member-list/team-member-list.component';
 import { UnitTypeSidebarComponent } from './component/sidebar/unit-type-sidebar/unit-type-sidebar.component';
@@ -80,6 +80,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {AddUserAccountComponent} from "./component/modal/add-user-account/add-user-account.component";
 import {EditUserComponent} from "./component/panel/edit-user/edit-user.component";
+import {AccessGuard} from "./AccessGuard";
 
 @NgModule({
   declarations: [
@@ -129,6 +130,7 @@ import {EditUserComponent} from "./component/panel/edit-user/edit-user.component
     AddTaskComponent
   ],
   imports: [
+    MatSnackBarModule,
     MatGridListModule,
     MatMenuModule,
     MatCardModule,
@@ -190,7 +192,8 @@ import {EditUserComponent} from "./component/panel/edit-user/edit-user.component
     SignInService,
     MatDatepickerModule,
     TaskPanelService,
-    ProjectService
+    ProjectService,
+    AccessGuard
   ],
   bootstrap: [AppComponent],
   exports: [
