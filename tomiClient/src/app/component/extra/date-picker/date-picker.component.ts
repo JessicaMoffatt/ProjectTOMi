@@ -33,13 +33,13 @@ export class DatePickerComponent implements OnInit{
    */
   @Input() parent;
 
-  constructor(private timesheetService: TimesheetService, private teamMemberTimesheetService:TeamMemberTimesheetService){
+  constructor(private timesheetService: TimesheetService){
     this.maxDate = new Date();
     this.horse = true;
   }
 
   ngOnInit(): void {
-    console.log("HERE");
+    console.log(this.selectedDate);
   }
 
   doSetMinDate(){
