@@ -23,8 +23,7 @@ export class ViewUserComponent implements OnInit {
   @Input() userAccount: UserAccount;
   /** Event Emitter used to notify the UserAccountComponent parent that the ViewUserComponent edit had been requested. */
   @Output() editRequested = new EventEmitter<any>();
-  /** Event Emitter used to notify the UserAccountComponent parent that the ViewUserComponent delete had been requested. */
-  @Output() deleteRequested = new EventEmitter<any>();
+
 
   constructor(public teamService: TeamService) { }
 
@@ -39,10 +38,5 @@ export class ViewUserComponent implements OnInit {
     this.editRequested.emit(this.userAccount);
   }
 
-  /**
-   * Emits a request for this UserAccount to be deleted.
-   */
-  delete():void {
-    this.deleteRequested.emit(this.userAccount);
-  }
+
 }

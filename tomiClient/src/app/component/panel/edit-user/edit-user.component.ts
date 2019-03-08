@@ -4,20 +4,11 @@ import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
 import {ErrorStateMatcher} from "@angular/material";
 
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || isSubmitted));
-  }
-}
-
-
 /**
  * EditUserComponent is an individual, editable entry for a UserAccount.
  *
  * @author Iliya Kiritchkov
- * @version 1.0
+ * @version 1.1
  */
 @Component({
   selector: 'app-edit-user',
@@ -26,35 +17,44 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class EditUserComponent implements OnInit {
 
+  /** Validations for the first name. */
   userAccountFirstNameControl = new FormControl('', [
     Validators.required,
     Validators.pattern(/^[a-zA-Z ]{1,255}$/)
   ]);
 
+  /** Validations for the last name. */
   userAccountLastNameControl = new FormControl('', [
     Validators.required,
     Validators.pattern(/^[a-zA-Z ]{1,255}$/)
   ]);
 
+  /** Validations for the email address. */
   userAccountEmailControl = new FormControl('', [
     Validators.required,
-    Validators.email,
-    Validators.pattern(/^[\w\W]+@[Gg][Mm][Aa][Ii][Ll]\.[Cc][Oo][Mm]$/)
+    Validators.email
   ]);
 
+  /** Validations for the salaried rate. */
   userAccountRateControl = new FormControl('', [
     Validators.required,
-    Validators.min(1)
+    Validators.min(0),
+    Validators.pattern(/^[0-9]{1,3}(?:,?[0-9]{3})*\.?[0-9]{0,2}$/)
   ])
 
+  /** Invalid name error detection. */
   userAccountNameMatcher = new MyErrorStateMatcher();
-  userAccountEmailCatcher = new MyErrorStateMatcher();
-  userAccountRateCatcher = new MyErrorStateMatcher();
+  /** Invalid email error detection. */
+  userAccountEmailMatcher = new MyErrorStateMatcher();
+  /** Invalid salaried rate error detection. */
+  userAccountRateMatcher = new MyErrorStateMatcher();
 
   /** The UserAccount model associated with this component. */
   @Input() userAccount: UserAccount;
   /** Event Emitter used to notify the UserAccountComponent parent that the EditUserComponent save had been requested. */
   @Output() saveRequested = new EventEmitter<any>();
+  /** Event Emitter used to notify the UserAccountComponent parent that the EditUserComponent delete had been requested. */
+  @Output() deleteRequested = new EventEmitter<any>();
   /** Event Emitter used to notify the UserAccountComponent parent that the EditUserComponent cancel had been requested. */
   @Output() cancelRequested = new EventEmitter<any>();
 
@@ -77,14 +77,22 @@ export class EditUserComponent implements OnInit {
   @ViewChild('editUserProgramDirector') editUserProgramDirector;
 
   /** The input checkbox for the UserAccount's Admin status.*/
-  @ViewChild('editUserAdmin') editUserAdmin;
+  @ViewChild('editUserAdmin') editUserAdmin
+
+  @ViewChild('editUserAccountForm') editUserAccountForm
 
   constructor(public teamService: TeamService) {
 
   }
 
+  /**
+   * Initialize the value inputs on the template. This fixes issues caused by the Validators.required when an input is pristine.
+   */
   ngOnInit() {
-
+    this.userAccountFirstNameControl.setValue(this.userAccount.firstName);
+    this.userAccountLastNameControl.setValue(this.userAccount.lastName);
+    this.userAccountEmailControl.setValue(this.userAccount.email);
+    this.userAccountRateControl.setValue((this.userAccount.salariedRate/100).toFixed(2));
   }
 
   /**
@@ -95,37 +103,22 @@ export class EditUserComponent implements OnInit {
     this.userAccount.lastName = this.editUserLastName.nativeElement.value;
     this.userAccount.email = this.editUserEmail.nativeElement.value;
     this.userAccount.salariedRate = Number (this.editUserSalariedRate.nativeElement.value * 100);
-    this.userAccount.teamId = Number (this.editUserTeamId.nativeElement.value);
-    this.userAccount.programDirector = this.editUserProgramDirector.nativeElement.checked;
-    this.userAccount.admin = this.editUserAdmin.nativeElement.checked;
-
-    let goodUserAccount = true;
-    let nameRegex = /^[a-zA-Z ]{1,255}$/;
-
-    // Validate the first and last names
-    if (!nameRegex.test(this.userAccount.firstName) || !nameRegex.test(this.userAccount.lastName)) {
-      goodUserAccount = false;
+    if (!this.editUserTeamId.empty) {
+      this.userAccount.teamId = this.editUserTeamId.selected.value;
     } else {
-      // Capitalize the first character of the first and last name
-      this.userAccount.firstName = this.userAccount.firstName.charAt(0).toUpperCase() + this.userAccount.firstName.substring(1);
-      this.userAccount.lastName = this.userAccount.lastName.charAt(0).toUpperCase() + this.userAccount.lastName.substring(1);
+      this.editUserTeamId = -1;
     }
+    this.userAccount.programDirector = this.editUserProgramDirector.checked;
+    this.userAccount.admin = this.editUserAdmin.checked;
 
-    // Validate length of email address
-    if (!(this.userAccount.email.length > 1)) {
-      goodUserAccount = false;
-    }
+    this.saveRequested.emit(this.userAccount);
+  }
 
-    // Validate salaried rate
-    // If valid, multiply by 100 to change from pennies to dollars.
-    if (!(this.userAccount.salariedRate > 0)) {
-      goodUserAccount = false;
-    }
-
-    // Save the new UserAccount if it has been fully validated.
-    if (goodUserAccount) {
-      this.saveRequested.emit(this.userAccount);
-    }
+  /**
+   * Emits a request for this UserAccount to be deleted.
+   */
+  delete():void {
+    this.deleteRequested.emit(this.userAccount);
   }
 
   /**
@@ -136,9 +129,22 @@ export class EditUserComponent implements OnInit {
     this.editUserLastName.nativeElement.value = this.userAccount.lastName;
     this.editUserEmail.nativeElement.value = this.userAccount.email;
     this.editUserSalariedRate.nativeElement.value = (this.userAccount.salariedRate/100).toFixed(2);
-    this.editUserTeamId.nativeElement.value = this.userAccount.teamId;
-    this.editUserAdmin.nativeElement.checked = this.userAccount.admin;
-    this.editUserProgramDirector.nativeElement.checked = this.userAccount.programDirector;
+    if (this.userAccount.teamId) {
+      this.editUserTeamId.selected.value = this.userAccount.teamId;
+    } else {
+      //this.editUserTeamId.selected.value = -1;
+    }
+    this.editUserAdmin.checked = this.userAccount.admin;
+    this.editUserProgramDirector.checked = this.userAccount.programDirector;
     this.cancelRequested.emit(this.userAccount);
+  }
+}
+
+
+/** Inner class for error detection of the Angular Material input fields. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || isSubmitted));
   }
 }

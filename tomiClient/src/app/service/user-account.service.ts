@@ -133,7 +133,7 @@ export class UserAccountService {
         //TODO Add an error display
       });
     } else {
-      const url = userAccount._links["update"];
+      const url = userAccount._links["self"];
       await this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
         this.refreshUserAccounts();
       }).catch((error: any) => {
@@ -149,7 +149,8 @@ export class UserAccountService {
    * @param account The UserAccount to be deleted.
    */
     delete(accountToDelete:UserAccount) {
-      let url = accountToDelete._links["delete"];
+      console.log(accountToDelete._links);
+      const url = accountToDelete._links["self"];
       this.http.delete(url["href"], httpOptions).subscribe((response) => {
         this.refreshUserAccounts();
       });
