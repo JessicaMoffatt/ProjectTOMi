@@ -246,6 +246,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   navigateToTimesheet() {
     this.router.navigateByUrl('/', {skipLocationChange: true}).finally(() =>
       this.router.navigate(["/my_timesheets"]));
+      this.timesheetService.setCurrentDate();
   }
 
   /**
