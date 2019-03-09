@@ -24,8 +24,6 @@
             <mat-error *ngIf="userAccountLastNameControl.hasError('pattern')">Please enter a valid name</mat-error>
           </mat-form-field>
         </td>
-        <td>
-        </td>
       </tr>
       <tr>
         <td>
@@ -35,25 +33,26 @@
             <mat-error *ngIf="userAccountEmailControl.hasError('email')">Please enter a valid email address</mat-error>
           </mat-form-field>
         </td>
-        <td></td>
+      </tr>
+      <tr>
         <td>
+          <mat-form-field>
+            <input matInput type="number" #editUserSalariedRate placeholder="Salaried Rate" [formControl]="userAccountRateControl" [errorStateMatcher]="userAccountRateMatcher">
+            <mat-error *ngIf="userAccountRateControl.hasError('required') && !userAccountRateControl.hasError('min') && !userAccountRateControl.hasError('pattern')">Salaried rate is <strong>required</strong></mat-error>
+            <mat-error *ngIf="userAccountRateControl.hasError('min') && !userAccountRateControl.hasError('pattern')">Please enter at least 0.00</mat-error>
+            <mat-error *ngIf="userAccountRateControl.hasError('pattern')">Please enter a valid rate</mat-error>
+          </mat-form-field>
         </td>
       </tr>
       <tr>
-        <mat-form-field>
-          <input matInput type="number" #editUserSalariedRate placeholder="Salaried Rate" [formControl]="userAccountRateControl" [errorStateMatcher]="userAccountRateMatcher">
-          <mat-error *ngIf="userAccountRateControl.hasError('required') && !userAccountRateControl.hasError('min') && !userAccountRateControl.hasError('pattern')">Salaried rate is <strong>required</strong></mat-error>
-          <mat-error *ngIf="userAccountRateControl.hasError('min') && !userAccountRateControl.hasError('pattern')">Please enter at least 0.00</mat-error>
-          <mat-error *ngIf="userAccountRateControl.hasError('pattern')">Please enter a valid rate</mat-error>
-        </mat-form-field>
-      </tr>
-      <tr>
-        <mat-form-field>
-          <mat-select #editUserTeamId placeholder="Team" [value]="userAccount.teamId">
-            <mat-option [value]="-1">None</mat-option>
-            <mat-option *ngFor="let team of teamService.teamsObservable" [value]="team.id">{{team.teamName}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <td>
+          <mat-form-field>
+            <mat-select #editUserTeamId placeholder="Team" [value]="userAccount.teamId">
+              <mat-option [value]="-1">None</mat-option>
+              <mat-option *ngFor="let team of teamService.teamsObservable" [value]="team.id">{{team.teamName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
       </tr>
       <tr>
         <td>
@@ -65,8 +64,6 @@
           <mat-checkbox #editUserProgramDirector [checked]="userAccount.programDirector">
             Program Director
           </mat-checkbox>
-        </td>
-        <td>
         </td>
       </tr>
     </table>

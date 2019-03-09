@@ -40,7 +40,7 @@ export class EditUserComponent implements OnInit {
     Validators.required,
     Validators.min(0),
     Validators.pattern(/^[0-9]{1,3}(?:,?[0-9]{3})*\.?[0-9]{0,2}$/)
-  ])
+  ]);
 
   /** Invalid name error detection. */
   userAccountNameMatcher = new MyErrorStateMatcher();
@@ -77,13 +77,12 @@ export class EditUserComponent implements OnInit {
   @ViewChild('editUserProgramDirector') editUserProgramDirector;
 
   /** The input checkbox for the UserAccount's Admin status.*/
-  @ViewChild('editUserAdmin') editUserAdmin
+  @ViewChild('editUserAdmin') editUserAdmin;
 
-  @ViewChild('editUserAccountForm') editUserAccountForm
+  /** The ngForm for this component */
+  @ViewChild('editUserAccountForm') editUserAccountForm;
 
-  constructor(public teamService: TeamService) {
-
-  }
+  constructor(public teamService: TeamService) { }
 
   /**
    * Initialize the value inputs on the template. This fixes issues caused by the Validators.required when an input is pristine.
@@ -99,7 +98,6 @@ export class EditUserComponent implements OnInit {
    * Emits a request for this UserAccount's changes to be saved.
    */
   save():void {
-    if (this.userAccountFirstNameControl.valid && this.userAccountLastNameControl.valid && this.userAccountEmailControl.valid && this.userAccountRateControl) {
 
       this.userAccount.firstName = this.editUserFirstName.nativeElement.value;
       this.userAccount.lastName = this.editUserLastName.nativeElement.value;
@@ -115,7 +113,7 @@ export class EditUserComponent implements OnInit {
 
       this.saveRequested.emit(this.userAccount);
     }
-  }
+
 
   /**
    * Emits a request for this UserAccount to be deleted.

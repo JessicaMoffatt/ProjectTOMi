@@ -1,8 +1,8 @@
 import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {UserAccountSidebarService} from "../../../service/user-account-sidebar-service";
 import {UserAccountService} from "../../../service/user-account.service";
-import {UserAccount} from "../../../model/userAccount";
 import {AddUserAccountComponent} from "../../modal/add-user-account/add-user-account.component";
+import {MatDialog} from "@angular/material";
 
 @Component({
   selector: 'app-user-account-sidebar',
@@ -14,11 +14,27 @@ export class UserAccountSidebarComponent implements OnInit {
   @ViewChild('add_user_account_container', {read: ViewContainerRef})
   public add_user_account_container: ViewContainerRef;
 
-  constructor(public resolver: ComponentFactoryResolver, public userAccountSidebarService: UserAccountSidebarService, private userAccountService: UserAccountService) {
+  /** Demo variables to be removed*/
+  animal: String;
+  name: String;
+
+  constructor(public dialog: MatDialog, public resolver: ComponentFactoryResolver, public userAccountSidebarService: UserAccountSidebarService, private userAccountService: UserAccountService) {
   }
 
   ngOnInit() {
 
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddUserAccountComponent, {
+      // width: '250px',
+      data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
   }
 
   /**

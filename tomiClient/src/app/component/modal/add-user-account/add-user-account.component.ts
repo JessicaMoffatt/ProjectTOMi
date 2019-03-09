@@ -1,19 +1,15 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
-import {UserAccountSidebarService} from "../../../service/user-account-sidebar-service";
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
-import {TeamSidebarService} from "../../../service/team-sidebar.service";
-import {Team} from "../../../model/team";
 import {TeamService} from "../../../service/team.service";
+import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {ErrorStateMatcher, MatDialogRef} from "@angular/material";
 
 /**
  * AddUserAccountComponent is a modal form used to add a new UserAccount to the database.
  *
  * @author Iliya Kiritchkov
- * @version 1.0
+ * @version 1.1
  */
 @Component({
   selector: 'app-add-user-account',
@@ -21,7 +17,73 @@ import {TeamService} from "../../../service/team.service";
   styleUrls: ['./add-user-account.component.scss']
 })
 export class AddUserAccountComponent implements OnInit {
-  constructor(private userAccountSidebarService: UserAccountSidebarService, private userAccountService: UserAccountService, private teamService: TeamService) { }
+
+  /** Validations for the first name. */
+  userAccountFirstNameControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern(/^[a-zA-Z ]{1,255}$/)
+  ]);
+
+  /** Validations for the last name. */
+  userAccountLastNameControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern(/^[a-zA-Z ]{1,255}$/)
+  ]);
+
+  /** Validations for the email address. */
+  userAccountEmailControl = new FormControl('', [
+    Validators.required,
+    Validators.email
+  ]);
+
+  /** Validations for the salaried rate. */
+  userAccountRateControl = new FormControl('', [
+    Validators.required,
+    Validators.min(0),
+    Validators.pattern(/^[0-9]{1,3}(?:,?[0-9]{3})*\.?[0-9]{0,2}$/)
+  ]);
+
+  /** Invalid name error detection. */
+  userAccountNameMatcher = new MyErrorStateMatcher();
+  /** Invalid email error detection. */
+  userAccountEmailMatcher = new MyErrorStateMatcher();
+  /** Invalid salaried rate error detection. */
+  userAccountRateMatcher = new MyErrorStateMatcher();
+
+  /** The input field for the UserAccount's first name. */
+  @ViewChild('addUserFirstName') addUserAccountFirstName;
+
+  /** The input field for the UserAccount's last name. */
+  @ViewChild('addUserLastName') addUserAccountLastName;
+
+  /** The input field for the UserAccount's email address. */
+  @ViewChild('addUserEmail') addUserAccountEmail;
+
+  /** The input field for the UserAccount's salaried rate. */
+  @ViewChild('addUserSalariedRate') addUserAccountSalariedRate;
+
+  /** The input field for the UserAccount's team. */
+  @ViewChild('addUserTeamId') addUserAccountTeamId;
+
+  /** The input field for the UserAccount's Program Director status. */
+  @ViewChild('addUserProgramDirector') addUserAccountProgramDirector;
+
+  /** The input field for the UserAccount's admin status. */
+  @ViewChild('addUserAdmin') addUserAccountAdmin;
+
+  /** The ngForm for this component */
+  @ViewChild('addUserForm') addUserAccountForm;
+
+  constructor(public dialogRef: MatDialogRef<AddUserAccountComponent>,
+              private userAccountService: UserAccountService,
+              private teamService: TeamService) { }
+
+  /**
+   * Closes the modal component.
+    */
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
   ngOnInit() {
 
@@ -31,52 +93,31 @@ export class AddUserAccountComponent implements OnInit {
    * Adds a new UserAccount. Passes the request to save the new UserAccount to the UserAccountService.
    */
   addUserAccount() {
-    let userAccount = new UserAccount();
-    userAccount.firstName = (<HTMLInputElement>document.getElementById("user_account_to_add_first_name")).value;
-    userAccount.lastName = (<HTMLInputElement>document.getElementById("user_account_to_add_last_name")).value;
-    userAccount.email = (<HTMLInputElement>document.getElementById("user_account_to_add_email")).value;
-    userAccount.salariedRate = Number((<HTMLInputElement>document.getElementById("user_account_to_add_rate")).value);
-    userAccount.teamId = Number((<HTMLInputElement>document.getElementById("user_account_to_add_team")).value);
+    let userAccountToAdd = new UserAccount();
+    userAccountToAdd.firstName = this.addUserAccountFirstName.nativeElement.value;
+    userAccountToAdd.lastName = this.addUserAccountLastName.nativeElement.value;
+    userAccountToAdd.email = this.addUserAccountEmail.nativeElement.value;
+    userAccountToAdd.salariedRate = Number(this.addUserAccountSalariedRate.nativeElement.value * 100);
 
-    let goodUserAccount = true;
-    let nameRegex = /^[a-zA-Z ]{1,255}$/;
-
-    // Validate the first and last names
-    if (!nameRegex.test(userAccount.firstName) || !nameRegex.test(userAccount.lastName)) {
-      goodUserAccount = false;
+    if (this.addUserAccountTeamId.selected) {
+      userAccountToAdd.teamId = this.addUserAccountTeamId.selected.value;
     } else {
-      // Capitalize the first character of the first and last name are capitalized
-      userAccount.firstName = userAccount.firstName.charAt(0).toUpperCase() + userAccount.firstName.substring(1);
-      userAccount.lastName = userAccount.lastName.charAt(0).toUpperCase() + userAccount.lastName.substring(1);
+      userAccountToAdd.teamId = -1;
     }
 
-    // Validate length of email address
-    if (!(userAccount.email.length > 1)) {
-      goodUserAccount = false;
-    }
+    userAccountToAdd.programDirector = this.addUserAccountProgramDirector.checked;
+    userAccountToAdd.admin = this.addUserAccountAdmin.checked;
 
-    // Validate salaried rate
-    // If valid, multiply by 100 to change from pennies to dollars.
-    if (!(userAccount.salariedRate > 0)) {
-      goodUserAccount = false;
-    } else {
-      userAccount.salariedRate *= 100;
-    }
+    this.userAccountService.save(userAccountToAdd);
+    this.dialogRef.close();
 
-    // Save the new UserAccount if it has been fully validated.
-    if (goodUserAccount) {
-      this.userAccountService.save(userAccount).then(value => {
-        this.destroyAddUserAccountComponent();
-      });
-    }
-  }
-
-  /**r
-   * Destroys the dynamically created Add UserAccount component.
-   */
-  destroyAddUserAccountComponent() {
-    this.userAccountSidebarService.destroyAddUserAccountComponent();
   }
 }
 
-
+/** Inner class for error detection of the Angular Material input fields. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || isSubmitted));
+  }
+}
