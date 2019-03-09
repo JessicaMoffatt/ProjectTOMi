@@ -3,6 +3,7 @@ import {UserAccount} from "../model/userAccount";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {MatSnackBar, MatSnackBarHorizontalPosition} from "@angular/material";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -31,7 +32,7 @@ export class UserAccountService {
   userAccounts: Observable<Array<UserAccount>>;
   userSubject: BehaviorSubject<Array<UserAccount>>;
 
-  public constructor(private http: HttpClient) {
+  public constructor(private http: HttpClient, public snackBar:MatSnackBar) {
 
   }
 
@@ -46,7 +47,7 @@ export class UserAccountService {
   }
 
   /**
-   *
+   * Sorts the user accounts in the userSubject list by ascending last name.
    */
   sortUserAccounts() {
     this.userSubject.getValue().sort((user1, user2) => {
@@ -124,23 +125,26 @@ export class UserAccountService {
    * @param account The UserAccount to be created/updated.
    */
   async save(userAccount: UserAccount) {
-    let testUserAccount: UserAccount = null;
-
     if (userAccount.id === -1) {
       await this.http.post<UserAccount>(this.userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
         this.refreshUserAccounts();
+        let addUserSuccessMessage = userAccount.firstName + ' ' + userAccount.lastName + ' added successfully.';
+        this.snackBar.open(addUserSuccessMessage, null, {duration: 4000, politeness: 'assertive', panelClass: 'snackbar-success', horizontalPosition: 'right'});
       }).catch((error: any) => {
-        //TODO Add an error display
+        let addUserErrorMessage = 'Something went wrong when adding ' + userAccount.firstName + ' ' + userAccount.lastName + '. Please contact your system administrator.';
+        this.snackBar.open(addUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
       });
     } else {
       const url = userAccount._links["self"];
       await this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
         this.refreshUserAccounts();
+        let editUserSuccessMessage = userAccount.firstName + ' ' + userAccount.lastName + ' updated successfully.';
+        this.snackBar.open(editUserSuccessMessage, null, {duration: 4000, politeness: 'assertive', panelClass: 'snackbar-success', horizontalPosition: 'right'});
       }).catch((error: any) => {
-        //TODO Add an error display
+        let editUserErrorMessage = 'Something went wrong when updating ' + userAccount.firstName + ' ' + userAccount.lastName + '. Please contact your system administrator.';
+        this.snackBar.open(editUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
       });
     }
-    return testUserAccount;
   }
 
   /**
@@ -148,18 +152,26 @@ export class UserAccountService {
    *
    * @param account The UserAccount to be deleted.
    */
-    delete(accountToDelete:UserAccount) {
-      console.log(accountToDelete._links);
-      const url = accountToDelete._links["self"];
-      this.http.delete(url["href"], httpOptions).subscribe((response) => {
+    delete(userAccount: UserAccount) {
+      const url = userAccount._links["self"];
+      this.http.delete(url["href"], httpOptions).toPromise().then( response => {
         this.refreshUserAccounts();
+        let deleteUserSuccessMessage = userAccount.firstName + ' ' + userAccount.lastName + ' deleted successfully.';
+        this.snackBar.open(deleteUserSuccessMessage, null, {duration: 4000, politeness: 'assertive', panelClass: 'snackbar-success', horizontalPosition: 'right'});
+      }).catch((error: any) => {
+        let deleteUserErrorMessage = 'Something went wrong when deleting ' + userAccount.firstName + ' ' + userAccount.lastName + '. Please contact your system administrator.';
+        this.snackBar.open(deleteUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
       });
   }
 
-    getUserById(id:number): Observable<UserAccount>{
-      return this.http.get(`${this.userAccountUrl}/${id}`).pipe(map((response:Response) => response))
-        .pipe(map((data: any) => {
-          return data as UserAccount;
-        }));
-    }
+  /**
+   *
+   * @param id
+   */
+  getUserById(id:number): Observable<UserAccount>{
+    return this.http.get(`${this.userAccountUrl}/${id}`).pipe(map((response:Response) => response))
+      .pipe(map((data: any) => {
+        return data as UserAccount;
+      }));
+  }
 }

@@ -93,24 +93,25 @@ export class AddUserAccountComponent implements OnInit {
    * Adds a new UserAccount. Passes the request to save the new UserAccount to the UserAccountService.
    */
   addUserAccount() {
-    let userAccountToAdd = new UserAccount();
-    userAccountToAdd.firstName = this.addUserAccountFirstName.nativeElement.value;
-    userAccountToAdd.lastName = this.addUserAccountLastName.nativeElement.value;
-    userAccountToAdd.email = this.addUserAccountEmail.nativeElement.value;
-    userAccountToAdd.salariedRate = Number(this.addUserAccountSalariedRate.nativeElement.value * 100);
+    if (this.userAccountFirstNameControl.valid && this.userAccountLastNameControl.valid && this.userAccountEmailControl.valid && this.userAccountRateControl.valid) {
+      let userAccountToAdd = new UserAccount();
+      userAccountToAdd.firstName = this.addUserAccountFirstName.nativeElement.value;
+      userAccountToAdd.lastName = this.addUserAccountLastName.nativeElement.value;
+      userAccountToAdd.email = this.addUserAccountEmail.nativeElement.value;
+      userAccountToAdd.salariedRate = Number(this.addUserAccountSalariedRate.nativeElement.value * 100);
 
-    if (this.addUserAccountTeamId.selected) {
-      userAccountToAdd.teamId = this.addUserAccountTeamId.selected.value;
-    } else {
-      userAccountToAdd.teamId = -1;
+      if (this.addUserAccountTeamId.selected) {
+        userAccountToAdd.teamId = this.addUserAccountTeamId.selected.value;
+      } else {
+        userAccountToAdd.teamId = -1;
+      }
+
+      userAccountToAdd.programDirector = this.addUserAccountProgramDirector.checked;
+      userAccountToAdd.admin = this.addUserAccountAdmin.checked;
+
+      this.userAccountService.save(userAccountToAdd);
+      this.dialogRef.close();
     }
-
-    userAccountToAdd.programDirector = this.addUserAccountProgramDirector.checked;
-    userAccountToAdd.admin = this.addUserAccountAdmin.checked;
-
-    this.userAccountService.save(userAccountToAdd);
-    this.dialogRef.close();
-
   }
 }
 
