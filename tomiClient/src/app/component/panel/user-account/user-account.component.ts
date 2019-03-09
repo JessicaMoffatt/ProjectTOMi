@@ -40,6 +40,7 @@ export class UserAccountComponent implements OnInit {
    */
   delete(userAccount: UserAccount) {
     this.userAccountService.delete(userAccount);
+    this.cancel(userAccount);
   }
 
   /**

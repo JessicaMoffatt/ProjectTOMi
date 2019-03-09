@@ -30,7 +30,7 @@ export class UserAccountService {
 
   /** Listing of all active UserAccounts */
   userAccounts: Observable<Array<UserAccount>>;
-  userSubject: BehaviorSubject<Array<UserAccount>>;
+  userSubject: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject<Array<UserAccount>>([]);
 
   public constructor(private http: HttpClient, public snackBar:MatSnackBar) {
 
@@ -43,6 +43,9 @@ export class UserAccountService {
     this.GETAllUserAccounts().forEach( users => {
       this.userSubject = new BehaviorSubject<Array<UserAccount>>(users);
       this.sortUserAccounts();
+    }).catch( (error: any) => {
+      let getUsersErrorMessage = 'Something went wrong when getting the list of users. Please contact your system administrator.';
+      this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
     });
   }
 
