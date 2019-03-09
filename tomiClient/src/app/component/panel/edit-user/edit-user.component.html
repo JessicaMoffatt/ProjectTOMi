@@ -25,7 +25,6 @@
           </mat-form-field>
         </td>
         <td>
-          <button type="submit" mat-raised-button color="primary" (click)="save()">Save</button>
         </td>
       </tr>
       <tr>
@@ -38,14 +37,14 @@
         </td>
         <td></td>
         <td>
-          <button mat-raised-button color="accent" (click)="cancel()">Cancel</button>
         </td>
       </tr>
       <tr>
         <mat-form-field>
           <input matInput type="number" #editUserSalariedRate placeholder="Salaried Rate" [formControl]="userAccountRateControl" [errorStateMatcher]="userAccountRateMatcher">
-          <mat-error *ngIf="userAccountRateControl.hasError('required') && !userAccountRateControl.hasError('min')">Salaried rate is <strong>required</strong></mat-error>
-          <mat-error *ngIf="userAccountRateControl.hasError('min')">Please enter a positive rate</mat-error>
+          <mat-error *ngIf="userAccountRateControl.hasError('required') && !userAccountRateControl.hasError('min') && !userAccountRateControl.hasError('pattern')">Salaried rate is <strong>required</strong></mat-error>
+          <mat-error *ngIf="userAccountRateControl.hasError('min') && !userAccountRateControl.hasError('pattern')">Please enter at least 0.00</mat-error>
+          <mat-error *ngIf="userAccountRateControl.hasError('pattern')">Please enter a valid rate</mat-error>
         </mat-form-field>
       </tr>
       <tr>
@@ -68,9 +67,11 @@
           </mat-checkbox>
         </td>
         <td>
-          <button mat-raised-button color="warn" (click)="delete()">Delete</button>
         </td>
       </tr>
     </table>
+    <button type="submit" mat-raised-button color="primary" (click)="save()">Save</button>
+    <button mat-raised-button color="accent" (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="warn" (click)="delete()">Delete</button>
   </form>
 </mat-card>

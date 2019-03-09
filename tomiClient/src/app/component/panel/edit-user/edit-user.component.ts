@@ -99,19 +99,22 @@ export class EditUserComponent implements OnInit {
    * Emits a request for this UserAccount's changes to be saved.
    */
   save():void {
-    this.userAccount.firstName = this.editUserFirstName.nativeElement.value;
-    this.userAccount.lastName = this.editUserLastName.nativeElement.value;
-    this.userAccount.email = this.editUserEmail.nativeElement.value;
-    this.userAccount.salariedRate = Number (this.editUserSalariedRate.nativeElement.value * 100);
-    if (!this.editUserTeamId.empty) {
-      this.userAccount.teamId = this.editUserTeamId.selected.value;
-    } else {
-      this.editUserTeamId = -1;
-    }
-    this.userAccount.programDirector = this.editUserProgramDirector.checked;
-    this.userAccount.admin = this.editUserAdmin.checked;
+    if (this.userAccountFirstNameControl.valid && this.userAccountLastNameControl.valid && this.userAccountEmailControl.valid && this.userAccountRateControl) {
 
-    this.saveRequested.emit(this.userAccount);
+      this.userAccount.firstName = this.editUserFirstName.nativeElement.value;
+      this.userAccount.lastName = this.editUserLastName.nativeElement.value;
+      this.userAccount.email = this.editUserEmail.nativeElement.value;
+      this.userAccount.salariedRate = Number (this.editUserSalariedRate.nativeElement.value * 100);
+      if (!this.editUserTeamId.empty) {
+        this.userAccount.teamId = this.editUserTeamId.selected.value;
+      } else {
+        this.userAccount.teamId = -1;
+      }
+      this.userAccount.programDirector = this.editUserProgramDirector.checked;
+      this.userAccount.admin = this.editUserAdmin.checked;
+
+      this.saveRequested.emit(this.userAccount);
+    }
   }
 
   /**
@@ -132,7 +135,7 @@ export class EditUserComponent implements OnInit {
     if (this.userAccount.teamId) {
       this.editUserTeamId.selected.value = this.userAccount.teamId;
     } else {
-      //this.editUserTeamId.selected.value = -1;
+      this.editUserTeamId.value = null;
     }
     this.editUserAdmin.checked = this.userAccount.admin;
     this.editUserProgramDirector.checked = this.userAccount.programDirector;

@@ -37,6 +37,4 @@ export class ViewUserComponent implements OnInit {
   edit():void {
     this.editRequested.emit(this.userAccount);
   }
-
-
 }
