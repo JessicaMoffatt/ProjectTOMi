@@ -14,7 +14,7 @@ import {
   MatButtonModule,
   MatDatepickerModule, MatExpansionModule, MatGridListModule, MatIconModule,
   MatMenuModule,
-  MatNativeDateModule, MatSnackBarModule
+  MatNativeDateModule, MatSidenavModule, MatSnackBarModule
 } from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
@@ -142,7 +142,8 @@ import {AccessGuard} from "./AccessGuard";
     MatMenuModule,
     MatIconModule,
     MatSnackBarModule,
-    MatGridListModule
+    MatGridListModule,
+    MatSidenavModule
   ],
   entryComponents: [
     EntryComponent,
@@ -188,7 +189,8 @@ import {AccessGuard} from "./AccessGuard";
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSidenavModule
   ]
 })
 export class AppModule {

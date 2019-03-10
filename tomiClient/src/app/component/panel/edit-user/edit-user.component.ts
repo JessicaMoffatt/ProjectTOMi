@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {FormControl, Validators, FormGroupDirective, NgForm} from "@angular/forms";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
 import {ErrorStateMatcher, MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
+import {Observable, Subscription} from "rxjs";
 
 /**
  * EditUserComponent is an individual, editable entry for a UserAccount.
@@ -15,7 +16,7 @@ import {ErrorStateMatcher, MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angu
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.scss']
 })
-export class EditUserComponent implements OnInit {
+export class EditUserComponent implements OnInit, OnDestroy {
 
   /** Validations for the first name. */
   userAccountFirstNameControl = new FormControl('', [
@@ -49,6 +50,12 @@ export class EditUserComponent implements OnInit {
   /** Invalid salaried rate error detection. */
   userAccountRateMatcher = new MyErrorStateMatcher();
 
+  /** The Event emitted indicating that a user has been selected in the sidebar. */
+  @Input() userSelectedEvent: Observable<UserAccount>;
+
+  /** The subscription for the selected user event. */
+  private userSelectedSubscription: Subscription;
+
   /** The UserAccount model associated with this component. */
   @Input() userAccount: UserAccount;
   /** Event Emitter used to notify the UserAccountComponent parent that the EditUserComponent save had been requested. */
@@ -58,6 +65,7 @@ export class EditUserComponent implements OnInit {
   /** Event Emitter used to notify the UserAccountComponent parent that the EditUserComponent cancel had been requested. */
   @Output() cancelRequested = new EventEmitter<any>();
 
+  /** The expansion panel for this user account. */
   @ViewChild('editUserExpansionPanel') editUserExpansionPanel;
 
   /** The input field for the UserAccount's first name.*/
@@ -87,7 +95,15 @@ export class EditUserComponent implements OnInit {
   constructor(public deleteUserDialog: MatDialog, public teamService: TeamService) { }
 
   ngOnInit() {
+    this.userSelectedSubscription = this.userSelectedEvent.subscribe((userSelected:UserAccount) => {
+      if (this.userAccount.id === userSelected.id) {
+        this.editUserExpansionPanel.open();
+      }
+    });
+  }
 
+  ngOnDestroy(): void {
+    this.userSelectedSubscription.unsubscribe();
   }
 
   /**
