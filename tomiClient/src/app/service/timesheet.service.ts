@@ -156,7 +156,6 @@ export class TimesheetService {
         year: 'numeric', month: 'long', day: 'numeric'
       };
 
-      console.log("4");
       this.currentDate = tempDay.toLocaleString('en-US', options);
     }
   }
@@ -225,4 +224,5 @@ export class TimesheetService {
         return data as Timesheet;
       }));
   }
+
 }
