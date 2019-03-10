@@ -66,7 +66,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
 
 		final UserAccount user;
-		//TODO Remove Hardcoded UserAccount---------------
 		try {
 			user = this.userAuthenticationService.checkLogin(authToken);
 		}catch (final Exception e){
@@ -76,7 +75,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		if(user == null){
 			return false;
 		}
-		//TODO -------------------------------------------
 
 		final String requestMethod = request.getMethod();
 		final String requestURI = request.getRequestURI();
