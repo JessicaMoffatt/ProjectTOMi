@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
+import org.hibernate.annotations.Formula;
 
 /**
  * A Project represents a project that either needs to be completed, or has been completed
@@ -74,6 +75,8 @@ public final class Project {
 	@Min (0)
 	private Long billableRate;
 
+	@Formula("budget / billable_rate")
+	private Double budgetedHours;
 	/**
 	 * The Accounts that are members of this Project.
 	 */
