@@ -2,11 +2,12 @@
 @author Iliya Kiritchkov
 @version 1.1
 -->
-
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>{{userAccount.firstName + ' ' + userAccount.lastName}}</mat-card-title>
-  </mat-card-header>
+<mat-expansion-panel #editUserExpansionPanel (opened)="setValuesOnOpen()">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{userAccount.firstName}} {{userAccount.lastName}}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
   <form #editUserAccountForm="ngForm">
     <table>
       <tr>
@@ -67,8 +68,8 @@
         </td>
       </tr>
     </table>
-    <button type="submit" mat-raised-button color="primary" (click)="save()">Save</button>
-    <button mat-raised-button color="accent" (click)="cancel()">Cancel</button>
-    <button mat-raised-button color="warn" (click)="delete()">Delete</button>
+    <button type="submit" mat-raised-button color="primary" (click)="save(this)">Save</button>
+    <button mat-raised-button color="accent" (click)="cancel(this)">Cancel</button>
+    <button mat-raised-button color="warn" (click)="openDeleteDialog()">Delete</button>
   </form>
-</mat-card>
+</mat-expansion-panel>

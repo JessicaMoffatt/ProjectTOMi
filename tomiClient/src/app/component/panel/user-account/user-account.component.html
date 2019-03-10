@@ -3,22 +3,31 @@
 @version 1.0
 -->
 <div id="mainPanel">
-  <h2>Users</h2>
-  <div [ngClass]="'user_account'">
-    <ul>
-      <ul (click)="selectUserAccount(userAccount)"
-          *ngFor="let userAccount of userAccountService.userSubject | async"
-          style="list-style: none">
-        <ng-container>
-          <app-view-user id="view_user_account{{userAccount.id}}" #viewUserComponent (editRequested)="editUserAccount($event)"
-                         [userAccount]="userAccount"></app-view-user>
-          <app-edit-user id="edit_user_account{{userAccount.id}}" class="edit_user_hidden" #editUserComponent
-                         (cancelRequested)="cancel($event)"
-                         (saveRequested)="save($event)"
-                         (deleteRequested)="delete($event)"
-                         [userAccount]="userAccount"></app-edit-user>
-        </ng-container>
-      </ul>
-    </ul>
-  </div>
+  <mat-accordion>
+    <ng-container *ngFor="let userAccount of userAccountService.userSubject | async">
+        <app-edit-user id="edit_user_account{{userAccount.id}}" #editUserComponent
+                       (cancelRequested)="cancel($event)"
+                       (saveRequested)="save($event)"
+                       (deleteRequested)="delete($event)"
+                       [userAccount]="userAccount"></app-edit-user>
+    </ng-container>
+  </mat-accordion>
+
+  <!--<div [ngClass]="'user_account'">-->
+    <!--<ul>-->
+      <!--<ul (click)="selectUserAccount(userAccount)"-->
+          <!--*ngFor="let userAccount of userAccountService.userSubject | async"-->
+          <!--style="list-style: none">-->
+        <!--<ng-container>-->
+          <!--<app-view-user id="view_user_account{{userAccount.id}}" #viewUserComponent (editRequested)="editUserAccount($event)"-->
+                         <!--[userAccount]="userAccount"></app-view-user>-->
+          <!--<app-edit-user id="edit_user_account{{userAccount.id}}" class="edit_user_hidden" #editUserComponent-->
+                         <!--(cancelRequested)="cancel($event)"-->
+                         <!--(saveRequested)="save($event)"-->
+                         <!--(deleteRequested)="delete($event)"-->
+                         <!--[userAccount]="userAccount"></app-edit-user>-->
+        <!--</ng-container>-->
+      <!--</ul>-->
+    <!--</ul>-->
+  <!--</div>-->
 </div>

@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormControl, Validators, FormGroupDirective, NgForm} from "@angular/forms";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
-import {ErrorStateMatcher} from "@angular/material";
+import {ErrorStateMatcher, MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
 
 /**
  * EditUserComponent is an individual, editable entry for a UserAccount.
@@ -58,6 +58,8 @@ export class EditUserComponent implements OnInit {
   /** Event Emitter used to notify the UserAccountComponent parent that the EditUserComponent cancel had been requested. */
   @Output() cancelRequested = new EventEmitter<any>();
 
+  @ViewChild('editUserExpansionPanel') editUserExpansionPanel;
+
   /** The input field for the UserAccount's first name.*/
   @ViewChild('editUserFirstName') editUserFirstName;
 
@@ -82,16 +84,27 @@ export class EditUserComponent implements OnInit {
   /** The ngForm for this component */
   @ViewChild('editUserAccountForm') editUserAccountForm;
 
-  constructor(public teamService: TeamService) { }
+  constructor(public deleteUserDialog: MatDialog, public teamService: TeamService) { }
+
+  ngOnInit() {
+
+  }
 
   /**
    * Initialize the value inputs on the template. This fixes issues caused by the Validators.required when an input is pristine.
    */
-  ngOnInit() {
+  setValuesOnOpen() {
     this.userAccountFirstNameControl.setValue(this.userAccount.firstName);
     this.userAccountLastNameControl.setValue(this.userAccount.lastName);
     this.userAccountEmailControl.setValue(this.userAccount.email);
     this.userAccountRateControl.setValue((this.userAccount.salariedRate/100).toFixed(2));
+    if (this.userAccount.teamId) {
+      this.editUserTeamId.selected.value = this.userAccount.teamId;
+    } else {
+      this.editUserTeamId.value = null;
+    }
+    this.editUserAdmin.checked = this.userAccount.admin;
+    this.editUserProgramDirector.checked = this.userAccount.programDirector;
   }
 
   /**
@@ -111,15 +124,16 @@ export class EditUserComponent implements OnInit {
         this.userAccount.programDirector = this.editUserProgramDirector.checked;
         this.userAccount.admin = this.editUserAdmin.checked;
 
+        this.editUserExpansionPanel.toggle();
         this.saveRequested.emit(this.userAccount);
     }
   }
-
 
   /**
    * Emits a request for this UserAccount to be deleted.
    */
   delete():void {
+    this.editUserExpansionPanel.toggle();
     this.deleteRequested.emit(this.userAccount);
   }
 
@@ -127,21 +141,56 @@ export class EditUserComponent implements OnInit {
    * Emits a request for this UserAccount's changes to be cancelled.
    */
   cancel():void {
-    this.editUserFirstName.nativeElement.value = this.userAccount.firstName;
-    this.editUserLastName.nativeElement.value = this.userAccount.lastName;
-    this.editUserEmail.nativeElement.value = this.userAccount.email;
-    this.editUserSalariedRate.nativeElement.value = (this.userAccount.salariedRate/100).toFixed(2);
-    if (this.userAccount.teamId) {
-      this.editUserTeamId.selected.value = this.userAccount.teamId;
-    } else {
-      this.editUserTeamId.value = null;
-    }
-    this.editUserAdmin.checked = this.userAccount.admin;
-    this.editUserProgramDirector.checked = this.userAccount.programDirector;
-    this.cancelRequested.emit(this.userAccount);
+    this.editUserExpansionPanel.toggle();
+  }
+
+  openDeleteDialog() {
+    this.deleteUserDialog.open(DeleteUserAccountModal, {
+      width: '500px',
+      data: {userAccountToDelete: this.userAccount, parent: this}
+    });
   }
 }
 
+@Component({
+  selector: 'app-delete-user-modal',
+  template: `
+    <h1 mat-dialog-title>Delete User</h1>
+    <div mat-dialog-content>
+      <p>Confirm deletion of {{userAccountToDelete.firstName}} {{userAccountToDelete.lastName}}</p>
+      <button mat-raised-button color="warn" (click)="confirmedDelete()">Delete</button>
+      <button mat-raised-button color="accent" (click)="canceledDelete()">Cancel</button>
+    </div>
+  `
+})
+/** Inner class for confirmation modal of delete User Account. */
+export class DeleteUserAccountModal {
+  userAccountToDelete: UserAccount;
+
+  constructor(public dialogRef: MatDialogRef<DeleteUserAccountModal>, @Inject(MAT_DIALOG_DATA) public data: DeleteDialogData) {
+
+  }
+
+  ngOnInit() {
+    this.userAccountToDelete = this.data.userAccountToDelete;
+  }
+
+  canceledDelete(): void {
+    this.dialogRef.close();
+  }
+
+  confirmedDelete() {
+    this.data.parent.delete();
+    this.dialogRef.close();
+  }
+
+}
+
+/** Data interface for the DeleteUserModal */
+export interface DeleteDialogData {
+  userAccountToDelete : UserAccount;
+  parent: EditUserComponent;
+}
 
 /** Inner class for error detection of the Angular Material input fields. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {

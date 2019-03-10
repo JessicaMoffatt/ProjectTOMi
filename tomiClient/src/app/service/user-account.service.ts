@@ -3,7 +3,7 @@ import {UserAccount} from "../model/userAccount";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {MatSnackBar, MatSnackBarHorizontalPosition} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -37,7 +37,7 @@ export class UserAccountService {
   }
 
   /**
-   *
+   * Get the list of all active users and populate into the userSubject list.
    */
   initializeUserAccounts() {
     this.GETAllUserAccounts().forEach( users => {
@@ -151,7 +151,7 @@ export class UserAccountService {
   }
 
   /**
-   *  Logically deletes the selected user account (sets the active status to false.)
+   * Logically deletes the selected user account (sets the active status to false.)
    *
    * @param account The UserAccount to be deleted.
    */
@@ -168,8 +168,9 @@ export class UserAccountService {
   }
 
   /**
+   * Get a UserAccount by their id.
    *
-   * @param id
+   * @param id id of the user.
    */
   getUserById(id:number): Observable<UserAccount>{
     return this.http.get(`${this.userAccountUrl}/${id}`).pipe(map((response:Response) => response))

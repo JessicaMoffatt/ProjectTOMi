@@ -1,7 +1,8 @@
-import {Component, ElementRef, NgModule, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ElementRef, Input, NgModule, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
+import {MatExpansionPanel} from "@angular/material";
 
 @Component({
   selector: 'app-user-account',
@@ -26,6 +27,7 @@ export class UserAccountComponent implements OnInit {
 
   }
 
+
   /**
    * Sets the selected UserAccount;
    * @param userAccount the UserAccount that has been selected.
@@ -48,8 +50,10 @@ export class UserAccountComponent implements OnInit {
    * @param userAccount the UserAccount whose changes are to be canceled.
    */
   cancel(userAccount: UserAccount) {
-    document.getElementById('view_user_account' + userAccount.id).className = "view_user_visible";
-    document.getElementById('edit_user_account' + userAccount.id).className = "edit_user_hidden";
+    //document.getElementById('view_user_account' + userAccount.id).className = "view_user_visible";
+    //document.getElementById('edit_user_account' + userAccount.id).className = "edit_user_hidden";
+    // this.userAccountAccordion.toggle();
+
   }
 
   /**

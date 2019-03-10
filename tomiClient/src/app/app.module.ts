@@ -12,7 +12,7 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
-  MatDatepickerModule, MatGridListModule, MatIconModule,
+  MatDatepickerModule, MatExpansionModule, MatGridListModule, MatIconModule,
   MatMenuModule,
   MatNativeDateModule, MatSnackBarModule
 } from '@angular/material';
@@ -49,7 +49,7 @@ import {UserAccountSidebarComponent} from "./component/sidebar/user-account-side
 import {UserAccountPanelComponent} from "./component/panel/user-account-panel/user-account-panel.component";
 import {UserAccountSidebarService} from "./service/user-account-sidebar-service";
 import {AddUserAccountComponent} from './component/modal/add-user-account/add-user-account.component';
-import {EditUserComponent} from './component/panel/edit-user/edit-user.component';
+import {DeleteUserAccountModal, EditUserComponent} from './component/panel/edit-user/edit-user.component';
 import {ViewUserComponent} from './component/panel/view-user/view-user.component';
 import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
 import {TimesheetService} from "./service/timesheet.service";
@@ -117,7 +117,8 @@ import {AccessGuard} from "./AccessGuard";
     AddUnitTypeComponent,
     EditUnitTypeComponent,
     EditTaskComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    DeleteUserAccountModal
   ],
   imports: [
     BrowserModule,
@@ -137,6 +138,7 @@ import {AccessGuard} from "./AccessGuard";
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatExpansionModule,
     MatMenuModule,
     MatIconModule,
     MatSnackBarModule,
@@ -155,7 +157,8 @@ import {AccessGuard} from "./AccessGuard";
     AddTaskComponent,
     EditTaskComponent,
     AddUnitTypeComponent,
-    EditUnitTypeComponent
+    EditUnitTypeComponent,
+    DeleteUserAccountModal,
   ],
   providers: [
     TeamSidebarService,
@@ -184,7 +187,8 @@ import {AccessGuard} from "./AccessGuard";
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatExpansionModule
   ]
 })
 export class AppModule {
