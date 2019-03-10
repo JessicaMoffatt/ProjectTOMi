@@ -27,7 +27,7 @@ export class UnitTypeService {
   /**
    * Lists all active Unit Types. This list can be subscribed to provide an always update list of Unit Types.
    */
-  unitTypes: BehaviorSubject<Array<UnitType>>;
+  unitTypes: BehaviorSubject<Array<UnitType>> = new BehaviorSubject<Array<UnitType>>([]);
 
   constructor(private http: HttpClient) {
 

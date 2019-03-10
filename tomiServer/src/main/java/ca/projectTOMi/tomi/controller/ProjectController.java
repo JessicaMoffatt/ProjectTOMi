@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.EntryResourceAssembler;
 import ca.projectTOMi.tomi.assembler.ProjectResourceAssembler;
 import ca.projectTOMi.tomi.authorization.manager.ProjectAuthManager;
+import ca.projectTOMi.tomi.authorization.manager.UserAuthManager;
 import ca.projectTOMi.tomi.authorization.wrapper.ProjectAuthLinkWrapper;
 import ca.projectTOMi.tomi.authorization.wrapper.TimesheetAuthLinkWrapper;
 import ca.projectTOMi.tomi.exception.InvalidIDPrefix;
@@ -111,13 +112,12 @@ public class ProjectController {
 	 * 	when the created URI is unable to be parsed
 	 */
 	@PostMapping ("/projects")
-	public ResponseEntity<?> createProject(@RequestBody final Project newProject,
-	                                       @RequestAttribute final ProjectAuthManager authMan) throws URISyntaxException {
+	public ResponseEntity<?> createProject(@RequestBody final Project newProject) throws URISyntaxException {
 		if (newProject.getId() == null || !newProject.getId().trim().matches("^\\p{Alpha}\\p{Alpha}\\d{0,5}+$")) {
 			throw new InvalidIDPrefix();
 		}
 		newProject.setId(this.projectService.getId(newProject.getId()));
-		final Resource<Project> resource = this.projectResourceAssembler.toResource(new ProjectAuthLinkWrapper<>(authMan.filterFields(this.projectService.createProject(newProject)), authMan));
+		final Resource<Project> resource = this.projectResourceAssembler.toResource(new ProjectAuthLinkWrapper<>(this.projectService.createProject(newProject), null));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}

@@ -22,14 +22,14 @@ export class TopNavBarComponent implements OnInit {
       this.isUserLoggedIn = value;
     });
     breakpointObserver.observe([
-      Breakpoints.XSmall
+      Breakpoints.XSmall,
+      Breakpoints.Small
     ]).subscribe(result => {
       if (result.matches) {
         this.activateSmallLayout();
       }
     });
     breakpointObserver.observe([
-      Breakpoints.Small,
       Breakpoints.Medium
     ]).subscribe(result => {
       if (result.matches) {

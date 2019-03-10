@@ -43,12 +43,56 @@
       </button>
     </ng-template>
   </ng-template>
+
+
   <ng-template [ngIf]="screenSize===1">
-    medium
+    <ng-template [ngIf]="isUserLoggedIn">
+      <ng-template [ngIf]="signInService.navList['my_timesheets']">
+        <a class="link" [routerLink]="'/my_timesheets'">Timesheets</a>
+      </ng-template>
+
+      <ng-template [ngIf]="signInService.navList['approve_timesheets']">
+        <a class="link" [routerLink]="'/approve_timesheets'">Approve</a>
+      </ng-template>
+
+      <ng-template [ngIf]="signInService.navList['my_team']">
+        <a class="link" [routerLink]="'/my_team'">Team</a>
+      </ng-template>
+      <mat-menu #appMenuMed="matMenu">
+        <ng-template [ngIf]="signInService.navList['manage_projects']">
+          <button mat-menu-item class="menu" [routerLink]="'/manage_projects'">Projects</button>
+        </ng-template>
+
+        <ng-template [ngIf]="signInService.navList['manage_teams']">
+          <button mat-menu-item class="menu" [routerLink]="'/manage_teams'">Manage Teams</button>
+        </ng-template>
+
+        <ng-template [ngIf]="signInService.navList['manage_unit_types']">
+          <button mat-menu-item class="menu" [routerLink]="'/manage_unit_types'">Unit Types</button>
+        </ng-template>
+
+        <ng-template [ngIf]="signInService.navList['manage_tasks']">
+          <button mat-menu-item class="menu" [routerLink]="'/manage_tasks'">Tasks</button>
+        </ng-template>
+
+        <ng-template [ngIf]="signInService.navList['manage_user_accounts']">
+          <button mat-menu-item class="menu" [routerLink]="'/manage_user_accounts'">Users</button>
+        </ng-template>
+
+
+        <button mat-menu-item class="menu" (click)="signInService.signOut()">Logout</button>
+      </mat-menu>
+
+      <button id="menuButtonMed" mat-ripple mat-flat-button [matMenuTriggerFor]="appMenuMed">
+        <img mat-ripple id="menuButtonImageMed" src="../../../../assets/img/burger_menu.png" />
+      </button>
+    </ng-template>
   </ng-template>
+
+
   <ng-template [ngIf]="screenSize===2">
     <ng-template [ngIf]="isUserLoggedIn">
-      <mat-menu #appMenu2="matMenu">
+      <mat-menu #appMenuSmall="matMenu">
         <ng-template [ngIf]="signInService.navList['my_timesheets']">
           <button mat-menu-item class="menu"[routerLink]="'/my_timesheets'">Timesheets</button>
         </ng-template>
@@ -85,8 +129,8 @@
         <button mat-menu-item class="menu" (click)="signInService.signOut()">Logout</button>
       </mat-menu>
 
-      <button id="menuButton2" mat-icon-button [matMenuTriggerFor]="appMenu2">
-        <img mat-ripple id="icon2" src="../../../../assets/img/burger_menu.png" />
+      <button id="menuButtonSmall" mat-ripple mat-flat-button [matMenuTriggerFor]="appMenuSmall">
+        <img mat-ripple id="menuButtonImage" src="../../../../assets/img/burger_menu.png" />
       </button>
     </ng-template>
   </ng-template>
