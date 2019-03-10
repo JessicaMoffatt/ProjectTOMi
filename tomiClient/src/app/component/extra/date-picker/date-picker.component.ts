@@ -14,9 +14,7 @@ const millisecondsToDays: number = 86400000;
   styleUrls: ['./date-picker.component.scss']
 })
 export class DatePickerComponent implements OnInit{
-  date = new FormControl(new Date());
-
-  horse: boolean;
+  date = new FormControl();
   /**
    * The latest date that can be selected.
    */
@@ -37,16 +35,10 @@ export class DatePickerComponent implements OnInit{
 
   constructor(private timesheetService: TimesheetService){
     this.maxDate = new Date();
-    this.horse = true;
   }
 
   ngOnInit(): void {
-    this.date.setValue(new Date());
-    console.log("HERE");
-    // if(this.timesheetService.currentDate) {
-    //   console.log(this.timesheetService.currentDate);
-    //
-    // }
+    this.date.setValue(new Date(this.timesheetService.currentDate));
   }
 
   doSetMinDate(){

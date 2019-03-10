@@ -75,6 +75,7 @@ export class TeamMemberTimesheetService {
     this.populateTimesheets().then((value) => {
       let timesheet = value as Timesheet;
       this.populateEntries(timesheet.id);
+      this.timesheetService.setCurrentDate();
     });
   }
 
