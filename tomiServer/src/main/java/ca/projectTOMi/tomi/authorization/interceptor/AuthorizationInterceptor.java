@@ -58,7 +58,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		final String authToken = request.getHeader("SignIn");
 
 		// Initial Login
-		if ("/tokensignin".equals(request.getRequestURI())) {
+		if ("/tokensignin".equals(request.getRequestURI()) || "/doAEmail".equals(request.getRequestURI())) {
 			return true;
 		} else if (request.getMethod().matches("OPTIONS")) {
 			return true;
@@ -141,7 +141,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
 			request.setAttribute("authMan", authMan);
 		}
-//		return true;
 		return ((AuthManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
 	}
 

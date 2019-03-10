@@ -138,12 +138,21 @@ public final class UserAccountService {
 	/**
 	 * Creates a new timesheet every monday at 1am for all active users.
 	 */
-	@Scheduled (cron = "0 0 1 * * MON")
+	@Scheduled (cron = "0 0 * * * MON")
 	public void createWeeklyTimesheet() {
 		final List<UserAccount> accounts = this.repository.getAllByActiveOrderById(true);
+		final List<Timesheet> timesheets = this.entryService.getActiveTimesheets();
 		final LocalDate date = LocalDate.now();
 		for (final UserAccount a : accounts) {
-			this.entryService.createTimesheet(date, a);
+			Boolean hasTimesheet = false;
+			for (Timesheet t:timesheets){
+				if(a.equals(t.getUserAccount()) && date.equals(t.getStartDate())){
+					hasTimesheet = true;
+				}
+			}
+			if(!hasTimesheet) {
+				this.entryService.createTimesheet(date, a);
+			}
 		}
 	}
 

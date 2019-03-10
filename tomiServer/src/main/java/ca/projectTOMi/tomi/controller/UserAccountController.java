@@ -15,6 +15,7 @@ import ca.projectTOMi.tomi.exception.MinimumProgramDirectorAccountException;
 import ca.projectTOMi.tomi.exception.TeamNotFoundException;
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.UserAccount;
+import ca.projectTOMi.tomi.service.TOMiEmailService;
 import ca.projectTOMi.tomi.service.UserAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -228,5 +229,13 @@ public class UserAccountController {
 		this.logger.warn("UserAccount Exception: " + e.getClass());
 
 		return ResponseEntity.unprocessableEntity().build();
+	}
+
+	@Autowired
+	TOMiEmailService email;
+
+	@GetMapping("/doAEmail")
+	public void doAEmail(){
+		email.sendSimpleMessage("KarolTalbot@gmail.com", "hello", "This is a email");
 	}
 }
