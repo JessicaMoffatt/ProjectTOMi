@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {InjectionToken, NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
@@ -14,9 +14,9 @@ import {
   DateAdapter,
   MAT_DATE_LOCALE,
   MatButtonModule,
-  MatDatepickerModule, MatGridListModule, MatIconModule,
+  MatDatepickerModule, MatExpansionModule, MatGridListModule, MatIconModule,
   MatMenuModule,
-  MatNativeDateModule, MatSnackBarModule
+  MatNativeDateModule, MatSidenavModule, MatSnackBarModule
 } from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
@@ -24,7 +24,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatToolbarModule} from "@angular/material";
-import {ReactiveFormsModule} from "@angular/forms";
+import {MatCheckboxModule } from '@angular/material/checkbox';
 
 import {AddTeamComponent, TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
 import {TeamSidebarService} from "./service/team-sidebar.service";
@@ -51,7 +51,7 @@ import {UserAccountSidebarComponent} from "./component/sidebar/user-account-side
 import {UserAccountPanelComponent} from "./component/panel/user-account-panel/user-account-panel.component";
 import {UserAccountSidebarService} from "./service/user-account-sidebar-service";
 import {AddUserAccountComponent} from './component/modal/add-user-account/add-user-account.component';
-import {EditUserComponent} from './component/panel/edit-user/edit-user.component';
+import {DeleteUserAccountModal, EditUserComponent} from './component/panel/edit-user/edit-user.component';
 import {ViewUserComponent} from './component/panel/view-user/view-user.component';
 import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
 import {TimesheetService} from "./service/timesheet.service";
@@ -118,12 +118,14 @@ import {AccessGuard} from "./AccessGuard";
     AddUnitTypeComponent,
     EditUnitTypeComponent,
     EditTaskComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    DeleteUserAccountModal
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     OrderModule,
     BrowserAnimationsModule,
@@ -134,13 +136,16 @@ import {AccessGuard} from "./AccessGuard";
     MatSelectModule,
     MatDialogModule,
     MatToolbarModule,
+    MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatExpansionModule,
     MatMenuModule,
     MatIconModule,
     MatSnackBarModule,
     MatGridListModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSidenavModule
   ],
   entryComponents: [
     EntryComponent,
@@ -155,7 +160,8 @@ import {AccessGuard} from "./AccessGuard";
     AddTaskComponent,
     EditTaskComponent,
     AddUnitTypeComponent,
-    EditUnitTypeComponent
+    EditUnitTypeComponent,
+    DeleteUserAccountModal,
   ],
   providers: [
     TeamSidebarService,
@@ -186,7 +192,9 @@ import {AccessGuard} from "./AccessGuard";
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatExpansionModule,
+    MatSidenavModule
   ]
 })
 export class AppModule {

@@ -1,8 +1,8 @@
-import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {UserAccountSidebarService} from "../../../service/user-account-sidebar-service";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {UserAccountService} from "../../../service/user-account.service";
-import {UserAccount} from "../../../model/userAccount";
 import {AddUserAccountComponent} from "../../modal/add-user-account/add-user-account.component";
+import {MatDialog} from "@angular/material";
+import {UserAccount} from "../../../model/userAccount";
 
 @Component({
   selector: 'app-user-account-sidebar',
@@ -11,22 +11,24 @@ import {AddUserAccountComponent} from "../../modal/add-user-account/add-user-acc
 })
 export class UserAccountSidebarComponent implements OnInit {
 
-  @ViewChild('add_user_account_container', {read: ViewContainerRef})
-  public add_user_account_container: ViewContainerRef;
+  /** Event emitted when the user is selected in the sidebar. */
+  @Output() userSelectedEvent: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(public resolver: ComponentFactoryResolver, public userAccountSidebarService: UserAccountSidebarService, private userAccountService: UserAccountService) {
-  }
+  constructor(public dialog: MatDialog, private userAccountService: UserAccountService) { }
 
   ngOnInit() {
 
   }
 
+  /** Pushes the selected user. */
+  userSelected(userAccount: UserAccount) {
+    this.userSelectedEvent.emit(userAccount);
+  }
+
   /**
-   * Creates a Modal component for adding a new UserAccount.
+   * Displays a Modal component for adding a new UserAccount.
    */
-  createAddUserAccountComponent() {
-    this.add_user_account_container.clear();
-    const factory = this.resolver.resolveComponentFactory(AddUserAccountComponent);
-    this.userAccountSidebarService.ref = this.add_user_account_container.createComponent(factory);
+  openDialog(): void {
+    this.dialog.open(AddUserAccountComponent);
   }
 }

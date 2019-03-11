@@ -213,11 +213,6 @@ html,body{
   background-color: $blue;
 }
 
-
-/**
- * @author: Iliya Kiritchkov
- */
-
 .user_account_name {
   font-weight: 700;
   color: $orange;
@@ -262,3 +257,12 @@ html,body{
   width:25%;
 }
 
+/** Snackbar styling */
+.snackbar-success {
+  background-color: $green;
+}
+
+.snackbar-fail {
+  background-color: $red;
+}
+/** Snackbar Styling */
