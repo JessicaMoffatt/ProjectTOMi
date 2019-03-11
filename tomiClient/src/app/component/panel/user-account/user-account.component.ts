@@ -1,37 +1,35 @@
-import {Component, ElementRef, NgModule, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
-import {TeamService} from "../../../service/team.service";
+import {Observable, Subject, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-user-account',
   templateUrl: './user-account.component.html',
   styleUrls: ['./user-account.component.scss']
 })
-@NgModule({
-  providers: [TeamService]
-})
-export class UserAccountComponent implements OnInit {
+export class UserAccountComponent implements OnInit, OnDestroy {
 
-  @ViewChild('componentHolder', {read: ViewContainerRef})
-  entry_container: ViewContainerRef;
+  public selectedEventSubject: Subject<UserAccount> = new Subject<UserAccount>();
 
-  @ViewChild('viewUserComponent') viewUserComponent : ElementRef;
+  private userSelectedSubscription: Subscription;
+
+  private userAccount: UserAccount;
+
+  @Input() userSelectedEvent: Observable<UserAccount>;
 
   @ViewChild('editUserComponent') editUserComponent : ElementRef;
 
-  constructor(public userAccountService: UserAccountService, public teamService: TeamService) { }
+  constructor(public userAccountService: UserAccountService) { }
 
   ngOnInit() {
-
+    this.userSelectedSubscription = this.userSelectedEvent.subscribe((userSelected: UserAccount) => {
+      this.selectedEventSubject.next(userSelected);
+    });
   }
 
-  /**
-   * Sets the selected UserAccount;
-   * @param userAccount the UserAccount that has been selected.
-   */
-  selectUserAccount(userAccount: UserAccount) {
-    this.userAccountService.setSelectedUserAccount(userAccount);
+  ngOnDestroy() {
+    this.userSelectedSubscription.unsubscribe();
   }
 
   /**
@@ -43,29 +41,10 @@ export class UserAccountComponent implements OnInit {
   }
 
   /**
-   * Passes on the request to cancel changes made to the given UserAccount to the UserAccountService.
-   * @param userAccount the UserAccount whose changes are to be canceled.
-   */
-  cancel(userAccount: UserAccount) {
-    document.getElementById('view_user_account' + userAccount.id).className = "view_user_visible";
-    document.getElementById('edit_user_account' + userAccount.id).className = "edit_user_hidden";
-  }
-
-  /**
-   *
-   * @param userAccount
-   */
-  editUserAccount(userAccount) {
-    document.getElementById('view_user_account' + userAccount.id).className = "view_user_hidden";
-    document.getElementById('edit_user_account' + userAccount.id).className = "edit_user_visible";
-  }
-
-  /**
    *
    * @param userAccount
    */
   save(userAccount: UserAccount) {
     this.userAccountService.save(userAccount);
-    this.cancel(userAccount);
   }
 }

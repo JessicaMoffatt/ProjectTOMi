@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserAccountService} from "../../../service/user-account.service";
 import {TeamService} from "../../../service/team.service";
+import {UserAccount} from "../../../model/userAccount";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-user-account-panel',
@@ -9,10 +11,18 @@ import {TeamService} from "../../../service/team.service";
 })
 export class UserAccountPanelComponent implements OnInit {
 
+  /** Subject that pushes the selected user account from the sidebar. */
+  public selectedEventSubject: Subject<UserAccount> = new Subject<UserAccount>();
+
   constructor(private userAccountService: UserAccountService, private teamService: TeamService) { }
 
   ngOnInit() {
     this.teamService.refreshTeams();
     this.userAccountService.initializeUserAccounts();
+  }
+
+  /** Pushes the selected user. */
+  userSelected(userAccount: UserAccount) {
+    this.selectedEventSubject.next(userAccount);
   }
 }
