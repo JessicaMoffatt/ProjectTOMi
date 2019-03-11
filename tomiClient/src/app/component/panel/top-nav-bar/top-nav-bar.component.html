@@ -3,35 +3,35 @@
   <ng-template [ngIf]="screenSize === 0">
     <ng-template [ngIf]="isUserLoggedIn">
       <ng-template [ngIf]="signInService.navList['my_timesheets']">
-        <a class="link" [routerLink]="'/my_timesheets'">Timesheets</a>
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/my_timesheets'">Timesheets</button>
       </ng-template>
 
       <ng-template [ngIf]="signInService.navList['approve_timesheets']">
-        <a class="link" [routerLink]="'/approve_timesheets'">Approve</a>
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/approve_timesheets'">Approve</button>
       </ng-template>
 
       <ng-template [ngIf]="signInService.navList['my_team']">
-        <a class="link" [routerLink]="'/my_team'">Team</a>
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/my_team'">Team</button>
       </ng-template>
 
       <ng-template [ngIf]="signInService.navList['manage_projects']">
-        <a class="link" [routerLink]="'/manage_projects'">Projects</a>
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/manage_projects'">Projects</button>
       </ng-template>
 
       <ng-template [ngIf]="signInService.navList['manage_teams']">
-        <a class="link" [routerLink]="'/manage_teams'">Manage Teams</a>
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/manage_teams'">Manage Teams</button>
       </ng-template>
 
       <ng-template [ngIf]="signInService.navList['manage_unit_types']">
-        <a class="link" [routerLink]="'/manage_unit_types'">Unit Types</a>
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/manage_unit_types'">Unit Types</button>
       </ng-template>
 
       <ng-template [ngIf]="signInService.navList['manage_tasks']">
-        <a class="link" [routerLink]="'/manage_tasks'">Tasks</a>
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/manage_tasks'">Tasks</button>
       </ng-template>
 
       <ng-template [ngIf]="signInService.navList['manage_user_accounts']">
-        <a class="link" [routerLink]="'/manage_user_accounts'">Users</a>
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/manage_user_accounts'">Users</button>
       </ng-template>
 
       <mat-menu #appMenu="matMenu">
@@ -48,15 +48,15 @@
   <ng-template [ngIf]="screenSize===1">
     <ng-template [ngIf]="isUserLoggedIn">
       <ng-template [ngIf]="signInService.navList['my_timesheets']">
-        <a class="link" [routerLink]="'/my_timesheets'">Timesheets</a>
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/my_timesheets'">Timesheets</button>
       </ng-template>
 
       <ng-template [ngIf]="signInService.navList['approve_timesheets']">
-        <a class="link" [routerLink]="'/approve_timesheets'">Approve</a>
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/approve_timesheets'">Approve</button>
       </ng-template>
 
       <ng-template [ngIf]="signInService.navList['my_team']">
-        <a class="link" [routerLink]="'/my_team'">Team</a>
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/my_team'">Team</button>
       </ng-template>
       <mat-menu #appMenuMed="matMenu">
         <ng-template [ngIf]="signInService.navList['manage_projects']">
@@ -83,8 +83,8 @@
         <button mat-menu-item class="menu" (click)="signInService.signOut()">Logout</button>
       </mat-menu>
 
-      <button id="menuButtonMed" mat-ripple mat-flat-button [matMenuTriggerFor]="appMenuMed">
-        <img mat-ripple id="menuButtonImageMed" src="../../../../assets/img/burger_menu.png" />
+      <button id="menuButtonMed" mat-flat-button [matMenuTriggerFor]="appMenuMed">
+        <img id="menuButtonImageMed" src="../../../../assets/img/burger_menu.png" />
       </button>
     </ng-template>
   </ng-template>
@@ -129,8 +129,8 @@
         <button mat-menu-item class="menu" (click)="signInService.signOut()">Logout</button>
       </mat-menu>
 
-      <button id="menuButtonSmall" mat-ripple mat-flat-button [matMenuTriggerFor]="appMenuSmall">
-        <img mat-ripple id="menuButtonImage" src="../../../../assets/img/burger_menu.png" />
+      <button id="menuButtonSmall" mat-flat-button [matMenuTriggerFor]="appMenuSmall">
+        <img id="menuButtonImage" src="../../../../assets/img/burger_menu.png" />
       </button>
     </ng-template>
   </ng-template>

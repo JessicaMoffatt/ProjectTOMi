@@ -14,6 +14,9 @@ import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.UserAccountRepository;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +36,7 @@ public final class UserAccountService {
 	private final UserAuthService userAuthService;
 	private final TimesheetAuthService timesheetAuthService;
 	private final ProjectAuthService projectAuthService;
+	private final TOMiEmailService emailService;
 
 	@Autowired
 	public UserAccountService(final UserAccountRepository repository,
@@ -40,13 +44,15 @@ public final class UserAccountService {
 	                          final EntryService entryService,
 	                          final UserAuthService userAuthService,
 	                          final TimesheetAuthService timesheetAuthService,
-	                          final ProjectAuthService projectAuthService) {
+	                          final ProjectAuthService projectAuthService,
+	                          final TOMiEmailService emailService) {
 		this.repository = repository;
 		this.teamService = teamService;
 		this.entryService = entryService;
 		this.userAuthService = userAuthService;
 		this.timesheetAuthService = timesheetAuthService;
 		this.projectAuthService = projectAuthService;
+		this.emailService = emailService;
 	}
 
 	/**
@@ -138,7 +144,7 @@ public final class UserAccountService {
 	/**
 	 * Creates a new timesheet every monday at 1am for all active users.
 	 */
-	@Scheduled (cron = "0 0 * * * MON")
+	@Scheduled (cron = "0 * * * * MON")
 	public void createWeeklyTimesheet() {
 		final List<UserAccount> accounts = this.repository.getAllByActiveOrderById(true);
 		final List<Timesheet> timesheets = this.entryService.getActiveTimesheets();
@@ -146,7 +152,7 @@ public final class UserAccountService {
 		for (final UserAccount a : accounts) {
 			Boolean hasTimesheet = false;
 			for (Timesheet t:timesheets){
-				if(a.equals(t.getUserAccount()) && date.equals(t.getStartDate())){
+				if(a.equals(t.getUserAccount()) && date.toString().equals(t.getStartDate().toString())){
 					hasTimesheet = true;
 				}
 			}
@@ -251,6 +257,24 @@ public final class UserAccountService {
 			if (oldUserAccount.isProgramDirector() && !newUserAccount.isProgramDirector()) {
 				throw new MinimumProgramDirectorAccountException();
 			}
+		}
+	}
+
+	@EventListener(ContextRefreshedEvent.class)
+	private void createUserPrime() {
+		String email = this.emailService.getEmailAddress();
+		Boolean userExists = false;
+		UserAccount primeAccount = this.repository.findByEmail(email).orElse(new UserAccount());
+		userExists = primeAccount.getFirstName() != null;
+		primeAccount.setFirstName("Project");
+		primeAccount.setLastName("TOMi");
+		primeAccount.setActive(true);
+		primeAccount.setAdmin(true);
+		primeAccount.setEmail(email);
+		if(userExists) {
+			this.updateUserAccount(primeAccount.getId(), primeAccount);
+		}else{
+			this.createUserAccount(primeAccount);
 		}
 	}
 }

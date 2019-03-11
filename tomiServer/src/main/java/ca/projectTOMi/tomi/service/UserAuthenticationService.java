@@ -3,6 +3,12 @@ package ca.projectTOMi.tomi.service;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import ca.projectTOMi.tomi.authorization.manager.UserAuthManager;
+import ca.projectTOMi.tomi.authorization.permission.UserPermission;
+import ca.projectTOMi.tomi.authorization.policy.UserAuthorizationPolicy;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.UserAccountRepository;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -52,5 +58,34 @@ public class UserAuthenticationService {
 			}
 		}
 		return account;
+	}
+
+	public Map<String, Boolean> getNavBarOptions(final UserAuthManager authMan, String user) throws GeneralSecurityException, IOException {
+		Set<UserAuthorizationPolicy> policies = authMan.getPolicies();
+		UserAccount userAccount = this.checkLogin(user);
+		UserAuthorizationPolicy policy = new UserAuthorizationPolicy();
+		policy.setRequestingUser(userAccount);
+		Map<String, Boolean> navs = new HashMap<>();
+		navs.put("my_timesheets", true);
+
+		navs.put("approve_timesheets", true);
+		navs.put("my_team", true);
+
+		//
+		policy.setPermission(UserPermission.DELETE_PROJECT);
+		navs.put("manage_projects", policies.contains(policy));
+
+		policy.setPermission(UserPermission.CREATE_TEAM);
+		navs.put("manage_teams", policies.contains(policy));
+
+		policy.setPermission(UserPermission.CREATE_UNIT_TYPE);
+		navs.put("manage_unit_types", policies.contains(policy));
+
+		policy.setPermission(UserPermission.CREATE_TASK);
+		navs.put("manage_tasks", policies.contains(policy));
+
+		policy.setPermission(UserPermission.CREATE_USER_ACCOUNT);
+		navs.put("manage_user_accounts", policies.contains(policy));
+		return navs;
 	}
 }

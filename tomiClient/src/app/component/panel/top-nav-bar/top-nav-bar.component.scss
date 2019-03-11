@@ -25,12 +25,13 @@ mat-toolbar {
 
 
 .link{
-  width: 8vw !important;
-  padding: 1vw;
+  width: 10vw !important;
+  height: 9vh;
   text-decoration: none;
   font-size: 1rem;
   color: #FFFFFF;
   text-align:center;
+  background: $orange;
 }
 
 .link:hover{
@@ -42,6 +43,7 @@ mat-toolbar {
 }
 #icon, #menuButtonImage, #menuButtonImageMed{
   position: inherit;
+  border: none;
   height: 7vh;
   width: 7vh;
   border-radius: 7vh;
@@ -58,7 +60,8 @@ mat-toolbar {
   width: 7vh;
   font-size: 1rem;
   color: #FFFFFF;
-  z-index: 3;
+  z-index: 2;
+  box-shadow: none;
 }
 
 #userName:hover{

@@ -3,6 +3,7 @@ package ca.projectTOMi.tomi.persistence;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.model.Team;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -53,4 +54,6 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
 
 	UserAccount getByActiveTrueAndGoogleId(String id);
 	UserAccount getByActiveTrueAndEmail(String email);
+
+	Optional<UserAccount> findByEmail(String email);
 }

@@ -47,17 +47,10 @@ public class AuthenticationController {
 	}
 
 	@GetMapping("/build_nav_bar")
-	public Map<String, Boolean> getNavBarOptions(final @RequestHeader String SignIn, final @RequestAttribute UserAuthManager authMan){
-		Map<String, Boolean> navs = new HashMap<>();
-		navs.put("my_timesheets", true);
-		navs.put("approve_timesheets", true);
-		navs.put("my_team", true);
-		navs.put("manage_projects", true);
-		navs.put("manage_teams", true);
-		navs.put("manage_unit_types", true);
-		navs.put("manage_tasks", true);
-		navs.put("manage_user_accounts", true);
-		return navs;
+	public Map<String, Boolean> getNavBarOptions(final @RequestHeader String signIn,
+	                                             final @RequestAttribute UserAuthManager authMan) throws GeneralSecurityException, IOException {
+
+		return userAuthenticationService.getNavBarOptions(authMan, signIn);
 	}
 
 	@ExceptionHandler({IOException.class, GeneralSecurityException.class})
