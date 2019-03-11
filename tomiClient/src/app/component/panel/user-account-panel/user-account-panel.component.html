@@ -1,4 +1,9 @@
+<!--
+@author Iliya Kiritchkov
+@version 1.1
+-->
+
 <div style="float:left">
-  <app-user-account-sidebar></app-user-account-sidebar>
+      <app-user-account-sidebar (userSelectedEvent)="userSelected($event)"></app-user-account-sidebar>
 </div>
-<app-user-account></app-user-account>
+<app-user-account [userSelectedEvent]="selectedEventSubject.asObservable()"></app-user-account>
