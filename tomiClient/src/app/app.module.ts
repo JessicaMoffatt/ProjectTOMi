@@ -6,6 +6,8 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 
+import { DatePipe } from '@angular/common';
+
 import {AppComponent} from './app.component';
 
 //Material Imports
@@ -182,7 +184,8 @@ import {AccessGuard} from "./AccessGuard";
     MatDatepickerModule,
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
     { provide: DateAdapter, useClass: CustomDateAdapter },
-    AccessGuard
+    AccessGuard,
+    DatePipe
   ],
   bootstrap: [AppComponent],
   exports: [
