@@ -9,7 +9,11 @@ import java.util.Set;
 import ca.projectTOMi.tomi.authorization.manager.UserAuthManager;
 import ca.projectTOMi.tomi.authorization.permission.UserPermission;
 import ca.projectTOMi.tomi.authorization.policy.UserAuthorizationPolicy;
+import ca.projectTOMi.tomi.model.Project;
+import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.model.UserAccount;
+import ca.projectTOMi.tomi.persistence.ProjectRepository;
+import ca.projectTOMi.tomi.persistence.TeamRepository;
 import ca.projectTOMi.tomi.persistence.UserAccountRepository;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -25,10 +29,16 @@ public class UserAuthenticationService {
 	private final static String CLIENT_ID_2 = "730191725836-6pv3tlbl520hai1tnl96nr0du79b7sfp.apps.googleusercontent.com";
 	private static GooglePublicKeysManager googlePublicKeysManager;
 	private final UserAccountRepository userAccountRepository;
+	private final TeamRepository teamRepository;
+	private final ProjectRepository projectRepository;
 
 	@Autowired
-	public UserAuthenticationService(final UserAccountRepository userAccountRepository) {
+	public UserAuthenticationService(final UserAccountRepository userAccountRepository,
+	                                 final TeamRepository teamRepository,
+	                                 final ProjectRepository projectRepository) {
 		this.userAccountRepository = userAccountRepository;
+		this.teamRepository = teamRepository;
+		this.projectRepository = projectRepository;
 		try {
 			googlePublicKeysManager = new GooglePublicKeysManager(GoogleNetHttpTransport.newTrustedTransport(), JacksonFactory.getDefaultInstance());
 		} catch (IOException | GeneralSecurityException e) {
@@ -68,8 +78,11 @@ public class UserAuthenticationService {
 		Map<String, Boolean> navs = new HashMap<>();
 		navs.put("my_timesheets", true);
 
-		navs.put("approve_timesheets", true);
-		navs.put("my_team", true);
+		Project p = this.projectRepository.findFirstByActiveTrueAndProjectManager(userAccount).orElse(null);
+		navs.put("approve_timesheets", p != null);
+
+		Team t = this.teamRepository.findFirstByActiveTrueAndTeamLead(userAccount).orElse(null);
+		navs.put("my_team", t != null);
 
 		//
 		policy.setPermission(UserPermission.DELETE_PROJECT);

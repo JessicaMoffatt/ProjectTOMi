@@ -19,7 +19,9 @@ public class TOMiEmailService {
 
 	public void sendSimpleMessage(
 		final String to, final String subject, final String text) {
-		this.emailSender = this.getJavaMailSender();
+		if(!((JavaMailSenderImpl)this.emailSender).getUsername().equals(emailAddress)) {
+			this.emailSender = this.getJavaMailSender();
+		}
 		final SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(to);
 		message.setSubject(subject);

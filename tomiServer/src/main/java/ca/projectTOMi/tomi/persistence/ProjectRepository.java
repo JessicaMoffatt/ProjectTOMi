@@ -1,6 +1,7 @@
 package ca.projectTOMi.tomi.persistence;
 
 import java.util.List;
+import java.util.Optional;
 import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,4 +30,6 @@ public interface ProjectRepository extends JpaRepository<Project, String> {
 	List<Project> getAllByActiveOrderById(boolean active);
 
 	List<Project> getAllByActiveTrueAndProjectMembersContainsOrderById(UserAccount user);
+
+	Optional<Project> findFirstByActiveTrueAndProjectManager(UserAccount projectManager);
 }
