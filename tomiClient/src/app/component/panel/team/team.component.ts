@@ -56,8 +56,7 @@ export class TeamComponent implements OnInit {
       width: '400px'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-    })
+    dialogRef.afterClosed().subscribe();
   }
 
   /**
