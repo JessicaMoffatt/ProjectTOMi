@@ -84,7 +84,7 @@ export class TeamMemberTimesheetService {
    */
   private async populateTimesheets() {
     let promise = new Promise((resolve, reject) => {
-      resolve(this.timesheetService.populateTimesheets(this.selectedMember.id))
+      resolve(this.timesheetService.populateTimesheets(this.selectedMember.id));
     });
 
     return await promise;

@@ -63,8 +63,7 @@ export class DatePickerComponent implements OnInit{
     let currentDay = new Date(this.timesheetService.currentDate);
 
     let days = +(currentDay) - +this.selectedDate;
-    let weeks = days / millisecondsToDays / 7;
-
+    let weeks = Math.ceil(days / millisecondsToDays / 7);
     this.parent.displaySpecifiedTimesheet(weeks);
   }
 }

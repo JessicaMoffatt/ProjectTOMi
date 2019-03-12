@@ -137,9 +137,6 @@ export class TimesheetService {
         if(this.currentTimesheetIndex >= this.timesheets.length){
           this.currentTimesheetIndex = this.timesheets.length -1;
         }
-
-        console.log(4);
-
         this.setCurrentDate();
         this.setCurrentStatus().then();
         return this.getCurrentTimesheet();
@@ -147,18 +144,10 @@ export class TimesheetService {
     });
   }
 
-  test(){
-    console.log(this.timesheets[this.currentTimesheetIndex]);
-    this.setCurrentDate();
-    this.setCurrentStatus().then();
-  }
-
   /**
    * Sets the current date to display.
    */
   setCurrentDate(){
-    console.log(this.timesheets[this.currentTimesheetIndex]);
-    console.log("problem area");
     // force LOCAL time with +'T00:00:00'
     if(this.currentTimesheetIndex != -1){
       let tempDay = new Date(this.timesheets[this.currentTimesheetIndex].startDate +'T00:00:00');
