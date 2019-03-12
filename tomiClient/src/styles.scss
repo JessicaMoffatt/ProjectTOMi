@@ -257,6 +257,17 @@ html,body{
   width:25%;
 }
 
+.calendar{
+  width:$btn_md;
+  height:$btn_md;
+  margin:1rem;
+
+  background-image: url('~src/assets/img/calendar.png');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
 /** Snackbar styling */
 .snackbar-success {
   background-color: $green;
@@ -266,3 +277,4 @@ html,body{
   background-color: $red;
 }
 /** Snackbar Styling */
+

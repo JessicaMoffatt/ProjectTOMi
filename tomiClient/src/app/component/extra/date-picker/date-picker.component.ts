@@ -14,7 +14,6 @@ const millisecondsToDays: number = 86400000;
   styleUrls: ['./date-picker.component.scss']
 })
 export class DatePickerComponent implements OnInit{
-  date = new FormControl();
   /**
    * The latest date that can be selected.
    */
@@ -38,7 +37,6 @@ export class DatePickerComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.date.setValue(new Date(this.timesheetService.currentDate));
   }
 
   doSetMinDate(){
@@ -63,7 +61,7 @@ export class DatePickerComponent implements OnInit{
     let currentDay = new Date(this.timesheetService.currentDate);
 
     let days = +(currentDay) - +this.selectedDate;
-    let weeks = Math.ceil(days / millisecondsToDays / 7);
+    let weeks = Math.floor((days / millisecondsToDays + 6) / 7) ;
     this.parent.displaySpecifiedTimesheet(weeks);
   }
 }
