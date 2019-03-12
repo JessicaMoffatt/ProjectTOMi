@@ -139,12 +139,18 @@ export class TimesheetService {
         }
 
         console.log(4);
-        console.log(data[this.currentTimesheetIndex]);
+
         this.setCurrentDate();
         this.setCurrentStatus().then();
         return this.getCurrentTimesheet();
       });
     });
+  }
+
+  test(){
+    console.log(this.timesheets[this.currentTimesheetIndex]);
+    this.setCurrentDate();
+    this.setCurrentStatus().then();
   }
 
   /**
