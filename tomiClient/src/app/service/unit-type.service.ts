@@ -116,6 +116,11 @@ export class UnitTypeService {
     }
   }
 
+  /**
+   * Returns a Unit Type by passing in it's id.
+   *
+   * @param id id of the unit type.
+   */
   getUnitTypeById(id:number){
     return this.http.get(`${this.unitTypeUrl}/${id}`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
@@ -168,6 +173,9 @@ export class UnitTypeService {
       });
     }).then(value => {
       this.sortUnitTypes();
+    }).catch( (error: any) => {
+      let getUnitTypeErrorMessage = 'Something went wrong when updating the list of Unit Types. Please contact your system administrator.';
+      this.snackBar.open(getUnitTypeErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
     });
   }
 }
