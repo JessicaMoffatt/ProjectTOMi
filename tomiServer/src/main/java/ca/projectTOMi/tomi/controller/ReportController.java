@@ -13,15 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Karol Talbot
  */
 @RestController
+@CrossOrigin (origins = "http://localhost:4200")
 public class ReportController {
 	private final Logger logger = LoggerFactory.getLogger("Report Controller");
 	private final ReportService reportService;
@@ -58,11 +56,13 @@ public class ReportController {
 
 	@GetMapping ("/data_dump_report")
 	public List<DataDumpReportLine> getDataDumpReport() {
+		System.out.println("HERE");
 		return this.reportService.getDataDumpReport();
 	}
 
 	@GetMapping ("/data_dump_report/xls")
 	public DataDumpReportExcelView getDataDumpReportExcel() {
+		System.out.println("Report Controller");
 		return new DataDumpReportExcelView(this.reportService.getDataDumpReport());
 	}
 

@@ -9,14 +9,27 @@ import {ProjectService} from "../../../service/project.service";
 })
 export class ProjectsPanelComponent implements OnInit {
 
-  constructor(private temp:ProjectService) { }
+  constructor(private projectService:ProjectService) { }
 
   project:Project;
 
   ngOnInit() {
-    this.temp.getProjectById('JM1001').subscribe((data)=>{
+    this.projectService.getProjectById('JM1001').subscribe((data)=>{
       this.project = data;
     });
   }
 
+  getDataDump(){
+    this.projectService.getDataDump().subscribe(
+      data =>{
+     window.open(window.URL.createObjectURL(data));
+    },
+        err=>{
+
+    });
+  }
+
+  downloadDataDump(){
+
+  }
 }
