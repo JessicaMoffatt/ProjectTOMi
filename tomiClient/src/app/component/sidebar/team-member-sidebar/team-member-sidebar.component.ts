@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TeamMemberTimesheetService} from "../../../service/team-member-timesheet.service";
 import {UserAccount} from "../../../model/userAccount";
+import {TimesheetService} from "../../../service/timesheet.service";
 
 /**
  * TeamMemberSidebarComponent is used to display the list of team members for a user to interact with when viewing timesheets.
@@ -15,7 +16,7 @@ import {UserAccount} from "../../../model/userAccount";
 })
 export class TeamMemberSidebarComponent implements OnInit {
 
-  constructor(public teamMemberTimesheetService: TeamMemberTimesheetService) { }
+  constructor(public teamMemberTimesheetService: TeamMemberTimesheetService, public timesheetService:TimesheetService) { }
 
   ngOnInit() {
     this.teamMemberTimesheetService.getAllTeamMembers().subscribe((data: Array<UserAccount>) => {
@@ -30,7 +31,7 @@ export class TeamMemberSidebarComponent implements OnInit {
   displayTimesheet(teamMember: UserAccount){
     this.teamMemberTimesheetService.getMemberById(teamMember.id).subscribe((data:UserAccount) => {
       this.teamMemberTimesheetService.selectedMember = data;
-
+      this.timesheetService.minDate = null;
       this.teamMemberTimesheetService.displayTimesheet();
       this.teamMemberTimesheetService.reloadTeamMembers();
     });

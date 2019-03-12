@@ -8,8 +8,7 @@
   <span [ngClass]="'week_title'">Week of {{timesheetService.currentDate}}</span>
   <span [ngClass]="['arrow', 'forward']" (click)="displayNextTimesheet()">
   </span>
-  <!--TODO FIX THIS-->
-  <app-date-picker [parent]="this"></app-date-picker>
+  <app-date-picker [parent]="this" [minDate]="timesheetService.minDate"></app-date-picker>
 
   <span id="submission_status">{{timesheetService.currentStatus}}</span>
 

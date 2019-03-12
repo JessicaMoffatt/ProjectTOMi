@@ -27,6 +27,8 @@ export class TeamMemberTimesheetService {
   /** The team member selected in the sidebar.*/
   selectedMember: UserAccount;
 
+
+
   //TODO, dont hardcode, should come from header
  teamid: number = 1;
 
@@ -39,6 +41,8 @@ export class TeamMemberTimesheetService {
   constructor(private http: HttpClient, private router: Router, private userAccountService:UserAccountService, private teamService:TeamService, public timesheetService: TimesheetService) {
 
   }
+
+
 
   /**
    * Gets all the team members for this team lead's team.
@@ -71,6 +75,9 @@ export class TeamMemberTimesheetService {
     this.populateTimesheets().then((value) => {
       let timesheet = value as Timesheet;
       this.populateEntries(timesheet.id);
+      console.log("display timesheet");
+      console.log(this.timesheetService.currentDate);
+      this.timesheetService.setCurrentDate();
     });
   }
 
@@ -79,7 +86,7 @@ export class TeamMemberTimesheetService {
    */
   private async populateTimesheets() {
     let promise = new Promise((resolve, reject) => {
-      resolve(this.timesheetService.populateTimesheets(this.selectedMember.id))
+      resolve(this.timesheetService.populateTimesheets(this.selectedMember.id));
     });
 
     return await promise;

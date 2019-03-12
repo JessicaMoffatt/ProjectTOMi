@@ -3,27 +3,12 @@
 @verison 1.0
 -->
 
-<mat-form-field>
-  <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="Choose a date"/>
-  <span id="fish" style="background:red; z-index: 9000" (mouseenter)="this.temp()">
-  <mat-datepicker-toggle matSuffix [for]="picker"  (click)="doSetMinDate()"></mat-datepicker-toggle>
-  <mat-datepicker #picker  (click)="doSetMinDate()"></mat-datepicker>
-  </span>
+<span style="display:none;"id="calendar" >
+<mat-form-field >
+  <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="Choose a date" (dateChange)="onDateChange($event)"/>
+  <mat-datepicker-toggle  matSuffix [for]="picker"  (click)="doSetMinDate()"></mat-datepicker-toggle>
+  <mat-datepicker  #picker (click)="doSetMinDate()"></mat-datepicker>
 </mat-form-field>
 
-
-<div class="row">
-  <div class="col-xs-4 form-group">
-    <!--<input-->
-      <!--class="form-control"-->
-      <!--placeholder=""-->
-      <!--bsDatepicker-->
-      <!--[bsConfig]="{ selectWeek: true, containerClass: 'theme-blue', selectFromOtherMonth: true}"-->
-      <!--[maxDate]="maxDate"-->
-      <!--[minDate]="minDate"-->
-      <!--(bsValueChange)="onDateChange($event)"-->
-      <!--(click)="doSetMinDate()"-->
-      <!--&gt;-->
-  </div>
-</div>
-
+</span>
+<button mat-flat-button (click)="picker.open()" (mouseenter)="doSetMinDate()" [ngClass]="'calendar'"></button>
