@@ -56,13 +56,11 @@ public class ReportController {
 
 	@GetMapping ("/data_dump_report")
 	public List<DataDumpReportLine> getDataDumpReport() {
-		System.out.println("HERE");
 		return this.reportService.getDataDumpReport();
 	}
 
 	@GetMapping ("/data_dump_report/xls")
 	public DataDumpReportExcelView getDataDumpReportExcel() {
-		System.out.println("Report Controller");
 		return new DataDumpReportExcelView(this.reportService.getDataDumpReport());
 	}
 

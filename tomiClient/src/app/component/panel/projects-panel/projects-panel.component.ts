@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Project} from "../../../model/project";
 import {ProjectService} from "../../../service/project.service";
-import { DatePipe } from '@angular/common';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-projects-panel',
@@ -10,37 +10,44 @@ import { DatePipe } from '@angular/common';
 })
 export class ProjectsPanelComponent implements OnInit {
 
-  constructor(private projectService:ProjectService, private datePipe:DatePipe) { }
+  constructor(private projectService: ProjectService, private datePipe: DatePipe) {
+  }
 
-  project:Project;
+  project: Project;
 
   ngOnInit() {
-    this.projectService.getProjectById('JM1001').subscribe((data)=>{
+    this.projectService.getProjectById('JM1001').subscribe((data) => {
       this.project = data;
     });
   }
 
-  getDataDump(){
+  getDataDump() {
     this.projectService.getDataDump().subscribe(
-      data =>{
-      let link = document.createElement('a');
-      link.href = window.URL.createObjectURL(data);
+      data => {
+        console.log("HERE");
+        console.log(data);
+        let link = document.createElement('a');
+        let stuff = window.URL.createObjectURL(data);
+        link.href = stuff
+        document.body.appendChild(link);
+        let today = new Date();
+        let dateString = this.datePipe.transform(today, "yyyy-MM-dd");
 
-      let today = new Date();
-      let dateString = this.datePipe.transform(today, "yyyy-MM-dd");
+        link.download = "Data_Dump_" + dateString+".xls";
 
-      link.download = "Data_Dump_" + dateString;
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(stuff);
 
-      link.click();
-    },
-        err=>{
-          // this.errorBar.openFromComponent(ErrorBarComponent, {
-          //   duration: 5000
-          // });
-    });
+      },
+      err => {
+        // this.errorBar.openFromComponent(ErrorBarComponent, {
+        //   duration: 5000
+        // });
+      });
   }
 
-  downloadDataDump(){
+  downloadDataDump() {
 
   }
 }
