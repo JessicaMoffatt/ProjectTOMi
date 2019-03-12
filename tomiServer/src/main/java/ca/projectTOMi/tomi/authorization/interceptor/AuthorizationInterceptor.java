@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.zip.ZipEntry;
+
 /**
  * @author Karol Talbot
  */
@@ -53,6 +56,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) {
+		System.out.println(request.getRequestURI());
+
 		final Long start = System.currentTimeMillis();
 		request.setAttribute("start", start);
 		final String authToken = request.getHeader("SignIn");
@@ -139,6 +144,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
 			request.setAttribute("authMan", authMan);
 		}
+
 		return ((AuthManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
 	}
 
@@ -149,7 +155,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		final Long start = (Long) request.getAttribute("start");
 		final String requestURI = request.getRequestURI();
 		final Long stop = System.currentTimeMillis();
-		System.out.printf("Call %d %s: %s executed in %dms%n", this.i++, requestURI, request.getMethod(), stop - start);
+//		System.out.printf("Call %d %s: %s executed in %dms%n", this.i++, requestURI, request.getMethod(), stop - start);
 	}
 
 	@Override

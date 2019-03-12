@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Karol Talbot
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin (origins = "http://localhost:4200")
 public class ReportController {
 	private final Logger logger = LoggerFactory.getLogger("Report Controller");
 	private final ReportService reportService;
