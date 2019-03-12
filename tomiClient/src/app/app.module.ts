@@ -6,6 +6,8 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 
+import { DatePipe } from '@angular/common';
+
 import {AppComponent} from './app.component';
 
 //Material Imports
@@ -178,7 +180,8 @@ import {AccessGuard} from "./AccessGuard";
     TaskPanelService,
     SignInService,
     MatDatepickerModule,
-    AccessGuard
+    AccessGuard,
+    DatePipe
   ],
   bootstrap: [AppComponent],
   exports: [

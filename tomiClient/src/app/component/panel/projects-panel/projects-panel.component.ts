@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Project} from "../../../model/project";
 import {ProjectService} from "../../../service/project.service";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-projects-panel',
@@ -9,7 +10,7 @@ import {ProjectService} from "../../../service/project.service";
 })
 export class ProjectsPanelComponent implements OnInit {
 
-  constructor(private projectService:ProjectService) { }
+  constructor(private projectService:ProjectService, private datePipe:DatePipe) { }
 
   project:Project;
 
@@ -22,10 +23,20 @@ export class ProjectsPanelComponent implements OnInit {
   getDataDump(){
     this.projectService.getDataDump().subscribe(
       data =>{
-     window.open(window.URL.createObjectURL(data));
+      let link = document.createElement('a');
+      link.href = window.URL.createObjectURL(data);
+
+      let today = new Date();
+      let dateString = this.datePipe.transform(today, "yyyy-MM-dd");
+
+      link.download = "Data_Dump_" + dateString;
+
+      link.click();
     },
         err=>{
-
+          // this.errorBar.openFromComponent(ErrorBarComponent, {
+          //   duration: 5000
+          // });
     });
   }
 
