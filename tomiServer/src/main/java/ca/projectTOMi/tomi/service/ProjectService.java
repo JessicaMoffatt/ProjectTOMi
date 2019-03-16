@@ -120,6 +120,7 @@ public final class ProjectService {
 	}
 
 	public Project createProject(final Project project){
+		project.setActive(true);
 		final Project savedProject = this.repository.save(project);
 		this.projectAuthService.newProjectPolicies(savedProject);
 		return savedProject;

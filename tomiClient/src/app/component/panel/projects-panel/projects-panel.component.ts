@@ -7,7 +7,7 @@ import {Client} from "../../../model/client";
 @Component({
   selector: 'app-projects-panel',
   templateUrl: './projects-panel.component.html',
-  styleUrls: ['./projects-panel.component.scss','../../../app.component.scss' ]
+  styleUrls: ['./projects-panel.component.scss']
 })
 
 
@@ -24,6 +24,8 @@ export class ProjectsPanelComponent implements OnInit {
     this.temp.getProjectById('JM1001').subscribe((data)=>{
       this.project = data;
     });
+    this.temp.initializeProjects();
+
   }
 
   viewProductivityReport() {
@@ -35,6 +37,7 @@ export class ProjectsPanelComponent implements OnInit {
   }
 
   displayBlankProject() {
+    this.temp.selected = null;
     this.subPanelDisplay = "newProject";
   }
 

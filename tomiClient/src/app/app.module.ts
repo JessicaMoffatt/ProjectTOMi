@@ -8,7 +8,7 @@ import {
   MatCheckboxModule,
   MatDatepickerModule, MatGridListModule,
   MatMenuModule,
-  MatNativeDateModule, MatSnackBarModule,
+  MatNativeDateModule, MatSidenavModule, MatSnackBarModule,
   MatTabsModule
 } from '@angular/material';
 import {MatListModule} from '@angular/material/list';
@@ -130,6 +130,7 @@ import {AccessGuard} from "./AccessGuard";
     AddTaskComponent
   ],
   imports: [
+    MatSidenavModule,
     MatSnackBarModule,
     MatGridListModule,
     MatMenuModule,

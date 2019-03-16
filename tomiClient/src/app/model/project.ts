@@ -16,7 +16,7 @@ export class Project{
   /** The Client this Project is for.*/
   client: Client;
   /** The ID of the UserAccount managing this Project.*/
-  projectManager: number;
+  projectManagerId: number;
   /** The name of this Project.*/
   projectName: string;
   /** The budget assigned to this Project multiplied by 100 to remove decimals.*/
@@ -28,7 +28,7 @@ export class Project{
   billableRate: number;
   /** The Accounts that are members of this Project.*/
   projectMembers: UserAccount[];
-  /** If this Project is active.*/
+  /** If this Project is active.  used to set backend but is not passed back*/
   active: boolean;
   /** The list of links used for communicating with the back end.*/
   _links: [];
@@ -36,7 +36,7 @@ export class Project{
   constructor(){
     this.id = "";
     this.client = new Client();
-    this.projectManager = -1;
+    this.projectManagerId = -1;
     this.projectName = "";
     this.budget = 0;
     this.billableRate = 0;

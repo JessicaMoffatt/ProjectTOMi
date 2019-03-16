@@ -5,6 +5,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {Client} from "../model/client";
 import {collectExternalReferences} from "@angular/compiler";
 import {UserAccount} from "../model/userAccount";
+import {Project} from "../model/project";
 
 /**
  * Clients service provides services relates to Clients.
@@ -34,13 +35,16 @@ export class ClientService {
   selected: Client;
 
   /** used to pass list to project related components */
-  clients: Observable<Array<Client>>;
-  clientArray: Client[];
+  clients: BehaviorSubject<Array<Client>>;
 
   constructor(private http: HttpClient) {
-    this.clients = this.getClients();
-    this.getClients().forEach( clients => {
-      this.clientArray = clients;
+    this.initializeProjects();
+  }
+
+  initializeProjects() {
+    this.getClients().forEach( client => {
+      this.clients = new BehaviorSubject<Array<Client>>(client);
+      //this.sortUserAccounts();
     });
   }
 
@@ -106,7 +110,7 @@ export class ClientService {
    */
   getClientByName(clientName: string): Client {
 
-        for (let c of this.clientArray) {
+        for (let c of this.clients.value) {
           if (c.name === clientName) {
             return c;
           }
@@ -143,8 +147,6 @@ export class ClientService {
       });
     }
   }
-
-
 
 }
 

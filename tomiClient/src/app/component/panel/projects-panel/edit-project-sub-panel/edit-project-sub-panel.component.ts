@@ -6,6 +6,9 @@ import {FormControl} from "@angular/forms";
 import {ExpenseService} from "../../../../service/expense.service";
 import {Client} from "../../../../model/client";
 import {UserAccountService} from "../../../../service/user-account.service";
+import {UserAccount} from "../../../../model/userAccount";
+import {map} from "rxjs/operators";
+import {UnitType} from "../../../../model/unitType";
 
 
 @Component({
@@ -23,9 +26,10 @@ export class EditProjectSubPanelComponent implements OnInit {
   }
 
   myControl = new FormControl();
-  myControl2 = new FormControl();
+
 
   ngOnInit() {
+    this.userAccountService.initializeUserAccounts();
   }
 
 
@@ -54,7 +58,7 @@ export class EditProjectSubPanelComponent implements OnInit {
     // we must validate the account manager
     else if (this.projectService.selected == null && (<HTMLInputElement>document.getElementById("account_manager")).value.length == 0) {
       alert("account manager name is required.")
-    } else if (this.projectService.selected == null && !this.isValidAccountManagerName(accountManagerName)) {
+    } else if (this.projectService.selected == null && !this.isValidAccountManagerName((<HTMLInputElement>document.getElementById("account_manager")).value)) {
       alert("account manager name is invalid.  Must take the format 'John Smith' or 'j s'");
     }
 
@@ -82,11 +86,12 @@ export class EditProjectSubPanelComponent implements OnInit {
         client.name = clientName;
         this.clientService.save(client);
         console.log("new client saved.")
-      } else {
-        console.log("existing client loaded.");
-        // @ts-ignore
-        client = this.clientService.getClientByName(clientName);
       }
+
+      console.log("existing client loaded.");
+      // @ts-ignore
+      client = this.clientService.getClientByName(clientName);
+
       this.projectService.selected.client = client;
 
       // 4.4 Set the billable rate and budget (not required fields)
@@ -98,7 +103,7 @@ export class EditProjectSubPanelComponent implements OnInit {
       alert("  project name:" + this.projectService.selected.projectName);
       alert("  client:" + this.projectService.selected.client.name);
       alert("  id:" + this.projectService.selected.id);
-      alert("  project manager id:" + this.projectService.selected.projectManager);
+      alert("  project manager id:" + this.projectService.selected.projectManagerId);
     }
   }
 
@@ -125,7 +130,16 @@ export class EditProjectSubPanelComponent implements OnInit {
     let first = words[0].charAt(0).toUpperCase();
     let second = words[1].charAt(0).toUpperCase();
     if (!first.match(/[A-Z]/i) || !second.match(/[A-Z]/i)) return "";
-    else console.log("extracted initials:" + first + second);
-    return first + second;
+    else
+    // console.log("extracted initials:" + first + second);
+      return first + second;
+  }
+
+  getProjectManager(): UserAccount {
+
+    for (let u of this.userAccountService.userSubject.getValue()) {
+      if (u.id == this.projectService.selected.projectManagerId) return u;
+    }
+    return new UserAccount();
   }
 }

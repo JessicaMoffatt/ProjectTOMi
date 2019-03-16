@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Project} from "../model/project";
 import {Client} from "../model/client";
 import {UserAccount} from "../model/userAccount";
@@ -29,14 +29,14 @@ export class ProjectService {
   /** The URL for accessing user accounts.*/
   private userAccountProjectsUrl = 'http://localhost:8080/user_accounts';
 
-  /** tracks which project is selected in project-panel component and manage-project modal */
+  /** tracks which project is selected in project-panel component and manage-project modal.
+   */
   selected: Project; // added by: James Andrade
 
   /** used to pass list to project related components */
-  projects: Observable<Array<Project>>; // added by: James Andrade
+  projects: BehaviorSubject<Array<Project>>; // added by: James Andrade
 
   constructor(private http: HttpClient) {
-    this.projects = this.getAllProjects(); // added by: James Andrade
   }
 
   /**
@@ -75,6 +75,11 @@ export class ProjectService {
    */
   setSelected(project: Project){
     this.selected = project;
+    // console.log("selected:"+project.projectName);
+    // console.log("is null:"+project == null);
+    // console.log("is undefined:"+project == undefined);
+    // console.log("is not null:"+project != null);
+    // console.log("is not undefined:"+project != undefined);
   }
 
 
@@ -125,5 +130,12 @@ export class ProjectService {
         //TODO Add an error display
       });
     }
+  }
+
+  initializeProjects() {
+    this.getAllProjects().forEach( project => {
+      this.projects = new BehaviorSubject<Array<Project>>(project);
+      //this.sortUserAccounts();
+    });
   }
 }

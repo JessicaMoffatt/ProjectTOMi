@@ -1,53 +1,49 @@
 <!-- James Andrade, Jan 27,2019 -->
 
+<mat-sidenav-container>
+  <mat-sidenav mode="side"
+               opened>
+    <!--div id="sidebar"-->
+    Projects
+    <br/>
+    <!--the keyup function below is used to trigger an update-->
+    <input #box (keyup)="0" id="search_value" type="text" placeholder="Search"/>
+    <br/>
 
-<div id="sidebar">
-  <h1>Projects</h1>
-  <!-- the keyup function below is used to trigger an update -->
-  <input #box (keyup)="0" id="search_value" type="text" placeholder="Search"/>
-  <h2>Tasks</h2>
-  <button (click)="viewProductivityReport()" mat-raised-button color="primary">
-    VIEW PRODUCTIVITY REPORT
-  </button>
+    <button (click)="viewProductivityReport()" mat-raised-button color="primary">
+      VIEW PRODUCTIVITY REPORT
+    </button>
+    <br/>
 
+    Active Projects
+    <br/>
 
-  <div>
-    <h3>Active Projects</h3>
-    <ul [ngClass]="['sidebar_list']">
+    <mat-list dense>
       <!--orderBy:'projectName'"-->
       <!--  [class.highlighted]="p.id === this.projectService.selected.id" -->
-      <li *ngFor="let p of this.projectService.projects|async|orderBy:'projectName'"
+      <!--"-->
+      <mat-list-item
+        *ngFor="let p of this.temp.projects|async|orderBy:'projectName'"
+        (click)="this.temp.setSelected(p)">
 
-          [ngClass]="['sidebar_list']">
-        <span *ngIf="p.projectName.includes(box.value) && p.active===true"
-              (click)="this.projectService.setSelected(p)">{{p.name}}</span>
-      </li>
-    </ul>
-  </div>
-  <div>
-    <h3>Archived Projects</h3>
-    <ul [ngClass]="['sidebar_list']">
+        <span *ngIf="p.projectName.toLowerCase().includes(box.value.toLowerCase())">
+          {{p.active}} {{p.projectName}}
+        </span>
 
-      <!--  [class.highlighted]="p.id === this.projectService.selected.id" -->
-      <li *ngFor="let p of this.projectService.projects|async|orderBy:'projectName'"
+      </mat-list-item>
+    </mat-list>
 
-          [ngClass]="['sidebar_list']">
-        <span *ngIf="p.projectName.includes(box.value) && p.active===false"
-              (click)="this.projectService.setSelected(p)">{{p.name}}</span>
-      </li>
-    </ul>
-  </div>
-  <button (click)="displayBlankProject()" mat-raised-button color="primary">NEW PROJECT</button>
-</div>
+    <button (click)="displayBlankProject()" mat-raised-button color="primary">NEW PROJECT</button>
+  </mat-sidenav>
 
-<div id="mainPanel">
+  <mat-sidenav-content>
+    <template #edit_project_container></template>
+    <template #display_project_container></template>
+    <div *ngIf="this.subPanelDisplay=='newProject'">
+      <app-edit-project-sub-panel></app-edit-project-sub-panel>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 
-  <template #edit_project_container></template>
-  <template #display_project_container></template>
-  <div *ngIf="this.subPanelDisplay=='newProject'">
-    <app-edit-project-sub-panel > </app-edit-project-sub-panel>
-  </div>
-
-</div>
 
 <app-budget-report [project]="project"></app-budget-report>

@@ -29,7 +29,7 @@ export class UserAccountService {
 
   /** Listing of all active UserAccounts */
   userAccounts: Observable<Array<UserAccount>>;
-  userSubject: BehaviorSubject<Array<UserAccount>>;
+  userSubject: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject([]);
 
   public constructor(private http: HttpClient) {
 
@@ -122,7 +122,7 @@ export class UserAccountService {
   /**
    * Saves a specified UserAccount. If the UserAccount is new (id = -1), an HTTP POST is performed, else an HTTP PUT is performed to update the existing UserAccount.
    *
-   * @param account The UserAccount to be created/updated.
+   * @param userAccount The UserAccount to be created/updated.
    */
   async save(userAccount: UserAccount) {
     let testUserAccount: UserAccount = null;
@@ -147,7 +147,7 @@ export class UserAccountService {
   /**
    *  Logically deletes the selected user account (sets the active status to false.)
    *
-   * @param account The UserAccount to be deleted.
+   * @param accountToDelete The UserAccount to be deleted.
    */
     delete(accountToDelete:UserAccount) {
       let url = accountToDelete._links["delete"];
@@ -162,4 +162,6 @@ export class UserAccountService {
           return data as UserAccount;
         }));
     }
+
+
 }
