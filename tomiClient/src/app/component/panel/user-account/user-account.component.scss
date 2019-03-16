@@ -1,45 +1,49 @@
 /**
  * @author Karol Talbot
  */
-
 @import "../../../../variables";
 
-.content_pane{
-  height:90vh;
+.content_pane {
+  height: 90vh;
   width: 100vw;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-.search_bar{
+.search_bar {
   padding: 1.5vh 25vw;
   width: 50vw;
 }
 
-.input_search{
+.input_search {
   width: inherit;
   height: 1.5rem;
 }
 
-#left{
-  position:relative;
+#left {
+  position: relative;
   width: 15vw;
   display: inline-flex;
   top: 0;
 }
 
-#center{
+#center {
   width: 70vw;
   display: inline-block;
 }
 
-.floating_action_button{
+.floating_action_button {
   position: fixed;
   right: 4vw;
   bottom: 4vh;
-  i{
-    width:available;
-    height: available;
-    font-size: larger;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  div {
+    display: block;
+    i {
+      font-size: 3rem;
+    }
   }
+
 }
