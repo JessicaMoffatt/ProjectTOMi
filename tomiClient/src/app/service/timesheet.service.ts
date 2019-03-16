@@ -38,6 +38,11 @@ export class TimesheetService {
   /** The status of the current timesheet.*/
   public currentStatus = "";
 
+  /**
+   * The earliest date that can be selected.
+   */
+  minDate: Date;
+
   constructor(private http: HttpClient) {
   }
 
@@ -55,6 +60,27 @@ export class TimesheetService {
   async setCurrentTimesheetIndex(index: number){
     this.currentTimesheetIndex = index;
     return this.currentTimesheetIndex;
+  }
+
+  /**
+   * Determines if the minimum date should be set.
+   */
+  doSetMinDate(){
+    if(this.minDate === undefined || this.minDate === null){
+      this.setMinDate().then();
+    }
+  }
+
+  /**
+   * Sets the minimum date accordingly.
+   */
+  async setMinDate(){
+    await this.getEarliestDate().then((data)=>{
+      let dateString = data.toString().replace(/-/g, '\/').replace(/T.+/, '');
+
+      this.minDate = new Date(dateString);
+      return this.minDate;
+    });
   }
 
   /**
@@ -108,6 +134,9 @@ export class TimesheetService {
       return response.toPromise().then((data)=>{
         this.timesheets = data;
 
+        if(this.currentTimesheetIndex >= this.timesheets.length){
+          this.currentTimesheetIndex = this.timesheets.length -1;
+        }
         this.setCurrentDate();
         this.setCurrentStatus().then();
         return this.getCurrentTimesheet();
@@ -194,4 +223,5 @@ export class TimesheetService {
         return data as Timesheet;
       }));
   }
+
 }

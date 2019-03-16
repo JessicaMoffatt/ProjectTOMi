@@ -13,29 +13,38 @@ public class BudgetReport {
 	@JsonIgnore
 	private LocalDate date;
 	private Long budget;
-	private Long hourCost;
-	private Long expenseCost;
+	private Double billableHours;
+	private Double nonBillableHours;
 	private Project project;
 
 	public BudgetReport(final Project project) {
 		this.date = LocalDate.now();
 		this.budget = project.getBudget();
-		this.hourCost = 0L;
-		this.expenseCost = 0L;
+		this.billableHours = 0.0;
+		this.nonBillableHours = 0.0;
 		this.project = project;
 	}
 
-	public BudgetReport(final Double hours, final Long expenseCost, final Project project) {
+	public BudgetReport(final Double billableHours, final Double nonBillableHours, final Project project) {
 		this.date = LocalDate.now();
 		this.budget = project.getBudget();
-		this.expenseCost = expenseCost;
-		final Double hourCostDouble = hours * project.getBillableRate();
-		this.hourCost = hourCostDouble.longValue();
+		this.billableHours = billableHours;
+		this.nonBillableHours = nonBillableHours;
 		this.project = project;
 	}
 
 	@JsonProperty("date")
 	public String getDate(){
 		return this.date.toString();
+	}
+
+	@JsonProperty("hourCost")
+	public Double getHourCost(){
+		return this.getTotalHours() * this.project.getBillableRate();
+	}
+
+	@JsonProperty("totalHours")
+	public Double getTotalHours(){
+		return this.billableHours + this.nonBillableHours;
 	}
 }

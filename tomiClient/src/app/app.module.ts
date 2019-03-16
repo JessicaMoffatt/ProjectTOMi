@@ -1,15 +1,25 @@
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {BrowserModule} from '@angular/platform-browser';
+import {InjectionToken, NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+
 import {AppRoutingModule} from './app-routing.module';
+
+import { DatePipe } from '@angular/common';
+
 import {AppComponent} from './app.component';
 
 //Material Imports
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MatCheckboxModule,
-  MatDatepickerModule, MatGridListModule,
+  DateAdapter,
+  MatAutocompleteModule,
+  MAT_DATE_LOCALE,
+  MatButtonModule,
+  MatDatepickerModule, MatExpansionModule, MatGridListModule, MatIconModule,
   MatMenuModule,
-  MatNativeDateModule, MatSidenavModule, MatSnackBarModule,
-  MatTabsModule
+  MatNativeDateModule, MatSidenavModule, MatSnackBarModule
 } from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
@@ -18,6 +28,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from "@angular/material";
+import {MatCheckboxModule } from '@angular/material/checkbox';
 
 import {AddTeamComponent, TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
 import {TeamSidebarService} from "./service/team-sidebar.service";
@@ -42,19 +53,19 @@ import {UserAccountService} from "./service/user-account.service";
 import {UserAccountComponent} from './component/panel/user-account/user-account.component';
 import {UserAccountSidebarComponent} from "./component/sidebar/user-account-sidebar/user-account-sidebar.component";
 import {UserAccountPanelComponent} from "./component/panel/user-account-panel/user-account-panel.component";
-import {UserAccountSidebarService} from "./service/user-account-sidebar-service";;
-import {MatButtonModule} from '@angular/material/button';
-import { ViewUserComponent } from './component/panel/view-user/view-user.component';
+import {UserAccountSidebarService} from "./service/user-account-sidebar-service";
+import {AddUserAccountComponent} from './component/modal/add-user-account/add-user-account.component';
+import {DeleteUserAccountModal, EditUserComponent} from './component/panel/edit-user/edit-user.component';
+import {ViewUserComponent} from './component/panel/view-user/view-user.component';
 import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
 import {TimesheetService} from "./service/timesheet.service";
-// import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry-submitted.component';
 import {AddTaskComponent} from './component/modal/add-task/add-task.component';
 import {TaskPanelService} from "./service/task-panel.service";
 import {TeamService} from "./service/team.service";
 import {SigninComponent} from './component/panel/signin-panel/signin.component';
 import {SignInService} from "./service/sign-in.service";
 import {EntryUneditableComponent} from './component/panel/entry-uneditable/entry-uneditable.component';
-import {DatePickerComponent} from './component/extra/date-picker/date-picker.component';
+import {CustomDateAdapter, DatePickerComponent} from './component/extra/date-picker/date-picker.component';
 import {TeamMemberTimesheetComponent} from './component/panel/team-member-timesheet/team-member-timesheet.component';
 import {TeamMemberSidebarComponent} from './component/sidebar/team-member-sidebar/team-member-sidebar.component';
 import {
@@ -65,7 +76,6 @@ import {ProjectEntriesSidebarComponent} from './component/sidebar/project-entrie
 import {ProjectEntriesService} from "./service/project-entries.service";
 import {EntryApproveComponent} from './component/panel/entry-approve/entry-approve.component';
 import {BudgetReportComponent} from './component/extra/budget-report/budget-report.component';
-import { EditTaskComponent } from './component/modal/edit-task/edit-task.component';
 import {ProjectService} from "./service/project.service";
 import { EditProjectSubPanelComponent } from './component/panel/projects-panel/edit-project-sub-panel/edit-project-sub-panel.component';
 import {MatFormFieldModule, MatInput } from "@angular/material";
@@ -74,13 +84,8 @@ import { TeamMemberListComponent } from './component/panel/projects-panel/team-m
 import { UnitTypeSidebarComponent } from './component/sidebar/unit-type-sidebar/unit-type-sidebar.component';
 import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
 import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-unit-type.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {NgModule} from "@angular/core";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {BrowserModule} from "@angular/platform-browser";
-import {AddUserAccountComponent} from "./component/modal/add-user-account/add-user-account.component";
-import {EditUserComponent} from "./component/panel/edit-user/edit-user.component";
 import {AccessGuard} from "./AccessGuard";
+import {EditTaskComponent} from "./component/modal/edit-task/edit-task.component";
 
 @NgModule({
   declarations: [
@@ -126,8 +131,9 @@ import {AccessGuard} from "./AccessGuard";
     UnitTypeSidebarComponent,
     AddUnitTypeComponent,
     EditUnitTypeComponent,
-    EditTaskComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    DeleteUserAccountModal,
+    EditTaskComponent
   ],
   imports: [
     MatSidenavModule,
@@ -147,6 +153,7 @@ import {AccessGuard} from "./AccessGuard";
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     OrderModule,
     BrowserAnimationsModule,
@@ -157,8 +164,16 @@ import {AccessGuard} from "./AccessGuard";
     MatSelectModule,
     MatDialogModule,
     MatToolbarModule,
+    MatCheckboxModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatExpansionModule,
+    MatMenuModule,
+    MatIconModule,
+    MatSnackBarModule,
+    MatGridListModule,
+    ReactiveFormsModule,
+    MatSidenavModule,
   ],
   entryComponents: [
     EntryComponent,
@@ -173,7 +188,8 @@ import {AccessGuard} from "./AccessGuard";
     AddTaskComponent,
     EditTaskComponent,
     AddUnitTypeComponent,
-    EditUnitTypeComponent
+    EditUnitTypeComponent,
+    DeleteUserAccountModal,
   ],
   providers: [
     TeamSidebarService,
@@ -190,11 +206,13 @@ import {AccessGuard} from "./AccessGuard";
     ProjectEntriesService,
     UserAccountService,
     TaskPanelService,
+    ProjectService,
     SignInService,
     MatDatepickerModule,
-    TaskPanelService,
-    ProjectService,
-    AccessGuard
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    { provide: DateAdapter, useClass: CustomDateAdapter },
+    AccessGuard,
+    DatePipe
   ],
   bootstrap: [AppComponent],
   exports: [
@@ -204,7 +222,9 @@ import {AccessGuard} from "./AccessGuard";
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatExpansionModule,
+    MatSidenavModule
   ]
 })
 export class AppModule {

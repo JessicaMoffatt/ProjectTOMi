@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Project} from "../../../model/project";
 import {ProjectService} from "../../../service/project.service";
+import {DatePipe} from '@angular/common';
 import {ClientService} from "../../../service/client.service";
 import {Client} from "../../../model/client";
 
@@ -13,18 +14,20 @@ import {Client} from "../../../model/client";
 
 export class ProjectsPanelComponent implements OnInit {
 
-  constructor(public temp: ProjectService, public clientService: ClientService) { }
+  constructor(private projectService: ProjectService, private datePipe: DatePipe, private clientService: ClientService) {
+  }
+
 
   /** tracks which sub-panel: new project panel, existing project panel, or report panel will be displayed */
   subPanelDisplay: string = "newProject";
 
-  project:Project;
+  project: Project;
 
   ngOnInit() {
-    this.temp.getProjectById('JM1001').subscribe((data)=>{
+    this.projectService.getProjectById('JM1001').subscribe((data) => {
       this.project = data;
     });
-    this.temp.initializeProjects();
+    this.projectService.initializeProjects();
 
   }
 
@@ -37,7 +40,7 @@ export class ProjectsPanelComponent implements OnInit {
   }
 
   displayBlankProject() {
-    this.temp.selected = null;
+    this.projectService.selected = null;
     this.subPanelDisplay = "newProject";
   }
 
@@ -45,14 +48,33 @@ export class ProjectsPanelComponent implements OnInit {
 
   }
 
-  archiveProject() {
+  getDataDump() {
+    this.projectService.getDataDump().subscribe(
+      data => {
+        console.log("HERE");
+        console.log(data);
+        let link = document.createElement('a');
+        let stuff = window.URL.createObjectURL(data);
+        link.href = stuff
+        document.body.appendChild(link);
+        let today = new Date();
+        let dateString = this.datePipe.transform(today, "yyyy-MM-dd");
 
+        link.download = "Data_Dump_" + dateString+".xls";
+
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(stuff);
+
+      },
+      err => {
+        // this.errorBar.openFromComponent(ErrorBarComponent, {
+        //   duration: 5000
+        // });
+      });
   }
 
-  deleteProject() {
+  downloadDataDump() {
 
   }
-
-
-
 }

@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
+import {catchError} from "rxjs/operators";
+import {HttpErrorResponse} from "@angular/common/http";
+import {throwError} from "rxjs";
 import {Project} from "../model/project";
 import {Client} from "../model/client";
 import {UserAccount} from "../model/userAccount";
@@ -26,6 +29,9 @@ export class ProjectService {
 
   /** The URL for accessing projects.*/
   private projectsUrl = 'http://localhost:8080/projects';
+
+  private dataDumpUrl = 'http://localhost:8080/data_dump_report/xls';
+
   /** The URL for accessing user accounts.*/
   private userAccountProjectsUrl = 'http://localhost:8080/user_accounts';
 
@@ -96,6 +102,21 @@ export class ProjectService {
           return null;
         }
       }));
+  }
+
+  /**
+   *
+   * @param project The project to get a report for.
+   */
+  getDataDump(){
+    return this.http.get(`${this.dataDumpUrl}`, {responseType: 'blob'})
+      .pipe(
+        map((res) => {return res}),catchError(this.handleError)
+      );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    return throwError(error.message);
   }
 
 
