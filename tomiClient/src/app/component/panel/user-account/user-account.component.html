@@ -5,7 +5,6 @@
 <div class="content_pane">
   <div class="search_bar"><input #user_account_search id="user_account_search" [ngClass]="'input_search'"
                                  placeholder="search" (keyup)="0"></div>
-
   <div class="accordion">
     <div id="left">&nbsp;</div>
     <div id="center">
@@ -22,11 +21,11 @@
       </mat-accordion>
     </div>
   </div>
-</div>
-<button class=" floating_action_button" mat-fab>
-  <div>
+  <button class=" floating_action_button" mat-fab (click)="openDialog()">
+    <div>
       <i class="material-icons">
-    add
-    </i>
-  </div>
-</button>
+        add
+      </i>
+    </div>
+  </button>
+</div>

@@ -39,10 +39,15 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-color: $blue;
   div {
     display: block;
+    height:4rem;
     i {
+      padding-top:0.5rem;
+      padding-bottom:0.5rem;
       font-size: 3rem;
+      color: white;
     }
   }
 

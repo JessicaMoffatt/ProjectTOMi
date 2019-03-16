@@ -2,6 +2,8 @@ import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angul
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
 import {Observable, Subject, Subscription} from "rxjs";
+import {AddUserAccountComponent} from "../../modal/add-user-account/add-user-account.component";
+import {MatDialog} from "@angular/material";
 
 @Component({
   selector: 'app-user-account',
@@ -20,7 +22,7 @@ export class UserAccountComponent implements OnInit, OnDestroy {
 
   @ViewChild('editUserComponent') editUserComponent : ElementRef;
 
-  constructor(public userAccountService: UserAccountService) { }
+  constructor(private dialog: MatDialog, private userAccountService: UserAccountService) { }
 
   ngOnInit() {
     this.userSelectedSubscription = this.userSelectedEvent.subscribe((userSelected: UserAccount) => {
@@ -46,5 +48,12 @@ export class UserAccountComponent implements OnInit, OnDestroy {
    */
   save(userAccount: UserAccount) {
     this.userAccountService.save(userAccount);
+  }
+
+  /**
+   * Displays a Modal component for adding a new UserAccount.
+   */
+  openDialog(): void {
+    this.dialog.open(AddUserAccountComponent);
   }
 }
