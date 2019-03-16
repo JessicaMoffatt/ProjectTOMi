@@ -8,6 +8,7 @@ import {throwError} from "rxjs";
 import {Project} from "../model/project";
 import {Client} from "../model/client";
 import {UserAccount} from "../model/userAccount";
+import {MatSnackBar} from "@angular/material";
 
 /**
  * Project service provides services relates to Projects.
@@ -27,6 +28,10 @@ const httpOptions = {
 })
 export class ProjectService {
 
+  //TODO don't hardcode this
+  userId = 1;
+
+
   /** The URL for accessing projects.*/
   private projectsUrl = 'http://localhost:8080/projects';
 
@@ -40,9 +45,9 @@ export class ProjectService {
   selected: Project; // added by: James Andrade
 
   /** used to pass list to project related components */
-  projects: BehaviorSubject<Array<Project>>; // added by: James Andrade
+  projects: BehaviorSubject<Array<Project>> = new BehaviorSubject([]); // added by: James Andrade
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public snackBar:MatSnackBar) {
   }
 
   /**
@@ -154,9 +159,14 @@ export class ProjectService {
   }
 
   initializeProjects() {
-    this.getAllProjects().forEach( project => {
+    this.getProjectsForUser(this.userId).forEach( project => {
       this.projects = new BehaviorSubject<Array<Project>>(project);
-      //this.sortUserAccounts();
+      // this.sort();
+    }).catch( (error: any) => {
+      let getUsersErrorMessage = 'Something went wrong when getting the list of projects. Please contact your system administrator.';
+      this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
     });
+
+
   }
 }

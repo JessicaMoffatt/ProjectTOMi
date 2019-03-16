@@ -14,7 +14,7 @@ import {Client} from "../../../model/client";
 
 export class ProjectsPanelComponent implements OnInit {
 
-  constructor(private projectService: ProjectService, private datePipe: DatePipe, private clientService: ClientService) {
+  constructor(public projectService: ProjectService, private datePipe: DatePipe, private clientService: ClientService) {
   }
 
 
@@ -24,9 +24,9 @@ export class ProjectsPanelComponent implements OnInit {
   project: Project;
 
   ngOnInit() {
-    this.projectService.getProjectById('JM1001').subscribe((data) => {
-      this.project = data;
-    });
+   // this.projectService.getProjectById('JM1001').subscribe((data) => {
+    //  this.project = data;
+    //});
     this.projectService.initializeProjects();
 
   }

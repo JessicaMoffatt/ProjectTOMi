@@ -61,6 +61,7 @@ import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
 import {TimesheetService} from "./service/timesheet.service";
 import {AddTaskComponent} from './component/modal/add-task/add-task.component';
 import {TaskPanelService} from "./service/task-panel.service";
+import {EditTaskComponent} from './component/modal/edit-task/edit-task.component';
 import {TeamService} from "./service/team.service";
 import {SigninComponent} from './component/panel/signin-panel/signin.component';
 import {SignInService} from "./service/sign-in.service";
@@ -78,14 +79,13 @@ import {EntryApproveComponent} from './component/panel/entry-approve/entry-appro
 import {BudgetReportComponent} from './component/extra/budget-report/budget-report.component';
 import {ProjectService} from "./service/project.service";
 import { EditProjectSubPanelComponent } from './component/panel/projects-panel/edit-project-sub-panel/edit-project-sub-panel.component';
-import {MatFormFieldModule, MatInput } from "@angular/material";
+import {MatFormFieldModule} from "@angular/material";
 import { ExpenseListComponent } from './component/panel/projects-panel/expense-list/expense-list.component';
 import { TeamMemberListComponent } from './component/panel/projects-panel/team-member-list/team-member-list.component';
 import { UnitTypeSidebarComponent } from './component/sidebar/unit-type-sidebar/unit-type-sidebar.component';
 import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
 import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-unit-type.component';
 import {AccessGuard} from "./AccessGuard";
-import {EditTaskComponent} from "./component/modal/edit-task/edit-task.component";
 
 @NgModule({
   declarations: [
@@ -111,6 +111,8 @@ import {EditTaskComponent} from "./component/modal/edit-task/edit-task.component
     AddTeamMemberComponent,
     UserAccountSidebarComponent,
     UserAccountComponent,
+    AddUserAccountComponent,
+    EditUserComponent,
     ViewUserComponent,
     DeleteEntryModalComponent,
     SubmitTimesheetModalComponent,
@@ -131,6 +133,7 @@ import {EditTaskComponent} from "./component/modal/edit-task/edit-task.component
     UnitTypeSidebarComponent,
     AddUnitTypeComponent,
     EditUnitTypeComponent,
+    EditTaskComponent,
     AddTaskComponent,
     DeleteUserAccountModal,
     EditTaskComponent
@@ -173,7 +176,7 @@ import {EditTaskComponent} from "./component/modal/edit-task/edit-task.component
     MatSnackBarModule,
     MatGridListModule,
     ReactiveFormsModule,
-    MatSidenavModule,
+    MatSidenavModule
   ],
   entryComponents: [
     EntryComponent,

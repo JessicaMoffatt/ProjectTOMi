@@ -23,8 +23,8 @@
       <!--  [class.highlighted]="p.id === this.projectService.selected.id" -->
       <!--"-->
       <mat-list-item
-        *ngFor="let p of this.temp.projects|async|orderBy:'projectName'"
-        (click)="this.temp.setSelected(p)">
+        *ngFor="let p of this.projectService.projects|async|orderBy:'projectName'"
+        (click)="this.projectService.setSelected(p)">
 
         <span *ngIf="p.projectName.toLowerCase().includes(box.value.toLowerCase())">
           {{p.active}} {{p.projectName}}
@@ -36,15 +36,15 @@
     <button (click)="displayBlankProject()" mat-raised-button color="primary">NEW PROJECT</button>
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <!--mat-sidenav-content>
     <template #edit_project_container></template>
     <template #display_project_container></template>
     <div *ngIf="this.subPanelDisplay=='newProject'">
       <app-edit-project-sub-panel></app-edit-project-sub-panel>
     </div>
-  </mat-sidenav-content>
+  </mat-sidenav-content-->
 </mat-sidenav-container>
 
 
-<app-budget-report [project]="project"></app-budget-report>
-<button mat-input-button (click)="getDataDump()">Data Dump Report</button>
+<!--app-budget-report [project]="project"></app-budget-report>
+<button mat-input-button (click)="getDataDump()">Data Dump Report</button-->
