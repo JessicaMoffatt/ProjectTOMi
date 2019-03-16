@@ -14,33 +14,33 @@ import lombok.Data;
  */
 @Data
 @Entity
-@IdClass(TimesheetAuthId.class)
+@IdClass (TimesheetAuthId.class)
 public class TimesheetAuthorizationPolicy {
 
-  @Id
-  @ManyToOne (targetEntity = UserAccount.class, optional = false)
-  private UserAccount requestingUser;
+	@Id
+	@ManyToOne (targetEntity = UserAccount.class, optional = false)
+	private UserAccount requestingUser;
 
-  @Id
-  @Enumerated
-  private TimesheetPermission permission;
+	@Id
+	@Enumerated
+	private TimesheetPermission permission;
 
-  @Id
-  @ManyToOne (targetEntity = UserAccount.class, optional = false)
-  private UserAccount timesheetOwner;
+	@Id
+	@ManyToOne (targetEntity = UserAccount.class, optional = false)
+	private UserAccount timesheetOwner;
 
-  @Override
-  public int hashCode() {
-    return this.timesheetOwner.hashCode() + this.permission.hashCode();
-  }
+	@Override
+	public int hashCode() {
+		return this.timesheetOwner.hashCode() + this.permission.hashCode();
+	}
 
-  @Override
-  public boolean equals(final Object obj) {
-    if (obj.getClass() != TimesheetAuthorizationPolicy.class) {
-      return false;
-    } else {
-      final TimesheetAuthorizationPolicy policyB = (TimesheetAuthorizationPolicy) obj;
-      return this.permission == policyB.getPermission() && this.timesheetOwner.equals(policyB.getTimesheetOwner()) && this.requestingUser.equals(policyB.getRequestingUser());
-    }
-  }
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj.getClass() != TimesheetAuthorizationPolicy.class) {
+			return false;
+		} else {
+			final TimesheetAuthorizationPolicy policyB = (TimesheetAuthorizationPolicy) obj;
+			return this.permission == policyB.getPermission() && this.timesheetOwner.equals(policyB.getTimesheetOwner()) && this.requestingUser.equals(policyB.getRequestingUser());
+		}
+	}
 }

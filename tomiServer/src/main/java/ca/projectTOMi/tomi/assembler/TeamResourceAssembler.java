@@ -29,7 +29,7 @@ public final class TeamResourceAssembler implements ResourceAssembler<UserAuthLi
 			linkTo(methodOn(TeamController.class).getActiveTeams(authLinkWrapper.getManager())).withRel("teams"),
 			linkTo(methodOn(UserAccountController.class).getAccountsByTeam(team.getId(), authLinkWrapper.getManager())).withRel("getAccounts"),
 			linkTo(methodOn(UserAccountController.class).getTeamLead(team.getId(), authLinkWrapper.getManager())).withRel("getTeamLead"),
-			linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(team.getId(),authLinkWrapper.getManager())).withRel("getAvailable"),
+			linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(team.getId(), authLinkWrapper.getManager())).withRel("getAvailable"),
 			linkTo(methodOn(UserAccountController.class).getUnassignedUserAccounts(authLinkWrapper.getManager())).withRel("getUnassignedAccounts")
 		);
 

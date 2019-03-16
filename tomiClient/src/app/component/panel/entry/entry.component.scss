@@ -12,7 +12,8 @@
   margin-bottom:.25rem;
   margin-top:.5rem;
   margin-left:10rem;
-  max-width:50rem;
+  max-width:75vw;
+  min-width: 75vw;
   //font-size:1.25rem;
   //position:relative;
 }
@@ -27,8 +28,8 @@
 
 .copy_entry{
   background-color:$blue;
-  height:$btn_md;
-  width:$btn_md;
+  height:$btn_md_ht;
+  width:$btn_md_wh;
   background-image: url('~src/assets/img/copy.png');
   background-position: center;
   background-repeat: no-repeat;

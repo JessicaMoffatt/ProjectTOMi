@@ -3,8 +3,8 @@
 
 .approve_entry{
   background-color:$blue;
-  height:$btn_md;
-  width:$btn_md;
+  height:$btn_md_ht;
+  width:$btn_md_wh;
   background-image: url('~src/assets/img/check.png');
   background-position: center;
   background-repeat: no-repeat;
@@ -13,8 +13,8 @@
 
 .reject_entry{
   background-color:$red;
-  height:$btn_md;
-  width:$btn_md;
+  height:$btn_md_ht;
+  width:$btn_md_wh;
   background-image: url('~src/assets/img/x.png');
   background-position: center;
   background-repeat: no-repeat;

@@ -65,7 +65,7 @@ public final class UnitTypeService {
 	 * @return List containing all UnitTypes that are active.
 	 */
 	public List<UnitType> getActiveUnitTypes() {
-		return new ArrayList<>(this.repository.getAllByActiveOrderById(true));
+		return this.repository.getAllByActiveOrderById(true);
 	}
 
 	/**

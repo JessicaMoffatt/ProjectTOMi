@@ -11,7 +11,7 @@ body{
   color:$grey;
   font-size:14pt;
   padding-top:10vh;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 html,body{
@@ -40,16 +40,16 @@ html,body{
 }
 
 .confirm_btn{
-  background-color: $green;
+  background-color: $blue;
 }
 
 .save_btn{
-  background-color: $green;
+  background-color: $blue;
   background-image: url('~src/assets/img/save.png');
   background-repeat: no-repeat;
   background-position: center;
-  height:$btn_md;
-  width:$btn_md;
+  height:$btn_md_ht;
+  width:$btn_md_wh;
 }
 
 .delete_btn{
@@ -57,19 +57,19 @@ html,body{
   background-image: url('~src/assets/img/remove.png');
   background-repeat: no-repeat;
   background-position: center;
-  height:$btn_md;
-  width:$btn_md;
+  height:$btn_md_ht;
+  width:$btn_md_wh;
 }
 
 .close_btn{
   background-color:$red;
-  width:$btn_md;
-  height:$btn_md;
+  width:$btn_md_wh;
+  height:$btn_md_ht;
   float:right;
 }
 
 .new_btn{
-  background-color:$green;
+  background-color:$blue;
 }
 
 .add_btn{
@@ -84,14 +84,7 @@ html,body{
   background-color:$red;
 }
 
-.submit{
-  background-color:$green;
-  background-image: url('~src/assets/img/submit.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  height:$btn_md;
-  width:$btn_md;
-}
+
 
 .cancel_changes_btn{
   background-color:$red;
@@ -114,7 +107,7 @@ html,body{
 }
 
 .submitted_entry{
-  background-color:orange;
+  background-color:$orange;
 }
 
 /**Timesheet styles*/
@@ -129,8 +122,8 @@ html,body{
   margin-right:1rem;
   top:.5rem;
 
-  width:$btn_md;
-  height:$btn_md;
+  width:$btn_md_wh;
+  height:$btn_md_ht;
 }
 
 .arrow:hover{
@@ -142,16 +135,16 @@ html,body{
   background-image: url('~src/assets/img/arrow_forward.png');
   background-repeat: no-repeat;
   background-position: center;
-  height:$btn_md;
-  width:$btn_md;
+  height:$btn_md_ht;
+  width:$btn_md_wh;
 }
 
 .back {
   background-image: url('~src/assets/img/arrow_back.png');
   background-repeat: no-repeat;
   background-position: center;
-  height:$btn_md;
-  width:$btn_md;
+  height:$btn_md_ht;
+  width:$btn_md_wh;
 }
 
 
@@ -163,22 +156,13 @@ html,body{
 }
 
 .new_entry{
-  width:$btn_md;
-  height:$btn_md;
+  width:$btn_md_wh;
+  height:$btn_md_ht;
   margin:1rem;
 
   background-image: url('~src/assets/img/add.png');
   background-position: center;
   background-repeat: no-repeat;
-}
-
-/* Timesheet Footer Styles */
-.timesheet_footer{
-  background-color:$light_grey;
-  height:$btn_md;
-  position:relative;
-  bottom: 0px;
-  font-size: 1.5rem;
 }
 
 .hours_tally{
@@ -234,7 +218,7 @@ html,body{
 
 .project_entries_footer {
   background-color: $light_grey;
-  height: $btn_md;
+  height: $btn_md_ht;
   position: fixed;
   bottom: 0px;
   right: 0px;
@@ -258,8 +242,8 @@ html,body{
 }
 
 .calendar{
-  width:$btn_md;
-  height:$btn_md;
+  width:$btn_md_wh;
+  height:$btn_md_ht;
   margin:1rem;
 
   background-image: url('~src/assets/img/calendar.png');

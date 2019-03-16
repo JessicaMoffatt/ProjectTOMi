@@ -20,14 +20,14 @@ const httpOptions = {
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit {
-  signIn: SignInService;
-  document:any;
-  meta:Meta;
 
-  constructor(@Inject(DOCUMENT) document, meta:Meta, private http: HttpClient, ngZone: NgZone, signIn: SignInService, private router: Router, private elementRef: ElementRef) {
-    this.signIn = signIn;
-    this.document = document;
-    this.meta = meta;
+  constructor( @Inject(DOCUMENT) private document,
+              private meta:Meta,
+              private http: HttpClient,
+              private ngZone: NgZone,
+              private signIn: SignInService,
+              private router: Router,
+              private elementRef: ElementRef) {
     window['onSignIn'] = (user) => ngZone.run(() => this.onSignIn(user));
   }
 
@@ -35,7 +35,8 @@ export class SignInComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.meta.addTag({name:'google-signin-client_id', content:'730191725836-6pv3tlbl520hai1tnl96nr0du79b7sfp.apps.googleusercontent.com'});
+    this.meta.addTag({name:'google-signin-client_id',
+      content:'730191725836-6pv3tlbl520hai1tnl96nr0du79b7sfp.apps.googleusercontent.com'});
     let s = this.document.createElement("script");
     s.type = "text/javascript";
     s.src = "https://apis.google.com/js/platform.js";

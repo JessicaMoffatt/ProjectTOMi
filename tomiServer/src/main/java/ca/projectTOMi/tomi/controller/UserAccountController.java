@@ -46,6 +46,8 @@ public class UserAccountController {
 	private final UserAccountResourceAssembler assembler;
 	private final UserAccountService userAccountService;
 	private final Logger logger = LoggerFactory.getLogger("UserAccount Controller");
+	@Autowired
+	TOMiEmailService email;
 
 	@Autowired
 	public UserAccountController(final UserAccountResourceAssembler assembler, final UserAccountService userAccountService) {
@@ -224,18 +226,15 @@ public class UserAccountController {
 		return ResponseEntity.status(400).build();
 	}
 
-	@ExceptionHandler({MinimumProgramDirectorAccountException.class, MinimumAdminAccountException.class, TeamNotFoundException.class})
-	public ResponseEntity<?> handleMinimumAccountExceptions(final Exception e){
+	@ExceptionHandler ({MinimumProgramDirectorAccountException.class, MinimumAdminAccountException.class, TeamNotFoundException.class})
+	public ResponseEntity<?> handleMinimumAccountExceptions(final Exception e) {
 		this.logger.warn("UserAccount Exception: " + e.getClass());
 
 		return ResponseEntity.unprocessableEntity().build();
 	}
 
-	@Autowired
-	TOMiEmailService email;
-
-	@GetMapping("/doAEmail")
-	public void doAEmail(){
+	@GetMapping ("/doAEmail")
+	public void doAEmail() {
 		email.sendSimpleMessage("KarolTalbot@gmail.com", "hello", "This is a email");
 	}
 }

@@ -46,15 +46,15 @@ public class AuthenticationController {
 		return account != null;
 	}
 
-	@GetMapping("/build_nav_bar")
+	@GetMapping ("/build_nav_bar")
 	public Map<String, Boolean> getNavBarOptions(final @RequestHeader String signIn,
 	                                             final @RequestAttribute UserAuthManager authMan) throws GeneralSecurityException, IOException {
 
 		return userAuthenticationService.getNavBarOptions(authMan, signIn);
 	}
 
-	@ExceptionHandler({IOException.class, GeneralSecurityException.class})
-	public ResponseEntity<?> handleExceptions(Exception e){
+	@ExceptionHandler ({IOException.class, GeneralSecurityException.class})
+	public ResponseEntity<?> handleExceptions(Exception e) {
 		this.logger.warn("Authentication Exception: " + e.getClass());
 		return ResponseEntity.status(400).build();
 	}

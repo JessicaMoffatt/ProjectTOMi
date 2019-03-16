@@ -116,10 +116,10 @@ public final class UserAccountService {
 			this.checkProgramDirectors(userAccount, newUserAccount);
 			userAccount.setFirstName(newUserAccount.getFirstName());
 			userAccount.setLastName(newUserAccount.getLastName());
-			if(userAccount.getTeam() != null){
+			if (userAccount.getTeam() != null) {
 				this.timesheetAuthService.removeMemberFromTeam(userAccount, userAccount.getTeam());
 			}
-			if(newUserAccount.getTeam() != null){
+			if (newUserAccount.getTeam() != null) {
 				this.timesheetAuthService.addMemberToTeam(newUserAccount, newUserAccount.getTeam());
 			}
 			userAccount.setTeam(newUserAccount.getTeam());
@@ -128,9 +128,9 @@ public final class UserAccountService {
 			userAccount.setProjects(newUserAccount.getProjects());
 			userAccount.setActive(true);
 			userAccount.setAdmin(newUserAccount.isAdmin());
-			if(newUserAccount.isProgramDirector() && !userAccount.isProgramDirector()){
+			if (newUserAccount.isProgramDirector() && !userAccount.isProgramDirector()) {
 				this.projectAuthService.newProgramDirector(newUserAccount);
-			}else if(!newUserAccount.isProgramDirector() && userAccount.isProgramDirector()){
+			} else if (!newUserAccount.isProgramDirector() && userAccount.isProgramDirector()) {
 				this.projectAuthService.removeProgramDirector(newUserAccount);
 			}
 			userAccount.setProgramDirector(newUserAccount.isProgramDirector());
@@ -151,12 +151,12 @@ public final class UserAccountService {
 		final LocalDate date = LocalDate.now();
 		for (final UserAccount a : accounts) {
 			Boolean hasTimesheet = false;
-			for (Timesheet t:timesheets){
-				if(a.equals(t.getUserAccount()) && date.toString().equals(t.getStartDate().toString())){
+			for (Timesheet t : timesheets) {
+				if (a.equals(t.getUserAccount()) && date.toString().equals(t.getStartDate().toString())) {
 					hasTimesheet = true;
 				}
 			}
-			if(!hasTimesheet) {
+			if (!hasTimesheet) {
 				this.entryService.createTimesheet(date, a);
 			}
 		}
@@ -181,7 +181,7 @@ public final class UserAccountService {
 		}
 		this.userAuthService.setNewUserAccountPolicy(newUserAccount);
 		this.timesheetAuthService.setNewUserAccountPolicy(newUserAccount);
-		if(newUserAccount.isProgramDirector()){
+		if (newUserAccount.isProgramDirector()) {
 			this.projectAuthService.newProgramDirector(newUserAccount);
 		}
 		return newUserAccount;
@@ -260,7 +260,7 @@ public final class UserAccountService {
 		}
 	}
 
-	@EventListener(ContextRefreshedEvent.class)
+	@EventListener (ContextRefreshedEvent.class)
 	private void createUserPrime() {
 		String email = this.emailService.getEmailAddress();
 		Boolean userExists = false;
@@ -271,9 +271,9 @@ public final class UserAccountService {
 		primeAccount.setActive(true);
 		primeAccount.setAdmin(true);
 		primeAccount.setEmail(email);
-		if(userExists) {
+		if (userExists) {
 			this.updateUserAccount(primeAccount.getId(), primeAccount);
-		}else{
+		} else {
 			this.createUserAccount(primeAccount);
 		}
 	}

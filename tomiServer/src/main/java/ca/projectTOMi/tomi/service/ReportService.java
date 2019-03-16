@@ -40,9 +40,9 @@ public class ReportService {
 	public BudgetReport getBudgetReport(final String projectId) {
 		final Project project = this.projectService.getProjectById(projectId);
 		final BudgetReport report = this.reportRepository.generateBudgetReport(project);
-		for(final Entry e: this.entryService.getEntriesByProject(project)){
-			report.setBillableHours(report.getBillableHours() + (e.getTask().isBillable()? e.getTotalHours() : 0));
-			report.setNonBillableHours(report.getNonBillableHours() + (e.getTask().isBillable()? 0 : e.getTotalHours()));
+		for (final Entry e : this.entryService.getEntriesByProject(project)) {
+			report.setBillableHours(report.getBillableHours() + (e.getTask().isBillable() ? e.getTotalHours() : 0));
+			report.setNonBillableHours(report.getNonBillableHours() + (e.getTask().isBillable() ? 0 : e.getTotalHours()));
 		}
 		return report;
 	}

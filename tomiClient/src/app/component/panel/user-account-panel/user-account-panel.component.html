@@ -2,8 +2,4 @@
 @author Iliya Kiritchkov
 @version 1.1
 -->
-
-<div style="float:left">
-      <app-user-account-sidebar (userSelectedEvent)="userSelected($event)"></app-user-account-sidebar>
-</div>
 <app-user-account [userSelectedEvent]="selectedEventSubject.asObservable()"></app-user-account>

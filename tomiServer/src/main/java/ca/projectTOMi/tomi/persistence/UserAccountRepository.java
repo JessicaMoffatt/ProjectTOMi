@@ -42,6 +42,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
 	 * @return List of UserAccount that do not belong to a Team
 	 */
 	List<UserAccount> getAllByActiveTrueAndTeamIsNullOrderById();
+
 	List<UserAccount> getAllByActiveTrueAndTeamNot(Team team);
 
 	@Query ("SELECT count(id) FROM UserAccount WHERE admin = true")
@@ -53,6 +54,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
 	List<UserAccount> getAllByActiveTrueAndProgramDirectorTrue();
 
 	UserAccount getByActiveTrueAndGoogleId(String id);
+
 	UserAccount getByActiveTrueAndEmail(String email);
 
 	Optional<UserAccount> findByEmail(String email);

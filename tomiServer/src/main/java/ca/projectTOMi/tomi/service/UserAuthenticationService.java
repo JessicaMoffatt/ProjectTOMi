@@ -46,7 +46,7 @@ public class UserAuthenticationService {
 		}
 	}
 
-	public UserAccount checkLogin(final String idToken) throws GeneralSecurityException, IOException{
+	public UserAccount checkLogin(final String idToken) throws GeneralSecurityException, IOException {
 		final GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(UserAuthenticationService.googlePublicKeysManager)
 			.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2))
 			.build();
@@ -57,10 +57,10 @@ public class UserAuthenticationService {
 			final GoogleIdToken.Payload payload = gIdToken.getPayload();
 			String userId = payload.getSubject();
 			account = this.userAccountRepository.getByActiveTrueAndGoogleId(userId);
-			if(account == null){
+			if (account == null) {
 				final String email = payload.getEmail();
 				account = this.userAccountRepository.getByActiveTrueAndEmail(email);
-				if(account == null){
+				if (account == null) {
 					return null;
 				}
 				account.setGoogleId(userId);

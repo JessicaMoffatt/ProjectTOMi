@@ -90,7 +90,7 @@ public class ProjectController {
 	@GetMapping ("/projects")
 	public Resources<Resource<Project>> getActiveProjects(@RequestAttribute final ProjectAuthManager authMan) {
 		final List<Project> projects = this.projectService.getActiveProjects();
-		final	List<Resource<Project>> projectResources = authMan.filterList(projects)
+		final List<Resource<Project>> projectResources = authMan.filterList(projects)
 			.stream()
 			.map(project -> (new ProjectAuthLinkWrapper<>(project, authMan)))
 			.map(this.projectResourceAssembler::toResource)
@@ -168,7 +168,7 @@ public class ProjectController {
 	public Resources<Resource<Project>> getProjectsByUserAccount(@PathVariable final Long userAccountId,
 	                                                             @RequestAttribute final ProjectAuthManager authMan) {
 		final List<Project> projects = this.projectService.getProjectByUserAccount(userAccountId);
-		final	List<Resource<Project>> projectResources = authMan.filterList(projects)
+		final List<Resource<Project>> projectResources = authMan.filterList(projects)
 			.stream()
 			.map(project -> (new ProjectAuthLinkWrapper<>(project, authMan)))
 			.map(this.projectResourceAssembler::toResource)
@@ -179,7 +179,7 @@ public class ProjectController {
 	}
 
 	@GetMapping ("/projects/{projectId}/evaluate_entries")
-	public Resources<Resource<Entry>> getEntriesToEvaluate(@PathVariable final String projectId){
+	public Resources<Resource<Entry>> getEntriesToEvaluate(@PathVariable final String projectId) {
 		final Project project = this.projectService.getProjectById(projectId);
 		final List<Resource<Entry>> entries = this.entryService.getEntriesToEvaluate(project)
 			.stream()
@@ -191,24 +191,24 @@ public class ProjectController {
 			linkTo(methodOn(ProjectController.class).getEntriesToEvaluate(projectId)).withSelfRel());
 	}
 
-	@PutMapping("/projects/{projectId}/entries/{entryId}")
+	@PutMapping ("/projects/{projectId}/entries/{entryId}")
 	public ResponseEntity<?> evaluateEntry(@PathVariable final String projectId,
 	                                       @PathVariable final Long entryId,
-	                                       @RequestBody final Status status){
-		if(status != Status.APPROVED && status != Status.REJECTED) {
+	                                       @RequestBody final Status status) {
+		if (status != Status.APPROVED && status != Status.REJECTED) {
 			return ResponseEntity.badRequest().build();
 		}
-		return this.entryService.evaluateEntry(entryId, status) ? ResponseEntity.accepted().build(): ResponseEntity.badRequest().build();
+		return this.entryService.evaluateEntry(entryId, status) ? ResponseEntity.accepted().build() : ResponseEntity.badRequest().build();
 	}
 
-	@PutMapping("/projects/{projectId}/add_member/{userAccountId}")
-	public ResponseEntity<?> addTeamMember(@PathVariable final String projectId, @PathVariable final Long userAccountId){
+	@PutMapping ("/projects/{projectId}/add_member/{userAccountId}")
+	public ResponseEntity<?> addTeamMember(@PathVariable final String projectId, @PathVariable final Long userAccountId) {
 		this.projectService.addTeamMember(projectId, userAccountId);
 		return ResponseEntity.accepted().build();
 	}
 
-	@PutMapping("/projects/{projectId}/remove_member/{userAccountId}")
-	public ResponseEntity<?> removeTeamMember(@PathVariable final String projectId, @PathVariable final Long userAccountId){
+	@PutMapping ("/projects/{projectId}/remove_member/{userAccountId}")
+	public ResponseEntity<?> removeTeamMember(@PathVariable final String projectId, @PathVariable final Long userAccountId) {
 		this.projectService.removeTeamMember(projectId, userAccountId);
 		return ResponseEntity.accepted().build();
 	}

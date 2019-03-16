@@ -6,3 +6,52 @@
 @import '../../../../variables';
 
 
+.timesheet_footer{
+  background-color: $orange;
+  position: fixed;
+  bottom:0;
+  width: 100vw;
+  height: $footer_height;
+  vertical-align: middle;
+  z-index: 2;
+  box-shadow: 0 0 1vh black;
+}
+
+.timesheet_content{
+  height: 100vh;
+}
+
+.scroll_panel{
+  height: 84vh;
+  overflow-y: auto;
+}
+
+.footer_btn{
+  bottom: 0;
+  background-color:$blue;
+  height:$btn_md_ht;
+  width:$btn_md_wh;
+  margin: 0.5vh 0.5vw;
+  vertical-align: middle;
+}
+
+.hours_tally{
+  vertical-align: middle;
+  float: right;
+  font-size: 1.5rem;
+  margin: 0.5vh 0.5vw;
+}
+
+
+.submit{
+  bottom: 0;
+  float: right;
+  background-color:$blue;
+  background-image: url('~src/assets/img/submit.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  height:$btn_md_ht;
+  width:$btn_md_wh;
+  vertical-align: middle;
+}
+

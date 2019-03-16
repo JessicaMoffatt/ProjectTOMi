@@ -12,8 +12,8 @@ import ca.projectTOMi.tomi.model.UserAccount;
  * @author Karol Talbot
  */
 public final class ProjectAuthManager implements AuthManager<ProjectAuthorizationPolicy>, AuthorizationFilter<Project> {
-	private HashSet<ProjectAuthorizationPolicy> policies;
 	private final UserAccount user;
+	private HashSet<ProjectAuthorizationPolicy> policies;
 
 	public ProjectAuthManager(final UserAccount user) {
 		this.user = user;
@@ -64,15 +64,6 @@ public final class ProjectAuthManager implements AuthManager<ProjectAuthorizatio
 		return this.policies.contains(requestPolicy);
 	}
 
-	private boolean handleListReads() {
-		boolean hasAnyReadPermission = false;
-		for (final ProjectAuthorizationPolicy policy : this.policies) {
-			final boolean hasReadPermission = policy.getPermission() == ProjectPermission.READ;
-			hasAnyReadPermission = Boolean.logicalOr(hasAnyReadPermission, hasReadPermission);
-		}
-		return hasAnyReadPermission;
-	}
-
 	@Override
 	public boolean linkAuthorization(final String url, final String request) {
 		final String uri = url.substring(url.indexOf("/", 7));
@@ -84,6 +75,14 @@ public final class ProjectAuthManager implements AuthManager<ProjectAuthorizatio
 		this.policies = new HashSet<>(policies);
 	}
 
+	private boolean handleListReads() {
+		boolean hasAnyReadPermission = false;
+		for (final ProjectAuthorizationPolicy policy : this.policies) {
+			final boolean hasReadPermission = policy.getPermission() == ProjectPermission.READ;
+			hasAnyReadPermission = Boolean.logicalOr(hasAnyReadPermission, hasReadPermission);
+		}
+		return hasAnyReadPermission;
+	}
 
 	@Override
 	public List<Project> filterList(final List<Project> list) {

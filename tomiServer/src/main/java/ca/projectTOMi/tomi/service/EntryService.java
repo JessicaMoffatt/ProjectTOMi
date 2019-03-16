@@ -314,10 +314,9 @@ public class EntryService {
 	}
 
 	/**
-	 * Evaluates the {@link Status} of the timesheet with the provided id. If all {@link
-	 * Entry}s are approved the timesheet is given the approved status. If
-	 * all entries are approved or rejected the timesheet is given the rejected status. Otherwise,
-	 * it's status remains unchanged.
+	 * Evaluates the {@link Status} of the timesheet with the provided id. If all {@link Entry}s are
+	 * approved the timesheet is given the approved status. If all entries are approved or rejected
+	 * the timesheet is given the rejected status. Otherwise, it's status remains unchanged.
 	 *
 	 * @param id
 	 * 	the unique identifier for the timesheet
@@ -343,9 +342,9 @@ public class EntryService {
 		return this.entryRepository.getAllByActiveTrueAndProjectAndStatus(project, Status.SUBMITTED);
 	}
 
-	public boolean evaluateEntry(final Long entryId, final Status status){
+	public boolean evaluateEntry(final Long entryId, final Status status) {
 		final Entry entry = this.entryRepository.findById(entryId).orElseThrow(EntryNotFoundException::new);
-		if(entry.getStatus() == Status.SUBMITTED) {
+		if (entry.getStatus() == Status.SUBMITTED) {
 			entry.setStatus(status);
 			this.entryRepository.save(entry);
 			this.evaluateTimesheet(entry.getTimesheet().getId());

@@ -11,8 +11,8 @@ import ca.projectTOMi.tomi.model.UserAccount;
  * @author Karol Talbot
  */
 public final class UserAuthManager implements AuthManager<UserAuthorizationPolicy> {
-	private HashSet<UserAuthorizationPolicy> policies;
 	private final UserAccount user;
+	private HashSet<UserAuthorizationPolicy> policies;
 
 	public UserAuthManager(final UserAccount user) {
 		this.user = user;
@@ -131,7 +131,7 @@ public final class UserAuthManager implements AuthManager<UserAuthorizationPolic
 		this.policies = new HashSet<>(policies);
 	}
 
-	public Set<UserAuthorizationPolicy> getPolicies(){
+	public Set<UserAuthorizationPolicy> getPolicies() {
 		return this.policies;
 	}
 }

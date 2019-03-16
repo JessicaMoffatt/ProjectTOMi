@@ -23,8 +23,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.zip.ZipEntry;
-
 /**
  * @author Karol Talbot
  */
@@ -67,15 +65,14 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			return true;
 		}
 
-
 		final UserAccount user;
 		try {
 			user = this.userAuthenticationService.checkLogin(authToken);
-		}catch (final Exception e){
-			System.out.println(request.getMethod() + " " +e);
+		} catch (final Exception e) {
+			System.out.println(request.getMethod() + " " + e);
 			return false;
 		}
-		if(user == null){
+		if (user == null) {
 			return false;
 		}
 
@@ -88,13 +85,13 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		} catch (final ClassCastException e) {
 			return true;
 		}
-		if(requestURI.contains("build_nav_bar")){
+		if (requestURI.contains("build_nav_bar")) {
 			final AuthManager<UserAuthorizationPolicy> authMan;
 			authMan = new UserAuthManager(user);
 			authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
 			request.setAttribute("authMan", authMan);
 			return true;
-		}else if ("TimesheetController".matches(controller) || "EntryController".matches(controller)) {
+		} else if ("TimesheetController".matches(controller) || "EntryController".matches(controller)) {
 			final AuthManager<TimesheetAuthorizationPolicy> authMan;
 			authMan = new TimesheetAuthManager(user, this.getOwner(requestURI, requestMethod, user));
 			authMan.loadUserPolicies(this.timesheetAuthRepository.getAllByRequestingUser(user));
@@ -122,18 +119,18 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 				authMan = new ProjectAuthManager(user);
 				authMan.loadUserPolicies(this.projectAuthRepository.getAllByRequestingUser(user));
 				request.setAttribute("authMan", authMan);
-			} else if (requestURI.contains("data_dump_report")|| requestURI.contains("billable_hours_report")) {
+			} else if (requestURI.contains("data_dump_report") || requestURI.contains("billable_hours_report")) {
 				final AuthManager<UserAuthorizationPolicy> authMan;
 				authMan = new UserAuthManager(user);
 				authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
 				request.setAttribute("authMan", authMan);
-			} else if(requestURI.contains("productivity_report")){
+			} else if (requestURI.contains("productivity_report")) {
 				final AuthManager<TimesheetAuthorizationPolicy> authMan;
 				final UserAccount owner = this.userAccountService.getUserAccount(Long.parseLong(requestURI.split("/")[2]));
-				authMan = new TimesheetAuthManager(user,owner);
+				authMan = new TimesheetAuthManager(user, owner);
 				authMan.loadUserPolicies(this.timesheetAuthRepository.getAllByRequestingUser(user));
 				request.setAttribute("authMan", authMan);
-			}else {
+			} else {
 				return false;
 			}
 		} else {
@@ -142,7 +139,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
 			request.setAttribute("authMan", authMan);
 		}
-
 		return ((AuthManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
 	}
 
