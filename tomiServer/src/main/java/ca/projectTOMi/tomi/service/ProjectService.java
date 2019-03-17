@@ -155,4 +155,9 @@ public final class ProjectService {
 		}
 		this.repository.save(project);
 	}
+
+	public List<UserAccount> getProjectMembers(final String projectId) {
+		final Project project = this.repository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
+		return this.userAccountService.getUserAccountsByProjects(project);
+	}
 }

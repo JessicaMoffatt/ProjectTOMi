@@ -56,8 +56,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) {
-		System.out.println(request.getRequestURI());
-
 		final Long start = System.currentTimeMillis();
 		request.setAttribute("start", start);
 		final String authToken = request.getHeader("SignIn");
@@ -155,7 +153,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		final Long start = (Long) request.getAttribute("start");
 		final String requestURI = request.getRequestURI();
 		final Long stop = System.currentTimeMillis();
-//		System.out.printf("Call %d %s: %s executed in %dms%n", this.i++, requestURI, request.getMethod(), stop - start);
+		System.out.printf("Call %d %s: %s executed in %dms%n", this.i++, requestURI, request.getMethod(), stop - start);
 	}
 
 	@Override
