@@ -9,6 +9,7 @@ import {Project} from "../model/project";
 import {Client} from "../model/client";
 import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
+import {Entry} from "../model/entry";
 
 /**
  * Project service provides services relates to Projects.
@@ -46,6 +47,9 @@ export class ProjectService {
 
   /** used to pass list to project related components */
   projects: BehaviorSubject<Array<Project>> = new BehaviorSubject([]); // added by: James Andrade
+
+  /** used to store the members assigned to a project */
+  memberList: BehaviorSubject<Array<Project>> = new BehaviorSubject([]);
 
   constructor(private http: HttpClient, public snackBar:MatSnackBar) {
   }
@@ -166,7 +170,19 @@ export class ProjectService {
       let getUsersErrorMessage = 'Something went wrong when getting the list of projects. Please contact your system administrator.';
       this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
     });
+  }
 
+  async addUser(userAccountId: number) {
+    console.log("in project.service.ts -- saving user");
+    let tempAccount: UserAccount = null;
+    await this.http.put<UserAccount>(`${this.projectsUrl}/${this.selected.id}/add_member/${userAccountId}`, httpOptions).toPromise().then((response) => {
 
+   //   tempAccount = response;
+      return response;
+    }).catch(() => {
+      return null;
+    });
+
+  return tempAccount;
   }
 }

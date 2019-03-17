@@ -5,7 +5,8 @@
 <div id="mainPanel">
   <mat-accordion>
     <ng-container *ngFor="let userAccount of userAccountService.userSubject | async">
-        <app-edit-user id="edit_user_account{{userAccount.id}}" #editUserComponent
+        <app-edit-user
+            id="edit_user_account{{userAccount.id}}" #editUserComponent
                        (saveRequested)="save($event)"
                        (deleteRequested)="delete($event)"
                        [userAccount]="userAccount"

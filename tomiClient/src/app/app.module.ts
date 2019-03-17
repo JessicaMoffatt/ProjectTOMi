@@ -81,14 +81,16 @@ import {ProjectService} from "./service/project.service";
 import { EditProjectSubPanelComponent } from './component/panel/projects-panel/edit-project-sub-panel/edit-project-sub-panel.component';
 import {MatFormFieldModule} from "@angular/material";
 import { ExpenseListComponent } from './component/panel/projects-panel/expense-list/expense-list.component';
-import { TeamMemberListComponent } from './component/panel/projects-panel/team-member-list/team-member-list.component';
+import { ProjectMemberListComponent } from './component/panel/projects-panel/project-member-list/project-member-list.component';
 import { UnitTypeSidebarComponent } from './component/sidebar/unit-type-sidebar/unit-type-sidebar.component';
 import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
 import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-unit-type.component';
 import {AccessGuard} from "./AccessGuard";
+import { AddProjectMemberComponent } from './component/modal/add-project-member/add-project-member.component';
 
 @NgModule({
   declarations: [
+    AddProjectMemberComponent,
     EditUserComponent,
     AddUserAccountComponent,
     AppComponent,
@@ -128,7 +130,7 @@ import {AccessGuard} from "./AccessGuard";
     SubmitTimesheetModalComponent,
     EditProjectSubPanelComponent,
     ExpenseListComponent,
-    TeamMemberListComponent,
+    ProjectMemberListComponent,
     BudgetReportComponent,
     UnitTypeSidebarComponent,
     AddUnitTypeComponent,
@@ -136,7 +138,8 @@ import {AccessGuard} from "./AccessGuard";
     EditTaskComponent,
     AddTaskComponent,
     DeleteUserAccountModal,
-    EditTaskComponent
+    EditTaskComponent,
+    AddProjectMemberComponent
   ],
   imports: [
     MatSidenavModule,
@@ -179,6 +182,7 @@ import {AccessGuard} from "./AccessGuard";
     MatSidenavModule
   ],
   entryComponents: [
+    AddProjectMemberComponent,
     EntryComponent,
     AddTeamComponent,
     AddTeamMemberComponent,

@@ -19,8 +19,8 @@
     <br/>
 
     <mat-list dense>
-      <!--orderBy:'projectName'"-->
-      <!--  [class.highlighted]="p.id === this.projectService.selected.id" -->
+      <!--orderBy:'projectName'" -->
+      <!-- [class.highlighted]="p.id === this.projectService.selected.id" -->
       <!--"-->
       <mat-list-item
         *ngFor="let p of this.projectService.projects|async|orderBy:'projectName'"
@@ -36,13 +36,13 @@
     <button (click)="displayBlankProject()" mat-raised-button color="primary">NEW PROJECT</button>
   </mat-sidenav>
 
-  <!--mat-sidenav-content>
+  <mat-sidenav-content>
     <template #edit_project_container></template>
     <template #display_project_container></template>
     <div *ngIf="this.subPanelDisplay=='newProject'">
       <app-edit-project-sub-panel></app-edit-project-sub-panel>
     </div>
-  </mat-sidenav-content-->
+  </mat-sidenav-content>
 </mat-sidenav-container>
 
 
