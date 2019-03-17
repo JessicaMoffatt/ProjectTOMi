@@ -39,7 +39,7 @@ export class TimesheetService {
   public currentStatus = "";
 
   /**
-   * The earliest date that can be selected.
+   * The earliest date that can be selectedProject.
    */
   minDate: Date;
 

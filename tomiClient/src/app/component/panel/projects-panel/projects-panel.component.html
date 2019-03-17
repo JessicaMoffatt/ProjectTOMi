@@ -18,9 +18,9 @@
     Active Projects
     <br/>
 
-    <mat-list dense>
+    <mat-list>
       <!--orderBy:'projectName'" -->
-      <!-- [class.highlighted]="p.id === this.projectService.selected.id" -->
+      <!-- [class.highlighted]="p.id === this.projectService.selectedProject.id" -->
       <!--"-->
       <mat-list-item
         *ngFor="let p of this.projectService.projects|async|orderBy:'projectName'"

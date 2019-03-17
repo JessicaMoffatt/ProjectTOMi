@@ -11,7 +11,7 @@ import {Subject} from "rxjs";
 })
 export class UserAccountPanelComponent implements OnInit {
 
-  /** Subject that pushes the selected user account from the sidebar. */
+  /** Subject that pushes the selectedProject user account from the sidebar. */
   public selectedEventSubject: Subject<UserAccount> = new Subject<UserAccount>();
 
   constructor(private userAccountService: UserAccountService, private teamService: TeamService) { }
@@ -21,7 +21,7 @@ export class UserAccountPanelComponent implements OnInit {
     this.userAccountService.initializeUserAccounts();
   }
 
-  /** Pushes the selected user. */
+  /** Pushes the selectedProject user. */
   userSelected(userAccount: UserAccount) {
     this.selectedEventSubject.next(userAccount);
   }

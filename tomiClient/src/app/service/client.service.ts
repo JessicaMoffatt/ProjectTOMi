@@ -31,7 +31,7 @@ export class ClientService {
   /** The URL for accessing user accounts.
    private userAccountProjectsUrl = 'http://localhost:8080/user_accounts/'; */
 
-  /** tracks which project is selected in project-panel component and manage-project modal */
+  /** tracks which project is selectedProject in project-panel component and manage-project modal */
   selected: Client;
 
   /** used to pass list to project related components */
@@ -78,9 +78,9 @@ export class ClientService {
   } */
 
   /**
-   * sets the selected project that will be used in project-panel and manage-projects component
+   * sets the selectedProject project that will be used in project-panel and manage-projects component
    * added by: James Andrade
-   * @param project the project to be stored as 'selected'
+   * @param project the project to be stored as 'selectedProject'
    */
   setSelected(client: Client) {
     this.selected = client;

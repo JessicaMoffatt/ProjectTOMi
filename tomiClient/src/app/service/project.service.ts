@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
@@ -10,6 +10,8 @@ import {Client} from "../model/client";
 import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
 import {Entry} from "../model/entry";
+import {User} from "../component/modal/add-project-member/add-project-member.component";
+import {__values} from "tslib";
 
 /**
  * Project service provides services relates to Projects.
@@ -41,23 +43,23 @@ export class ProjectService {
   /** The URL for accessing user accounts.*/
   private userAccountProjectsUrl = 'http://localhost:8080/user_accounts';
 
-  /** tracks which project is selected in project-panel component and manage-project modal.
+  /** tracks which project is selectedProject in project-panel component and manage-project modal.
    */
-  selected: Project; // added by: James Andrade
+  selectedProject: Project; // added by: James Andrade
 
   /** used to pass list to project related components */
   projects: BehaviorSubject<Array<Project>> = new BehaviorSubject([]); // added by: James Andrade
 
   /** the user accounts assigned to the current project; for display in project-member-list-component */
-  userAccountList: BehaviorSubject<Array<Project>> = new BehaviorSubject([]);
+  userAccountList: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject([]);
 
-  constructor(private http: HttpClient, public snackBar:MatSnackBar) {
+  constructor(private http: HttpClient, public snackBar: MatSnackBar) {
   }
 
   /**
    * Gets all projects.
    */
-  getAllProjects(): Observable<Array<Project>>{
+  getAllProjects(): Observable<Array<Project>> {
     return this.http.get(`${this.projectsUrl}`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
@@ -68,29 +70,16 @@ export class ProjectService {
       }));
   }
 
-  /**
-   * Gets the projects for a specified user.
-   * @param userId The ID of the user whose projects we want.
-   */
-  getProjectsForUser(userId:number): Observable<Array<Project>>{
-    return this.http.get(`${this.userAccountProjectsUrl}/${userId}/projects`).pipe(map((response: Response) => response))
-      .pipe(map((data: any) => {
-        if (data._embedded !== undefined) {
-          return data._embedded.projects as Project[];
-        } else {
-          return [];
-        }
-      }));
-  }
 
   /**
-   * sets the selected project that will be used in project-panel and manage-projects component
+   * sets the selectedProject project that will be used in project-panel and manage-projects component
    * added by: James Andrade
-   * @param project the project to be stored as 'selected'
+   * @param project the project to be stored as 'selectedProject'
    */
-  setSelected(project: Project){
-    this.selected = project;
-    // console.log("selected:"+project.projectName);
+  setSelected(project: Project) {
+    this.selectedProject = project;
+    this.initializeUserAccountList();
+    // console.log("selectedProject:"+project.projectName);
     // console.log("is null:"+project == null);
     // console.log("is undefined:"+project == undefined);
     // console.log("is not null:"+project != null);
@@ -102,8 +91,8 @@ export class ProjectService {
    * Gets a project with the specified ID.
    * @param id The ID of the project to get.
    */
-   getProjectById(id:string){
-     return this.http.get(`${this.projectsUrl}/${id}`).pipe(map((response: Response) => response))
+  getProjectById(id: string) {
+    return this.http.get(`${this.projectsUrl}/${id}`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data !== undefined) {
           return data as Project;
@@ -117,10 +106,12 @@ export class ProjectService {
    *
    * @param project The project to get a report for.
    */
-  getDataDump(){
+  getDataDump() {
     return this.http.get(`${this.dataDumpUrl}`, {responseType: 'blob'})
       .pipe(
-        map((res) => {return res}),catchError(this.handleError)
+        map((res) => {
+          return res
+        }), catchError(this.handleError)
       );
   }
 
@@ -162,42 +153,101 @@ export class ProjectService {
     }
   }
 
-  initializeProjects() {
-    this.getProjectsForUser(this.userId).forEach( project => {
-      this.projects = new BehaviorSubject<Array<Project>>(project);
-      // this.sort();
-    }).catch( (error: any) => {
-      let getUsersErrorMessage = 'Something went wrong when getting the list of projects. Please contact your system administrator.';
-      this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
-    });
-  }
+
 
   async addUser(userAccountId: number) {
     console.log("in project.service.ts -- saving user");
     let tempAccount: UserAccount = null;
-    await this.http.put<UserAccount>(`${this.projectsUrl}/${this.selected.id}/add_member/${userAccountId}`, httpOptions).toPromise().then((response) => {
+    await this.http.put<UserAccount>(`${this.projectsUrl}/${this.selectedProject.id}/add_member/${userAccountId}`, httpOptions).toPromise().then((response) => {
 
-   //   tempAccount = response;
+      //   tempAccount = response;
       return response;
     }).catch(() => {
       return null;
     });
 
-  return tempAccount;
+    return tempAccount;
   }
 
 
-  initializeUserAccountList() {
+  /**
+   * Gets the projects for a specified user.
+   * @param userId The ID of the user whose projects we want.
+   */
+  getProjectsForUser(userId: number): Observable<Array<Project>> {
 
-    // await this.http.put<UserAccount>(`${this.projectsUrl}/${this.selected.id}/add_member/${userAccountId}`, httpOptions).toPromise().then((response) => {
-    //
-    // this.getProjectsForUser(this.userId).forEach( project => {
-    //   this.projects = new BehaviorSubject<Array<Project>>(project);
-    //   // this.sort();
-    // }).catch( (error: any) => {
-    //   let getUsersErrorMessage = 'Something went wrong when getting the list of projects. Please contact your system administrator.';
-    //   this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
-    // });
+    return this.http.get(`${this.userAccountProjectsUrl}/${userId}/projects`).pipe(map((response: Response) => response))
+      .pipe(map((data: any) => {
+        if (data._embedded !== undefined) {
+          return data._embedded.projects as Project[];
+        } else {
+          return [];
+        }
+      }));
+  }
+
+
+  /**
+   * Copies the specified entry.
+   * @param entry The entry to copy.
+   */
+  async copy(entry: Entry) {
+    let tempEntry: Entry = null;
+    const url = entry._links["copy"];
+    await this.http.post<Entry>(url["href"],null, httpOptions).toPromise().then(response => {
+      tempEntry = response;
+      return response;
+    }).catch(() => {
+      return null;
+    });
+
+    return tempEntry;
+  }
+
+
+  initializeProjects() {
+    this.getProjectsForUser(this.userId).forEach(project => {
+      this.projects = new BehaviorSubject<Array<Project>>(project);
+      // this.sort();
+    }).catch((error: any) => {
+      let getUsersErrorMessage = 'Something went wrong when getting the list of projects. Please contact your system administrator.';
+      this.snackBar.open(getUsersErrorMessage, null, {
+        duration: 5000,
+        politeness: 'assertive',
+        panelClass: 'snackbar-fail',
+        horizontalPosition: 'right'
+      });
+    });
+  }
+
+
+
+
+  getUserAccountList() : Observable<Array<UserAccount>> {
+    return this.http.get(`${this.projectsUrl}/${this.selectedProject.id}/members`)
+      .pipe(map((data: any) => {
+        if (data._embedded !== undefined) {
+          return data._embedded.userAccounts as UserAccount[];
+        } else {
+          return []
+        }
+      }));
+  }
+
+  initializeUserAccountList() {
+    this.getUserAccountList().forEach(userAccount => {
+      console.log(userAccount);
+
+      // this.sort();
+    }).catch((error: any) => {
+      let getUsersErrorMessage = 'Something went wrong when getting the list of project members. Please contact your system administrator.';
+      this.snackBar.open(getUsersErrorMessage, null, {
+        duration: 5000,
+        politeness: 'assertive',
+        panelClass: 'snackbar-fail',
+        horizontalPosition: 'right'
+      });
+    });
   }
 
 }

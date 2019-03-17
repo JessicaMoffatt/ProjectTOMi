@@ -26,7 +26,7 @@ export class UserAccountService {
   /** The link used to GET, POST and DELETE user accounts */
   private userAccountUrl = "http://localhost:8080/user_accounts";
 
-  /** The UserAccount selected from the list of UserAccounts.*/
+  /** The UserAccount selectedProject from the list of UserAccounts.*/
   private selectedUserAccount: UserAccount;
 
   /** Listing of all active UserAccounts */
@@ -186,7 +186,7 @@ export class UserAccountService {
   }
 
   /**
-   * Logically deletes the selected user account (sets the active status to false.)
+   * Logically deletes the selectedProject user account (sets the active status to false.)
    *
    * @param account The UserAccount to be deleted.
    */

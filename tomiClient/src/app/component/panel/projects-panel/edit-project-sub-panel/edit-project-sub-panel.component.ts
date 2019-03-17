@@ -56,9 +56,9 @@ export class EditProjectSubPanelComponent implements OnInit {
     // 3. Validate account manager name (for new projects only)
     // if selected is null, then the user is trying to create a new project and
     // we must validate the account manager
-    else if (this.projectService.selected == null && (<HTMLInputElement>document.getElementById("account_manager")).value.length == 0) {
+    else if (this.projectService.selectedProject == null && (<HTMLInputElement>document.getElementById("account_manager")).value.length == 0) {
       alert("account manager name is required.")
-    } else if (this.projectService.selected == null && !this.isValidAccountManagerName((<HTMLInputElement>document.getElementById("account_manager")).value)) {
+    } else if (this.projectService.selectedProject == null && !this.isValidAccountManagerName((<HTMLInputElement>document.getElementById("account_manager")).value)) {
       alert("account manager name is invalid.  Must take the format 'John Smith' or 'j s'");
     }
 
@@ -68,15 +68,15 @@ export class EditProjectSubPanelComponent implements OnInit {
       // 4.1 Create a new project if necessary along with the initials that will be passed
       // to the backend to create the id (for new projects only).
       // if the selected project is null, it means we are creating a new project
-      if (this.projectService.selected == null) {
+      if (this.projectService.selectedProject == null) {
         console.log("creating new project");
-        this.projectService.selected = new Project();
+        this.projectService.selectedProject = new Project();
         accountManagerName = (<HTMLInputElement>document.getElementById("account_manager")).value;
-        this.projectService.selected.id = this.getInitialsFromName(accountManagerName);
+        this.projectService.selectedProject.id = this.getInitialsFromName(accountManagerName);
       }
 
       // 4.2 Set the Project Name
-      this.projectService.selected.projectName = projectName;
+      this.projectService.selectedProject.projectName = projectName;
 
       // 4.3 Set the Client
       // if the client exists get the reference, if not create a new one
@@ -92,18 +92,18 @@ export class EditProjectSubPanelComponent implements OnInit {
       // @ts-ignore
       client = this.clientService.getClientByName(clientName);
 
-      this.projectService.selected.client = client;
+      this.projectService.selectedProject.client = client;
 
       // 4.4 Set the billable rate and budget (not required fields)
-      this.projectService.selected.billableRate = +(<HTMLInputElement>document.getElementById("billing_rate")).value;
-      this.projectService.selected.budget = +(<HTMLInputElement>document.getElementById("budget_total")).value;
+      this.projectService.selectedProject.billableRate = +(<HTMLInputElement>document.getElementById("billing_rate")).value;
+      this.projectService.selectedProject.budget = +(<HTMLInputElement>document.getElementById("budget_total")).value;
 
-      this.projectService.save(this.projectService.selected);
+      this.projectService.save(this.projectService.selectedProject);
       alert("project saved.");
-      alert("  project name:" + this.projectService.selected.projectName);
-      alert("  client:" + this.projectService.selected.client.name);
-      alert("  id:" + this.projectService.selected.id);
-      alert("  project manager id:" + this.projectService.selected.projectManagerId);
+      alert("  project name:" + this.projectService.selectedProject.projectName);
+      alert("  client:" + this.projectService.selectedProject.client.name);
+      alert("  id:" + this.projectService.selectedProject.id);
+      alert("  project manager id:" + this.projectService.selectedProject.projectManagerId);
     }
   }
 
@@ -138,7 +138,7 @@ export class EditProjectSubPanelComponent implements OnInit {
   getProjectManager(): UserAccount {
 
     for (let u of this.userAccountService.userSubject.getValue()) {
-      if (u.id == this.projectService.selected.projectManagerId) return u;
+      if (u.id == this.projectService.selectedProject.projectManagerId) return u;
     }
     return new UserAccount();
   }

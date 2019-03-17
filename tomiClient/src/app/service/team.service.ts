@@ -30,7 +30,7 @@ export class TeamService {
   /** The link used to get,post, and delete user accounts. */
   private userUrl = `http://localhost:8080/user_accounts`;
 
-  /** List of all the team members of the selected team.*/
+  /** List of all the team members of the selectedProject team.*/
   teamMembers: UserAccount[] = [];
 
   teamsObservable: Team[];
@@ -38,11 +38,11 @@ export class TeamService {
   /** List of all the team members not currently on any teams.*/
   allFreeMembers: UserAccount[] = [];
   //
-  // /** List of all the active user accounts that aren't already a part of the selected team,
+  // /** List of all the active user accounts that aren't already a part of the selectedProject team,
   //  * as well as not a team lead of any other teams.
   //  */
   // allOutsideMembers: UserAccount[] = [];
-  /** The members selected from the list of team members.*/
+  /** The members selectedProject from the list of team members.*/
   private selectedMembers: UserAccount[];
 
   /** Used to reference the add team member component created by clicking the Add Member button.*/
@@ -69,8 +69,8 @@ export class TeamService {
   }
 
   /**
-   * Populates teamMembers with the members of the selected team.
-   * @param team The selected team.
+   * Populates teamMembers with the members of the selectedProject team.
+   * @param team The selectedProject team.
    */
   populateTeamMembers(team:Team){
     this.getTeamMembers(team.id).subscribe((data: Array<UserAccount>) => {
@@ -87,7 +87,7 @@ export class TeamService {
   }
 
   /**
-   * Removes a member from the selected team.
+   * Removes a member from the selectedProject team.
    */
   async removeMembers() {
     if(this.selectedMembers.length > 0){
@@ -199,7 +199,7 @@ export class TeamService {
 
   /**
    * Cancels any changes made to the team name or the team lead.
-   * @param team The selected team.
+   * @param team The selectedProject team.
    */
   cancel(team: Team): void {
     this.teamSideBarService.getTeamById(team.id).subscribe((data)=>{
@@ -209,7 +209,7 @@ export class TeamService {
 
   //TODO add error handling!!
   /**
-   * Logically deletes the selected team (sets their active status to false.)
+   * Logically deletes the selectedProject team (sets their active status to false.)
    *
    * @param team The team to be deleted.
    */

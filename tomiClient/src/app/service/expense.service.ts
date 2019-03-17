@@ -43,9 +43,9 @@ export class ExpenseService {
   }
 
   /**
-   * sets the selected expense that will be used in edit expense modal
+   * sets the selectedProject expense that will be used in edit expense modal
    * added by: James Andrade
-   * @param project the project to be stored as 'selected'
+   * @param project the project to be stored as 'selectedProject'
    */
   setSelected(expense: Expense){
     this.selected = expense;

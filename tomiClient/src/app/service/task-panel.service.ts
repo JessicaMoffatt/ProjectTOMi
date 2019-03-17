@@ -25,7 +25,7 @@ export class TaskPanelService {
   /** Used to reference the add task component created by clicking the Add Task button.*/
   ref: ComponentRef<any>;
 
-  /** The task selected in the sidebar.*/
+  /** The task selectedProject in the sidebar.*/
   selectedTask: Task = new Task();
 
   /** List of all the tasks.*/
@@ -44,7 +44,7 @@ export class TaskPanelService {
   }
 
   /**
-   * Removes a member from the selected team.
+   * Removes a member from the selectedProject team.
    */
   delete(task: Task) {
 
@@ -76,8 +76,8 @@ export class TaskPanelService {
   }
 
   /**
-   * Sets the selected team member.
-   * @param account The user account whom has been selected.
+   * Sets the selectedProject team member.
+   * @param account The user account whom has been selectedProject.
    */
   setSelectedTask(task: Task) {
     this.selectedTask = task;

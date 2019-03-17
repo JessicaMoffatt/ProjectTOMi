@@ -36,11 +36,11 @@ export class ProjectsPanelComponent implements OnInit {
   }
 
   setClient(c: Client){
-    this.clientService.selected=c;
+    this.clientService.selectedProject=c;
   }
 
   displayBlankProject() {
-    this.projectService.selected = null;
+    this.projectService.selectedProject = null;
     this.subPanelDisplay = "newProject";
   }
 

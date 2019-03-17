@@ -29,9 +29,9 @@ export class TeamComponent implements OnInit {
   }
 
   /**
-   * Sets the selected team members.
+   * Sets the selectedProject team members.
    * @param event The event to be captured.
-   * @param selectedMembers The selected values.
+   * @param selectedMembers The selectedProject values.
    */
   onSelection(event, selectedMembers) {
     let tempList: UserAccount[] = [];
@@ -42,7 +42,7 @@ export class TeamComponent implements OnInit {
   }
 
   /**
-   * Removes the selected member from the team.
+   * Removes the selectedProject member from the team.
    */
   removeMembers() {
     this.teamService.removeMembers().then();
@@ -139,7 +139,7 @@ export class AddTeamMemberComponent implements OnInit {
 
   //TODO add error handling
   /**
-   * Adds the selected team member to the team. Passes on requests to save this information to the user account service and team service.
+   * Adds the selectedProject team member to the team. Passes on requests to save this information to the user account service and team service.
    */
   addMember(): void {
     let memberId = this.member;

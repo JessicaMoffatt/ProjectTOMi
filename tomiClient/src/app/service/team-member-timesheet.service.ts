@@ -24,7 +24,7 @@ export class TeamMemberTimesheetService {
 
   /** The list of team members for this team lead's team.*/
   teamMembers: UserAccount[];
-  /** The team member selected in the sidebar.*/
+  /** The team member selectedProject in the sidebar.*/
   selectedMember: UserAccount;
 
 

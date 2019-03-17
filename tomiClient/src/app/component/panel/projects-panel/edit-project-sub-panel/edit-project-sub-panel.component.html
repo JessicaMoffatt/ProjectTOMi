@@ -4,8 +4,8 @@
 
     <mat-form-field>
       <input id="project_name"
-             [value]="this.projectService.selected != null ?
-            this.projectService.selected.projectName : '' "
+             [value]="this.projectService.selectedProject != null ?
+            this.projectService.selectedProject.projectName : '' "
              type="text"
              placeholder="Project Name"
              aria-label="Project Name"
@@ -21,8 +21,8 @@
              aria-label="Client"
              matInput [formControl]="this.myControl"
              [matAutocomplete]="auto"
-             [value]="this.projectService.selected != null ?
-            this.projectService.selected.client.name : '' ">
+             [value]="this.projectService.selectedProject != null ?
+            this.projectService.selectedProject.client.name : '' ">
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let c of this.clientService.clients | async" [value]="c.name">
           {{c.name}}
@@ -35,7 +35,7 @@
       <mat-select id="project_manager"
              placeholder="Project Manager"
              aria-label="Project Manager"
-             [value]="this.projectService.selected != null ? getProjectManager().firstName : '' " >
+             [value]="this.projectService.selectedProject != null ? getProjectManager().firstName : '' " >
         <!--    matInput [formControl]="this.myControl"     -->
       <!--<mat-autocomplete #auto2="matAutocomplete">-->
         <mat-option *ngFor="let u of this.userAccountService.userSubject | async" [value]="u.firstName" >
@@ -50,11 +50,11 @@
       <input
         id="account_manager"
         type="text"
-        placeholder="{{this.projectService.selected != null ? 'Account ID' : 'Account Manager'}}"
-        attr.aria-label="{{this.projectService.selected != null ? 'Account ID' : 'Account Manager'}}"
+        placeholder="{{this.projectService.selectedProject != null ? 'Account ID' : 'Account Manager'}}"
+        attr.aria-label="{{this.projectService.selectedProject != null ? 'Account ID' : 'Account Manager'}}"
         matInput
-        [disabled]="this.projectService.selected != null"
-        [value]="this.projectService.selected != null ? this.projectService.selected.id : ''"
+        [disabled]="this.projectService.selectedProject != null"
+        [value]="this.projectService.selectedProject != null ? this.projectService.selectedProject.id : ''"
       >
     </mat-form-field>
     <br/>
@@ -67,8 +67,8 @@
              type="number"
              min="0.00"
              matInput
-             [value]="this.projectService.selected != null?
-               this.projectService.selected.billableRate : '' "
+             [value]="this.projectService.selectedProject != null?
+               this.projectService.selectedProject.billableRate : '' "
              [formControl]="myControl"
       >
       <span matPrefix>$&nbsp;</span>
@@ -82,8 +82,8 @@
              aria-label="Budget Total"
              min="0.00"
              matInput
-             [value]="this.projectService.selected != null?
-                this.projectService.selected.budget : '' "
+             [value]="this.projectService.selectedProject != null?
+                this.projectService.selectedProject.budget : '' "
              [formControl]="this.myControl"
       >
       <span matPrefix>$&nbsp;</span>

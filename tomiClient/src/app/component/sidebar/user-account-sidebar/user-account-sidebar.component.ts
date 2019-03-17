@@ -11,7 +11,7 @@ import {UserAccount} from "../../../model/userAccount";
 })
 export class UserAccountSidebarComponent implements OnInit {
 
-  /** Event emitted when the user is selected in the sidebar. */
+  /** Event emitted when the user is selectedProject in the sidebar. */
   @Output() userSelectedEvent: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(public dialog: MatDialog, private userAccountService: UserAccountService) { }
@@ -20,7 +20,7 @@ export class UserAccountSidebarComponent implements OnInit {
 
   }
 
-  /** Pushes the selected user. */
+  /** Pushes the selectedProject user. */
   userSelected(userAccount: UserAccount) {
     this.userSelectedEvent.emit(userAccount);
   }

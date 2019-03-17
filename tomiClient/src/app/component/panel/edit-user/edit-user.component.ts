@@ -50,10 +50,10 @@ export class EditUserComponent implements OnInit, OnDestroy {
   /** Invalid salaried rate error detection. */
   userAccountRateMatcher = new MyErrorStateMatcher();
 
-  /** The Event emitted indicating that a user has been selected in the sidebar. */
+  /** The Event emitted indicating that a user has been selectedProject in the sidebar. */
   @Input() userSelectedEvent: Observable<UserAccount>;
 
-  /** The subscription for the selected user event. */
+  /** The subscription for the selectedProject user event. */
   private userSelectedSubscription: Subscription;
 
   /** The UserAccount model associated with this component. */

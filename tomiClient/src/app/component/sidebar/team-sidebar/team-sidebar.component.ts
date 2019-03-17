@@ -113,7 +113,7 @@ export class AddTeamComponent implements OnInit {
   }
 
   /**
-   * Adds a new team. Passes on the request to save the new team to the team service. If a team lead is selected, also passes
+   * Adds a new team. Passes on the request to save the new team to the team service. If a team lead is selectedProject, also passes
    * on the request to save the user account's info to the user account service.
    */
   addTeam() {

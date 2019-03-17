@@ -17,7 +17,7 @@ export class UserAccountSidebarService {
   /** Used to reference the Add User component created by click the Add User button. */
   ref: ComponentRef<any>;
 
-  /** The selected UserAccount in the sidebar. */
+  /** The selectedProject UserAccount in the sidebar. */
   selectedUserAccount: UserAccount;
 
   constructor(private http:HttpClient) {

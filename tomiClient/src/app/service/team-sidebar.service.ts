@@ -18,7 +18,7 @@ export class TeamSidebarService {
   /** The link used to get,post, and delete teams. */
   private teamUrl = `http://localhost:8080/teams/`;
 
-  /** The team selected in the sidebar.*/
+  /** The team selectedProject in the sidebar.*/
   selectedTeam: Team;
 
   /** List of all the teams.*/
