@@ -13,7 +13,7 @@ import {ProjectService} from "../../../../service/project.service";
 })
 export class ProjectMemberListComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, public expenseService: ExpenseService, public userAccountService: UserAccountService) { }
+  constructor(public dialog: MatDialog, public expenseService: ExpenseService, public projectService: ProjectService) { }
 
   ngOnInit() {
   }

@@ -3,7 +3,7 @@
     <mat-card-title>Members on Project</mat-card-title>
   </mat-card-header>
   <mat-list role="list">
-    <mat-list-item *ngFor="let userAccount of this.userAccountService.userSubject | async">
+    <mat-list-item *ngFor="let userAccount of this.projectService.userAccountList | async">
 
       <h4 matLine>{{userAccount.firstName}} {{userAccount.lastName}}</h4>
       <!--p matLine class="demo-2"> {{folder.updated}} </p-->

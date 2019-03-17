@@ -33,6 +33,11 @@ export class UserAccountService {
   userAccounts: Observable<Array<UserAccount>>;
   userSubject: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject<Array<UserAccount>>([]);
 
+
+
+
+
+
   public constructor(private http: HttpClient, public snackBar: MatSnackBar) {
 
   }

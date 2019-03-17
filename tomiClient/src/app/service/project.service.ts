@@ -48,8 +48,8 @@ export class ProjectService {
   /** used to pass list to project related components */
   projects: BehaviorSubject<Array<Project>> = new BehaviorSubject([]); // added by: James Andrade
 
-  /** used to store the members assigned to a project */
-  memberList: BehaviorSubject<Array<Project>> = new BehaviorSubject([]);
+  /** the user accounts assigned to the current project; for display in project-member-list-component */
+  userAccountList: BehaviorSubject<Array<Project>> = new BehaviorSubject([]);
 
   constructor(private http: HttpClient, public snackBar:MatSnackBar) {
   }
@@ -185,4 +185,19 @@ export class ProjectService {
 
   return tempAccount;
   }
+
+
+  initializeUserAccountList() {
+
+    // await this.http.put<UserAccount>(`${this.projectsUrl}/${this.selected.id}/add_member/${userAccountId}`, httpOptions).toPromise().then((response) => {
+    //
+    // this.getProjectsForUser(this.userId).forEach( project => {
+    //   this.projects = new BehaviorSubject<Array<Project>>(project);
+    //   // this.sort();
+    // }).catch( (error: any) => {
+    //   let getUsersErrorMessage = 'Something went wrong when getting the list of projects. Please contact your system administrator.';
+    //   this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
+    // });
+  }
+
 }

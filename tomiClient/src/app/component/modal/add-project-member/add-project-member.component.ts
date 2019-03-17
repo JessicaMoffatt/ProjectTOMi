@@ -1,7 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProjectService} from "../../../service/project.service";
 import {UserAccountService} from "../../../service/user-account.service";
-import {UserAccount} from "../../../model/userAccount";
 
 
 export interface User {
@@ -9,7 +8,6 @@ export interface User {
   lastName: string;
   id: number;
 }
-
 
 @Component({
   selector: 'app-add-project-member',
@@ -27,14 +25,9 @@ export class AddProjectMemberComponent implements OnInit {
   }
 
   addUserAccount(){
-
-
-    console.log("selected value:"+this.selectedUserId)
-
     if (this.selectedUserId != undefined){
       this.projectService.addUser(this.selectedUserId);
     }
-    console.log("user added. in add-project-member-component.ts");
   }
 
 }
