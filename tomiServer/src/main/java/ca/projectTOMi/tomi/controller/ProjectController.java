@@ -15,6 +15,7 @@ import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.Status;
+import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.service.EntryService;
 import ca.projectTOMi.tomi.service.ProjectAuthService;
 import ca.projectTOMi.tomi.service.ProjectService;
@@ -211,6 +212,11 @@ public class ProjectController {
 	public ResponseEntity<?> removeTeamMember(@PathVariable final String projectId, @PathVariable final Long userAccountId){
 		this.projectService.removeTeamMember(projectId, userAccountId);
 		return ResponseEntity.accepted().build();
+	}
+
+	@GetMapping("/projects/{projectId}/members")
+	public List<UserAccount> getProjectMembers(@PathVariable final String projectId){
+		return this.projectService.getProjectMembers(projectId);
 	}
 
 	@ExceptionHandler ({ProjectNotFoundException.class, InvalidIDPrefix.class, ProjectManagerException.class})
