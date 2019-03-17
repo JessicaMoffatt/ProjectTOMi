@@ -221,10 +221,8 @@ export class ProjectService {
   }
 
 
-
-
   getUserAccountList() : Observable<Array<UserAccount>> {
-    return this.http.get(`${this.projectsUrl}/${this.selectedProject.id}/members`)
+    return this.http.get(`${this.projectsUrl}/${this.selectedProject.id}/members`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];

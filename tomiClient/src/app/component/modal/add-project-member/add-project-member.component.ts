@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ProjectService} from "../../../service/project.service";
 import {UserAccountService} from "../../../service/user-account.service";
+import {MatDialogRef} from "@angular/material";
 
 
 export interface User {
@@ -19,7 +20,8 @@ export class AddProjectMemberComponent implements OnInit {
 
   selectedUserId: number;
 
-  constructor(public userAccountService: UserAccountService, private projectService: ProjectService) { }
+  constructor(public dialogRef: MatDialogRef<AddProjectMemberComponent>,
+    public userAccountService: UserAccountService, private projectService: ProjectService) { }
 
   ngOnInit() {
   }
@@ -30,4 +32,7 @@ export class AddProjectMemberComponent implements OnInit {
     }
   }
 
+  cancel() {
+    this.dialogRef.close();
+  }
 }
