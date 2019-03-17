@@ -21,7 +21,9 @@
     </mat-form-field>
 
     <div mat-dialog-actions>
-      <button mat-raised-button color="primary" (click)="addUserAccount()">ADD</button>
+      <button mat-raised-button color="primary"
+              [disabled]="selectedUserId == undefined ? true : false"
+              (click)="addUserAccount()">ADD</button>
       <button mat-raised-button color="accent" (click)="cancel()">CANCEL</button>
     </div>
   </form>
