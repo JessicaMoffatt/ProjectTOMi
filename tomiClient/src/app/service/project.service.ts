@@ -69,7 +69,7 @@ export class ProjectService {
   }
 
   /**
-   *
+   * Retrieves the data dump report as an xls file download.
    * @param project The project to get a report for.
    */
   getDataDump(){
@@ -79,6 +79,10 @@ export class ProjectService {
       );
   }
 
+  /**
+   * General error handling method.
+   * @param error The error that occurred.
+   */
   private handleError(error: HttpErrorResponse) {
     return throwError(error.message);
   }
