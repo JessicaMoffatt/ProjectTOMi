@@ -179,7 +179,7 @@ public final class UserAccountService {
 		if (!this.entryService.createTimesheet(date, newUserAccount)) {
 			throw new TimesheetNotFoundException();
 		}
-		this.userAuthService.setNewUserAccountPolicy(newUserAccount);
+		this.userAuthService.updatedUserAccount(newUserAccount);
 		this.timesheetAuthService.setNewUserAccountPolicy(newUserAccount);
 		if (newUserAccount.isProgramDirector()) {
 			this.projectAuthService.newProgramDirector(newUserAccount);

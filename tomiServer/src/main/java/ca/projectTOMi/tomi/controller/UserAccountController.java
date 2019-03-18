@@ -232,9 +232,4 @@ public class UserAccountController {
 
 		return ResponseEntity.unprocessableEntity().build();
 	}
-
-	@GetMapping ("/doAEmail")
-	public void doAEmail() {
-		email.sendSimpleMessage("KarolTalbot@gmail.com", "hello", "This is a email");
-	}
 }
