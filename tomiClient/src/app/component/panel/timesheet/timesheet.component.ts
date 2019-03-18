@@ -19,6 +19,7 @@ import {Router} from "@angular/router";
 import {Task} from "../../../model/task";
 import {UnitType} from "../../../model/unitType";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
+import {SignInService} from "../../../service/sign-in.service";
 
 
 export interface DialogData {
@@ -41,7 +42,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
   //TODO, don't hard code
   /** The ID of the user.*/
-  private userId = 1;
+  private userId = this.signInService.userAccount.id;
 
   /** List of all entries for current timesheet.*/
   entries: Entry[] = [];
@@ -70,7 +71,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router, public timesheetService: TimesheetService,
               private projectService: ProjectService, private entryService: EntryService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog, private signInService:SignInService) {
 
   }
 

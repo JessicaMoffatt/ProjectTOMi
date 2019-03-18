@@ -47,17 +47,25 @@ export class SigninComponent implements OnInit {
     this.signIn.setUser(googleUser);
     let id_token: string;
     id_token = googleUser.getAuthResponse().id_token;
-    this.http.post("http://localhost:8080/tokensignin", id_token, httpOptions).toPromise().then(response => {
+    this.http.post("http://localhost:8080/tokensignin", id_token, httpOptions).toPromise().then(async(response) => {
       if(response != null){
-        this.signIn.userAccount = response as UserAccount;
-        this.router.navigate(['/my_timesheets']);
-        this.signIn.setLoggedIn();
+        new Promise((resolve, reject)=>{
+          resolve(this.setUser(response));
+        }).then(()=>{
+          this.router.navigate(['/my_timesheets']);
+          this.signIn.setLoggedIn();
+        });
+
       }
       return response;
     }).catch(() => {
       this.signIn.signOutOperations();
       return null;
     });
+  }
+
+  async setUser(userAccount){
+    return this.signIn.userAccount = userAccount as UserAccount;
   }
 }
 
