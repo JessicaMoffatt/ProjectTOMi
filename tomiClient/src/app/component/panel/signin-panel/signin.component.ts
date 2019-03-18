@@ -52,7 +52,6 @@ export class SigninComponent implements OnInit {
         this.signIn.userAccount = response as UserAccount;
         this.router.navigate(['/my_timesheets']);
         this.signIn.setLoggedIn();
-        console.log(this.signIn.userAccount)
       }
       return response;
     }).catch(() => {
