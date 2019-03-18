@@ -2,70 +2,110 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {UnitTypeSidebarService} from "../../../service/unit-type-sidebar.service";
 import {UnitType} from "../../../model/unitType";
 import {UnitTypeService} from "../../../service/unit-type.service";
+import {ErrorStateMatcher, MatDialogRef} from "@angular/material";
+import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-add-unit-type',
   templateUrl: './add-unit-type.component.html',
   styleUrls: ['./add-unit-type.component.scss']
 })
+/**
+ * AddUnitTypeComponent is a modal for adding new Unit Types.
+ *
+ * @author Iliya Kiritchkov
+ * @version 1.1
+ */
 export class AddUnitTypeComponent implements OnInit {
 
+  /** Validations for the name. */
+  unitTypeNameControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern('')
+  ]);
+
+  /** Validations for the unit. */
+  unitTypeUnitControl = new FormControl('', [
+    Validators.required,
+  ]);
+
+  /** Validations for the weight. */
+  unitTypeWeightControl = new FormControl('', [
+    Validators.required,
+    Validators.min(0)
+  ]);
+
+  /** Invalid name error detection. */
+  unitTypeNameMatcher = new MyErrorStateMatcher();
+
+  /** Invalid unit error detection. */
+  unitTypeUnitMatcher = new MyErrorStateMatcher();
+
+  /** Invalid weight error detection. */
+  unitTypeWeightMatcher = new MyErrorStateMatcher();
+
   /** The input field for the Unit Types's name.*/
-  @ViewChild('name') unitTypeName;
+  @ViewChild('addUnitTypeName') addUnitTypeName;
 
   /** The input field for the Unit Types's unit.*/
-  @ViewChild('unit') unitTypeUnit;
+  @ViewChild('addUnitTypeUnit') addUnitTypeUnit;
 
   /** The input field for the Unit Types's weight.*/
-  @ViewChild('weight') unitTypeWeight;
+  @ViewChild('addUnitTypeWeight') addUnitTypeWeight;
 
-  constructor(private unitTypeSidebarService: UnitTypeSidebarService, private unitTypeService: UnitTypeService) { }
+  /** The ngForm for this component. */
+  @ViewChild('addUnitTypeForm') addUnitTypeForm;
+
+  constructor(public dialogRef: MatDialogRef<AddUnitTypeComponent>, private unitTypeSidebarService: UnitTypeSidebarService, private unitTypeService: UnitTypeService) { }
 
   ngOnInit() {
+    this.applyUniqueNameValidator();
+  }
 
+  /**
+   * Dynamically generate a unique name regex pattern to ensure that new Unit Types have unique names.
+   */
+  applyUniqueNameValidator() {
+    let existingUnitTypeNamesRegex = "^(?!.*(";
+    //Add every existing unit type name to the regex
+    this.unitTypeService.unitTypes.getValue().forEach(existingUnitType => {
+      existingUnitTypeNamesRegex += "^" + existingUnitType.name + "$|";
+    });
+    //Remove the last | that was added in the forEach loop.
+    existingUnitTypeNamesRegex = existingUnitTypeNamesRegex.substring(0, existingUnitTypeNamesRegex.length - 1);
+    existingUnitTypeNamesRegex += ")).*$";
+    this.unitTypeNameControl.setValidators([Validators.pattern(existingUnitTypeNamesRegex), Validators.required]);
+    this.unitTypeNameControl.updateValueAndValidity();
   }
 
   /**
    * Adds a new Unit Type. Passes the request to save the new Unit Type to the UnitTypeService.
    */
   addUnitType() {
-    let unitType = new UnitType();
-    unitType.name = this.unitTypeName.nativeElement.value;
-    unitType.unit = this.unitTypeUnit.nativeElement.value;
-    unitType.weight = Number (this.unitTypeWeight.nativeElement.value);
+    if (this.unitTypeNameControl.valid && this.unitTypeUnitControl.valid && this.unitTypeWeightControl.valid) {
 
-    let goodUnitType = true;
+      let unitTypeToAdd = new UnitType();
+      unitTypeToAdd.name = this.addUnitTypeName.nativeElement.value;
+      unitTypeToAdd.unit = this.addUnitTypeUnit.nativeElement.value;
+      unitTypeToAdd.weight = Number (this.addUnitTypeWeight.nativeElement.value);
 
-    if (!(unitType.name.length > 0)) {
-      goodUnitType = false;
-    }
-
-    //Ensure that the name is unique
-    if (!(this.unitTypeService.unitTypes.getValue().every(existingUnitType => {
-      return existingUnitType.name !== unitType.name;
-    }))) {
-      goodUnitType = false;
-    }
-
-    if (!(unitType.unit.length > 0)) {
-      goodUnitType = false;
-    }
-
-    if (!(unitType.weight >= 0)) {
-      goodUnitType = false;
-    }
-
-    if (goodUnitType) {
-      this.unitTypeService.saveUnitType(unitType).then( value => {
-        this.destroyAddUnitTypeComponent();
-      });
+      this.unitTypeService.saveUnitType(unitTypeToAdd);
+      this.dialogRef.close();
     }
   }
 
   /**
-   * Destroy the AddUnitType modal.
+   * Closes the modal component.
    */
-  destroyAddUnitTypeComponent() {
-    this.unitTypeSidebarService.destroyAddUnitTypeComponent();
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+/** Inner class for error detection of the Angular Material input fields. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || isSubmitted));
   }
 }

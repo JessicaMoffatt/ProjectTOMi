@@ -18,7 +18,7 @@ import {
   MatButtonModule,
   MatDatepickerModule, MatExpansionModule, MatGridListModule, MatIconModule,
   MatMenuModule,
-  MatNativeDateModule, MatSidenavModule, MatSnackBarModule
+  MatNativeDateModule, MatSidenavModule, MatSnackBarModule, MatTableModule
 } from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
@@ -152,6 +152,7 @@ import { TeamProductivityReportComponent } from './component/extra/team-producti
     MatIconModule,
     MatSnackBarModule,
     MatGridListModule,
+    iliya-unittype-material,
     ReactiveFormsModule,
     MatSidenavModule,
     MatTabsModule,
@@ -206,6 +207,7 @@ import { TeamProductivityReportComponent } from './component/extra/team-producti
     MatNativeDateModule,
     MatExpansionModule,
     MatSidenavModule,
+    iliya-unittype-material,
     MatTabsModule,
     MatTableModule
   ]
