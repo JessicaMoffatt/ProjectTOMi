@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Project} from "../../../model/project";
 import {ProjectService} from "../../../service/project.service";
 import {DatePipe} from '@angular/common';
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-projects-panel',
@@ -10,7 +11,7 @@ import {DatePipe} from '@angular/common';
 })
 export class ProjectsPanelComponent implements OnInit {
 
-  constructor(private projectService: ProjectService, private datePipe: DatePipe) {
+  constructor(private projectService: ProjectService, private datePipe: DatePipe, public snackBar:MatSnackBar) {
   }
 
   project: Project;
@@ -21,6 +22,9 @@ export class ProjectsPanelComponent implements OnInit {
     });
   }
 
+  /**
+   * Retrieves the data dump report for download in xls format.
+   */
   getDataDump() {
     this.projectService.getDataDump().subscribe(
       data => {
@@ -41,13 +45,8 @@ export class ProjectsPanelComponent implements OnInit {
 
       },
       err => {
-        // this.errorBar.openFromComponent(ErrorBarComponent, {
-        //   duration: 5000
-        // });
+        let errorMessage = 'Something went wrong when updating retrieving the data dump report.';
+        this.snackBar.open(errorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
       });
-  }
-
-  downloadDataDump() {
-
   }
 }
