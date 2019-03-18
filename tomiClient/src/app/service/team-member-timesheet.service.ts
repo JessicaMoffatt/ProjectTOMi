@@ -71,9 +71,9 @@ export class TeamMemberTimesheetService {
       for (let i = 0; i < this.teamMembers.length; i++) {
         this.getProductivityReportByMember(this.teamMembers[i])
           .subscribe((data: ProductivityReportLine[]) => {
-            for (let j = 0; j < data.length; j++) {
-              this.teamMembersReports.push(data[j]);
-            }
+            this.teamMembersReports = this.teamMembersReports.concat(data);
+            this.teamMembersReports.sort(ProductivityReportLine.compareDate);
+            this.teamMembersReports.sort(ProductivityReportLine.compareUser);
           }, error => {
             let errorMessage = 'Something went wrong when loading team member productivity reports.';
             this.snackBar.open(errorMessage, null, {

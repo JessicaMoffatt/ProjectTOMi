@@ -17,4 +17,26 @@ export class ProductivityReportLine {
     this.quantity = 0;
     this.normalizedValue = 0;
   }
+
+  public static compareDate(first: ProductivityReportLine, second:ProductivityReportLine){
+    if (first.date < second.date) {
+      return -1;
+    }
+    if (first.date > second.date)
+    {
+      return 1;
+    }
+    return 0;
+  }
+
+  public static compareUser(first: ProductivityReportLine, second:ProductivityReportLine){
+    if ((first.userAccount.firstName + first.userAccount.lastName) < (second.userAccount.firstName + second.userAccount.lastName)) {
+      return -1;
+    }
+    if ((first.userAccount.firstName + first.userAccount.lastName) > (second.userAccount.firstName + second.userAccount.lastName))
+    {
+      return 1;
+    }
+    return 0;
+  }
 }
