@@ -6,11 +6,15 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 
+import { DatePipe } from '@angular/common';
+
 import {AppComponent} from './app.component';
 
 //Material Imports
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
+  DateAdapter,
+  MAT_DATE_LOCALE,
   MatButtonModule,
   MatDatepickerModule, MatExpansionModule, MatGridListModule, MatIconModule,
   MatMenuModule,
@@ -53,7 +57,6 @@ import {DeleteUserAccountModal, EditUserComponent} from './component/panel/edit-
 import {ViewUserComponent} from './component/panel/view-user/view-user.component';
 import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
 import {TimesheetService} from "./service/timesheet.service";
-// import { EntrySubmittedComponent } from './component/panel/entry-submitted/entry-submitted.component';
 import {AddTaskComponent} from './component/modal/add-task/add-task.component';
 import {TaskPanelService} from "./service/task-panel.service";
 import {EditTaskComponent} from './component/modal/edit-task/edit-task.component';
@@ -61,7 +64,7 @@ import {TeamService} from "./service/team.service";
 import {SigninComponent} from './component/panel/signin-panel/signin.component';
 import {SignInService} from "./service/sign-in.service";
 import {EntryUneditableComponent} from './component/panel/entry-uneditable/entry-uneditable.component';
-import {DatePickerComponent} from './component/extra/date-picker/date-picker.component';
+import {CustomDateAdapter, DatePickerComponent} from './component/extra/date-picker/date-picker.component';
 import {TeamMemberTimesheetComponent} from './component/panel/team-member-timesheet/team-member-timesheet.component';
 import {TeamMemberSidebarComponent} from './component/sidebar/team-member-sidebar/team-member-sidebar.component';
 import {
@@ -143,8 +146,7 @@ import {AccessGuard} from "./AccessGuard";
     MatIconModule,
     MatSnackBarModule,
     MatGridListModule,
-    MatSidenavModule,
-    MatTableModule
+    MatSidenavModule
   ],
   entryComponents: [
     EntryComponent,
@@ -179,7 +181,10 @@ import {AccessGuard} from "./AccessGuard";
     TaskPanelService,
     SignInService,
     MatDatepickerModule,
-    AccessGuard
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    { provide: DateAdapter, useClass: CustomDateAdapter },
+    AccessGuard,
+    DatePipe
   ],
   bootstrap: [AppComponent],
   exports: [

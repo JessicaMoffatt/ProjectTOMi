@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.zip.ZipEntry;
+
 /**
  * @author Karol Talbot
  */
@@ -139,6 +142,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
 			request.setAttribute("authMan", authMan);
 		}
+
 		return ((AuthManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
 	}
 
