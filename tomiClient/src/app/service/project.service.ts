@@ -103,7 +103,7 @@ export class ProjectService {
   }
 
   /**
-   *
+   * Retrieves the data dump report as an xls file download.
    * @param project The project to get a report for.
    */
   getDataDump() {
@@ -115,6 +115,10 @@ export class ProjectService {
       );
   }
 
+  /**
+   * General error handling method.
+   * @param error The error that occurred.
+   */
   private handleError(error: HttpErrorResponse) {
     return throwError(error.message);
   }
@@ -175,7 +179,7 @@ export class ProjectService {
    */
   getProjectsForUser(userId: number): Observable<Array<Project>> {
 
-    return this.http.get(`${this.userAccountProjectsUrl}/${userId}/projects`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.userAccountProjectsUrl}/${userId}/projects`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];

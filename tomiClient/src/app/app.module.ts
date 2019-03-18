@@ -26,9 +26,10 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatTableModule} from '@angular/material/table';
 import {MatToolbarModule} from "@angular/material";
 import {MatCheckboxModule } from '@angular/material/checkbox';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatTableModule} from '@angular/material/table';
 
 import {AddTeamComponent, TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
 import {TeamSidebarService} from "./service/team-sidebar.service";
@@ -86,6 +87,8 @@ import { UnitTypeSidebarComponent } from './component/sidebar/unit-type-sidebar/
 import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
 import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-unit-type.component';
 import {AccessGuard} from "./AccessGuard";
+import { ProductivityReportComponent } from './component/extra/productivity-report/productivity-report.component';
+import { TeamProductivityReportComponent } from './component/extra/team-productivity-report/team-productivity-report.component';
 import { AddProjectMemberComponent } from './component/modal/add-project-member/add-project-member.component';
 import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/project-sidebar.component';
 
@@ -139,6 +142,9 @@ import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/pro
     EditTaskComponent,
     AddTaskComponent,
     DeleteUserAccountModal,
+    ProductivityReportComponent,
+    TeamProductivityReportComponent,
+    DeleteUserAccountModal,
     EditTaskComponent,
     AddProjectMemberComponent,
     ProjectSidebarComponent
@@ -181,7 +187,9 @@ import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/pro
     MatSnackBarModule,
     MatGridListModule,
     ReactiveFormsModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatTabsModule,
+    MatTableModule
   ],
   entryComponents: [
     AddProjectMemberComponent,
@@ -233,7 +241,9 @@ import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/pro
     MatDatepickerModule,
     MatNativeDateModule,
     MatExpansionModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatTabsModule,
+    MatTableModule
   ]
 })
 export class AppModule {

@@ -1,0 +1,31 @@
+
+Projects
+<br/>
+<!--the keyup function below is used to trigger an update-->
+<input #box (keyup)="0" id="search_value" type="text" placeholder="Search"/>
+<br/>
+
+<button (click)="viewProductivityReport()" mat-raised-button color="primary">
+  PRODUCTIVITY REPORT
+</button>
+<br/>
+
+Active Projects
+<br/>
+
+<mat-list>
+  <!--orderBy:'projectName'" -->
+  <!-- [class.highlighted]="p.id === this.projectService.selectedProject.id" -->
+  <!--"-->
+  <mat-list-item
+    *ngFor="let p of this.projectService.projects|async|orderBy:'projectName'"
+    (click)="this.selectProject(p)">
+
+        <span *ngIf="p.projectName.toLowerCase().includes(box.value.toLowerCase())">
+          {{p.active}} {{p.projectName}}
+        </span>
+
+  </mat-list-item>
+</mat-list>
+
+<button (click)="displayBlankProject()" mat-raised-button color="primary">NEW PROJECT</button>

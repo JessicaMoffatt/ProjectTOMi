@@ -11,7 +11,13 @@
   </mat-list>
 
   <div style="display: flex; justify-content: flex-end">
-    <button (click)="this.addMemberToProject()" mat-button color="primary" style="order: 1">ADD MEMBER TO PROJECT</button>
+    <button (click)="this.addMemberToProject()"
+            mat-button
+            color="primary"
+            [disabled]="this.projectService.selectedProject == null"
+            style="order: 1">
+      ADD MEMBER TO PROJECT
+    </button>
   </div>
 
 
