@@ -74,8 +74,8 @@ export class TeamMemberTimesheetService {
               this.teamMembersReports.push(data[j]);
             }
           }, error => {
-            let loadTeamErrorMessage = 'Something went wrong when loading team member productivity reports.';
-            this.snackBar.open(loadTeamErrorMessage, null, {
+            let errorMessage = 'Something went wrong when loading team member productivity reports.';
+            this.snackBar.open(errorMessage, null, {
               duration: 5000,
               politeness: 'assertive',
               panelClass: 'snackbar-fail',
@@ -84,8 +84,8 @@ export class TeamMemberTimesheetService {
           });
       }
     }, error => {
-      let loadTeamErrorMessage = 'Something went wrong when loading team members.';
-      this.snackBar.open(loadTeamErrorMessage, null, {
+      let errorMessage = 'Something went wrong when loading team members.';
+      this.snackBar.open(errorMessage, null, {
         duration: 5000,
         politeness: 'assertive',
         panelClass: 'snackbar-fail',
