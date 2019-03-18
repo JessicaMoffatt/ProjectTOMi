@@ -65,9 +65,9 @@ export class TeamMemberTimesheetService {
    * Also repopulates the team member productivity reports.
    */
   reloadTeamMembers() {
+    this.teamMembersReports =[];
     this.getAllTeamMembers().subscribe((data: Array<UserAccount>) => {
       this.teamMembers = data;
-      this.teamMembersReports =[];
       for (let i = 0; i < this.teamMembers.length; i++) {
         this.getProductivityReportByMember(this.teamMembers[i])
           .subscribe((data: ProductivityReportLine[]) => {
