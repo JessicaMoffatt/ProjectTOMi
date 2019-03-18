@@ -4,6 +4,7 @@ import {DOCUMENT} from "@angular/common";
 import {SignInService} from "../../../service/sign-in.service";
 import {Router} from "@angular/router";
 import {Meta} from "@angular/platform-browser";
+import {UserAccount} from "../../../model/userAccount";
 
 declare let gapi: any;
 
@@ -47,9 +48,11 @@ export class SigninComponent implements OnInit {
     let id_token: string;
     id_token = googleUser.getAuthResponse().id_token;
     this.http.post("http://localhost:8080/tokensignin", id_token, httpOptions).toPromise().then(response => {
-      if(response){
+      if(response != null){
+        this.signIn.userAccount = response as UserAccount;
         this.router.navigate(['/my_timesheets']);
         this.signIn.setLoggedIn();
+        console.log(this.signIn.userAccount)
       }
       return response;
     }).catch(() => {

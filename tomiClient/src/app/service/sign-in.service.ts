@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
+import {UserAccount} from "../model/userAccount";
 declare let gapi:any;
 
 @Injectable({
@@ -16,6 +17,7 @@ export class SignInService {
   snackBar:MatSnackBar;
   http:HttpClient;
   navList:any = new Array();
+  userAccount:UserAccount = null;
 
   constructor(router:Router, snackBar:MatSnackBar, http:HttpClient) {
     this.router = router;

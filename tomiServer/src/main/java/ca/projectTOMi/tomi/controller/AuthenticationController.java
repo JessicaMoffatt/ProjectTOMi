@@ -44,10 +44,10 @@ public class AuthenticationController {
 	}
 
 	@PostMapping ("/tokensignin")
-	public Boolean getToken(@RequestBody String idtoken) throws IOException, GeneralSecurityException {
+	public UserAccount getToken(@RequestBody String idtoken) throws IOException, GeneralSecurityException {
 		UserAccount account = null;
 		account = this.userAuthenticationService.checkLogin(idtoken);
-		return account != null;
+		return account;
 	}
 
 	@GetMapping("/build_nav_bar")
