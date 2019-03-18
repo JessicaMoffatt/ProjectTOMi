@@ -1,18 +1,34 @@
 <!--
-@author Jessica Moffatt
+@author Jessica Moffatt and Karol Talbot
 @version 2.0
 -->
 <div class="timesheet_content">
   <div class="scroll_panel">
-  <span [ngClass]="['arrow', 'back']" (click)="displayPrevTimesheet()">
-  </span>
-    <span [ngClass]="'week_title'">Week of {{timesheetService.currentDate}}</span>
-    <span [ngClass]="['arrow', 'forward']" (click)="displayNextTimesheet()">
-  </span>
-    <app-date-picker [parent]="this" [minDate]="timesheetService.minDate"></app-date-picker>
-
-    <span id="submission_status">{{timesheetService.currentStatus}}</span>
-
+    <div class="navigation">
+      <button mat-flat-button [ngClass]="['arrow']" (click)="displayPrevTimesheet()">
+        <div>
+          <i class="material-icons">
+            navigate_before
+          </i>
+        </div>
+      </button>
+      <div [ngClass]="'week_title'">
+        <div>
+          <h4>Week of {{timesheetService.currentDate}}</h4>
+        </div>
+      </div>
+      <button mat-flat-button [ngClass]="['arrow']" (click)="displayNextTimesheet()">
+        <div>
+          <i class="material-icons">
+            navigate_next
+          </i>
+        </div>
+      </button>
+      <app-date-picker [parent]="this" [minDate]="timesheetService.minDate"></app-date-picker>
+      <mat-chip-trailing-icon disabled [ngClass]="['submission_status']">
+        <mat-chip [disableRipple]="true" id="status">{{timesheetService.currentStatus}}</mat-chip>
+      </mat-chip-trailing-icon>
+    </div>
     <div>
       <div *ngFor="let entry of entries">
         <app-entry [ngClass]="'entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.LOGGING" [entry]="entry"
@@ -36,10 +52,46 @@
     <div #entryHolder></div>
   </div>
 </div>
+
+
 <div [ngClass]="'timesheet_footer'">
-  <button mat-flat-button (click)="addEntry()" [ngClass]="['new_entry', 'new_btn', 'footer_btn']"></button>
-  <button mat-flat-button [ngClass]="['submit', 'footer_btn']" (click)="displaySubmitModal()"></button>
-  <span [ngClass]="'hours_tally'">Hours:<strong> {{tally}}</strong></span>
-  <button mat-flat-button [ngClass]="['save_timesheet', 'save_btn', 'footer_btn']" (click)="save().then()"></button>
+  <ng-template [ngIf]="timesheetService.currentStatus.match('LOGGING|REJECTED')">
+    <button mat-flat-button (click)="addEntry()" [ngClass]="['add_btn', 'footer_btn']">
+      <div>
+        <i class="material-icons">
+          add
+        </i>
+      </div>
+    </button>
+  </ng-template>
+  <ng-template [ngIf]="timesheetService.currentStatus.match('LOGGING|REJECTED')">
+    <button mat-flat-button [ngClass]="['submit_btn', 'footer_btn']" (click)="displaySubmitModal()">
+      <div>
+        <i class="material-icons">
+          send
+        </i>
+      </div>
+    </button>
+  </ng-template>
+  <ng-template [ngIf]="!timesheetService.currentStatus.match('LOGGING|REJECTED')">
+    <button mat-flat-button [ngClass]="['hidden_btn', 'submit_btn',  'footer_btn']" (click)="displaySubmitModal()">
+      <div>
+        <i class="material-icons">
+          send
+        </i>
+      </div>
+    </button>
+  </ng-template>
+
+  <span [ngClass]="'hours_tally'"><strong> {{tally}}</strong> Hours</span>
+  <ng-template [ngIf]="timesheetService.currentStatus.match('LOGGING|REJECTED')">
+    <button mat-flat-button [ngClass]="['footer_btn', 'save_btn']" (click)="save().then()">
+      <div>
+        <i class="material-icons">
+          save_alt
+        </i>
+      </div>
+    </button>
+  </ng-template>
 </div>
 

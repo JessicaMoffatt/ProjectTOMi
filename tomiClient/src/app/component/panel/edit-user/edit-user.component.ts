@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {FormControl, Validators, FormGroupDirective, NgForm} from "@angular/forms";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
@@ -34,13 +34,6 @@ export class EditUserComponent implements OnInit, OnDestroy {
   userAccountEmailControl = new FormControl('', [
     Validators.required,
     Validators.email
-  ]);
-
-  /** Validations for the salaried rate. */
-  userAccountRateControl = new FormControl('', [
-    Validators.required,
-    Validators.min(0),
-    Validators.pattern(/^[0-9]{1,3}(?:,?[0-9]{3})*\.?[0-9]{0,2}$/)
   ]);
 
   /** Invalid name error detection. */
@@ -92,12 +85,14 @@ export class EditUserComponent implements OnInit, OnDestroy {
   /** The ngForm for this component */
   @ViewChild('editUserAccountForm') editUserAccountForm;
 
+
   constructor(public deleteUserDialog: MatDialog, public teamService: TeamService) { }
 
   ngOnInit() {
     this.userSelectedSubscription = this.userSelectedEvent.subscribe((userSelected:UserAccount) => {
       if (this.userAccount.id === userSelected.id) {
         this.editUserExpansionPanel.open();
+
       }
     });
   }
@@ -106,6 +101,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
     this.userSelectedSubscription.unsubscribe();
   }
 
+
   /**
    * Initialize the value inputs on the template. This fixes issues caused by the Validators.required when an input is pristine.
    */
@@ -113,7 +109,6 @@ export class EditUserComponent implements OnInit, OnDestroy {
     this.userAccountFirstNameControl.setValue(this.userAccount.firstName);
     this.userAccountLastNameControl.setValue(this.userAccount.lastName);
     this.userAccountEmailControl.setValue(this.userAccount.email);
-    this.userAccountRateControl.setValue((this.userAccount.salariedRate/100).toFixed(2));
     if (this.userAccount.teamId) {
       this.editUserTeamId.selected.value = this.userAccount.teamId;
     } else {
@@ -127,11 +122,10 @@ export class EditUserComponent implements OnInit, OnDestroy {
    * Emits a request for this UserAccount's changes to be saved.
    */
   save():void {
-    if (this.userAccountFirstNameControl.valid && this.userAccountLastNameControl.valid && this.userAccountEmailControl.valid && this.userAccountRateControl.valid) {
+    if (this.userAccountFirstNameControl.valid && this.userAccountLastNameControl.valid && this.userAccountEmailControl.valid) {
         this.userAccount.firstName = this.editUserFirstName.nativeElement.value;
         this.userAccount.lastName = this.editUserLastName.nativeElement.value;
         this.userAccount.email = this.editUserEmail.nativeElement.value;
-        this.userAccount.salariedRate = Number (this.editUserSalariedRate.nativeElement.value * 100);
         if (!this.editUserTeamId.empty) {
           this.userAccount.teamId = this.editUserTeamId.selected.value;
         } else {
@@ -162,7 +156,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
   openDeleteDialog() {
     this.deleteUserDialog.open(DeleteUserAccountModal, {
-      width: '500px',
+      width: '40vw',
       data: {userAccountToDelete: this.userAccount, parent: this}
     });
   }
@@ -170,14 +164,8 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
 @Component({
   selector: 'app-delete-user-modal',
-  template: `
-    <h1 mat-dialog-title>Delete User</h1>
-    <div mat-dialog-content>
-      <p>Confirm deletion of {{userAccountToDelete.firstName}} {{userAccountToDelete.lastName}}</p>
-      <button mat-raised-button color="warn" (click)="confirmedDelete()">Delete</button>
-      <button mat-raised-button color="accent" (click)="canceledDelete()">Cancel</button>
-    </div>
-  `
+  templateUrl: './delete-user-modal.html',
+  styleUrls: ['./delete-user-modal.scss']
 })
 /** Inner class for confirmation modal of delete User Account. */
 export class DeleteUserAccountModal {
@@ -199,7 +187,6 @@ export class DeleteUserAccountModal {
     this.data.parent.delete();
     this.dialogRef.close();
   }
-
 }
 
 /** Data interface for the DeleteUserModal */

@@ -14,10 +14,6 @@ export class UserAccount{
   lastName:string;
   /** The email for this user account.*/
   email:string;
-  /** The salaried rate for this user account.*/
-  salariedRate:number;
-  /** Represents the active status of this user account.*/
-  active:boolean;
   /** The ID for the team this user account is a part of.*/
   teamId:number;
   /** The admin status for this user account.*/
@@ -34,8 +30,6 @@ export class UserAccount{
     this.firstName = "";
     this.lastName = "";
     this.email = "";
-    this.salariedRate = 0;
-    this.active = true;
     this.teamId = -1;
     this.admin = false;
     this.programDirector=false;

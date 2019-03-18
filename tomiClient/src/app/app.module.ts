@@ -27,11 +27,11 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatToolbarModule} from "@angular/material";
 import {MatCheckboxModule } from '@angular/material/checkbox';
-
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {AddTeamComponent, TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
 import {TeamSidebarService} from "./service/team-sidebar.service";
 import {OrderModule} from "ngx-order-pipe";
-
+import {MatChipsModule} from "@angular/material";
 import {
   DeleteEntryModalComponent, SubmitTimesheetModalComponent,
   TimesheetComponent
@@ -54,7 +54,6 @@ import {UserAccountPanelComponent} from "./component/panel/user-account-panel/us
 import {UserAccountSidebarService} from "./service/user-account-sidebar-service";
 import {AddUserAccountComponent} from './component/modal/add-user-account/add-user-account.component';
 import {DeleteUserAccountModal, EditUserComponent} from './component/panel/edit-user/edit-user.component';
-import {ViewUserComponent} from './component/panel/view-user/view-user.component';
 import {AddHeaderInterceptor} from "./add-header-interceptor";
 import {TimesheetService} from "./service/timesheet.service";
 import {AddTaskComponent} from './component/modal/add-task/add-task.component';
@@ -104,7 +103,6 @@ import {AccessGuard} from "./access-guard";
     UserAccountComponent,
     AddUserAccountComponent,
     EditUserComponent,
-    ViewUserComponent,
     DeleteEntryModalComponent,
     SubmitTimesheetModalComponent,
     SignInComponent,
@@ -147,7 +145,9 @@ import {AccessGuard} from "./access-guard";
     MatSnackBarModule,
     MatGridListModule,
     ReactiveFormsModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatSlideToggleModule,
+    MatChipsModule
   ],
   entryComponents: [
     EntryComponent,

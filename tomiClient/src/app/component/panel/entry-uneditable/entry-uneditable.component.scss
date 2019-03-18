@@ -1,0 +1,70 @@
+@import "../../../../variables";
+
+.entry_card{
+  margin: .5rem 10vw;
+  padding: .5rem 2vw;
+  width: 76vw;
+}
+
+.row{
+  display: inline;
+  width: 74.48vw;
+  padding: 0 0.76vw;
+}
+
+.top{
+  display: inline-block;
+  width: 55.86vw;
+}
+
+.third{
+  display: inline-block;
+  width: 16.758vw;
+  padding-right: 2.793vw;
+}
+
+.third_last{
+  display: inline-block;
+  width: 30%;
+}
+
+.component{
+  display: inline-block;
+  width: 75%;
+}
+
+.quantity{
+  float: right;
+  display: inline-block;
+  width: 20%;
+}
+
+.day{
+  width: 14%;
+  padding-right: 1%;
+  padding-left: 1%;
+  display: inline-flex;
+  flex-direction: column;
+  text-align: center;
+  input{
+    width: 98%;
+    padding: 1%;
+    border: none;
+  }
+}
+
+.weekday{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 98%;
+  padding: 1%;
+}
+
+.weekday:last-child{
+  padding-right: 0;
+}
+
+.weekday:first-child{
+  padding-left: 0;
+}

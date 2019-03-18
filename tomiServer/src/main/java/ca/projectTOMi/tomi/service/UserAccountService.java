@@ -124,7 +124,6 @@ public final class UserAccountService {
 			}
 			userAccount.setTeam(newUserAccount.getTeam());
 			userAccount.setEmail(newUserAccount.getEmail());
-			userAccount.setSalariedRate(newUserAccount.getSalariedRate());
 			userAccount.setProjects(newUserAccount.getProjects());
 			userAccount.setActive(true);
 			userAccount.setAdmin(newUserAccount.isAdmin());
@@ -261,7 +260,7 @@ public final class UserAccountService {
 	}
 
 	@EventListener (ContextRefreshedEvent.class)
-	private void createUserPrime() {
+	public void createUserPrime() {
 		String email = this.emailService.getEmailAddress();
 		Boolean userExists = false;
 		UserAccount primeAccount = this.repository.findByEmail(email).orElse(new UserAccount());

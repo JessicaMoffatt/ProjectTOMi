@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Entry} from "../../../model/entry";
 import {TimesheetComponent} from "../timesheet/timesheet.component";
+import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 /**
  * The component used to display entries with a stats of submitted.
@@ -16,8 +17,20 @@ import {TimesheetComponent} from "../timesheet/timesheet.component";
 export class EntryUneditableComponent implements OnInit {
   /** The entry model instance associated with this component. */
   @Input() entry: Entry;
+  smallScreen:Boolean = false;
 
-  constructor() { }
+  constructor(private breakpointObserver:BreakpointObserver) {
+    breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.smallScreen=true;
+      }else{
+        this.smallScreen=false;
+      }
+    });
+  }
 
   ngOnInit() {
   }

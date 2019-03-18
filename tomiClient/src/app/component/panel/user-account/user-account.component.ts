@@ -54,6 +54,9 @@ export class UserAccountComponent implements OnInit, OnDestroy {
    * Displays a Modal component for adding a new UserAccount.
    */
   openDialog(): void {
-    this.dialog.open(AddUserAccountComponent);
+    this.dialog.open(AddUserAccountComponent, {
+      width: "70vw",
+      height: "70vh"
+    });
   }
 }

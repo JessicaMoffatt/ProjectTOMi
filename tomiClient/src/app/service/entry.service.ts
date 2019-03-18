@@ -23,7 +23,7 @@ const httpOptions = {
 export class EntryService {
 
   /** The URL used to get,post, and delete entries. */
-  private entriesUrl = 'http://localhost:8080/entries';
+  private entriesUrl = '/entries';
   /** The URL used to get,post, and delete tasks. */
   private tasksUrl = 'http://localhost:8080/tasks';
   /** The URL used to get,post, and delete unit types. */

@@ -11,4 +11,10 @@
 </mat-form-field>
 
 </span>
-<button mat-flat-button (click)="picker.open()" (mouseenter)="doSetMinDate()" [ngClass]="'calendar'"></button>
+<button mat-flat-button (click)="picker.open()" (mouseenter)="doSetMinDate()" [ngClass]="'calendar'">
+  <div>
+    <i class="material-icons">
+      calendar_today
+    </i>
+  </div>
+</button>

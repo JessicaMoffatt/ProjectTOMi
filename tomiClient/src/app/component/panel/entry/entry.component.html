@@ -2,38 +2,58 @@
 @author Jessica Moffatt
 @version 3.0
 -->
-<mat-card [ngClass]="['entry_card']">
-  <mat-card-header>
-    <div [ngClass]="'entry_btn_container'">
-        <button mat-icon-button [ngClass]="['copy_entry']" (click)="copy()"></button>
-        <button mat-icon-button [ngClass]="['delete_btn']" (click)="delete()"></button>
-    </div>
-  </mat-card-header>
+<mat-card class="entry_card">
   <mat-card-content>
-    <mat-form-field [ngClass]="'input_full_width'">
-      <input matInput  placeholder="Component" [(ngModel)]="entry.component" #componentInput>
-    </mat-form-field>
-<br/>
-    <mat-form-field [ngClass]="'select_width_half'">
-      <span *ngIf="entry.project">
-        <mat-select placeholder="Project" [(ngModel)]="entry.project.id" #projectInput>
-        <mat-option value="-1">None</mat-option>
-        <mat-option *ngFor="let project of (projects |orderBy: 'projectName')" [value]="project.id">
-          {{project.projectName}}
-        </mat-option>
-      </mat-select>
-      </span>
-      <span *ngIf="!entry.project">
-        <mat-select placeholder="Project" #projectInput>
-        <mat-option value="-1">None</mat-option>
-        <mat-option *ngFor="let project of (projects |orderBy: 'projectName')" [value]="project.id">
-          {{project.projectName}}
-        </mat-option>
-      </mat-select>
-      </span>
-    </mat-form-field>
-<br/>
-    <mat-form-field [ngClass]="'select_width_quarter'">
+    <div class="row">
+      <div *ngIf="smallScreen; else buttons" class="entry_btn_container">
+        <mat-menu #entryMenu="matMenu" id="menu">
+          <button mat-flat-button class="menu_item" (click)="copy()">
+            copy
+          </button>
+          <br/>
+          <button mat-flat-button class="menu_item" (click)="delete()">
+            delete
+          </button>
+        </mat-menu>
+        <button id="menu_btn" mat-flat-button [matMenuTriggerFor]="entryMenu">
+          <i class="material-icons">
+            menu
+          </i>
+        </button>
+      </div>
+      <ng-template class="entry_btn_container" #buttons>
+        <button mat-flat-button class="entry_btn delete_btn" (click)="delete()">
+          <i class="material-icons">
+            delete
+          </i>
+        </button>
+        <button mat-flat-button class="entry_btn copy_btn" (click)="copy()">
+          <i class="material-icons">
+            file_copy
+          </i>
+        </button>
+      </ng-template>
+      <div class="top">
+        <mat-form-field class="third">
+        <span *ngIf="entry.project">
+          <mat-select placeholder="Project" [(ngModel)]="entry.project.id" #projectInput>
+          <mat-option value="-1">None</mat-option>
+          <mat-option *ngFor="let project of (projects |orderBy: 'projectName')" [value]="project.id">
+            {{project.projectName}}
+          </mat-option>
+        </mat-select>
+        </span>
+          <span *ngIf="!entry.project">
+          <mat-select placeholder="Project" #projectInput>
+          <mat-option value="-1">None</mat-option>
+          <mat-option *ngFor="let project of (projects |orderBy: 'projectName')" [value]="project.id">
+            {{project.projectName}}
+          </mat-option>
+        </mat-select>
+        </span>
+        </mat-form-field>
+
+        <mat-form-field class="third">
       <span *ngIf="entry.task">
         <mat-select placeholder="Task" [(ngModel)]="this.entry.task.id" #taskInput>
         <mat-option value="-1">None</mat-option>
@@ -42,7 +62,8 @@
         </mat-option>
       </mat-select>
       </span>
-      <span *ngIf="!entry.task">
+
+          <span *ngIf="!entry.task">
         <mat-select placeholder="Task" #taskInput>
         <mat-option value="-1">None</mat-option>
         <mat-option *ngFor="let task of (tasks |orderBy: 'name')" [value]="task.id">
@@ -51,9 +72,9 @@
       </mat-select>
       </span>
 
-    </mat-form-field>
+        </mat-form-field>
 
-    <mat-form-field [ngClass]="'select_width_quarter'">
+        <mat-form-field class="third_last">
       <span *ngIf="entry.unitType">
         <mat-select placeholder="Unit Type" [(ngModel)]="this.entry.unitType.id" #unitTypeInput>
         <mat-option value="-1">None</mat-option>
@@ -62,7 +83,7 @@
         </mat-option>
       </mat-select>
       </span>
-      <span *ngIf="!entry.unitType">
+          <span *ngIf="!entry.unitType">
         <mat-select placeholder="Unit Type" #unitTypeInput>
         <mat-option value="-1">None</mat-option>
         <mat-option *ngFor="let unitType of (unitTypes |orderBy: 'name')" [value]="unitType.id">
@@ -71,50 +92,105 @@
       </mat-select>
       </span>
 
-    </mat-form-field>
+        </mat-form-field>
 
-    <mat-form-field>
-      <input matInput type="number" step=".25" min="0" placeholder="{{entry.unitType ? entry.unitType.unit : 'Units'}}"
-             [(ngModel)]="entry.quantity" [ngClass]="'small_number_input'"
-             (keypress)="validateNumber($event)"
-             #quantityInput>
-    </mat-form-field>
+      </div>
+    </div>
+
+    <!--Second Row-->
+    <div class="row">
+      <mat-form-field class="component">
+        <input matInput placeholder="Component" [(ngModel)]="entry.component" #componentInput>
+      </mat-form-field>
+
+      <mat-form-field class="quantity">
+        <input matInput type="number" step=".25" min="0"
+               placeholder="{{entry.unitType ? entry.unitType.unit : 'Units'}}"
+               [(ngModel)]="entry.quantity"
+               (keypress)="validateNumber($event)"
+               #quantityInput>
+      </mat-form-field>
+    </div>
+
 
     <!-- days of the week -->
-    <div>
-      <label><strong>M</strong>
+    <div class = "weekday">
+      <div id="monday" class="day">
+        <div *ngIf="!smallScreen; else smallMonday">
+          <label for="mondayInput">Monday</label>
+        </div>
+        <ng-template #smallMonday>
+          <label for="mondayInput">Mon</label>
+        </ng-template>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.mondayHours" placeholder="0" type="number"
-               step=".25" min="0" (keypress)="validateNumber($event)" #mondayInput>
-      </label>
-      <label><strong>T</strong>
+               step=".25" min="0" (keypress)="validateNumber($event)" #mondayInput id="mondayInput">
+      </div>
+
+      <div id="tuesday" class="day">
+        <div *ngIf="!smallScreen; else smallTuesday">
+          <label for="tuesdayInput">Tuesday</label>
+        </div>
+        <ng-template #smallTuesday>
+          <label for="tuesdayInput">Tues</label>
+        </ng-template>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.tuesdayHours" placeholder="0" type="number"
-               step=".25" min="0" (keypress)="validateNumber($event)" #tuesdayInput>
-      </label>
+               step=".25" min="0" (keypress)="validateNumber($event)" #tuesdayInput id="tuesdayInput">
+      </div>
 
-      <label><strong>W</strong>
+      <div id="wednesday" class="day">
+        <div *ngIf="!smallScreen; else smallWednesday">
+          <label for="wednesdayInput">Wednesday</label>
+        </div>
+        <ng-template #smallWednesday>
+          <label for="wednesdayInput">Wed</label>
+        </ng-template>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.wednesdayHours" placeholder="0" type="number"
-               step=".25" min="0" (keypress)="validateNumber($event)" #wednesdayInput>
-      </label>
+               step=".25" min="0" (keypress)="validateNumber($event)" #wednesdayInput id="wednesdayInput">
+      </div>
 
-      <label><strong>R</strong>
+      <div id="thursday" class="day">
+        <div *ngIf="!smallScreen; else smallThursday">
+          <label for="thursdayInput">Thursday</label>
+        </div>
+        <ng-template #smallThursday>
+          <label for="thursdayInput">Thurs</label>
+        </ng-template>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.thursdayHours" placeholder="0" type="number"
-               step=".25" min="0" (keypress)="validateNumber($event)" #thursdayInput>
-      </label>
+               step=".25" min="0" (keypress)="validateNumber($event)" #thursdayInput id="thursdayInput">
+      </div>
 
-      <label><strong>F</strong>
+      <div id="friday" class="day">
+        <div *ngIf="!smallScreen; else smallFriday">
+          <label for="fridayInput">Friday</label>
+        </div>
+        <ng-template #smallFriday>
+          <label for="fridayInput">Fri</label>
+        </ng-template>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.fridayHours" placeholder="0" type="number"
-               step=".25" min="0" (keypress)="validateNumber($event)" #fridayInput>
-      </label>
+               step=".25" min="0" (keypress)="validateNumber($event)" #fridayInput id="fridayInput">
+      </div>
 
-      <label><strong>S</strong>
+      <div id="saturday" class="day">
+        <div *ngIf="!smallScreen; else smallSaturday">
+          <label for="saturdayInput">Saturday</label>
+        </div>
+        <ng-template #smallSaturday>
+          <label for="saturdayInput">Sat</label>
+        </ng-template>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.saturdayHours" placeholder="0" type="number"
-               step=".25" min="0" (keypress)="validateNumber($event)" #saturdayInput>
-      </label>
+               step=".25" min="0" (keypress)="validateNumber($event)" #saturdayInput id="saturdayInput">
+      </div>
 
-      <label><strong>U</strong>
+      <div id="sunday" class="day">
+        <div *ngIf="!smallScreen; else smallSunday">
+          <label for="sundayInput">Sunday</label>
+        </div>
+        <ng-template #smallSunday>
+          <label for="sundayInput">Sun</label>
+        </ng-template>
         <input [ngClass]="'small_number_input'" [(ngModel)]="entry.sundayHours" placeholder="0" type="number"
-               step=".25" min="0" (keypress)="validateNumber($event)" #sundayInput>
-      </label>
+               step=".25" min="0" (keypress)="validateNumber($event)" #sundayInput id="sundayInput">
+      </div>
       <!-- end of days of week-->
     </div>
 

@@ -5,7 +5,7 @@ mat-toolbar {
   background-color: $orange;
   color: $white;
   position: fixed;
-  height: 9vh;
+  height: 3.1em;
   left: 0;
   top: 0;
   padding-left: 10vw;
@@ -26,7 +26,7 @@ mat-toolbar {
 
 .link{
   width: 10vw !important;
-  height: 9vh;
+  height: 3.1em;
   text-decoration: none;
   font-size: 1rem;
   color: #FFFFFF;
@@ -44,20 +44,20 @@ mat-toolbar {
 #icon, #menuButtonImage, #menuButtonImageMed{
   position: inherit;
   border: none;
-  height: 7vh;
-  width: 7vh;
-  border-radius: 7vh;
+  height: 2.4rem;
+  width: 2.4rem;
+  border-radius: 2.5rem;
   margin: 0;
 }
 
 #menuButton, #menuButtonSmall, #menuButtonMed{
   position: absolute;
-  right: 1vh;
-  top: 1vh;
+  right: 0.35em;
+  top: 0.35em;
   background: none;
   border: none;
-  height: 7vh;
-  width: 7vh;
+  height: 2.4rem;
+  width: 2.4rem;
   font-size: 1rem;
   color: #FFFFFF;
   z-index: 2;
@@ -70,6 +70,9 @@ mat-toolbar {
 }
 
 #logo{
-  height:2.5vh;
+  position:fixed;
+  top:0;
+  left:0;
+  height: 3.1em;
   width: auto;
 }

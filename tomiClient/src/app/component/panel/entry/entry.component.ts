@@ -5,6 +5,7 @@ import {Project} from "../../../model/project";
 import {Task} from 'src/app/model/task';
 import {UnitType} from "../../../model/unitType";
 import {TimesheetService} from "../../../service/timesheet.service";
+import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 /**
  * EntryComponent is used to facilitate communication between the view and front end services.
@@ -56,8 +57,19 @@ export class EntryComponent implements OnInit {
   /** The input field for the entry's sunday hours.*/
   @ViewChild('sundayInput') sundayInput;
 
-  constructor(private entryService: EntryService, public timesheetService: TimesheetService) {
+  smallScreen: boolean = false;
 
+  constructor(private entryService: EntryService, public timesheetService: TimesheetService, private  breakpointObserver: BreakpointObserver) {
+    breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.smallScreen=true;
+      }else{
+        this.smallScreen=false;
+      }
+    });
   }
 
   /** On initialization, populates the list of tasks and unit types.*/

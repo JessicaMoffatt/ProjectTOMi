@@ -4,10 +4,13 @@
 @import "../../../../variables";
 
 .content_pane {
-  height: 90vh;
+  height: 92vh;
   width: 100vw;
   overflow-y: auto;
   overflow-x: hidden;
+  mat-divider{
+    color:$light_grey;
+  }
 }
 
 .search_bar {

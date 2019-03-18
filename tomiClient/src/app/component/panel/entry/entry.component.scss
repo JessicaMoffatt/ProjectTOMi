@@ -6,33 +6,84 @@
 @import '../../../../variables';
 
 .entry_card{
-  //border:1px solid $medium_grey;
-  //display:inline-block;
-  padding:1rem 2rem 1rem 2rem;
-  margin-bottom:.25rem;
-  margin-top:.5rem;
-  margin-left:10rem;
-  max-width:75vw;
-  min-width: 75vw;
-  //font-size:1.25rem;
-  //position:relative;
+  margin: .5rem 10vw;
+  padding: .5rem 2vw;
+  width: 76vw;
+}
+
+.entry_btn{
+  color:$white;
+  margin: 0.1vw;
+  width: 2rem;
+  height: 2rem;
+  float:top
+}
+
+.delete_btn{
+  float: right;
+  background-color: $red;
+}
+
+.copy_btn{
+  float: right;
+  background-color: $blue;
 }
 
 .entry_btn_container{
-
+  float:right;
+  width: 14.896vw;
 }
 
+.row{
+  display: inline;
+  width: 74.48vw;
+  padding: 0 0.76vw;
+}
+
+.top{
+  display: inline-block;
+  width: 55.86vw;
+}
+
+.third{
+  display: inline-block;
+  width: 16.758vw;
+  padding-right: 2.793vw;
+}
+
+.third_last{
+  display: inline-block;
+  width: 30%;
+}
+
+.component{
+  display: inline-block;
+  width: 75%;
+}
+
+.quantity{
+  float: right;
+  display: inline-block;
+  width: 20%;
+}
+
+
 .small_number_input{
+  float: right;
   width:3.5rem;
 }
 
-.copy_entry{
-  background-color:$blue;
-  height:$btn_md_ht;
-  width:$btn_md_wh;
-  background-image: url('~src/assets/img/copy.png');
-  background-position: center;
-  background-repeat: no-repeat;
+.day{
+  width: 14%;
+  padding-right: 1%;
+  padding-left: 1%;
+  display: inline-flex;
+  flex-direction: column;
+  text-align: center;
+  input{
+    width: 98%;
+    padding: 1%;
+  }
 }
 
 select,input{
@@ -42,4 +93,29 @@ select,input{
 
 input{
   line-height:.25rem;
+}
+
+.weekday{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 98%;
+  padding: 1%;
+}
+
+.weekday:last-child{
+  padding-right: 0;
+}
+
+.weekday:first-child{
+  padding-left: 0;
+}
+
+#menu_btn{
+  float:right;
+}
+
+#menu{
+  overflow: hidden;
+
 }
