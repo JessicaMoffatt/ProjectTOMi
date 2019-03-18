@@ -43,3 +43,4 @@ TOMiServer.log
 *.gz
 *.log
 package-lock.json
+tomiClient/package-lock.json
