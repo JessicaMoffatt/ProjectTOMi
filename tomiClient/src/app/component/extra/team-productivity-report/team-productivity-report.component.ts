@@ -6,7 +6,7 @@ import {TeamMemberTimesheetService} from "../../../service/team-member-timesheet
   templateUrl: './team-productivity-report.component.html',
   styleUrls: ['./team-productivity-report.component.scss']
 })
-export class TeamProductivityReportComponent implements OnInit, OnDestroy {
+export class TeamProductivityReportComponent implements OnInit {
   displayedColumns: string[] = ['date', 'teamMember', 'unitType','quantity','time', 'normalizedValue'];
 
   constructor(public teamMemberTimesheetService:TeamMemberTimesheetService) { }
@@ -14,7 +14,4 @@ export class TeamProductivityReportComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  ngOnDestroy(){
-    this.teamMemberTimesheetService.teamMembersReports =[];
-  }
 }
