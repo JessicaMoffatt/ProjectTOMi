@@ -124,10 +124,6 @@ public class ProjectAuthService {
 		policy.setProject(project);
 		policy.setRequestingUser(userAccount);
 		this.projectAuthorizationRepository.save(policy);
-		if (userAccount.getTeam().getTeamLead() != null) {
-			policy.setRequestingUser(userAccount.getTeam().getTeamLead());
-			this.projectAuthorizationRepository.save(policy);
-		}
 	}
 }
 
