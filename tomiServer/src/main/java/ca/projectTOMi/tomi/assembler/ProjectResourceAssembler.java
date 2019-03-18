@@ -34,6 +34,7 @@ public final class ProjectResourceAssembler implements ResourceAssembler<Project
 			linkTo(methodOn(ProjectController.class).getActiveProjects(projectAuthLinkWrapper.getManager())).withRel("projects"),
 			linkTo(methodOn(ProjectController.class).setProjectInactive(project.getId())).withRel("delete"),
 			linkTo(methodOn(ProjectController.class).getEntriesToEvaluate(project.getId())).withRel("entries"),
+			linkTo(methodOn(ProjectController.class).getProjectMembers(project.getId())).withRel("members"),
 			linkTo(methodOn(ReportController.class).getBudgetReport(project.getId())).withRel("budget")
 		);
 

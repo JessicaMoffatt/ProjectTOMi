@@ -10,6 +10,7 @@ import ca.projectTOMi.tomi.exception.MinimumAdminAccountException;
 import ca.projectTOMi.tomi.exception.MinimumProgramDirectorAccountException;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
+import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.model.UserAccount;
@@ -275,5 +276,9 @@ public final class UserAccountService {
 		} else {
 			this.createUserAccount(primeAccount);
 		}
+	}
+	
+	List<UserAccount> getUserAccountsByProjects(final Project project) {
+		return this.repository.getAllByActiveTrueAndProjectsOrderById(project);
 	}
 }

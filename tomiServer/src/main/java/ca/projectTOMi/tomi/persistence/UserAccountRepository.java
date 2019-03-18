@@ -1,5 +1,6 @@
 package ca.projectTOMi.tomi.persistence;
 
+import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.model.Team;
 import java.util.List;
@@ -58,4 +59,6 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
 	UserAccount getByActiveTrueAndEmail(String email);
 
 	Optional<UserAccount> findByEmail(String email);
+	
+	List<UserAccount> getAllByActiveTrueAndProjectsOrderById(Project project);
 }
