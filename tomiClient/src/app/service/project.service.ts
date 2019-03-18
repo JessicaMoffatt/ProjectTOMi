@@ -78,7 +78,7 @@ export class ProjectService {
    */
   setSelected(project: Project) {
     this.selectedProject = project;
-    this.initializeUserAccountList();
+    this.refreshUserAccountList();
     // console.log("selectedProject:"+project.projectName);
     // console.log("is null:"+project == null);
     // console.log("is undefined:"+project == undefined);
@@ -154,13 +154,12 @@ export class ProjectService {
   }
 
 
-
   async addUser(userAccountId: number) {
     console.log("in project.service.ts -- saving user");
     let tempAccount: UserAccount = null;
     await this.http.put<UserAccount>(`${this.projectsUrl}/${this.selectedProject.id}/add_member/${userAccountId}`, httpOptions).toPromise().then((response) => {
 
-      //   tempAccount = response;
+      this.refreshUserAccountList()
       return response;
     }).catch(() => {
       return null;
@@ -187,24 +186,6 @@ export class ProjectService {
   }
 
 
-  /**
-   * Copies the specified entry.
-   * @param entry The entry to copy.
-   */
-  async copy(entry: Entry) {
-    let tempEntry: Entry = null;
-    const url = entry._links["copy"];
-    await this.http.post<Entry>(url["href"],null, httpOptions).toPromise().then(response => {
-      tempEntry = response;
-      return response;
-    }).catch(() => {
-      return null;
-    });
-
-    return tempEntry;
-  }
-
-
   initializeProjects() {
     this.getProjectsForUser(this.userId).forEach(project => {
       this.projects = new BehaviorSubject<Array<Project>>(project);
@@ -221,22 +202,16 @@ export class ProjectService {
   }
 
 
-  getUserAccountList() : Observable<Array<UserAccount>> {
-    return this.http.get(`${this.projectsUrl}/${this.selectedProject.id}/members`).pipe(map((response: Response) => response))
+  refreshUserAccountList() {
+    this.http.get(`${this.projectsUrl}/${this.selectedProject.id}/members`)
       .pipe(map((data: any) => {
-        if (data._embedded !== undefined) {
-          return data._embedded.userAccounts as UserAccount[];
+        if (data !== undefined) {
+          return data as UserAccount[];
         } else {
-          return []
+          return [];
         }
-      }));
-  }
-
-  initializeUserAccountList() {
-    this.getUserAccountList().forEach(userAccount => {
-      console.log(userAccount);
-
-      // this.sort();
+      })).forEach(userAccount => {
+      this.userAccountList = new BehaviorSubject<Array<UserAccount>>(userAccount);
     }).catch((error: any) => {
       let getUsersErrorMessage = 'Something went wrong when getting the list of project members. Please contact your system administrator.';
       this.snackBar.open(getUsersErrorMessage, null, {

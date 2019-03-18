@@ -87,6 +87,7 @@ import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-t
 import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-unit-type.component';
 import {AccessGuard} from "./AccessGuard";
 import { AddProjectMemberComponent } from './component/modal/add-project-member/add-project-member.component';
+import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/project-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -139,7 +140,8 @@ import { AddProjectMemberComponent } from './component/modal/add-project-member/
     AddTaskComponent,
     DeleteUserAccountModal,
     EditTaskComponent,
-    AddProjectMemberComponent
+    AddProjectMemberComponent,
+    ProjectSidebarComponent
   ],
   imports: [
     MatSidenavModule,

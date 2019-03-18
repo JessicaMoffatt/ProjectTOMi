@@ -17,32 +17,22 @@ export class ProjectsPanelComponent implements OnInit {
   constructor(public projectService: ProjectService, private datePipe: DatePipe, private clientService: ClientService) {
   }
 
-
   /** tracks which sub-panel: new project panel, existing project panel, or report panel will be displayed */
-  subPanelDisplay: string = "newProject";
+  subPanelDisplay: string = "manageProject";
+
 
   project: Project;
 
   ngOnInit() {
-   // this.projectService.getProjectById('JM1001').subscribe((data) => {
-    //  this.project = data;
-    //});
-    this.projectService.initializeProjects();
-
   }
 
-  viewProductivityReport() {
-    this.subPanelDisplay = "productivityReport";
-  }
+
 
   setClient(c: Client){
-    this.clientService.selectedProject=c;
+   // this.clientService.selectedProject=c;
   }
 
-  displayBlankProject() {
-    this.projectService.selectedProject = null;
-    this.subPanelDisplay = "newProject";
-  }
+
 
   editProject() {
 
@@ -72,6 +62,8 @@ export class ProjectsPanelComponent implements OnInit {
         //   duration: 5000
         // });
       });
+
+    this.subPanelDisplay = "productivityReport";
   }
 
   downloadDataDump() {
