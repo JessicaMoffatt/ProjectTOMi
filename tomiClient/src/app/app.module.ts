@@ -27,6 +27,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatToolbarModule} from "@angular/material";
 import {MatCheckboxModule } from '@angular/material/checkbox';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatTableModule} from '@angular/material/table';
 
 import {AddTeamComponent, TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
 import {TeamSidebarService} from "./service/team-sidebar.service";
@@ -79,6 +81,8 @@ import { UnitTypeSidebarComponent } from './component/sidebar/unit-type-sidebar/
 import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
 import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-unit-type.component';
 import {AccessGuard} from "./AccessGuard";
+import { ProductivityReportComponent } from './component/extra/productivity-report/productivity-report.component';
+import { TeamProductivityReportComponent } from './component/extra/team-productivity-report/team-productivity-report.component';
 
 @NgModule({
   declarations: [
@@ -121,7 +125,9 @@ import {AccessGuard} from "./AccessGuard";
     EditUnitTypeComponent,
     EditTaskComponent,
     AddTaskComponent,
-    DeleteUserAccountModal
+    DeleteUserAccountModal,
+    ProductivityReportComponent,
+    TeamProductivityReportComponent
   ],
   imports: [
     BrowserModule,
@@ -147,7 +153,9 @@ import {AccessGuard} from "./AccessGuard";
     MatSnackBarModule,
     MatGridListModule,
     ReactiveFormsModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatTabsModule,
+    MatTableModule
   ],
   entryComponents: [
     EntryComponent,
@@ -197,7 +205,9 @@ import {AccessGuard} from "./AccessGuard";
     MatDatepickerModule,
     MatNativeDateModule,
     MatExpansionModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatTabsModule,
+    MatTableModule
   ]
 })
 export class AppModule {
