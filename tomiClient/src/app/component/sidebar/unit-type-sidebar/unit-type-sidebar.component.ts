@@ -26,7 +26,6 @@ export class UnitTypeSidebarComponent implements OnInit {
    * Displays a Modal component for adding a new Unit Type.
    */
 
-  // style="overflow-y: auto; max-height:400px;">
   openDialog(): void {
     this.dialog.open(AddUnitTypeComponent);
   }

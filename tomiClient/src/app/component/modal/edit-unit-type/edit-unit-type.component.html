@@ -1,25 +1,36 @@
 <!--
 @author Iliya Kiritchkov
-@version 1.0
+@version 1.1
 -->
-<div [ngClass]="'modal_container'">
-  <h1>Edit Unit Type</h1>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Unit</th>
-      <th>Weight</th>
-    </tr>
-    <tr>
-      <td><input #editUnitTypeName type="text" placeholder="Ex.: Animation (Silver)" value="{{unitTypePanelService.selectedUnitType.name}}"></td>
-      <td><input #editUnitTypeUnit type="text" placeholder="Ex.: Seconds" value="{{unitTypePanelService.selectedUnitType.unit}}"></td>
-      <td><input #editUnitTypeWeight type="number" step="0.01" placeholder="Ex.: 1.25" value="{{unitTypePanelService.selectedUnitType.weight}}"></td>
-    </tr>
-    <tr>
-      <td>
-        <div [ngClass]="['btn','add_btn']" (click)="saveUnitType()">Save</div>
-        <div [ngClass]="['btn','cancel_btn']" (click)="destroyEditUnitTypeComponent()">Cancel</div>
-      </td>
-    </tr>
-  </table>
+<h1 mat-dialog-title>Edit Unit Type</h1>
+<div style="height: 150px" mat-dialog-content>
+  <form #editUnitTypeForm="ngForm">
+    <table>
+      <tr>
+        <td>
+          <mat-form-field>
+            <input matInput #editUnitTypeName placeholder="Name" [formControl]="unitTypeNameControl" [errorStateMatcher]="unitTypeNameMatcher">
+            <mat-error *ngIf="unitTypeNameControl.hasError('required')">Name is <strong>required</strong></mat-error>
+            <mat-error *ngIf="unitTypeNameControl.hasError('pattern')">This name is already taken</mat-error>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <input matInput #editUnitTypeUnit placeholder="Unit" [formControl]="unitTypeUnitControl" [errorStateMatcher]="unitTypeUnitMatcher">
+            <mat-error *ngIf="unitTypeUnitControl.hasError('required')">Unit is <strong>required</strong></mat-error>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <input matInput type="number" #editUnitTypeWeight placeholder="Weight" [formControl]="unitTypeWeightControl" [errorStateMatcher]="unitTypeWeightMatcher">
+            <mat-error *ngIf="unitTypeWeightControl.hasError('required') && !unitTypeWeightControl.hasError('min')">Weight is <strong>required</strong></mat-error>
+            <mat-error *ngIf="unitTypeWeightControl.hasError('min')">Please enter at least 0.00</mat-error>
+          </mat-form-field>
+        </td>
+    </table>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="primary" (click)="updateUnitType()">Add</button>
+      <button mat-raised-button color="accent" (click)="onNoClick()">Cancel</button>
+    </div>
+  </form>
 </div>
