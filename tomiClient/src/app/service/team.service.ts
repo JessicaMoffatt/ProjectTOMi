@@ -33,7 +33,7 @@ export class TeamService {
   /** List of all the team members of the selected team.*/
   teamMembers: UserAccount[] = [];
 
-  teamsObservable: Team[];
+  teamsObservable: Team[] = [];
 
   /** List of all the team members not currently on any teams.*/
   allFreeMembers: UserAccount[] = [];
@@ -174,6 +174,7 @@ export class TeamService {
    * @param team The team to update/create.
    */
   async save(team: Team) {
+
     let tempTeam: Team = null;
     if (team.id === -1) {
       await this.http.post<Team>(this.teamUrl, JSON.stringify(team), httpOptions).toPromise().then(response => {

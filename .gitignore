@@ -44,3 +44,4 @@ TOMiServer.log
 *.log
 tomiClient/package.json
 tomiClient/package-lock.json
+tomiClient/package-lock.json

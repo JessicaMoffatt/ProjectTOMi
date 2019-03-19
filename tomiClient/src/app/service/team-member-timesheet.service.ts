@@ -101,7 +101,7 @@ export class TeamMemberTimesheetService {
   displayTimesheet() {
     this.populateTimesheets().then((value) => {
       let timesheet = value as Timesheet;
-      this.populateEntries(timesheet.id);
+      this.populateEntries(timesheet);
       this.timesheetService.setCurrentDate();
     }, reject => {
       let errorMessage = 'Something went wrong when retrieving timesheets.';
@@ -129,8 +129,8 @@ export class TeamMemberTimesheetService {
    * Populates the list of entries for the specified timesheet.
    * @param id The ID of the timesheet to display entries for.
    */
-  private populateEntries(id: number) {
-    this.timesheetService.getEntries(id).subscribe((data) => {
+  private populateEntries(timesheet: Timesheet) {
+    this.timesheetService.getEntries(timesheet).subscribe((data) => {
       this.entries = data;
       this.updateTally();
     }, error => {
