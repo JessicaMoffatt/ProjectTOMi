@@ -3,6 +3,7 @@ import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UnitType} from "../model/unitType";
 import {BehaviorSubject, Observable} from "rxjs";
+import {unitTypeUrl} from "../configuration/domainConfiguration";
 
 const httpOptions = {
   headers: new HttpHeaders( {
@@ -20,9 +21,6 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UnitTypeService {
-
-  /** The link used to GET, POST and DELETE unit types. */
-  private unitTypeUrl = 'http://localhost:8080/unit_types';
 
   /**
    * Lists all active Unit Types. This list can be subscribed to provide an always update list of Unit Types.
@@ -61,7 +59,7 @@ export class UnitTypeService {
    */
   GETAllUnitTypes() {
     let obsUnitTypes : Observable<Array<UnitType>>;
-    obsUnitTypes = this.http.get(this.unitTypeUrl).pipe(map((response:Response) =>
+    obsUnitTypes = this.http.get(unitTypeUrl).pipe(map((response:Response) =>
       response)).pipe(map((data: any) => {
       return data._embedded.unitTypes as UnitType[];
     }));
@@ -88,14 +86,13 @@ export class UnitTypeService {
     let testUnitType: UnitType = null;
 
     if (unitTypeToSave.id === -1) {
-      await this.http.post<UnitType>(this.unitTypeUrl, JSON.stringify(unitTypeToSave), httpOptions).toPromise().then(response => {
+      await this.http.post<UnitType>(unitTypeUrl, JSON.stringify(unitTypeToSave), httpOptions).toPromise().then(response => {
         this.refreshUnitTypes();
       }).catch((error: any) => {
         //TODO add a catch for the error
       });
     } else {
       const url = unitTypeToSave._links["update"];
-      console.log(unitTypeToSave._links);
       await this.http.put<UnitType>(url["href"],
         JSON.stringify(unitTypeToSave), httpOptions)
         .toPromise()
@@ -109,7 +106,7 @@ export class UnitTypeService {
   }
 
   getUnitTypeById(id:number){
-    return this.http.get(`${this.unitTypeUrl}/${id}`).pipe(map((response: Response) => response))
+    return this.http.get(`${unitTypeUrl}/${id}`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data !== undefined) {
           return data as UnitType;

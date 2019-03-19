@@ -4,6 +4,8 @@ import {map} from "rxjs/operators";
 import {Entry} from "../model/entry";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Timesheet} from "../model/timesheet";
+import {timesheetUrl} from "../configuration/domainConfiguration";
+import {userTimesheetsUrl} from "../configuration/domainConfiguration";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -21,11 +23,6 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class TimesheetService {
-  /** The link used to get,post, and delete entries. */
-  private timesheetUrl = `http://localhost:8080/timesheets`;
-  /** The link used to get all timesheets for a specified user.*/
-  private userTimesheetsUrl = `http://localhost:8080/timesheets/user_accounts`;
-
   /** The list of all timehseets for this user.*/
   timesheets: Timesheet[] = [];
 
@@ -87,8 +84,9 @@ export class TimesheetService {
    * Gets all entries for the specified timesheet.
    * @param id The ID of the timesheet.
    */
-  getEntries(id: number): Observable<Array<Entry>>{
-    return this.http.get(`${this.timesheetUrl}/${id}/entries`).pipe(map((response: Response) => response))
+  getEntries(timesheet:Timesheet): Observable<Array<Entry>>{
+    let url = timesheet._links["getEntries"];
+    return this.http.get(url["href"])
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           let sorted = data._embedded.entries as Entry[];
@@ -115,7 +113,7 @@ export class TimesheetService {
    * @param userId The ID of the user.
    */
   async getAllTimesheets(userId: number) {
-    return this.http.get(`${this.userTimesheetsUrl}/${userId}`).pipe(map((response: Response) => response))
+    return this.http.get(`${userTimesheetsUrl}/${userId}`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.timesheets as Timesheet[];
@@ -176,7 +174,7 @@ export class TimesheetService {
 
     return await this.getCurrentTimesheet().then(
       (data)=>{
-        const url = data._links["submit"];
+        let url = data._links["submit"];
 
         return this.putTimesheetRequest(data,tempSheet,url).then((data)=>{
          tempSheet = data;
@@ -218,10 +216,9 @@ export class TimesheetService {
    * @param timesheetId The ID of the timesheet to get.
    */
   getTimesheetById(timesheetId:number):Observable<Timesheet>{
-    return this.http.get(`http://localhost:8080/timesheets/${timesheetId}`).pipe(map((response:Response) => response))
+    return this.http.get(`${timesheetUrl}/${timesheetId}`).pipe(map((response:Response) => response))
       .pipe(map((data: any) => {
         return data as Timesheet;
       }));
   }
-
 }

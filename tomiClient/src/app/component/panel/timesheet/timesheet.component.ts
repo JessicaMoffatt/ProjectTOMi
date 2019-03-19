@@ -40,7 +40,6 @@ export interface DialogData {
 })
 export class TimesheetComponent implements OnInit, AfterViewInit {
 
-  //TODO, don't hard code
   /** The ID of the user.*/
   private userId = this.signInService.userAccount.id;
 
@@ -81,7 +80,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.populateTimesheets().then((value) => {
       let timesheet = value as Timesheet;
-      this.getEntries(timesheet.id);
+      this.getEntries(timesheet);
       this.getProjects(this.userId);
       this.populateTasks();
       this.populateUnitTypes();
@@ -125,8 +124,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Gets all entries for this timesheet.
    * @param id The ID of the timesheet we want the entries of.
    */
-  getEntries(id: number) {
-    this.timesheetService.getEntries(id).subscribe((data) => {
+  getEntries(timesheet:Timesheet) {
+    this.timesheetService.getEntries(timesheet).subscribe((data) => {
       this.entries = data;
       this.updateTally();
     });
