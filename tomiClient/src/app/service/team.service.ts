@@ -33,7 +33,7 @@ export class TeamService {
   /** List of all the team members of the selected team.*/
   teamMembers: UserAccount[] = [];
 
-  teamsObservable: Team[];
+  teamsObservable: Team[] = [];
 
   /** List of all the team members not currently on any teams.*/
   allFreeMembers: UserAccount[] = [];

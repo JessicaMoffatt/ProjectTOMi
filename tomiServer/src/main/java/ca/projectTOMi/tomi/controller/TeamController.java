@@ -97,10 +97,9 @@ public class TeamController {
 	@PostMapping ("/teams")
 	public ResponseEntity<?> createTeam(@RequestBody final Team newTeam,
 	                                    @RequestAttribute final UserAuthManager authMan) throws URISyntaxException {
-		throw new TeamNotFoundException();
-//		final Resource<Team> team = this.assembler.toResource(new UserAuthLinkWrapper<>(this.teamService.createTeam(newTeam), authMan));
-//
-//		return ResponseEntity.created(new URI(team.getId().expand().getHref())).body(team);
+		final Resource<Team> team = this.assembler.toResource(new UserAuthLinkWrapper<>(this.teamService.createTeam(newTeam), authMan));
+
+		return ResponseEntity.created(new URI(team.getId().expand().getHref())).body(team);
 	}
 
 	/**
