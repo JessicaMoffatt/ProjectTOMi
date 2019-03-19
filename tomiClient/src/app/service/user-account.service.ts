@@ -85,7 +85,7 @@ export class UserAccountService {
       });
 
       // Check for any deleted userAccounts
-      this.userSubject.getValue().forEach( oldUser => {
+      this.userSubject.getValue().forEach(oldUser => {
         let index = freshUsers.findIndex(newUser => {
           return (newUser.id === oldUser.id);
         });
@@ -100,6 +100,9 @@ export class UserAccountService {
       });
     }).then(value => {
       this.sortUserAccounts();
+    }).catch( (error: any) => {
+      let getUsersErrorMessage = 'Something went wrong when updating the list of Users. Please contact your system administrator.';
+      this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
     });
   }
 
@@ -113,10 +116,6 @@ export class UserAccountService {
         return data._embedded.userAccounts as UserAccount[];
       }));
     return obsUsers;
-  }
-
-  setSelectedUserAccount(userAccount: UserAccount) {
-    this.selectedUserAccount = userAccount;
   }
 
   /**

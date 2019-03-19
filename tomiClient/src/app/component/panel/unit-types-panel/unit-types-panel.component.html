@@ -1,27 +1,46 @@
 <!--
 @author Iliya Kiritchkov
-@version 1.0
+@version 1.1
 -->
 <app-unit-type-sidebar></app-unit-type-sidebar>
 <div>
   <h2>Unit Types</h2>
   <div>
     <template #edit_unit_type_container></template>
-    <table>
+
+    <table mat-table [dataSource]="unitTypeService.unitTypes">
       <tr>
-        <th>Name</th>
-        <th>Unit</th>
-        <th>Weight</th>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <th mat-cell *matCellDef="let unitType"> {{unitType.name}} </th>
+        </ng-container>
+
+        <ng-container matColumnDef="unit">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Unit </th>
+          <th mat-cell *matCellDef="let unitType"> {{unitType.unit}} </th>
+        </ng-container>
+
+        <ng-container matColumnDef="weight">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
+          <th mat-cell *matCellDef="let unitType"> {{unitType.weight}} </th>
+        </ng-container>
       </tr>
-      <ng-container *ngFor="let unitType of unitTypeService.unitTypes | async">
-        <tr>
-          <td>{{unitType.name}}</td>
-          <td>{{unitType.unit}}</td>
-          <td>{{unitType.weight}}</td>
-          <td [ngClass]="['btn', 'edit_btn']" (click)="editUnitType(unitType)">Edit</td>
-          <td [ngClass]="['btn', 'cancel_btn']" (click)="deleteUnitType(unitType)">Delete</td>
-        </tr>
-      </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay" (click)="openEditDialog(myRowData)"></tr>
+      <!--<tr>-->
+        <!--<th>Name</th>-->
+        <!--<th>Unit</th>-->
+        <!--<th>Weight</th>-->
+      <!--</tr>-->
+      <!--<ng-container *ngFor="let unitType of unitTypeService.unitTypes | async">-->
+        <!--<tr>-->
+          <!--<td>{{unitType.name}}</td>-->
+          <!--<td>{{unitType.unit}}</td>-->
+          <!--<td>{{unitType.weight}}</td>-->
+          <!--<td [ngClass]="['btn', 'edit_btn']" (click)="editUnitType(unitType)">Edit</td>-->
+          <!--<td [ngClass]="['btn', 'cancel_btn']" (click)="deleteUnitType(unitType)">Delete</td>-->
+        <!--</tr>-->
+      <!--</ng-container>-->
     </table>
   </div>
 </div>

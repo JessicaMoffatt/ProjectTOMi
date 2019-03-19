@@ -1,25 +1,36 @@
 <!--
 @author Iliya Kiritchkov
-@version 1.0
+@version 1.1
 -->
-<div [ngClass]="'modal_container'">
-  <h1>Add New Unit Type</h1>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Unit</th>
-      <th>Weight</th>
-    </tr>
-    <tr>
-      <td><input #name type="text" placeholder="Ex.: Animation (Silver)"></td>
-      <td><input #unit type="text" placeholder="Ex.: Seconds"></td>
-      <td><input #weight type="number" step="0.01" placeholder="Ex.: 1.25"></td>
-    </tr>
-    <tr>
-      <td>
-        <div [ngClass]="['btn','add_btn']" (click)="addUnitType()">Add</div>
-        <div [ngClass]="['btn', 'cancel_btn']" (click)="destroyAddUnitTypeComponent()">Cancel</div>
-      </td>
-    </tr>
-  </table>
+<h1 mat-dialog-title>Add New Unit Type</h1>
+<div style="height: 150px" mat-dialog-content>
+  <form #addUnitTypeForm="ngForm">
+    <table>
+      <tr>
+        <td>
+          <mat-form-field>
+            <input matInput #addUnitTypeName placeholder="Name" [formControl]="unitTypeNameControl" [errorStateMatcher]="unitTypeNameMatcher">
+            <mat-error *ngIf="unitTypeNameControl.hasError('required')">Name is <strong>required</strong></mat-error>
+            <mat-error *ngIf="unitTypeNameControl.hasError('pattern')">This name is already taken</mat-error>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <input matInput #addUnitTypeUnit placeholder="Unit" [formControl]="unitTypeUnitControl" [errorStateMatcher]="unitTypeUnitMatcher">
+            <mat-error *ngIf="unitTypeUnitControl.hasError('required')">Unit is <strong>required</strong></mat-error>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <input matInput type="number" #addUnitTypeWeight placeholder="Weight" [formControl]="unitTypeWeightControl" [errorStateMatcher]="unitTypeWeightMatcher">
+            <mat-error *ngIf="unitTypeWeightControl.hasError('required') && !unitTypeWeightControl.hasError('min')">Weight is <strong>required</strong></mat-error>
+            <mat-error *ngIf="unitTypeWeightControl.hasError('min')">Please enter at least 0.00</mat-error>
+          </mat-form-field>
+        </td>
+    </table>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="primary" (click)="addUnitType()">Add</button>
+      <button mat-raised-button color="accent" (click)="onNoClick()">Cancel</button>
+    </div>
+  </form>
 </div>
