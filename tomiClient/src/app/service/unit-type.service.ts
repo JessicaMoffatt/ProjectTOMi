@@ -3,6 +3,7 @@ import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UnitType} from "../model/unitType";
 import {BehaviorSubject, Observable} from "rxjs";
+import {MatSnackBar} from "@angular/material";
 
 const httpOptions = {
   headers: new HttpHeaders( {
@@ -25,26 +26,29 @@ export class UnitTypeService {
   private unitTypeUrl = 'http://localhost:8080/unit_types';
 
   /**
-   * Lists all active Unit Types. This list can be subscribed to provide an always update list of Unit Types.
+   * Lists all active Unit Types. This list can be subscribed to provide an always updated list of Unit Types.
    */
-  unitTypes: BehaviorSubject<Array<UnitType>>;
+  unitTypes: BehaviorSubject<Array<UnitType>> = new BehaviorSubject<Array<UnitType>>([]);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public snackBar:MatSnackBar) {
 
   }
 
   /**
-   *
+   * Get the list of all active unit types and populate into the unitTypes list.
    */
   initializeUnitTypes() {
     this.GETAllUnitTypes().forEach(unitTypes => {
       this.unitTypes = new BehaviorSubject<Array<UnitType>>(unitTypes);
       this.sortUnitTypes();
+    }).catch((error: any) => {
+      let getUnitTypesErrorMessage = 'Something went wrong when getting the list unit types. Please contact your system administrator.';
+      this.snackBar.open(getUnitTypesErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right' });
     });
   }
 
   /**
-   *
+   * Sorts the unit types in the unitTypes list by ascending name.
    */
   sortUnitTypes() {
     this.unitTypes.getValue().sort((unit1, unit2) => {
@@ -70,13 +74,18 @@ export class UnitTypeService {
 
   /**
    * Logically deletes the unit type (sets the active status to false).
+   *
    * @param unitTypeToDelete the UnitType to be deleted.
    */
   DELETEUnitType(unitTypeToDelete: UnitType) {
-    let url = unitTypeToDelete._links["delete"];
-    this.http.delete(url["href"],
-      httpOptions).subscribe((response) => {
+    const url = unitTypeToDelete._links["self"];
+    this.http.delete(url["href"], httpOptions).toPromise().then((response) => {
         this.refreshUnitTypes();
+        let deleteUnitTypeSuccessMessage = unitTypeToDelete.name + ' deleted successfully.';
+        this.snackBar.open(deleteUnitTypeSuccessMessage, null, {duration: 4000, politeness: 'assertive', panelClass: 'snackbar-success', horizontalPosition: 'right'});
+    }).catch((error: any) =>{
+      let deleteUnitTypeErrorMessage = 'Something went wrong when deleting ' + unitTypeToDelete.name + '. Please contact your system administrator.';
+      this.snackBar.open(deleteUnitTypeErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
     });
   }
 
@@ -85,29 +94,33 @@ export class UnitTypeService {
    * @param unitTypeToSave
    */
   async saveUnitType(unitTypeToSave: UnitType) {
-    let testUnitType: UnitType = null;
-
     if (unitTypeToSave.id === -1) {
       await this.http.post<UnitType>(this.unitTypeUrl, JSON.stringify(unitTypeToSave), httpOptions).toPromise().then(response => {
         this.refreshUnitTypes();
+        let addUnitTypeSucessMessage = unitTypeToSave.name + ' added successfully.';
+        this.snackBar.open(addUnitTypeSucessMessage, null, {duration: 4000, politeness: 'assertive', panelClass: 'snackbar-success', horizontalPosition: 'right'});
       }).catch((error: any) => {
-        //TODO add a catch for the error
+        let addUnitTypeErrorMessage = 'Something went wrong when adding ' + unitTypeToSave.name + '. Please contact your system administrator.';
+        this.snackBar.open(addUnitTypeErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
       });
     } else {
-      const url = unitTypeToSave._links["update"];
-      console.log(unitTypeToSave._links);
-      await this.http.put<UnitType>(url["href"],
-        JSON.stringify(unitTypeToSave), httpOptions)
-        .toPromise()
-        .then(response => {
+      const url = unitTypeToSave._links["self"];
+      await this.http.put<UnitType>(url["href"], JSON.stringify(unitTypeToSave), httpOptions).toPromise().then(response => {
         this.refreshUnitTypes();
+        let editUnitTypeSucessMessage = unitTypeToSave.name + ' updated successfully.';
+        this.snackBar.open(editUnitTypeSucessMessage, null, {duration: 4000, politeness: 'assertive', panelClass: 'snackbar-success', horizontalPosition: 'right'});
       }).catch((error:any) => {
-        //TODO add a catch for the error
+        let editUnitTypeFailMessage = 'Something went wrong when updating ' + unitTypeToSave.name + '. Please contact your system administrator.';
+        this.snackBar.open(editUnitTypeFailMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
       });
     }
-    return testUnitType;
   }
 
+  /**
+   * Returns a Unit Type by passing in it's id.
+   *
+   * @param id id of the unit type.
+   */
   getUnitTypeById(id:number){
     return this.http.get(`${this.unitTypeUrl}/${id}`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
@@ -160,6 +173,9 @@ export class UnitTypeService {
       });
     }).then(value => {
       this.sortUnitTypes();
+    }).catch( (error: any) => {
+      let getUnitTypeErrorMessage = 'Something went wrong when updating the list of Unit Types. Please contact your system administrator.';
+      this.snackBar.open(getUnitTypeErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
     });
   }
 }

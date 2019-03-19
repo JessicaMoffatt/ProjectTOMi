@@ -35,31 +35,44 @@ export class ClientService {
   selected: Client;
 
   /** used to pass list to project related components */
-  clients: BehaviorSubject<Array<Client>>;
+  clients: BehaviorSubject<Array<Client>> = new BehaviorSubject<Array<Client>>([]);
 
   constructor(private http: HttpClient) {
-    this.initializeProjects();
+    this.initializeClients();
   }
 
-  initializeProjects() {
+  initializeClients() {
     this.getClients().forEach( client => {
       this.clients = new BehaviorSubject<Array<Client>>(client);
-      //this.sortUserAccounts();
+      console.log(this.clients.value);
     });
   }
+
 
   /**
    * Gets all projects.
    */
   getClients(): Observable<Array<Client>> {
-    return this.http.get(`${this.clientsUrl}`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.clientsUrl}`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.clients as Client[];
         } else {
           return [];
         }
-      }));
+      }))
+  }
+
+
+  async getAsyncClients() {
+    return await this.http.get(`${this.clientsUrl}`)
+      .pipe(map((data: any) => {
+        if (data._embedded !== undefined) {
+          return data._embedded.clients as Client[];
+        } else {
+          return [];
+        }
+      })).toPromise().then( value => this.clients = new BehaviorSubject(value));
   }
 
   /**
@@ -109,10 +122,11 @@ export class ClientService {
    * @param clientName the client name to be searched for
    */
   getClientByName(clientName: string): Client {
-
+      console.log(this.clients.value);
+      console.log(clientName);
         for (let c of this.clients.value) {
           if (c.name === clientName) {
-            return c;
+            return c as Client;
           }
         }
         return null;
@@ -133,14 +147,14 @@ export class ClientService {
     if (client.id === -1) {
       await this.http.post<UserAccount>(this.clientsUrl, JSON.stringify(client), httpOptions).toPromise().then(response => {
 
-       // this.refreshClients();
+        return response;
       }).catch((error: any) => {
         //TODO Add an error display
       });
     } else {
       const url = client._links["update"];
       this.http.put<UserAccount>(url["href"], JSON.stringify(client), httpOptions).toPromise().then(response => {
-
+      return response;
       //  this.refreshClients();
       }).catch((error: any) => {
         //TODO Add an error display

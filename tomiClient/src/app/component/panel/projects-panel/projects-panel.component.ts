@@ -5,6 +5,8 @@ import {DatePipe} from '@angular/common';
 import {MatSnackBar} from "@angular/material";
 import {ClientService} from "../../../service/client.service";
 import {Client} from "../../../model/client";
+import {BehaviorSubject} from "rxjs";
+import {UserAccount} from "../../../model/userAccount";
 
 @Component({
   selector: 'app-projects-panel',
@@ -25,9 +27,8 @@ export class ProjectsPanelComponent implements OnInit {
   project: Project;
 
   ngOnInit() {
-    this.projectService.getProjectById('JM1001').subscribe((data) => {
-      this.project = data;
-    });
+    this.projectService.selectedProject=null;
+    this.projectService.userAccountList = new BehaviorSubject<Array<UserAccount>>([]);
   }
 
   /**

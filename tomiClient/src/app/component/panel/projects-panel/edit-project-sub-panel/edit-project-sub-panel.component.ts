@@ -81,30 +81,47 @@ export class EditProjectSubPanelComponent implements OnInit {
       // 4.3 Set the Client
       // if the client exists get the reference, if not create a new one
       let client: Client;
+
       if (this.clientService.getClientByName(clientName) == null) {
+        console.log("unrecognized name... creating new client");
         client = new Client();
         client.name = clientName;
-        this.clientService.save(client);
-        console.log("new client saved.")
+        this.clientService.save(client).then(() => {
+          this.clientService.getAsyncClients().then(() => {
+            client = this.clientService.getClientByName(clientName);
+            this.projectService.selectedProject.client = client;
+            console.log("newly returned client data: name-" + client.name + ", id-" + client.id);
+            this.persistProject();
+          });
+        });
+        // console.log("new client saved.")
+      } else {
+        // console.log("existing client loaded.");
+        this.projectService.selectedProject.client = this.clientService.getClientByName(clientName);
+        this.persistProject();
       }
-
-      console.log("existing client loaded.");
-      // @ts-ignore
-      client = this.clientService.getClientByName(clientName);
-
-      this.projectService.selectedProject.client = client;
-
-      // 4.4 Set the billable rate and budget (not required fields)
-      this.projectService.selectedProject.billableRate = +(<HTMLInputElement>document.getElementById("billing_rate")).value;
-      this.projectService.selectedProject.budget = +(<HTMLInputElement>document.getElementById("budget_total")).value;
-
-      this.projectService.save(this.projectService.selectedProject);
-      alert("project saved.");
-      alert("  project name:" + this.projectService.selectedProject.projectName);
-      alert("  client:" + this.projectService.selectedProject.client.name);
-      alert("  id:" + this.projectService.selectedProject.id);
-      alert("  project manager id:" + this.projectService.selectedProject.projectManagerId);
     }
+  }
+
+
+  persistProject() {
+    // 4.4 Set the billable rate and budget (not required fields)
+    this.projectService.selectedProject.billableRate = +(<HTMLInputElement>document.getElementById("billing_rate")).value;
+    this.projectService.selectedProject.budget = +(<HTMLInputElement>document.getElementById("budget_total")).value;
+
+    console.log("before project saved.");
+    console.log("  project name:" + this.projectService.selectedProject.projectName);
+    console.log("  client:" + this.projectService.selectedProject.client.name);
+    console.log("  id:" + this.projectService.selectedProject.id);
+    console.log("  project manager id:" + this.projectService.selectedProject.projectManagerId);
+
+    this.projectService.save(this.projectService.selectedProject).then(() => {
+      console.log("after project saved.");
+      console.log("  project name:" + this.projectService.selectedProject.projectName);
+      console.log("  client:" + this.projectService.selectedProject.client.name);
+      console.log("  id:" + this.projectService.selectedProject.id);
+      console.log("  project manager id:" + this.projectService.selectedProject.projectManagerId);
+    });
   }
 
   onHidden(): void {

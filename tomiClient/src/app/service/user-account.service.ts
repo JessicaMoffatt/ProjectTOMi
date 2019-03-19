@@ -81,13 +81,13 @@ export class UserAccountService {
    * Refresh the List of UserAccounts to keep up-to-date with the server.
    */
   refreshUserAccounts() {
-    let freshUsers: UserAccount[];
+    let freshUsers :UserAccount[];
 
     this.GETAllUserAccounts().forEach(users => {
       freshUsers = users;
 
       //Replace all users with fresh user data
-      freshUsers.forEach(freshUser => {
+      freshUsers.forEach( freshUser => {
         let index = this.userSubject.getValue().findIndex((staleUser) => {
           return (staleUser.id === freshUser.id);
         });
@@ -109,15 +109,18 @@ export class UserAccountService {
         });
 
         if (index === -1) {
-          let indexToBeRemoved = this.userSubject.getValue().findIndex((userToBeRemoved) => {
+          let indexToBeRemoved = this.userSubject.getValue().findIndex( (userToBeRemoved) => {
             return (userToBeRemoved.id === oldUser.id);
           });
 
-          this.userSubject.getValue().splice(indexToBeRemoved, 1);
+           this.userSubject.getValue().splice(indexToBeRemoved, 1);
         }
       });
     }).then(value => {
       this.sortUserAccounts();
+    }).catch( (error: any) => {
+      let getUsersErrorMessage = 'Something went wrong when updating the list of Users. Please contact your system administrator.';
+      this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
     });
   }
 
@@ -125,16 +128,12 @@ export class UserAccountService {
    * Sends a GET message to the server for a fresh list of all UserAccounts.
    */
   GETAllUserAccounts() {
-    let obsUsers: Observable<Array<UserAccount>>;
-    obsUsers = this.http.get(this.userAccountUrl).pipe(map((response: Response) => response))
+    let obsUsers : Observable<Array<UserAccount>>;
+    obsUsers = this.http.get(this.userAccountUrl).pipe(map((response:Response) => response))
       .pipe(map((data: any) => {
         return data._embedded.userAccounts as UserAccount[];
       }));
     return obsUsers;
-  }
-
-  setSelectedUserAccount(userAccount: UserAccount) {
-    this.selectedUserAccount = userAccount;
   }
 
   /**
@@ -186,7 +185,7 @@ export class UserAccountService {
   }
 
   /**
-   * Logically deletes the selectedProject user account (sets the active status to false.)
+   * Logically deletes the selected user account (sets the active status to false.)
    *
    * @param account The UserAccount to be deleted.
    */
@@ -224,6 +223,3 @@ export class UserAccountService {
       }));
   }
 }
-
-
-
