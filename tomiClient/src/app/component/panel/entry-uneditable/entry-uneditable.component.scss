@@ -1,10 +1,12 @@
 @import "../../../../variables";
 
-.entry_card{
+.entry_card .mat-card{
   margin: .5rem 10vw;
   padding: .5rem 2vw;
   width: 76vw;
+  background-color: $light_grey;
 }
+
 
 .row{
   display: inline;
