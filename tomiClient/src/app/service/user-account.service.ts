@@ -14,7 +14,7 @@ const httpOptions = {
 /**
  * UserAccountService is used to control the flow of data regarding user accounts to/from the view.
  *
- * @author Jessica Moffatt
+ * @author Jessica Moffatt, Iliya Kiritchkov
  * @version 1.1
  */
 @Injectable({
@@ -67,8 +67,8 @@ export class UserAccountService {
 
     this.GETAllUserAccounts().forEach(users => {
       freshUsers = users;
-
       //Replace all users with fresh user data
+
       freshUsers.forEach( freshUser => {
         let index = this.userSubject.getValue().findIndex((staleUser) => {
           return (staleUser.id === freshUser.id);
@@ -111,10 +111,10 @@ export class UserAccountService {
    */
   GETAllUserAccounts() {
     let obsUsers : Observable<Array<UserAccount>>;
-    obsUsers = this.http.get(this.userAccountUrl).pipe(map((response:Response) => response))
+    obsUsers = (this.http.get(this.userAccountUrl).pipe(map((response:Response) => response))
       .pipe(map((data: any) => {
         return data._embedded.userAccounts as UserAccount[];
-      }));
+      })));
     return obsUsers;
   }
 

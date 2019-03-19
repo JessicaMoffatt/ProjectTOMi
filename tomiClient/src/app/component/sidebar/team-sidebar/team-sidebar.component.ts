@@ -125,7 +125,7 @@ export class AddTeamComponent implements OnInit {
     }
 
     if(team.teamName != null && team.teamName != ""){
-      this.teamService.save(team).then(value => {
+      this.teamService.save(team).then((value: Team) => {
         this.teamSidebarService.teams.push(value);
 
         if (team.leadId != -1) {
@@ -137,6 +137,8 @@ export class AddTeamComponent implements OnInit {
         }
 
         this.closeAddTeamComponent();
+      }).catch((error: any) => {
+        console.log("An ERRORR HAPPENED " + error);
       });
     }else{
       //TODO

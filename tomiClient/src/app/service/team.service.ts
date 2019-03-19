@@ -1,12 +1,12 @@
-import {ComponentRef, Injectable, NgModule} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {ComponentRef, Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, JsonpClientBackend} from "@angular/common/http";
 import {Team} from "../model/team";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {UserAccount} from "../model/userAccount";
 import {TeamSidebarService} from "./team-sidebar.service";
 import {UserAccountService} from "./user-account.service";
-import {SignInService} from "./sign-in.service";
+import {MatSnackBar} from "@angular/material";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -32,6 +32,7 @@ export class TeamService {
 
   /** List of all the team members of the selected team.*/
   teamMembers: UserAccount[] = [];
+  teamSubject: BehaviorSubject<Array<Team>> = new BehaviorSubject<Array<Team>>([]);
 
   teamsObservable: Team[];
 
@@ -48,7 +49,7 @@ export class TeamService {
   /** Used to reference the add team member component created by clicking the Add Member button.*/
   ref: ComponentRef<any>;
 
-  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService, private userAccountService:UserAccountService) {
+  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService, private userAccountService:UserAccountService, private snackBar: MatSnackBar) {
     this.refreshTeams();
   }
 
@@ -62,9 +63,69 @@ export class TeamService {
       }));
   }
 
+  // refreshTeams() {
+  //   this.GETAllTeams().subscribe((data)=>{
+  //     this.teamsObservable = data;
+  //   });
+  // }
+
+  /**
+   * Refresh the list of teamSubject to keep up-to-date with the server.
+   */
   refreshTeams() {
-    this.GETAllTeams().subscribe((data)=>{
-      this.teamsObservable = data;
+    let freshTeams: Team[];
+
+    this.GETAllTeams().forEach(teams => {
+      freshTeams = teams;
+
+      //Replace all users with fresh user data
+      freshTeams.forEach(freshTeam => {
+        let index = this.teamSubject.getValue().findIndex((staleTeam) => {
+          return (staleTeam.id === freshTeam.id);
+        });
+
+        // If the id didn't match any of the existing ids then add it to the list.
+        if (index === -1) {
+          this.teamSubject.getValue().push(freshTeam);
+
+          // id was found and this Team will be replaced with fresh data.
+        } else {
+          this.teamSubject.getValue().splice(index, 1, freshTeam);
+        }
+      });
+
+      // Check for any deleted Teams
+      this.teamSubject.getValue().forEach(oldTeam => {
+        let index = freshTeams.findIndex( newTeam => {
+          return (newTeam.id === oldTeam.id);
+        });
+
+        if (index === -1) {
+          let indexToBeRemoved = this.teamSubject.getValue().findIndex((teamToBeRemoved) => {
+            return (teamToBeRemoved.id === oldTeam.id);
+          });
+
+          this.teamSubject.getValue().splice(indexToBeRemoved, 1);
+        }
+      });
+    }).then(() => {
+      this.sortTeams();
+    }).catch((error: any) => {
+      let getTeamErrorMessage = 'Something went wrong when updating the list of Teams. Please contact your system administrator.';
+      this.snackBar.open(getTeamErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
+    });
+  }
+
+  /**
+   * Sorts all teams in the teamSubject list by ascending team name.
+   */
+  sortTeams() {
+    this.teamSubject.getValue().sort((team1, team2) => {
+      let teamName1 = team1.teamName.toLowerCase();
+      let teamName2 = team2.teamName.toLowerCase();
+      if (teamName1 > teamName2) {return 1; }
+      if (teamName1 < teamName2) {return -1; }
+      return 0;
     });
   }
 
@@ -196,6 +257,34 @@ export class TeamService {
 
     return tempTeam;
   }
+  //
+  // async save (team: Team) {
+  //   if (team.id === -1) {
+  //     let savedTeam: Team = null;
+  //     await this.http.post<Team>(this.teamUrl, JSON.stringify(team), httpOptions).toPromise().then(response => {
+  //       this.refreshTeams();
+  //       savedTeam = response;
+  //       return response;
+  //       //let addTeamSuccessMessage = team.teamName + ' added successfully.';
+  //       //this.snackBar.open(addTeamSuccessMessage, null, {duration: 4000, politeness: 'assertive', panelClass: 'snackbar-success', horizontalPosition: 'center'});
+  //     }).catch((error: Error) => {
+  //       throw error;
+  //       // let addTeamErrorMessage = 'Something went wrong when adding ' + team.teamName + '. Please contact your system administrator.';
+  //       // this.snackBar.open(addTeamErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
+  //     });
+  //     return savedTeam;
+  //   } else {
+  //     const url = team._links["self"];
+  //     await this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).toPromise().then(response => {
+  //       this.refreshTeams();
+  //       let editTeamSuccessMessage = team.teamName + ' updated successfully.';
+  //       this.snackBar.open(editTeamSuccessMessage, null, {duration: 4000, politeness: 'assertive', panelClass: 'snackbar-success', horizontalPosition: 'center'});
+  //     }).catch( (error: any) => {
+  //       let editTeamErrorMessage = 'Something went wrong when updating ' + team.teamName + '. Please contact your system administrator.';
+  //       this.snackBar.open(editTeamErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
+  //     });
+  //   }
+  // }
 
   /**
    * Cancels any changes made to the team name or the team lead.
