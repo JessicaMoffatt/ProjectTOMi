@@ -34,7 +34,7 @@ export class TeamService {
   teamMembers: UserAccount[] = [];
   teamSubject: BehaviorSubject<Array<Team>> = new BehaviorSubject<Array<Team>>([]);
 
-  teamsObservable: Team[];
+  teamsObservable: Team[] = [];
 
   /** List of all the team members not currently on any teams.*/
   allFreeMembers: UserAccount[] = [];
