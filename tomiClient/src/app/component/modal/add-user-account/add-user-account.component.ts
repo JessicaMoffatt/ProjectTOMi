@@ -6,7 +6,7 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/form
 import {ErrorStateMatcher, MatDialogRef} from "@angular/material";
 
 /**
- * AddUserAccountComponent is a modal form used to add a new UserAccount to the database.
+ * AddTaskComponent is a modal form used to add a new UserAccount to the database.
  *
  * @author Iliya Kiritchkov
  * @version 1.1

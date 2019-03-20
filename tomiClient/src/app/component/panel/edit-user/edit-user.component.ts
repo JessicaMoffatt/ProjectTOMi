@@ -40,14 +40,9 @@ export class EditUserComponent implements OnInit, OnDestroy {
   userAccountNameMatcher = new MyErrorStateMatcher();
   /** Invalid email error detection. */
   userAccountEmailMatcher = new MyErrorStateMatcher();
-  /** Invalid salaried rate error detection. */
-  userAccountRateMatcher = new MyErrorStateMatcher();
 
   /** The Event emitted indicating that a user has been selected in the sidebar. */
   @Input() userSelectedEvent: Observable<UserAccount>;
-
-  /** The subscription for the selected user event. */
-  private userSelectedSubscription: Subscription;
 
   /** The UserAccount model associated with this component. */
   @Input() userAccount: UserAccount;
@@ -89,16 +84,11 @@ export class EditUserComponent implements OnInit, OnDestroy {
   constructor(public deleteUserDialog: MatDialog, public teamService: TeamService) { }
 
   ngOnInit() {
-    this.userSelectedSubscription = this.userSelectedEvent.subscribe((userSelected:UserAccount) => {
-      if (this.userAccount.id === userSelected.id) {
-        this.editUserExpansionPanel.open();
 
-      }
-    });
   }
 
   ngOnDestroy(): void {
-    this.userSelectedSubscription.unsubscribe();
+
   }
 
 

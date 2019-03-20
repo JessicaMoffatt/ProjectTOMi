@@ -14,8 +14,6 @@ export class UnitType{
   unit: string;
   /** The measurement of value of for this Unit Type.*/
   weight: number;
-  /** Represents whether or not this Unit Type is active.*/
-  active: boolean;
   /** The list of links used for communicating with the back end.*/
   _links: [];
 
@@ -24,7 +22,6 @@ export class UnitType{
     this.name = "";
     this.unit = "";
     this.weight = 0;
-    this.active = true;
     this._links = [];
   }
 }

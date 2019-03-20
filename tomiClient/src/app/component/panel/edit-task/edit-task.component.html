@@ -1,0 +1,25 @@
+<!--
+@author Karol Talbot
+@version 1.1
+-->
+<mat-expansion-panel #editTaskExpansionPanel (opened)="setValuesOnOpen()" class="user_account_table">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{task.name}}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <form #editTaskForm="ngForm">
+    <mat-form-field id="task">
+      <input matInput #editTaskName placeholder="Name" [formControl]="taskNameControl">
+    </mat-form-field>
+
+    <mat-slide-toggle color="warn" #editBillable [checked]="task.billable">
+      Billable
+    </mat-slide-toggle>
+    <div #buttons>
+      <button mat-raised-button class="manage_delete_btn" (click)="openDeleteDialog()">Delete</button>
+      <button mat-raised-button class="manage_cancel_btn" (click)="cancel()">Cancel</button>
+      <button type="submit" mat-raised-button class="manage_save_btn" (click)="save()">Save</button>
+    </div>
+  </form>
+</mat-expansion-panel>

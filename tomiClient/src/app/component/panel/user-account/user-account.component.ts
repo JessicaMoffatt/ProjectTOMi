@@ -4,6 +4,7 @@ import {UserAccount} from "../../../model/userAccount";
 import {Observable, Subject, Subscription} from "rxjs";
 import {AddUserAccountComponent} from "../../modal/add-user-account/add-user-account.component";
 import {MatDialog} from "@angular/material";
+import {TeamService} from "../../../service/team.service";
 
 @Component({
   selector: 'app-user-account',
@@ -12,26 +13,20 @@ import {MatDialog} from "@angular/material";
 })
 export class UserAccountComponent implements OnInit, OnDestroy {
 
-  public selectedEventSubject: Subject<UserAccount> = new Subject<UserAccount>();
-
-  private userSelectedSubscription: Subscription;
-
   private userAccount: UserAccount;
 
   @Input() userSelectedEvent: Observable<UserAccount>;
 
   @ViewChild('editUserComponent') editUserComponent : ElementRef;
 
-  constructor(private dialog: MatDialog, private userAccountService: UserAccountService) { }
+  constructor(private dialog: MatDialog, private userAccountService: UserAccountService, private teamService:TeamService) { }
 
   ngOnInit() {
-    this.userSelectedSubscription = this.userSelectedEvent.subscribe((userSelected: UserAccount) => {
-      this.selectedEventSubject.next(userSelected);
-    });
+    this.teamService.refreshTeams();
+    this.userAccountService.initializeUserAccounts();
   }
 
   ngOnDestroy() {
-    this.userSelectedSubscription.unsubscribe();
   }
 
   /**

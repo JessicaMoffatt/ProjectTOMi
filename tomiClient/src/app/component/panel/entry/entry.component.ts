@@ -36,7 +36,7 @@ export class EntryComponent implements OnInit {
   @ViewChild('componentInput') componentInput;
   /** The input field for the entry's project.*/
   @ViewChild('projectInput') projectInput;
-  /** The input field for the entry's task.*/
+  /** The input field for the entry's taskSubject.*/
   @ViewChild('taskInput') taskInput;
   /** The input field for the entry's unit type.*/
   @ViewChild('unitTypeInput') unitTypeInput;
@@ -172,7 +172,7 @@ export class EntryComponent implements OnInit {
   }
 
   /**
-   * Populates this entry with project, task and unit type information.
+   * Populates this entry with project, taskSubject and unit type information.
    */
   private populateEntry(){
       if(this.projectInput.selected &&  this.projectInput.selected.value != "-1"){
@@ -191,9 +191,9 @@ export class EntryComponent implements OnInit {
           return (element.id == this.taskInput.selected.value);
         });
 
-        this.entry.task = this.tasks[index];
+        this.entry.taskSubject = this.tasks[index];
       }else{
-        this.entry.task = null;
+        this.entry.taskSubject = null;
       }
 
       if(this.unitTypeInput.selected && this.unitTypeInput.selected.value != -1){
