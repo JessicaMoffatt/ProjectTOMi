@@ -1,26 +1,28 @@
-import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
+
 declare let gapi:any;
 
+/**
+ * @author Karol Talbot
+ * @version 1.0
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class SignInService {
-  user:any;
-  public isUserLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  router:Router;
-  snackBar:MatSnackBar;
-  http:HttpClient;
-  navList:any = new Array();
+  private user:any;
+  private isUserLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public navList:Array<any> = [];
 
-  constructor(router:Router, snackBar:MatSnackBar, http:HttpClient) {
+  constructor(private router:Router, private snackBar:MatSnackBar, private http:HttpClient) {
     this.router = router;
-    this.snackBar=snackBar;
-    this.http=http;
+    this.snackBar = snackBar;
+    this.http = http;
   }
 
   setUser(user:any):boolean{
@@ -41,7 +43,7 @@ export class SignInService {
   }
 
 
-  getNavBarList(){
+  private getNavBarList(){
   return this.http.get("http://localhost:8080/build_nav_bar").pipe(map(value => {
       return value;})).subscribe((value) => {
         this.navList["my_timesheets"] = value["my_timesheets"];
@@ -51,7 +53,7 @@ export class SignInService {
         this.navList["manage_teams"] = value["manage_teams"];
         this.navList["manage_unit_types"] = value["manage_unit_types"];
         this.navList["manage_tasks"] = value["manage_tasks"];
-        this.navList["manage_user_accounts"] = value["manage_user_accounts"]
+        this.navList["manage_user_accounts"] = value["manage_user_accounts"];
       return value;});
   }
   async signOut() {
@@ -74,8 +76,7 @@ export class SignInService {
   }
 
   getToken():string{
-    let userToken = this.user.getAuthResponse().id_token;
-    return userToken;
+    return this.user.getAuthResponse().id_token;
   }
 
   getIcon():string{

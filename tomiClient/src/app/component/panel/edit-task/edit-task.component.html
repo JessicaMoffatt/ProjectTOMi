@@ -2,7 +2,7 @@
 @author Karol Talbot
 @version 1.1
 -->
-<mat-expansion-panel #editTaskExpansionPanel (opened)="setValuesOnOpen()" class="user_account_table">
+<mat-expansion-panel #editTaskExpansionPanel (opened)="setValuesOnOpen()" class="table">
   <mat-expansion-panel-header>
     <mat-panel-title>
       {{task.name}}
@@ -12,8 +12,8 @@
     <mat-form-field id="task">
       <input matInput #editTaskName placeholder="Name" [formControl]="taskNameControl">
     </mat-form-field>
-
-    <mat-slide-toggle color="warn" #editBillable [checked]="task.billable">
+    <br/>
+    <mat-slide-toggle color="warn" #editBillable [checked]="task.billable" id="billable">
       Billable
     </mat-slide-toggle>
     <div #buttons>

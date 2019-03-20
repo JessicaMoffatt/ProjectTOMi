@@ -1,28 +1,33 @@
 <!--
-@author Iliya Kiritchkov
-@version 1.1
+  @author Karol Talbot
+  @version 2.0
 -->
 <div class="content_pane">
-  <div class="search_bar"><input #user_account_search id="user_account_search" [ngClass]="'input_search'"
-                                 placeholder="search" (keyup)="0"></div>
+
+  <div class="search_bar">
+    <input #unit_type_search id="unit_type_search" [ngClass]="'input_search'" placeholder="search" (keyup)="0">
+  </div>
+
   <div class="accordion">
     <div id="left">&nbsp;</div>
     <div id="center">
       <mat-accordion>
-        <ng-container *ngFor="let userAccount of userAccountService.userSubject | async">
-          <app-edit-user id="edit_user_account{{userAccount.id}}" #editUserComponent
+        <ng-container *ngFor="let unitType of unitTypeService.unitTypes | async">
+          <app-edit-unit-type id="edit_unit_type{{unitType.id}}" #editUnitTypeComponent
                          (saveRequested)="save($event)"
                          (deleteRequested)="delete($event)"
-                         [userAccount]="userAccount"
-          ></app-edit-user>
+                         [unitType]="unitType"
+          ></app-edit-unit-type>
           <mat-divider></mat-divider>
         </ng-container>
       </mat-accordion>
     </div>
-  </div>
+  </div><!-- .accordion -->
+
   <button class=" floating_action_button" mat-fab (click)="openDialog()">
     <i class="material-icons">
       add
     </i>
   </button>
 </div>
+

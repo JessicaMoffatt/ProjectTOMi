@@ -1,7 +1,7 @@
 /**
  * A Unit Type is used to distinguish between types of units.
  *
- * @author Jessica Moffatt (updated by Iliya Kiritchkov)
+ * @author Jessica Moffatt and Iliya Kiritchkov
  * @version 1.0
  */
 export class UnitType{

@@ -191,9 +191,9 @@ export class EntryComponent implements OnInit {
           return (element.id == this.taskInput.selected.value);
         });
 
-        this.entry.taskSubject = this.tasks[index];
+        this.entry.task = this.tasks[index];
       }else{
-        this.entry.taskSubject = null;
+        this.entry.task = null;
       }
 
       if(this.unitTypeInput.selected && this.unitTypeInput.selected.value != -1){

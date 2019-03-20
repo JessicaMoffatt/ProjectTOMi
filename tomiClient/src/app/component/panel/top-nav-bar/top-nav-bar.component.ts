@@ -2,7 +2,10 @@ import {Component, NgModule, OnInit} from '@angular/core';
 import {SignInService} from "../../../service/sign-in.service";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
-
+/**
+ * @author Karol Talbot
+ * @version 1.0
+ */
 @NgModule({
   providers: [SignInService]
 })
@@ -12,13 +15,12 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
   styleUrls: ['./top-nav-bar.component.scss']
 })
 export class TopNavBarComponent implements OnInit {
-  signInService: SignInService;
   isUserLoggedIn: boolean;
   screenSize: number;
 
-  constructor(signInService: SignInService, breakpointObserver: BreakpointObserver) {
+  constructor(private signInService: SignInService, private breakpointObserver: BreakpointObserver) {
     this.signInService = signInService;
-    this.signInService.isUserLoggedIn.subscribe(value => {
+    this.signInService.isLoggedIn().subscribe(value => {
       this.isUserLoggedIn = value;
     });
     breakpointObserver.observe([

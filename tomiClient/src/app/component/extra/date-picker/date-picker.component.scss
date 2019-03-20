@@ -1,16 +1,9 @@
-@import "../../../../variables";
+@import "/~src/variables";
 
 .calendar {
   position: relative;
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
   box-shadow: none;
-  div {
-    i {
-      padding-top: 0.8rem;
-      font-size: 3rem;
-      color: $arrow_color;
-    }
+  i {
+    color: $arrow_color;
   }
 }

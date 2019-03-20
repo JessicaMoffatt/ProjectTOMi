@@ -48,7 +48,7 @@ import {TimesheetPanelComponent} from "./component/panel/timesheet-panel/timeshe
 import {TeamPanelComponent} from "./component/panel/team-panel/team-panel.component";
 import {ProjectsPanelComponent} from "./component/panel/projects-panel/projects-panel.component";
 import {ManageTeamsPanelComponent} from "./component/panel/manage-teams-panel/manage-teams-panel.component";
-import {UnitTypesPanelComponent} from "./component/panel/unit-types-panel/unit-types-panel.component";
+import {UnitTypePanelComponent} from "./component/panel/unit-types-panel/unit-type-panel.component";
 import {TasksPanelComponent} from "./component/panel/tasks-panel/tasks-panel.component";
 import {UserAccountComponent} from './component/panel/user-account/user-account.component';
 import {AddUserAccountComponent} from './component/modal/add-user-account/add-user-account.component';
@@ -68,11 +68,12 @@ import {EntryApproveComponent} from './component/panel/entry-approve/entry-appro
 import {BudgetReportComponent} from './component/extra/budget-report/budget-report.component';
 import { UnitTypeSidebarComponent } from './component/sidebar/unit-type-sidebar/unit-type-sidebar.component';
 import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
-import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-unit-type.component';
+import { EditUnitTypeComponent } from './component/panel/edit-unit-type/edit-unit-type.component';
 import { ProductivityReportComponent } from './component/extra/productivity-report/productivity-report.component';
 import { TeamProductivityReportComponent } from './component/extra/team-productivity-report/team-productivity-report.component';
 import { DeleteTaskModal } from "./component/panel/edit-task/edit-task.component";
 import {AddTaskComponent} from "./component/modal/add-task/add-task.component";
+import {DeleteUnitTypeModal} from "./component/panel/edit-unit-type/edit-unit-type.component";
 
 //Service Imports
 import {ProjectEntriesService} from "./service/project-entries.service";
@@ -93,7 +94,7 @@ import {UserAccountService} from "./service/user-account.service";
     TeamPanelComponent,
     ProjectsPanelComponent,
     ManageTeamsPanelComponent,
-    UnitTypesPanelComponent,
+    UnitTypePanelComponent,
     TasksPanelComponent,
     TimesheetComponent,
     EntryComponent,
@@ -125,7 +126,8 @@ import {UserAccountService} from "./service/user-account.service";
     ProductivityReportComponent,
     TeamProductivityReportComponent,
     DeleteTaskModal,
-    AddTaskComponent
+    AddTaskComponent,
+    DeleteUnitTypeModal
   ],
   imports: [
     BrowserModule,
@@ -173,7 +175,8 @@ import {UserAccountService} from "./service/user-account.service";
     EditUnitTypeComponent,
     DeleteUserAccountModal,
     AddTaskComponent,
-    DeleteTaskModal
+    DeleteTaskModal,
+    DeleteUnitTypeModal
   ],
   providers: [
     AccessGuard,

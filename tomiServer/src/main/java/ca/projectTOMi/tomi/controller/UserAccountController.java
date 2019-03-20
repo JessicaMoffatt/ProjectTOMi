@@ -179,29 +179,6 @@ public class UserAccountController {
 	}
 
 	/**
-	 * Gets the {@link UserAccount}s that are active, not part of the provided Team and not a team
-	 * lead of any {@link ca.projectTOMi.tomi.model.Team}.
-	 *
-	 * @param teamId
-	 * 	the unique identifier for the Team
-	 *
-	 * @return List of UserAccounts that are active, not part of the provided Team and not a team lead
-	 * of any Teams.
-	 */
-	@GetMapping ("/teams/{teamId}/available")
-	public Resources<Resource<UserAccount>> getAvailableUserAccountsForTeam(@PathVariable final Long teamId,
-	                                                                        @RequestAttribute final UserAuthManager authMan) {
-		final List<Resource<UserAccount>> accountList = this.userAccountService.getAvailableUserAccountsForTeam(teamId)
-			.stream()
-			.map(userAccount -> new UserAuthLinkWrapper<>(userAccount, authMan))
-			.map(this.assembler::toResource)
-			.collect(Collectors.toList());
-
-		return new Resources<>(accountList,
-			linkTo(methodOn(UserAccountController.class).getAvailableUserAccountsForTeam(teamId, authMan)).withSelfRel());
-	}
-
-	/**
 	 * Gets {@link UserAccount}s that are active but not a part of {@link
 	 * ca.projectTOMi.tomi.model.Team}.
 	 *

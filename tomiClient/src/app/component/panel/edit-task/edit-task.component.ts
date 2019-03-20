@@ -24,11 +24,11 @@ export class EditTaskComponent implements OnInit, OnDestroy {
 
   /** The taskSubject model associated with this component. */
   @Input() task: Task;
-  /** Event Emitter used to notify the TaskComponent parent that the EditTaskComponent save had been requested. */
+  /** Event Emitter used to notify the TaskComponent parent that the EditUnitTypeComponent save had been requested. */
   @Output() saveRequested = new EventEmitter<any>();
-  /** Event Emitter used to notify the TaskComponent parent that the EditTaskComponent delete had been requested. */
+  /** Event Emitter used to notify the TaskComponent parent that the EditUnitTypeComponent delete had been requested. */
   @Output() deleteRequested = new EventEmitter<any>();
-  /** Event Emitter used to notify the TaskComponent parent that the EditTaskComponent cancel had been requested. */
+  /** Event Emitter used to notify the TaskComponent parent that the EditUnitTypeComponent cancel had been requested. */
   @Output() cancelRequested = new EventEmitter<any>();
 
   /** The expansion panel for this taskSubject. */

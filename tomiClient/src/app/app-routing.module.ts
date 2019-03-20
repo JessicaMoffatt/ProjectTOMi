@@ -5,7 +5,7 @@ import {ApprovePanelComponent} from "./component/panel/approve-panel/approve-pan
 import {TeamPanelComponent} from "./component/panel/team-panel/team-panel.component";
 import {ProjectsPanelComponent} from "./component/panel/projects-panel/projects-panel.component";
 import {ManageTeamsPanelComponent} from "./component/panel/manage-teams-panel/manage-teams-panel.component";
-import {UnitTypesPanelComponent} from "./component/panel/unit-types-panel/unit-types-panel.component";
+import {UnitTypePanelComponent} from "./component/panel/unit-types-panel/unit-type-panel.component";
 import {TasksPanelComponent} from "./component/panel/tasks-panel/tasks-panel.component";
 import {UserAccountComponent} from "./component/panel/user-account/user-account.component";
 import {SignInComponent} from "./component/panel/sign-in-panel/sign-in.component";
@@ -19,7 +19,7 @@ const routes: Routes = [
   {path: 'my_team', component: TeamPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
   {path: 'manage_projects', component: ProjectsPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
   {path: 'manage_teams', component: ManageTeamsPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
-  {path: 'manage_unit_types', component: UnitTypesPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
+  {path: 'manage_unit_types', component: UnitTypePanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
   {path: 'manage_tasks', component: TasksPanelComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
   {path: 'manage_user_accounts', component: UserAccountComponent, data:{requiresLogin: true}, canActivate: [ AccessGuard ]},
   {path: 'sign_in', component: SignInComponent},

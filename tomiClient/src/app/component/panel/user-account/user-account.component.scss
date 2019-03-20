@@ -8,8 +8,9 @@
   width: 100vw;
   overflow-y: auto;
   overflow-x: hidden;
-  mat-divider{
-    color:$light_grey;
+
+  mat-divider {
+    color: $light_grey;
   }
 }
 
@@ -39,18 +40,8 @@
   position: fixed;
   right: 4vw;
   bottom: 4vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   background-color: $blue;
-  div {
-    display: block;
-    height:4rem;
-    i {
-      padding-top:0.5rem;
-      padding-bottom:0.5rem;
-      font-size: 3rem;
-      color: white;
-    }
+  i {
+    color: white;
   }
 }

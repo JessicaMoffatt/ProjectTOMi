@@ -1,3 +1,7 @@
+<!--
+  @author Karol Talbot
+  @version 1.0
+-->
 <mat-toolbar>
   <img id="logo" src="../../../../assets/img/tomiIcon.svg" alt="Logo"/>
   <ng-template [ngIf]="screenSize === 0">
@@ -39,7 +43,7 @@
       </mat-menu>
 
       <button id="menuButton" mat-icon-button [matMenuTriggerFor]="appMenu">
-        <img id="icon" [src]="signInService.getIcon()"/>
+        <img id="icon" [src]="signInService.getIcon()" alt="menu"/>
       </button>
     </ng-template>
   </ng-template>
@@ -84,7 +88,9 @@
       </mat-menu>
 
       <button id="menuButtonMed" mat-flat-button [matMenuTriggerFor]="appMenuMed">
-        <img id="menuButtonImageMed" src="../../../../assets/img/burger_menu.png" />
+        <i class="material-icons">
+          menu
+        </i>
       </button>
     </ng-template>
   </ng-template>
@@ -94,7 +100,7 @@
     <ng-template [ngIf]="isUserLoggedIn">
       <mat-menu #appMenuSmall="matMenu">
         <ng-template [ngIf]="signInService.navList['my_timesheets']">
-          <button mat-menu-item class="menu"[routerLink]="'/my_timesheets'">Timesheets</button>
+          <button mat-menu-item class="menu" [routerLink]="'/my_timesheets'">Timesheets</button>
         </ng-template>
 
         <ng-template [ngIf]="signInService.navList['approve_timesheets']">
@@ -130,7 +136,9 @@
       </mat-menu>
 
       <button id="menuButtonSmall" mat-flat-button [matMenuTriggerFor]="appMenuSmall">
-        <img id="menuButtonImage" src="../../../../assets/img/burger_menu.png" />
+        <i class="material-icons">
+          menu
+        </i>
       </button>
     </ng-template>
   </ng-template>
