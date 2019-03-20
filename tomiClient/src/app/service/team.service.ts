@@ -6,7 +6,8 @@ import {map} from "rxjs/operators";
 import {UserAccount} from "../model/userAccount";
 import {TeamSidebarService} from "./team-sidebar.service";
 import {UserAccountService} from "./user-account.service";
-import {SignInService} from "./sign-in.service";
+import {teamUrl} from "../configuration/domainConfiguration";
+import{userAccountUrl} from "../configuration/domainConfiguration";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -25,11 +26,6 @@ const httpOptions = {
 })
 export class TeamService {
 
-  /** The link used to get,post, and delete teams. */
-  private teamUrl = `http://localhost:8080/teams`;
-  /** The link used to get,post, and delete user accounts. */
-  private userUrl = `http://localhost:8080/user_accounts`;
-
   /** List of all the team members of the selected team.*/
   teamMembers: UserAccount[] = [];
 
@@ -37,11 +33,7 @@ export class TeamService {
 
   /** List of all the team members not currently on any teams.*/
   allFreeMembers: UserAccount[] = [];
-  //
-  // /** List of all the active user accounts that aren't already a part of the selected team,
-  //  * as well as not a team lead of any other teams.
-  //  */
-  // allOutsideMembers: UserAccount[] = [];
+
   /** The members selected from the list of team members.*/
   private selectedMembers: UserAccount[];
 
@@ -56,7 +48,7 @@ export class TeamService {
    * Gets a List of all Teams from the server.
    */
   GETAllTeams() {
-    return this.http.get(this.teamUrl)
+    return this.http.get(teamUrl)
       .pipe(map((data: any) => {
         return data._embedded.teams as Team[];
       }));
@@ -73,7 +65,7 @@ export class TeamService {
    * @param team The selected team.
    */
   populateTeamMembers(team:Team){
-    this.getTeamMembers(team.id).subscribe((data: Array<UserAccount>) => {
+    this.getTeamMembers(team).subscribe((data: Array<UserAccount>) => {
       this.teamMembers = data;
     });
   }
@@ -115,23 +107,8 @@ export class TeamService {
    * Gets all members who aren't on the team, as well as not a team lead of any other teams.
    * @param id The ID of the team to be omitted from the selection of user accounts.
    */
-  getAllOutsideMembers(id: number): Observable<Array<UserAccount>> {
-    return this.http.get(`${this.teamUrl}/${id}/available`)
-      .pipe(map((data: any) => {
-        if (data._embedded !== undefined) {
-          return data._embedded.userAccounts as UserAccount[];
-        } else {
-          return [];
-        }
-      }));
-  }
-
-  /**
-   * Gets all members who aren't on the team, as well as not a team lead of any other teams.
-   * @param id The ID of the team to be omitted from the selection of user accounts.
-   */
   getAllFreeMembers(): Observable<Array<UserAccount>> {
-    return this.http.get(`${this.teamUrl}/unassigned`)
+    return this.http.get(`${teamUrl}/unassigned`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];
@@ -145,8 +122,9 @@ export class TeamService {
    * Gets all user accounts on the team with the specified ID.
    * @param id The ID of the team whose members are to be gotten.
    */
-  getTeamMembers(id: number): Observable<Array<UserAccount>> {
-    return this.http.get(`${this.teamUrl}/${id}/user_accounts`)
+  getTeamMembers(team: Team): Observable<Array<UserAccount>> {
+    let url = team._links["getAccounts"];
+    return this.http.get(url["href"])
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];
@@ -162,7 +140,7 @@ export class TeamService {
    * @param id The ID of the user account to get.
    */
   getTeamMemberById(id: number): Observable<UserAccount> {
-    return this.http.get(`${this.userUrl}/${id}`)
+    return this.http.get(`${userAccountUrl}/${id}`)
       .pipe(map((data: any) => {
         return data as UserAccount;
       }));
@@ -177,7 +155,7 @@ export class TeamService {
 
     let tempTeam: Team = null;
     if (team.id === -1) {
-      await this.http.post<Team>(this.teamUrl, JSON.stringify(team), httpOptions).toPromise().then(response => {
+      await this.http.post<Team>(teamUrl, JSON.stringify(team), httpOptions).toPromise().then(response => {
         tempTeam = response;
         return response;
       }).catch((error: any) => {
