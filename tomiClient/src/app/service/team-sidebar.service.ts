@@ -41,7 +41,7 @@ export class TeamSidebarService {
    * @param id The id of the team to get.
    */
   getTeamById(id: number): Observable<Team> {
-    return this.http.get(`${teamUrl}${id}`)
+    return this.http.get(`${teamUrl}/${id}`)
       .pipe(map((data: any) => {
           return data as Team;
       }));

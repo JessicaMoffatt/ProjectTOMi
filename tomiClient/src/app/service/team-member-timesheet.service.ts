@@ -51,8 +51,7 @@ export class TeamMemberTimesheetService{
   /**
    * Gets all the team members for this team lead's team.
    */
-  getAllTeamMembers(): Observable<Array<UserAccount>> {
-
+  getAllTeamMembers(team:Team): Observable<Array<UserAccount>> {
     return this.teamService.getTeamMembers(team);
   }
 
@@ -71,33 +70,33 @@ export class TeamMemberTimesheetService{
   reloadTeamMembers() {
     this.teamMembersReports =[];
 
-
-
-    this.getAllTeamMembers().subscribe((data: Array<UserAccount>) => {
-      this.teamMembers = data;
-      for (let i = 0; i < this.teamMembers.length; i++) {
-        this.getProductivityReportByMember(this.teamMembers[i])
-          .subscribe((data: ProductivityReportLine[]) => {
-            this.teamMembersReports = this.teamMembersReports.concat(data);
-            this.teamMembersReports.sort(ProductivityReportLine.compareDate);
-            this.teamMembersReports.sort(ProductivityReportLine.compareUser);
-          }, error => {
-            let errorMessage = 'Something went wrong when loading team member productivity reports.';
-            this.snackBar.open(errorMessage, null, {
-              duration: 5000,
-              politeness: 'assertive',
-              panelClass: 'snackbar-fail',
-              horizontalPosition: 'right'
+    this.teamSidebarService.getTeamById(this.teamid).subscribe((data)=>{
+      this.getAllTeamMembers(data).subscribe((data: Array<UserAccount>) => {
+        this.teamMembers = data;
+        for (let i = 0; i < this.teamMembers.length; i++) {
+          this.getProductivityReportByMember(this.teamMembers[i])
+            .subscribe((data: ProductivityReportLine[]) => {
+              this.teamMembersReports = this.teamMembersReports.concat(data);
+              this.teamMembersReports.sort(ProductivityReportLine.compareDate);
+              this.teamMembersReports.sort(ProductivityReportLine.compareUser);
+            }, error => {
+              let errorMessage = 'Something went wrong when loading team member productivity reports.';
+              this.snackBar.open(errorMessage, null, {
+                duration: 5000,
+                politeness: 'assertive',
+                panelClass: 'snackbar-fail',
+                horizontalPosition: 'right'
+              });
             });
-          });
-      }
-    }, error => {
-      let errorMessage = 'Something went wrong when loading team members.';
-      this.snackBar.open(errorMessage, null, {
-        duration: 5000,
-        politeness: 'assertive',
-        panelClass: 'snackbar-fail',
-        horizontalPosition: 'right'
+        }
+      }, error => {
+        let errorMessage = 'Something went wrong when loading team members.';
+        this.snackBar.open(errorMessage, null, {
+          duration: 5000,
+          politeness: 'assertive',
+          panelClass: 'snackbar-fail',
+          horizontalPosition: 'right'
+        });
       });
     });
   }
