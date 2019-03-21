@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {UserAccount} from "../model/userAccount";
 import {Observable, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
@@ -11,6 +11,9 @@ import {Router} from "@angular/router";
 import {UserAccountService} from "./user-account.service";
 import {ProductivityReportLine} from "../model/productivityReportLine";
 import {MatSnackBar} from "@angular/material";
+import {SignInService} from "./sign-in.service";
+import {Team} from "../model/team";
+import {TeamSidebarService} from "./team-sidebar.service";
 
 /**
  * TeamMemberTimesheetService is used to control the flow of data regarding timesheets to/from the view.
@@ -21,7 +24,7 @@ import {MatSnackBar} from "@angular/material";
 @Injectable({
   providedIn: 'root'
 })
-export class TeamMemberTimesheetService {
+export class TeamMemberTimesheetService{
 
   /** The list of team members for this team lead's team.*/
   teamMembers: UserAccount[] = [];
@@ -31,8 +34,7 @@ export class TeamMemberTimesheetService {
   selectedMemberReport: ProductivityReportLine[] = [];
   teamMembersReports: ProductivityReportLine[] = [];
 
-  //TODO, dont hardcode, should come from header
-  teamid: number = 1;
+  teamid: number = this.signInService.userAccount.teamId;
 
   /** The list of entries for the displaying timesheet*/
   entries: Entry[] = [];
@@ -42,14 +44,16 @@ export class TeamMemberTimesheetService {
 
   constructor(private http: HttpClient, private router: Router,
               private userAccountService: UserAccountService, private teamService: TeamService,
-              public timesheetService: TimesheetService, public snackBar: MatSnackBar) {
+              public timesheetService: TimesheetService, public snackBar: MatSnackBar,
+              private signInService:SignInService, private teamSidebarService:TeamSidebarService) {
   }
 
   /**
    * Gets all the team members for this team lead's team.
    */
   getAllTeamMembers(): Observable<Array<UserAccount>> {
-    return this.teamService.getTeamMembers(this.teamid);
+
+    return this.teamService.getTeamMembers(team);
   }
 
   /**
@@ -66,6 +70,9 @@ export class TeamMemberTimesheetService {
    */
   reloadTeamMembers() {
     this.teamMembersReports =[];
+
+
+
     this.getAllTeamMembers().subscribe((data: Array<UserAccount>) => {
       this.teamMembers = data;
       for (let i = 0; i < this.teamMembers.length; i++) {
