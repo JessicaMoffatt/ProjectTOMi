@@ -124,7 +124,7 @@ export class AddTeamComponent implements OnInit {
       team.leadId = this.lead;
     }
 
-    if (team.teamName !== null && team.teamName !== "") {
+    if (team.teamName !== null && team.teamName !== "" && team.teamName !== undefined) {
       this.teamService.save(team).then((value: Team) => {
         this.teamService.refreshTeams();
         if (team.leadId !== -1) {
