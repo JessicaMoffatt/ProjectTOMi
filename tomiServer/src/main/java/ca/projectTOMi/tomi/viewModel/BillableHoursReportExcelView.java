@@ -25,20 +25,16 @@ public class BillableHoursReportExcelView extends AbstractXlsView {
 		httpServletResponse.setHeader("Content-Disposition", "attachment;filename=\"BillableHoursReport.xls\"");
 		final Sheet sheet = workbook.createSheet("Billable Hours");
 		final Row header = sheet.createRow(0);
-		header.createCell(0).setCellValue("Date");
 		header.createCell(1).setCellValue("Billable Hours");
 		header.createCell(2).setCellValue("NonBillable Hours");
-		header.createCell(3).setCellValue("Name");
-		header.createCell(4).setCellValue("Project");
+		header.createCell(3).setCellValue("Project");
 
 		int rowNum = 1;
 		for (final BillableHoursReportLine line : this.report) {
 			final Row row = sheet.createRow(rowNum++);
-			row.createCell(0).setCellValue(line.getDate().toString());
 			row.createCell(1).setCellValue(line.getBillableHours());
 			row.createCell(2).setCellValue(line.getNonbillableHours());
-			row.createCell(3).setCellValue(line.getUserAccount().getFirstName() + " " + line.getUserAccount().getLastName());
-			row.createCell(4).setCellValue(line.getProject().getProjectName());
+			row.createCell(3).setCellValue(line.getProject().getProjectName());
 		}
 	}
 }

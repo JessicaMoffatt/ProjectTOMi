@@ -20,5 +20,7 @@ export const projectsUrl = domain + 'projects';
 
 export const dataDumpUrl = domain + 'data_dump_report/xls';
 
+export const billableUrl = domain + 'billable_hours_report';
+
 /** The URL used to get,post, and delete entries. */
 export const entryUrl = domain + 'entries';

@@ -11,15 +11,22 @@ import {MatSnackBar} from "@angular/material";
 })
 export class ProjectsPanelComponent implements OnInit {
 
+  //TODO REMOVE
+  projectId: string = 'JM1001';
   constructor(private projectService: ProjectService, private datePipe: DatePipe, public snackBar:MatSnackBar) {
   }
 
   project: Project;
 
   ngOnInit() {
-    this.projectService.getProjectById('JM1001').subscribe((data) => {
-      this.project = data;
-    });
+    //TODO, remove, this is just for testing purposes... move it to wherever setSelected happens
+    this.projectService.getProjectById(this.projectId).subscribe(
+      data => {
+        this.projectService.setSelected(data);
+      },
+      err => {
+
+      });
   }
 
   /**
@@ -28,8 +35,6 @@ export class ProjectsPanelComponent implements OnInit {
   getDataDump() {
     this.projectService.getDataDump().subscribe(
       data => {
-        console.log("HERE");
-        console.log(data);
         let link = document.createElement('a');
         let stuff = window.URL.createObjectURL(data);
         link.href = stuff

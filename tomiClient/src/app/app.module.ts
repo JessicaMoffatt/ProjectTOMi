@@ -28,6 +28,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatToolbarModule} from "@angular/material";
 import {MatCheckboxModule } from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 import {AddTeamComponent, TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
 import {TeamSidebarService} from "./service/team-sidebar.service";
@@ -82,6 +83,7 @@ import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-uni
 import {AccessGuard} from "./AccessGuard";
 import { ProductivityReportComponent } from './component/extra/productivity-report/productivity-report.component';
 import { TeamProductivityReportComponent } from './component/extra/team-productivity-report/team-productivity-report.component';
+import { BillableHourReportComponent } from './component/extra/billable-hour-report/billable-hour-report.component';
 
 @NgModule({
   declarations: [
@@ -126,7 +128,8 @@ import { TeamProductivityReportComponent } from './component/extra/team-producti
     AddTaskComponent,
     DeleteUserAccountModal,
     ProductivityReportComponent,
-    TeamProductivityReportComponent
+    TeamProductivityReportComponent,
+    BillableHourReportComponent
   ],
   imports: [
     BrowserModule,
@@ -154,7 +157,8 @@ import { TeamProductivityReportComponent } from './component/extra/team-producti
     ReactiveFormsModule,
     MatSidenavModule,
     MatTabsModule,
-    MatTableModule
+    MatTableModule,
+    MatProgressBarModule
   ],
   entryComponents: [
     EntryComponent,
@@ -206,7 +210,8 @@ import { TeamProductivityReportComponent } from './component/extra/team-producti
     MatExpansionModule,
     MatSidenavModule,
     MatTabsModule,
-    MatTableModule
+    MatTableModule,
+    MatProgressBarModule
   ]
 })
 export class AppModule {
