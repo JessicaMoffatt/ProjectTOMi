@@ -3,6 +3,8 @@ import {map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Expense} from "../model/expense";
+import {Project} from "../model/project";
+import {ProjectService} from "./project.service";
 
 /**
  * Expense service provides services related to Expenses
@@ -25,6 +27,7 @@ export class ExpenseService {
   selected: Expense;
 
   constructor(private http: HttpClient) {
+
     this.expenses = this.getExpenses(); // added by: James Andrade
   }
 
@@ -55,15 +58,17 @@ export class ExpenseService {
   /**
    * Gets a project with the specified ID.
    * @param id The ID of the project to get.
-
-  getProjectById(id:number){
-    return this.http.get(`${this.projectsUrl}/${id}`).pipe(map((response: Response) => response))
+*/
+  getProjectById(id: string){
+    return this.http.get(`${this.expenseUrl}/${id}`)
+      .pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data !== undefined) {
           return data as Project;
+
         } else {
           return null;
         }
       }));
-  } */
+  }
 }

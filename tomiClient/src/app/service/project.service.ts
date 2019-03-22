@@ -29,7 +29,7 @@ export class ProjectService {
 
 
   /** The URL for accessing projects.*/
-  private projectsUrl = 'http://localhost:8080/projects';
+  public projectsUrl = 'http://localhost:8080/projects';
 
   private dataDumpUrl = 'http://localhost:8080/data_dump_report/xls';
 
@@ -53,7 +53,7 @@ export class ProjectService {
    * Gets all projects.
    */
   getAllProjects(): Observable<Array<Project>> {
-    return this.http.get(`${this.projectsUrl}`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.projectsUrl}`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];

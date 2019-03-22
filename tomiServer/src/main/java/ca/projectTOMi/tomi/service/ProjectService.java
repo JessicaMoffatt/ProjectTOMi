@@ -1,6 +1,7 @@
 package ca.projectTOMi.tomi.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import ca.projectTOMi.tomi.exception.ProjectManagerException;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
@@ -121,6 +122,7 @@ public final class ProjectService {
 
 	public Project createProject(final Project project){
 		project.setActive(true);
+		project.setProjectMembers(new HashSet<>());
 		final Project savedProject = this.repository.save(project);
 		this.projectAuthService.newProjectPolicies(savedProject);
 		return savedProject;

@@ -3,6 +3,7 @@ import {SelectionModel} from "@angular/cdk/collections";
 import {Expense} from "../../../../model/expense";
 import {FormControl} from "@angular/forms";
 import {ExpenseService} from "../../../../service/expense.service";
+import {ProjectService} from "../../../../service/project.service";
 
 @Component({
   selector: 'app-expense-list',
@@ -20,9 +21,10 @@ export class ExpenseListComponent implements OnInit {
 
   selection = new SelectionModel<Expense>(true, []);
 
-  constructor(public expenseService: ExpenseService) { }
+  constructor(public expenseService: ExpenseService, private projectService: ProjectService) { }
 
   ngOnInit() {
+    this.expenseService.getProjectById(this.projectService.selectedProject.id);
   }
 
 }

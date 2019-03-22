@@ -65,7 +65,7 @@ public final class ProjectAuthManager implements AuthManager<ProjectAuthorizatio
 	}
 
 	private boolean handleListReads() {
-		boolean hasAnyReadPermission = false;
+		boolean hasAnyReadPermission = true;
 		for (final ProjectAuthorizationPolicy policy : this.policies) {
 			final boolean hasReadPermission = policy.getPermission() == ProjectPermission.READ;
 			hasAnyReadPermission = Boolean.logicalOr(hasAnyReadPermission, hasReadPermission);
@@ -81,6 +81,7 @@ public final class ProjectAuthManager implements AuthManager<ProjectAuthorizatio
 
 	@Override
 	public void loadUserPolicies(final List<ProjectAuthorizationPolicy> policies) {
+//		System.out.println(policies.size());
 		this.policies = new HashSet<>(policies);
 	}
 

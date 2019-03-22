@@ -23,6 +23,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.zip.ZipEntry;
 
 /**
@@ -108,7 +109,11 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			} else {
 				final AuthManager<ProjectAuthorizationPolicy> authMan;
 				authMan = new ProjectAuthManager(user);
-				authMan.loadUserPolicies(this.projectAuthRepository.getAllByRequestingUser(user));
+				System.out.println("Before");
+				List<ProjectAuthorizationPolicy> f = this.projectAuthRepository.getAllByRequestingUser(user);
+				System.out.println("After List");
+				authMan.loadUserPolicies(f);
+				System.out.println("After load");
 				request.setAttribute("authMan", authMan);
 			}
 		} else if ("ExpenseController".matches(controller)) {
