@@ -13,11 +13,11 @@ import {UnitType} from "../../../../model/unitType";
 
 @Component({
   selector: 'app-edit-project-sub-panel',
-  templateUrl: './edit-project-sub-panel.component.html',
-  styleUrls: ['./edit-project-sub-panel.component.scss']
+  templateUrl: './project-detail.component.html',
+  styleUrls: ['./project-detail.component.scss']
 })
 
-export class EditProjectSubPanelComponent implements OnInit {
+export class ProjectDetailComponent implements OnInit {
 
   constructor(public projectService: ProjectService,
               public clientService: ClientService,
@@ -115,13 +115,17 @@ export class EditProjectSubPanelComponent implements OnInit {
     console.log("  id:" + this.projectService.selectedProject.id);
     console.log("  project manager id:" + this.projectService.selectedProject.projectManagerId);
 
-    this.projectService.save(this.projectService.selectedProject).then(() => {
-      console.log("after project saved.");
-      console.log("  project name:" + this.projectService.selectedProject.projectName);
-      console.log("  client:" + this.projectService.selectedProject.client.name);
-      console.log("  id:" + this.projectService.selectedProject.id);
-      console.log("  project manager id:" + this.projectService.selectedProject.projectManagerId);
-    });
+    this.projectService.save(this.projectService.selectedProject)
+
+      .then((data) => {
+
+
+        console.log("after project saved.");
+        console.log("  project name:" + this.projectService.selectedProject.projectName);
+        console.log("  client:" + this.projectService.selectedProject.client.name);
+        console.log("  id:" + this.projectService.selectedProject.id);
+        console.log("  project manager id:" + this.projectService.selectedProject.projectManagerId);
+          });
   }
 
   onHidden(): void {

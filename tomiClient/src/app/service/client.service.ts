@@ -44,7 +44,7 @@ export class ClientService {
   initializeClients() {
     this.getClients().forEach( client => {
       this.clients = new BehaviorSubject<Array<Client>>(client);
-      console.log(this.clients.value);
+      //console.log(this.clients.value);
     });
   }
 
@@ -122,8 +122,8 @@ export class ClientService {
    * @param clientName the client name to be searched for
    */
   getClientByName(clientName: string): Client {
-      console.log(this.clients.value);
-      console.log(clientName);
+    //  console.log(this.clients.value);
+    //  console.log(clientName);
         for (let c of this.clients.value) {
           if (c.name === clientName) {
             return c as Client;

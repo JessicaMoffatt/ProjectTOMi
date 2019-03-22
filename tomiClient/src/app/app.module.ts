@@ -78,7 +78,7 @@ import {ProjectEntriesService} from "./service/project-entries.service";
 import {EntryApproveComponent} from './component/panel/entry-approve/entry-approve.component';
 import {BudgetReportComponent} from './component/extra/budget-report/budget-report.component';
 import {ProjectService} from "./service/project.service";
-import { EditProjectSubPanelComponent } from './component/panel/projects-panel/edit-project-sub-panel/edit-project-sub-panel.component';
+import { ProjectDetailComponent } from './component/panel/projects-panel/project-detail/project-detail.component';
 import {MatFormFieldModule} from "@angular/material";
 import { ExpenseListComponent } from './component/panel/projects-panel/expense-list/expense-list.component';
 import { ProjectMemberListComponent } from './component/panel/projects-panel/project-member-list/project-member-list.component';
@@ -131,7 +131,7 @@ import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/pro
     SubmitApprovalModalComponent,
     BudgetReportComponent,
     SubmitTimesheetModalComponent,
-    EditProjectSubPanelComponent,
+    ProjectDetailComponent,
     ExpenseListComponent,
     ProjectMemberListComponent,
     BudgetReportComponent,

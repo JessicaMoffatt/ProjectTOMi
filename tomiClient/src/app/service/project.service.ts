@@ -6,12 +6,8 @@ import {catchError} from "rxjs/operators";
 import {HttpErrorResponse} from "@angular/common/http";
 import {throwError} from "rxjs";
 import {Project} from "../model/project";
-import {Client} from "../model/client";
 import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
-import {Entry} from "../model/entry";
-import {User} from "../component/modal/add-project-member/add-project-member.component";
-import {__values} from "tslib";
 
 /**
  * Project service provides services relates to Projects.
@@ -30,9 +26,6 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ProjectService {
-
-  //TODO don't hardcode this
-  userId = 1;
 
 
   /** The URL for accessing projects.*/
@@ -140,12 +133,14 @@ export class ProjectService {
 
   async save(project: Project) {
     if (project.id.length == 2) {
-      await this.http.post<Project>(this.projectsUrl, JSON.stringify(project), httpOptions).toPromise().then(response => {
 
-        // this.refreshClients();
-      }).catch((error: any) => {
+      await this.http.post<Project>(this.projectsUrl, JSON.stringify(project), httpOptions).toPromise()
+        .then((project)=> this.selectedProject = project)
+
+      console.log('in project.service.ts -- at end point of save')
+        //.catch((error: any) => {
         //TODO Add an error display
-      });
+      //});
     } else {
       const url = project._links["update"];
       this.http.put<UserAccount>(url["href"], JSON.stringify(project), httpOptions).toPromise().then(response => {

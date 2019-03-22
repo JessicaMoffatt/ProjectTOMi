@@ -117,7 +117,9 @@ public class ProjectController {
 			throw new InvalidIDPrefix();
 		}
 		newProject.setId(this.projectService.getId(newProject.getId()));
-		final Resource<Project> resource = this.projectResourceAssembler.toResource(new ProjectAuthLinkWrapper<>(this.projectService.createProject(newProject), null));
+		final Resource<Project> resource =
+				this.projectResourceAssembler.toResource(
+						new ProjectAuthLinkWrapper<>(this.projectService.createProject(newProject), null));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
