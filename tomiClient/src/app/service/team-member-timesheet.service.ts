@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {UserAccount} from "../model/userAccount";
 import {Observable, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
@@ -11,6 +11,9 @@ import {Router} from "@angular/router";
 import {UserAccountService} from "./user-account.service";
 import {ProductivityReportLine} from "../model/productivityReportLine";
 import {MatSnackBar} from "@angular/material";
+import {SignInService} from "./sign-in.service";
+import {Team} from "../model/team";
+import {TeamSidebarService} from "./team-sidebar.service";
 
 /**
  * TeamMemberTimesheetService is used to control the flow of data regarding timesheets to/from the view.
@@ -21,7 +24,7 @@ import {MatSnackBar} from "@angular/material";
 @Injectable({
   providedIn: 'root'
 })
-export class TeamMemberTimesheetService {
+export class TeamMemberTimesheetService{
 
   /** The list of team members for this team lead's team.*/
   teamMembers: UserAccount[] = [];
@@ -31,9 +34,8 @@ export class TeamMemberTimesheetService {
   selectedMemberReport: ProductivityReportLine[] = [];
   teamMembersReports: ProductivityReportLine[] = [];
 
-  //TODO, dont hardcode, should come from header
-  teamid: number = 1;
-
+  teamid: number = this.signInService.userAccount.teamId;
+  team: Team;
   /** The list of entries for the displaying timesheet*/
   entries: Entry[] = [];
 
@@ -42,14 +44,15 @@ export class TeamMemberTimesheetService {
 
   constructor(private http: HttpClient, private router: Router,
               private userAccountService: UserAccountService, private teamService: TeamService,
-              public timesheetService: TimesheetService, public snackBar: MatSnackBar) {
+              public timesheetService: TimesheetService, public snackBar: MatSnackBar,
+              private signInService:SignInService, private teamSidebarService:TeamSidebarService) {
   }
 
   /**
    * Gets all the team members for this team lead's team.
    */
-  getAllTeamMembers(): Observable<Array<UserAccount>> {
-    return this.teamService.getTeamMembers(this.teamid);
+  getAllTeamMembers(team:Team): Observable<Array<UserAccount>> {
+    return this.teamService.getTeamMembers(team);
   }
 
   /**
@@ -66,7 +69,19 @@ export class TeamMemberTimesheetService {
    */
   reloadTeamMembers() {
     this.teamMembersReports =[];
-    this.getAllTeamMembers().subscribe((data: Array<UserAccount>) => {
+
+    if(this.team === null || this.team === undefined){
+      this.teamSidebarService.getTeamById(this.teamid).subscribe((data)=>{
+        this.team = data;
+        this.getAllTeamMembersAndReports(data);
+      });
+    }else{
+      this.getAllTeamMembersAndReports(this.team);
+    }
+  }
+
+  getAllTeamMembersAndReports(team:Team){
+    this.getAllTeamMembers(team).subscribe((data: Array<UserAccount>) => {
       this.teamMembers = data;
       for (let i = 0; i < this.teamMembers.length; i++) {
         this.getProductivityReportByMember(this.teamMembers[i])
@@ -101,7 +116,7 @@ export class TeamMemberTimesheetService {
   displayTimesheet() {
     this.populateTimesheets().then((value) => {
       let timesheet = value as Timesheet;
-      this.populateEntries(timesheet.id);
+      this.populateEntries(timesheet);
       this.timesheetService.setCurrentDate();
     }, reject => {
       let errorMessage = 'Something went wrong when retrieving timesheets.';
@@ -129,8 +144,8 @@ export class TeamMemberTimesheetService {
    * Populates the list of entries for the specified timesheet.
    * @param id The ID of the timesheet to display entries for.
    */
-  private populateEntries(id: number) {
-    this.timesheetService.getEntries(id).subscribe((data) => {
+  private populateEntries(timesheet: Timesheet) {
+    this.timesheetService.getEntries(timesheet).subscribe((data) => {
       this.entries = data;
       this.updateTally();
     }, error => {

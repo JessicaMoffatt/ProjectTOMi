@@ -1,13 +1,11 @@
 import {ComponentRef, Injectable, Input} from '@angular/core';
 import {Task} from "../model/task";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {combineLatest} from "rxjs";
-import {Team} from "../model/team";
-import {any} from "codelyzer/util/function";
+import {taskUrl} from "../configuration/domainConfiguration";
 
- const httpOptions = {
+const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
   })
@@ -19,18 +17,11 @@ import {any} from "codelyzer/util/function";
 
 export class TaskPanelService {
 
-  /** The link used to get,post, and delete tasks. */
-  private taskUrl = `http://localhost:8080/tasks/`;
-
   /** Used to reference the add task component created by clicking the Add Task button.*/
   ref: ComponentRef<any>;
 
   /** The task selected in the sidebar.*/
   selectedTask: Task = new Task();
-
-  /** List of all the tasks.*/
-//  @Input() tasks: Task[];
-
 
   tasksObservable : Observable<Array<Task>>;
 
@@ -69,7 +60,7 @@ export class TaskPanelService {
    * Gets a list of all the tasks.
    */
   getAllTasks(): Observable<Array<Task>> {
-    return this.http.get(this.taskUrl).pipe(map((response: Response) => response))
+    return this.http.get(taskUrl).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         return data._embedded.tasks as Task[];
       }));
@@ -95,7 +86,7 @@ export class TaskPanelService {
     let testTask: Task = null;
     if (task.id === -1) {
 
-      await this.http.post<Task>(this.taskUrl, JSON.stringify(task), httpOptions).toPromise().then(response => {
+      await this.http.post<Task>(taskUrl, JSON.stringify(task), httpOptions).toPromise().then(response => {
         testTask = response;
         this.tasksObservable = this.getAllTasks();
         return response;

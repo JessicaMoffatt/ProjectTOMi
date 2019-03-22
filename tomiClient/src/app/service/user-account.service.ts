@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material";
+import {userAccountUrl} from "../configuration/domainConfiguration";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -21,9 +22,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserAccountService {
-
-  /** The link used to GET, POST and DELETE user accounts */
-  private userAccountUrl = "http://localhost:8080/user_accounts";
+  /** The UserAccount selected from the list of UserAccounts.*/
+  private selectedUserAccount: UserAccount;
 
   /** Listing of all active UserAccounts */
   userAccounts: Observable<Array<UserAccount>>;
@@ -111,7 +111,7 @@ export class UserAccountService {
    */
   GETAllUserAccounts() {
     let obsUsers : Observable<Array<UserAccount>>;
-    obsUsers = this.http.get(this.userAccountUrl).pipe(map((response:Response) => response))
+    obsUsers = this.http.get(userAccountUrl).pipe(map((response:Response) => response))
       .pipe(map((data: any) => {
         return data._embedded.userAccounts as UserAccount[];
       }));
@@ -125,7 +125,7 @@ export class UserAccountService {
    */
   async save(userAccount: UserAccount) {
     if (userAccount.id === -1) {
-      await this.http.post<UserAccount>(this.userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
+      await this.http.post<UserAccount>(userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
         this.refreshUserAccounts();
         let addUserSuccessMessage = userAccount.firstName + ' ' + userAccount.lastName + ' added successfully.';
         this.snackBar.open(addUserSuccessMessage, null, {duration: 4000, politeness: 'assertive', panelClass: 'snackbar-success', horizontalPosition: 'right'});
@@ -134,7 +134,7 @@ export class UserAccountService {
         this.snackBar.open(addUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
       });
     } else {
-      const url = userAccount._links["self"];
+      const url = userAccount._links["update"];
       await this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
         this.refreshUserAccounts();
         let editUserSuccessMessage = userAccount.firstName + ' ' + userAccount.lastName + ' updated successfully.';
@@ -152,7 +152,7 @@ export class UserAccountService {
    * @param account The UserAccount to be deleted.
    */
     delete(userAccount: UserAccount) {
-      const url = userAccount._links["self"];
+      const url = userAccount._links["delete"];
       this.http.delete(url["href"], httpOptions).toPromise().then( response => {
         this.refreshUserAccounts();
         let deleteUserSuccessMessage = userAccount.firstName + ' ' + userAccount.lastName + ' deleted successfully.';
@@ -169,7 +169,7 @@ export class UserAccountService {
    * @param id id of the user.
    */
   getUserById(id:number): Observable<UserAccount>{
-    return this.http.get(`${this.userAccountUrl}/${id}`).pipe(map((response:Response) => response))
+    return this.http.get(`${userAccountUrl}/${id}`).pipe(map((response:Response) => response))
       .pipe(map((data: any) => {
         return data as UserAccount;
       }));
