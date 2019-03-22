@@ -12,7 +12,7 @@ import {UserAccount} from "../../../model/userAccount";
 })
 export class ProjectSidebarComponent implements OnInit {
 
-  constructor( private ppc: ProjectsPanelComponent,  public projectService: ProjectService) { }
+  constructor(private projectsPanel: ProjectsPanelComponent, public projectService: ProjectService) { }
 
   ngOnInit() {
     this.projectService.initializeProjects();
@@ -21,15 +21,15 @@ export class ProjectSidebarComponent implements OnInit {
   displayBlankProject() {
     this.projectService.selectedProject = null;
     this.projectService.userAccountList = new BehaviorSubject<Array<UserAccount>>([]);
-    this.ppc.subPanelDisplay = "manageProject";
+    this.projectsPanel.subPanelDisplay = "manageProject";
   }
 
   viewProductivityReport() {
-    this.ppc.subPanelDisplay = "productivityReport";
+    this.projectsPanel.subPanelDisplay = "productivityReport";
   }
 
   selectProject(p : Project){
     this.projectService.setSelected(p);
-    this.ppc.subPanelDisplay = "manageProject";
+    this.projectsPanel.subPanelDisplay = "manageProject";
   }
 }

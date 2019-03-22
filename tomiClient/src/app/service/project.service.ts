@@ -191,7 +191,7 @@ export class ProjectService {
 
 
   initializeProjects() {
-    this.getProjectsForUser(this.userId).forEach(project => {
+    this.getAllProjects().forEach(project => {
       this.projects = new BehaviorSubject<Array<Project>>(project);
       // this.sort();
     }).catch((error: any) => {

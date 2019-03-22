@@ -3,8 +3,6 @@ import {Project} from "../../../model/project";
 import {ProjectService} from "../../../service/project.service";
 import {DatePipe} from '@angular/common';
 import {MatSnackBar} from "@angular/material";
-import {ClientService} from "../../../service/client.service";
-import {Client} from "../../../model/client";
 import {BehaviorSubject} from "rxjs";
 import {UserAccount} from "../../../model/userAccount";
 
@@ -17,7 +15,9 @@ import {UserAccount} from "../../../model/userAccount";
 
 export class ProjectsPanelComponent implements OnInit {
 
-  constructor(private projectService: ProjectService, private datePipe: DatePipe, public snackBar:MatSnackBar, private clientService: ClientService) {
+  constructor(private projectService: ProjectService,
+              private datePipe: DatePipe,
+              public snackBar:MatSnackBar) {
   }
 
   /** tracks which sub-panel: new project panel, existing project panel, or report panel will be displayed */

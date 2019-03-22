@@ -18,7 +18,7 @@ import {
   MAT_DATE_LOCALE,
   MatButtonModule,
   MatDatepickerModule, MatExpansionModule, MatGridListModule, MatIconModule,
-  MatMenuModule,
+  MatMenuModule, MatTableModule,
   MatNativeDateModule, MatSidenavModule, MatSnackBarModule
 } from '@angular/material';
 import {MatListModule} from '@angular/material/list';
