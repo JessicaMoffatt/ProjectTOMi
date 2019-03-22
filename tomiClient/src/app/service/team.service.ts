@@ -63,12 +63,6 @@ export class TeamService {
       }));
   }
 
-  // refreshTeams() {
-  //   this.GETAllTeams().subscribe((data)=>{
-  //     this.teamsObservable = data;
-  //   });
-  // }
-
   /**
    * Refresh the list of teamSubject to keep up-to-date with the server.
    */
@@ -229,62 +223,29 @@ export class TeamService {
       }));
   }
 
-  //TODO add error handling!!
-  /**
-   * Saves a specified team. If the team is new (ID of -1) an HTTP POST is performed, else a PUT is performed to update the existing team.
-   * @param team The team to update/create.
-   */
-  async save(team: Team) {
-    let tempTeam: Team = null;
+  async save (team: Team) {
     if (team.id === -1) {
+      let savedTeam: Team = null;
       await this.http.post<Team>(this.teamUrl, JSON.stringify(team), httpOptions).toPromise().then(response => {
-        tempTeam = response;
+        this.refreshTeams();
+        savedTeam = response;
         return response;
-      }).catch((error: any) => {
-        //TODO
+      }).catch((error: Error) => {
+        let addTeamErrorMessage = 'Something went wrong when adding ' + team.teamName + '. Please contact your system administrator.';
+        this.snackBar.open(addTeamErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
+        throw error;
       });
+      return savedTeam;
     } else {
-      const url = team._links["update"];
-      this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).toPromise().then((response) => {
-        this.teamSideBarService.reloadTeams();
-
-        tempTeam = response;
-        return response;
-      }).catch((error: any) => {
-        //TODO
+      const url = team._links["self"];
+      await this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).toPromise().then(response => {
+        this.refreshTeams();
+      }).catch( (error: any) => {
+        let editTeamErrorMessage = 'Something went wrong when updating ' + team.teamName + '. Please contact your system administrator.';
+        this.snackBar.open(editTeamErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
       });
     }
-
-    return tempTeam;
   }
-  //
-  // async save (team: Team) {
-  //   if (team.id === -1) {
-  //     let savedTeam: Team = null;
-  //     await this.http.post<Team>(this.teamUrl, JSON.stringify(team), httpOptions).toPromise().then(response => {
-  //       this.refreshTeams();
-  //       savedTeam = response;
-  //       return response;
-  //       //let addTeamSuccessMessage = team.teamName + ' added successfully.';
-  //       //this.snackBar.open(addTeamSuccessMessage, null, {duration: 4000, politeness: 'assertive', panelClass: 'snackbar-success', horizontalPosition: 'center'});
-  //     }).catch((error: Error) => {
-  //       throw error;
-  //       // let addTeamErrorMessage = 'Something went wrong when adding ' + team.teamName + '. Please contact your system administrator.';
-  //       // this.snackBar.open(addTeamErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
-  //     });
-  //     return savedTeam;
-  //   } else {
-  //     const url = team._links["self"];
-  //     await this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).toPromise().then(response => {
-  //       this.refreshTeams();
-  //       let editTeamSuccessMessage = team.teamName + ' updated successfully.';
-  //       this.snackBar.open(editTeamSuccessMessage, null, {duration: 4000, politeness: 'assertive', panelClass: 'snackbar-success', horizontalPosition: 'center'});
-  //     }).catch( (error: any) => {
-  //       let editTeamErrorMessage = 'Something went wrong when updating ' + team.teamName + '. Please contact your system administrator.';
-  //       this.snackBar.open(editTeamErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
-  //     });
-  //   }
-  // }
 
   /**
    * Cancels any changes made to the team name or the team lead.
@@ -296,26 +257,18 @@ export class TeamService {
     });
   }
 
-  //TODO add error handling!!
   /**
    * Logically deletes the selected team (sets their active status to false.)
    *
    * @param team The team to be deleted.
    */
   delete(team: Team) {
-    let index = this.teamSideBarService.teams.findIndex((element) => {
-      return (element.id == team.id);
-    });
-
-    this.teamSideBarService.teams.splice(index, 1);
-
-    const url = team._links["delete"];
-
-    this.http.delete(url["href"], httpOptions).subscribe((response) => {
-      this.teamSideBarService.selectedTeam = null;
-      this.teamMembers = [];
-
-      return response as Team;
+    const url = team._links["self"];
+    this.http.delete(url["href"], httpOptions).toPromise().then( response => {
+      this.refreshTeams();
+    }).catch(error => {
+      let deleteTeamErrorMessage = 'Something went wrong when deleting ' + team.teamName + '.';
+      this.snackBar.open(deleteTeamErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
     });
   }
 }

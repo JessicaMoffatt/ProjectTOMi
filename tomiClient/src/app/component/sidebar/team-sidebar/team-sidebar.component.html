@@ -6,8 +6,8 @@
 <div [ngClass]="'main_container'">
 <h1>Teams</h1>
   <div>
-    <mat-action-list *ngIf="teamSideBarService.teams">
-      <span *ngFor="let t of (teamSideBarService.teams|orderBy:'teamName')">
+    <mat-action-list>
+      <span *ngFor="let t of teamService.teamSubject | async">
         <button mat-list-item *ngIf="t" (click)="displayTeam(t)">{{t.teamName}}</button>
       </span>
     </mat-action-list>

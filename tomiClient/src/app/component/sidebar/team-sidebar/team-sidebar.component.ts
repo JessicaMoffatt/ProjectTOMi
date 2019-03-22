@@ -8,7 +8,7 @@ import {TeamSidebarService} from "../../../service/team-sidebar.service";
 import {TeamService} from "../../../service/team.service";
 import {UserAccount} from "../../../model/userAccount";
 import {UserAccountService} from "../../../service/user-account.service";
-import {MatDialog, MatDialogRef} from "@angular/material";
+import {MatDialog, MatDialogRef, MatSnackBar} from "@angular/material";
 
 /**
  * TeamSideBarComponent is used to house the list of teams to be managed.
@@ -124,25 +124,19 @@ export class AddTeamComponent implements OnInit {
       team.leadId = this.lead;
     }
 
-    if(team.teamName != null && team.teamName != ""){
+    if (team.teamName !== null && team.teamName !== "") {
       this.teamService.save(team).then((value: Team) => {
-        this.teamSidebarService.teams.push(value);
-
-        if (team.leadId != -1) {
-          this.teamService.getTeamMemberById(team.leadId).subscribe((data: UserAccount) => {
-            let tempAccount = data;
-            tempAccount.teamId = value.id;
-            this.userAccountService.save(tempAccount).then();
+        this.teamService.refreshTeams();
+        if (team.leadId !== -1) {
+          this.userAccountService.getUserById(team.leadId).subscribe((teamLead: UserAccount) => {
+            teamLead.teamId = value.id;
+            this.userAccountService.save(teamLead);
           });
         }
 
+        this.teamSidebarService.teams.push(value);
         this.closeAddTeamComponent();
-      }).catch((error: any) => {
-        console.log("An ERRORR HAPPENED " + error);
       });
-    }else{
-      //TODO
-      //display error
     }
   }
 

@@ -138,7 +138,7 @@ export class UserAccountService {
       await this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
         this.refreshUserAccounts();
         let editUserSuccessMessage = userAccount.firstName + ' ' + userAccount.lastName + ' updated successfully.';
-        this.snackBar.open(editUserSuccessMessage, null, {duration: 4000, politeness: 'assertive', panelClass: 'snackbar-success', horizontalPosition: 'center'});
+        this.snackBar.open(editUserSuccessMessage, null, {duration: 4000, politeness: 'polite', panelClass: 'snackbar-success', horizontalPosition: 'center'});
       }).catch((error: any) => {
         let editUserErrorMessage = 'Something went wrong when updating ' + userAccount.firstName + ' ' + userAccount.lastName + '. Please contact your system administrator.';
         this.snackBar.open(editUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
