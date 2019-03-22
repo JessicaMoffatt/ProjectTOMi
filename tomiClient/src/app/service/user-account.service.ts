@@ -101,7 +101,7 @@ export class UserAccountService {
     }).then(value => {
       this.sortUserAccounts();
     }).catch( (error: any) => {
-      let getUsersErrorMessage = 'Something went wrong when updating the list of Users. Please contact your system administrator.';
+      let getUsersErrorMessage = 'Something went wrong when updating the list of Users.';
       this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
     });
   }
@@ -125,22 +125,18 @@ export class UserAccountService {
    */
   async save(userAccount: UserAccount) {
     if (userAccount.id === -1) {
-      await this.http.post<UserAccount>(this.userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
+      await this.http.post<UserAccount>(this.userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then( response => {
         this.refreshUserAccounts();
-        let addUserSuccessMessage = userAccount.firstName + ' ' + userAccount.lastName + ' added successfully.';
-        this.snackBar.open(addUserSuccessMessage, null, {duration: 4000, politeness: 'assertive', panelClass: 'snackbar-success', horizontalPosition: 'center'});
       }).catch((error: any) => {
-        let addUserErrorMessage = 'Something went wrong when adding ' + userAccount.firstName + ' ' + userAccount.lastName + '. Please contact your system administrator.';
+        let addUserErrorMessage = 'Something went wrong when adding ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
         this.snackBar.open(addUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
       });
     } else {
       const url = userAccount._links["self"];
       await this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
         this.refreshUserAccounts();
-        let editUserSuccessMessage = userAccount.firstName + ' ' + userAccount.lastName + ' updated successfully.';
-        this.snackBar.open(editUserSuccessMessage, null, {duration: 4000, politeness: 'polite', panelClass: 'snackbar-success', horizontalPosition: 'center'});
       }).catch((error: any) => {
-        let editUserErrorMessage = 'Something went wrong when updating ' + userAccount.firstName + ' ' + userAccount.lastName + '. Please contact your system administrator.';
+        let editUserErrorMessage = 'Something went wrong when updating ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
         this.snackBar.open(editUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
       });
     }
@@ -155,10 +151,8 @@ export class UserAccountService {
       const url = userAccount._links["self"];
       this.http.delete(url["href"], httpOptions).toPromise().then( response => {
         this.refreshUserAccounts();
-        let deleteUserSuccessMessage = userAccount.firstName + ' ' + userAccount.lastName + ' deleted successfully.';
-        this.snackBar.open(deleteUserSuccessMessage, null, {duration: 4000, politeness: 'assertive', panelClass: 'snackbar-success', horizontalPosition: 'center'});
       }).catch((error: any) => {
-        let deleteUserErrorMessage = 'Something went wrong when deleting ' + userAccount.firstName + ' ' + userAccount.lastName + '. Please contact your system administrator.';
+        let deleteUserErrorMessage = 'Something went wrong when deleting ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
         this.snackBar.open(deleteUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
       });
   }
