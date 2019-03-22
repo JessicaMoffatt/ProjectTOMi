@@ -105,7 +105,7 @@ export class TeamService {
     }).then(() => {
       this.sortTeams();
     }).catch((error: any) => {
-      let getTeamErrorMessage = 'Something went wrong when updating the list of Teams. Please contact your system administrator.';
+      let getTeamErrorMessage = 'Something went wrong when updating the list of Teams.';
       this.snackBar.open(getTeamErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
     });
   }
@@ -231,7 +231,7 @@ export class TeamService {
         savedTeam = response;
         return response;
       }).catch((error: Error) => {
-        let addTeamErrorMessage = 'Something went wrong when adding ' + team.teamName + '. Please contact your system administrator.';
+        let addTeamErrorMessage = 'Something went wrong when adding ' + team.teamName + '.';
         this.snackBar.open(addTeamErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
         throw error;
       });
@@ -241,7 +241,7 @@ export class TeamService {
       await this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).toPromise().then(response => {
         this.refreshTeams();
       }).catch( (error: any) => {
-        let editTeamErrorMessage = 'Something went wrong when updating ' + team.teamName + '. Please contact your system administrator.';
+        let editTeamErrorMessage = 'Something went wrong when updating ' + team.teamName + '.';
         this.snackBar.open(editTeamErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
       });
     }
