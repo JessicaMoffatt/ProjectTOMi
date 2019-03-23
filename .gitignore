@@ -42,5 +42,6 @@ Thumbs.db
 TOMiServer.log
 *.gz
 *.log
-package-lock.json
+tomiClient/package.json
+tomiClient/package-lock.json
 tomiClient/package-lock.json

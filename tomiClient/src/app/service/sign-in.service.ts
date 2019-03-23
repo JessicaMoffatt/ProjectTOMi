@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
+import {UserAccount} from "../model/userAccount";
+import {buildNavBarUrl} from "../configuration/domainConfiguration";
 
 declare let gapi:any;
 
@@ -18,6 +20,7 @@ export class SignInService {
   private user:any;
   private isUserLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public navList:Array<any> = [];
+  userAccount:UserAccount = null;
 
   constructor(private router:Router, private snackBar:MatSnackBar, private http:HttpClient) {
     this.router = router;
@@ -43,8 +46,8 @@ export class SignInService {
   }
 
 
-  private getNavBarList(){
-  return this.http.get("http://localhost:8080/build_nav_bar").pipe(map(value => {
+  getNavBarList(){
+  return this.http.get(buildNavBarUrl).pipe(map(value => {
       return value;})).subscribe((value) => {
         this.navList["my_timesheets"] = value["my_timesheets"];
         this.navList["approve_timesheets"] = value["approve_timesheets"];

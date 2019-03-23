@@ -6,6 +6,9 @@ import {map} from "rxjs/operators";
 import {Task} from '../model/task';
 import {UnitType} from "../model/unitType";
 import {Team} from "../model/team";
+import {entryUrl} from "../configuration/domainConfiguration";
+import {taskUrl} from "../configuration/domainConfiguration";
+import {unitTypeUrl} from "../configuration/domainConfiguration";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -35,7 +38,7 @@ export class EntryService {
    * Gets all tasks.
    */
   getTasks(): Observable<Array<Task>> {
-    return this.http.get(`${this.tasksUrl}`)
+    return this.http.get(`${taskUrl}`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.tasks as Task[];
@@ -49,7 +52,7 @@ export class EntryService {
    * Gets all unit types.
    */
   getUnitTypes(): Observable<Array<UnitType>> {
-    return this.http.get(`${this.unitTypeUrl}`)
+    return this.http.get(`${unitTypeUrl}`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.unitTypes as UnitType[];
@@ -66,7 +69,7 @@ export class EntryService {
   async save(entry: Entry) {
     let tempEntry: Entry = null;
     if (entry.id === -1) {
-      await this.http.post<Entry>(this.entriesUrl, JSON.stringify(entry), httpOptions).toPromise().then(response => {
+      await this.http.post<Entry>(entryUrl, JSON.stringify(entry), httpOptions).toPromise().then(response => {
         tempEntry = response;
         return response;
       }).catch(() => {

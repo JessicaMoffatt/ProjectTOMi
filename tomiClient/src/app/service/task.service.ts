@@ -5,6 +5,7 @@ import {Task} from '../model/task';
 import {BehaviorSubject, Observable} from "rxjs";
 import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
+import {taskUrl} from "../configuration/domainConfiguration";
 
 
 const httpOptions: any = {
