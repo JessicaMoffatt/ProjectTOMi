@@ -5,7 +5,6 @@ import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import ca.projectTOMi.tomi.exception.MinimumAdminAccountException;
 import ca.projectTOMi.tomi.exception.MinimumProgramDirectorAccountException;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
@@ -15,7 +14,6 @@ import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.UserAccountRepository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -30,6 +28,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public final class UserAccountService {
+
 
 	private final UserAccountRepository repository;
 	private final TeamService teamService;
@@ -150,8 +149,8 @@ public final class UserAccountService {
 		final List<Timesheet> timesheets = this.entryService.getActiveTimesheets();
 		final LocalDate date = LocalDate.now();
 		for (final UserAccount a : accounts) {
-			Boolean hasTimesheet = false;
-			for (Timesheet t : timesheets) {
+			boolean hasTimesheet = false;
+			for (final Timesheet t : timesheets) {
 				if (a.equals(t.getUserAccount()) && date.toString().equals(t.getStartDate().toString())) {
 					hasTimesheet = true;
 				}
@@ -245,12 +244,27 @@ public final class UserAccountService {
 		}
 	}
 
+	@Scheduled (cron = "0 16 * * * FRI")
+	public void emailReminder() {
+		final TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
+		final LocalDate date = LocalDate.now().with(fieldISO, 1);
+		final List<Timesheet> timesheets = this.entryService.getTimesheetsByDate(date);
+		for(final Timesheet timesheet: timesheets){
+			if(timesheet.getSubmitDate().isEmpty() && (timesheet.getUserAccount().getGoogleId() != null)){
+				final String email = timesheet.getUserAccount().getEmail();
+				final String subject = TOMiEmailService.SUBJECT;
+				final String body = String.format(TOMiEmailService.EMAIL_BODY, timesheet.getUserAccount().getFirstName(), date);
+				this.emailService.sendSimpleMessage(email, subject, body);
+			}
+		}
+	}
+
 	@EventListener (ContextRefreshedEvent.class)
 	public void createUserPrime() {
-		String email = this.emailService.getEmailAddress();
+		final String email = this.emailService.getEmailAddress();
 		Boolean userExists = false;
-		UserAccount primeAccount = this.repository.findByEmail(email).orElse(new UserAccount());
-		userExists = primeAccount.getFirstName() != null;
+		final UserAccount primeAccount = this.repository.findByEmail(email).orElse(new UserAccount());
+		userExists = primeAccount.getEmail() != null;
 		primeAccount.setFirstName("Project");
 		primeAccount.setLastName("TOMi");
 		primeAccount.setActive(true);

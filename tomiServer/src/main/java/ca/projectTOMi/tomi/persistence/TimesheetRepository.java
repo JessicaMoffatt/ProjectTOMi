@@ -1,5 +1,6 @@
 package ca.projectTOMi.tomi.persistence;
 
+import java.time.LocalDate;
 import java.util.List;
 import ca.projectTOMi.tomi.model.Status;
 import ca.projectTOMi.tomi.model.Timesheet;
@@ -40,4 +41,6 @@ public interface TimesheetRepository extends JpaRepository<Timesheet, Long> {
 	List<Status> getEntriesStatusesByTimesheet(@Param ("timesheetId") Long timesheetId);
 
 	List<Timesheet> getAllByActiveTrueAndUserAccountOrderByStartDateDesc(UserAccount userAccount);
+
+	List<Timesheet> getAllByActiveTrueAndStartDate(LocalDate date);
 }

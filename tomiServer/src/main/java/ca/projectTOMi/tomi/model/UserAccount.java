@@ -104,7 +104,7 @@ public final class UserAccount {
 
 	@Override
 	public int hashCode() {
-		return this.id.intValue();
+		return this.id.hashCode();
 	}
 
 	@Override

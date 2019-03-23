@@ -77,7 +77,7 @@ public final class Team {
 
 	@Override
 	public int hashCode() {
-		return this.id.intValue();
+		return this.id.hashCode();
 	}
 
 	@Override

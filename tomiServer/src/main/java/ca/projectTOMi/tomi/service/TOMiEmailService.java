@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TOMiEmailService {
+	static final String SUBJECT = "Reminder to submit this weeks timesheet";
+	static final String EMAIL_BODY = "Hello %s%nThis is a reminder to submit your timesheet for the week of %s.%n%nThis is an automated message please do not reply.%n";
+
 	@Value ("${spring.mail.username}")
 	private String emailAddress;
 	@Value ("${spring.mail.password}")

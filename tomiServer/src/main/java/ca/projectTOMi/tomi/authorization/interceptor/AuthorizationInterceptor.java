@@ -66,16 +66,16 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			return true;
 		}
 
-		final UserAccount user = userAccountService.getUserAccount(1L);
-//		try {
-//			user = this.userAuthenticationService.checkLogin(authToken);
-//		} catch (final Exception e) {
-//			System.out.println(request.getMethod() + " " + e);
-//			return false;
-//		}
-//		if (user == null) {
-//			return false;
-//		}
+		final UserAccount user;
+		try {
+			user = this.userAuthenticationService.checkLogin(authToken);
+		} catch (final Exception e) {
+			System.out.println(request.getMethod() + " " + e);
+			return false;
+		}
+		if (user == null) {
+			return false;
+		}
 
 		final String requestMethod = request.getMethod();
 		final String requestURI = request.getRequestURI();

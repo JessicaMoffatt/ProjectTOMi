@@ -218,7 +218,7 @@ public class EntryService {
 	 *
 	 * @return List containing all Timesheet that are active
 	 */
-	public List<Timesheet> getActiveTimesheets() {
+	List<Timesheet> getActiveTimesheets() {
 		return this.timesheetRepository.getAllByActiveOrderById(true);
 	}
 
@@ -353,7 +353,11 @@ public class EntryService {
 		return false;
 	}
 
-	public List<Entry> getEntriesByProject(Project project) {
-		return entryRepository.getAllByActiveTrueAndProject(project);
+	List<Entry> getEntriesByProject(final Project project) {
+		return this.entryRepository.getAllByActiveTrueAndProject(project);
+	}
+
+	List<Timesheet> getTimesheetsByDate(final LocalDate date) {
+		return this.timesheetRepository.getAllByActiveTrueAndStartDate(date);
 	}
 }
