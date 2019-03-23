@@ -90,6 +90,7 @@ import { ProductivityReportComponent } from './component/extra/productivity-repo
 import { TeamProductivityReportComponent } from './component/extra/team-productivity-report/team-productivity-report.component';
 import { AddProjectMemberComponent } from './component/modal/add-project-member/add-project-member.component';
 import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/project-sidebar.component';
+import { AddProjectExpenseComponent } from './component/modal/add-project-expense/add-project-expense.component';
 
 @NgModule({
   declarations: [
@@ -146,7 +147,8 @@ import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/pro
     DeleteUserAccountModal,
     EditTaskComponent,
     AddProjectMemberComponent,
-    ProjectSidebarComponent
+    ProjectSidebarComponent,
+    AddProjectExpenseComponent
   ],
   imports: [
     MatSidenavModule,
@@ -191,6 +193,7 @@ import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/pro
     MatTableModule
   ],
   entryComponents: [
+    AddProjectExpenseComponent,
     AddProjectMemberComponent,
     EntryComponent,
     AddTeamComponent,

@@ -4,6 +4,9 @@ import {Expense} from "../../../../model/expense";
 import {FormControl} from "@angular/forms";
 import {ExpenseService} from "../../../../service/expense.service";
 import {ProjectService} from "../../../../service/project.service";
+import {AddProjectMemberComponent} from "../../../modal/add-project-member/add-project-member.component";
+import {MatDialog} from "@angular/material";
+import {AddProjectExpenseComponent} from "../../../modal/add-project-expense/add-project-expense.component";
 
 @Component({
   selector: 'app-expense-list',
@@ -12,18 +15,18 @@ import {ProjectService} from "../../../../service/project.service";
 })
 export class ExpenseListComponent implements OnInit {
 
-  /*expenses: Expense[] = [
-    {id: 0, notes: 'Pencils', amount: 20.75, active: true, project_id: 1, _links: null},
-    {id: 1, notes: 'Helium', amount: 4.26, active: false, project_id: 1, _links: null}]; */
 
   /** determines columns and in what order they will be displayed in expenses table */
   displayedColumns: string[] = ['notes', 'amount'];
 
   selection = new SelectionModel<Expense>(true, []);
 
-  constructor(public expenseService: ExpenseService, private projectService: ProjectService) { }
+  constructor(private dialog: MatDialog, public expenseService: ExpenseService) { }
 
   ngOnInit() {
   }
 
+  addExpense() {
+    this.dialog.open(AddProjectExpenseComponent);
+  }
 }

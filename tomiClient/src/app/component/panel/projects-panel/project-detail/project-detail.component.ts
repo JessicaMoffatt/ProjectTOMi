@@ -128,17 +128,7 @@ export class ProjectDetailComponent implements OnInit {
           });
   }
 
-  onHidden(): void {
-    console.log('Dropdown is hidden');
-  }
 
-  onShown(): void {
-    console.log('Dropdown is shown');
-  }
-
-  isOpenChange(): void {
-    console.log('Dropdown state is changed');
-  }
 
   private isValidAccountManagerName(accountManagerName: string) {
     if (this.getInitialsFromName(accountManagerName) === "") return false;
