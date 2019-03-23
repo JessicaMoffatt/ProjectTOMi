@@ -200,21 +200,6 @@ public final class UserAccountService {
 	}
 
 	/**
-	 * Gets the {@link UserAccount}s that are not part of the provided {@link
-	 * ca.projectTOMi.tomi.model.Team} and not team leads.
-	 *
-	 * @param teamId
-	 * 	the unique identifier for the Team.
-	 *
-	 * @return List of UserAccounts that are not part of the Team and not team leads.
-	 */
-	public List<UserAccount> getAvailableUserAccountsForTeam(final Long teamId) {
-		//TODO fix this monstrosity
-		final List<UserAccount> availableUserAccounts = this.repository.getAllByActiveOrderById(true);
-		return availableUserAccounts;
-	}
-
-	/**
 	 * Gets {@link UserAccount}s that are not assigned to a {@link Team}.
 	 *
 	 * @return List of userAccounts that are not part of a Team

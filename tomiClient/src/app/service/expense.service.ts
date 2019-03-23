@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {map} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Expense} from "../model/expense";
 import {Project} from "../model/project";
 import {ProjectService} from "./project.service";
@@ -21,20 +21,17 @@ export class ExpenseService {
   private expenseUrl = 'http://localhost:8080/expenses';
 
   /** used to pass list to project related components */
-  expenses: Observable<Array<Expense>>;
-
-  /** used by expense list in project panel service */
-  selected: Expense;
+  expenses: BehaviorSubject<Array<Expense>>;
 
   constructor(private http: HttpClient) {
 
-    this.expenses = this.getExpenses(); // added by: James Andrade
+
   }
 
   /**
    * Gets all expenses.
    */
-  getExpenses(): Observable<Array<Expense>>{
+  getExpenses(): Observable<Array<Expense>> {
     return this.http.get(`${this.expenseUrl}`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
@@ -45,30 +42,32 @@ export class ExpenseService {
       }));
   }
 
-  /**
-   * sets the selectedProject expense that will be used in edit expense modal
-   * added by: James Andrade
-   * @param project the project to be stored as 'selectedProject'
-   */
-  setSelected(expense: Expense){
-    this.selected = expense;
+  refreshExpenses(projectId: string){
+    if (projectId == null) {
+      return [];
+    } else {
+    this.getExpensesByProjectId(projectId).toPromise()
+      .then(expense => this.expenses = new BehaviorSubject<Array<Expense>>(expense)) // added by: James Andrade
+      .catch(); //TODO: add error handling
+    }
   }
 
 
   /**
    * Gets a project with the specified ID.
-   * @param id The ID of the project to get.
-*/
-  getProjectById(id: string){
-    return this.http.get(`${this.expenseUrl}/${id}`)
-      .pipe(map((response: Response) => response))
-      .pipe(map((data: any) => {
-        if (data !== undefined) {
-          return data as Project;
+   * @param projectId The ID of the project to get.
+   */
+  private getExpensesByProjectId(projectId: string) {
 
-        } else {
-          return null;
-        }
-      }));
+      return this.http.get(`${this.expenseUrl}/${projectId}`)
+        .pipe(map((response: Response) => response))
+        .pipe(map((data: any) => {
+          if (data !== undefined) {
+            return data as Project;
+          } else {
+            return null;
+          }
+        }));
+
   }
 }

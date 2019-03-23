@@ -24,7 +24,6 @@ export class ExpenseListComponent implements OnInit {
   constructor(public expenseService: ExpenseService, private projectService: ProjectService) { }
 
   ngOnInit() {
-    this.expenseService.getProjectById(this.projectService.selectedProject.id);
   }
 
 }

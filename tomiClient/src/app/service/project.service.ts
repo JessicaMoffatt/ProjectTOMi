@@ -6,37 +6,28 @@ import {catchError} from "rxjs/operators";
 import {HttpErrorResponse} from "@angular/common/http";
 import {throwError} from "rxjs";
 import {Project} from "../model/project";
+import {projectsUrl} from "../configuration/domainConfiguration";
+import {dataDumpUrl} from "../configuration/domainConfiguration";
+import {userAccountUrl} from "../configuration/domainConfiguration";
 import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
+import {ExpenseService} from "./expense.service";
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 /**
  * Project service provides services relates to Projects.
  * @author Jessica Moffatt
  * @version 1.0
  */
-
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-};
-
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
 
-
-  /** The URL for accessing projects.*/
-  public projectsUrl = 'http://localhost:8080/projects';
-
-  private dataDumpUrl = 'http://localhost:8080/data_dump_report/xls';
-
-  /** The URL for accessing user accounts.*/
-  private userAccountProjectsUrl = 'http://localhost:8080/user_accounts';
-
-  /** tracks which project is selectedProject in project-panel component and manage-project modal.
+    /** tracks which project is selectedProject in project-panel component and manage-project modal.
    */
   selectedProject: Project; // added by: James Andrade
 
@@ -46,14 +37,29 @@ export class ProjectService {
   /** the user accounts assigned to the current project; for display in project-member-list-component */
   userAccountList: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject([]);
 
-  constructor(private http: HttpClient, public snackBar: MatSnackBar) {
+  constructor(private http: HttpClient, public snackBar: MatSnackBar, private expenseService: ExpenseService) {
   }
 
   /**
    * Gets all projects.
    */
-  getAllProjects(): Observable<Array<Project>> {
-    return this.http.get(`${this.projectsUrl}`)
+  getAllProjects(): Observable<Array<Project>>{
+    return this.http.get(`${projectsUrl}`).pipe(map((response: Response) => response))
+      .pipe(map((data: any) => {
+        if (data._embedded !== undefined) {
+          return data._embedded.projects as Project[];
+        } else {
+          return [];
+        }
+      }));
+  }
+
+  /**
+   * Gets the projects for a specified user.
+   * @param userId The ID of the user whose projects we want.
+   */
+  getProjectsForUser(userId:number): Observable<Array<Project>>{
+    return this.http.get(`${userAccountUrl}/${userId}/projects`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];
@@ -72,6 +78,7 @@ export class ProjectService {
   setSelected(project: Project) {
     this.selectedProject = project;
     this.refreshUserAccountList();
+    this.expenseService.refreshExpenses(project.id);
     // console.log("selectedProject:"+project.projectName);
     // console.log("is null:"+project == null);
     // console.log("is undefined:"+project == undefined);
@@ -84,8 +91,8 @@ export class ProjectService {
    * Gets a project with the specified ID.
    * @param id The ID of the project to get.
    */
-  getProjectById(id: string) {
-    return this.http.get(`${this.projectsUrl}/${id}`).pipe(map((response: Response) => response))
+   getProjectById(id:string){
+     return this.http.get(`${projectsUrl}/${id}`).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data !== undefined) {
           return data as Project;
@@ -99,12 +106,10 @@ export class ProjectService {
    * Retrieves the data dump report as an xls file download.
    * @param project The project to get a report for.
    */
-  getDataDump() {
-    return this.http.get(`${this.dataDumpUrl}`, {responseType: 'blob'})
+  getDataDump(){
+    return this.http.get(`${dataDumpUrl}`, {responseType: 'blob'})
       .pipe(
-        map((res) => {
-          return res
-        }), catchError(this.handleError)
+        map((res) => {return res}),catchError(this.handleError)
       );
   }
 
@@ -134,7 +139,8 @@ export class ProjectService {
   async save(project: Project) {
     if (project.id.length == 2) {
 
-      await this.http.post<Project>(this.projectsUrl, JSON.stringify(project), httpOptions).toPromise()
+      await this.http.post<Project>(`${projectsUrl}`, JSON.stringify(project))
+        .toPromise()
         .then((project)=> this.selectedProject = project)
 
       console.log('in project.service.ts -- at end point of save')
@@ -143,7 +149,7 @@ export class ProjectService {
       //});
     } else {
       const url = project._links["update"];
-      this.http.put<UserAccount>(url["href"], JSON.stringify(project), httpOptions).toPromise().then(response => {
+      this.http.put<UserAccount>(url["href"], JSON.stringify(project)).toPromise().then(response => {
 
         //  this.refreshClients();
       }).catch((error: any) => {
@@ -156,7 +162,7 @@ export class ProjectService {
   async addUser(userAccountId: number) {
     console.log("in project.service.ts -- saving user");
     let tempAccount: UserAccount = null;
-    await this.http.put<UserAccount>(`${this.projectsUrl}/${this.selectedProject.id}/add_member/${userAccountId}`, httpOptions).toPromise().then((response) => {
+    await this.http.put<UserAccount>(`${projectsUrl}/${this.selectedProject.id}/add_member/${userAccountId}`, httpOptions).toPromise().then((response) => {
 
       this.refreshUserAccountList()
       return response;
@@ -168,21 +174,7 @@ export class ProjectService {
   }
 
 
-  /**
-   * Gets the projects for a specified user.
-   * @param userId The ID of the user whose projects we want.
-   */
-  getProjectsForUser(userId: number): Observable<Array<Project>> {
 
-    return this.http.get(`${this.userAccountProjectsUrl}/${userId}/projects`)
-      .pipe(map((data: any) => {
-        if (data._embedded !== undefined) {
-          return data._embedded.projects as Project[];
-        } else {
-          return [];
-        }
-      }));
-  }
 
 
   initializeProjects() {
@@ -202,7 +194,7 @@ export class ProjectService {
 
 
   refreshUserAccountList() {
-    this.http.get(`${this.projectsUrl}/${this.selectedProject.id}/members`)
+    this.http.get(`${projectsUrl}/${this.selectedProject.id}/members`)
       .pipe(map((data: any) => {
         if (data !== undefined) {
           return data as UserAccount[];
