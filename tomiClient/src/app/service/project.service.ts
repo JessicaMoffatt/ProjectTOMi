@@ -9,6 +9,7 @@ import {userAccountUrl} from "../configuration/domainConfiguration";
 import {BudgetReport} from "../model/budgetReport";
 import {billableUrl} from "../configuration/domainConfiguration";
 import {BillableHoursReportLine} from "../model/billableHoursReportLine";
+import {ProductivityReportLine} from "../model/productivityReportLine";
 
 /**
  * Project service provides services relates to Projects.
@@ -81,8 +82,8 @@ export class ProjectService {
         error => {
         });
     this.getBillableReport().subscribe(data=>{
-      console.log(data);
       this.billableReport = data;
+      this.billableReport.sort(BillableHoursReportLine.compareName);
     }, error =>{
 
     });
