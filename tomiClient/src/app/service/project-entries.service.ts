@@ -6,6 +6,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {Entry} from "../model/entry";
 import {Status} from "../model/status";
+import {SignInService} from "./sign-in.service";
 
 const headers = new HttpHeaders({
     'Content-Type': 'application/json'
@@ -16,15 +17,14 @@ const headers = new HttpHeaders({
 })
 export class ProjectEntriesService {
 
-  //TODO don't hardcode this
-  userId = 1;
+  userId = this.signInService.userAccount.id;
 
-  projects: Project[];
-  entries: Entry[];
+  projects: Project[] = [];
+  entries: Entry[] = [];
 
   selectedProject: Project;
 
-  constructor(private projectService: ProjectService, private http: HttpClient) {
+  constructor(private projectService: ProjectService, private http: HttpClient, private signInService:SignInService) {
 
   }
 
@@ -37,13 +37,14 @@ export class ProjectEntriesService {
   }
 
   async displayProjectEntries() {
-    this.populateEntries(this.selectedProject.id).subscribe((data) => {
+    this.populateEntries(this.selectedProject).subscribe((data) => {
       this.entries = data;
     });
   }
 
-  populateEntries(projectId: string): Observable<Array<Entry>> {
-    return this.http.get(`http://localhost:8080/projects/${projectId}/evaluate_entries`).pipe(map((response: Response) => response))
+  populateEntries(project: Project): Observable<Array<Entry>> {
+    let url = project._links["entries"];
+    return this.http.get(url["href"]).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           let sorted = data._embedded.entries as Entry[];
@@ -80,7 +81,7 @@ export class ProjectEntriesService {
   }
 
   async putApprovalRequest(entry:Entry){
-    let url = "http://localhost:8080/projects/" + this.selectedProject.id + "/entries/" + entry.id;
+    let url = entry._links["evaluate"];
     let temp = null;
     await this.http.put(url,'"APPROVED"', {headers:headers, observe:"response"}).toPromise().then(response => {
       temp = response;
@@ -94,7 +95,7 @@ export class ProjectEntriesService {
   }
 
   async putRejectionRequest(entry:Entry): Promise<Entry>{
-    let url = "http://localhost:8080/projects/" + this.selectedProject.id + "/entries/" + entry.id;
+    let url = entry._links["evaluate"];
     let temp = null;
     await this.http.put(url,'"REJECTED"', {headers:headers, observe:"response"}).toPromise().then(response => {
       temp = response;

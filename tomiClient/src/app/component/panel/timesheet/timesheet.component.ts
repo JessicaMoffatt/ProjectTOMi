@@ -19,6 +19,7 @@ import {Router} from "@angular/router";
 import {Task} from "../../../model/task";
 import {UnitType} from "../../../model/unitType";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
+import {SignInService} from "../../../service/sign-in.service";
 
 
 export interface DialogData {
@@ -39,9 +40,8 @@ export interface DialogData {
 })
 export class TimesheetComponent implements OnInit, AfterViewInit {
 
-  //TODO, don't hard code
   /** The ID of the user.*/
-  private userId = 1;
+  private userId = this.signInService.userAccount.id;
 
   /** List of all entries for current timesheet.*/
   entries: Entry[] = [];
@@ -70,7 +70,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router, public timesheetService: TimesheetService,
               private projectService: ProjectService, private entryService: EntryService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog, private signInService:SignInService) {
 
   }
 
@@ -80,7 +80,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.populateTimesheets().then((value) => {
       let timesheet = value as Timesheet;
-      this.getEntries(timesheet.id);
+      this.getEntries(timesheet);
       this.getProjects(this.userId);
       this.populateTasks();
       this.populateUnitTypes();
@@ -124,8 +124,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Gets all entries for this timesheet.
    * @param id The ID of the timesheet we want the entries of.
    */
-  getEntries(id: number) {
-    this.timesheetService.getEntries(id).subscribe((data) => {
+  getEntries(timesheet:Timesheet) {
+    this.timesheetService.getEntries(timesheet).subscribe((data) => {
       this.entries = data;
       this.updateTally();
     });

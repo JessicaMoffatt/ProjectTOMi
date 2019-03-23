@@ -4,6 +4,9 @@ import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
+import {UserAccount} from "../model/userAccount";
+import {buildNavBarUrl} from "../configuration/domainConfiguration";
+
 declare let gapi:any;
 
 @Injectable({
@@ -16,6 +19,7 @@ export class SignInService {
   snackBar:MatSnackBar;
   http:HttpClient;
   navList:any = new Array();
+  userAccount:UserAccount = null;
 
   constructor(router:Router, snackBar:MatSnackBar, http:HttpClient) {
     this.router = router;
@@ -41,7 +45,7 @@ export class SignInService {
 
 
   getNavBarList(){
-  return this.http.get("http://localhost:8080/build_nav_bar").pipe(map(value => {
+  return this.http.get(buildNavBarUrl).pipe(map(value => {
       return value;})).subscribe((value) => {
         this.navList["my_timesheets"] = value["my_timesheets"];
         this.navList["approve_timesheets"] = value["approve_timesheets"];
