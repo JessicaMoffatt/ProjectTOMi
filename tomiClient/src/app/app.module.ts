@@ -44,7 +44,6 @@ import {EntryComponent} from './component/panel/entry/entry.component';
 import {AddTeamMemberComponent, TeamComponent} from './component/panel/team/team.component';
 import {TopNavBarComponent} from "./component/panel/top-nav-bar/top-nav-bar.component";
 import {ApprovePanelComponent} from "./component/panel/approve-panel/approve-panel.component";
-import {TimesheetPanelComponent} from "./component/panel/timesheet-panel/timesheet-panel.component";
 import {TeamPanelComponent} from "./component/panel/team-panel/team-panel.component";
 import {ProjectsPanelComponent} from "./component/panel/projects-panel/projects-panel.component";
 import {ManageTeamsPanelComponent} from "./component/panel/manage-teams-panel/manage-teams-panel.component";
@@ -90,7 +89,6 @@ import {UserAccountService} from "./service/user-account.service";
     AppComponent,
     TopNavBarComponent,
     ApprovePanelComponent,
-    TimesheetPanelComponent,
     TeamPanelComponent,
     ProjectsPanelComponent,
     ManageTeamsPanelComponent,

@@ -1,7 +1,23 @@
-<mat-grid-list [cols]="5" [rowHeight]="70">
-  <mat-grid-tile [colspan]="5">&nbsp;</mat-grid-tile>
-  <mat-grid-tile>&nbsp;</mat-grid-tile>
-  <mat-grid-tile [colspan]="3"  class="g-signin2" data-longtitle="false" data-height="70" data-theme="dark" data-onsuccess="onSignIn"></mat-grid-tile>
-  <mat-grid-tile>&nbsp;</mat-grid-tile>
-</mat-grid-list>
-<img style="height: 30vw; width: 30vw; position:fixed; bottom:1rem; padding-left: 67vw; padding-right: auto;" src="../../../../assets/img/graa.svg">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+<div id=content>
+  <mat-card class="body_card">
+    <mat-card-title><img src="../../../../assets/img/projectTOMiLogoOrange.svg"></mat-card-title>
+    <mat-card-subtitle><span>T</span>ime <span>O</span>ptimization and <span>M</span>anagement <span>I</span>nitiative</mat-card-subtitle>
+    <mat-card-content>
+      <ng-template [ngIf]="this.isLarge()">
+        <!--<div id="quote">They don't think it be like it is but it do.</div>-->
+        <!--<div id="man">-Oscar Gamble</div>-->
+        <p id="message">To continue please sign in using Google</p>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-grid-list [cols]="3" class="sign_in_btn" rowHeight="20em">
+    <mat-grid-tile [colspan]="3" class="g-signin2" data-longtitle="false" data data-theme="dark"
+                   data-onsuccess="onSignIn"></mat-grid-tile>
+  </mat-grid-list>
+</div>
+<div id="background">
+  <div id="overlay"></div>
+</div>

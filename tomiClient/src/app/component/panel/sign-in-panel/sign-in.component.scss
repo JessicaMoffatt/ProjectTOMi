@@ -1,3 +1,65 @@
-mat-grid-list{
-  height: 100vh;
+@import "~src/variables";
+#background{
+  top:0;
+  position:fixed;
+  height:100vh;
+  width: 100vw;
+  z-index: -1;
+  filter: blur(.25em);
+  background-image: url("~src/assets/img/background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+mat-card-subtitle{
+  font-family: Montserrat,  sans-serif;
+  span{
+    color:$orange;
+    font-size: 1.1rem;
+  }
+}
+#content{
+  top:0;
+  position:fixed;
+  height:100vh;
+  width: 100vw;
+}
+
+#overlay{
+  background: black;
+  opacity: 0.3;
+  top:0;
+  position:fixed;
+  height:100vh;
+  width: 100vw;
+}
+
+.body_card{
+  position: fixed;
+  width: 30vw;
+  margin: 30vh 35vw;
+  height: 40vh;
+  z-index: 1;
+}
+
+mat-card-footer{
+  position: relative;
+}
+
+.sign_in_btn{
+  position: fixed;
+  top: 65vh;
+  width: 20vw;
+  margin: 0 40vw;
+  z-index: 5;
+}
+
+#message{
+  padding-left: 15%;
+  padding-right: 15%;
+  padding-top: 10%;
+  width: 70%;
+  text-align: left;
+  font-family: Roboto, sans-serif;
+  color: $dark_grey;
 }

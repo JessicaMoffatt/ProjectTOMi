@@ -47,8 +47,8 @@ public final class ProjectAuthManager implements AuthManager<ProjectAuthorizatio
 			try {
 				if ("evaluate_entries".equals(uri.split("/")[3])) {
 					requestPolicy.setPermission(ProjectPermission.EVALUATE_ENTRIES);
-				} else if ("user_accounts".equals(uri.split("/")[1])) {
-					return handleListReads();
+				} else if (uri.contains("user_accounts")) {
+					return true;
 				} else if ("budget_report".equals(uri.split("/")[3])) {
 					requestPolicy.setPermission(ProjectPermission.READ_BUDGET);
 				} else {
@@ -58,7 +58,7 @@ public final class ProjectAuthManager implements AuthManager<ProjectAuthorizatio
 				requestProject.setId(uri.split("/")[2]);
 				requestPolicy.setProject(requestProject);
 			} catch (final IndexOutOfBoundsException e) {
-				return handleListReads();
+				return true;
 			}
 		}
 		return this.policies.contains(requestPolicy);
@@ -73,15 +73,6 @@ public final class ProjectAuthManager implements AuthManager<ProjectAuthorizatio
 	@Override
 	public void loadUserPolicies(final List<ProjectAuthorizationPolicy> policies) {
 		this.policies = new HashSet<>(policies);
-	}
-
-	private boolean handleListReads() {
-		boolean hasAnyReadPermission = false;
-		for (final ProjectAuthorizationPolicy policy : this.policies) {
-			final boolean hasReadPermission = policy.getPermission() == ProjectPermission.READ;
-			hasAnyReadPermission = Boolean.logicalOr(hasAnyReadPermission, hasReadPermission);
-		}
-		return hasAnyReadPermission;
 	}
 
 	@Override

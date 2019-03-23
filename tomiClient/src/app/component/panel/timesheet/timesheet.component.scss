@@ -13,7 +13,6 @@
   height: $footer_height;
   vertical-align: middle;
   z-index: 2;
-  box-shadow: 0 0 1vh black;
 }
 
 .timesheet_content {
@@ -21,7 +20,7 @@
 }
 
 .scroll_panel {
-  height: 84vh;
+  height: 86vh;
   overflow-y: auto;
   overflow-x: hidden;
 }

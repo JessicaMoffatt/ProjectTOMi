@@ -1,6 +1,7 @@
 package ca.projectTOMi.tomi.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -77,13 +78,14 @@ public final class Project {
 
 	@Formula ("budget / billable_rate")
 	private Double budgetedHours;
+
 	/**
 	 * The Accounts that are members of this Project.
 	 */
 	@ManyToMany (fetch = FetchType.EAGER, targetEntity = UserAccount.class)
 	@JoinTable (name = "project_members", joinColumns = @JoinColumn (name = "project_id"), inverseJoinColumns = @JoinColumn (name = "user_account_id"))
 	@JsonIgnore
-	private Set<UserAccount> projectMembers = new HashSet<>();
+	private Set<UserAccount> projectMembers;
 
 	/**
 	 * If this Project is active.

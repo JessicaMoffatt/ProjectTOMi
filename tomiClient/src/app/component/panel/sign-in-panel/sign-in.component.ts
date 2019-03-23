@@ -4,6 +4,7 @@ import {DOCUMENT} from "@angular/common";
 import {SignInService} from "../../../service/sign-in.service";
 import {Router} from "@angular/router";
 import {Meta} from "@angular/platform-browser";
+import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 declare let gapi: any;
 
@@ -20,23 +21,38 @@ const httpOptions = {
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit {
+  private large: boolean;
 
-  constructor( @Inject(DOCUMENT) private document,
-              private meta:Meta,
+  constructor(@Inject(DOCUMENT) private document,
+              private meta: Meta,
               private http: HttpClient,
               private ngZone: NgZone,
               private signIn: SignInService,
               private router: Router,
-              private elementRef: ElementRef) {
+              private elementRef: ElementRef,
+              private breakpointObserver: BreakpointObserver) {
     window['onSignIn'] = (user) => ngZone.run(() => this.onSignIn(user));
+    breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Medium
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.large = false;
+      } else {
+        this.large = true;
+      }
+    });
   }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
-    this.meta.addTag({name:'google-signin-client_id',
-      content:'730191725836-6pv3tlbl520hai1tnl96nr0du79b7sfp.apps.googleusercontent.com'});
+    this.meta.addTag({
+      name: 'google-signin-client_id',
+      content: '730191725836-6pv3tlbl520hai1tnl96nr0du79b7sfp.apps.googleusercontent.com'
+    });
     let s = this.document.createElement("script");
     s.type = "text/javascript";
     s.src = "https://apis.google.com/js/platform.js";
@@ -48,7 +64,7 @@ export class SignInComponent implements OnInit {
     let id_token: string;
     id_token = googleUser.getAuthResponse().id_token;
     this.http.post("http://localhost:8080/tokensignin", id_token, httpOptions).toPromise().then(response => {
-      if(response){
+      if (response) {
         this.router.navigate(['/my_timesheets']);
         this.signIn.setLoggedIn();
       }
@@ -57,6 +73,10 @@ export class SignInComponent implements OnInit {
       this.signIn.signOutOperations();
       return null;
     });
+  }
+
+  public isLarge(): boolean {
+    return this.large;
   }
 }
 

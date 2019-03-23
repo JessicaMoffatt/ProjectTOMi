@@ -2,10 +2,11 @@
   @author Karol Talbot
   @version 1.0
 -->
-<mat-toolbar>
-  <img id="logo" src="../../../../assets/img/tomiIcon.svg" alt="Logo"/>
-  <ng-template [ngIf]="screenSize === 0">
-    <ng-template [ngIf]="isUserLoggedIn">
+<ng-template [ngIf]="isUserLoggedIn">
+  <mat-toolbar>
+    <img id="logo" src="../../../../assets/img/tomiIcon.svg" alt="Logo"/>
+    <ng-template [ngIf]="screenSize === 0">
+
       <ng-template [ngIf]="signInService.navList['my_timesheets']">
         <button mat-ripple mat-flat-button class="link" [routerLink]="'/my_timesheets'">Timesheets</button>
       </ng-template>
@@ -46,11 +47,9 @@
         <img id="icon" [src]="signInService.getIcon()" alt="menu"/>
       </button>
     </ng-template>
-  </ng-template>
 
 
-  <ng-template [ngIf]="screenSize===1">
-    <ng-template [ngIf]="isUserLoggedIn">
+    <ng-template [ngIf]="screenSize===1">
       <ng-template [ngIf]="signInService.navList['my_timesheets']">
         <button mat-ripple mat-flat-button class="link" [routerLink]="'/my_timesheets'">Timesheets</button>
       </ng-template>
@@ -93,11 +92,9 @@
         </i>
       </button>
     </ng-template>
-  </ng-template>
 
 
-  <ng-template [ngIf]="screenSize===2">
-    <ng-template [ngIf]="isUserLoggedIn">
+    <ng-template [ngIf]="screenSize===2">
       <mat-menu #appMenuSmall="matMenu">
         <ng-template [ngIf]="signInService.navList['my_timesheets']">
           <button mat-menu-item class="menu" [routerLink]="'/my_timesheets'">Timesheets</button>
@@ -141,5 +138,5 @@
         </i>
       </button>
     </ng-template>
-  </ng-template>
-</mat-toolbar>
+  </mat-toolbar>
+</ng-template>

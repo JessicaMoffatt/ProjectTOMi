@@ -1,5 +1,7 @@
 package ca.projectTOMi.tomi.authorization.interceptor;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ca.projectTOMi.tomi.authorization.manager.AuthManager;
@@ -12,6 +14,7 @@ import ca.projectTOMi.tomi.authorization.policy.UserAuthorizationPolicy;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.ProjectAuthorizationRepository;
 import ca.projectTOMi.tomi.persistence.TimesheetAuthRepository;
+import ca.projectTOMi.tomi.persistence.UserAccountRepository;
 import ca.projectTOMi.tomi.persistence.UserAuthorizationRepository;
 import ca.projectTOMi.tomi.service.EntryService;
 import ca.projectTOMi.tomi.service.UserAccountService;
@@ -54,27 +57,25 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) {
-		final Long start = System.currentTimeMillis();
-		request.setAttribute("start", start);
 		final String authToken = request.getHeader("SignIn");
 
 		// Initial Login
-		if ("/tokensignin".equals(request.getRequestURI()) || "/doAEmail".equals(request.getRequestURI())) {
+		if ("/tokensignin".equals(request.getRequestURI())) {
 			return true;
 		} else if (request.getMethod().matches("OPTIONS")) {
 			return true;
 		}
 
-		final UserAccount user;
-		try {
-			user = this.userAuthenticationService.checkLogin(authToken);
-		} catch (final Exception e) {
-			System.out.println(request.getMethod() + " " + e);
-			return false;
-		}
-		if (user == null) {
-			return false;
-		}
+		final UserAccount user = userAccountService.getUserAccount(1L);
+//		try {
+//			user = this.userAuthenticationService.checkLogin(authToken);
+//		} catch (final Exception e) {
+//			System.out.println(request.getMethod() + " " + e);
+//			return false;
+//		}
+//		if (user == null) {
+//			return false;
+//		}
 
 		final String requestMethod = request.getMethod();
 		final String requestURI = request.getRequestURI();
@@ -102,22 +103,29 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 				authMan = new UserAuthManager(user);
 				authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
 				request.setAttribute("authMan", authMan);
-			} else {
+			} else{
 				final AuthManager<ProjectAuthorizationPolicy> authMan;
 				authMan = new ProjectAuthManager(user);
-				authMan.loadUserPolicies(this.projectAuthRepository.getAllByRequestingUser(user));
+				List<ProjectAuthorizationPolicy> f;
+				try{
+					f = this.projectAuthRepository.findAllByRequestingUser(user).orElse(new ArrayList<>());
+				}catch (Exception e){
+					System.out.println("this");
+					f = new ArrayList<>();
+				}
+				authMan.loadUserPolicies(f);
 				request.setAttribute("authMan", authMan);
 			}
 		} else if ("ExpenseController".matches(controller)) {
 			final AuthManager<ProjectAuthorizationPolicy> authMan;
 			authMan = new ProjectAuthManager(user);
-			authMan.loadUserPolicies(this.projectAuthRepository.getAllByRequestingUser(user));
+			authMan.loadUserPolicies(this.projectAuthRepository.findAllByRequestingUser(user).orElse(new ArrayList<>()));
 			request.setAttribute("authMan", authMan);
 		} else if ("ReportController".matches(controller)) {
 			if (requestURI.contains("budget")) {
 				final AuthManager<ProjectAuthorizationPolicy> authMan;
 				authMan = new ProjectAuthManager(user);
-				authMan.loadUserPolicies(this.projectAuthRepository.getAllByRequestingUser(user));
+				authMan.loadUserPolicies(this.projectAuthRepository.findAllByRequestingUser(user).orElse(new ArrayList<>()));
 				request.setAttribute("authMan", authMan);
 			} else if (requestURI.contains("data_dump_report") || requestURI.contains("billable_hours_report")) {
 				final AuthManager<UserAuthorizationPolicy> authMan;
@@ -139,17 +147,16 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
 			request.setAttribute("authMan", authMan);
 		}
-		return ((AuthManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
+
+		boolean fish = ((AuthManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
+		System.out.printf("%5s %30s: %6s%n", requestMethod, requestURI, fish ? "true" : "false");
+		return fish;
 	}
 
 	@Override
 	public void postHandle(
 		final HttpServletRequest request, final HttpServletResponse response, final Object handler,
 		final ModelAndView modelAndView) {
-		final Long start = (Long) request.getAttribute("start");
-		final String requestURI = request.getRequestURI();
-		final Long stop = System.currentTimeMillis();
-		System.out.printf("Call %d %s: %s executed in %dms%n", this.i++, requestURI, request.getMethod(), stop - start);
 	}
 
 	@Override

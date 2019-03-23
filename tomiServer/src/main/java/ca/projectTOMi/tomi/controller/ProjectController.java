@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.assembler.EntryResourceAssembler;
 import ca.projectTOMi.tomi.assembler.ProjectResourceAssembler;
 import ca.projectTOMi.tomi.authorization.manager.ProjectAuthManager;
-import ca.projectTOMi.tomi.authorization.manager.UserAuthManager;
 import ca.projectTOMi.tomi.authorization.wrapper.ProjectAuthLinkWrapper;
 import ca.projectTOMi.tomi.authorization.wrapper.TimesheetAuthLinkWrapper;
+import ca.projectTOMi.tomi.exception.EmptyProjectListException;
 import ca.projectTOMi.tomi.exception.InvalidIDPrefix;
 import ca.projectTOMi.tomi.exception.ProjectManagerException;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
@@ -18,7 +18,6 @@ import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.Status;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.service.EntryService;
-import ca.projectTOMi.tomi.service.ProjectAuthService;
 import ca.projectTOMi.tomi.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -168,7 +167,10 @@ public class ProjectController {
 	@GetMapping ("/user_accounts/{userAccountId}/projects")
 	public Resources<Resource<Project>> getProjectsByUserAccount(@PathVariable final Long userAccountId,
 	                                                             @RequestAttribute final ProjectAuthManager authMan) {
-		final List<Project> projects = this.projectService.getProjectByUserAccount(userAccountId);
+		final List<Project> projects = this.projectService.getProjectsByUserAccount(userAccountId);
+		if(projects.isEmpty()){
+			throw new EmptyProjectListException();
+		}
 		final List<Resource<Project>> projectResources = authMan.filterList(projects)
 			.stream()
 			.map(project -> (new ProjectAuthLinkWrapper<>(project, authMan)))
@@ -217,6 +219,11 @@ public class ProjectController {
 	@GetMapping("/projects/{projectId}/members")
 	public List<UserAccount> getProjectMembers(@PathVariable final String projectId){
 		return this.projectService.getProjectMembers(projectId);
+	}
+
+	@ExceptionHandler ({EmptyProjectListException.class})
+	public ResponseEntity<?> handleEmptyList(final Exception e) {
+		return ResponseEntity.status(204).build();
 	}
 
 	@ExceptionHandler ({ProjectNotFoundException.class, InvalidIDPrefix.class, ProjectManagerException.class})

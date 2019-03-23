@@ -8,7 +8,7 @@ mat-toolbar {
   background-color: $orange;
   color: $white;
   position: fixed;
-  height: 3.1em;
+  height: $nav_height;
   left: 0;
   top: 0;
   padding-left: 10vw;
@@ -17,12 +17,13 @@ mat-toolbar {
   z-index: 2;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 1rem;
+  animation: doStuff 0.5s 1 ease-in;
   img{
     position:absolute;
     top:3.25vh;
     left:3.25vh;
     padding:0;
-
+    animation: doStuff 0.5s 1 ease-in;
   }
 }
 
@@ -78,4 +79,14 @@ mat-toolbar {
   left:0;
   height: 3.1em;
   width: auto;
+}
+
+
+@keyframes doStuff {
+  0%{
+    top: -$nav_height;
+  }
+  100%{
+    top: 0;
+  }
 }

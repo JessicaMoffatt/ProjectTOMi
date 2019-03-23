@@ -1,6 +1,8 @@
 package ca.projectTOMi.tomi.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import ca.projectTOMi.tomi.exception.ProjectManagerException;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
@@ -121,12 +123,13 @@ public final class ProjectService {
 
 	public Project createProject(final Project project) {
 		project.setActive(true);
+		project.setProjectMembers(new HashSet<>());
 		final Project savedProject = this.repository.save(project);
 		this.projectAuthService.newProjectPolicies(savedProject);
 		return savedProject;
 	}
 
-	public List<Project> getProjectByUserAccount(final Long userAccountId) {
+	public List<Project> getProjectsByUserAccount(final Long userAccountId) {
 		final UserAccount userAccount = this.userAccountService.getUserAccount(userAccountId);
 		return this.repository.getAllByActiveTrueAndProjectMembersContainsOrderById(userAccount);
 	}
@@ -134,7 +137,6 @@ public final class ProjectService {
 	public void addTeamMember(final String projectId, final Long userAccountId) {
 		final Project project = this.repository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 		final UserAccount userAccount = this.userAccountService.getUserAccount(userAccountId);
-
 		if (!project.getProjectMembers().contains(userAccount)) {
 			project.getProjectMembers().add(userAccount);
 			this.projectAuthService.addProjectMember(userAccount, project);
