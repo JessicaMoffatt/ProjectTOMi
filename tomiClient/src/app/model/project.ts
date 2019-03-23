@@ -26,11 +26,6 @@ export class Project{
    * multiplied by 100 to remove decimals.
    */
   billableRate: number;
-  /** The Accounts that are members of this Project.*/
-  projectMembers: UserAccount[];
-  /** If this Project is active.  used to set backend but is not passed back*/
-  active: boolean;
-  /** The list of links used for communicating with the back end.*/
   _links: [];
 
   constructor(){
@@ -40,8 +35,6 @@ export class Project{
     this.projectName = "";
     this.budget = 0;
     this.billableRate = 0;
-    this.projectMembers = [];
-    this.active = true;
     this._links = [];
   }
 }

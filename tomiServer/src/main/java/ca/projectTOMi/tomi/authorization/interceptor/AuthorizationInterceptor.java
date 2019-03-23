@@ -109,11 +109,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			} else {
 				final AuthManager<ProjectAuthorizationPolicy> authMan;
 				authMan = new ProjectAuthManager(user);
-				System.out.println("Before");
-				List<ProjectAuthorizationPolicy> f = this.projectAuthRepository.getAllByRequestingUser(user);
-				System.out.println("After List");
-				authMan.loadUserPolicies(f);
-				System.out.println("After load");
+				authMan.loadUserPolicies(this.projectAuthRepository.getAllByRequestingUser(user));
 				request.setAttribute("authMan", authMan);
 			}
 		} else if ("ExpenseController".matches(controller)) {

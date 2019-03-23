@@ -52,6 +52,7 @@ public final class Project {
 	 * The UserAccount managing this Project.
 	 */
 	@OneToOne
+	@MapKeyColumn (name = "id")
 	@JsonProperty (value = "projectManagerId")
 	@JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference (alwaysAsId = true)
@@ -93,7 +94,7 @@ public final class Project {
 	@Column (nullable = false)
 	private boolean active;
 
-  @JsonProperty
+  @JsonProperty("projectManagerId")
   public void setProjectManagerId(final Long id){
     UserAccount projectManager = null;
     if(id != -1){
