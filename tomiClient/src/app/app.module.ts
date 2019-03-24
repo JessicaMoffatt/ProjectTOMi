@@ -32,9 +32,10 @@ import {MatCheckboxModule } from '@angular/material/checkbox';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from "@angular/material";
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import {MatButtonToggleModule} from "@angular/material";
 
 // Component Imports
-import {AddTeamComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
 import {TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
 import {
   DeleteEntryModalComponent, SubmitTimesheetModalComponent,
@@ -79,6 +80,7 @@ import {ProjectEntriesService} from "./service/project-entries.service";
 import {SignInService} from "./service/sign-in.service";
 import {TaskService} from "./service/task.service";
 import {TeamService} from "./service/team.service";
+import {TeamService2} from "./service/team2.service";
 import {TeamSidebarService} from "./service/team-sidebar.service";
 import {TimesheetService} from "./service/timesheet.service";
 import {UserAccountService} from "./service/user-account.service";
@@ -98,7 +100,6 @@ import {UserAccountService} from "./service/user-account.service";
     EntryComponent,
     TeamComponent,
     TeamSidebarComponent,
-    AddTeamComponent,
     AddTeamMemberComponent,
     EntryUneditableComponent,
     AddTeamMemberComponent,
@@ -156,11 +157,12 @@ import {UserAccountService} from "./service/user-account.service";
     MatChipsModule,
     MatTabsModule,
     MatTableModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    DragDropModule,
+    MatButtonToggleModule
   ],
   entryComponents: [
     EntryComponent,
-    AddTeamComponent,
     AddTeamMemberComponent,
     EntryUneditableComponent,
     AddUserAccountComponent,
@@ -183,6 +185,7 @@ import {UserAccountService} from "./service/user-account.service";
     SignInService,
     TaskService,
     TeamService,
+    TeamService2,
     TeamSidebarService,
     TimesheetService,
     UserAccountService,

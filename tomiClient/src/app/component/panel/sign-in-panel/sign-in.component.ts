@@ -84,6 +84,10 @@ export class SignInComponent implements OnInit {
   async setUser(userAccount){
     return this.signIn.userAccount = userAccount as UserAccount;
   }
+
+  public isLarge():boolean{
+    return this.large;
+  }
 }
 
 

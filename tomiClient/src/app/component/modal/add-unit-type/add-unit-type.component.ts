@@ -1,5 +1,4 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {UnitTypeSidebarService} from "../../../service/unit-type-sidebar.service";
 import {UnitType} from "../../../model/unitType";
 import {UnitTypeService} from "../../../service/unit-type.service";
 import {ErrorStateMatcher, MatDialogRef} from "@angular/material";
@@ -13,7 +12,7 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/form
 /**
  * AddUnitTypeComponent is a modal for adding new Unit Types.
  *
- * @author Iliya Kiritchkov
+ * @author Iliya Kiritchkov and Karol Talbot
  * @version 1.1
  */
 export class AddUnitTypeComponent implements OnInit {
@@ -56,7 +55,7 @@ export class AddUnitTypeComponent implements OnInit {
   /** The ngForm for this component. */
   @ViewChild('addUnitTypeForm') addUnitTypeForm;
 
-  constructor(public dialogRef: MatDialogRef<AddUnitTypeComponent>, private unitTypeSidebarService: UnitTypeSidebarService, private unitTypeService: UnitTypeService) { }
+  constructor(public dialogRef: MatDialogRef<AddUnitTypeComponent>, private unitTypeService: UnitTypeService) { }
 
   ngOnInit() {
     this.applyUniqueNameValidator();

@@ -1,0 +1,57 @@
+@import "~src/variables";
+
+.floating_action_button {
+  position: fixed;
+  right: 4vw;
+  bottom: 4vh;
+  background-color: $blue;
+  i {
+    color: white;
+  }
+}
+
+.team_edit_card{
+  padding:5%;
+  height: 60%;
+  width: 60%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-bottom: 25%;
+  margin-top: 5%;
+}
+
+.manage_delete_btn{
+  background-color: $delete_btn;
+  color:$delete_btn_text;
+}
+
+.manage_cancel_btn{
+  background-color: $cancel_btn;
+  color:$cancel_btn_text;
+  float:right;
+  margin-right: 1%;
+}
+
+.manage_save_btn{
+  background-color: $save_btn;
+  color: $save_btn_text;
+  float:right;
+  margin-right: 1%;
+}
+
+#onTeam, #available{
+  display: inline;
+  mat-chip-list{
+    display: inline;
+  }
+  h4{
+    display: inline;
+  }
+  padding:1%;
+  width:48%;
+}
+
+.on_team{
+  background-color: $orange;
+  color:$white;
+}

@@ -66,8 +66,16 @@
 
     <div [ngClass]="'row'">
       <div [ngClass]="['col-xs-4','flex_btn_container']">
-        <div [ngClass]="['approve_entry', 'btn']" (click)="approve()"></div>
-        <div [ngClass]="['reject_entry', 'btn']" (click)="reject()"></div>
+        <button mat-flat-button class='approved' (click)="approve()">
+          <i class="material-icons">
+            check
+          </i>
+        </button>
+        <button mat-flat-button class='rejected' (click)="reject()">
+          <i class="material-icons">
+            close
+          </i>
+        </button>
       </div>
     </div>
   </mat-card-content>
