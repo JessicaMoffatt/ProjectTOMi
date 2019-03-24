@@ -1,6 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material";
+import {Expense} from "../../../model/expense";
+import {ExpenseService} from "../../../service/expense.service";
+import {Project} from "../../../model/project";
+import {ProjectService} from "../../../service/project.service";
 
 @Component({
   selector: 'app-add-project-expense',
@@ -11,7 +15,10 @@ import {MatDialogRef} from "@angular/material";
 
 export class AddProjectExpenseComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<AddProjectExpenseComponent>) { }
+  // value is set by the parent component that opens the dialog
+  selectedProject: Project;
+
+  constructor(public dialogRef: MatDialogRef<AddProjectExpenseComponent>, private expenseService: ExpenseService, private projectService: ProjectService) { }
 
 
   /** The input field for the Unit Types's name.*/
@@ -41,6 +48,12 @@ export class AddProjectExpenseComponent implements OnInit {
   }
 
   save() {
-    console.log("note:"+this.addExpenseNote+", amount:"+this.addExpenseAmount);
+    if(this.expenseService.selected == null) {
+      this.expenseService.selected = new Expense();
+    }
+    this.expenseService.selected.notes = this.addExpenseNote.nativeElement.value;
+    this.expenseService.selected.amount = this.addExpenseAmount.nativeElement.value;
+    this.expenseService.save(this.projectService.selectedProject);
+    this.dialogRef.close()
   }
 }

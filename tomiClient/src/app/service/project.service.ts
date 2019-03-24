@@ -78,7 +78,7 @@ export class ProjectService {
   setSelected(project: Project) {
     this.selectedProject = project;
     this.refreshUserAccountList();
-    this.expenseService.refreshExpenses(project.id);
+    this.expenseService.refreshExpenses(this.selectedProject);
     // console.log("selectedProject:"+project.projectName);
     // console.log("is null:"+project == null);
     // console.log("is undefined:"+project == undefined);
