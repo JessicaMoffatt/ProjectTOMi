@@ -34,6 +34,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from "@angular/material";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatButtonToggleModule} from "@angular/material";
+import {MatPaginatorModule} from "@angular/material";
 
 // Component Imports
 import {TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
@@ -66,7 +67,6 @@ import {
 import {ProjectEntriesSidebarComponent} from './component/sidebar/project-entries-sidebar/project-entries-sidebar.component';
 import {EntryApproveComponent} from './component/panel/entry-approve/entry-approve.component';
 import {BudgetReportComponent} from './component/extra/budget-report/budget-report.component';
-import { UnitTypeSidebarComponent } from './component/sidebar/unit-type-sidebar/unit-type-sidebar.component';
 import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
 import { EditUnitTypeComponent } from './component/panel/edit-unit-type/edit-unit-type.component';
 import { ProductivityReportComponent } from './component/extra/productivity-report/productivity-report.component';
@@ -117,7 +117,6 @@ import {UserAccountService} from "./service/user-account.service";
     EntryApproveComponent,
     SubmitApprovalModalComponent,
     BudgetReportComponent,
-    UnitTypeSidebarComponent,
     AddUnitTypeComponent,
     EditUnitTypeComponent,
     EditTaskComponent,
@@ -159,7 +158,8 @@ import {UserAccountService} from "./service/user-account.service";
     MatTableModule,
     MatDatepickerModule,
     DragDropModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatPaginatorModule
   ],
   entryComponents: [
     EntryComponent,

@@ -21,17 +21,29 @@
           </div>
           <div class="team_members" cdkDropListGroup>
             <div id="on_team">
-              <mat-card-subtitle>Team Members</mat-card-subtitle>
-              <mat-chip-list cdkDropList #teamMembers="cdkDropList"[cdkDropListConnectedTo]="[availableUserAccounts]" (cdkDropListDropped)="drop($event, 'team')">
-                <mat-chip cdkDrag [cdkDragData]="user_account" (click)="move(user_account, 'team')"  class="user_account on_team" *ngFor="let user_account of this.getSelectedTeamMembers() | async" cdkDrag>
+            <span class="title_line">
+              Team Members
+              <mat-paginator [pageSize]="10" [pageIndex]="1"></mat-paginator>
+            </span>
+              <mat-chip-list cdkDropList #teamMembers="cdkDropList" [cdkDropListConnectedTo]="[availableUserAccounts]"
+                             (cdkDropListDropped)="drop($event, 'team')">
+                <mat-chip cdkDrag [cdkDragData]="user_account" (click)="move(user_account, 'team')"
+                          class="user_account on_team"
+                          *ngFor="let user_account of this.getSelectedTeamMembers() | async" cdkDrag>
                   {{user_account.firstName}} {{user_account.lastName}}
                 </mat-chip>
               </mat-chip-list>
             </div>
             <div id="available">
-              <mat-card-subtitle>Available Members</mat-card-subtitle>
-              <mat-chip-list cdkDropList #availableUserAccounts="cdkDropList" [cdkDropListConnectedTo]="[teamMembers]" (cdkDropListDropped)="drop($event, 'available')">
-                <mat-chip cdkDrag [cdkDragData]="user_account" (click)="move(user_account, 'available')" class="user_account" *ngFor="let user_account of this.getAvailableMembers() | async" cdkDrag>
+              <span class="title_line">
+                Available Members
+                <mat-paginator [pageSize]="10" [pageIndex]="1"></mat-paginator>
+              </span>
+              <mat-chip-list cdkDropList #availableUserAccounts="cdkDropList" [cdkDropListConnectedTo]="[teamMembers]"
+                             (cdkDropListDropped)="drop($event, 'available')">
+                <mat-chip cdkDrag [cdkDragData]="user_account" (click)="move(user_account, 'available')"
+                          class="user_account" *ngFor="let user_account of this.getAvailableMembers() | async"
+                          cdkDrag>
                   {{user_account.firstName}} {{user_account.lastName}}
                 </mat-chip>
               </mat-chip-list>

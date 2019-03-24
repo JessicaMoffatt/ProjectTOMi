@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {ProjectEntriesService} from "../../../service/project-entries.service";
 import {Project} from "../../../model/project";
+import {ApprovePanelComponent} from "../../panel/approve-panel/approve-panel.component";
 
 /**
  * ProjectEntriesSidebarComponent is used to display the list of projects for a user to interact with when viewing entries for approval.
@@ -14,24 +15,22 @@ import {Project} from "../../../model/project";
   styleUrls: ['./project-entries-sidebar.component.scss']
 })
 export class ProjectEntriesSidebarComponent implements OnInit {
+  @ViewChild("btn_group") btn_group;
 
-  constructor(public projectEntriesService: ProjectEntriesService) { }
-
-  ngOnInit() {
-    this.projectEntriesService.getAllProjects().subscribe((data: Array<Project>) => {
-      this.projectEntriesService.projects = data;
-    });
+  constructor(@Inject(ApprovePanelComponent) private parent: ApprovePanelComponent,
+              public projectEntriesService:ProjectEntriesService) {
   }
 
-  /**
-   * Displays the entries for a specified project.
-   * @param project The project to display entries for.
-   */
-  displayProjectEntries(project: Project){
-    this.projectEntriesService.getProjectById(project.id).subscribe((data:Project) => {
-      this.projectEntriesService.selectedProject = data;
+  ngOnInit() {
+    this.projectEntriesService.getAllProjects();
+  }
 
-      this.projectEntriesService.displayProjectEntries().then();
-    });
+  selectProject(project: Project): void {
+    this.parent.setSelectedProject(project);
+  }
+
+  public unselect(teamId:number){
+    this.btn_group.selected.checked = false;
+    console.log(this.btn_group);
   }
 }
