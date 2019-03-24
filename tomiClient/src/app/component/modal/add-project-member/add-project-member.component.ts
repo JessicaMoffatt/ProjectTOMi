@@ -5,13 +5,6 @@ import {MatDialogRef} from "@angular/material";
 import {BehaviorSubject} from "rxjs";
 import {UserAccount} from "../../../model/userAccount";
 
-
-// export interface User {
-//   firstName: string;
-//   lastName: string;
-//   id: number;
-// }
-
 @Component({
   selector: 'app-add-project-member',
   templateUrl: './add-project-member.component.html',

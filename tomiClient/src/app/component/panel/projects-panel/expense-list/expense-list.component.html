@@ -48,6 +48,15 @@
 
 
 <button  (click)="addExpense()" mat-button color="primary">ADD</button>
-<button mat-button color="primary">EDIT</button>
+<button (click)="edit()"
+        [disabled]="selection.selected.length != 1"
+        mat-button color="primary">
+  EDIT
+</button>
+  <button (click)="delete()"
+          [disabled]="selection.selected.length == 0"
+          mat-button color="primary">
+    DELETE
+  </button>
 
 </mat-card>

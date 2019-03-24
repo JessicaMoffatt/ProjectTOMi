@@ -4,7 +4,7 @@
   </mat-card-header>
   <mat-selection-list role="list" #userAccounts>
     <mat-list-option *ngFor="let userAccount of this.projectService.userAccountList | async"
-     [value]="userAccount.id">
+                     [value]="userAccount.id">
 
       <h4 matLine>{{userAccount.firstName}} {{userAccount.lastName}}</h4>
       <!--p matLine class="demo-2"> {{folder.updated}} </p-->
@@ -17,12 +17,12 @@
             color="primary"
             [disabled]="this.projectService.selectedProject == null"
             style="order: 1">
-      ADD MEMBER TO PROJECT
+      ADD MEMBER
     </button>
     <button (click)="deleteMembers(userAccounts)"
             mat-button
             color="accent"
-            [disabled]="userAccounts.selectedOptions.selected.length == 0" >
+            [disabled]="userAccounts.selectedOptions.selected.length == 0">
       DELETE
     </button>
   </div>

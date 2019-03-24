@@ -26,7 +26,7 @@ const httpOptions = {
 })
 export class TeamService {
 
-  /** List of all the team members of the selected team.*/
+  /** List of all the team members of the selectedExpense team.*/
   teamMembers: UserAccount[] = [];
 
   teamsObservable: Team[] = [];
@@ -34,7 +34,7 @@ export class TeamService {
   /** List of all the team members not currently on any teams.*/
   allFreeMembers: UserAccount[] = [];
 
-  /** The members selected from the list of team members.*/
+  /** The members selectedExpense from the list of team members.*/
   private selectedMembers: UserAccount[];
 
   /** Used to reference the add team member component created by clicking the Add Member button.*/
@@ -178,7 +178,7 @@ export class TeamService {
 
   /**
    * Cancels any changes made to the team name or the team lead.
-   * @param team The selected team.
+   * @param team The selectedExpense team.
    */
   cancel(team: Team): void {
     this.teamSideBarService.getTeamById(team.id).subscribe((data)=>{
@@ -188,7 +188,7 @@ export class TeamService {
 
   //TODO add error handling!!
   /**
-   * Logically deletes the selected team (sets their active status to false.)
+   * Logically deletes the selectedExpense team (sets their active status to false.)
    *
    * @param team The team to be deleted.
    */

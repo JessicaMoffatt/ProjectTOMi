@@ -5,6 +5,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {Expense} from "../model/expense";
 import {expenseUrl, projectsUrl} from "../configuration/domainConfiguration";
 import {Project} from "../model/project";
+import {ProjectService} from "./project.service";
 
 /**
  * Expense service provides services related to Expenses
@@ -25,8 +26,8 @@ export class ExpenseService {
   /** used to pass list to project related components */
   expenses: BehaviorSubject<Array<Expense>> = new BehaviorSubject<Array<Expense>>([]);
 
-  /** used to track the expense being selected and edited in the components */
-  selected: Expense;
+  /** used to track the expense being selectedExpense and edited in the components */
+  selectedExpense: Expense;
 
   constructor(private http: HttpClient) {
   }
@@ -74,8 +75,8 @@ export class ExpenseService {
   }
 
   save(selectedProject: Project) {
-    if (this.selected.id === -1) {
-      this.http.post<Expense>(`${projectsUrl}/${selectedProject.id}/expenses`, JSON.stringify(this.selected), httpOptions).toPromise()
+    if (this.selectedExpense.id === -1) {
+      this.http.post<Expense>(`${projectsUrl}/${selectedProject.id}/expenses`, JSON.stringify(this.selectedExpense), httpOptions).toPromise()
         .then(response => {
           this.refreshExpenses(selectedProject);
           return response;
@@ -83,8 +84,8 @@ export class ExpenseService {
         //TODO
       });
     } else {
-      const url = this.selected._links["update"];
-      this.http.put<Expense>(url["href"], JSON.stringify(this.selected), httpOptions).toPromise()
+      const url = this.selectedExpense._links["update"];
+      this.http.put<Expense>(url["href"], JSON.stringify(this.selectedExpense), httpOptions).toPromise()
         .then((response) => {
           this.refreshExpenses(selectedProject);
           return response;
@@ -93,4 +94,12 @@ export class ExpenseService {
       });
     }
   }
+
+  delete(expense: Expense, project: Project) {
+    //const url = expense._links["delete"];
+    const url = `${projectsUrl}/${project.id}/expenses/${expense.id}`;
+      this.http.delete<Expense>(url).toPromise()
+        .then( () => this.refreshExpenses(project))
+    }
+
 }

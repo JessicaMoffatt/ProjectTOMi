@@ -23,7 +23,7 @@ const httpOptions = {
 })
 export class UserAccountService {
 
-  /** The UserAccount selected from the list of UserAccounts.*/
+  /** The UserAccount selectedExpense from the list of UserAccounts.*/
   private selectedUserAccount: UserAccount;
 
 
@@ -178,7 +178,7 @@ export class UserAccountService {
   }
 
   /**
-   * Logically deletes the selected user account (sets the active status to false.)
+   * Logically deletes the selectedExpense user account (sets the active status to false.)
    *
    * @param account The UserAccount to be deleted.
    */
