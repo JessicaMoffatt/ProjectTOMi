@@ -7,7 +7,7 @@ import {TeamMemberTimesheetService} from "../../../service/team-member-timesheet
   styleUrls: ['./productivity-report.component.scss']
 })
 export class ProductivityReportComponent implements OnInit {
-  displayedColumns: string[] = ['date', 'unitType','quantity','time', 'normalizedValue'];
+  private displayedColumns: string[] = ['date', 'unitType','quantity','time', 'normalizedValue'];
 
   constructor(public teamMemberTimesheetService:TeamMemberTimesheetService) { }
 
