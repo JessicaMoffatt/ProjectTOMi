@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {Expense} from "../model/expense";
-import {expenseUrl, projectsUrl} from "../configuration/domainConfiguration";
+import {projectsUrl} from "../configuration/domainConfiguration";
 import {Project} from "../model/project";
-import {ProjectService} from "./project.service";
 
 /**
  * Expense service provides services related to Expenses
@@ -32,23 +31,7 @@ export class ExpenseService {
   constructor(private http: HttpClient) {
   }
 
-  /**
-   * Gets all expenses.
-   * TODO: does it make sense to keep this?  Would we have any reason to access expenses without the projectId?
-   */
-  getExpenses(): Observable<Array<Expense>> {
-    return this.http.get(`${expenseUrl}`).pipe(map((response: Response) => response))
-      .pipe(map((data: any) => {
-        if (data._embedded !== undefined) {
-          return data._embedded.expenses as Expense[];
-        } else {
-          return [];
-        }
-      }));
-  }
-
   refreshExpenses(selectedProject: Project) {
-
     if (selectedProject.id == null) {
       return [];
     } else {
@@ -80,7 +63,7 @@ export class ExpenseService {
         .then(response => {
           this.refreshExpenses(selectedProject);
           return response;
-        }).catch((error: any) => {
+        }).catch(() => {
         //TODO
       });
     } else {
@@ -89,13 +72,14 @@ export class ExpenseService {
         .then((response) => {
           this.refreshExpenses(selectedProject);
           return response;
-        }).catch((error: any) => {
+        }).catch(() => {
         //TODO
       });
     }
   }
 
   delete(expense: Expense, project: Project) {
+    //TODO: can we make this link work?
     //const url = expense._links["delete"];
     const url = `${projectsUrl}/${project.id}/expenses/${expense.id}`;
       this.http.delete<Expense>(url).toPromise()
