@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SelectionModel} from "@angular/cdk/collections";
 import {Expense} from "../../../../model/expense";
 import {ExpenseService} from "../../../../service/expense.service";
@@ -19,22 +19,35 @@ export class ExpenseListComponent implements OnInit {
 
   selection = new SelectionModel<Expense>(true, []);
 
-  constructor(private dialog: MatDialog, public expenseService: ExpenseService, private projectService: ProjectService) { }
+  constructor(private dialog: MatDialog, public expenseService: ExpenseService, private projectService: ProjectService) {
+  }
 
   ngOnInit() {
   }
 
   addExpense() {
-    this.dialog.open(AddProjectExpenseComponent);
+    this.expenseService.selectedExpense = new Expense();
+    this.dialog.open(AddProjectExpenseComponent)
   }
 
+  /**
+   * Opens an existing expense in the addExpenseComponent modal for editing
+   * Because the edit button can only be clicked when 1 expense is selected, the for each below will
+   * only execute for one item.
+   */
   edit() {
-    this.selection.selected.forEach( expense => console.log("expense:"+expense.notes))
+    // note: because the list selection only allow
+    this.selection.selected
+      .forEach(expense => {
+        this.expenseService.selectedExpense = expense;
+        this.dialog.open(AddProjectExpenseComponent).afterClosed().toPromise()
+          .finally(() => this.selection = new SelectionModel<Expense>(true, []));
+      });
   }
 
   delete() {
     this.selection.selected
-      .forEach( expense => this.expenseService.delete(expense, this.projectService.selectedProject));
+      .forEach(expense => this.expenseService.delete(expense, this.projectService.selectedProject));
     this.selection = new SelectionModel<Expense>(true, []);
   }
 }

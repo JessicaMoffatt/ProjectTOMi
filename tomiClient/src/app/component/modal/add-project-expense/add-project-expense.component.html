@@ -3,16 +3,26 @@
   @version 1.0
 -->
 
-<h1 mat-dialog-title>Add Expense to Project</h1>
+<h1 mat-dialog-title>Edit Project Expense</h1>
 <div mat-dialog-content>
   <form>
     <mat-form-field>
-      <input matInput #addExpenseNote placeholder="Note" [formControl]="" [errorStateMatcher]="">
+      <input matInput
+             #addExpenseNote
+             placeholder="Note"
+             [value]="this.expenseService.selectedExpense.notes"
+             [formControl]=""
+             [errorStateMatcher]="">
       <mat-error *ngIf="expenseNoteControl.hasError('required')">Note is <strong>required</strong></mat-error>
     </mat-form-field>
-
+  <br/>
     <mat-form-field>
-      <input matInput #addExpenseAmount placeholder="Amount" [formControl]="" [errorStateMatcher]="">
+      <input matInput
+             #addExpenseAmount
+             placeholder="Amount"
+             [value]="this.expenseService.selectedExpense.amount"
+             [formControl]=""
+             [errorStateMatcher]="">
 
       <mat-error *ngIf="expenseAmountControl.hasError('required')">Unit is <strong>required</strong></mat-error>
       <mat-error *ngIf="expenseAmountControl.hasError('pattern')">Must be a dollar amount</mat-error>
@@ -20,11 +30,17 @@
 
     <div mat-dialog-actions>
       <!-- TODO: disable save button until both fields are filled in -->
-      <button mat-raised-button color="primary"
-              [disabled]="false"
-              (click)="save()">SAVE
+      <button mat-raised-button
+              color="primary"
+              [disabled]="false "
+              (click)="save()">
+        SAVE
       </button>
-      <button mat-raised-button color="accent" (click)="cancel()">CANCEL</button>
+      <button mat-raised-button
+              color="primary"
+              (click)="cancel()">
+        CANCEL
+      </button>
     </div>
   </form>
 </div>

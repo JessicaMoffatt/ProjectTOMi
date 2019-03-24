@@ -104,12 +104,11 @@ export class ProjectService {
 
   /**
    * Retrieves the data dump report as an xls file download.
-   * @param project The project to get a report for.
    */
   getDataDump(){
     return this.http.get(`${dataDumpUrl}`, {responseType: 'blob'})
       .pipe(
-        map((res) => {return res}),catchError(this.handleError)
+        map((res) => {return res}),catchError(ProjectService.handleError)
       );
   }
 
@@ -117,7 +116,7 @@ export class ProjectService {
    * General error handling method.
    * @param error The error that occurred.
    */
-  private handleError(error: HttpErrorResponse) {
+  private static handleError(error: HttpErrorResponse) {
     return throwError(error.message);
   }
 
@@ -136,12 +135,12 @@ export class ProjectService {
     );
   }
 
-  async save(project: Project) {
+  save(project: Project) {
     if (project.id.length == 2) {
 
-      await this.http.post<Project>(`${projectsUrl}`, JSON.stringify(project))
+      this.http.post<Project>(`${projectsUrl}`, JSON.stringify(project))
         .toPromise()
-        .then((project)=> this.selectedProject = project)
+        .then((project)=> this.selectedProject = project);
 
       console.log('in project.service.ts -- at end point of save')
         //.catch((error: any) => {
@@ -149,10 +148,10 @@ export class ProjectService {
       //});
     } else {
       const url = project._links["update"];
-      this.http.put<UserAccount>(url["href"], JSON.stringify(project)).toPromise().then(response => {
+      this.http.put<UserAccount>(url["href"], JSON.stringify(project)).toPromise().then(() => {
 
         //  this.refreshClients();
-      }).catch((error: any) => {
+      }).catch(() => {
         //TODO Add an error display
       });
     }
@@ -160,17 +159,13 @@ export class ProjectService {
 
 
   addUser(userAccountId: number) {
-    console.log("in project.service.ts -- saving user");
-    let tempAccount: UserAccount = null;
     this.http.put<UserAccount>(`${projectsUrl}/${this.selectedProject.id}/add_member/${userAccountId}`, httpOptions).toPromise()
       .then((response) => {
-      this.refreshUserAccountList()
+      this.refreshUserAccountList();
       return response;
     }).catch(() => {
       return null;
     });
-
-    return tempAccount;
   }
 
 
@@ -178,7 +173,7 @@ export class ProjectService {
     this.getAllProjects().forEach(project => {
       this.projects = new BehaviorSubject<Array<Project>>(project);
       // this.sort();
-    }).catch((error: any) => {
+    }).catch(() => {
       let getUsersErrorMessage = 'Something went wrong when getting the list of projects. Please contact your system administrator.';
       this.snackBar.open(getUsersErrorMessage, null, {
         duration: 5000,
@@ -200,7 +195,7 @@ export class ProjectService {
         }
       })).forEach(userAccount => {
       this.userAccountList = new BehaviorSubject<Array<UserAccount>>(userAccount);
-    }).catch((error: any) => {
+    }).catch(() => {
       let getUsersErrorMessage = 'Something went wrong when getting the list of project members. Please contact your system administrator.';
       this.snackBar.open(getUsersErrorMessage, null, {
         duration: 5000,
@@ -212,7 +207,6 @@ export class ProjectService {
   }
 
   removeUser(userId: number) {
-    console.log("userid: "+userId);
     this.http.put(`${projectsUrl}/${this.selectedProject.id}/remove_member/${userId}`, httpOptions).toPromise()
       .then( () => this.refreshUserAccountList())
   }

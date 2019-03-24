@@ -22,7 +22,6 @@ export class ProjectMemberListComponent implements OnInit {
 
   addMemberToProject() {
     this.dialog.open(AddProjectMemberComponent);
-    console.log("you clicked open");
   }
 
 
