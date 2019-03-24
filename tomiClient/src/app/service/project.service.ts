@@ -159,11 +159,11 @@ export class ProjectService {
   }
 
 
-  async addUser(userAccountId: number) {
+  addUser(userAccountId: number) {
     console.log("in project.service.ts -- saving user");
     let tempAccount: UserAccount = null;
-    await this.http.put<UserAccount>(`${projectsUrl}/${this.selectedProject.id}/add_member/${userAccountId}`, httpOptions).toPromise().then((response) => {
-
+    this.http.put<UserAccount>(`${projectsUrl}/${this.selectedProject.id}/add_member/${userAccountId}`, httpOptions).toPromise()
+      .then((response) => {
       this.refreshUserAccountList()
       return response;
     }).catch(() => {

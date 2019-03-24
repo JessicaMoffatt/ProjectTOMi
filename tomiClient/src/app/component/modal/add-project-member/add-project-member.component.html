@@ -13,7 +13,7 @@
                   aria-label="New Project Member"
                   [(ngModel)]="selectedUserId"
         name="user">
-        <mat-option *ngFor="let u of this.userAccountService.userSubject | async"
+        <mat-option *ngFor="let u of this.availUsersList | async | orderBy: 'firstName'"
           [value]="u.id">
           {{u.firstName}} {{u.lastName}}
         </mat-option>
