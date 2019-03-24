@@ -174,9 +174,6 @@ export class ProjectService {
   }
 
 
-
-
-
   initializeProjects() {
     this.getAllProjects().forEach(project => {
       this.projects = new BehaviorSubject<Array<Project>>(project);
@@ -214,4 +211,9 @@ export class ProjectService {
     });
   }
 
+  removeUser(userId: number) {
+    console.log("userid: "+userId);
+    this.http.put(`${projectsUrl}/${this.selectedProject.id}/remove_member/${userId}`, httpOptions).toPromise()
+      .then( () => this.refreshUserAccountList())
+  }
 }

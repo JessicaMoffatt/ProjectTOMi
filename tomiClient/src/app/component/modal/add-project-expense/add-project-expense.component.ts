@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material";
 import {Expense} from "../../../model/expense";
