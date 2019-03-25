@@ -6,6 +6,9 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Timesheet} from "../model/timesheet";
 import {timesheetUrl} from "../configuration/domainConfiguration";
 import {userTimesheetUrl} from "../configuration/domainConfiguration";
+import {Project} from "../model/project";
+import {Task} from "../model/task";
+import {UnitType} from "../model/unitType";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -25,6 +28,14 @@ const httpOptions = {
 export class TimesheetService {
   /** The list of all timehseets for this user.*/
   timesheets: Timesheet[] = [];
+
+  /** List of all projects this user is allowed to access.*/
+  projects: Project[] = [];
+
+  /** List of all tasks.*/
+  tasks: Task[] = [];
+  /** List of all unit types.*/
+  unitTypes: UnitType[] = [];
 
   /** The position in timesheets for the current timesheet.*/
   private currentTimesheetIndex = 0;

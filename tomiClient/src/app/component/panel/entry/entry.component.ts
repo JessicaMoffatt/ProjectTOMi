@@ -21,11 +21,11 @@ export class EntryComponent implements OnInit {
   /** The entry model instance associated with this component. */
   @Input() entry: Entry;
   /** The list of projects this user is allowed to access.*/
-  @Input() projects: Project[];
+  @Input() projects: Project[] = [];
   /** The list of unit types this user is allowed to access.*/
-  @Input() unitTypes: UnitType[];
+  @Input() unitTypes: UnitType[] = [];
   /** The list of tasks this user is allowed to access.*/
-  @Input() tasks: Task[];
+  @Input() tasks: Task[] = [];
   /** Event emitter used to notify the parent component that a copy of an entry has been requested. */
   @Output() requestCopy = new EventEmitter<any>();
   /** Event emitter used to notify the parent component that a delete of an entry has been requested. */

@@ -45,13 +45,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
   /** List of all entries for current timesheet.*/
   entries: Entry[] = [];
-  /** List of all projects this user is allowed to access.*/
-  projects: Project[] = [];
 
-  /** List of all tasks.*/
-  tasks: Task[];
-  /** List of all unit types.*/
-  unitTypes: UnitType[];
 
   /**
    * Holds the total number of hours worked this week.
@@ -78,6 +72,23 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * On initialization, calls getEntries to populate the entries variable as well as the projects variable.
    */
   ngOnInit() {
+    if(this.timesheetService.timesheets.length === 0){
+      this.firstLoad();
+    }else{
+      this.timesheetService.getCurrentTimesheet().then(data=>{
+        this.getEntries(data);
+        this.timesheetService.setCurrentDate();
+        this.timesheetService.setCurrentStatus().then();
+      });
+    }
+  }
+
+  /** After the view has initialized, gets all entry components.*/
+  ngAfterViewInit(): void {
+    this.getEntryComponents();
+  }
+
+  firstLoad(){
     this.populateTimesheets().then((value) => {
       let timesheet = value as Timesheet;
       this.getEntries(timesheet);
@@ -87,19 +98,14 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     });
   }
 
-  /** After the view has initialized, gets all entry components.*/
-  ngAfterViewInit(): void {
-    this.getEntryComponents();
-  }
-
   /** Populates tasks.*/
   populateTasks() {
-    this.entryService.getTasks().subscribe((data => this.tasks = data))
+    this.entryService.getTasks().subscribe((data => this.timesheetService.tasks = data))
   }
 
   /** Populates unitTypes.*/
   populateUnitTypes() {
-    this.entryService.getUnitTypes().subscribe((data => this.unitTypes = data))
+    this.entryService.getUnitTypes().subscribe((data => this.timesheetService.unitTypes = data))
   }
 
   /** Gets all the entry components currently on the timesheet.*/
@@ -136,7 +142,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * @param id The ID of the user.
    */
   getProjects(id: number): void {
-    this.projectService.getProjectsForUser(id).subscribe((data => this.projects = data));
+    this.projectService.getProjectsForUser(id).subscribe((data => this.timesheetService.projects = data));
   }
 
   /**
