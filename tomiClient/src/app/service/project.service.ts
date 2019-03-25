@@ -67,7 +67,7 @@ export class ProjectService {
 
   /**
    * sets the selected project that will be used in project-panel and manage-projects component
-   * added by: James Andrade
+   * @author: James Andrade, Jessica Moffatt
    * @param project the project to be stored as 'selected'
    */
   setSelected(project: Project){
