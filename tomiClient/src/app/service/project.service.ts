@@ -135,7 +135,7 @@ export class ProjectService {
     );
   }
 
-  save(project: Project) {
+  async save(project: Project) {
     if (project.id.length == 2) {
 
       this.http.post<Project>(`${projectsUrl}`, JSON.stringify(project))
