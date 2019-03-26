@@ -12,7 +12,8 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/form
 /**
  * AddUnitTypeComponent is a modal for adding new Unit Types.
  *
- * @author Iliya Kiritchkov and Karol Talbot
+ * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1.1
  */
 export class AddUnitTypeComponent implements OnInit {

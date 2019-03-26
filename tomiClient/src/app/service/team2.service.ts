@@ -16,7 +16,9 @@ const httpOptions = {
 /**
  * TeamService is used to control the flow of data regarding teams to/from the view.
  *
- * @author Jessica Moffatt, Iliya Kiritchkov, and Karol Talbot
+ * @author Jessica Moffatt
+ * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 2.0
  */
 @Injectable({

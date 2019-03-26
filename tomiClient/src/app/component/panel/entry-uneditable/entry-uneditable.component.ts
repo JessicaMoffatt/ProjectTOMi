@@ -7,6 +7,7 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
  * The component used to display entries with a stats of submitted.
  *
  * @author Jessica Moffatt
+ * @author Karol Talbot
  * @version 1.0
  */
 @Component({

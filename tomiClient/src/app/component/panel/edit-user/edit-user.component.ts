@@ -9,6 +9,7 @@ import {Observable, Subscription} from "rxjs";
  * EditUserComponent is an individual, editable entry for a UserAccount.
  *
  * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1.1
  */
 @Component({

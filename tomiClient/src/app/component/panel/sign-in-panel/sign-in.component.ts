@@ -7,6 +7,10 @@ import {Meta} from "@angular/platform-browser";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {UserAccount} from "../../../model/userAccount";
 
+/**
+ * @author Karol Talbot
+ * @version 1.0
+ */
 declare let gapi: any;
 
 const httpOptions = {

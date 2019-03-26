@@ -8,6 +8,9 @@ import {Observable} from "rxjs";
 import {SignInService} from "./service/sign-in.service";
 import {NgModule} from "@angular/core";
 
+/**
+ * @author Karol Talbot
+ */
 @NgModule({
   providers: [SignInService]
 })

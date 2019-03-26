@@ -6,6 +6,10 @@ import {AddUserAccountComponent} from "../../modal/add-user-account/add-user-acc
 import {MatDialog} from "@angular/material";
 import {TeamService} from "../../../service/team.service";
 
+/**
+ * @author Karol Talbot
+ * @author Iliya Kiritchkov
+ */
 @Component({
   selector: 'app-user-account',
   templateUrl: './user-account.component.html',

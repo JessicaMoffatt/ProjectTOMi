@@ -2,7 +2,6 @@ package ca.projectTOMi.tomi.authorization.manager;
 
 import java.util.List;
 /**
- * @param <E>
  *
  * @author Karol Talbot
  */

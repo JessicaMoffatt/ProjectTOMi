@@ -3,6 +3,9 @@ import {ActivatedRouteSnapshot, CanActivate, Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {SignInService} from "./service/sign-in.service";
 
+/**
+ * @author Karol Talbot
+ */
 @Injectable()
 export class AccessGuard implements CanActivate {
   signInService:SignInService;

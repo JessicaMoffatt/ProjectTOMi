@@ -9,6 +9,10 @@ import {MatDialog, MatInput, MatPaginator, MatSelect, PageEvent} from "@angular/
 import {AddUserAccountComponent} from "../../modal/add-user-account/add-user-account.component";
 import {AddTeamComponent} from "../../modal/add-team/add-team.component";
 
+/**
+ * @author Karol Talbot
+ * @version 2.0
+ */
 @Component({
   selector: 'app-manage-teams-panel',
   templateUrl: './manage-teams-panel.component.html',

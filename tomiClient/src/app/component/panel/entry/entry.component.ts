@@ -11,6 +11,7 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
  * EntryComponent is used to facilitate communication between the view and front end services.
  *
  * @author Jessica Moffatt
+ * @author Karol Talbot
  * @version 2.0
  */
 @Component({

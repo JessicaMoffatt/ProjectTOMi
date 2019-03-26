@@ -9,6 +9,7 @@ import {ErrorStateMatcher, MatDialogRef} from "@angular/material";
  * AddTaskComponent is a modal form used to add a new UserAccount to the database.
  *
  * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1.1
  */
 @Component({

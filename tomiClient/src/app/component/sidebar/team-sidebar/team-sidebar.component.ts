@@ -12,7 +12,8 @@ import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-t
 /**
  * TeamSideBarComponent is used to house the list of teams to be managed.
  *
- * @author Jessica Moffatt and Karol Talbot
+ * @author Jessica Moffatt
+ * @author Karol Talbot
  * @version 2.0
  */
 

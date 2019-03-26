@@ -2,7 +2,6 @@ import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewC
 import {FormControl, Validators} from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
 import {Task} from 'src/app/model/task';
-import {TaskService} from "../../../service/task.service";
 
 /**
  * EditUserComponent is an individual, editable entry for a Task.
