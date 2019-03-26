@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {TeamService} from "../../../service/team.service";
 import {Team} from "../../../model/team";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamSidebarService} from "../../../service/team-sidebar.service";
-import {MatDialog, MatDialogRef, MatSelectionList, MatSelectionListChange} from "@angular/material";
+import {MatDialog, MatDialogRef, MatSelectionList} from "@angular/material";
 import {UserAccountService} from "../../../service/user-account.service";
 
 /**
@@ -27,6 +27,7 @@ export class TeamComponent implements OnInit {
 
   ngOnInit() {
   }
+
 
   /**
    * Sets the selected team members.
