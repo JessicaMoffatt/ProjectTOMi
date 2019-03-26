@@ -2,8 +2,9 @@ import {Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, O
 import {FormControl, Validators, FormGroupDirective, NgForm} from "@angular/forms";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamService} from "../../../service/team.service";
-import {ErrorStateMatcher, MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
+import {ErrorStateMatcher, MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSelect} from "@angular/material";
 import {Observable, Subscription} from "rxjs";
+import {TeamService2} from "../../../service/team2.service";
 
 /**
  * EditUserComponent is an individual, editable entry for a UserAccount.
@@ -70,7 +71,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
   @ViewChild('editUserSalariedRate') editUserSalariedRate;
 
   /** The select field for the UserAccount's team id.*/
-  @ViewChild('editUserTeamId') editUserTeamId;
+  @ViewChild('editUserTeamId') editUserTeamId:MatSelect;
 
   /** The input checkbox for the UserAccount's Program Director status.*/
   @ViewChild('editUserProgramDirector') editUserProgramDirector;
@@ -82,10 +83,10 @@ export class EditUserComponent implements OnInit, OnDestroy {
   @ViewChild('editUserAccountForm') editUserAccountForm;
 
 
-  constructor(public deleteUserDialog: MatDialog, public teamService: TeamService) { }
+  constructor(public deleteUserDialog: MatDialog, public teamService2: TeamService2) { }
 
   ngOnInit() {
-
+    this.teamService2.initializeTeams();
   }
 
   ngOnDestroy(): void {
@@ -100,10 +101,10 @@ export class EditUserComponent implements OnInit, OnDestroy {
     this.userAccountFirstNameControl.setValue(this.userAccount.firstName);
     this.userAccountLastNameControl.setValue(this.userAccount.lastName);
     this.userAccountEmailControl.setValue(this.userAccount.email);
-    if (this.userAccount.teamId) {
-      this.editUserTeamId.selected.value = this.userAccount.teamId;
-    } else {
+    if (this.userAccount.teamId == undefined) {
       this.editUserTeamId.value = null;
+    } else {
+      this.editUserTeamId.value = this.userAccount.teamId;
     }
     this.editUserAdmin.checked = this.userAccount.admin;
     this.editUserProgramDirector.checked = this.userAccount.programDirector;
@@ -118,7 +119,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
         this.userAccount.lastName = this.editUserLastName.nativeElement.value;
         this.userAccount.email = this.editUserEmail.nativeElement.value;
         if (!this.editUserTeamId.empty) {
-          this.userAccount.teamId = this.editUserTeamId.selected.value;
+          this.userAccount.teamId = this.editUserTeamId.value;
         } else {
           this.userAccount.teamId = -1;
         }

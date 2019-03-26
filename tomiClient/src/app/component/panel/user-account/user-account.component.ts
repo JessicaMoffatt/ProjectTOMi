@@ -23,7 +23,7 @@ export class UserAccountComponent implements OnInit, OnDestroy {
 
   @ViewChild('editUserComponent') editUserComponent : ElementRef;
 
-  constructor(private dialog: MatDialog, private userAccountService: UserAccountService, private teamService:TeamService) { }
+  constructor(private dialog: MatDialog, public userAccountService: UserAccountService, private teamService:TeamService) { }
 
   ngOnInit() {
     this.teamService.refreshTeams();
