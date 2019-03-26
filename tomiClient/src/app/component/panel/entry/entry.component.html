@@ -106,7 +106,7 @@
 
       <mat-form-field class="quantity">
         <input matInput type="number" step=".25" min="0"
-               placeholder="{{entry.unitType ? entry.unitType.unit : 'Units'}}"
+               [placeholder]="entry.unitType ? entry.unitType.unit : 'Units'"
                [(ngModel)]="entry.quantity"
                (keypress)="validateNumber($event)"
                #quantityInput>
@@ -117,79 +117,37 @@
     <!-- days of the week -->
     <div class = "weekday">
       <mat-form-field id="monday" class="day">
-        <div *ngIf="!smallScreen; else smallMonday">
-          <label for="mondayInput">Monday</label>
-        </div>
-        <ng-template #smallMonday>
-          <label for="mondayInput">Mon</label>
-        </ng-template>
-        <input matInput [(ngModel)]="entry.mondayHours" type="number"
+        <input matInput [(ngModel)]="entry.mondayHours" type="number" placeholder="Monday"
                step=".25" min="0" (keypress)="validateNumber($event)" #mondayInput id="mondayInput">
       </mat-form-field>
 
       <mat-form-field id="tuesday" class="day">
-        <div *ngIf="!smallScreen; else smallTuesday">
-          <label for="tuesdayInput">Tuesday</label>
-        </div>
-        <ng-template #smallTuesday>
-          <label for="tuesdayInput">Tues</label>
-        </ng-template>
-        <input matInput [(ngModel)]="entry.tuesdayHours" type="number"
+        <input matInput [(ngModel)]="entry.tuesdayHours" type="number" placeholder="Tuesday"
                step=".25" min="0" (keypress)="validateNumber($event)" #tuesdayInput id="tuesdayInput">
       </mat-form-field>
 
       <mat-form-field id="wednesday" class="day">
-        <div *ngIf="!smallScreen; else smallWednesday">
-          <label for="wednesdayInput">Wednesday</label>
-        </div>
-        <ng-template #smallWednesday>
-          <label for="wednesdayInput">Wed</label>
-        </ng-template>
-        <input matInput [(ngModel)]="entry.wednesdayHours" type="number"
+        <input matInput [(ngModel)]="entry.wednesdayHours" type="number" placeholder="Wednesday"
                step=".25" min="0" (keypress)="validateNumber($event)" #wednesdayInput id="wednesdayInput">
       </mat-form-field>
 
       <mat-form-field id="thursday" class="day">
-        <div *ngIf="!smallScreen; else smallThursday">
-          <label for="thursdayInput">Thursday</label>
-        </div>
-        <ng-template #smallThursday>
-          <label for="thursdayInput">Thurs</label>
-        </ng-template>
-        <input matInput [(ngModel)]="entry.thursdayHours" type="number"
+        <input matInput [(ngModel)]="entry.thursdayHours" type="number" placeholder="Thursday"
                step=".25" min="0" (keypress)="validateNumber($event)" #thursdayInput id="thursdayInput">
       </mat-form-field>
 
       <mat-form-field id="friday" class="day">
-        <div *ngIf="!smallScreen; else smallFriday">
-          <label for="fridayInput">Friday</label>
-        </div>
-        <ng-template #smallFriday>
-          <label for="fridayInput">Fri</label>
-        </ng-template>
-        <input matInput [(ngModel)]="entry.fridayHours" type="number"
+        <input matInput [(ngModel)]="entry.fridayHours" type="number" placeholder="Friday"
                step=".25" min="0" (keypress)="validateNumber($event)" #fridayInput id="fridayInput">
       </mat-form-field>
 
       <mat-form-field id="saturday" class="day">
-        <div *ngIf="!smallScreen; else smallSaturday">
-          <label for="saturdayInput">Saturday</label>
-        </div>
-        <ng-template #smallSaturday>
-          <label for="saturdayInput">Sat</label>
-        </ng-template>
-        <input matInput [(ngModel)]="entry.saturdayHours" type="number"
+        <input matInput [(ngModel)]="entry.saturdayHours" type="number" placeholder="Saturday"
                step=".25" min="0" (keypress)="validateNumber($event)" #saturdayInput id="saturdayInput">
       </mat-form-field>
 
       <mat-form-field id="sunday" class="day">
-        <div *ngIf="!smallScreen; else smallSunday">
-          <label for="sundayInput">Sunday</label>
-        </div>
-        <ng-template #smallSunday>
-          <label for="sundayInput">Sun</label>
-        </ng-template>
-        <input matInput [(ngModel)]="entry.sundayHours" type="number"
+        <input matInput [(ngModel)]="entry.sundayHours" type="number" placeholder="Sunday"
                step=".25" min="0" (keypress)="validateNumber($event)" #sundayInput id="sundayInput">
       </mat-form-field>
       <!-- end of days of week-->

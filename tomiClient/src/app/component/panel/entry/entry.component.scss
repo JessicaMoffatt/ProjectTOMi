@@ -3,89 +3,97 @@
 @author Karol Talbot
 @version 2.0
  */
-
 @import '../../../../variables';
 
-.entry_card{
+.entry_card {
   margin: 1rem 10vw;
   padding: 1rem 2vw;
   width: 76vw;
+  //animation: spin 10s infinite linear;
+
+  label {
+    padding-bottom: 0.2em;
+  }
+
+  background-color: $blue_faded;
 }
 
-.entry_btn{
-  color:$white;
+.entry_btn {
+  color: $white;
   margin: 0.1vw;
   width: 2rem;
   height: 2rem;
-  float:top
+  float: top
 }
 
-.delete_btn{
+.delete_btn {
   float: right;
   background-color: $red;
 }
 
-.copy_btn{
+.copy_btn {
   float: right;
   background-color: $blue;
 }
 
-.entry_btn_container{
-  float:right;
+.entry_btn_container {
+  float: right;
   width: 14.896vw;
 }
 
-.row{
+.row {
   display: inline;
   width: 74.48vw;
   padding: 0 0.76vw;
 }
 
-.top{
+.top {
   display: inline-block;
   width: 55.86vw;
 }
 
-.third{
+.third {
   display: inline-block;
   width: 16.758vw;
   padding-right: 2.793vw;
 }
 
-.third_last{
+.third_last {
   display: inline-block;
   width: 30%;
 }
 
-.component{
+.component {
   display: inline-block;
   width: 75%;
 }
 
-.quantity{
+.quantity {
   float: right;
   display: inline-block;
   width: 20%;
-  input{
-    text-align: right;
+
+  input {
+    text-align: center;
   }
 }
 
-.day{
+.day {
   width: 12%;
   margin-right: 1%;
   margin-left: 1%;
   display: inline-flex;
   flex-direction: column;
   text-align: center;
-  input{
-    text-align: right;
+
+  input {
+    text-align: center;
     width: 98%;
     padding: 1%;
   }
 }
 
-.weekday{
+.weekday {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -93,18 +101,26 @@
   padding: 1%;
 }
 
-.weekday:last-child{
+.weekday:last-child {
   padding-right: 0;
 }
 
-.weekday:first-child{
+.weekday:first-child {
   padding-left: 0;
 }
 
-#menu_btn{
-  float:right;
+#menu_btn {
+  float: right;
 }
 
-#menu{
+#menu {
   overflow: hidden;
+}
+
+
+
+@keyframes spin {
+  to {
+    transform:rotate(360deg)
+  }
 }
