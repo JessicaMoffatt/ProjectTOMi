@@ -1,31 +1,17 @@
-
 @import "../../../../variables";
-
-.user_account_table{
+.dialog_pane{
   width: available;
+  padding: 1vh 5vw;
 }
 
-#unit_type_name{
-  width: 48%;
-  padding: 1%;
-}
-
-#unit_type_unit{
-  width: 23%;
-  padding: 1%;
-}
-
-#unit_type_weight{
-  width: 23%;
-  padding: 1%;
-}
-
-.manage_delete_btn{
-  background-color: $delete_btn;
-  color:$delete_btn_text;
+#buttons{
+  padding-top: 5vh;
+  padding-right:1%;
+  width: 100%;
 }
 
 .manage_cancel_btn{
+  position: relative;
   background-color: $cancel_btn;
   color:$cancel_btn_text;
   float:right;
@@ -38,5 +24,3 @@
   float:right;
   margin-right: 1%;
 }
-
-

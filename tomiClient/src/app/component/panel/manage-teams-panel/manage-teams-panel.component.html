@@ -9,54 +9,73 @@
           <mat-form-field id="team">
             <input matInput #editTeamName placeholder="Team Name" [formControl]="teamNameControl">
           </mat-form-field>
-
-          <div>
-            <mat-form-field id="team_lead">
-              <mat-select #editUserTeamId placeholder="Team Lead" [value]="this.getSelectedTeam().leadId">
-                <mat-option [value]="-1">None</mat-option>
-                <mat-option *ngFor="let user of this.getSelectedTeamMembers() | async"
-                            [value]="user.id">{{user.firstName}} {{user.lastName}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="team_members" cdkDropListGroup>
-            <div id="on_team">
+          <mat-form-field id="team_lead">
+            <mat-select #editTeamLeadId placeholder="Team Lead" [value]="this.getSelectedTeam().leadId">
+              <mat-option [value]="-1">None</mat-option>
+              <mat-option *ngFor="let user of this.getSelectedTeamMembers() | async"
+                          [value]="user.id">{{user.firstName}} {{user.lastName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div cdkDropListGroup>
             <span class="title_line">
-              Team Members
-              <mat-paginator [pageSize]="10" [pageIndex]="1"></mat-paginator>
+              <span class="title">Team Members</span>
+              <span class="search_bar_inline">
+                <input #member_filter id="member_filter" [ngClass]="'input_search'"
+                       placeholder="search" (keyup)="0">
+              </span>
+              <mat-paginator #memberPaginator [hidePageSize]="true"
+                             [length]="this.getSelectedTeamMembers().getValue().length"
+                             [pageSize]="this.PAGE_SIZE" (page)="teamPageChange($event)">
+              </mat-paginator>
             </span>
+            <div class="chip_list">
               <mat-chip-list cdkDropList #teamMembers="cdkDropList" [cdkDropListConnectedTo]="[availableUserAccounts]"
                              (cdkDropListDropped)="drop($event, 'team')">
-                <mat-chip cdkDrag [cdkDragData]="user_account" (click)="move(user_account, 'team')"
+                <mat-chip [cdkDragData]="user_account" (click)="move(user_account, 'team')"
                           class="user_account on_team"
-                          *ngFor="let user_account of this.getSelectedTeamMembers() | async" cdkDrag>
+                          *ngFor="let user_account of this.getTeamMembersPage()" cdkDrag>
                   {{user_account.firstName}} {{user_account.lastName}}
                 </mat-chip>
               </mat-chip-list>
+              <ng-template [ngIf]="this.getSelectedTeamMembers().getValue().length == 0">
+                <div class="no_users">
+                  There are no members on this team
+                </div>
+              </ng-template>
             </div>
-            <div id="available">
-              <span class="title_line">
-                Available Members
-                <mat-paginator [pageSize]="10" [pageIndex]="1"></mat-paginator>
-              </span>
+            <span class="title_line">
+                <span class="title">Available Members</span>
+                <span class="search_bar_inline"><input #available_filter id="available_filter"
+                                                       [ngClass]="'input_search'"
+                                                       placeholder="search" (keyup)="0"></span>
+                <mat-paginator #availablePaginator [hidePageSize]="true" [pageSize]="this.PAGE_SIZE"
+                               [length]="this.getAvailableMembers().getValue().length"
+                               (page)="availablePageChange($event)"></mat-paginator>
+            </span>
+            <div class="chip_list">
               <mat-chip-list cdkDropList #availableUserAccounts="cdkDropList" [cdkDropListConnectedTo]="[teamMembers]"
                              (cdkDropListDropped)="drop($event, 'available')">
-                <mat-chip cdkDrag [cdkDragData]="user_account" (click)="move(user_account, 'available')"
-                          class="user_account" *ngFor="let user_account of this.getAvailableMembers() | async"
+                <mat-chip [cdkDragData]="user_account" (click)="move(user_account, 'available')"
+                          class="user_account" *ngFor="let user_account of this.getAvailableMembersPage()"
                           cdkDrag>
                   {{user_account.firstName}} {{user_account.lastName}}
                 </mat-chip>
               </mat-chip-list>
+              <ng-template [ngIf]="this.getAvailableMembers().getValue().length == 0">
+                <div class="no_users">
+                  There are no unassigned users
+                </div>
+              </ng-template>
             </div>
           </div>
         </form>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-flat-button class="manage_save_btn" (click)="save()">
-          Save
-        </button>
         <button mat-flat-button class="manage_cancel_btn" (click)="cancel()">
           Cancel
+        </button>
+        <button mat-flat-button class="manage_save_btn" (click)="save()">
+          Save
         </button>
         <button mat-flat-button class="manage_delete_btn" (click)="delete()">
           Delete

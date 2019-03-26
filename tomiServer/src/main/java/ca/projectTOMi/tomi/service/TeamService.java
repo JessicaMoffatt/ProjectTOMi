@@ -94,6 +94,6 @@ public final class TeamService {
 		final Team team = this.getTeamById(teamId);
 		team.setActive(false);
 		team.setTeamLead(null);
-		this.repository.delete(team);
+		this.repository.save(team);
 	}
 }

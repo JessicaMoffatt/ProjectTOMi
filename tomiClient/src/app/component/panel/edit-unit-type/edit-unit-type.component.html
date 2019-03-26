@@ -9,13 +9,13 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
   <form #editUnitTypeForm="ngForm">
-    <mat-form-field id="unitType">
+    <mat-form-field id="unit_type_name">
       <input matInput #editUnitTypeName placeholder="Name" [formControl]="unitTypeNameControl">
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field id="unit_type_unit">
       <input matInput #editUnitTypeUnit placeholder="Unit" [formControl]="unitTypeUnitControl">
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field id="unit_type_weight">
       <input matInput #editUnitTypeWeight placeholder="Weight" [formControl]="unitTypeWeightControl">
     </mat-form-field>
     <div #buttons>

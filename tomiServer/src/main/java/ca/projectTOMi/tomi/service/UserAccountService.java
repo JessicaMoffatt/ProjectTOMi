@@ -173,6 +173,9 @@ public final class UserAccountService {
 	public UserAccount createUserAccount(final UserAccount userAccount) {
 		userAccount.setActive(true);
 		final UserAccount newUserAccount = this.repository.save(userAccount);
+		if(newUserAccount.getTeam() != null){
+			this.timesheetAuthService.addMemberToTeam(newUserAccount, newUserAccount.getTeam());
+		}
 		final TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
 		final LocalDate date = LocalDate.now().with(fieldISO, 1);
 		if (!this.entryService.createTimesheet(date, newUserAccount)) {

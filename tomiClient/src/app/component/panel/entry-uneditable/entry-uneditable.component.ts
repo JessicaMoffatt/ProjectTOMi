@@ -12,7 +12,7 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 @Component({
   selector: 'app-entry-uneditable',
   templateUrl: './entry-uneditable.component.html',
-  styleUrls: ['../entry/entry.component.scss']
+  styleUrls: ['../entry-uneditable/entry-uneditable.component.scss']
 })
 export class EntryUneditableComponent implements OnInit {
   /** The entry model instance associated with this component. */
@@ -24,11 +24,7 @@ export class EntryUneditableComponent implements OnInit {
       Breakpoints.XSmall,
       Breakpoints.Small
     ]).subscribe(result => {
-      if (result.matches) {
-        this.smallScreen=true;
-      }else{
-        this.smallScreen=false;
-      }
+      this.smallScreen = result.matches;
     });
   }
 

@@ -32,7 +32,7 @@ export class ProjectsPanelComponent implements OnInit {
         console.log(data);
         let link = document.createElement('a');
         let stuff = window.URL.createObjectURL(data);
-        link.href = stuff
+        link.href = stuff;
         document.body.appendChild(link);
         let today = new Date();
         let dateString = this.datePipe.transform(today, "yyyy-MM-dd");

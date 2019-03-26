@@ -8,7 +8,7 @@
     <div class="search_bar"><input #team_search id="team_search" [ngClass]="'input_search'"
                                    placeholder="search" (keyup)="0"></div>
     <mat-button-toggle-group #btn_group="matButtonToggleGroup" [name]="btn_group" class="btn_list" vertical>
-      <mat-button-toggle id="{{team.id}}_btn" class="list_btns" (click)='this.selectTeam(team)' *ngFor="let team of team2.getTeamSubjectList() | async">{{team.teamName}}</mat-button-toggle>
+      <mat-button-toggle id="{{team.id}}_btn" class="list_btns" (click)='this.selectTeam(team)' *ngFor='let team of team2.getTeamSubjectList() | async'>{{team.teamName}}</mat-button-toggle>
     </mat-button-toggle-group>
   </mat-action-list>
 </div>

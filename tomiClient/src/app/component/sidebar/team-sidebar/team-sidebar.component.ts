@@ -4,14 +4,10 @@ import {
   OnInit, ViewChild
 } from '@angular/core';
 import {Team} from "../../../model/team";
-import {TeamSidebarService} from "../../../service/team-sidebar.service";
 import {TeamService} from "../../../service/team.service";
-import {UserAccount} from "../../../model/userAccount";
-import {UserAccountService} from "../../../service/user-account.service";
-import {MatDialog, MatDialogRef} from "@angular/material";
+import {MatDialog} from "@angular/material";
 import {TeamService2} from "../../../service/team2.service";
 import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-teams-panel.component";
-import {MatButtonToggleModule} from "@angular/material";
 
 /**
  * TeamSideBarComponent is used to house the list of teams to be managed.
@@ -29,7 +25,7 @@ export class TeamSidebarComponent implements OnInit {
   @ViewChild("btn_group") btn_group;
 
   constructor(@Inject(ManageTeamsPanelComponent) private parent: ManageTeamsPanelComponent,
-              private resolver: ComponentFactoryResolver, private teamSideBarService: TeamSidebarService, private teamService: TeamService,
+              private resolver: ComponentFactoryResolver, private teamService: TeamService,
               public dialog: MatDialog, public team2: TeamService2) {
   }
 
@@ -43,6 +39,5 @@ export class TeamSidebarComponent implements OnInit {
 
   public unselect(teamId:number){
     this.btn_group.selected.checked = false;
-    console.log(this.btn_group);
   }
 }

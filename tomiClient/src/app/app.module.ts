@@ -74,6 +74,7 @@ import { TeamProductivityReportComponent } from './component/extra/team-producti
 import { DeleteTaskModal } from "./component/panel/edit-task/edit-task.component";
 import {AddTaskComponent} from "./component/modal/add-task/add-task.component";
 import {DeleteUnitTypeModal} from "./component/panel/edit-unit-type/edit-unit-type.component";
+import {AddTeamComponent} from "./component/modal/add-team/add-team.component";
 
 //Service Imports
 import {ProjectEntriesService} from "./service/project-entries.service";
@@ -125,7 +126,8 @@ import {UserAccountService} from "./service/user-account.service";
     TeamProductivityReportComponent,
     DeleteTaskModal,
     AddTaskComponent,
-    DeleteUnitTypeModal
+    DeleteUnitTypeModal,
+    AddTeamComponent
   ],
   imports: [
     BrowserModule,
@@ -176,7 +178,8 @@ import {UserAccountService} from "./service/user-account.service";
     DeleteUserAccountModal,
     AddTaskComponent,
     DeleteTaskModal,
-    DeleteUnitTypeModal
+    DeleteUnitTypeModal,
+    AddTeamComponent
   ],
   providers: [
     AccessGuard,

@@ -11,7 +11,7 @@
 }
 
 .team_edit_card{
-  padding:5%;
+  padding:2%;
   height: 60%;
   width: 60%;
   margin-left: 15%;
@@ -39,23 +39,75 @@
   margin-right: 1%;
 }
 
-#onTeam, #available{
-  display: inline;
-  mat-chip-list{
-    display: inline;
-  }
-  h4{
-    display: inline;
-  }
-  padding:1%;
-  width:48%;
-}
-
 .on_team{
   background-color: $orange;
   color:$white;
 }
 
 .title_line{
+  padding-top: 1%;
+  margin:0;
   display: inline-block;
+  width:100%;
+}
+
+.title{
+  display: inline-block;
+  font-weight: bold;
+  width:20%;
+  padding-left: 1%;
+  padding-right: 4%;
+}
+
+.mat-paginator{
+  display: inline-block;
+  width: 35%;
+  padding-left: 4%;
+  padding-right: 1%;
+}
+
+.search_bar_inline{
+  display: inline-block !important;
+  width: 35%;
+  align-content: center;
+  input{
+    text-align: center;
+    width: 96%;
+    margin-left:2%;
+    margin-right:2%;
+    border: $dark_grey 1px solid;
+    border-radius: 0.3em;
+  }
+}
+
+#team{
+  width: 48%;
+  padding: 1% 1% 0;
+}
+#team_lead{
+  width: 48%;
+  padding: 1% 1% 0;
+}
+
+.chip_list{
+  height: 4.5rem;
+  width: 98%;
+  margin:0.5%;
+  padding:0.5%;
+  border: $light_grey 1px solid;
+  border-radius: 0.2rem;
+}
+
+.user_account{
+  display: inline !important;
+}
+
+.no_users{
+  text-align: center;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  display: inline-block;
+  color: $dark_grey;
+  padding: 2%;
+  margin:0;
+  width: auto;
 }
