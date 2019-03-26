@@ -1,19 +1,19 @@
 import {
   Component,
-  ComponentFactoryResolver,
-  OnInit
+  ComponentFactoryResolver, Inject,
+  OnInit, ViewChild
 } from '@angular/core';
 import {Team} from "../../../model/team";
-import {TeamSidebarService} from "../../../service/team-sidebar.service";
 import {TeamService} from "../../../service/team.service";
-import {UserAccount} from "../../../model/userAccount";
-import {UserAccountService} from "../../../service/user-account.service";
-import {MatDialog, MatDialogRef, MatSnackBar} from "@angular/material";
+import {MatDialog} from "@angular/material";
+import {TeamService2} from "../../../service/team2.service";
+import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-teams-panel.component";
 
 /**
  * TeamSideBarComponent is used to house the list of teams to be managed.
  *
  * @author Jessica Moffatt
+ * @author Karol Talbot
  * @version 2.0
  */
 
@@ -23,127 +23,22 @@ import {MatDialog, MatDialogRef, MatSnackBar} from "@angular/material";
   styleUrls: ['./team-sidebar.component.scss']
 })
 export class TeamSidebarComponent implements OnInit {
+  @ViewChild("btn_group") btn_group;
 
-  constructor(private resolver: ComponentFactoryResolver, private teamSideBarService: TeamSidebarService, private teamService: TeamService,
-              public dialog: MatDialog) {
+  constructor(@Inject(ManageTeamsPanelComponent) private parent: ManageTeamsPanelComponent,
+              private resolver: ComponentFactoryResolver, private teamService: TeamService,
+              public dialog: MatDialog, public team2: TeamService2) {
   }
 
   ngOnInit() {
-    this.teamSideBarService.getAllTeams().subscribe((data: Array<Team>) => {
-      this.teamSideBarService.teams = data;
-    });
+    this.team2.initializeTeams();
   }
 
-  /**
-   * Displays the team in the team component.
-   * @param team The team to display.
-   */
-  displayTeam(team: Team) {
-    this.teamSideBarService.getTeamById(team.id).subscribe((data: Team) => {
-      this.teamSideBarService.selectedTeam = data;
-    });
-
-    this.teamService.setSelectMembers([]);
-    this.teamService.populateTeamMembers(team);
+  selectTeam(team: Team): void {
+    this.parent.setSelectedTeam(team);
   }
 
-  /**
-   * Displays the add team modal.
-   */
-  displayAddTeamModal(): void {
-    const dialogRef = this.dialog.open(AddTeamComponent, {
-      width: '400px'
-    });
-
-    dialogRef.afterClosed().subscribe();
-  }
-
-}
-
-/**
- * AddTeamComponent is used to facilitate communication between the view and front end services.
- *
- * @author Jessica Moffatt
- * @version 1.0
- */
-@Component({
-  selector: 'app-add-team',
-  template: `
-    <button mat-icon-button [ngClass]="['close_btn']" (click)="closeAddTeamComponent()">
-    </button>
-    <h1 mat-dialog-title>Add New Team</h1>
-    <div mat-dialog-content>
-      <mat-form-field>
-        <input matInput [(ngModel)]="name" placeholder="Team Name">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-select [(ngModel)]="lead" placeholder="Team Lead">
-          <mat-option value="-1">None</mat-option>
-          <mat-option *ngFor="let member of (this.teamService.allFreeMembers |orderBy: 'firstName')"
-                      [value]="member.id">
-            {{member.firstName}} {{member.lastName}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <div [ngClass]="'modal_btns_container'">
-        <button mat-button [ngClass]="['add_btn']" (click)="addTeam()">Add</button>
-        <button mat-button [ngClass]="['cancel_btn']" (click)="closeAddTeamComponent()">Cancel</button>
-      </div>
-    </div>
-  `
-})
-export class AddTeamComponent implements OnInit {
-
-  public name: string;
-  public lead: number;
-
-  constructor(private teamSidebarService: TeamSidebarService, public teamService: TeamService,
-              private userAccountService: UserAccountService, public dialogRef: MatDialogRef<AddTeamComponent>) {
-  }
-
-  /**
-   * On initialization of this component, assigns the team service's list of all members.
-   */
-  ngOnInit() {
-    this.teamService.getAllFreeMembers().subscribe((data: Array<UserAccount>) => {
-      this.teamService.allFreeMembers = data;
-    });
-  }
-
-  /**
-   * Adds a new team. Passes on the request to save the new team to the team service. If a team lead is selected, also passes
-   * on the request to save the user account's info to the user account service.
-   */
-  addTeam() {
-    let team = new Team();
-    team.teamName = this.name;
-
-    if (this.lead != undefined) {
-      team.leadId = this.lead;
-    }
-
-    if (team.teamName !== null && team.teamName !== "" && team.teamName !== undefined) {
-      this.teamService.save(team).then((value: Team) => {
-        this.teamService.refreshTeams();
-        if (team.leadId !== -1) {
-          this.userAccountService.getUserById(team.leadId).subscribe((teamLead: UserAccount) => {
-            teamLead.teamId = value.id;
-            this.userAccountService.save(teamLead);
-          });
-        }
-
-        this.teamSidebarService.teams.push(value);
-        this.closeAddTeamComponent();
-      });
-    }
-  }
-
-  /**
-   * Closes this add team component.
-   */
-  closeAddTeamComponent() {
-    this.dialogRef.close();
+  public unselect(teamId:number){
+    this.btn_group.selected.checked = false;
   }
 }

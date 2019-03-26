@@ -10,9 +10,9 @@ import ca.projectTOMi.tomi.model.UserAccount;
  * @author Karol Talbot
  */
 public final class TimesheetAuthManager implements AuthManager<TimesheetAuthorizationPolicy> {
-	private HashSet<TimesheetAuthorizationPolicy> policies;
 	private final UserAccount user;
 	private final UserAccount owner;
+	private HashSet<TimesheetAuthorizationPolicy> policies;
 
 	public TimesheetAuthManager(final UserAccount user, final UserAccount owner) {
 		this.user = user;

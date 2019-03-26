@@ -28,8 +28,6 @@ export class Project{
   billableRate: number;
   /** The Accounts that are members of this Project.*/
   projectMembers: UserAccount[];
-  /** If this Project is active.*/
-  active: boolean;
   /** The list of links used for communicating with the back end.*/
   _links: [];
 
@@ -41,7 +39,6 @@ export class Project{
     this.budget = 0;
     this.billableRate = 0;
     this.projectMembers = [];
-    this.active = true;
     this._links = [];
   }
 }

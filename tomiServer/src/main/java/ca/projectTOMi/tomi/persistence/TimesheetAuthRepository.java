@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Karol Talbot
  */
 public interface TimesheetAuthRepository extends JpaRepository<TimesheetAuthorizationPolicy, TimesheetAuthId> {
-  List<TimesheetAuthorizationPolicy> getAllByRequestingUser(UserAccount userAccount);
+	List<TimesheetAuthorizationPolicy> getAllByRequestingUser(UserAccount userAccount);
 }

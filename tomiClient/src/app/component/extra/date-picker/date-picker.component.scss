@@ -1,0 +1,11 @@
+@import "/~src/variables";
+/**
+ Author: Karol Talbot
+ */
+.calendar {
+  position: relative;
+  box-shadow: none;
+  i {
+    color: $arrow_color;
+  }
+}

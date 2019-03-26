@@ -1,5 +1,5 @@
 /*
-@author Jessica Moffatt
+@author Karol Talbot
 @version 2.0
  */
 
@@ -7,4 +7,23 @@
 
 #team_name{
   font-size:2rem;
+}
+
+.manage_delete_btn{
+  background-color: $delete_btn;
+  color:$delete_btn_text;
+}
+
+.manage_cancel_btn{
+  background-color: $cancel_btn;
+  color:$cancel_btn_text;
+  float:right;
+  margin-right: 1%;
+}
+
+.manage_save_btn{
+  background-color: $save_btn;
+  color: $save_btn_text;
+  float:right;
+  margin-right: 1%;
 }

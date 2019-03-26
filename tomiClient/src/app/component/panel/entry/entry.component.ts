@@ -5,11 +5,13 @@ import {Project} from "../../../model/project";
 import {Task} from 'src/app/model/task';
 import {UnitType} from "../../../model/unitType";
 import {TimesheetService} from "../../../service/timesheet.service";
+import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 /**
  * EntryComponent is used to facilitate communication between the view and front end services.
  *
  * @author Jessica Moffatt
+ * @author Karol Talbot
  * @version 2.0
  */
 @Component({
@@ -35,7 +37,7 @@ export class EntryComponent implements OnInit {
   @ViewChild('componentInput') componentInput;
   /** The input field for the entry's project.*/
   @ViewChild('projectInput') projectInput;
-  /** The input field for the entry's task.*/
+  /** The input field for the entry's taskSubject.*/
   @ViewChild('taskInput') taskInput;
   /** The input field for the entry's unit type.*/
   @ViewChild('unitTypeInput') unitTypeInput;
@@ -56,8 +58,19 @@ export class EntryComponent implements OnInit {
   /** The input field for the entry's sunday hours.*/
   @ViewChild('sundayInput') sundayInput;
 
-  constructor(private entryService: EntryService, public timesheetService: TimesheetService) {
+  smallScreen: boolean = false;
 
+  constructor(private entryService: EntryService, public timesheetService: TimesheetService, private  breakpointObserver: BreakpointObserver) {
+    breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.smallScreen=true;
+      }else{
+        this.smallScreen=false;
+      }
+    });
   }
 
   /** On initialization, populates the list of tasks and unit types.*/
@@ -160,7 +173,7 @@ export class EntryComponent implements OnInit {
   }
 
   /**
-   * Populates this entry with project, task and unit type information.
+   * Populates this entry with project, taskSubject and unit type information.
    */
   private populateEntry(){
       if(this.projectInput.selected &&  this.projectInput.selected.value != "-1"){

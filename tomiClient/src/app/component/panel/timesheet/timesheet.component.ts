@@ -21,7 +21,10 @@ import {UnitType} from "../../../model/unitType";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
 import {SignInService} from "../../../service/sign-in.service";
 
-
+/**
+ *  @author Karol Talbot
+ *  @author Jessica Moffatt
+ */
 export interface DialogData {
   entry: Entry;
   parent: TimesheetComponent;

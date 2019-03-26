@@ -19,5 +19,9 @@
 </div>
 </div>
 <div [ngClass]="'project_entries_footer'">
-  <button mat-button [ngClass]="['submit', 'bottom_btn']" (click)="displaySubmitModal()"></button>
+  <button mat-flat-button class="submit" (click)="displaySubmitModal()">
+    <i class="material-icons">
+      send
+    </i>
+  </button>
 </div>

@@ -13,15 +13,12 @@ export class Team{
   teamName: string;
   /** The ID for the team lead of this team.*/
   leadId: number;
-  /** Represents whether or not the team is active.*/
-  active: boolean;
   /** The list of links used for communicating with the back end.*/
   _links: [];
 
   constructor(){
     this.teamName = "";
     this.leadId = -1;
-    this.active = true;
     this.id = -1;
     _links: [];
   }

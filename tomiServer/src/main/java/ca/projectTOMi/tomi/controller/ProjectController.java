@@ -9,6 +9,7 @@ import ca.projectTOMi.tomi.assembler.ProjectResourceAssembler;
 import ca.projectTOMi.tomi.authorization.manager.ProjectAuthManager;
 import ca.projectTOMi.tomi.authorization.wrapper.ProjectAuthLinkWrapper;
 import ca.projectTOMi.tomi.authorization.wrapper.TimesheetAuthLinkWrapper;
+import ca.projectTOMi.tomi.exception.EmptyProjectListException;
 import ca.projectTOMi.tomi.exception.InvalidIDPrefix;
 import ca.projectTOMi.tomi.exception.ProjectManagerException;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
@@ -17,7 +18,6 @@ import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.Status;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.service.EntryService;
-import ca.projectTOMi.tomi.service.ProjectAuthService;
 import ca.projectTOMi.tomi.service.ProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,7 +90,7 @@ public class ProjectController {
 	@GetMapping ("/projects")
 	public Resources<Resource<Project>> getActiveProjects(@RequestAttribute final ProjectAuthManager authMan) {
 		final List<Project> projects = this.projectService.getActiveProjects();
-		final	List<Resource<Project>> projectResources = authMan.filterList(projects)
+		final List<Resource<Project>> projectResources = authMan.filterList(projects)
 			.stream()
 			.map(project -> (new ProjectAuthLinkWrapper<>(project, authMan)))
 			.map(this.projectResourceAssembler::toResource)
@@ -112,13 +112,12 @@ public class ProjectController {
 	 * 	when the created URI is unable to be parsed
 	 */
 	@PostMapping ("/projects")
-	public ResponseEntity<?> createProject(@RequestBody final Project newProject,
-	                                       @RequestAttribute final ProjectAuthManager authMan) throws URISyntaxException {
+	public ResponseEntity<?> createProject(@RequestBody final Project newProject) throws URISyntaxException {
 		if (newProject.getId() == null || !newProject.getId().trim().matches("^\\p{Alpha}\\p{Alpha}\\d{0,5}+$")) {
 			throw new InvalidIDPrefix();
 		}
 		newProject.setId(this.projectService.getId(newProject.getId()));
-		final Resource<Project> resource = this.projectResourceAssembler.toResource(new ProjectAuthLinkWrapper<>(authMan.filterFields(this.projectService.createProject(newProject)), authMan));
+		final Resource<Project> resource = this.projectResourceAssembler.toResource(new ProjectAuthLinkWrapper<>(this.projectService.createProject(newProject), null));
 
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
@@ -168,8 +167,11 @@ public class ProjectController {
 	@GetMapping ("/user_accounts/{userAccountId}/projects")
 	public Resources<Resource<Project>> getProjectsByUserAccount(@PathVariable final Long userAccountId,
 	                                                             @RequestAttribute final ProjectAuthManager authMan) {
-		final List<Project> projects = this.projectService.getProjectByUserAccount(userAccountId);
-		final	List<Resource<Project>> projectResources = authMan.filterList(projects)
+		final List<Project> projects = this.projectService.getProjectsByUserAccount(userAccountId);
+		if(projects.isEmpty()){
+			throw new EmptyProjectListException();
+		}
+		final List<Resource<Project>> projectResources = authMan.filterList(projects)
 			.stream()
 			.map(project -> (new ProjectAuthLinkWrapper<>(project, authMan)))
 			.map(this.projectResourceAssembler::toResource)
@@ -180,7 +182,7 @@ public class ProjectController {
 	}
 
 	@GetMapping ("/projects/{projectId}/evaluate_entries")
-	public Resources<Resource<Entry>> getEntriesToEvaluate(@PathVariable final String projectId){
+	public Resources<Resource<Entry>> getEntriesToEvaluate(@PathVariable final String projectId) {
 		final Project project = this.projectService.getProjectById(projectId);
 		final List<Resource<Entry>> entries = this.entryService.getEntriesToEvaluate(project)
 			.stream()
@@ -192,24 +194,24 @@ public class ProjectController {
 			linkTo(methodOn(ProjectController.class).getEntriesToEvaluate(projectId)).withSelfRel());
 	}
 
-	@PutMapping("/projects/{projectId}/entries/{entryId}")
+	@PutMapping ("/projects/{projectId}/entries/{entryId}")
 	public ResponseEntity<?> evaluateEntry(@PathVariable final String projectId,
 	                                       @PathVariable final Long entryId,
-	                                       @RequestBody final Status status){
-		if(status != Status.APPROVED && status != Status.REJECTED) {
+	                                       @RequestBody final Status status) {
+		if (status != Status.APPROVED && status != Status.REJECTED) {
 			return ResponseEntity.badRequest().build();
 		}
-		return this.entryService.evaluateEntry(entryId, status) ? ResponseEntity.accepted().build(): ResponseEntity.badRequest().build();
+		return this.entryService.evaluateEntry(entryId, status) ? ResponseEntity.accepted().build() : ResponseEntity.badRequest().build();
 	}
 
-	@PutMapping("/projects/{projectId}/add_member/{userAccountId}")
-	public ResponseEntity<?> addTeamMember(@PathVariable final String projectId, @PathVariable final Long userAccountId){
+	@PutMapping ("/projects/{projectId}/add_member/{userAccountId}")
+	public ResponseEntity<?> addTeamMember(@PathVariable final String projectId, @PathVariable final Long userAccountId) {
 		this.projectService.addTeamMember(projectId, userAccountId);
 		return ResponseEntity.accepted().build();
 	}
 
-	@PutMapping("/projects/{projectId}/remove_member/{userAccountId}")
-	public ResponseEntity<?> removeTeamMember(@PathVariable final String projectId, @PathVariable final Long userAccountId){
+	@PutMapping ("/projects/{projectId}/remove_member/{userAccountId}")
+	public ResponseEntity<?> removeTeamMember(@PathVariable final String projectId, @PathVariable final Long userAccountId) {
 		this.projectService.removeTeamMember(projectId, userAccountId);
 		return ResponseEntity.accepted().build();
 	}
@@ -217,6 +219,11 @@ public class ProjectController {
 	@GetMapping("/projects/{projectId}/members")
 	public List<UserAccount> getProjectMembers(@PathVariable final String projectId){
 		return this.projectService.getProjectMembers(projectId);
+	}
+
+	@ExceptionHandler ({EmptyProjectListException.class})
+	public ResponseEntity<?> handleEmptyList(final Exception e) {
+		return ResponseEntity.status(204).build();
 	}
 
 	@ExceptionHandler ({ProjectNotFoundException.class, InvalidIDPrefix.class, ProjectManagerException.class})

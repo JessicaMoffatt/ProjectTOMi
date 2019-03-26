@@ -1,42 +1,142 @@
-<mat-toolbar>
-  <img id="logo" src="../../../../assets/tomiLogo.png"/>
-  <ng-template [ngIf]="isUserLoggedIn">
-    <ng-template [ngIf]="signInService.navList['my_timesheets']">
-      <a class="link" [routerLink]="'/my_timesheets'">Timesheets</a>
+<!--
+  @author Karol Talbot
+  @version 1.0
+-->
+<ng-template [ngIf]="isUserLoggedIn">
+  <mat-toolbar>
+    <img id="logo" src="../../../../assets/img/tomiIcon.svg" alt="Logo"/>
+    <ng-template [ngIf]="screenSize === 0">
+
+      <ng-template [ngIf]="signInService.navList['my_timesheets']">
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/my_timesheets'">Timesheets</button>
+      </ng-template>
+
+      <ng-template [ngIf]="signInService.navList['approve_timesheets']">
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/approve_timesheets'">Approve</button>
+      </ng-template>
+
+      <ng-template [ngIf]="signInService.navList['my_team']">
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/my_team'">Team</button>
+      </ng-template>
+
+      <ng-template [ngIf]="signInService.navList['manage_projects']">
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/manage_projects'">Projects</button>
+      </ng-template>
+
+      <ng-template [ngIf]="signInService.navList['manage_teams']">
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/manage_teams'">Manage Teams</button>
+      </ng-template>
+
+      <ng-template [ngIf]="signInService.navList['manage_unit_types']">
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/manage_unit_types'">Unit Types</button>
+      </ng-template>
+
+      <ng-template [ngIf]="signInService.navList['manage_tasks']">
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/manage_tasks'">Tasks</button>
+      </ng-template>
+
+      <ng-template [ngIf]="signInService.navList['manage_user_accounts']">
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/manage_user_accounts'">Users</button>
+      </ng-template>
+
+      <mat-menu #appMenu="matMenu">
+        <button mat-menu-item class="menu" (click)="signInService.signOut()">Logout</button>
+      </mat-menu>
+
+      <button id="menuButton" mat-icon-button [matMenuTriggerFor]="appMenu">
+        <img id="icon" [src]="signInService.getIcon()" alt="menu"/>
+      </button>
     </ng-template>
 
-    <ng-template [ngIf]="signInService.navList['approve_timesheets']">
-      <a class="link" [routerLink]="'/approve_timesheets'">Approve</a>
+
+    <ng-template [ngIf]="screenSize===1">
+      <ng-template [ngIf]="signInService.navList['my_timesheets']">
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/my_timesheets'">Timesheets</button>
+      </ng-template>
+
+      <ng-template [ngIf]="signInService.navList['approve_timesheets']">
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/approve_timesheets'">Approve</button>
+      </ng-template>
+
+      <ng-template [ngIf]="signInService.navList['my_team']">
+        <button mat-ripple mat-flat-button class="link" [routerLink]="'/my_team'">Team</button>
+      </ng-template>
+      <mat-menu #appMenuMed="matMenu">
+        <ng-template [ngIf]="signInService.navList['manage_projects']">
+          <button mat-menu-item class="menu" [routerLink]="'/manage_projects'">Projects</button>
+        </ng-template>
+
+        <ng-template [ngIf]="signInService.navList['manage_teams']">
+          <button mat-menu-item class="menu" [routerLink]="'/manage_teams'">Manage Teams</button>
+        </ng-template>
+
+        <ng-template [ngIf]="signInService.navList['manage_unit_types']">
+          <button mat-menu-item class="menu" [routerLink]="'/manage_unit_types'">Unit Types</button>
+        </ng-template>
+
+        <ng-template [ngIf]="signInService.navList['manage_tasks']">
+          <button mat-menu-item class="menu" [routerLink]="'/manage_tasks'">Tasks</button>
+        </ng-template>
+
+        <ng-template [ngIf]="signInService.navList['manage_user_accounts']">
+          <button mat-menu-item class="menu" [routerLink]="'/manage_user_accounts'">Users</button>
+        </ng-template>
+
+
+        <button mat-menu-item class="menu" (click)="signInService.signOut()">Logout</button>
+      </mat-menu>
+
+      <button id="menuButtonMed" mat-flat-button [matMenuTriggerFor]="appMenuMed">
+        <i class="material-icons">
+          menu
+        </i>
+      </button>
     </ng-template>
 
-    <ng-template [ngIf]="signInService.navList['my_team']">
-      <a class="link" [routerLink]="'/my_team'">Team</a>
-    </ng-template>
 
-    <ng-template [ngIf]="signInService.navList['manage_projects']">
-      <a class="link" [routerLink]="'/manage_projects'">Projects</a>
-    </ng-template>
+    <ng-template [ngIf]="screenSize===2">
+      <mat-menu #appMenuSmall="matMenu">
+        <ng-template [ngIf]="signInService.navList['my_timesheets']">
+          <button mat-menu-item class="menu" [routerLink]="'/my_timesheets'">Timesheets</button>
+        </ng-template>
 
-    <ng-template [ngIf]="signInService.navList['manage_teams']">
-      <a class="link" [routerLink]="'/manage_teams'">Manage Teams</a>
-    </ng-template>
+        <ng-template [ngIf]="signInService.navList['approve_timesheets']">
+          <button mat-menu-item class="menu" [routerLink]="'/approve_timesheets'">Approve</button>
+        </ng-template>
 
-    <ng-template [ngIf]="signInService.navList['manage_unit_types']">
-      <a class="link" [routerLink]="'/manage_unit_types'">Unit Types</a>
-    </ng-template>
+        <ng-template [ngIf]="signInService.navList['my_team']">
+          <button mat-menu-item class="menu" [routerLink]="'/my_team'">Team</button>
+        </ng-template>
 
-    <ng-template [ngIf]="signInService.navList['manage_tasks']">
-      <a class="link" [routerLink]="'/manage_tasks'">Tasks</a>
-    </ng-template>
+        <ng-template [ngIf]="signInService.navList['manage_projects']">
+          <button mat-menu-item class="menu" [routerLink]="'/manage_projects'">Projects</button>
+        </ng-template>
 
-    <ng-template [ngIf]="signInService.navList['manage_user_accounts']">
-      <a class="link" [routerLink]="'/manage_user_accounts'">Users</a>
+        <ng-template [ngIf]="signInService.navList['manage_teams']">
+          <button mat-menu-item class="menu" [routerLink]="'/manage_teams'">Manage Teams</button>
+        </ng-template>
+
+        <ng-template [ngIf]="signInService.navList['manage_unit_types']">
+          <button mat-menu-item class="menu" [routerLink]="'/manage_unit_types'">Unit Types</button>
+        </ng-template>
+
+        <ng-template [ngIf]="signInService.navList['manage_tasks']">
+          <button mat-menu-item class="menu" [routerLink]="'/manage_tasks'">Tasks</button>
+        </ng-template>
+
+        <ng-template [ngIf]="signInService.navList['manage_user_accounts']">
+          <button mat-menu-item class="menu" [routerLink]="'/manage_user_accounts'">Users</button>
+        </ng-template>
+
+
+        <button mat-menu-item class="menu" (click)="signInService.signOut()">Logout</button>
+      </mat-menu>
+
+      <button id="menuButtonSmall" mat-flat-button [matMenuTriggerFor]="appMenuSmall">
+        <i class="material-icons">
+          menu
+        </i>
+      </button>
     </ng-template>
-    <mat-menu #appMenu="matMenu">
-      <button mat-menu-item id="menu" (click)="signInService.signOut()">Logout</button>
-    </mat-menu>
-    <button id="menuButton" mat-icon-button [matMenuTriggerFor]="appMenu">
-      <img id="icon" [src]="signInService.getIcon()"/>
-    </button>
-  </ng-template>
-</mat-toolbar>
+  </mat-toolbar>
+</ng-template>

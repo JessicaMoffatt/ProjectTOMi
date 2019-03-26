@@ -25,6 +25,13 @@ const httpOptions = {
 })
 export class EntryService {
 
+  /** The URL used to get,post, and delete entries. */
+  private entriesUrl = '/entries';
+  /** The URL used to get,post, and delete tasks. */
+  private tasksUrl = 'http://localhost:8080/tasks';
+  /** The URL used to get,post, and delete unit types. */
+  private unitTypeUrl = 'http://localhost:8080/unit_types';
+
   constructor(private http: HttpClient) { }
 
   /**

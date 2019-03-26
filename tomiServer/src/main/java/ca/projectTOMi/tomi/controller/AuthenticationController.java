@@ -2,7 +2,6 @@ package ca.projectTOMi.tomi.controller;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.HashMap;
 import java.util.Map;
 import ca.projectTOMi.tomi.authorization.manager.UserAuthManager;
 import ca.projectTOMi.tomi.model.UserAccount;
@@ -46,23 +45,15 @@ public class AuthenticationController {
 		return account;
 	}
 
-	@GetMapping("/build_nav_bar")
-	public Map<String, Boolean> getNavBarOptions(final @RequestHeader String SignIn, final @RequestAttribute UserAuthManager authMan){
-		Map<String, Boolean> navs = new HashMap<>();
-		navs.put("my_timesheets", true);
-		navs.put("approve_timesheets", true);
-		navs.put("my_team", true);
-		navs.put("manage_projects", true);
-		navs.put("manage_teams", true);
-		navs.put("manage_unit_types", true);
-		navs.put("manage_tasks", true);
-		navs.put("manage_user_accounts", true);
+	@GetMapping ("/build_nav_bar")
+	public Map<String, Boolean> getNavBarOptions(final @RequestHeader String signIn,
+	                                             final @RequestAttribute UserAuthManager authMan) throws GeneralSecurityException, IOException {
 
-		return navs;
+		return userAuthenticationService.getNavBarOptions(authMan, signIn);
 	}
 
-	@ExceptionHandler({IOException.class, GeneralSecurityException.class})
-	public ResponseEntity<?> handleExceptions(Exception e){
+	@ExceptionHandler ({IOException.class, GeneralSecurityException.class})
+	public ResponseEntity<?> handleExceptions(Exception e) {
 		this.logger.warn("Authentication Exception: " + e.getClass());
 		return ResponseEntity.status(400).build();
 	}

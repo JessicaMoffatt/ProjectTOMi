@@ -3,7 +3,7 @@ import {Status} from "./status";
 
 
 /**
- * Timesheet represents a single timesheet for a user for a specific week.  Entries (task ,client, hours)
+ * Timesheet represents a single timesheet for a user for a specific week.  Entries (taskSubject ,client, hours)
  * on the timesheet are attached by referencing it.
  *
  * @author Jessica Moffatt
@@ -21,8 +21,6 @@ export class Timesheet{
   startDate: string;
   /** The date that the timesheet was submitted.*/
   submitDate: string;
-  /** If the timesheet is active.*/
-  active: boolean;
   /** The list of links used for communicating with the back end.*/
   _links: [];
 
@@ -32,7 +30,6 @@ export class Timesheet{
     this.status = Status.LOGGING;
     this.startDate = null;
     this.submitDate = null;
-    this.active = true;
     this._links = [];
   }
 }

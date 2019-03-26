@@ -1,4 +1,4 @@
 package ca.projectTOMi.tomi.exception;
 
-public class MinimumProgramDirectorAccountException extends RuntimeException{
+public class MinimumProgramDirectorAccountException extends RuntimeException {
 }

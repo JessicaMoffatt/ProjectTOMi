@@ -72,12 +72,6 @@ public final class UserAccount {
 	@Column (unique = true)
 	private String email;
 
-	/**
-	 * The salaried rate of this UserAccount multiplied by 100 to remove decimals.
-	 */
-	@Min (0)
-	private Long salariedRate;
-
 	@ManyToMany (mappedBy = "projectMembers", targetEntity = Project.class)
 	@JsonIgnore
 	private Set<Project> projects = new HashSet<>();

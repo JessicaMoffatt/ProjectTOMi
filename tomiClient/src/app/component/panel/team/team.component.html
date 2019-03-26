@@ -4,45 +4,33 @@
 -->
 <div *ngIf="teamSideBarService.selectedTeam" [ngClass]="'main_container'">
   <mat-card [ngClass]="'manage_card'">
-    <mat-card-header>
-      <button mat-icon-button [ngClass]="['save_btn']"
-                    (click)="save(teamSideBarService.selectedTeam)"></button>
-      <button mat-icon-button [ngClass]="['cancel_changes_btn']"
-            (click)="cancel(teamSideBarService.selectedTeam)"></button>
-      <button mat-icon-button [ngClass]="['delete_btn']"
-            (click)="delete(teamSideBarService.selectedTeam)"></button>
-    </mat-card-header>
 
-    <div>
-      <mat-form-field [ngClass]="'input_full_width'">
-        <input matInput  placeholder="Team Name" [(ngModel)]="teamSideBarService.selectedTeam.teamName">
-      </mat-form-field>
 
-      <div>
-          <mat-form-field>
-          <mat-select placeholder="Team Lead" [(ngModel)]="teamSideBarService.selectedTeam.leadId">
-            <mat-option value="-1">None</mat-option>
-            <mat-option *ngFor="let member of (this.teamService.teamMembers |orderBy: 'firstName')" [value]="member.id">
-              {{member.firstName}} {{member.lastName}}
-            </mat-option>
-          </mat-select>
-          </mat-form-field>
-      </div>
 
-    </div>
-    <h3>Team Members</h3>
-    <div [ngClass]="'team_members'">
-      <mat-selection-list   #teamMemberList (selectionChange)="onSelection($event, teamMemberList.selectedOptions.selected)" *ngIf="teamService.teamMembers">
-        <mat-list-option *ngFor="let m of teamService.teamMembers| orderBy:'firstName'"   [value]='m' >
-          <span *ngIf="m">{{m.firstName}} {{m.lastName}}</span>
-        </mat-list-option>
-      </mat-selection-list>
-    </div>
-    <button mat-button [ngClass]="['add_btn']" (click)="displayAddMemberModal()">Add
-      Member
-    </button>
-    <button mat-button [ngClass]="['delete_btn']" (click)="removeMembers()">
-    </button>
+    <!--<div>-->
+    <!--<mat-selection-list   #teamMemberList (selectionChange)="onSelection($event, teamMemberList.selectedOptions.selected)" *ngIf="teamService.teamMembers">-->
+    <!--<mat-list-option *ngFor="let m of teamService.teamMembers| orderBy:'firstName'"   [value]='m' >-->
+    <!--<span *ngIf="m">{{m.firstName}} {{m.lastName}}</span>-->
+    <!--</mat-list-option>-->
+    <!--</mat-selection-list>-->
+    <!--<button mat-button [ngClass]="['add_btn']" (click)="displayAddMemberModal()">Add-->
+      <!--Member-->
+    <!--</button>-->
+    <!--<button mat-button [ngClass]="['delete_btn']" (click)="removeMembers()">-->
+      <!--button-->
+    <!--</button>-->
+    <!--</div>-->
+    <mat-card-actions>
+      <button mat-flat-button class="manage_save_btn" (click)="save(teamSideBarService.selectedTeam)">
+        Save
+      </button>
+      <button mat-flat-button class="manage_cancel_btn" (click)="cancel(teamSideBarService.selectedTeam)">
+        Cancel
+      </button>
+      <button mat-flat-button class="manage_delete_btn" (click)="delete(teamSideBarService.selectedTeam)">
+        Delete
+      </button>
+    </mat-card-actions>
   </mat-card>
 </div>
 
