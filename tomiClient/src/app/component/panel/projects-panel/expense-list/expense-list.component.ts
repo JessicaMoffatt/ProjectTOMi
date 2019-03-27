@@ -47,7 +47,7 @@ export class ExpenseListComponent implements OnInit {
 
   delete() {
     this.selection.selected
-      .forEach(expense => this.expenseService.delete(expense, this.projectService.selectedProject));
+      .forEach(expense => this.expenseService.delete(expense, this.projectService.getSelectedProject()));
     this.selection = new SelectionModel<Expense>(true, []);
   }
 }

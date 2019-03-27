@@ -53,7 +53,7 @@ export class AddProjectExpenseComponent implements OnInit {
     }
     this.expenseService.selectedExpense.notes = this.addExpenseNote.nativeElement.value;
     this.expenseService.selectedExpense.amount = this.addExpenseAmount.nativeElement.value;
-    this.expenseService.save(this.projectService.selectedProject);
+    this.expenseService.save(this.projectService.getSelectedProject());
     this.dialogRef.close()
   }
 }

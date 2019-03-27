@@ -1,28 +1,24 @@
 <mat-card id="project_details">
-
   <form>
 
     <mat-form-field>
-      <input id="project_name"
-             [value]="this.projectService.selectedProject != null ?
-            this.projectService.selectedProject.projectName : '' "
-             type="text"
+      <input type="text"
              placeholder="Project Name"
              aria-label="Project Name"
              matInput
-             [formControl]="this.myControl">
+             [(ngModel)]="this.projectService.getSelectedProject().projectName"
+             [formControl]="this.nameControl">
     </mat-form-field>
     <br/>
 
     <mat-form-field>
-      <input id="client_name"
-             type="text"
+      <input type="text"
              placeholder="Client"
              aria-label="Client"
-             matInput [formControl]="this.myControl"
-             [matAutocomplete]="auto"
-             [value]="this.projectService.selectedProject != null ?
-            this.projectService.selectedProject.client.name : '' ">
+             matInput
+             [(ngModel)]="this.projectService.getSelectedProject().client.name"
+             [formControl]="clientControl"
+             [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let c of this.clientService.clients | async" [value]="c.name">
           {{c.name}}
@@ -31,61 +27,48 @@
     </mat-form-field>
     <br/>
 
-  <mat-form-field>
-      <mat-select id="project_manager"
-             placeholder="Project Manager"
-             aria-label="Project Manager"
-             [value]="this.projectService.selectedProject != null ? getProjectManager().firstName : '' " >
-        <!--    matInput [formControl]="this.myControl"     -->
-      <!--<mat-autocomplete #auto2="matAutocomplete">-->
-        <mat-option *ngFor="let u of this.userAccountService.userSubject | async" [value]="u.firstName" >
+    <mat-form-field>
+      <mat-select placeholder="Project Manager"
+                  aria-label="Project Manager"
+                  [(value)]="this.projectService.getSelectedProject().projectManagerId">
+        <mat-option [value]="null">None</mat-option>
+        <mat-option *ngFor="let u of this.userAccountService.userSubject | async" [value]="u.id">
           {{u.firstName}}
         </mat-option>
-      <!--</mat-autocomplete>-->
       </mat-select>
-  </mat-form-field>
-    <br/>
-
-    <mat-form-field>
-      <input
-        id="account_manager"
-        type="text"
-        placeholder="{{this.projectService.selectedProject != null ? 'Account ID' : 'Account Manager'}}"
-        attr.aria-label="{{this.projectService.selectedProject != null ? 'Account ID' : 'Account Manager'}}"
-        matInput
-        [disabled]="this.projectService.selectedProject != null"
-        [value]="this.projectService.selectedProject != null ? this.projectService.selectedProject.id : ''"
-      >
     </mat-form-field>
     <br/>
 
+    <mat-form-field>
+      <input type="text"
+             placeholder="{{this.projectService.getSelectedProject().id.match(this.projectService.regExp) ? 'Account ID' : 'Account Manager'}}"
+             attr.aria-label="{{this.projectService.getSelectedProject().id.match(this.projectService.regExp) ? 'Account ID' : 'Account Manager'}}"
+             matInput
+             [(ngModel)]="this.projectService.getSelectedProject().id"
+             [formControl]="idControl">
+    </mat-form-field>
+    <br/>
 
     <mat-form-field>
-      <input id="billing_rate"
-             placeholder="Billing Rate"
+      <input placeholder="Billing Rate"
              aria-label="Billing Rate"
              type="number"
              min="0.00"
              matInput
-             [value]="this.projectService.selectedProject != null?
-               this.projectService.selectedProject.billableRate : '' "
-             [formControl]="myControl"
-      >
+             [(ngModel)]="this.projectService.getSelectedProject().billableRate"
+             [formControl]="this.billingControl">
       <span matPrefix>$&nbsp;</span>
     </mat-form-field>
     <br/>
 
     <mat-form-field>
-      <input id="budget_total"
-             type="number"
+      <input type="number"
              placeholder="Budget Total"
              aria-label="Budget Total"
              min="0.00"
              matInput
-             [value]="this.projectService.selectedProject != null?
-                this.projectService.selectedProject.budget : '' "
-             [formControl]="this.myControl"
-      >
+             [(ngModel)]="this.projectService.getSelectedProject().budget"
+             [formControl]="this.budgetControl">
       <span matPrefix>$&nbsp;</span>
     </mat-form-field>
     <br/>
@@ -95,21 +78,9 @@
     </div>
 
   </form>
-
 </mat-card>
 
 <app-project-member-list></app-project-member-list>
-
 <br>
 
 <app-expense-list></app-expense-list>
-
-<!--<div id="button_area">-->
-<!--<div (click)="editProject()" [ngClass]="['add_btn', 'btn','btn_padding','rounded_corners']">Edit-->
-<!--</div>-->
-<!--<div (click)="archiveProject()" [ngClass]="['add_btn', 'btn','btn_padding','rounded_corners']">Archive-->
-<!--</div> &lt;!&ndash; if the project is archived, does this become a 're-activate; button? &ndash;&gt;-->
-<!--<div (click)="deleteProject()" [ngClass]="['cancel_btn','btn','btn_padding','rounded_corners']">Delete</div>-->
-<!--</div>-->
-
-

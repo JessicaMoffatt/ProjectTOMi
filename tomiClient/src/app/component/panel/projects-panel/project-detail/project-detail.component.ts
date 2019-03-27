@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ProjectService} from "../../../../service/project.service";
 import {ClientService} from "../../../../service/client.service";
 import {Project} from "../../../../model/project";
@@ -25,117 +25,76 @@ export class ProjectDetailComponent implements OnInit {
               public userAccountService: UserAccountService) {
   }
 
-  myControl = new FormControl();
+  nameControl = new FormControl();
+  clientControl = new FormControl();
+  // TODO Validate that the client name field is not empty
+  idControl = new FormControl({
+    value: this.projectService.getSelectedProject().id.match(this.projectService.regExp),
+    disabled: false
+  },);
+  billingControl = new FormControl();
+  budgetControl = new FormControl();
 
 
   ngOnInit() {
+    this.projectService.setSelected(new Project());
     this.userAccountService.initializeUserAccounts();
   }
 
-
   save() {
 
-    let projectName: string = (<HTMLInputElement>document.getElementById("project_name")).value;
-    let clientName: string = (<HTMLInputElement>document.getElementById("client_name")).value;
-    let accountManagerName: string = "";
-
-
-    // 1. Validate project name is not empty and not taken
-    // validate project name is not empty
-    if (projectName.length === 0) {
-      alert("project name cannot be empty");
-    } else if (!this.projectService.projectNameIsAvailable(projectName)) {
+    // 1. Validate project name is not taken
+    // TODO: move to validation in form control
+    if (!this.projectService.projectNameIsAvailable(this.projectService.getSelectedProject().projectName)) {
       alert("Invalid project name.  This project name is already taken by another project.")
-    }
-
-    // 2. Validate that the client name field is not empty
-    else if (clientName.length === 0) {
-      alert("Client name field cannot be empty.");
     }
 
     // 3. Validate account manager name (for new projects only)
     // if selected is null, then the user is trying to create a new project and
     // we must validate the account manager
-    else if (this.projectService.selectedProject == null && (<HTMLInputElement>document.getElementById("account_manager")).value.length == 0) {
-      alert("account manager name is required.")
-    } else if (this.projectService.selectedProject == null && !this.isValidAccountManagerName((<HTMLInputElement>document.getElementById("account_manager")).value)) {
-      alert("account manager name is invalid.  Must take the format 'John Smith' or 'j s'");
-    }
+
+    //   alert("account manager name is required.")
+    // } else if (this.projectService.getSelectedProject() == null &&
+    //   !ProjectDetailComponent.isValidAccountManagerName(this.inAccountManager.nativeElement.value)) {
+    //   alert("account manager name is invalid.  Must take the format 'John Smith' or 'j s'");
+    // }
 
     // 4. All necessary data is validated, persist the project
-    else {
 
+    else {
       // 4.1 Create a new project if necessary along with the initials that will be passed
       // to the backend to create the id (for new projects only).
       // if the selected project is null, it means we are creating a new project
-      if (this.projectService.selectedProject == null) {
-        console.log("creating new project");
-        this.projectService.selectedProject = new Project();
-        accountManagerName = (<HTMLInputElement>document.getElementById("account_manager")).value;
-        this.projectService.selectedProject.id = this.getInitialsFromName(accountManagerName);
+      if (!this.projectService.getSelectedProject().id.match(this.projectService.regExp)) {
+        this.projectService.getSelectedProject().id = ProjectDetailComponent.getInitialsFromName(this.projectService.getSelectedProject().id);
       }
 
-      // 4.2 Set the Project Name
-      this.projectService.selectedProject.projectName = projectName;
 
-      // 4.3 Set the Client
-      // if the client exists get the reference, if not create a new one
-      let client: Client;
+      // a null return value indicates that no matching client is found
+      if (this.clientService.getClientByName(this.projectService.getSelectedProject().client.name) == null) {
+      //  console.log('new client');
+        this.clientService.save(this.projectService.getSelectedProject().client).then((client) => {
+          if (client instanceof Client) {
 
-      if (this.clientService.getClientByName(clientName) == null) {
-        console.log("unrecognized name... creating new client");
-        client = new Client();
-        client.name = clientName;
-        this.clientService.save(client).then(() => {
-          this.clientService.getAsyncClients().then(() => {
-            client = this.clientService.getClientByName(clientName);
-            this.projectService.selectedProject.client = client;
-            console.log("newly returned client data: name-" + client.name + ", id-" + client.id);
-            this.persistProject();
-          });
+            this.projectService.getSelectedProject().client = client;
+          }
+        //  this.logValues()
+          this.projectService.save(this.projectService.getSelectedProject())
         });
-        // console.log("new client saved.")
       } else {
-        // console.log("existing client loaded.");
-        this.projectService.selectedProject.client = this.clientService.getClientByName(clientName);
-        this.persistProject();
+       // console.log("existing client");
+        this.projectService.getSelectedProject().client
+          = this.clientService.getClientByName(this.projectService.getSelectedProject().client.name);
+        this.projectService.save(this.projectService.getSelectedProject())
       }
     }
   }
 
-
-  persistProject() {
-    // 4.4 Set the billable rate and budget (not required fields)
-    this.projectService.selectedProject.billableRate = +(<HTMLInputElement>document.getElementById("billing_rate")).value;
-    this.projectService.selectedProject.budget = +(<HTMLInputElement>document.getElementById("budget_total")).value;
-
-    console.log("before project saved.");
-    console.log("  project name:" + this.projectService.selectedProject.projectName);
-    console.log("  client:" + this.projectService.selectedProject.client.name);
-    console.log("  id:" + this.projectService.selectedProject.id);
-    console.log("  project manager id:" + this.projectService.selectedProject.projectManagerId);
-
-    this.projectService.save(this.projectService.selectedProject)
-
-      .then((data) => {
-
-
-        console.log("after project saved.");
-        console.log("  project name:" + this.projectService.selectedProject.projectName);
-        console.log("  client:" + this.projectService.selectedProject.client.name);
-        console.log("  id:" + this.projectService.selectedProject.id);
-        console.log("  project manager id:" + this.projectService.selectedProject.projectManagerId);
-          });
+  private static isValidAccountManagerName(accountManagerName: string) {
+    return ProjectDetailComponent.getInitialsFromName(accountManagerName) === "";
   }
 
-
-
-  private isValidAccountManagerName(accountManagerName: string) {
-    if (this.getInitialsFromName(accountManagerName) === "") return false;
-    return true;
-  }
-
-  private getInitialsFromName(name: string) {
+  private static getInitialsFromName(name: string) {
     let words: string[] = name.split(' ');
     if (words.length != 2) return "";
     let first = words[0].charAt(0).toUpperCase();
@@ -146,11 +105,22 @@ export class ProjectDetailComponent implements OnInit {
       return first + second;
   }
 
-  getProjectManager(): UserAccount {
 
-    for (let u of this.userAccountService.userSubject.getValue()) {
-      if (u.id == this.projectService.selectedProject.projectManagerId) return u;
-    }
-    return new UserAccount();
+
+  logValues() {
+    console.log("project name " + this.projectService.getSelectedProject().projectName);
+    console.log("client " + this.projectService.getSelectedProject().client.name);
+    console.log("client id " + this.projectService.getSelectedProject().client.id);
+    console.log("project manager " + this.projectService.getSelectedProject().projectManagerId);
+    console.log("account id " + this.projectService.getSelectedProject().id);
+    console.log("billable " + this.projectService.getSelectedProject().billableRate);
+    console.log("budget " + this.projectService.getSelectedProject().budget);
   }
+
+  // getProjectManager(): UserAccount {
+  //   for (let u of this.userAccountService.userSubject.getValue()) {
+  //     if (u.id == this.projectService.getSelectedProject().projectManagerId) return u;
+  //   }
+  //   return new UserAccount();
+  // }
 }

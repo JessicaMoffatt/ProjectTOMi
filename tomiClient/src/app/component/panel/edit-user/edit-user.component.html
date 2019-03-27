@@ -13,15 +13,24 @@
       <tr>
         <td>
           <mat-form-field>
-            <input matInput #editUserFirstName placeholder="First Name" [formControl]="userAccountFirstNameControl" [errorStateMatcher]="userAccountNameMatcher">
-            <mat-error *ngIf="userAccountFirstNameControl.hasError('required') && !userAccountFirstNameControl.hasError('pattern')">First name is <strong>required</strong></mat-error>
+            <input matInput
+                   #editUserFirstName
+                   placeholder="First Name"
+                   [formControl]="userAccountFirstNameControl"
+                   [errorStateMatcher]="userAccountNameMatcher">
+            <mat-error
+              *ngIf="userAccountFirstNameControl.hasError('required') && !userAccountFirstNameControl.hasError('pattern')">
+              First name is <strong>required</strong></mat-error>
             <mat-error *ngIf="userAccountFirstNameControl.hasError('pattern')">Please enter a valid name</mat-error>
           </mat-form-field>
         </td>
         <td>
           <mat-form-field>
-            <input matInput #editUserLastName placeholder="Last Name" [formControl]="userAccountLastNameControl" [errorStateMatcher]="userAccountNameMatcher">
-            <mat-error *ngIf="userAccountLastNameControl.hasError('required') && !userAccountLastNameControl.hasError('pattern')">Last name is <strong>required</strong></mat-error>
+            <input matInput #editUserLastName placeholder="Last Name" [formControl]="userAccountLastNameControl"
+                   [errorStateMatcher]="userAccountNameMatcher">
+            <mat-error
+              *ngIf="userAccountLastNameControl.hasError('required') && !userAccountLastNameControl.hasError('pattern')">
+              Last name is <strong>required</strong></mat-error>
             <mat-error *ngIf="userAccountLastNameControl.hasError('pattern')">Please enter a valid name</mat-error>
           </mat-form-field>
         </td>
@@ -29,8 +38,11 @@
       <tr>
         <td>
           <mat-form-field>
-            <input matInput #editUserEmail placeholder="Email" [formControl]="userAccountEmailControl" [errorStateMatcher]="userAccountEmailMatcher">
-            <mat-error *ngIf="userAccountEmailControl.hasError('required') && !userAccountEmailControl.hasError('email')">Email is <strong>required</strong></mat-error>
+            <input matInput #editUserEmail placeholder="Email" [formControl]="userAccountEmailControl"
+                   [errorStateMatcher]="userAccountEmailMatcher">
+            <mat-error
+              *ngIf="userAccountEmailControl.hasError('required') && !userAccountEmailControl.hasError('email')">Email
+              is <strong>required</strong></mat-error>
             <mat-error *ngIf="userAccountEmailControl.hasError('email')">Please enter a valid email address</mat-error>
           </mat-form-field>
         </td>
@@ -38,9 +50,14 @@
       <tr>
         <td>
           <mat-form-field>
-            <input matInput type="number" #editUserSalariedRate placeholder="Salaried Rate" [formControl]="userAccountRateControl" [errorStateMatcher]="userAccountRateMatcher">
-            <mat-error *ngIf="userAccountRateControl.hasError('required') && !userAccountRateControl.hasError('min') && !userAccountRateControl.hasError('pattern')">Salaried rate is <strong>required</strong></mat-error>
-            <mat-error *ngIf="userAccountRateControl.hasError('min') && !userAccountRateControl.hasError('pattern')">Please enter at least 0.00</mat-error>
+            <input matInput type="number" #editUserSalariedRate placeholder="Salaried Rate"
+                   [formControl]="userAccountRateControl" [errorStateMatcher]="userAccountRateMatcher">
+            <mat-error
+              *ngIf="userAccountRateControl.hasError('required') && !userAccountRateControl.hasError('min') && !userAccountRateControl.hasError('pattern')">
+              Salaried rate is <strong>required</strong></mat-error>
+            <mat-error *ngIf="userAccountRateControl.hasError('min') && !userAccountRateControl.hasError('pattern')">
+              Please enter at least 0.00
+            </mat-error>
             <mat-error *ngIf="userAccountRateControl.hasError('pattern')">Please enter a valid rate</mat-error>
           </mat-form-field>
         </td>
@@ -50,7 +67,8 @@
           <mat-form-field>
             <mat-select #editUserTeamId placeholder="Team" [value]="userAccount.teamId">
               <mat-option [value]="-1">None</mat-option>
-              <mat-option *ngFor="let team of teamService.teamsObservable" [value]="team.id">{{team.teamName}}</mat-option>
+              <mat-option *ngFor="let team of teamService.teamsObservable"
+                          [value]="team.id">{{team.teamName}}</mat-option>
             </mat-select>
           </mat-form-field>
         </td>

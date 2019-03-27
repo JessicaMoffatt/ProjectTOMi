@@ -19,7 +19,7 @@ export class ProjectSidebarComponent implements OnInit {
   }
 
   displayBlankProject() {
-    this.projectService.selectedProject = null;
+    this.projectService.setSelected(null);
     this.projectService.userAccountList = new BehaviorSubject<Array<UserAccount>>([]);
     this.projectsPanel.subPanelDisplay = "manageProject";
   }

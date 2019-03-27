@@ -27,7 +27,7 @@ export class ProjectsPanelComponent implements OnInit {
   project: Project;
 
   ngOnInit() {
-    this.projectService.selectedProject=null;
+    this.projectService.setSelected(null);
     this.projectService.userAccountList = new BehaviorSubject<Array<UserAccount>>([]);
   }
 
