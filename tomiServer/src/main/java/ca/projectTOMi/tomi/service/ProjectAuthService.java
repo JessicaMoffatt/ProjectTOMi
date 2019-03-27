@@ -93,9 +93,9 @@ public class ProjectAuthService {
 	}
 
 	void changeProjectManager(final Project oldProject, final Project newProject) {
-		if (oldProject == null || newProject == null){
+		if (oldProject == null || newProject == null) {
 			return;
-		}else if (oldProject.getProjectManager() != null && (newProject.getProjectManager() == null || !oldProject.getProjectManager().equals(newProject.getProjectManager()))) {
+		} else if (oldProject.getProjectManager() != null && (newProject.getProjectManager() == null || !oldProject.getProjectManager().equals(newProject.getProjectManager()))) {
 			final UserAccount oldProjectManager = oldProject.getProjectManager();
 			final ProjectAuthorizationPolicy policy = new ProjectAuthorizationPolicy();
 			policy.setProject(newProject);

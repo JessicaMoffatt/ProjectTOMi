@@ -15,6 +15,7 @@ import ca.projectTOMi.tomi.exception.MinimumProgramDirectorAccountException;
 import ca.projectTOMi.tomi.exception.TeamNotFoundException;
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.UserAccount;
+import ca.projectTOMi.tomi.service.TOMiEmailService;
 import ca.projectTOMi.tomi.service.UserAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,8 @@ public class UserAccountController {
 	private final UserAccountResourceAssembler assembler;
 	private final UserAccountService userAccountService;
 	private final Logger logger = LoggerFactory.getLogger("UserAccount Controller");
+	@Autowired
+	TOMiEmailService email;
 
 	@Autowired
 	public UserAccountController(final UserAccountResourceAssembler assembler, final UserAccountService userAccountService) {
@@ -200,8 +203,8 @@ public class UserAccountController {
 		return ResponseEntity.status(400).build();
 	}
 
-	@ExceptionHandler({MinimumProgramDirectorAccountException.class, MinimumAdminAccountException.class, TeamNotFoundException.class})
-	public ResponseEntity<?> handleMinimumAccountExceptions(final Exception e){
+	@ExceptionHandler ({MinimumProgramDirectorAccountException.class, MinimumAdminAccountException.class, TeamNotFoundException.class})
+	public ResponseEntity<?> handleMinimumAccountExceptions(final Exception e) {
 		this.logger.warn("UserAccount Exception: " + e.getClass());
 
 		return ResponseEntity.unprocessableEntity().build();

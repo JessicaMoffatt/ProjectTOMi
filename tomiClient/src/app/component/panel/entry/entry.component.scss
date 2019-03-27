@@ -1,44 +1,126 @@
 /*
 @author Jessica Moffatt
+@author Karol Talbot
 @version 2.0
  */
-
 @import '../../../../variables';
 
-.entry_card{
-  //border:1px solid $medium_grey;
-  //display:inline-block;
-  padding:1rem 2rem 1rem 2rem;
-  margin-bottom:.25rem;
-  margin-top:.5rem;
-  margin-left:10rem;
-  max-width:50rem;
-  //font-size:1.25rem;
-  //position:relative;
+.entry_card {
+  margin: 1rem 10vw;
+  padding: 1rem 2vw;
+  width: 76vw;
+  //animation: spin 10s infinite linear;
+
+  label {
+    padding-bottom: 0.2em;
+  }
+
+  background-color: $blue_faded;
 }
 
-.entry_btn_container{
-
+.entry_btn {
+  color: $white;
+  margin: 0.1vw;
+  width: 2rem;
+  height: 2rem;
+  float: top
 }
 
-.small_number_input{
-  width:3.5rem;
+.delete_btn {
+  float: right;
+  background-color: $red;
 }
 
-.copy_entry{
-  background-color:$blue;
-  height:$btn_md;
-  width:$btn_md;
-  background-image: url('~src/assets/img/copy.png');
-  background-position: center;
-  background-repeat: no-repeat;
+.copy_btn {
+  float: right;
+  background-color: $blue;
 }
 
-select,input{
-  font-size:1.25rem;
-  margin:.25rem;
+.entry_btn_container {
+  float: right;
+  width: 14.896vw;
 }
 
-input{
-  line-height:.25rem;
+.row {
+  display: inline;
+  width: 74.48vw;
+  padding: 0 0.76vw;
+}
+
+.top {
+  display: inline-block;
+  width: 55.86vw;
+}
+
+.third {
+  display: inline-block;
+  width: 16.758vw;
+  padding-right: 2.793vw;
+}
+
+.third_last {
+  display: inline-block;
+  width: 30%;
+}
+
+.component {
+  display: inline-block;
+  width: 75%;
+}
+
+.quantity {
+  float: right;
+  display: inline-block;
+  width: 20%;
+
+  input {
+    text-align: center;
+  }
+}
+
+.day {
+  width: 12%;
+  margin-right: 1%;
+  margin-left: 1%;
+  display: inline-flex;
+  flex-direction: column;
+  text-align: center;
+
+  input {
+    text-align: center;
+    width: 98%;
+    padding: 1%;
+  }
+}
+
+.weekday {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 98%;
+  padding: 1%;
+}
+
+.weekday:last-child {
+  padding-right: 0;
+}
+
+.weekday:first-child {
+  padding-left: 0;
+}
+
+#menu_btn {
+  float: right;
+}
+
+#menu {
+  overflow: hidden;
+}
+
+
+
+@keyframes spin {
+  to {
+    transform:rotate(360deg)
+  }
 }

@@ -20,12 +20,14 @@ import {UserAccountService} from "../../../service/user-account.service";
 export class TeamComponent implements OnInit {
 
   @ViewChild('teamMemberList') teamMemberList: MatSelectionList;
+  @ViewChild('availableUserAccounts') availableUserAccounts: MatSelectionList;
 
   constructor(public teamService: TeamService,
               public teamSideBarService: TeamSidebarService,public dialog: MatDialog) {
   }
 
   ngOnInit() {
+
   }
 
 

@@ -1,68 +1,89 @@
 <!--
 @author Jessica Moffatt
+@author Karol Talbot
 @version 1.0
 -->
-<mat-card [ngClass]="['entry_card']">
+<mat-card class="entry_card">
   <mat-card-content>
-      <label><strong>Component:</strong>
-        <span *ngIf="entry.component">{{entry.component}}</span>
-      </label>
-
-    <br/>
-      <label><strong>Project:</strong>
-        <span *ngIf="entry.project">{{entry.project.projectName}}</span>
-      </label>
-
-    <br/>
-    <div>
-      <label><strong>Task:</strong>
-        <span *ngIf="entry.task">{{entry.task.name}}</span>
-      </label>
+    <div class="row">
+      <div class="top">
+        <mat-form-field class="third">
+        <span *ngIf="entry.project">
+          <input matInput type="text"
+                 placeholder="Project"
+                 [(ngModel)]="entry.project.projectName"
+                 [readonly]="true">
+        </span>
+        </mat-form-field>
+        <mat-form-field class="third">
+        <span *ngIf="entry.task">
+        <input matInput type="text"
+               placeholder="Task"
+               [(ngModel)]="entry.task.name"
+               [readonly]="true">
+        </span>
+        </mat-form-field>
+        <mat-form-field class="third_last">
+        <span *ngIf="entry.unitType">
+          <input matInput type="text"
+                 placeholder="Unit Type"
+                 [(ngModel)]="entry.unitType.name"
+                 [readonly]="true">
+        </span>
+        </mat-form-field>
+      </div>
     </div>
 
-    <div>
-      <label *ngIf="entry.unitType"><strong>Unit Type:</strong>
-        {{entry.unitType.name}}
-      </label>
-      <span *ngIf="entry.quantity">
-        ,
-      {{entry.quantity}}
-    </span>
-      <span *ngIf="entry.unitType">
-      {{entry.unitType.unit}}
-    </span>
-    </div>
+    <div class="row">
+      <mat-form-field class="component">
+        <input matInput placeholder="Component" [(ngModel)]="entry.component" [readonly]="true">
+      </mat-form-field>
 
+      <mat-form-field class="quantity">
+        <input matInput type="text"
+               [placeholder]="entry.unitType ? entry.unitType.unit : 'Units'"
+               [(ngModel)]="entry.quantity"
+               [readonly]="true">
+      </mat-form-field>
+    </div>
     <!-- days of the week -->
-      <label><strong>M</strong>
-       {{entry.mondayHours}}
-      </label>
+    <div class="weekday">
+      <mat-form-field id="monday" class="day">
+        <input matInput [(ngModel)]="entry.mondayHours" type="text" placeholder="Monday"
+               [readOnly]="true">
+      </mat-form-field>
 
-      <label><strong>T</strong>
-       {{entry.tuesdayHours}}
-      </label>
+      <mat-form-field id="tuesday" class="day">
+        <input  matInput [(ngModel)]="entry.tuesdayHours" type="text" placeholder="Tuesday"
+               [readOnly]="true">
+      </mat-form-field>
 
-      <label><strong>W</strong>
-       {{entry.wednesdayHours}}
-      </label>
+      <mat-form-field id="wednesday" class="day">
+        <input matInput [(ngModel)]="entry.wednesdayHours" type="text" placeholder="Wednesday"
+               [readOnly]="true">
+      </mat-form-field>
 
-      <label><strong>R</strong>
-        {{entry.thursdayHours}}
-      </label>
+      <mat-form-field id="thursday" class="day">
+        <input matInput [(ngModel)]="entry.thursdayHours" type="text" placeholder="Thursday"
+               [readOnly]="true">
+      </mat-form-field>
 
-      <label><strong>F</strong>
-        {{entry.fridayHours}}
-      </label>
+      <mat-form-field id="friday" class="day">
+        <input matInput [(ngModel)]="entry.fridayHours" type="text" placeholder="Friday"
+               [readOnly]="true">
+      </mat-form-field>
 
-      <label><strong>S</strong>
-        {{entry.saturdayHours}}
-      </label>
+      <mat-form-field id="saturday" class="day">
+        <input matInput [(ngModel)]="entry.saturdayHours" type="text" placeholder="Saturday"
+               [readOnly]="true">
+      </mat-form-field>
 
-      <label><strong>U</strong>
-        {{entry.sundayHours}}
-      </label>
-
-    <!-- end of days of week-->
+      <mat-form-field id="sunday" class="day">
+        <input matInput [(ngModel)]="entry.sundayHours" type="text" placeholder="Sunday"
+               [readOnly]="true">
+      </mat-form-field>
+      <!-- end of days of week-->
+    </div>
   </mat-card-content>
 </mat-card>
 

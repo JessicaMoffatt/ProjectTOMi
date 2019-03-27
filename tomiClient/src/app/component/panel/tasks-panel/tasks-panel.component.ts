@@ -1,84 +1,63 @@
-import {
-  Component,
-  ChangeDetectorRef,
-  ComponentFactoryResolver,
-  Input,
-  OnInit,
-  ViewChild,
-  ViewContainerRef,
-} from '@angular/core';
-import {TaskPanelService} from "../../../service/task-panel.service";
-import {Task} from "../../../model/task";
-import {AddTaskComponent} from "../../modal/add-task/add-task.component";
-import {EditTaskComponent} from "../../modal/edit-task/edit-task.component";
+import {Component} from '@angular/core';
+import {Input} from '@angular/core';
+import {OnInit} from '@angular/core';
+import {ViewChild} from "@angular/core";
+import {ElementRef} from "@angular/core";
+import {TaskService} from '../../../service/task.service';
+import {Task} from '../../../model/task';
+import {Observable} from 'rxjs';
+import {MatDialog} from '@angular/material';
+import {AddTaskComponent} from '../../modal/add-task/add-task.component';
 
 /**
- * Tasks is used to facilitate communication between the view and front end services.
  *
- * Note: confirmation box for delete() must be styled
  *
- * @author James Andrade
- * @version 1.0
+ * @author Karol Talbot
+ * @version 2.0
  */
-
 @Component({
   selector: 'app-tasks-panel',
   templateUrl: './tasks-panel.component.html',
-  styleUrls: ['./tasks-panel.component.scss', '../../../app.component.scss']
+  styleUrls: ['./tasks-panel.component.scss']
 })
-
 export class TasksPanelComponent implements OnInit{
 
-  /** A view container ref for the template that will be used to house the add task member component. */
-  @Input() @ViewChild('add_task_container', {read: ViewContainerRef})
-  add_task_container: ViewContainerRef;
+  private task: Task;
 
-  /** A view container ref for the template that will be used to house the edit task member component. */
-  @Input() @ViewChild('edit_task_container', {read: ViewContainerRef})
-  edit_task_container: ViewContainerRef;
+  @Input() taskSelectedEvent: Observable<Task>;
 
-  constructor(private ref: ChangeDetectorRef, private resolver: ComponentFactoryResolver, public taskPanelService: TaskPanelService) {
-  }
+  @ViewChild('editTaskComponent') editTaskComponent : ElementRef;
+
+  constructor(private dialog: MatDialog, private taskService: TaskService) { }
 
   ngOnInit() {
+    this.taskService.initializeTasks();
   }
 
   /**
-   * Dynamically creates the add-task component, which will be housed in the template with the id of 'add_task_container'.
-   */
-  createAddTaskComponent() {
-    this.add_task_container.clear();
-    const factory = this.resolver.resolveComponentFactory(AddTaskComponent);
-    this.taskPanelService.ref = this.add_task_container.createComponent(factory);
-  }
-
-  /**
-   * Dynamically creates the edit-task component, which will be housed in the template with the id of 'edit_task_container'.
-   */
-  createEditTaskComponent(task: Task) {
-    this.taskPanelService.setSelectedTask(task);
-    this.edit_task_container.clear();
-    const factory = this.resolver.resolveComponentFactory(EditTaskComponent);
-    this.taskPanelService.ref = this.edit_task_container.createComponent(factory);
-  }
-
-  /**
-   * Changes the billable status of a task to the opposite of it's current value
-   * @param task the task for which the billable status is to be toggled
-   */
-  toggleBillable(task: Task) {
-    task.billable = !task.billable;
-    this.taskPanelService.save(task);
-  }
-
-  /**
-   * deletes the provided task via TaskPanelService
-   * @param task the task to be deleted
+   * Passes on the request to delete a Task to the TaskService.
+   * @param task Task to be deleted.
    */
   delete(task: Task) {
-    if (confirm("Delete " + task.name + " ?")) {
-      this.taskPanelService.delete(task);
-    }
+    this.taskService.delete(task);
+  }
+
+  /**
+   *
+   * @param Task
+   */
+  save(task: Task) {
+    this.taskService.save(task);
+  }
+
+  /**
+   * Displays a Modal component for adding a new Task.
+   */
+  openDialog(): void {
+    this.dialog.open(AddTaskComponent, {
+      width: "70vw",
+      height: "70vh"
+    });
   }
   
 }

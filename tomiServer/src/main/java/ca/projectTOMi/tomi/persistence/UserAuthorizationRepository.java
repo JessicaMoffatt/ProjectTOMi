@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Karol Talbot
  */
 public interface UserAuthorizationRepository extends JpaRepository<UserAuthorizationPolicy, UserAuthId> {
-  List<UserAuthorizationPolicy> getAllByRequestingUser(UserAccount userAccount);
+	List<UserAuthorizationPolicy> getAllByRequestingUser(UserAccount userAccount);
 }

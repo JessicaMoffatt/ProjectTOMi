@@ -1,45 +1,33 @@
-<!-- James Andrade, Jan 27,2019 -->
+<!--
+  @author Karol Talbot
+  @version 2.0
+-->
+<div class="content_pane">
 
-<div id="sidebar">
-  <h1>Tasks</h1>
-  <!-- the keyup function below is used to trigger an update -->
-  <input #box (keyup)="0" id="search_value" type="text" placeholder="Search"/>
-  <h2>Tasks</h2>
-  <div>
-    <ul [ngClass]="['sidebar_list']">
-      <li *ngFor="let t of this.taskPanelService.tasksObservable|async|orderBy:'name'"
-          [class.highlighted]="t.name === this.taskPanelService.selectedTask.name"
-          [ngClass]="['sidebar_list']">
-        <span *ngIf="t.name.includes(box.value)" (click)="this.taskPanelService.setSelectedTask(t)">{{t.name}}</span>
-      </li>
-    </ul>
-  </div>
-  <div (click)="createAddTaskComponent()" [ngClass]="['add_task', 'btn','btn_padding','rounded_corners']">New Task</div>
-</div>
-
-<div id="mainPanel">
-  <template #add_task_container></template>
-  <template #edit_task_container></template>
-  <h1>Tasks</h1>
-
-  <div>
-    <table>
-      <tr>
-        <th colspan="2">Task</th>
-        <th>Billable</th>
-      </tr>
-
-      <tr *ngFor="let t of taskPanelService.tasksObservable|async|orderBy:'name'"
-          [class.highlighted]="t.name === this.taskPanelService.selectedTask.name">
-
-        <td *ngIf="t" (click)="this.taskPanelService.setSelectedTask(t)">{{t.name}}</td>
-        <td (click)="createEditTaskComponent(t)" [ngClass]="['add_btn', 'btn','btn_padding','rounded_corners']">Edit
-        </td>
-        <td (click)="delete(t)" [ngClass]="['cancel_btn','btn','btn_padding','rounded_corners']">Delete</td>
-
-        <td> <input type="checkbox" (click)="this.toggleBillable(t)" [checked]="t.billable"> </td>
-      </tr>
-    </table>
+  <div class="search_bar">
+    <input #task_search id="task_search" [ngClass]="'input_search'" placeholder="search" (keyup)="0">
   </div>
 
+  <div class="accordion">
+    <div id="left">&nbsp;</div>
+    <div id="center">
+      <mat-accordion>
+        <ng-container *ngFor="let task of taskService.getTaskSubjectList() | async">
+          <app-edit-task id="edit_task{{task.id}}" #editTaskComponent
+                         (saveRequested)="save($event)"
+                         (deleteRequested)="delete($event)"
+                         [task]="task"
+          ></app-edit-task>
+          <mat-divider></mat-divider>
+        </ng-container>
+      </mat-accordion>
+    </div>
+  </div><!-- .accordion -->
+
+  <button class=" floating_action_button" mat-fab (click)="openDialog()">
+    <i class="material-icons">
+      add
+    </i>
+  </button>
 </div>
+

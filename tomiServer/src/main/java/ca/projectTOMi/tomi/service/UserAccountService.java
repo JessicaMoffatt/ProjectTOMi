@@ -5,7 +5,6 @@ import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import ca.projectTOMi.tomi.exception.MinimumAdminAccountException;
 import ca.projectTOMi.tomi.exception.MinimumProgramDirectorAccountException;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
@@ -15,6 +14,8 @@ import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.UserAccountRepository;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,12 +29,14 @@ import org.springframework.stereotype.Service;
 @Service
 public final class UserAccountService {
 
+
 	private final UserAccountRepository repository;
 	private final TeamService teamService;
 	private final EntryService entryService;
 	private final UserAuthService userAuthService;
 	private final TimesheetAuthService timesheetAuthService;
 	private final ProjectAuthService projectAuthService;
+	private final TOMiEmailService emailService;
 
 	@Autowired
 	public UserAccountService(final UserAccountRepository repository,
@@ -41,13 +44,15 @@ public final class UserAccountService {
 	                          final EntryService entryService,
 	                          final UserAuthService userAuthService,
 	                          final TimesheetAuthService timesheetAuthService,
-	                          final ProjectAuthService projectAuthService) {
+	                          final ProjectAuthService projectAuthService,
+	                          final TOMiEmailService emailService) {
 		this.repository = repository;
 		this.teamService = teamService;
 		this.entryService = entryService;
 		this.userAuthService = userAuthService;
 		this.timesheetAuthService = timesheetAuthService;
 		this.projectAuthService = projectAuthService;
+		this.emailService = emailService;
 	}
 
 	/**
@@ -111,21 +116,20 @@ public final class UserAccountService {
 			this.checkProgramDirectors(userAccount, newUserAccount);
 			userAccount.setFirstName(newUserAccount.getFirstName());
 			userAccount.setLastName(newUserAccount.getLastName());
-			if(userAccount.getTeam() != null){
+			if (userAccount.getTeam() != null) {
 				this.timesheetAuthService.removeMemberFromTeam(userAccount, userAccount.getTeam());
 			}
-			if(newUserAccount.getTeam() != null){
+			if (newUserAccount.getTeam() != null) {
 				this.timesheetAuthService.addMemberToTeam(newUserAccount, newUserAccount.getTeam());
 			}
 			userAccount.setTeam(newUserAccount.getTeam());
 			userAccount.setEmail(newUserAccount.getEmail());
-			userAccount.setSalariedRate(newUserAccount.getSalariedRate());
 			userAccount.setProjects(newUserAccount.getProjects());
 			userAccount.setActive(true);
 			userAccount.setAdmin(newUserAccount.isAdmin());
-			if(newUserAccount.isProgramDirector() && !userAccount.isProgramDirector()){
+			if (newUserAccount.isProgramDirector() && !userAccount.isProgramDirector()) {
 				this.projectAuthService.newProgramDirector(newUserAccount);
-			}else if(!newUserAccount.isProgramDirector() && userAccount.isProgramDirector()){
+			} else if (!newUserAccount.isProgramDirector() && userAccount.isProgramDirector()) {
 				this.projectAuthService.removeProgramDirector(newUserAccount);
 			}
 			userAccount.setProgramDirector(newUserAccount.isProgramDirector());
@@ -139,12 +143,21 @@ public final class UserAccountService {
 	/**
 	 * Creates a new timesheet every monday at 1am for all active users.
 	 */
-	@Scheduled (cron = "0 0 1 * * MON")
+	@Scheduled (cron = "0 * * * * MON")
 	public void createWeeklyTimesheet() {
 		final List<UserAccount> accounts = this.repository.getAllByActiveOrderById(true);
+		final List<Timesheet> timesheets = this.entryService.getActiveTimesheets();
 		final LocalDate date = LocalDate.now();
 		for (final UserAccount a : accounts) {
-			this.entryService.createTimesheet(date, a);
+			boolean hasTimesheet = false;
+			for (final Timesheet t : timesheets) {
+				if (a.equals(t.getUserAccount()) && date.toString().equals(t.getStartDate().toString())) {
+					hasTimesheet = true;
+				}
+			}
+			if (!hasTimesheet) {
+				this.entryService.createTimesheet(date, a);
+			}
 		}
 	}
 
@@ -160,14 +173,17 @@ public final class UserAccountService {
 	public UserAccount createUserAccount(final UserAccount userAccount) {
 		userAccount.setActive(true);
 		final UserAccount newUserAccount = this.repository.save(userAccount);
+		if(newUserAccount.getTeam() != null){
+			this.timesheetAuthService.addMemberToTeam(newUserAccount, newUserAccount.getTeam());
+		}
 		final TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
 		final LocalDate date = LocalDate.now().with(fieldISO, 1);
 		if (!this.entryService.createTimesheet(date, newUserAccount)) {
 			throw new TimesheetNotFoundException();
 		}
-		this.userAuthService.setNewUserAccountPolicy(newUserAccount);
+		this.userAuthService.updatedUserAccount(newUserAccount);
 		this.timesheetAuthService.setNewUserAccountPolicy(newUserAccount);
-		if(newUserAccount.isProgramDirector()){
+		if (newUserAccount.isProgramDirector()) {
 			this.projectAuthService.newProgramDirector(newUserAccount);
 		}
 		return newUserAccount;
@@ -231,6 +247,39 @@ public final class UserAccountService {
 		}
 	}
 
+	@Scheduled (cron = "0 16 * * * FRI")
+	public void emailReminder() {
+		final TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
+		final LocalDate date = LocalDate.now().with(fieldISO, 1);
+		final List<Timesheet> timesheets = this.entryService.getTimesheetsByDate(date);
+		for(final Timesheet timesheet: timesheets){
+			if(timesheet.getSubmitDate().isEmpty() && (timesheet.getUserAccount().getGoogleId() != null)){
+				final String email = timesheet.getUserAccount().getEmail();
+				final String subject = TOMiEmailService.SUBJECT;
+				final String body = String.format(TOMiEmailService.EMAIL_BODY, timesheet.getUserAccount().getFirstName(), date);
+				this.emailService.sendSimpleMessage(email, subject, body);
+			}
+		}
+	}
+
+	@EventListener (ContextRefreshedEvent.class)
+	public void createUserPrime() {
+		final String email = this.emailService.getEmailAddress();
+		Boolean userExists = false;
+		final UserAccount primeAccount = this.repository.findByEmail(email).orElse(new UserAccount());
+		userExists = primeAccount.getEmail() != null;
+		primeAccount.setFirstName("Project");
+		primeAccount.setLastName("TOMi");
+		primeAccount.setActive(true);
+		primeAccount.setAdmin(true);
+		primeAccount.setEmail(email);
+		if (userExists) {
+			this.updateUserAccount(primeAccount.getId(), primeAccount);
+		} else {
+			this.createUserAccount(primeAccount);
+		}
+	}
+	
 	List<UserAccount> getUserAccountsByProjects(final Project project) {
 		return this.repository.getAllByActiveTrueAndProjectsOrderById(project);
 	}

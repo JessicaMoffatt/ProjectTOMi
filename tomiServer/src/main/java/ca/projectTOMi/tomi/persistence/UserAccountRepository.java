@@ -4,6 +4,7 @@ import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.model.Team;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -42,6 +43,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
 	 * @return List of UserAccount that do not belong to a Team
 	 */
 	List<UserAccount> getAllByActiveTrueAndTeamIsNullOrderById();
+
 	List<UserAccount> getAllByActiveTrueAndTeamNot(Team team);
 
 	@Query ("SELECT count(id) FROM UserAccount WHERE admin = true")
@@ -53,7 +55,10 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
 	List<UserAccount> getAllByActiveTrueAndProgramDirectorTrue();
 
 	UserAccount getByActiveTrueAndGoogleId(String id);
+
 	UserAccount getByActiveTrueAndEmail(String email);
 
+	Optional<UserAccount> findByEmail(String email);
+	
 	List<UserAccount> getAllByActiveTrueAndProjectsOrderById(Project project);
 }

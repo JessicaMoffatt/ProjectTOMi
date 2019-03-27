@@ -1,37 +1,84 @@
 <!--
 @author Jessica Moffatt
+@author Karol Talbot
 @version 2.0
 -->
-<div>
-  <span [ngClass]="['arrow', 'back']" (click)="displayPrevTimesheet()">
-  </span>
-  <span [ngClass]="'week_title'">Week of {{timesheetService.currentDate}}</span>
-  <span [ngClass]="['arrow', 'forward']" (click)="displayNextTimesheet()">
-  </span>
-  <app-date-picker [parent]="this" [minDate]="timesheetService.minDate"></app-date-picker>
+<div class="timesheet_content">
+  <div class="scroll_panel">
+    <div class="navigation">
+      <button mat-flat-button [ngClass]="['arrow']" (click)="displayPrevTimesheet()">
+          <i class="material-icons">
+            navigate_before
+          </i>
+      </button>
+      <div [ngClass]="'week_title'">
+          <h4>Week of {{timesheetService.currentDate}}</h4>
+      </div>
+      <app-date-picker [parent]="this" [minDate]="timesheetService.minDate"></app-date-picker>
+      <mat-chip-trailing-icon disabled [ngClass]="['submission_status']">
+        <mat-chip [disableRipple]="true" id="status">{{timesheetService.currentStatus}}</mat-chip>
+      </mat-chip-trailing-icon>
+      <button mat-flat-button [ngClass]="['arrow']" (click)="displayNextTimesheet()">
+          <i class="material-icons">
+            navigate_next
+          </i>
+      </button>
+    </div>
+    <div>
+      <div *ngFor="let entry of entries">
+        <app-entry [ngClass]="'entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.LOGGING" [entry]="entry"
+                   [projects]="projects" [unitTypes]="unitTypes" [tasks]="tasks"
+                   (requestCopy)="copyEntry($event)"
+                   (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>
+        <app-entry [ngClass]="'rejected_entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.REJECTED"
+                   [entry]="entry" [projects]="projects" [unitTypes]="unitTypes" [tasks]="tasks"
+                   (requestCopy)="copyEntry($event)"
+                   (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>
+        <app-entry-uneditable [ngClass]="'submitted_entry'"
+                              *ngIf="getStatusValue(entry.status.toString()) === sts.SUBMITTED"
+                              [entry]="entry"></app-entry-uneditable>
+        <app-entry-uneditable [ngClass]="'approved_entry'"
+                              *ngIf="getStatusValue(entry.status.toString()) === sts.APPROVED"
+                              [entry]="entry"></app-entry-uneditable>
+      </div>
 
-  <span id="submission_status">{{timesheetService.currentStatus}}</span>
-
-  <div>
-    <div *ngFor="let entry of entries">
-      <app-entry [ngClass]="'entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.LOGGING" [entry]="entry" [projects]="this.timesheetService.projects" [unitTypes]="this.timesheetService.unitTypes" [tasks]="this.timesheetService.tasks"
-                 (requestCopy)="copyEntry($event)"
-                 (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>
-      <app-entry [ngClass]="'rejected_entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.REJECTED" [entry]="entry" [projects]="this.timesheetService.projects" [unitTypes]="this.timesheetService.unitTypes" [tasks]="this.timesheetService.tasks"
-                 (requestCopy)="copyEntry($event)"
-                 (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>
-      <app-entry-uneditable [ngClass]="'submitted_entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.SUBMITTED" [entry]="entry"></app-entry-uneditable>
-      <app-entry-uneditable [ngClass]="'approved_entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.APPROVED" [entry]="entry"></app-entry-uneditable>
     </div>
 
+    <div #entryHolder></div>
   </div>
-
-  <div #entryHolder></div>
 </div>
+
+
 <div [ngClass]="'timesheet_footer'">
-  <button mat-button (click)="addEntry()" [ngClass]="['new_entry', 'new_btn']"></button>
-  <span [ngClass]="'hours_tally'">Hours:<strong> {{tally}}</strong></span>
-  <button mat-button [ngClass]="['submit','bottom_btn']" (click)="displaySubmitModal()"></button>
-  <button mat-button [ngClass]="['save_timesheet', 'bottom_btn', 'save_btn']" (click)="save().then()"></button>
+  <ng-template [ngIf]="timesheetService.currentStatus.match('LOGGING|REJECTED')">
+    <button mat-flat-button (click)="addEntry()" [ngClass]="['add_btn', 'footer_btn']">
+      <i class="material-icons">
+        add
+      </i>
+    </button>
+  </ng-template>
+  <ng-template [ngIf]="timesheetService.currentStatus.match('LOGGING|REJECTED')">
+    <button mat-flat-button [ngClass]="['submit_btn', 'footer_btn']" (click)="displaySubmitModal()">
+      <i class="material-icons">
+        send
+      </i>
+    </button>
+  </ng-template>
+  <ng-template [ngIf]="!timesheetService.currentStatus.match('LOGGING|REJECTED')">
+    <button mat-flat-button [ngClass]="['hidden_btn', 'submit_btn',  'footer_btn']" (click)="displaySubmitModal()">
+      <i class="material-icons">
+        send
+      </i>
+    </button>
+  </ng-template>
+
+  <span [ngClass]="'hours_tally'"><strong> {{tally}}</strong> Hours</span>
+  <ng-template [ngIf]="timesheetService.currentStatus.match('LOGGING|REJECTED')">
+    <button mat-flat-button [ngClass]="['footer_btn', 'save_btn']" (click)="save().then()">
+      <i class="material-icons">
+        save_alt
+      </i>
+    </button>
+  </ng-template>
 </div>
 
