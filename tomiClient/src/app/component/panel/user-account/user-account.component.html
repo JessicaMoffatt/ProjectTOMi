@@ -11,7 +11,7 @@
     <div id="left">&nbsp;</div>
     <div id="center">
       <mat-accordion>
-        <ng-container *ngFor="let userAccount of userAccountService.userSubject | async | filterByName:user_account_search">
+        <ng-container *ngFor="let userAccount of userAccountService.userSubject.getValue() | filterByName:user_account_search.value">
           <app-edit-user id="edit_user_account{{userAccount.id}}" #editUserComponent
                          (saveRequested)="save($event)"
                          (deleteRequested)="delete($event)"
