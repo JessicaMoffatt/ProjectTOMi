@@ -1,27 +1,47 @@
 /**
- * @author Iliya Kiritchkov
+ * @author Karol Talbot
  */
+@import "../../../../variables";
 
-#mainPanel{
-  position: absolute;
-  left: 220px;
-  top: 70px;
-  width: 100%;
-  height: 100%;
+.content_pane {
+  height: 92vh;
+  width: 100vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  mat-divider {
+    color: $light_grey;
+  }
 }
 
-.view_user_hidden{
-  display: none;
+.search_bar {
+  padding: 1.5vh 25vw;
+  width: 50vw;
 }
 
-.view_user_visible {
-  display: block;
+.input_search {
+  width: inherit;
+  height: 1.5rem;
 }
 
-.edit_user_hidden {
-  display: none;
+#left {
+  position: relative;
+  width: 15vw;
+  display: inline-flex;
+  top: 0;
 }
 
-.edit_user_visible {
-  display: block;
+#center {
+  width: 70vw;
+  display: inline-block;
+}
+
+.floating_action_button {
+  position: fixed;
+  right: 4vw;
+  bottom: 4vh;
+  background-color: $blue;
+  i {
+    color: white;
+  }
 }

@@ -73,7 +73,7 @@ public final class Entry {
 	private UnitType unitType;
 
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne (fetch = FetchType.EAGER)
 	@MapKeyColumn (name = "id")
 	@JsonProperty (value = "timesheet")
 	@JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -175,21 +175,21 @@ public final class Entry {
 	}
 
 	@JsonIgnore
-	public void setTimesheet(final Timesheet timesheet){
+	public void setTimesheet(final Timesheet timesheet) {
 		this.timesheet = timesheet;
 	}
 
 	@JsonProperty
-	public void setProject(final ProjectViewModel project){
-		if(project != null) {
+	public ProjectViewModel getProject() {
+		return this.project == null ? null : new ProjectViewModel(this.project);
+	}
+
+	@JsonProperty
+	public void setProject(final ProjectViewModel project) {
+		if (project != null) {
 			final Project p = new Project();
 			p.setId(project.getId());
 			this.project = p;
 		}
-	}
-
-	@JsonProperty
-	public ProjectViewModel getProject(){
-		return this.project == null ? null : new ProjectViewModel(this.project);
 	}
 }

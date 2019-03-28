@@ -2,17 +2,27 @@
 @author Iliya Kiritchkov
 @version 1.1
 -->
-<div id="mainPanel">
-  <mat-accordion>
-    <ng-container *ngFor="let userAccount of userAccountService.userSubject | async">
-        <app-edit-user
-            id="edit_user_account{{userAccount.id}}" #editUserComponent
-                       (saveRequested)="save($event)"
-                       (deleteRequested)="delete($event)"
-                       [userAccount]="userAccount"
-                       [userSelectedEvent]="selectedEventSubject.asObservable()"
-        ></app-edit-user>
-      <mat-divider></mat-divider>
-    </ng-container>
-  </mat-accordion>
+<div class="content_pane">
+  <div class="search_bar"><input #user_account_search id="user_account_search" [ngClass]="'input_search'"
+                                 placeholder="search" (keyup)="0"></div>
+  <div class="accordion">
+    <div id="left">&nbsp;</div>
+    <div id="center">
+      <mat-accordion>
+        <ng-container *ngFor="let userAccount of userAccountService.userSubject | async">
+          <app-edit-user id="edit_user_account{{userAccount.id}}" #editUserComponent
+                         (saveRequested)="save($event)"
+                         (deleteRequested)="delete($event)"
+                         [userAccount]="userAccount"
+          ></app-edit-user>
+          <mat-divider></mat-divider>
+        </ng-container>
+      </mat-accordion>
+    </div>
+  </div>
+  <button class=" floating_action_button" mat-fab (click)="openDialog()">
+    <i class="material-icons">
+      add
+    </i>
+  </button>
 </div>

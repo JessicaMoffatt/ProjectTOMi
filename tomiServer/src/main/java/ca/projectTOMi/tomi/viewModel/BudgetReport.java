@@ -33,18 +33,18 @@ public class BudgetReport {
 		this.project = project;
 	}
 
-	@JsonProperty("date")
-	public String getDate(){
+	@JsonProperty ("date")
+	public String getDate() {
 		return this.date.toString();
 	}
 
-	@JsonProperty("hourCost")
-	public Double getHourCost(){
+	@JsonProperty ("hourCost")
+	public Double getHourCost() {
 		return this.getTotalHours() * this.project.getBillableRate();
 	}
 
-	@JsonProperty("totalHours")
-	public Double getTotalHours(){
+	@JsonProperty ("totalHours")
+	public Double getTotalHours() {
 		return this.billableHours + this.nonBillableHours;
 	}
 }

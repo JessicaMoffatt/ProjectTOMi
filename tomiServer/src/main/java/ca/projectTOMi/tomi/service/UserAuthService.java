@@ -27,14 +27,6 @@ public class UserAuthService {
 		this.userAuthorizationRepository = userAuthorizationRepository;
 	}
 
-	void setNewUserAccountPolicy(final UserAccount newUserAccount) {
-
-		final UserAuthorizationPolicy authPolicy = new UserAuthorizationPolicy();
-		authPolicy.setPermission(UserPermission.READ_LISTS);
-		authPolicy.setRequestingUser(newUserAccount);
-		this.userAuthorizationRepository.save(authPolicy);
-	}
-
 	public void updatedUserAccount(final UserAccount updatedUserAccount) {
 		if (updatedUserAccount.isProgramDirector()) {
 			this.userAuthorizationRepository.deleteAll(this.userAuthorizationRepository.getAllByRequestingUser(updatedUserAccount));

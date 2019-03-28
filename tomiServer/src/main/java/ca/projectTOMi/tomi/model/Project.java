@@ -1,7 +1,5 @@
 package ca.projectTOMi.tomi.model;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,7 +50,6 @@ public final class Project {
 	 * The UserAccount managing this Project.
 	 */
 	@OneToOne
-	@MapKeyColumn (name = "id")
 	@JsonProperty (value = "projectManagerId")
 	@JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference (alwaysAsId = true)
@@ -77,15 +74,16 @@ public final class Project {
 	@Min (0)
 	private Long billableRate;
 
-	@Formula("budget / billable_rate")
+	@Formula ("budget / billable_rate")
 	private Double budgetedHours;
+
 	/**
 	 * The Accounts that are members of this Project.
 	 */
 	@ManyToMany (fetch = FetchType.EAGER, targetEntity = UserAccount.class)
 	@JoinTable (name = "project_members", joinColumns = @JoinColumn (name = "project_id"), inverseJoinColumns = @JoinColumn (name = "user_account_id"))
 	@JsonIgnore
-	private Set<UserAccount> projectMembers;// = new HashSet<>();
+	private Set<UserAccount> projectMembers;
 
 	/**
 	 * If this Project is active.
@@ -94,27 +92,27 @@ public final class Project {
 	@Column (nullable = false)
 	private boolean active;
 
-  @JsonProperty("projectManagerId")
-  public void setProjectManagerId(final Long id){
-    UserAccount projectManager = null;
-    if(id != -1){
-      projectManager = new UserAccount();
-      projectManager.setId(id);
-    }
-    this.projectManager = projectManager;
-  }
+	@JsonProperty
+	public void setProjectManagerId(final Long id) {
+		UserAccount projectManager = null;
+		if (id != -1) {
+			projectManager = new UserAccount();
+			projectManager.setId(id);
+		}
+		this.projectManager = projectManager;
+	}
 
-  @Override
-  public boolean equals(final Object obj){
-    if(obj.getClass() != this.getClass()){
-      return false;
-    }else{
-      return this.getId().equals(((Project)obj).getId());
-    }
-  }
+	@Override
+	public int hashCode() {
+		return this.getId().hashCode();
+	}
 
-  @Override
-  public int hashCode(){
-    return this.getId().hashCode();
-  }
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj.getClass() != this.getClass()) {
+			return false;
+		} else {
+			return this.getId().equals(((Project) obj).getId());
+		}
+	}
 }

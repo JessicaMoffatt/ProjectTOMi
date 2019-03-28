@@ -17,8 +17,9 @@ Active Projects
   <!--orderBy:'projectName'" -->
   <!-- [class.highlighted]="p.id === this.projectService.selectedProject.id" -->
   <!--"-->
+  <!--|orderBy:'projectName'-->
   <mat-list-item
-    *ngFor="let p of this.projectService.projects|async|orderBy:'projectName'"
+    *ngFor="let p of this.projectService.projects|async"
     (click)="this.selectProject(p)">
 
         <span *ngIf="p.projectName.toLowerCase().includes(box.value.toLowerCase())">

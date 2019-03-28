@@ -1,10 +1,14 @@
-<div [ngClass]="['container','h-100','']">
-  <h1>Projects</h1>
-  <div>
-    <mat-action-list *ngIf="projectEntriesService.projects">
-      <span *ngFor="let p of (projectEntriesService.projects|orderBy:'project_name')">
-        <button mat-list-item *ngIf="p" (click)="displayProjectEntries(p)">{{p.projectName}}</button>
-      </span>
-    </mat-action-list>
-  </div>
+<!--
+  @author Karol Talbot
+  @version 1.1
+-->
+<div class="sidebar">
+  <mat-action-list>
+    <h2>Projects</h2>
+    <div class="search_bar"><input #project_search id="project_search" [ngClass]="'input_search'"
+                                   placeholder="search" (keyup)="0"></div>
+    <mat-button-toggle-group #btn_group="matButtonToggleGroup" [name]="btn_group" class="btn_list" vertical>
+      <mat-button-toggle id="{{project.id}}_btn" class="list_btns" (click)='this.selectProject(project)' *ngFor="let project of this.projectEntriesService.getAllProjects() | async">{{project.projectName}}</mat-button-toggle>
+    </mat-button-toggle-group>
+  </mat-action-list>
 </div>

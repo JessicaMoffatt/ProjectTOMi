@@ -15,17 +15,15 @@ const httpOptions = {
 /**
  * UserAccountService is used to control the flow of data regarding user accounts to/from the view.
  *
- * @author Jessica Moffatt
+ * @author Jessica Moffatt, Iliya Kiritchkov
  * @version 1.1
  */
 @Injectable({
   providedIn: 'root'
 })
 export class UserAccountService {
-
-  /** The UserAccount selectedExpense from the list of UserAccounts.*/
+  /** The UserAccount selected from the list of UserAccounts.*/
   private selectedUserAccount: UserAccount;
-
 
   /** Listing of all active UserAccounts */
   userAccounts: Observable<Array<UserAccount>>;
@@ -44,12 +42,7 @@ export class UserAccountService {
       this.sortUserAccounts();
     }).catch( (error: any) => {
       let getUsersErrorMessage = 'Something went wrong when getting the list of users. Please contact your system administrator.';
-      this.snackBar.open(getUsersErrorMessage, null, {
-        duration: 5000,
-        politeness: 'assertive',
-        panelClass: 'snackbar-fail',
-        horizontalPosition: 'right'
-      });
+      this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
     });
   }
 
@@ -60,12 +53,8 @@ export class UserAccountService {
     this.userSubject.getValue().sort((user1, user2) => {
       let name1 = user1.lastName.toLowerCase();
       let name2 = user2.lastName.toLowerCase();
-      if (name1 > name2) {
-        return 1;
-      }
-      if (name1 < name2) {
-        return -1;
-      }
+      if (name1 > name2) { return 1; }
+      if (name1 < name2) { return -1; }
       return 0;
     });
   }
@@ -78,8 +67,8 @@ export class UserAccountService {
 
     this.GETAllUserAccounts().forEach(users => {
       freshUsers = users;
-
       //Replace all users with fresh user data
+
       freshUsers.forEach( freshUser => {
         let index = this.userSubject.getValue().findIndex((staleUser) => {
           return (staleUser.id === freshUser.id);
@@ -112,8 +101,8 @@ export class UserAccountService {
     }).then(value => {
       this.sortUserAccounts();
     }).catch( (error: any) => {
-      let getUsersErrorMessage = 'Something went wrong when updating the list of Users. Please contact your system administrator.';
-      this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
+      let getUsersErrorMessage = 'Something went wrong when updating the list of Users.';
+      this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
     });
   }
 
@@ -138,47 +127,23 @@ export class UserAccountService {
     if (userAccount.id === -1) {
       await this.http.post<UserAccount>(userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
         this.refreshUserAccounts();
-        let addUserSuccessMessage = userAccount.firstName + ' ' + userAccount.lastName + ' added successfully.';
-        this.snackBar.open(addUserSuccessMessage, null, {
-          duration: 4000,
-          politeness: 'assertive',
-          panelClass: 'snackbar-success',
-          horizontalPosition: 'right'
-        });
       }).catch((error: any) => {
-        let addUserErrorMessage = 'Something went wrong when adding ' + userAccount.firstName + ' ' + userAccount.lastName + '. Please contact your system administrator.';
-        this.snackBar.open(addUserErrorMessage, null, {
-          duration: 5000,
-          politeness: 'assertive',
-          panelClass: 'snackbar-fail',
-          horizontalPosition: 'right'
-        });
+        let addUserErrorMessage = 'Something went wrong when adding ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
+        this.snackBar.open(addUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
       });
     } else {
       const url = userAccount._links["update"];
       await this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
         this.refreshUserAccounts();
-        let editUserSuccessMessage = userAccount.firstName + ' ' + userAccount.lastName + ' updated successfully.';
-        this.snackBar.open(editUserSuccessMessage, null, {
-          duration: 4000,
-          politeness: 'assertive',
-          panelClass: 'snackbar-success',
-          horizontalPosition: 'right'
-        });
       }).catch((error: any) => {
-        let editUserErrorMessage = 'Something went wrong when updating ' + userAccount.firstName + ' ' + userAccount.lastName + '. Please contact your system administrator.';
-        this.snackBar.open(editUserErrorMessage, null, {
-          duration: 5000,
-          politeness: 'assertive',
-          panelClass: 'snackbar-fail',
-          horizontalPosition: 'right'
-        });
+        let editUserErrorMessage = 'Something went wrong when updating ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
+        this.snackBar.open(editUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
       });
     }
   }
 
   /**
-   * Logically deletes the selectedExpense user account (sets the active status to false.)
+   * Logically deletes the selected user account (sets the active status to false.)
    *
    * @param account The UserAccount to be deleted.
    */
@@ -186,11 +151,9 @@ export class UserAccountService {
       const url = userAccount._links["delete"];
       this.http.delete(url["href"], httpOptions).toPromise().then( response => {
         this.refreshUserAccounts();
-        let deleteUserSuccessMessage = userAccount.firstName + ' ' + userAccount.lastName + ' deleted successfully.';
-        this.snackBar.open(deleteUserSuccessMessage, null, {duration: 4000, politeness: 'assertive', panelClass: 'snackbar-success', horizontalPosition: 'right'});
       }).catch((error: any) => {
-        let deleteUserErrorMessage = 'Something went wrong when deleting ' + userAccount.firstName + ' ' + userAccount.lastName + '. Please contact your system administrator.';
-        this.snackBar.open(deleteUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
+        let deleteUserErrorMessage = 'Something went wrong when deleting ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
+        this.snackBar.open(deleteUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
       });
   }
 

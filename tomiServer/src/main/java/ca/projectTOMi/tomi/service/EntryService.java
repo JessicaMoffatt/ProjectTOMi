@@ -68,24 +68,39 @@ public class EntryService {
 				throw new IllegalEntryStateException();
 
 			case REJECTED:
-				final Entry modifiedEntry = new Entry();
-				modifiedEntry.setComponent(updatedEntry.getComponent());
-				modifiedEntry.setProject(updatedEntry.getProject());
-				modifiedEntry.setQuantity(updatedEntry.getQuantity());
-				modifiedEntry.setTask(updatedEntry.getTask());
-				modifiedEntry.setUnitType(updatedEntry.getUnitType());
-				modifiedEntry.setMondayHours(updatedEntry.getMondayHours());
-				modifiedEntry.setTuesdayHours(updatedEntry.getTuesdayHours());
-				modifiedEntry.setWednesdayHours(updatedEntry.getWednesdayHours());
-				modifiedEntry.setThursdayHours(updatedEntry.getTuesdayHours());
-				modifiedEntry.setFridayHours(updatedEntry.getFridayHours());
-				modifiedEntry.setSaturdayHours(updatedEntry.getSaturdayHours());
-				modifiedEntry.setSundayHours(updatedEntry.getSundayHours());
-				modifiedEntry.setStatus(Status.LOGGING);
-				modifiedEntry.setActive(true);
-				this.entryRepository.save(modifiedEntry);
+				final Entry archievedEntry = new Entry();
+				archievedEntry.setComponent(entry.getComponent());
+				archievedEntry.setProject(entry.getProject());
+				archievedEntry.setQuantity(entry.getQuantity());
+				archievedEntry.setTask(entry.getTask());
+				archievedEntry.setUnitType(entry.getUnitType());
+				archievedEntry.setMondayHours(entry.getMondayHours());
+				archievedEntry.setTuesdayHours(entry.getTuesdayHours());
+				archievedEntry.setWednesdayHours(entry.getWednesdayHours());
+				archievedEntry.setThursdayHours(entry.getTuesdayHours());
+				archievedEntry.setFridayHours(entry.getFridayHours());
+				archievedEntry.setSaturdayHours(entry.getSaturdayHours());
+				archievedEntry.setSundayHours(entry.getSundayHours());
+				archievedEntry.setStatus(Status.REJECTED);
+				archievedEntry.setTimesheet(entry.getTimesheet().getId());
+				archievedEntry.setActive(false);
+				this.entryRepository.save(archievedEntry);
 
-				entry.setActive(false);
+
+				entry.setComponent(updatedEntry.getComponent());
+				entry.setProject(updatedEntry.getProject());
+				entry.setQuantity(updatedEntry.getQuantity());
+				entry.setTask(updatedEntry.getTask());
+				entry.setUnitType(updatedEntry.getUnitType());
+				entry.setMondayHours(updatedEntry.getMondayHours());
+				entry.setTuesdayHours(updatedEntry.getTuesdayHours());
+				entry.setWednesdayHours(updatedEntry.getWednesdayHours());
+				entry.setThursdayHours(updatedEntry.getTuesdayHours());
+				entry.setFridayHours(updatedEntry.getFridayHours());
+				entry.setSaturdayHours(updatedEntry.getSaturdayHours());
+				entry.setSundayHours(updatedEntry.getSundayHours());
+				entry.setStatus(Status.LOGGING);
+				entry.setActive(true);
 				this.entryRepository.save(entry);
 				break;
 
@@ -203,7 +218,7 @@ public class EntryService {
 	 *
 	 * @return List containing all Timesheet that are active
 	 */
-	public List<Timesheet> getActiveTimesheets() {
+	List<Timesheet> getActiveTimesheets() {
 		return this.timesheetRepository.getAllByActiveOrderById(true);
 	}
 
@@ -299,10 +314,9 @@ public class EntryService {
 	}
 
 	/**
-	 * Evaluates the {@link Status} of the timesheet with the provided id. If all {@link
-	 * Entry}s are approved the timesheet is given the approved status. If
-	 * all entries are approved or rejected the timesheet is given the rejected status. Otherwise,
-	 * it's status remains unchanged.
+	 * Evaluates the {@link Status} of the timesheet with the provided id. If all {@link Entry}s are
+	 * approved the timesheet is given the approved status. If all entries are approved or rejected
+	 * the timesheet is given the rejected status. Otherwise, it's status remains unchanged.
 	 *
 	 * @param id
 	 * 	the unique identifier for the timesheet
@@ -328,9 +342,9 @@ public class EntryService {
 		return this.entryRepository.getAllByActiveTrueAndProjectAndStatus(project, Status.SUBMITTED);
 	}
 
-	public boolean evaluateEntry(final Long entryId, final Status status){
+	public boolean evaluateEntry(final Long entryId, final Status status) {
 		final Entry entry = this.entryRepository.findById(entryId).orElseThrow(EntryNotFoundException::new);
-		if(entry.getStatus() == Status.SUBMITTED) {
+		if (entry.getStatus() == Status.SUBMITTED) {
 			entry.setStatus(status);
 			this.entryRepository.save(entry);
 			this.evaluateTimesheet(entry.getTimesheet().getId());
@@ -339,7 +353,11 @@ public class EntryService {
 		return false;
 	}
 
-	public List<Entry> getEntriesByProject(Project project) {
-		return entryRepository.getAllByActiveTrueAndProject(project);
+	List<Entry> getEntriesByProject(final Project project) {
+		return this.entryRepository.getAllByActiveTrueAndProject(project);
+	}
+
+	List<Timesheet> getTimesheetsByDate(final LocalDate date) {
+		return this.timesheetRepository.getAllByActiveTrueAndStartDate(date);
 	}
 }

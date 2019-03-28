@@ -34,7 +34,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 /**
  * Handles HTTP requests for {@link Task} objects in the ProjectTOMi system.
  *
- * @author Iliya Kiritchkov and Karol Talbot
+ * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 2
  */
 @RestController

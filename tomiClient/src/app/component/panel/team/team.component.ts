@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {TeamService} from "../../../service/team.service";
 import {Team} from "../../../model/team";
 import {UserAccount} from "../../../model/userAccount";
 import {TeamSidebarService} from "../../../service/team-sidebar.service";
-import {MatDialog, MatDialogRef, MatSelectionList, MatSelectionListChange} from "@angular/material";
+import {MatDialog, MatDialogRef, MatSelectionList} from "@angular/material";
 import {UserAccountService} from "../../../service/user-account.service";
 
 /**
@@ -20,13 +20,16 @@ import {UserAccountService} from "../../../service/user-account.service";
 export class TeamComponent implements OnInit {
 
   @ViewChild('teamMemberList') teamMemberList: MatSelectionList;
+  @ViewChild('availableUserAccounts') availableUserAccounts: MatSelectionList;
 
   constructor(public teamService: TeamService,
               public teamSideBarService: TeamSidebarService,public dialog: MatDialog) {
   }
 
   ngOnInit() {
+
   }
+
 
   /**
    * Sets the selectedProject team members.
@@ -104,7 +107,8 @@ export class TeamComponent implements OnInit {
 
         <mat-form-field>
           <mat-select [(ngModel)]="member" placeholder="New Member">
-            <mat-option *ngFor="let member of (this.teamService.allFreeMembers  |orderBy: 'firstName')"
+            <!--|orderBy: 'firstName'-->
+            <mat-option *ngFor="let member of (this.teamService.allFreeMembers  )"
                         [value]="member.id">
               {{member.firstName}} {{member.lastName}}
             </mat-option>

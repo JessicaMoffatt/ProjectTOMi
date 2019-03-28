@@ -10,15 +10,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Component
 public class TOMiInterceptorAppConfig implements WebMvcConfigurer {
-  private final AuthorizationInterceptor authorizationInterceptor;
+	private final AuthorizationInterceptor authorizationInterceptor;
 
-  @Autowired
-  public TOMiInterceptorAppConfig(final AuthorizationInterceptor authorizationInterceptor) {
-    this.authorizationInterceptor = authorizationInterceptor;
-  }
+	@Autowired
+	public TOMiInterceptorAppConfig(final AuthorizationInterceptor authorizationInterceptor) {
+		this.authorizationInterceptor = authorizationInterceptor;
+	}
 
-  @Override
-  public void addInterceptors(final InterceptorRegistry registry) {
-    registry.addInterceptor(this.authorizationInterceptor);
-  }
+	@Override
+	public void addInterceptors(final InterceptorRegistry registry) {
+		registry.addInterceptor(this.authorizationInterceptor);
+	}
 }

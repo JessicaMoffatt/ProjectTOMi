@@ -1,0 +1,43 @@
+@import "~src/variables";
+/**
+  @author Karol Talbot
+ */
+.user_account_table{
+  width: available;
+}
+
+#unit_type_name{
+  width: 48%;
+  padding: 1%;
+}
+
+#unit_type_unit{
+  width: 23%;
+  padding: 1%;
+}
+
+#unit_type_weight{
+  width: 23%;
+  padding: 1%;
+}
+
+.manage_delete_btn{
+  background-color: $delete_btn;
+  color:$delete_btn_text;
+}
+
+.manage_cancel_btn{
+  background-color: $cancel_btn;
+  color:$cancel_btn_text;
+  float:right;
+  margin-right: 1%;
+}
+
+.manage_save_btn{
+  background-color: $save_btn;
+  color: $save_btn_text;
+  float:right;
+  margin-right: 1%;
+}
+
+

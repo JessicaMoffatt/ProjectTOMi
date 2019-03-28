@@ -1,8 +1,10 @@
 package ca.projectTOMi.tomi.persistence;
 
 import ca.projectTOMi.tomi.model.Team;
+import ca.projectTOMi.tomi.model.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * TeamRepository is used to persist and retrieve data regarding {@link Team} from the database.
@@ -20,4 +22,6 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
 	 * @return List containing all teams with the provided active state
 	 */
 	List<Team> getAllByActiveOrderById(boolean active);
+
+	Optional<Team> findFirstByActiveTrueAndTeamLead(UserAccount teamLead);
 }

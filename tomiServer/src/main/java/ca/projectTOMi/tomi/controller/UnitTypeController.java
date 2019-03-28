@@ -51,7 +51,6 @@ public class UnitTypeController {
 		this.unitTypeService = unitTypeService;
 	}
 
-
 	@GetMapping ("/unit_types")
 	public Resources<Resource<UnitType>> getActiveUnitTypes(@RequestAttribute final UserAuthManager authMan) {
 		final List<Resource<UnitType>> unitTypeList = this.unitTypeService.getActiveUnitTypes()

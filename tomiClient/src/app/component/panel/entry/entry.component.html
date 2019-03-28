@@ -1,120 +1,161 @@
 <!--
 @author Jessica Moffatt
+@author Karol Talbot
 @version 3.0
 -->
-<mat-card [ngClass]="['entry_card']">
-  <mat-card-header>
-    <div [ngClass]="'entry_btn_container'">
-        <button mat-icon-button [ngClass]="['copy_entry']" (click)="copy()"></button>
-        <button mat-icon-button [ngClass]="['delete_btn']" (click)="delete()"></button>
-    </div>
-  </mat-card-header>
+<mat-card class="entry_card">
   <mat-card-content>
-    <mat-form-field [ngClass]="'input_full_width'">
-      <input matInput  placeholder="Component" [(ngModel)]="entry.component" #componentInput>
-    </mat-form-field>
-<br/>
-    <mat-form-field [ngClass]="'select_width_half'">
-      <span *ngIf="entry.project">
-        <mat-select placeholder="Project" [(ngModel)]="entry.project.id" #projectInput>
-        <mat-option value="-1">None</mat-option>
-        <mat-option *ngFor="let project of (projects |orderBy: 'projectName')" [value]="project.id">
-          {{project.projectName}}
-        </mat-option>
-      </mat-select>
-      </span>
-      <span *ngIf="!entry.project">
-        <mat-select placeholder="Project" #projectInput>
-        <mat-option value="-1">None</mat-option>
-        <mat-option *ngFor="let project of (projects |orderBy: 'projectName')" [value]="project.id">
-          {{project.projectName}}
-        </mat-option>
-      </mat-select>
-      </span>
-    </mat-form-field>
-<br/>
-    <mat-form-field [ngClass]="'select_width_quarter'">
+    <div class="row">
+      <div *ngIf="smallScreen; else buttons" class="entry_btn_container">
+        <mat-menu #entryMenu="matMenu" id="menu">
+          <button mat-flat-button class="menu_item" (click)="copy()">
+            copy
+          </button>
+          <br/>
+          <button mat-flat-button class="menu_item" (click)="delete()">
+            delete
+          </button>
+        </mat-menu>
+        <button id="menu_btn" mat-flat-button [matMenuTriggerFor]="entryMenu">
+          <i class="material-icons">
+            menu
+          </i>
+        </button>
+      </div>
+      <ng-template class="entry_btn_container" #buttons>
+        <button mat-flat-button class="entry_btn delete_btn" (click)="delete()">
+          <i class="material-icons">
+            delete
+          </i>
+        </button>
+        <button mat-flat-button class="entry_btn copy_btn" (click)="copy()">
+          <i class="material-icons">
+            file_copy
+          </i>
+        </button>
+      </ng-template>
+      <div class="top">
+        <mat-form-field class="third">
+        <span *ngIf="entry.project">
+          <mat-select placeholder="Project" [(ngModel)]="entry.project.id" #projectInput>
+          <mat-option value="-1">None</mat-option>
+            <!--|orderBy: 'projectName'-->
+          <mat-option *ngFor="let project of (projects )" [value]="project.id">
+            {{project.projectName}}
+          </mat-option>
+        </mat-select>
+        </span>
+          <span *ngIf="!entry.project">
+          <mat-select placeholder="Project" #projectInput>
+          <mat-option value="-1">None</mat-option>
+            <!--|orderBy: 'projectName'-->
+          <mat-option *ngFor="let project of (projects)" [value]="project.id">
+            {{project.projectName}}
+          </mat-option>
+        </mat-select>
+        </span>
+        </mat-form-field>
+
+        <mat-form-field class="third">
       <span *ngIf="entry.task">
         <mat-select placeholder="Task" [(ngModel)]="this.entry.task.id" #taskInput>
         <mat-option value="-1">None</mat-option>
-        <mat-option *ngFor="let task of (tasks |orderBy: 'name')" [value]="task.id">
+          <!--|orderBy: 'name'-->
+        <mat-option *ngFor="let task of (tasks )" [value]="task.id">
           {{task.name}}
         </mat-option>
       </mat-select>
       </span>
-      <span *ngIf="!entry.task">
+
+          <span *ngIf="!entry.task">
         <mat-select placeholder="Task" #taskInput>
         <mat-option value="-1">None</mat-option>
-        <mat-option *ngFor="let task of (tasks |orderBy: 'name')" [value]="task.id">
+          <!--|orderBy: 'name'-->
+        <mat-option *ngFor="let task of (tasks )" [value]="task.id">
           {{task.name}}
         </mat-option>
       </mat-select>
       </span>
 
-    </mat-form-field>
+        </mat-form-field>
 
-    <mat-form-field [ngClass]="'select_width_quarter'">
+        <mat-form-field class="third_last">
       <span *ngIf="entry.unitType">
         <mat-select placeholder="Unit Type" [(ngModel)]="this.entry.unitType.id" #unitTypeInput>
         <mat-option value="-1">None</mat-option>
-        <mat-option *ngFor="let unitType of (unitTypes |orderBy: 'name')" [value]="unitType.id">
+          <!--|orderBy: 'name'-->
+        <mat-option *ngFor="let unitType of (unitTypes )" [value]="unitType.id">
           {{unitType.name}}
         </mat-option>
       </mat-select>
       </span>
-      <span *ngIf="!entry.unitType">
+          <span *ngIf="!entry.unitType">
         <mat-select placeholder="Unit Type" #unitTypeInput>
         <mat-option value="-1">None</mat-option>
-        <mat-option *ngFor="let unitType of (unitTypes |orderBy: 'name')" [value]="unitType.id">
+          <!--|orderBy: 'name'-->
+        <mat-option *ngFor="let unitType of (unitTypes )" [value]="unitType.id">
           {{unitType.name}}
         </mat-option>
       </mat-select>
       </span>
 
-    </mat-form-field>
+        </mat-form-field>
 
-    <mat-form-field>
-      <input matInput type="number" step=".25" min="0" placeholder="{{entry.unitType ? entry.unitType.unit : 'Units'}}"
-             [(ngModel)]="entry.quantity" [ngClass]="'small_number_input'"
-             (keypress)="validateNumber($event)"
-             #quantityInput>
-    </mat-form-field>
+      </div>
+    </div>
+
+    <!--Second Row-->
+    <div class="row">
+      <mat-form-field class="component">
+        <input matInput placeholder="Component" [(ngModel)]="entry.component" #componentInput>
+      </mat-form-field>
+
+      <mat-form-field class="quantity">
+        <input matInput type="number" step=".25" min="0"
+               [placeholder]="entry.unitType ? entry.unitType.unit : 'Units'"
+               [(ngModel)]="entry.quantity"
+               (keypress)="validateNumber($event)"
+               #quantityInput>
+      </mat-form-field>
+    </div>
+
 
     <!-- days of the week -->
-    <div>
-      <label><strong>M</strong>
-        <input [ngClass]="'small_number_input'" [(ngModel)]="entry.mondayHours" placeholder="0" type="number"
-               step=".25" min="0" (keypress)="validateNumber($event)" #mondayInput>
-      </label>
-      <label><strong>T</strong>
-        <input [ngClass]="'small_number_input'" [(ngModel)]="entry.tuesdayHours" placeholder="0" type="number"
-               step=".25" min="0" (keypress)="validateNumber($event)" #tuesdayInput>
-      </label>
+    <div class = "weekday">
+      <mat-form-field id="monday" class="day">
+        <input matInput [(ngModel)]="entry.mondayHours" type="number" placeholder="Monday"
+               step=".25" min="0" (keypress)="validateNumber($event)" #mondayInput id="mondayInput">
+      </mat-form-field>
 
-      <label><strong>W</strong>
-        <input [ngClass]="'small_number_input'" [(ngModel)]="entry.wednesdayHours" placeholder="0" type="number"
-               step=".25" min="0" (keypress)="validateNumber($event)" #wednesdayInput>
-      </label>
+      <mat-form-field id="tuesday" class="day">
+        <input matInput [(ngModel)]="entry.tuesdayHours" type="number" placeholder="Tuesday"
+               step=".25" min="0" (keypress)="validateNumber($event)" #tuesdayInput id="tuesdayInput">
+      </mat-form-field>
 
-      <label><strong>R</strong>
-        <input [ngClass]="'small_number_input'" [(ngModel)]="entry.thursdayHours" placeholder="0" type="number"
-               step=".25" min="0" (keypress)="validateNumber($event)" #thursdayInput>
-      </label>
+      <mat-form-field id="wednesday" class="day">
+        <input matInput [(ngModel)]="entry.wednesdayHours" type="number" placeholder="Wednesday"
+               step=".25" min="0" (keypress)="validateNumber($event)" #wednesdayInput id="wednesdayInput">
+      </mat-form-field>
 
-      <label><strong>F</strong>
-        <input [ngClass]="'small_number_input'" [(ngModel)]="entry.fridayHours" placeholder="0" type="number"
-               step=".25" min="0" (keypress)="validateNumber($event)" #fridayInput>
-      </label>
+      <mat-form-field id="thursday" class="day">
+        <input matInput [(ngModel)]="entry.thursdayHours" type="number" placeholder="Thursday"
+               step=".25" min="0" (keypress)="validateNumber($event)" #thursdayInput id="thursdayInput">
+      </mat-form-field>
 
-      <label><strong>S</strong>
-        <input [ngClass]="'small_number_input'" [(ngModel)]="entry.saturdayHours" placeholder="0" type="number"
-               step=".25" min="0" (keypress)="validateNumber($event)" #saturdayInput>
-      </label>
+      <mat-form-field id="friday" class="day">
+        <input matInput [(ngModel)]="entry.fridayHours" type="number" placeholder="Friday"
+               step=".25" min="0" (keypress)="validateNumber($event)" #fridayInput id="fridayInput">
+      </mat-form-field>
 
-      <label><strong>U</strong>
-        <input [ngClass]="'small_number_input'" [(ngModel)]="entry.sundayHours" placeholder="0" type="number"
-               step=".25" min="0" (keypress)="validateNumber($event)" #sundayInput>
-      </label>
+      <mat-form-field id="saturday" class="day">
+        <input matInput [(ngModel)]="entry.saturdayHours" type="number" placeholder="Saturday"
+               step=".25" min="0" (keypress)="validateNumber($event)" #saturdayInput id="saturdayInput">
+      </mat-form-field>
+
+      <mat-form-field id="sunday" class="day">
+        <input matInput [(ngModel)]="entry.sundayHours" type="number" placeholder="Sunday"
+               step=".25" min="0" (keypress)="validateNumber($event)" #sundayInput id="sundayInput">
+      </mat-form-field>
       <!-- end of days of week-->
     </div>
 
