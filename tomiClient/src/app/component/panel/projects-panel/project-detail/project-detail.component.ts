@@ -123,4 +123,11 @@ export class ProjectDetailComponent implements OnInit {
   //   }
   //   return new UserAccount();
   // }
+  delete() {
+    if (this.projectService.getSelectedProject().id.match(this.projectService.regExp)){
+      this.projectService.delete(this.projectService.getSelectedProject());
+    }
+      this.projectService.setSelected(new Project());
+
+  }
 }

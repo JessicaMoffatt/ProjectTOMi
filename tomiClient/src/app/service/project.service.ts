@@ -12,13 +12,15 @@ import {userAccountUrl} from "../configuration/domainConfiguration";
 import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
 import {ExpenseService} from "./expense.service";
+import {Entry} from "../model/entry";
+import {Team} from "../model/team";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 
-  /**
+/**
  * Project service provides services relates to Projects.
  * @author Jessica Moffatt
  * @version 1.0
@@ -28,8 +30,8 @@ const httpOptions = {
 })
 export class ProjectService {
 
-    /** general expression used to check if projectId is valid */
-    public readonly regExp: string = "[A-Z]{2}[0-9]{4}";
+  /** general expression used to check if projectId is valid */
+  public readonly regExp: string = "[A-Z]{2}[0-9]{4}";
 
   /** tracks which project is selectedProject in project-panel component and manage-project modal.
    */
@@ -79,22 +81,17 @@ export class ProjectService {
    * added by: James Andrade
    * @param project the project to be stored as 'selectedProject'
    */
- async setSelected(project: Project) {
+  async setSelected(project: Project) {
     this.selectedProject = await project;
-    if (this.selectedProject!= null && this.selectedProject.id.match(this.regExp))
-    {
+    this.refreshProjectList()
+    if (this.selectedProject != null && this.selectedProject.id.match(this.regExp)) {
       this.refreshUserAccountList();
       this.expenseService.refreshExpenses(this.selectedProject);
     }
-    // console.log("selectedProject:"+project.projectName);
-    // console.log("is null:"+project == null);
-    // console.log("is undefined:"+project == undefined);
-    // console.log("is not null:"+project != null);
-    // console.log("is not undefined:"+project != undefined);
   }
 
-  getSelectedProject(){
-   return this.selectedProject;
+  getSelectedProject() {
+    return this.selectedProject;
   }
 
 
@@ -162,12 +159,12 @@ export class ProjectService {
       return this.http.put<Project>(url["href"], JSON.stringify(project), httpOptions).toPromise()
         .then((project) => {
           this.setSelected(project);
-          console.log ("update complete, project:"+project);
+          console.log("update complete, project:" + project);
         })
-        // .catch(() => {
-        //   //TODO Add an error display
-        //   console.log("update rejected")
-        // });
+      // .catch(() => {
+      //   //TODO Add an error display
+      //   console.log("update rejected")
+      // });
     }
   }
 
@@ -183,7 +180,7 @@ export class ProjectService {
   }
 
 
-  initializeProjects() {
+  refreshProjectList() {
     this.getAllProjects().forEach(project => {
       this.projects = new BehaviorSubject<Array<Project>>(project);
       // this.sort();
@@ -224,4 +221,12 @@ export class ProjectService {
     this.http.put(`${projectsUrl}/${this.selectedProject.id}/remove_member/${userId}`, httpOptions).toPromise()
       .then(() => this.refreshUserAccountList())
   }
+
+  delete(project: Project) {
+    const url = project._links["delete"];
+    this.http.delete(url["href"], httpOptions).subscribe((response) => {
+      return response as Project;
+    });
+  }
+
 }

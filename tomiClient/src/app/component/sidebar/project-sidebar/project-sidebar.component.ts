@@ -15,11 +15,11 @@ export class ProjectSidebarComponent implements OnInit {
   constructor(private projectsPanel: ProjectsPanelComponent, public projectService: ProjectService) { }
 
   ngOnInit() {
-    this.projectService.initializeProjects();
+    this.projectService.refreshProjectList();
   }
 
   displayBlankProject() {
-    this.projectService.setSelected(null);
+    this.projectService.setSelected(new Project());
     this.projectService.userAccountList = new BehaviorSubject<Array<UserAccount>>([]);
     this.projectsPanel.subPanelDisplay = "manageProject";
   }
