@@ -39,7 +39,8 @@
         <span *ngIf="entry.project">
           <mat-select placeholder="Project" [(ngModel)]="entry.project.id" #projectInput>
           <mat-option value="-1">None</mat-option>
-          <mat-option *ngFor="let project of (projects |orderBy: 'projectName')" [value]="project.id">
+            <!--|orderBy: 'projectName'-->
+          <mat-option *ngFor="let project of (projects )" [value]="project.id">
             {{project.projectName}}
           </mat-option>
         </mat-select>
@@ -47,7 +48,8 @@
           <span *ngIf="!entry.project">
           <mat-select placeholder="Project" #projectInput>
           <mat-option value="-1">None</mat-option>
-          <mat-option *ngFor="let project of (projects |orderBy: 'projectName')" [value]="project.id">
+            <!--|orderBy: 'projectName'-->
+          <mat-option *ngFor="let project of (projects)" [value]="project.id">
             {{project.projectName}}
           </mat-option>
         </mat-select>
@@ -58,7 +60,8 @@
       <span *ngIf="entry.task">
         <mat-select placeholder="Task" [(ngModel)]="this.entry.task.id" #taskInput>
         <mat-option value="-1">None</mat-option>
-        <mat-option *ngFor="let task of (tasks |orderBy: 'name')" [value]="task.id">
+          <!--|orderBy: 'name'-->
+        <mat-option *ngFor="let task of (tasks )" [value]="task.id">
           {{task.name}}
         </mat-option>
       </mat-select>
@@ -67,7 +70,8 @@
           <span *ngIf="!entry.task">
         <mat-select placeholder="Task" #taskInput>
         <mat-option value="-1">None</mat-option>
-        <mat-option *ngFor="let task of (tasks |orderBy: 'name')" [value]="task.id">
+          <!--|orderBy: 'name'-->
+        <mat-option *ngFor="let task of (tasks )" [value]="task.id">
           {{task.name}}
         </mat-option>
       </mat-select>
@@ -79,7 +83,8 @@
       <span *ngIf="entry.unitType">
         <mat-select placeholder="Unit Type" [(ngModel)]="this.entry.unitType.id" #unitTypeInput>
         <mat-option value="-1">None</mat-option>
-        <mat-option *ngFor="let unitType of (unitTypes |orderBy: 'name')" [value]="unitType.id">
+          <!--|orderBy: 'name'-->
+        <mat-option *ngFor="let unitType of (unitTypes )" [value]="unitType.id">
           {{unitType.name}}
         </mat-option>
       </mat-select>
@@ -87,7 +92,8 @@
           <span *ngIf="!entry.unitType">
         <mat-select placeholder="Unit Type" #unitTypeInput>
         <mat-option value="-1">None</mat-option>
-        <mat-option *ngFor="let unitType of (unitTypes |orderBy: 'name')" [value]="unitType.id">
+          <!--|orderBy: 'name'-->
+        <mat-option *ngFor="let unitType of (unitTypes )" [value]="unitType.id">
           {{unitType.name}}
         </mat-option>
       </mat-select>

@@ -15,8 +15,8 @@ export class Project{
   id: string;
   /** The Client this Project is for.*/
   client: Client;
-  /** The UserAccount managing this Project.*/
-  projectManager: UserAccount;
+  /** The ID of the UserAccount managing this Project.*/
+  projectManagerId: number;
   /** The name of this Project.*/
   projectName: string;
   /** The budget assigned to this Project multiplied by 100 to remove decimals.*/
@@ -34,7 +34,7 @@ export class Project{
   constructor(){
     this.id = "";
     this.client = new Client();
-    this.projectManager = new UserAccount();
+    this.projectManagerId = -1;
     this.projectName = "";
     this.budget = 0;
     this.billableRate = 0;

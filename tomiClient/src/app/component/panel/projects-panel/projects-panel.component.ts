@@ -3,23 +3,32 @@ import {Project} from "../../../model/project";
 import {ProjectService} from "../../../service/project.service";
 import {DatePipe} from '@angular/common';
 import {MatSnackBar} from "@angular/material";
+import {BehaviorSubject} from "rxjs";
+import {UserAccount} from "../../../model/userAccount";
 
 @Component({
   selector: 'app-projects-panel',
   templateUrl: './projects-panel.component.html',
-  styleUrls: ['./projects-panel.component.css']
+  styleUrls: ['./projects-panel.component.scss']
 })
+
+
 export class ProjectsPanelComponent implements OnInit {
 
-  constructor(private projectService: ProjectService, private datePipe: DatePipe, public snackBar:MatSnackBar) {
+  constructor(private projectService: ProjectService,
+              private datePipe: DatePipe,
+              public snackBar:MatSnackBar) {
   }
+
+  /** tracks which sub-panel: new project panel, existing project panel, or report panel will be displayed */
+  subPanelDisplay: string = "manageProject";
+
 
   project: Project;
 
   ngOnInit() {
-    this.projectService.getProjectById('JM1001').subscribe((data) => {
-      this.project = data;
-    });
+    this.projectService.setSelected(null);
+    this.projectService.userAccountList = new BehaviorSubject<Array<UserAccount>>([]);
   }
 
   /**
@@ -48,5 +57,9 @@ export class ProjectsPanelComponent implements OnInit {
         let errorMessage = 'Something went wrong when updating retrieving the data dump report.';
         this.snackBar.open(errorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
       });
+
+    this.subPanelDisplay = "productivityReport";
   }
+
+
 }
