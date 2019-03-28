@@ -27,7 +27,7 @@ public class ReportRepository {
 	public List<BillableHoursReportLine> generateBillableHoursReport() {
 		return this.entityManager.createQuery(
 			"SELECT NEW " +
-				"ca.projectTOMi.tomi.viewModel.BillableHoursReportLine( " +
+				"ca.projectTOMi.tomi.viewModel.BillableHoursReportLine(" +
 				"SUM( CASE WHEN (e.task.billable = true ) THEN e.totalHours ELSE 0 END), " +
 				"SUM( CASE WHEN (e.task.billable = false ) THEN e.totalHours ELSE 0 END) , p) " +
 				"FROM Timesheet t " +

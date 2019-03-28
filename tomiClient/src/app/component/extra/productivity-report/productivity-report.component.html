@@ -1,5 +1,6 @@
 <div *ngIf="this.teamMemberTimesheetService?.selectedMemberReport">
-  <h2 *ngIf="this.teamMemberTimesheetService.selectedMember">{{this.teamMemberTimesheetService.selectedMember.firstName}} {{this.teamMemberTimesheetService.selectedMember.lastName}}
+  <h2 *ngIf="this.teamMemberTimesheetService.selectedMember">
+    {{this.teamMemberTimesheetService.selectedMember.firstName}} {{this.teamMemberTimesheetService.selectedMember.lastName}}
     Productivity Report
   </h2>
     <table mat-table [dataSource]="this.teamMemberTimesheetService.selectedMemberReport" class="mat-elevation-z8">

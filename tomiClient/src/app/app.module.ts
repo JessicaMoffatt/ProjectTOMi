@@ -31,6 +31,7 @@ import {MatToolbarModule} from "@angular/material";
 import {MatCheckboxModule } from '@angular/material/checkbox';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatChipsModule} from "@angular/material";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatButtonToggleModule} from "@angular/material";
@@ -77,6 +78,7 @@ import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-t
 import { EditUnitTypeComponent } from './component/panel/edit-unit-type/edit-unit-type.component';
 import { ProductivityReportComponent } from './component/extra/productivity-report/productivity-report.component';
 import { TeamProductivityReportComponent } from './component/extra/team-productivity-report/team-productivity-report.component';
+import { BillableHourReportComponent } from './component/extra/billable-hour-report/billable-hour-report.component';
 import { DeleteTaskModal } from "./component/panel/edit-task/edit-task.component";
 import {AddTaskComponent} from "./component/modal/add-task/add-task.component";
 import {DeleteUnitTypeModal} from "./component/panel/edit-unit-type/edit-unit-type.component";
@@ -95,6 +97,7 @@ import {UserAccountService} from "./service/user-account.service";
 import { AddProjectMemberComponent } from './component/modal/add-project-member/add-project-member.component';
 import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/project-sidebar.component';
 import { AddProjectExpenseComponent } from './component/modal/add-project-expense/add-project-expense.component';
+import { DataDumpReportComponent } from './component/extra/data-dump-report/data-dump-report.component';
 
 //Other stuff
 import {DoAFilter} from "./component/panel/user-account/user-account.component";
@@ -144,6 +147,7 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     DeleteUserAccountModal,
     ProductivityReportComponent,
     TeamProductivityReportComponent,
+    BillableHourReportComponent,
     DeleteTaskModal,
     AddTaskComponent,
     DeleteUnitTypeModal,
@@ -154,6 +158,7 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     AddProjectMemberComponent,
     ProjectSidebarComponent,
     AddProjectExpenseComponent,
+    DataDumpReportComponent,
     DoAFilter
   ],
   imports: [
@@ -198,6 +203,7 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     MatChipsModule,
     MatTabsModule,
     MatTableModule,
+    MatProgressBarModule,
     MatDatepickerModule,
     DragDropModule,
     MatButtonToggleModule,
@@ -274,6 +280,7 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     MatSidenavModule,
     MatTabsModule,
     MatTableModule,
+    MatProgressBarModule,
     DoAFilter
   ]
 })
