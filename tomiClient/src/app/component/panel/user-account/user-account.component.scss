@@ -1,7 +1,7 @@
 /**
  * @author Karol Talbot
  */
-@import "../../../../variables";
+@import "~src/variables";
 
 .content_pane {
   height: 92vh;
@@ -44,4 +44,9 @@
   i {
     color: white;
   }
+}
+
+h2{
+  text-align: center;
+  color:$blue;
 }

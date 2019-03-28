@@ -1,15 +1,17 @@
 <!--
 @author Iliya Kiritchkov
+@author Karol Talbot
 @version 1.1
 -->
 <div class="content_pane">
+  <h2>Manage User Accounts</h2>
   <div class="search_bar"><input #user_account_search id="user_account_search" [ngClass]="'input_search'"
                                  placeholder="search" (keyup)="0"></div>
   <div class="accordion">
     <div id="left">&nbsp;</div>
     <div id="center">
       <mat-accordion>
-        <ng-container *ngFor="let userAccount of userAccountService.userSubject | async">
+        <ng-container *ngFor="let userAccount of userAccountService.userSubject | async | filterByName:user_account_search">
           <app-edit-user id="edit_user_account{{userAccount.id}}" #editUserComponent
                          (saveRequested)="save($event)"
                          (deleteRequested)="delete($event)"
