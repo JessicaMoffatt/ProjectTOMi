@@ -16,7 +16,7 @@ import {teamUrl} from "../configuration/domainConfiguration";
 })
 export class TeamSidebarService {
 
-  /** The team selected in the sidebar.*/
+  /** The team selectedExpense in the sidebar.*/
   selectedTeam: Team;
 
   /** List of all the teams.*/

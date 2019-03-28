@@ -23,16 +23,16 @@ public class TimesheetAuthService {
 	@Autowired
 	public TimesheetAuthService(final TimesheetAuthRepository timesheetAuthRepository,
 	                            final UserAccountRepository userAccountRepository,
-	                            final TeamRepository teamRepository){
+	                            final TeamRepository teamRepository) {
 		this.timesheetAuthRepository = timesheetAuthRepository;
 		this.userAccountRepository = userAccountRepository;
 		this.teamRepository = teamRepository;
 	}
 
-	public void setNewUserAccountPolicy(UserAccount newUserAccount){
+	public void setNewUserAccountPolicy(UserAccount newUserAccount) {
 
 		TimesheetAuthorizationPolicy authPolicy = new TimesheetAuthorizationPolicy();
-		for(TimesheetPermission t: TimesheetPermission.values()) {
+		for (TimesheetPermission t : TimesheetPermission.values()) {
 			authPolicy.setPermission(t);
 			authPolicy.setRequestingUser(newUserAccount);
 			authPolicy.setTimesheetOwner(newUserAccount);
@@ -40,9 +40,9 @@ public class TimesheetAuthService {
 		}
 	}
 
-	public void addMemberToTeam(final UserAccount newMember, Team team){
+	public void addMemberToTeam(final UserAccount newMember, Team team) {
 		team = this.teamRepository.findById(team.getId()).orElseThrow(TeamNotFoundException::new);
-		if(team.getTeamLead() != null) {
+		if (team.getTeamLead() != null) {
 			TimesheetAuthorizationPolicy authPolicy = new TimesheetAuthorizationPolicy();
 			authPolicy.setTimesheetOwner(newMember);
 			authPolicy.setRequestingUser(team.getTeamLead());
@@ -51,9 +51,9 @@ public class TimesheetAuthService {
 		}
 	}
 
-	public void removeMemberFromTeam(UserAccount oldMember, Team team){
+	public void removeMemberFromTeam(UserAccount oldMember, Team team) {
 		team = this.teamRepository.findById(team.getId()).orElseThrow(TeamNotFoundException::new);
-		if(team.getTeamLead() != null && !oldMember.equals(team.getTeamLead())) {
+		if (team.getTeamLead() != null && !oldMember.equals(team.getTeamLead())) {
 			TimesheetAuthorizationPolicy authPolicy = new TimesheetAuthorizationPolicy();
 			authPolicy.setTimesheetOwner(oldMember);
 			authPolicy.setRequestingUser(team.getTeamLead());
@@ -62,23 +62,23 @@ public class TimesheetAuthService {
 		}
 	}
 
-	public void setTeamLead(UserAccount newTeamLead, Team team){
+	public void setTeamLead(UserAccount newTeamLead, Team team) {
 		final TimesheetAuthorizationPolicy authPolicy = new TimesheetAuthorizationPolicy();
 		final List<UserAccount> teamMembers = this.userAccountRepository.getUserAccountsByTeamOrderById(team);
 		authPolicy.setPermission(TimesheetPermission.READ);
 		authPolicy.setRequestingUser(newTeamLead);
-		for(final UserAccount member: teamMembers){
+		for (final UserAccount member : teamMembers) {
 			authPolicy.setTimesheetOwner(member);
 			this.timesheetAuthRepository.save(authPolicy);
 		}
 	}
 
-	public void removeTeamLead(UserAccount oldTeamLead, Team team){
+	public void removeTeamLead(UserAccount oldTeamLead, Team team) {
 		final TimesheetAuthorizationPolicy authPolicy = new TimesheetAuthorizationPolicy();
 		final List<UserAccount> teamMembers = this.userAccountRepository.getUserAccountsByTeamOrderById(team);
 		authPolicy.setRequestingUser(oldTeamLead);
 		authPolicy.setPermission(TimesheetPermission.READ);
-		for(final UserAccount member: teamMembers) {
+		for (final UserAccount member : teamMembers) {
 			if (!member.equals(oldTeamLead)) {
 				authPolicy.setTimesheetOwner(member);
 				this.timesheetAuthRepository.delete(authPolicy);

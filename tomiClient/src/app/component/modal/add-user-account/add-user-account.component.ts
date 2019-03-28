@@ -6,9 +6,10 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/form
 import {ErrorStateMatcher, MatDialogRef} from "@angular/material";
 
 /**
- * AddUserAccountComponent is a modal form used to add a new UserAccount to the database.
+ * AddTaskComponent is a modal form used to add a new UserAccount to the database.
  *
  * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1.1
  */
 @Component({
@@ -36,19 +37,10 @@ export class AddUserAccountComponent implements OnInit {
     Validators.email
   ]);
 
-  /** Validations for the salaried rate. */
-  userAccountRateControl = new FormControl('', [
-    Validators.required,
-    Validators.min(0),
-    Validators.pattern(/^[0-9]{1,3}(?:,?[0-9]{3})*\.?[0-9]{0,2}$/)
-  ]);
-
   /** Invalid name error detection. */
   userAccountNameMatcher = new MyErrorStateMatcher();
   /** Invalid email error detection. */
   userAccountEmailMatcher = new MyErrorStateMatcher();
-  /** Invalid salaried rate error detection. */
-  userAccountRateMatcher = new MyErrorStateMatcher();
 
   /** The input field for the UserAccount's first name. */
   @ViewChild('addUserFirstName') addUserAccountFirstName;
@@ -93,12 +85,11 @@ export class AddUserAccountComponent implements OnInit {
    * Adds a new UserAccount. Passes the request to save the new UserAccount to the UserAccountService.
    */
   addUserAccount() {
-    if (this.userAccountFirstNameControl.valid && this.userAccountLastNameControl.valid && this.userAccountEmailControl.valid && this.userAccountRateControl.valid) {
+    if (this.userAccountFirstNameControl.valid && this.userAccountLastNameControl.valid && this.userAccountEmailControl.valid) {
       let userAccountToAdd = new UserAccount();
       userAccountToAdd.firstName = this.addUserAccountFirstName.nativeElement.value;
       userAccountToAdd.lastName = this.addUserAccountLastName.nativeElement.value;
       userAccountToAdd.email = this.addUserAccountEmail.nativeElement.value;
-      userAccountToAdd.salariedRate = Number(this.addUserAccountSalariedRate.nativeElement.value * 100);
 
       if (this.addUserAccountTeamId.selected) {
         userAccountToAdd.teamId = this.addUserAccountTeamId.selected.value;

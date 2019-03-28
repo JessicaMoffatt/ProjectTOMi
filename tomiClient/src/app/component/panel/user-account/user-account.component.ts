@@ -2,7 +2,14 @@ import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angul
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
 import {Observable, Subject, Subscription} from "rxjs";
+import {AddUserAccountComponent} from "../../modal/add-user-account/add-user-account.component";
+import {MatDialog} from "@angular/material";
+import {TeamService} from "../../../service/team.service";
 
+/**
+ * @author Karol Talbot
+ * @author Iliya Kiritchkov
+ */
 @Component({
   selector: 'app-user-account',
   templateUrl: './user-account.component.html',
@@ -10,26 +17,20 @@ import {Observable, Subject, Subscription} from "rxjs";
 })
 export class UserAccountComponent implements OnInit, OnDestroy {
 
-  public selectedEventSubject: Subject<UserAccount> = new Subject<UserAccount>();
-
-  private userSelectedSubscription: Subscription;
-
   private userAccount: UserAccount;
 
   @Input() userSelectedEvent: Observable<UserAccount>;
 
   @ViewChild('editUserComponent') editUserComponent : ElementRef;
 
-  constructor(public userAccountService: UserAccountService) { }
+  constructor(private dialog: MatDialog, public userAccountService: UserAccountService, private teamService:TeamService) { }
 
   ngOnInit() {
-    this.userSelectedSubscription = this.userSelectedEvent.subscribe((userSelected: UserAccount) => {
-      this.selectedEventSubject.next(userSelected);
-    });
+    this.teamService.refreshTeams();
+    this.userAccountService.initializeUserAccounts();
   }
 
   ngOnDestroy() {
-    this.userSelectedSubscription.unsubscribe();
   }
 
   /**
@@ -46,5 +47,15 @@ export class UserAccountComponent implements OnInit, OnDestroy {
    */
   save(userAccount: UserAccount) {
     this.userAccountService.save(userAccount);
+  }
+
+  /**
+   * Displays a Modal component for adding a new UserAccount.
+   */
+  openDialog(): void {
+    this.dialog.open(AddUserAccountComponent, {
+      width: "70vw",
+      height: "70vh"
+    });
   }
 }

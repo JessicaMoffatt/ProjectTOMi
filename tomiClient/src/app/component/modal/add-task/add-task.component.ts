@@ -1,69 +1,56 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {MatDialogRef} from "@angular/material";
 import {Task} from "../../../model/task";
-import {TaskPanelService} from "../../../service/task-panel.service";
+import {TaskService} from "../../../service/task.service";
 
 /**
- * AddTaskComponent is used to facilitate communication between the view and front end services.
- * The purpose of a task is to represent which stage a 'unit-type' is in ie. Alpha, Beta but
- * it can have other uses as well.  This form allows the user to assign a new name to
- * a created component and assign a billable status, if desired.  The user has the option to cancel
- * and changes are only persisted on selection of the 'save' button.  The name entered cannot be empty
- * and must not match the name of an already existing task.
+ * AddTaskComponent is a modal form used to add a new Task to the back end.
  *
- * Note: the addTask method has 2 alert boxes, which will require styling
- *
- * @author James Andrade
- * @version 1.0
+ * @author Karol Talbot
+ * @version 2.0
  */
-
 @Component({
   selector: 'app-add-task',
-  templateUrl: 'add-task.component.html',
-  styleUrls: ['./add-task.component.css', '../../../app.component.scss']
+  templateUrl: './add-task.component.html',
+  styleUrls: ['./add-task.component.scss']
 })
-
 export class AddTaskComponent implements OnInit {
 
-  constructor(public taskPanelService: TaskPanelService) {
+
+  taskNameControl = new FormControl('', [
+    Validators.required
+  ]);
+
+
+  @ViewChild('addTaskName') addTaskName;
+
+  /** The input field for the UserAccount's Program Director status. */
+  @ViewChild('addTaskBillable') addTaskBillable;
+
+  /** The ngForm for this component */
+  @ViewChild('addTaskForm') addTaskForm;
+
+  constructor(public dialogRef: MatDialogRef<AddTaskComponent>, private taskService:TaskService) { }
+
+  /**
+   * Closes the modal component.
+    */
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
   ngOnInit() {
+
   }
 
-  /**
-   * Adds a new task. Passes on the request to save the new task to the task service.
-   */
   addTask() {
-    let task = new Task();
-    task.name = (<HTMLInputElement>document.getElementById("new_task_name")).value;
-    task.billable = (<HTMLInputElement>document.getElementById("new_task_is_billable")).checked;
-
-    // validate data
-    let nameAvailable: boolean = true;
-    if (task.name === '') {
-      alert("The Name of a New Task cannot be empty");
-      nameAvailable = false;
+    if (this.taskNameControl.valid) {
+      let taskToAdd = new Task();
+      taskToAdd.name = this.addTaskName.nativeElement.value;
+      taskToAdd.billable = this.addTaskBillable.checked;
+      this.taskService.save(taskToAdd);
+      this.dialogRef.close();
     }
-
-    for (let t of this.taskPanelService.tasks) {
-      if (task.name === t.name) {
-        alert("Task name: " + task.name + " is already taken.");
-        nameAvailable = false;
-      }
-    }
-
-    // save if changes are valid
-    if (nameAvailable === true) {
-      this.taskPanelService.save(task).then(()=>{
-        this.taskPanelService.destroyAddTaskComponent();
-      });
-    }
-  }
-
-  /**
-   * Destroys the dynamically created add task component.
-   */
-  destroyAddTaskComponent() {
-    this.taskPanelService.destroyAddTaskComponent();
   }
 }

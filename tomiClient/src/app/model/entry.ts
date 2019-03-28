@@ -16,7 +16,7 @@ export class Entry{
   id: number;
   /** The project this entry is for.*/
   project: Project;
-  /** The task this entry is for.*/
+  /** The taskSubject this entry is for.*/
   task: Task;
   /** The unit type corresponding to the component worked on for this entry.*/
   unitType: UnitType;
@@ -44,8 +44,6 @@ export class Entry{
   totalHours: number;
   /** The quantity of the unit type's unit that was produced.*/
   quantity: number;
-  /** If this Entry is active.*/
-  active: boolean;
   /** The list of links used for communicating with the back end.*/
   _links: [];
 
@@ -66,7 +64,6 @@ export class Entry{
     this.sundayHours = 0;
     this.totalHours = 0;
     this.quantity = 0;
-    this.active = true;
     this._links = [];
   }
 }

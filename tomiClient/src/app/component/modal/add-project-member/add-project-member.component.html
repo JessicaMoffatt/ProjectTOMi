@@ -1,0 +1,30 @@
+<!--
+  @author James
+  @version 1.0
+-->
+
+<h1 mat-dialog-title>Add Member to Project</h1>
+<div mat-dialog-content>
+  <form>
+
+    <mat-form-field>
+      <mat-select id="new_project_member"
+                  placeholder="New Project Member"
+                  aria-label="New Project Member"
+                  [(ngModel)]="selectedUserId"
+        name="user">
+        <mat-option *ngFor="let u of this.availUsersList | async"
+          [value]="u.id">
+          {{u.firstName}} {{u.lastName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-raised-button color="primary"
+              [disabled]="selectedUserId == undefined"
+              (click)="addUserAccount()">ADD</button>
+      <button mat-raised-button color="accent" (click)="cancel()">CANCEL</button>
+    </div>
+  </form>
+</div>

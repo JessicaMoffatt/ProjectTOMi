@@ -1,0 +1,17 @@
+<!--
+  @author Karol Talbot
+  @version 1.1
+-->
+
+<h1 mat-dialog-title>Add New Team</h1>
+<div mat-dialog-content class="dialog_pane">
+  <form #addTeamForm="ngForm">
+    <mat-form-field id="team">
+      <input matInput #addTeamName placeholder="Team Name" [formControl]="teamNameControl">
+    </mat-form-field>
+  </form>
+</div>
+<div id="buttons" mat-dialog-actions align="end">
+  <button mat-raised-button class="manage_save_btn" (click)="addTeam()">Add</button>
+  <button mat-raised-button class="manage_cancel_btn" (click)="onNoClick()">Cancel</button>
+</div>

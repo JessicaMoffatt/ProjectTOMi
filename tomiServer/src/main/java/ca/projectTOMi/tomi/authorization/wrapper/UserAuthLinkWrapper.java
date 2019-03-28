@@ -4,8 +4,9 @@ import ca.projectTOMi.tomi.authorization.manager.UserAuthManager;
 import lombok.Getter;
 
 /**
- * @author Karol Talbot
  * @param <E>
+ *
+ * @author Karol Talbot
  */
 @Getter
 public final class UserAuthLinkWrapper<E> {

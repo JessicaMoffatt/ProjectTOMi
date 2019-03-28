@@ -1,6 +1,8 @@
 package ca.projectTOMi.tomi.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import ca.projectTOMi.tomi.exception.ProjectManagerException;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
@@ -119,37 +121,38 @@ public final class ProjectService {
 		return this.repository.save(project);
 	}
 
-	public Project createProject(final Project project){
+	public Project createProject(final Project project) {
+		project.setActive(true);
+		project.setProjectMembers(new HashSet<>());
 		final Project savedProject = this.repository.save(project);
 		this.projectAuthService.newProjectPolicies(savedProject);
 		return savedProject;
 	}
 
-	public List<Project> getProjectByUserAccount(final Long userAccountId) {
+	public List<Project> getProjectsByUserAccount(final Long userAccountId) {
 		final UserAccount userAccount = this.userAccountService.getUserAccount(userAccountId);
 		return this.repository.getAllByActiveTrueAndProjectMembersContainsOrderById(userAccount);
 	}
 
-	public void addTeamMember(final String projectId, final Long userAccountId){
+	public void addTeamMember(final String projectId, final Long userAccountId) {
 		final Project project = this.repository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 		final UserAccount userAccount = this.userAccountService.getUserAccount(userAccountId);
-
-		if(!project.getProjectMembers().contains(userAccount)) {
+		if (!project.getProjectMembers().contains(userAccount)) {
 			project.getProjectMembers().add(userAccount);
 			this.projectAuthService.addProjectMember(userAccount, project);
 		}
 		this.repository.save(project);
 	}
 
-	public void removeTeamMember(final String projectId, final Long userAccountId){
+	public void removeTeamMember(final String projectId, final Long userAccountId) {
 		final Project project = this.repository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 		final UserAccount userAccount = this.userAccountService.getUserAccount(userAccountId);
 
-		if(userAccount.equals(project.getProjectManager())){
+		if (userAccount.equals(project.getProjectManager())) {
 			throw new ProjectManagerException();
 		}
 
-		if(project.getProjectMembers().contains(userAccount)) {
+		if (project.getProjectMembers().contains(userAccount)) {
 			project.getProjectMembers().remove(userAccount);
 		}
 		this.repository.save(project);

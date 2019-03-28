@@ -2,8 +2,8 @@ package ca.projectTOMi.tomi.authorization.manager;
 
 import java.util.List;
 /**
+ *
  * @author Karol Talbot
- * @param <E>
  */
 public interface AuthorizationFilter<E> {
 	/**

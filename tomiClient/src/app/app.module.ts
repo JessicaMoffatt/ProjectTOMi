@@ -1,24 +1,26 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {InjectionToken, NgModule} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-
-import {AppRoutingModule} from './app-routing.module';
-
-import { DatePipe } from '@angular/common';
+import {DatePipe} from '@angular/common';
 
 import {AppComponent} from './app.component';
+import {AccessGuard} from "./access-guard";
+import {AppRoutingModule} from './app-routing.module';
+import {AddHeaderInterceptor} from "./add-header-interceptor";
 
 //Material Imports
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   DateAdapter,
+  MatAutocompleteModule,
   MAT_DATE_LOCALE,
   MatButtonModule,
   MatDatepickerModule, MatExpansionModule, MatGridListModule, MatIconModule,
-  MatMenuModule,
-  MatNativeDateModule, MatSidenavModule, MatSnackBarModule, MatTableModule
+  MatMenuModule, MatTableModule,
+  MatNativeDateModule, MatSidenavModule, MatSnackBarModule
 } from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
@@ -27,44 +29,34 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatToolbarModule} from "@angular/material";
 import {MatCheckboxModule } from '@angular/material/checkbox';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatChipsModule} from "@angular/material";
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import {MatButtonToggleModule} from "@angular/material";
+import {MatPaginatorModule} from "@angular/material";
 
-import {AddTeamComponent, TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
-import {TeamSidebarService} from "./service/team-sidebar.service";
-import {OrderModule} from "ngx-order-pipe";
-
+// Component Imports
+import {TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
 import {
   DeleteEntryModalComponent, SubmitTimesheetModalComponent,
   TimesheetComponent
 } from './component/panel/timesheet/timesheet.component';
 import {EntryComponent} from './component/panel/entry/entry.component';
-
 import {AddTeamMemberComponent, TeamComponent} from './component/panel/team/team.component';
 import {TopNavBarComponent} from "./component/panel/top-nav-bar/top-nav-bar.component";
 import {ApprovePanelComponent} from "./component/panel/approve-panel/approve-panel.component";
-import {TimesheetPanelComponent} from "./component/panel/timesheet-panel/timesheet-panel.component";
 import {TeamPanelComponent} from "./component/panel/team-panel/team-panel.component";
 import {ProjectsPanelComponent} from "./component/panel/projects-panel/projects-panel.component";
 import {ManageTeamsPanelComponent} from "./component/panel/manage-teams-panel/manage-teams-panel.component";
-import {UnitTypesPanelComponent} from "./component/panel/unit-types-panel/unit-types-panel.component";
+import {UnitTypePanelComponent} from "./component/panel/unit-types-panel/unit-type-panel.component";
 import {TasksPanelComponent} from "./component/panel/tasks-panel/tasks-panel.component";
-import {UserAccountService} from "./service/user-account.service";
 import {UserAccountComponent} from './component/panel/user-account/user-account.component';
-import {UserAccountSidebarComponent} from "./component/sidebar/user-account-sidebar/user-account-sidebar.component";
-import {UserAccountPanelComponent} from "./component/panel/user-account-panel/user-account-panel.component";
-import {UserAccountSidebarService} from "./service/user-account-sidebar-service";
 import {AddUserAccountComponent} from './component/modal/add-user-account/add-user-account.component';
 import {DeleteUserAccountModal, EditUserComponent} from './component/panel/edit-user/edit-user.component';
-import {ViewUserComponent} from './component/panel/view-user/view-user.component';
-import {AddHeaderInterceptor} from "./AddHeaderInterceptor";
-import {TimesheetService} from "./service/timesheet.service";
-import {AddTaskComponent} from './component/modal/add-task/add-task.component';
-import {TaskPanelService} from "./service/task-panel.service";
-import {EditTaskComponent} from './component/modal/edit-task/edit-task.component';
-import {TeamService} from "./service/team.service";
-import {SigninComponent} from './component/panel/signin-panel/signin.component';
-import {SignInService} from "./service/sign-in.service";
+import {EditTaskComponent} from './component/panel/edit-task/edit-task.component';
+import {SignInComponent} from './component/panel/sign-in-panel/sign-in.component';
 import {EntryUneditableComponent} from './component/panel/entry-uneditable/entry-uneditable.component';
 import {CustomDateAdapter, DatePickerComponent} from './component/extra/date-picker/date-picker.component';
 import {TeamMemberTimesheetComponent} from './component/panel/team-member-timesheet/team-member-timesheet.component';
@@ -74,45 +66,63 @@ import {
   SubmitApprovalModalComponent
 } from './component/panel/project-entries/project-entries.component';
 import {ProjectEntriesSidebarComponent} from './component/sidebar/project-entries-sidebar/project-entries-sidebar.component';
-import {ProjectEntriesService} from "./service/project-entries.service";
 import {EntryApproveComponent} from './component/panel/entry-approve/entry-approve.component';
 import {BudgetReportComponent} from './component/extra/budget-report/budget-report.component';
-import { UnitTypeSidebarComponent } from './component/sidebar/unit-type-sidebar/unit-type-sidebar.component';
+import {ProjectService} from "./service/project.service";
+import { ProjectDetailComponent } from './component/panel/projects-panel/project-detail/project-detail.component';
+import {MatFormFieldModule} from "@angular/material";
+import { ExpenseListComponent } from './component/panel/projects-panel/expense-list/expense-list.component';
+import { ProjectMemberListComponent } from './component/panel/projects-panel/project-member-list/project-member-list.component';
 import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
-import { EditUnitTypeComponent } from './component/modal/edit-unit-type/edit-unit-type.component';
-import {AccessGuard} from "./AccessGuard";
+import { EditUnitTypeComponent } from './component/panel/edit-unit-type/edit-unit-type.component';
 import { ProductivityReportComponent } from './component/extra/productivity-report/productivity-report.component';
 import { TeamProductivityReportComponent } from './component/extra/team-productivity-report/team-productivity-report.component';
 import { BillableHourReportComponent } from './component/extra/billable-hour-report/billable-hour-report.component';
+import { DeleteTaskModal } from "./component/panel/edit-task/edit-task.component";
+import {AddTaskComponent} from "./component/modal/add-task/add-task.component";
+import {DeleteUnitTypeModal} from "./component/panel/edit-unit-type/edit-unit-type.component";
+import {AddTeamComponent} from "./component/modal/add-team/add-team.component";
+
+//Service Imports
+import {ProjectEntriesService} from "./service/project-entries.service";
+import {SignInService} from "./service/sign-in.service";
+import {TaskService} from "./service/task.service";
+import {TeamService} from "./service/team.service";
+import {TeamService2} from "./service/team2.service";
+import {TeamSidebarService} from "./service/team-sidebar.service";
+import {TimesheetService} from "./service/timesheet.service";
+import {UserAccountService} from "./service/user-account.service";
+
+import { AddProjectMemberComponent } from './component/modal/add-project-member/add-project-member.component';
+import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/project-sidebar.component';
+import { AddProjectExpenseComponent } from './component/modal/add-project-expense/add-project-expense.component';
 
 @NgModule({
   declarations: [
+    AddProjectMemberComponent,
+    EditUserComponent,
+    AddUserAccountComponent,
     AppComponent,
     TopNavBarComponent,
     ApprovePanelComponent,
-    TimesheetPanelComponent,
     TeamPanelComponent,
     ProjectsPanelComponent,
     ManageTeamsPanelComponent,
-    UnitTypesPanelComponent,
+    UnitTypePanelComponent,
     TasksPanelComponent,
-    UserAccountPanelComponent,
     TimesheetComponent,
     EntryComponent,
     TeamComponent,
     TeamSidebarComponent,
-    AddTeamComponent,
     AddTeamMemberComponent,
     EntryUneditableComponent,
     AddTeamMemberComponent,
-    UserAccountSidebarComponent,
     UserAccountComponent,
     AddUserAccountComponent,
     EditUserComponent,
-    ViewUserComponent,
     DeleteEntryModalComponent,
     SubmitTimesheetModalComponent,
-    SigninComponent,
+    SignInComponent,
     DatePickerComponent,
     TeamMemberTimesheetComponent,
     TeamMemberSidebarComponent,
@@ -121,23 +131,49 @@ import { BillableHourReportComponent } from './component/extra/billable-hour-rep
     EntryApproveComponent,
     SubmitApprovalModalComponent,
     BudgetReportComponent,
-    UnitTypeSidebarComponent,
+    SubmitTimesheetModalComponent,
+    ProjectDetailComponent,
+    ExpenseListComponent,
+    ProjectMemberListComponent,
+    BudgetReportComponent,
     AddUnitTypeComponent,
     EditUnitTypeComponent,
     EditTaskComponent,
-    AddTaskComponent,
     DeleteUserAccountModal,
     ProductivityReportComponent,
     TeamProductivityReportComponent,
-    BillableHourReportComponent
+    BillableHourReportComponent,
+    DeleteTaskModal,
+    AddTaskComponent,
+    DeleteUnitTypeModal,
+    AddTeamComponent,
+    TeamProductivityReportComponent,
+    DeleteUserAccountModal,
+    EditTaskComponent,
+    AddProjectMemberComponent,
+    ProjectSidebarComponent,
+    AddProjectExpenseComponent
   ],
   imports: [
+    MatSidenavModule,
+    MatSnackBarModule,
+    MatGridListModule,
+    MatMenuModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatTableModule,
+    MatListModule,
+    MatButtonModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    OrderModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatListModule,
@@ -156,13 +192,20 @@ import { BillableHourReportComponent } from './component/extra/billable-hour-rep
     MatGridListModule,
     ReactiveFormsModule,
     MatSidenavModule,
+    MatSlideToggleModule,
+    MatChipsModule,
     MatTabsModule,
     MatTableModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDatepickerModule,
+    DragDropModule,
+    MatButtonToggleModule,
+    MatPaginatorModule
   ],
   entryComponents: [
+    AddProjectExpenseComponent,
+    AddProjectMemberComponent,
     EntryComponent,
-    AddTeamComponent,
     AddTeamMemberComponent,
     EntryUneditableComponent,
     AddUserAccountComponent,
@@ -170,27 +213,45 @@ import { BillableHourReportComponent } from './component/extra/billable-hour-rep
     SubmitTimesheetModalComponent,
     SubmitApprovalModalComponent,
     AddTeamMemberComponent,
-    AddTaskComponent,
     EditTaskComponent,
     AddUnitTypeComponent,
     EditUnitTypeComponent,
     DeleteUserAccountModal,
+    AddTaskComponent,
+    DeleteTaskModal,
+    DeleteUnitTypeModal,
+    AddTeamComponent
   ],
   providers: [
-    TeamSidebarService,
+    AccessGuard,
+    DatePipe,
+    ProjectEntriesService,
+    SignInService,
+    TaskService,
     TeamService,
+    TeamService2,
+    TeamSidebarService,
+    TimesheetService,
     UserAccountService,
-    UserAccountSidebarService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AddHeaderInterceptor,
       multi: true
     },
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: 'en-GB'
+    },
+    {
+      provide: DateAdapter,
+      useClass: CustomDateAdapter
+    },
+
     TeamService,
     TimesheetService,
     ProjectEntriesService,
     UserAccountService,
-    TaskPanelService,
+    ProjectService,
     SignInService,
     MatDatepickerModule,
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},

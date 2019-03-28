@@ -2,6 +2,7 @@ package ca.projectTOMi.tomi.authorization.manager;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import ca.projectTOMi.tomi.authorization.policy.UserAuthorizationPolicy;
 import ca.projectTOMi.tomi.authorization.permission.UserPermission;
 import ca.projectTOMi.tomi.model.UserAccount;
@@ -10,8 +11,8 @@ import ca.projectTOMi.tomi.model.UserAccount;
  * @author Karol Talbot
  */
 public final class UserAuthManager implements AuthManager<UserAuthorizationPolicy> {
-	private HashSet<UserAuthorizationPolicy> policies;
 	private final UserAccount user;
+	private HashSet<UserAuthorizationPolicy> policies;
 
 	public UserAuthManager(final UserAccount user) {
 		this.user = user;
@@ -128,5 +129,9 @@ public final class UserAuthManager implements AuthManager<UserAuthorizationPolic
 	@Override
 	public void loadUserPolicies(final List<UserAuthorizationPolicy> policies) {
 		this.policies = new HashSet<>(policies);
+	}
+
+	public Set<UserAuthorizationPolicy> getPolicies() {
+		return this.policies;
 	}
 }

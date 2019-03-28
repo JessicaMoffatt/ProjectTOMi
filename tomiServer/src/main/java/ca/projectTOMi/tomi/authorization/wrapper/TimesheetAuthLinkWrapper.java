@@ -3,8 +3,9 @@ package ca.projectTOMi.tomi.authorization.wrapper;
 import ca.projectTOMi.tomi.authorization.manager.TimesheetAuthManager;
 import lombok.Getter;
 /**
- * @author Karol Talbot
  * @param <E>
+ *
+ * @author Karol Talbot
  */
 @Getter
 public final class TimesheetAuthLinkWrapper<E> {

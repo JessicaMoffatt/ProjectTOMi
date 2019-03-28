@@ -1,13 +1,14 @@
-import {ComponentRef, Injectable, NgModule} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {ComponentRef, Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, JsonpClientBackend} from "@angular/common/http";
 import {Team} from "../model/team";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {UserAccount} from "../model/userAccount";
 import {TeamSidebarService} from "./team-sidebar.service";
 import {UserAccountService} from "./user-account.service";
 import {teamUrl} from "../configuration/domainConfiguration";
 import{userAccountUrl} from "../configuration/domainConfiguration";
+import {MatSnackBar} from "@angular/material";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -26,21 +27,22 @@ const httpOptions = {
 })
 export class TeamService {
 
-  /** List of all the team members of the selected team.*/
+  /** List of all the team members of the selectedExpense team.*/
   teamMembers: UserAccount[] = [];
+  teamSubject: BehaviorSubject<Array<Team>> = new BehaviorSubject<Array<Team>>([]);
 
   teamsObservable: Team[] = [];
 
   /** List of all the team members not currently on any teams.*/
   allFreeMembers: UserAccount[] = [];
 
-  /** The members selected from the list of team members.*/
+  /** The members selectedExpense from the list of team members.*/
   private selectedMembers: UserAccount[];
 
   /** Used to reference the add team member component created by clicking the Add Member button.*/
   ref: ComponentRef<any>;
 
-  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService, private userAccountService:UserAccountService) {
+  constructor(private http: HttpClient, private teamSideBarService: TeamSidebarService, private userAccountService:UserAccountService, private snackBar: MatSnackBar) {
     this.refreshTeams();
   }
 
@@ -54,15 +56,69 @@ export class TeamService {
       }));
   }
 
+  /**
+   * Refresh the list of teamSubject to keep up-to-date with the server.
+   */
   refreshTeams() {
-    this.GETAllTeams().subscribe((data)=>{
-      this.teamsObservable = data;
+    let freshTeams: Team[];
+
+    this.GETAllTeams().forEach(teams => {
+      freshTeams = teams;
+
+      //Replace all users with fresh user data
+      freshTeams.forEach(freshTeam => {
+        let index = this.teamSubject.getValue().findIndex((staleTeam) => {
+          return (staleTeam.id === freshTeam.id);
+        });
+
+        // If the id didn't match any of the existing ids then add it to the list.
+        if (index === -1) {
+          this.teamSubject.getValue().push(freshTeam);
+
+          // id was found and this Team will be replaced with fresh data.
+        } else {
+          this.teamSubject.getValue().splice(index, 1, freshTeam);
+        }
+      });
+
+      // Check for any deleted Teams
+      this.teamSubject.getValue().forEach(oldTeam => {
+        let index = freshTeams.findIndex( newTeam => {
+          return (newTeam.id === oldTeam.id);
+        });
+
+        if (index === -1) {
+          let indexToBeRemoved = this.teamSubject.getValue().findIndex((teamToBeRemoved) => {
+            return (teamToBeRemoved.id === oldTeam.id);
+          });
+
+          this.teamSubject.getValue().splice(indexToBeRemoved, 1);
+        }
+      });
+    }).then(() => {
+      this.sortTeams();
+    }).catch((error: any) => {
+      let getTeamErrorMessage = 'Something went wrong when updating the list of Teams.';
+      this.snackBar.open(getTeamErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
     });
   }
 
   /**
-   * Populates teamMembers with the members of the selected team.
-   * @param team The selected team.
+   * Sorts all teams in the teamSubject list by ascending team name.
+   */
+  sortTeams() {
+    this.teamSubject.getValue().sort((team1, team2) => {
+      let teamName1 = team1.teamName.toLowerCase();
+      let teamName2 = team2.teamName.toLowerCase();
+      if (teamName1 > teamName2) {return 1; }
+      if (teamName1 < teamName2) {return -1; }
+      return 0;
+    });
+  }
+
+  /**
+   * Populates teamMembers with the members of the selectedProject team.
+   * @param team The selectedProject team.
    */
   populateTeamMembers(team:Team){
     this.getTeamMembers(team).subscribe((data: Array<UserAccount>) => {
@@ -79,7 +135,7 @@ export class TeamService {
   }
 
   /**
-   * Removes a member from the selected team.
+   * Removes a member from the selectedProject team.
    */
   async removeMembers() {
     if(this.selectedMembers.length > 0){
@@ -146,39 +202,33 @@ export class TeamService {
       }));
   }
 
-  //TODO add error handling!!
-  /**
-   * Saves a specified team. If the team is new (ID of -1) an HTTP POST is performed, else a PUT is performed to update the existing team.
-   * @param team The team to update/create.
-   */
-  async save(team: Team) {
-
-    let tempTeam: Team = null;
+  async save (team: Team) {
     if (team.id === -1) {
-      await this.http.post<Team>(teamUrl, JSON.stringify(team), httpOptions).toPromise().then(response => {
-        tempTeam = response;
+      let savedTeam: Team = null;
+      await this.http.post<Team>(`${teamUrl}`, JSON.stringify(team), httpOptions).toPromise().then(response => {
+        this.refreshTeams();
+        savedTeam = response;
         return response;
-      }).catch((error: any) => {
-        //TODO
+      }).catch((error: Error) => {
+        let addTeamErrorMessage = 'Something went wrong when adding ' + team.teamName + '.';
+        this.snackBar.open(addTeamErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
+        throw error;
       });
+      return savedTeam;
     } else {
-      const url = team._links["update"];
-      this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).toPromise().then((response) => {
-        this.teamSideBarService.reloadTeams();
-
-        tempTeam = response;
-        return response;
-      }).catch((error: any) => {
-        //TODO
+      const url = team._links["self"];
+      await this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).toPromise().then(response => {
+        this.refreshTeams();
+      }).catch( (error: any) => {
+        let editTeamErrorMessage = 'Something went wrong when updating ' + team.teamName + '.';
+        this.snackBar.open(editTeamErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
       });
     }
-
-    return tempTeam;
   }
 
   /**
    * Cancels any changes made to the team name or the team lead.
-   * @param team The selected team.
+   * @param team The selectedExpense team.
    */
   cancel(team: Team): void {
     this.teamSideBarService.getTeamById(team.id).subscribe((data)=>{
@@ -186,26 +236,18 @@ export class TeamService {
     });
   }
 
-  //TODO add error handling!!
   /**
-   * Logically deletes the selected team (sets their active status to false.)
+   * Logically deletes the selectedExpense team (sets their active status to false.)
    *
    * @param team The team to be deleted.
    */
   delete(team: Team) {
-    let index = this.teamSideBarService.teams.findIndex((element) => {
-      return (element.id == team.id);
-    });
-
-    this.teamSideBarService.teams.splice(index, 1);
-
-    const url = team._links["delete"];
-
-    this.http.delete(url["href"], httpOptions).subscribe((response) => {
-      this.teamSideBarService.selectedTeam = null;
-      this.teamMembers = [];
-
-      return response as Team;
+    const url = team._links["self"];
+    this.http.delete(url["href"], httpOptions).toPromise().then( response => {
+      this.refreshTeams();
+    }).catch(error => {
+      let deleteTeamErrorMessage = 'Something went wrong when deleting ' + team.teamName + '.';
+      this.snackBar.open(deleteTeamErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
     });
   }
 }
