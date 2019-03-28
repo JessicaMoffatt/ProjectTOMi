@@ -36,6 +36,7 @@ import {MatChipsModule} from "@angular/material";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatButtonToggleModule} from "@angular/material";
 import {MatPaginatorModule} from "@angular/material";
+import {ScrollingModule} from "@angular/cdk/scrolling";
 
 // Component Imports
 import {TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
@@ -98,6 +99,9 @@ import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/pro
 import { AddProjectExpenseComponent } from './component/modal/add-project-expense/add-project-expense.component';
 import { DataDumpReportComponent } from './component/extra/data-dump-report/data-dump-report.component';
 
+//Other stuff
+import {DoAFilter} from "./component/panel/user-account/user-account.component";
+
 @NgModule({
   declarations: [
     AddProjectMemberComponent,
@@ -154,7 +158,8 @@ import { DataDumpReportComponent } from './component/extra/data-dump-report/data
     AddProjectMemberComponent,
     ProjectSidebarComponent,
     AddProjectExpenseComponent,
-    DataDumpReportComponent
+    DataDumpReportComponent,
+    DoAFilter
   ],
   imports: [
     MatSidenavModule,
@@ -202,7 +207,8 @@ import { DataDumpReportComponent } from './component/extra/data-dump-report/data
     MatDatepickerModule,
     DragDropModule,
     MatButtonToggleModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    ScrollingModule
   ],
   entryComponents: [
     AddProjectExpenseComponent,
@@ -274,7 +280,8 @@ import { DataDumpReportComponent } from './component/extra/data-dump-report/data
     MatSidenavModule,
     MatTabsModule,
     MatTableModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    DoAFilter
   ]
 })
 export class AppModule {
