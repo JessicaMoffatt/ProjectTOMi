@@ -22,7 +22,7 @@ export class ProductivityReportLine {
     if (first.date < second.date) {
       return -1;
     }
-    if (first.date > second.date)
+    else if (first.date > second.date)
     {
       return 1;
     }
@@ -33,7 +33,7 @@ export class ProductivityReportLine {
     if ((first.userAccount.firstName + first.userAccount.lastName) < (second.userAccount.firstName + second.userAccount.lastName)) {
       return -1;
     }
-    if ((first.userAccount.firstName + first.userAccount.lastName) > (second.userAccount.firstName + second.userAccount.lastName))
+    else if ((first.userAccount.firstName + first.userAccount.lastName) > (second.userAccount.firstName + second.userAccount.lastName))
     {
       return 1;
     }

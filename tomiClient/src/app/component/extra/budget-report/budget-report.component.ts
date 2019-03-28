@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Project} from "../../../model/project";
+import {ProjectService} from "../../../service/project.service";
 
 @Component({
   selector: 'app-budget-report',
@@ -9,11 +10,10 @@ import {Project} from "../../../model/project";
 export class BudgetReportComponent implements OnInit {
 
   @Input() project:Project;
-  constructor() { }
+  constructor(public projectService:ProjectService) { }
 
   ngOnInit() {
 
-}
-
+  }
 
 }

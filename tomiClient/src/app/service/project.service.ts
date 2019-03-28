@@ -9,6 +9,10 @@ import {Project} from "../model/project";
 import {projectsUrl} from "../configuration/domainConfiguration";
 import {dataDumpUrl} from "../configuration/domainConfiguration";
 import {userAccountUrl} from "../configuration/domainConfiguration";
+import {BudgetReport} from "../model/budgetReport";
+import {billableUrl} from "../configuration/domainConfiguration";
+import {BillableHoursReportLine} from "../model/billableHoursReportLine";
+import {ProductivityReportLine} from "../model/productivityReportLine";
 import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
 import {ExpenseService} from "./expense.service";
@@ -30,6 +34,16 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ProjectService {
+
+  selectedBudget: BudgetReport;
+
+  billableReport: BillableHoursReportLine[] = [];
+
+  /** The actual hours spent working on a project.*/
+  percentActual:number = 0;
+
+  /** The percent of budgeted hours remaining.*/
+  percentRemaining:number = 0;
 
   /** general expression used to check if projectId is valid */
   public readonly regExp: string = "[A-Z]{2}[0-9]{4}";
@@ -79,7 +93,8 @@ export class ProjectService {
 
   /**
    * sets the selectedProject project that will be used in project-panel and manage-projects component
-   * added by: James Andrade
+   * @author James Andrade
+   * @author Jessica Moffatt
    * @param project the project to be stored as 'selectedProject'
    */
   async setSelected(project: Project) {
@@ -88,6 +103,22 @@ export class ProjectService {
     if (this.selectedProject != null && this.selectedProject.id.match(this.regExp)) {
       this.refreshUserAccountList();
       this.expenseService.refreshExpenses(this.selectedProject);
+      this.getBudgetReportByProjectId(project)
+      .subscribe(
+        data => {
+          this.selectedBudget = data;
+          this.percentActual = this.calculatePercentActual();
+          this.percentRemaining = 100- this.percentActual;
+        },
+        error => {
+          this.handleError
+        });
+    this.getBillableReport().subscribe(data=>{
+      this.billableReport = data;
+      this.billableReport.sort(BillableHoursReportLine.compareName);
+    }, error =>{
+        this.handleError
+    });
     }
   }
 
@@ -95,21 +126,55 @@ export class ProjectService {
     return this.selectedProject;
   }
 
-
   /**
    * Gets a project with the specified ID.
    * @param id The ID of the project to get.
    */
-  getProjectById(id: string) {
-    return this.http.get(`${projectsUrl}/${id}`).pipe(map((response: Response) => response))
-      .pipe(map((data: any) => {
-        if (data !== undefined) {
-          return data as Project;
-        } else {
-          return null;
-        }
-      }));
+  getProjectById(id:string){
+    return this.http.get(`${projectsUrl}/${id}`)
+      .pipe(
+        map((res:Project) => {return res}),catchError(this.handleError)
+      );
   }
+
+  /**
+   *
+   * @param project The project to get a report for.
+   */
+  getBudgetReportByProjectId(project:Project){
+    let url = project._links["budget"];
+    return this.http.get(`${url["href"]}`)
+      .pipe(
+        map((res:BudgetReport) => {return res}),catchError(this.handleError)
+      );
+  }
+
+  calculatePercentBillable():string{
+    if(this.selectedBudget){
+      let percent = this.selectedBudget.billableHours/this.selectedBudget.totalHours*100;
+      let percentString = percent.toFixed(2);
+
+      return percentString;
+    }else{
+      return "0";
+    }
+  }
+
+  calculatePercentActual():number{
+    if(this.selectedBudget){
+      return this.selectedBudget.totalHours/this.selectedBudget.project.budgetedHours*100;
+    }else{
+      return 0;
+    }
+  }
+
+  getBillableReport(){
+    return this.http.get(billableUrl)
+      .pipe(
+        map((res:BillableHoursReportLine[]) => {return res}),catchError(this.handleError)
+      );
+  }
+
 
   /**
    * Retrieves the data dump report as an xls file download.
@@ -119,7 +184,7 @@ export class ProjectService {
       .pipe(
         map((res) => {
           return res
-        }), catchError(ProjectService.handleError)
+        }), catchError(this.handleError)
       );
   }
 
@@ -127,7 +192,7 @@ export class ProjectService {
    * General error handling method.
    * @param error The error that occurred.
    */
-  private static handleError(error: HttpErrorResponse) {
+  private handleError(error: HttpErrorResponse) {
     return throwError(error.message);
   }
 

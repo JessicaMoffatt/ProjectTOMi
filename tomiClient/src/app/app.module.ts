@@ -31,10 +31,12 @@ import {MatToolbarModule} from "@angular/material";
 import {MatCheckboxModule } from '@angular/material/checkbox';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatChipsModule} from "@angular/material";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatButtonToggleModule} from "@angular/material";
 import {MatPaginatorModule} from "@angular/material";
+import {ScrollingModule} from "@angular/cdk/scrolling";
 
 // Component Imports
 import {TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
@@ -76,6 +78,7 @@ import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-t
 import { EditUnitTypeComponent } from './component/panel/edit-unit-type/edit-unit-type.component';
 import { ProductivityReportComponent } from './component/extra/productivity-report/productivity-report.component';
 import { TeamProductivityReportComponent } from './component/extra/team-productivity-report/team-productivity-report.component';
+import { BillableHourReportComponent } from './component/extra/billable-hour-report/billable-hour-report.component';
 import { DeleteTaskModal } from "./component/panel/edit-task/edit-task.component";
 import {AddTaskComponent} from "./component/modal/add-task/add-task.component";
 import {DeleteUnitTypeModal} from "./component/panel/edit-unit-type/edit-unit-type.component";
@@ -94,6 +97,10 @@ import {UserAccountService} from "./service/user-account.service";
 import { AddProjectMemberComponent } from './component/modal/add-project-member/add-project-member.component';
 import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/project-sidebar.component';
 import { AddProjectExpenseComponent } from './component/modal/add-project-expense/add-project-expense.component';
+import { DataDumpReportComponent } from './component/extra/data-dump-report/data-dump-report.component';
+
+//Other stuff
+import {DoAFilter} from "./component/panel/user-account/user-account.component";
 
 @NgModule({
   declarations: [
@@ -140,6 +147,7 @@ import { AddProjectExpenseComponent } from './component/modal/add-project-expens
     DeleteUserAccountModal,
     ProductivityReportComponent,
     TeamProductivityReportComponent,
+    BillableHourReportComponent,
     DeleteTaskModal,
     AddTaskComponent,
     DeleteUnitTypeModal,
@@ -149,7 +157,9 @@ import { AddProjectExpenseComponent } from './component/modal/add-project-expens
     EditTaskComponent,
     AddProjectMemberComponent,
     ProjectSidebarComponent,
-    AddProjectExpenseComponent
+    AddProjectExpenseComponent,
+    DataDumpReportComponent,
+    DoAFilter
   ],
   imports: [
     MatSidenavModule,
@@ -193,10 +203,12 @@ import { AddProjectExpenseComponent } from './component/modal/add-project-expens
     MatChipsModule,
     MatTabsModule,
     MatTableModule,
+    MatProgressBarModule,
     MatDatepickerModule,
     DragDropModule,
     MatButtonToggleModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    ScrollingModule
   ],
   entryComponents: [
     AddProjectExpenseComponent,
@@ -267,7 +279,9 @@ import { AddProjectExpenseComponent } from './component/modal/add-project-expens
     MatExpansionModule,
     MatSidenavModule,
     MatTabsModule,
-    MatTableModule
+    MatTableModule,
+    MatProgressBarModule,
+    DoAFilter
   ]
 })
 export class AppModule {

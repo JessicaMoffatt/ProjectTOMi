@@ -1,28 +1,26 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Project} from "../../../model/project";
 import {ProjectService} from "../../../service/project.service";
 import {DatePipe} from '@angular/common';
-import {MatSnackBar} from "@angular/material";
+import {MatSnackBar, MatTab, MatTabChangeEvent} from "@angular/material";
 import {BehaviorSubject} from "rxjs";
 import {UserAccount} from "../../../model/userAccount";
+import {SignInService} from "../../../service/sign-in.service";
+import {DataDumpReportComponent} from "../../extra/data-dump-report/data-dump-report.component";
 
 @Component({
   selector: 'app-projects-panel',
   templateUrl: './projects-panel.component.html',
   styleUrls: ['./projects-panel.component.scss']
 })
-
-
 export class ProjectsPanelComponent implements OnInit {
 
+  @ViewChild('dumpTab') dumpTab: MatTab;
+  @ViewChild('dataDumpReport') dataDumpReport: DataDumpReportComponent;
+
   constructor(private projectService: ProjectService,
-              private datePipe: DatePipe,
-              public snackBar:MatSnackBar) {
+              public snackBar:MatSnackBar, public signInService:SignInService) {
   }
-
-  /** tracks which sub-panel: new project panel, existing project panel, or report panel will be displayed */
-  subPanelDisplay: string = "manageProject";
-
 
   project: Project;
 
@@ -31,35 +29,10 @@ export class ProjectsPanelComponent implements OnInit {
     this.projectService.userAccountList = new BehaviorSubject<Array<UserAccount>>([]);
   }
 
-  /**
-   * Retrieves the data dump report for download in xls format.
-   */
-  getDataDump() {
-    this.projectService.getDataDump().subscribe(
-      data => {
-        console.log("HERE");
-        console.log(data);
-        let link = document.createElement('a');
-        let stuff = window.URL.createObjectURL(data);
-        link.href = stuff;
-        document.body.appendChild(link);
-        let today = new Date();
-        let dateString = this.datePipe.transform(today, "yyyy-MM-dd");
-
-        link.download = "Data_Dump_" + dateString+".xls";
-
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(stuff);
-
-      },
-      err => {
-        let errorMessage = 'Something went wrong when updating retrieving the data dump report.';
-        this.snackBar.open(errorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
-      });
-
-    this.subPanelDisplay = "productivityReport";
+  tabEvent(event:MatTabChangeEvent){
+    if(event.tab === this.dumpTab){
+      this.dataDumpReport.getDataDump();
+    }
   }
-
 
 }
