@@ -99,9 +99,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     this.populateTimesheets().then((value) => {
       let timesheet = value as Timesheet;
       this.getEntries(timesheet);
-      this.getProjects(this.userId);
+      this.populateProjects(this.userId);
       this.timesheetService.populateTasks().then();
-      this.timesheetService.populateUnitTypes();
+      this.timesheetService.populateUnitTypes().then();
     });
   }
 
@@ -138,7 +138,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Gets all projects this user is associated with.
    * @param id The ID of the user.
    */
-  getProjects(id: number): void {
+  populateProjects(id: number): void {
     this.projectService.getProjectsForUser(id).subscribe((data => this.timesheetService.projects = data));
   }
 

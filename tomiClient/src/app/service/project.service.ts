@@ -14,6 +14,7 @@ import {MatSnackBar} from "@angular/material";
 import {ExpenseService} from "./expense.service";
 import {Entry} from "../model/entry";
 import {Team} from "../model/team";
+import {UnitType} from "../model/unitType";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -50,7 +51,7 @@ export class ProjectService {
    * Gets all projects.
    */
   getAllProjects(): Observable<Array<Project>> {
-    return this.http.get(`${projectsUrl}`).pipe(map((response: Response) => response))
+    return this.http.get(`${projectsUrl}`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];
@@ -65,7 +66,7 @@ export class ProjectService {
    * @param userId The ID of the user whose projects we want.
    */
   getProjectsForUser(userId: number): Observable<Array<Project>> {
-    return this.http.get(`${userAccountUrl}/${userId}/projects`).pipe(map((response: Response) => response))
+    return this.http.get(`${userAccountUrl}/${userId}/projects`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];
@@ -179,9 +180,8 @@ export class ProjectService {
     });
   }
 
-
   refreshProjectList() {
-    this.getAllProjects().forEach(project => {
+    return this.getAllProjects().forEach(project => {
       this.projects = new BehaviorSubject<Array<Project>>(project);
       // this.sort();
     }).catch(() => {
@@ -194,7 +194,6 @@ export class ProjectService {
       });
     });
   }
-
 
   refreshUserAccountList() {
     this.http.get(`${projectsUrl}/${this.selectedProject.id}/members`)
@@ -229,4 +228,7 @@ export class ProjectService {
     });
   }
 
+  getProjectSubjectList(): BehaviorSubject<Array<Project>> {
+    return this.projects;
+  }
 }
