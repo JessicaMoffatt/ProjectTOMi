@@ -1,2 +1,23 @@
-<app-budget-report [project]="project"></app-budget-report>
-<button mat-flat-button (click)="getDataDump()">Data Dump Report</button>
+<!-- James Andrade, Jan 27,2019 -->
+
+<mat-sidenav-container>
+  <mat-sidenav mode="side"
+               opened>
+    <app-project-sidebar></app-project-sidebar>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+    <div *ngIf="this.subPanelDisplay=='manageProject'">
+      <app-edit-project-sub-panel></app-edit-project-sub-panel>
+    </div>
+    <div *ngIf="this.subPanelDisplay=='productivityReport'">
+      <app-budget-report [project]="project"></app-budget-report>
+      <button mat-input-button (click)="getDataDump()">Data Dump Report</button>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+

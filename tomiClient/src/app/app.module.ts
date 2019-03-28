@@ -5,7 +5,6 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {DatePipe} from '@angular/common';
-import {OrderModule} from "ngx-order-pipe";
 
 import {AppComponent} from './app.component';
 import {AccessGuard} from "./access-guard";
@@ -16,11 +15,12 @@ import {AddHeaderInterceptor} from "./add-header-interceptor";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   DateAdapter,
+  MatAutocompleteModule,
   MAT_DATE_LOCALE,
   MatButtonModule,
   MatDatepickerModule, MatExpansionModule, MatGridListModule, MatIconModule,
-  MatMenuModule,
-  MatNativeDateModule, MatSidenavModule, MatSnackBarModule, MatTableModule
+  MatMenuModule, MatTableModule,
+  MatNativeDateModule, MatSidenavModule, MatSnackBarModule
 } from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
@@ -67,6 +67,11 @@ import {
 import {ProjectEntriesSidebarComponent} from './component/sidebar/project-entries-sidebar/project-entries-sidebar.component';
 import {EntryApproveComponent} from './component/panel/entry-approve/entry-approve.component';
 import {BudgetReportComponent} from './component/extra/budget-report/budget-report.component';
+import {ProjectService} from "./service/project.service";
+import { ProjectDetailComponent } from './component/panel/projects-panel/project-detail/project-detail.component';
+import {MatFormFieldModule} from "@angular/material";
+import { ExpenseListComponent } from './component/panel/projects-panel/expense-list/expense-list.component';
+import { ProjectMemberListComponent } from './component/panel/projects-panel/project-member-list/project-member-list.component';
 import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
 import { EditUnitTypeComponent } from './component/panel/edit-unit-type/edit-unit-type.component';
 import { ProductivityReportComponent } from './component/extra/productivity-report/productivity-report.component';
@@ -86,9 +91,15 @@ import {TeamSidebarService} from "./service/team-sidebar.service";
 import {TimesheetService} from "./service/timesheet.service";
 import {UserAccountService} from "./service/user-account.service";
 
+import { AddProjectMemberComponent } from './component/modal/add-project-member/add-project-member.component';
+import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/project-sidebar.component';
+import { AddProjectExpenseComponent } from './component/modal/add-project-expense/add-project-expense.component';
 
 @NgModule({
   declarations: [
+    AddProjectMemberComponent,
+    EditUserComponent,
+    AddUserAccountComponent,
     AppComponent,
     TopNavBarComponent,
     ApprovePanelComponent,
@@ -118,6 +129,11 @@ import {UserAccountService} from "./service/user-account.service";
     EntryApproveComponent,
     SubmitApprovalModalComponent,
     BudgetReportComponent,
+    SubmitTimesheetModalComponent,
+    ProjectDetailComponent,
+    ExpenseListComponent,
+    ProjectMemberListComponent,
+    BudgetReportComponent,
     AddUnitTypeComponent,
     EditUnitTypeComponent,
     EditTaskComponent,
@@ -127,15 +143,34 @@ import {UserAccountService} from "./service/user-account.service";
     DeleteTaskModal,
     AddTaskComponent,
     DeleteUnitTypeModal,
-    AddTeamComponent
+    AddTeamComponent,
+    TeamProductivityReportComponent,
+    DeleteUserAccountModal,
+    EditTaskComponent,
+    AddProjectMemberComponent,
+    ProjectSidebarComponent,
+    AddProjectExpenseComponent
   ],
   imports: [
+    MatSidenavModule,
+    MatSnackBarModule,
+    MatGridListModule,
+    MatMenuModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatTableModule,
+    MatListModule,
+    MatButtonModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    OrderModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatListModule,
@@ -164,6 +199,8 @@ import {UserAccountService} from "./service/user-account.service";
     MatPaginatorModule
   ],
   entryComponents: [
+    AddProjectExpenseComponent,
+    AddProjectMemberComponent,
     EntryComponent,
     AddTeamMemberComponent,
     EntryUneditableComponent,
@@ -206,6 +243,17 @@ import {UserAccountService} from "./service/user-account.service";
       useClass: CustomDateAdapter
     },
 
+    TeamService,
+    TimesheetService,
+    ProjectEntriesService,
+    UserAccountService,
+    ProjectService,
+    SignInService,
+    MatDatepickerModule,
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    { provide: DateAdapter, useClass: CustomDateAdapter },
+    AccessGuard,
+    DatePipe
   ],
   bootstrap: [AppComponent],
   exports: [

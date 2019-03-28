@@ -14,16 +14,16 @@ const millisecondsToDays: number = 86400000;
 })
 export class DatePickerComponent implements OnInit{
   /**
-   * The latest date that can be selected.
+   * The latest date that can be selectedProject.
    */
   private maxDate: Date;
   /**
-   * The earliest date that can be selected.
+   * The earliest date that can be selectedProject.
    */
   @Input() private minDate: Date;
 
   /**
-   * The selected date.
+   * The selectedProject date.
    */
   private selectedDate: Date;
   /**
@@ -43,8 +43,8 @@ export class DatePickerComponent implements OnInit{
   }
 
   /**
-   * Changes the selected date and displays the corresponding timesheet.
-   * @param event The date selected.
+   * Changes the selectedProject date and displays the corresponding timesheet.
+   * @param event The date selectedProject.
    */
   onDateChange(event: MatDatepickerInputEvent<Date>): void {
     let day = event.value.getDay();
