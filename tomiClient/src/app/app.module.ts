@@ -35,6 +35,7 @@ import {MatChipsModule} from "@angular/material";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatButtonToggleModule} from "@angular/material";
 import {MatPaginatorModule} from "@angular/material";
+import {ScrollingModule} from "@angular/cdk/scrolling";
 
 // Component Imports
 import {TeamSidebarComponent} from './component/sidebar/team-sidebar/team-sidebar.component';
@@ -95,6 +96,9 @@ import { AddProjectMemberComponent } from './component/modal/add-project-member/
 import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/project-sidebar.component';
 import { AddProjectExpenseComponent } from './component/modal/add-project-expense/add-project-expense.component';
 
+//Other stuff
+import {DoAFilter} from "./component/panel/user-account/user-account.component";
+
 @NgModule({
   declarations: [
     AddProjectMemberComponent,
@@ -149,7 +153,8 @@ import { AddProjectExpenseComponent } from './component/modal/add-project-expens
     EditTaskComponent,
     AddProjectMemberComponent,
     ProjectSidebarComponent,
-    AddProjectExpenseComponent
+    AddProjectExpenseComponent,
+    DoAFilter
   ],
   imports: [
     MatSidenavModule,
@@ -196,7 +201,8 @@ import { AddProjectExpenseComponent } from './component/modal/add-project-expens
     MatDatepickerModule,
     DragDropModule,
     MatButtonToggleModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    ScrollingModule
   ],
   entryComponents: [
     AddProjectExpenseComponent,
@@ -267,7 +273,8 @@ import { AddProjectExpenseComponent } from './component/modal/add-project-expens
     MatExpansionModule,
     MatSidenavModule,
     MatTabsModule,
-    MatTableModule
+    MatTableModule,
+    DoAFilter
   ]
 })
 export class AppModule {

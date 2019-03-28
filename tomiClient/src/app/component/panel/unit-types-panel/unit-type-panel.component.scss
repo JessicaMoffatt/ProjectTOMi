@@ -3,7 +3,7 @@
  * @version 2.0
  */
 
-@import '../../../../variables';
+@import '~src/variables';
 
 .content_pane {
   height: 92vh;
@@ -45,4 +45,9 @@
   i {
     color: white;
   }
+}
+
+h2{
+  color:$blue;
+  text-align: center;
 }
