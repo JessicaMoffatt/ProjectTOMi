@@ -96,6 +96,7 @@ import {UserAccountService} from "./service/user-account.service";
 import { AddProjectMemberComponent } from './component/modal/add-project-member/add-project-member.component';
 import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/project-sidebar.component';
 import { AddProjectExpenseComponent } from './component/modal/add-project-expense/add-project-expense.component';
+import { DataDumpReportComponent } from './component/extra/data-dump-report/data-dump-report.component';
 
 @NgModule({
   declarations: [
@@ -152,7 +153,8 @@ import { AddProjectExpenseComponent } from './component/modal/add-project-expens
     EditTaskComponent,
     AddProjectMemberComponent,
     ProjectSidebarComponent,
-    AddProjectExpenseComponent
+    AddProjectExpenseComponent,
+    DataDumpReportComponent
   ],
   imports: [
     MatSidenavModule,

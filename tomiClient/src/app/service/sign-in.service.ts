@@ -45,7 +45,6 @@ export class SignInService {
     this.isUserLoggedIn.next(true);
   }
 
-
   getNavBarList(){
   return this.http.get(buildNavBarUrl).pipe(map(value => {
       return value;})).subscribe((value) => {
@@ -57,6 +56,7 @@ export class SignInService {
         this.navList["manage_unit_types"] = value["manage_unit_types"];
         this.navList["manage_tasks"] = value["manage_tasks"];
         this.navList["manage_user_accounts"] = value["manage_user_accounts"];
+        this.navList["create_project"] = value["create_project"];
       return value;});
   }
   async signOut() {
