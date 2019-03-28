@@ -1,6 +1,6 @@
 import {
   AfterViewInit,
-  Component, Inject,
+  Component, HostListener, Inject,
   OnInit,
   QueryList,
   ViewChild,
@@ -65,6 +65,10 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   /** The list of entry components that are children of the timesheet.*/
   entryComponents: EntryComponent[] = [];
 
+  @HostListener('window:keyup.Enter', ['$event']) enter(e: KeyboardEvent) {
+    this.savePromise().then();
+  }
+
   constructor(private router: Router, public timesheetService: TimesheetService,
               private projectService: ProjectService, private entryService: EntryService,
               public dialog: MatDialog, private signInService:SignInService) {
@@ -96,19 +100,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
       let timesheet = value as Timesheet;
       this.getEntries(timesheet);
       this.getProjects(this.userId);
-      this.populateTasks();
-      this.populateUnitTypes();
+      this.timesheetService.populateTasks().then();
+      this.timesheetService.populateUnitTypes();
     });
-  }
-
-  /** Populates tasks.*/
-  populateTasks() {
-    this.entryService.getTasks().subscribe((data => this.timesheetService.tasks = data))
-  }
-
-  /** Populates unitTypes.*/
-  populateUnitTypes() {
-    this.entryService.getUnitTypes().subscribe((data => this.timesheetService.unitTypes = data))
   }
 
   /** Gets all the entry components currently on the timesheet.*/
