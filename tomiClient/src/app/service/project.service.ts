@@ -375,4 +375,8 @@ export class ProjectService {
       }));
    return stuff;
   }
+
+  getProjects(): BehaviorSubject<Array<Project>>{
+    return this.projects;
+  }
 }

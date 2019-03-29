@@ -15,7 +15,7 @@ import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-t
 export class ProjectSidebarComponent implements OnInit {
   @ViewChild("btn_group") buttonGroup;
 
-  constructor(@Inject(ManageTeamsPanelComponent) private parent: ManageTeamsPanelComponent, public projectService: ProjectService) { }
+  constructor(public projectService: ProjectService) { }
 
   ngOnInit() {
     this.projectService.refreshProjectList();
