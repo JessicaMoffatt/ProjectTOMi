@@ -1,4 +1,5 @@
 @import "~src/variables";
+
 /**
   @author Karol Talbot
   @version 2.0
@@ -8,13 +9,14 @@
   right: 4vw;
   bottom: 4vh;
   background-color: $blue;
+
   i {
     color: white;
   }
 }
 
-.team_edit_card{
-  padding:2%;
+.team_edit_card {
+  padding: 2%;
   height: 60%;
   width: 60%;
   margin-left: 15%;
@@ -23,94 +25,101 @@
   margin-top: 5%;
 }
 
-.manage_delete_btn{
+.manage_delete_btn {
   background-color: $delete_btn;
-  color:$delete_btn_text;
+  color: $delete_btn_text;
 }
 
-.manage_cancel_btn{
+.manage_cancel_btn {
   background-color: $cancel_btn;
-  color:$cancel_btn_text;
-  float:right;
+  color: $cancel_btn_text;
+  float: right;
   margin-right: 1%;
 }
 
-.manage_save_btn{
+.manage_save_btn {
   background-color: $save_btn;
   color: $save_btn_text;
-  float:right;
+  float: right;
   margin-right: 1%;
 }
 
-.on_team{
+.on_team {
   background-color: $orange;
-  color:$white;
+  color: $white;
 }
 
-.title_line{
+.title_line {
   padding-top: 1%;
-  margin:0;
+  margin: 0;
   display: inline-block;
-  width:100%;
+  width: 100%;
 }
 
-.title{
+.title {
   display: inline-block;
   font-weight: bold;
-  width:20%;
+  width: 20%;
   padding-left: 1%;
   padding-right: 4%;
 }
 
-.mat-paginator{
+.mat-paginator {
   display: inline-block;
   width: 35%;
   padding-left: 4%;
   padding-right: 1%;
 }
 
-.search_bar_inline{
+.team_view {
+  float: right;
+  width: 75vw;
+}
+
+.search_bar_inline {
   display: inline-block !important;
   width: 35%;
   align-content: center;
-  input{
+
+  input {
     text-align: center;
     width: 96%;
-    margin-left:2%;
-    margin-right:2%;
+    margin-left: 2%;
+    margin-right: 2%;
     border: $dark_grey 1px solid;
     border-radius: 0.3em;
   }
 }
 
-#team{
-  width: 48%;
-  padding: 1% 1% 0;
-}
-#team_lead{
+#team {
   width: 48%;
   padding: 1% 1% 0;
 }
 
-.chip_list{
+#team_lead {
+  width: 48%;
+  padding: 1% 1% 0;
+}
+
+.chip_list {
   height: 4.5rem;
   width: 98%;
-  margin:0.5%;
-  padding:0.5%;
+  margin: 0.5%;
+  padding: 0.5%;
   border: $light_grey 1px solid;
   border-radius: 0.2rem;
 }
 
-.user_account{
+.user_account {
   display: inline !important;
 }
 
-.no_users{
+.no_users {
   text-align: center;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   display: inline-block;
   color: $dark_grey;
   padding: 2%;
-  margin:0;
+  margin: 0;
   width: auto;
 }

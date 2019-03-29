@@ -70,6 +70,7 @@ export class ManageTeamsPanelComponent implements OnInit {
   }
 
   public setSelectedTeam(team: Team): void {
+    console.log(team);
     this.selectedTeam = team;
     this.setValuesOnOpen();
     this.getTeamMembers();
