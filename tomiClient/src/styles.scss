@@ -28,6 +28,16 @@ body{
   width: 90%;
 }
 
+.sidebar{
+  float:left;
+  width: 15vw;
+  height: 86vh;
+}
+
+.content_view{
+  float:right;
+  width:85vw;
+}
 /** Snackbar styling */
 .snackbar-success {
   background-color: $green;

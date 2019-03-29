@@ -3,25 +3,25 @@
 @version 1.0
 -->
 <div [ngClass]="'container'">
-<div *ngIf="projectEntriesService.selectedProject">
-  <div>
+  <div *ngIf="projectEntriesService.selectedProject">
     <div>
-      {{projectEntriesService.selectedProject.projectName}}
-    </div>
+      <div>
+        {{projectEntriesService.selectedProject.projectName}}
+      </div>
 
-    <div>
-          <div *ngFor="let entry of this.projectEntriesService.entries">
-            <app-entry-approve [ngClass]="'entry'"
-                                  [entry]="entry"></app-entry-approve>
-          </div>
+      <div>
+        <div *ngFor="let entry of this.projectEntriesService.entries">
+          <app-entry-approve [ngClass]="'entry'"
+                             [entry]="entry"></app-entry-approve>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-</div>
-<div [ngClass]="'project_entries_footer'">
-  <button mat-flat-button class="submit" (click)="displaySubmitModal()">
-    <i class="material-icons">
-      send
-    </i>
-  </button>
+  <div [ngClass]="'project_entries_footer'">
+    <button mat-flat-button class="submit" (click)="displaySubmitModal()">
+      <i class="material-icons">
+        send
+      </i>
+    </button>
+  </div>
 </div>

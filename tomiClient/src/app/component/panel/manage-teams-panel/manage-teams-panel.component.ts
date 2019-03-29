@@ -1,13 +1,22 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Team} from "../../../model/team";
 import {FormControl, Validators} from "@angular/forms";
 import {TeamService2} from "../../../service/team2.service";
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
 import {BehaviorSubject} from "rxjs";
-import {MatDialog, MatInput, MatPaginator, MatSelect, PageEvent} from "@angular/material";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+  MatInput,
+  MatPaginator,
+  MatSelect,
+  PageEvent
+} from "@angular/material";
 import {AddUserAccountComponent} from "../../modal/add-user-account/add-user-account.component";
 import {AddTeamComponent} from "../../modal/add-team/add-team.component";
+import {DeleteUserAccountModal, EditUserComponent} from "../edit-user/edit-user.component";
 
 /**
  * @author Karol Talbot
@@ -42,7 +51,7 @@ export class ManageTeamsPanelComponent implements OnInit {
   @ViewChild('memberPaginator') memberPaginator: MatPaginator;
   @ViewChild('availablePaginator') availablePaginator: MatPaginator;
 
-  constructor(private dialog: MatDialog, private teamService2: TeamService2, public userAccountService: UserAccountService) {
+  constructor(private dialog: MatDialog, public deleteTeamDialog: MatDialog, private teamService2: TeamService2, public userAccountService: UserAccountService) {
   }
 
   ngOnInit() {
@@ -205,5 +214,43 @@ export class ManageTeamsPanelComponent implements OnInit {
     this.selectedTeam = null;
   }
 
+  openDeleteDialog() {
+    this.deleteTeamDialog.open(DeleteTeamModal, {
+      width: '40vw',
+      data: {teamToDelete: this.selectedTeam, parent: this}
+    });
+  }
+}
 
+@Component({
+  selector: 'app-delete-team-modal',
+  templateUrl: './delete-team-modal.html',
+  styleUrls: ['./delete-team-modal.scss']
+})
+/** Inner class for confirmation modal of delete Team. */
+export class DeleteTeamModal {
+  teamToDelete: Team;
+
+  constructor(public dialogRef: MatDialogRef<DeleteTeamModal>, @Inject(MAT_DIALOG_DATA) public data: DeleteDialogData) {
+
+  }
+
+  ngOnInit() {
+    this.teamToDelete = this.data.teamToDelete;
+  }
+
+  canceledDelete(): void {
+    this.dialogRef.close();
+  }
+
+  confirmedDelete() {
+    this.data.parent.delete();
+    this.dialogRef.close();
+  }
+}
+
+/** Data interface for the DeleteUserModal */
+export interface DeleteDialogData {
+  teamToDelete : Team;
+  parent: ManageTeamsPanelComponent;
 }
