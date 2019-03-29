@@ -25,6 +25,17 @@ export class ProjectDetailComponent implements OnInit {
               public userAccountService: UserAccountService) {
   }
 
+  nameControl = new FormControl();
+  clientControl = new FormControl();
+  // TODO Validate that the client name field is not empty
+  idControl = new FormControl({
+    value: this.projectService.getSelectedProject().id.match(this.projectService.regExp),
+    disabled: false
+  },);
+  billingControl = new FormControl();
+  budgetControl = new FormControl();
+
+
   ngOnInit() {
     this.projectService.setSelected(new Project());
     this.userAccountService.initializeUserAccounts();

@@ -48,7 +48,7 @@ import {EntryComponent} from './component/panel/entry/entry.component';
 import {TopNavBarComponent} from "./component/panel/top-nav-bar/top-nav-bar.component";
 import {ApprovePanelComponent} from "./component/panel/approve-panel/approve-panel.component";
 import {TeamPanelComponent} from "./component/panel/team-panel/team-panel.component";
-import {ManageProjectsPanelComponent} from "./component/panel/manage-projects-panel/manage-projects-panel.component";
+import {ProjectsPanelComponent} from "./component/panel/projects-panel/projects-panel.component";
 import {ManageTeamsPanelComponent} from "./component/panel/manage-teams-panel/manage-teams-panel.component";
 import {UnitTypePanelComponent} from "./component/panel/unit-types-panel/unit-type-panel.component";
 import {TasksPanelComponent} from "./component/panel/tasks-panel/tasks-panel.component";
@@ -69,10 +69,10 @@ import {ProjectEntriesSidebarComponent} from './component/sidebar/project-entrie
 import {EntryApproveComponent} from './component/panel/entry-approve/entry-approve.component';
 import {BudgetReportComponent} from './component/extra/budget-report/budget-report.component';
 import {ProjectService} from "./service/project.service";
-import {ProjectDetailComponent} from './component/panel/manage-projects-panel/project-detail/project-detail.component';
+import {ProjectDetailComponent} from './component/panel/projects-panel/project-detail/project-detail.component';
 import {MatFormFieldModule} from "@angular/material";
-import {ExpenseListComponent} from './component/panel/manage-projects-panel/expense-list/expense-list.component';
-import {ProjectMemberListComponent} from './component/panel/manage-projects-panel/project-member-list/project-member-list.component';
+import {ExpenseListComponent} from './component/panel/projects-panel/expense-list/expense-list.component';
+import {ProjectMemberListComponent} from './component/panel/projects-panel/project-member-list/project-member-list.component';
 import {AddUnitTypeComponent} from './component/modal/add-unit-type/add-unit-type.component';
 import {EditUnitTypeComponent} from './component/panel/edit-unit-type/edit-unit-type.component';
 import {ProductivityReportComponent} from './component/extra/productivity-report/productivity-report.component';
@@ -87,7 +87,6 @@ import {ProjectSidebarComponent} from './component/sidebar/project-sidebar/proje
 import {AddProjectExpenseComponent} from './component/modal/add-project-expense/add-project-expense.component';
 import {DataDumpReportComponent} from './component/extra/data-dump-report/data-dump-report.component';
 import {DeleteTeamModal} from "./component/panel/manage-teams-panel/manage-teams-panel.component";
-import {DeleteProjectModal} from "./component/panel/manage-projects-panel/manage-projects-panel.component";
 
 //Service Imports
 import {ProjectEntriesService} from "./service/project-entries.service";
@@ -116,7 +115,7 @@ import {FilterProjectByName} from "./component/sidebar/project-sidebar/project-s
     TopNavBarComponent,
     ApprovePanelComponent,
     TeamPanelComponent,
-    ManageProjectsPanelComponent,
+    ProjectsPanelComponent,
     ManageTeamsPanelComponent,
     UnitTypePanelComponent,
     TasksPanelComponent,
@@ -166,8 +165,7 @@ import {FilterProjectByName} from "./component/sidebar/project-sidebar/project-s
     FilterTaskByName,
     FilterTeamByName,
     FilterProjectByName,
-    DeleteTeamModal,
-    DeleteProjectModal
+    DeleteTeamModal
   ],
   imports: [
     MatSidenavModule,
@@ -235,8 +233,7 @@ import {FilterProjectByName} from "./component/sidebar/project-sidebar/project-s
     DeleteTaskModal,
     DeleteUnitTypeModal,
     AddTeamComponent,
-    DeleteTeamModal,
-    DeleteProjectModal
+    DeleteTeamModal
   ],
   providers: [
     AccessGuard,
