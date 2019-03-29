@@ -1,11 +1,13 @@
-<div [ngClass]="'main_container'">
-  <h1>Team Members</h1>
-  <div>
-    <mat-action-list *ngIf="teamMemberTimesheetService.teamMembers">
-      <!--|orderBy:['first_name','last_name']-->
-      <span *ngFor="let t of (teamMemberTimesheetService.teamMembers)">
-        <button mat-list-item *ngIf="t" (click)="displayTimesheet(t)">{{t.firstName}} {{t.lastName}}</button>
-      </span>
-    </mat-action-list>
-  </div>
-</div>
+<cdk-virtual-scroll-viewport [itemSize]="10" class="sidebar">
+
+  <h2>Team Members</h2>
+  <div class="search_bar"><input #team_member_search id="team_member_search" [ngClass]="'input_search'"
+                                 placeholder="search" (keyup)="0"></div>
+  <mat-action-list>
+    <mat-button-toggle-group #btn_group="matButtonToggleGroup" [name]="buttonGroup" class="btn_list" vertical>
+      <mat-button-toggle id="{{member.id}}_btn" class="list_btns" (click)='this.selectTeamMember(member)'
+                         *ngFor='let member of this.getTeamMemberList().getValue() '>{{member.firstName}} {{member.lastName}}</mat-button-toggle>
+    </mat-button-toggle-group>
+
+  </mat-action-list>
+</cdk-virtual-scroll-viewport>

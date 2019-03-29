@@ -28,7 +28,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatToolbarModule} from "@angular/material";
-import {MatCheckboxModule } from '@angular/material/checkbox';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -45,7 +45,6 @@ import {
   TimesheetComponent
 } from './component/panel/timesheet/timesheet.component';
 import {EntryComponent} from './component/panel/entry/entry.component';
-import {AddTeamMemberComponent, TeamComponent} from './component/panel/team/team.component';
 import {TopNavBarComponent} from "./component/panel/top-nav-bar/top-nav-bar.component";
 import {ApprovePanelComponent} from "./component/panel/approve-panel/approve-panel.component";
 import {TeamPanelComponent} from "./component/panel/team-panel/team-panel.component";
@@ -70,19 +69,24 @@ import {ProjectEntriesSidebarComponent} from './component/sidebar/project-entrie
 import {EntryApproveComponent} from './component/panel/entry-approve/entry-approve.component';
 import {BudgetReportComponent} from './component/extra/budget-report/budget-report.component';
 import {ProjectService} from "./service/project.service";
-import { ProjectDetailComponent } from './component/panel/projects-panel/project-detail/project-detail.component';
+import {ProjectDetailComponent} from './component/panel/projects-panel/project-detail/project-detail.component';
 import {MatFormFieldModule} from "@angular/material";
-import { ExpenseListComponent } from './component/panel/projects-panel/expense-list/expense-list.component';
-import { ProjectMemberListComponent } from './component/panel/projects-panel/project-member-list/project-member-list.component';
-import { AddUnitTypeComponent } from './component/modal/add-unit-type/add-unit-type.component';
-import { EditUnitTypeComponent } from './component/panel/edit-unit-type/edit-unit-type.component';
-import { ProductivityReportComponent } from './component/extra/productivity-report/productivity-report.component';
-import { TeamProductivityReportComponent } from './component/extra/team-productivity-report/team-productivity-report.component';
-import { BillableHourReportComponent } from './component/extra/billable-hour-report/billable-hour-report.component';
-import { DeleteTaskModal } from "./component/panel/edit-task/edit-task.component";
+import {ExpenseListComponent} from './component/panel/projects-panel/expense-list/expense-list.component';
+import {ProjectMemberListComponent} from './component/panel/projects-panel/project-member-list/project-member-list.component';
+import {AddUnitTypeComponent} from './component/modal/add-unit-type/add-unit-type.component';
+import {EditUnitTypeComponent} from './component/panel/edit-unit-type/edit-unit-type.component';
+import {ProductivityReportComponent} from './component/extra/productivity-report/productivity-report.component';
+import {TeamProductivityReportComponent} from './component/extra/team-productivity-report/team-productivity-report.component';
+import {BillableHourReportComponent} from './component/extra/billable-hour-report/billable-hour-report.component';
+import {DeleteTaskModal} from "./component/panel/edit-task/edit-task.component";
 import {AddTaskComponent} from "./component/modal/add-task/add-task.component";
 import {DeleteUnitTypeModal} from "./component/panel/edit-unit-type/edit-unit-type.component";
 import {AddTeamComponent} from "./component/modal/add-team/add-team.component";
+import {AddProjectMemberComponent} from './component/modal/add-project-member/add-project-member.component';
+import {ProjectSidebarComponent} from './component/sidebar/project-sidebar/project-sidebar.component';
+import {AddProjectExpenseComponent} from './component/modal/add-project-expense/add-project-expense.component';
+import {DataDumpReportComponent} from './component/extra/data-dump-report/data-dump-report.component';
+import {DeleteTeamModal} from "./component/panel/manage-teams-panel/manage-teams-panel.component";
 
 //Service Imports
 import {ProjectEntriesService} from "./service/project-entries.service";
@@ -94,10 +98,6 @@ import {TeamSidebarService} from "./service/team-sidebar.service";
 import {TimesheetService} from "./service/timesheet.service";
 import {UserAccountService} from "./service/user-account.service";
 
-import { AddProjectMemberComponent } from './component/modal/add-project-member/add-project-member.component';
-import { ProjectSidebarComponent } from './component/sidebar/project-sidebar/project-sidebar.component';
-import { AddProjectExpenseComponent } from './component/modal/add-project-expense/add-project-expense.component';
-import { DataDumpReportComponent } from './component/extra/data-dump-report/data-dump-report.component';
 
 //Other stuff
 import {DoAFilter} from "./component/panel/user-account/user-account.component";
@@ -117,11 +117,8 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     TasksPanelComponent,
     TimesheetComponent,
     EntryComponent,
-    TeamComponent,
     TeamSidebarComponent,
-    AddTeamMemberComponent,
     EntryUneditableComponent,
-    AddTeamMemberComponent,
     UserAccountComponent,
     AddUserAccountComponent,
     EditUserComponent,
@@ -159,7 +156,8 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     ProjectSidebarComponent,
     AddProjectExpenseComponent,
     DataDumpReportComponent,
-    DoAFilter
+    DoAFilter,
+    DeleteTeamModal
   ],
   imports: [
     MatSidenavModule,
@@ -214,13 +212,11 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     AddProjectExpenseComponent,
     AddProjectMemberComponent,
     EntryComponent,
-    AddTeamMemberComponent,
     EntryUneditableComponent,
     AddUserAccountComponent,
     DeleteEntryModalComponent,
     SubmitTimesheetModalComponent,
     SubmitApprovalModalComponent,
-    AddTeamMemberComponent,
     EditTaskComponent,
     AddUnitTypeComponent,
     EditUnitTypeComponent,
@@ -228,7 +224,8 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     AddTaskComponent,
     DeleteTaskModal,
     DeleteUnitTypeModal,
-    AddTeamComponent
+    AddTeamComponent,
+    DeleteTeamModal
   ],
   providers: [
     AccessGuard,
@@ -263,7 +260,7 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     SignInService,
     MatDatepickerModule,
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-    { provide: DateAdapter, useClass: CustomDateAdapter },
+    {provide: DateAdapter, useClass: CustomDateAdapter},
     AccessGuard,
     DatePipe
   ],

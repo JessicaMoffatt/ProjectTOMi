@@ -1,0 +1,39 @@
+/*
+@author Karol Talbot
+@version 2.0
+ */
+@import '~src/variables';
+
+.sidebar {
+  margin-top: 0;
+
+  h2 {
+    text-align: center;
+  }
+
+  height: 92vh;
+  width: 20vw;
+  background: $white;
+  color: $blue;
+}
+
+.list_btns {
+  display: block;
+  width: 100%;
+}
+
+.list_btns:active {
+  background-color: $blue;
+  color: white;
+}
+
+.mat-button-toggle-checked {
+  background-color: $blue;
+  color: white;
+}
+
+.btn_list {
+  width: 100%;
+}
+
+

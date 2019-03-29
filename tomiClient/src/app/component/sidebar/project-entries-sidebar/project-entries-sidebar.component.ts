@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {ProjectEntriesService} from "../../../service/project-entries.service";
 import {Project} from "../../../model/project";
 import {ApprovePanelComponent} from "../../panel/approve-panel/approve-panel.component";
+import {ProjectService} from "../../../service/project.service";
 
 /**
  * ProjectEntriesSidebarComponent is used to display the list of projects for a user to interact with when viewing entries for approval.
@@ -18,11 +18,11 @@ export class ProjectEntriesSidebarComponent implements OnInit {
   @ViewChild("btn_group") btn_group;
 
   constructor(@Inject(ApprovePanelComponent) private parent: ApprovePanelComponent,
-              public projectEntriesService:ProjectEntriesService) {
+              public projectService:ProjectService) {
   }
 
   ngOnInit() {
-    this.projectEntriesService.getAllProjects();
+    this.projectService.refreshProjectList();
   }
 
   selectProject(project: Project): void {
@@ -32,5 +32,9 @@ export class ProjectEntriesSidebarComponent implements OnInit {
   public unselect(teamId:number){
     this.btn_group.selected.checked = false;
     console.log(this.btn_group);
+  }
+
+  public getProjectEntries(project:Project){
+    alert("hello");
   }
 }

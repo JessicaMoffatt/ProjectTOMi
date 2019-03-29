@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {SignInService} from "../../../service/sign-in.service";
 
 @Component({
   selector: 'app-team-panel',
@@ -7,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TeamPanelComponent implements OnInit {
 
-  constructor() { }
+  constructor(private signInService:SignInService) { }
 
   ngOnInit() {
   }
 
-
+  getTeamId(){
+    return this.signInService.userAccount.teamId;
+  }
 }
