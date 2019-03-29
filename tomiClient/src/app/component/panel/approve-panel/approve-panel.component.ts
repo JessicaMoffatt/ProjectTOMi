@@ -4,7 +4,7 @@ import {Project} from "../../../model/project";
 @Component({
   selector: 'app-approve-panel',
   templateUrl: './approve-panel.component.html',
-  styleUrls: ['./approve-panel.component.css']
+  styleUrls: ['./approve-panel.component.scss']
 })
 export class ApprovePanelComponent implements OnInit {
   private selectedProject:Project = null;

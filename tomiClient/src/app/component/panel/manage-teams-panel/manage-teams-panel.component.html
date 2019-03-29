@@ -2,10 +2,10 @@
   @author Karol Talbot
   @version 2.0
 -->
-<div style="float:left; width: 15vw; height:86vh;">
+<div class="sidebar">
   <app-team-sidebar #sideBar></app-team-sidebar>
 </div>
-<div style="float:right; width: 85vw" class="team_view">
+<div class="team_view content_view">
   <ng-template [ngIf]="isTeamSelected()">
     <mat-card class="team_edit_card">
       <mat-card-content>

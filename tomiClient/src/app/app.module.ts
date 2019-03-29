@@ -45,7 +45,6 @@ import {
   TimesheetComponent
 } from './component/panel/timesheet/timesheet.component';
 import {EntryComponent} from './component/panel/entry/entry.component';
-import {AddTeamMemberComponent, TeamComponent} from './component/panel/team/team.component';
 import {TopNavBarComponent} from "./component/panel/top-nav-bar/top-nav-bar.component";
 import {ApprovePanelComponent} from "./component/panel/approve-panel/approve-panel.component";
 import {TeamPanelComponent} from "./component/panel/team-panel/team-panel.component";
@@ -118,11 +117,8 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     TasksPanelComponent,
     TimesheetComponent,
     EntryComponent,
-    TeamComponent,
     TeamSidebarComponent,
-    AddTeamMemberComponent,
     EntryUneditableComponent,
-    AddTeamMemberComponent,
     UserAccountComponent,
     AddUserAccountComponent,
     EditUserComponent,
@@ -216,13 +212,11 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     AddProjectExpenseComponent,
     AddProjectMemberComponent,
     EntryComponent,
-    AddTeamMemberComponent,
     EntryUneditableComponent,
     AddUserAccountComponent,
     DeleteEntryModalComponent,
     SubmitTimesheetModalComponent,
     SubmitApprovalModalComponent,
-    AddTeamMemberComponent,
     EditTaskComponent,
     AddUnitTypeComponent,
     EditUnitTypeComponent,

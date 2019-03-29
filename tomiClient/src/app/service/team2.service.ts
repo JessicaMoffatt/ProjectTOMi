@@ -130,4 +130,16 @@ export class TeamService2 {
       console.log(error);
     });
   }
+
+  //TODO account for 400 error
+  /**
+   * Gets a team with the specified ID.
+   * @param id The id of the team to get.
+   */
+  getTeamById(id: number): Observable<Team> {
+    return this.http.get(`${teamUrl}/${id}`)
+      .pipe(map((data: any) => {
+        return data as Team;
+      }));
+  }
 }
