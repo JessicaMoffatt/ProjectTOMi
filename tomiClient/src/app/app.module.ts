@@ -105,6 +105,7 @@ import {FilterUnitTypeByName} from "./component/panel/unit-types-panel/unit-type
 import {FilterTaskByName} from "./component/panel/tasks-panel/tasks-panel.component";
 import {FilterTeamByName} from "./component/sidebar/team-sidebar/team-sidebar.component";
 import {FilterProjectByName} from "./component/sidebar/project-sidebar/project-sidebar.component";
+import {FilterTeamMemberByName} from "./component/sidebar/team-member-sidebar/team-member-sidebar.component";
 
 @NgModule({
   declarations: [
@@ -165,6 +166,7 @@ import {FilterProjectByName} from "./component/sidebar/project-sidebar/project-s
     FilterTaskByName,
     FilterTeamByName,
     FilterProjectByName,
+    FilterTeamMemberByName,
     DeleteTeamModal
   ],
   imports: [
@@ -290,6 +292,7 @@ import {FilterProjectByName} from "./component/sidebar/project-sidebar/project-s
     FilterUnitTypeByName,
     FilterTaskByName,
     FilterProjectByName,
+    FilterTeamMemberByName,
     FilterTeamByName
   ]
 })

@@ -2,6 +2,7 @@ import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewC
 import {FormControl, Validators} from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
 import {UnitType} from "../../../model/unitType";
+import {CustomErrorStateMatcher} from "../../extra/CustomErrorStateMatcher";
 
 /**
  *
@@ -28,6 +29,9 @@ export class EditUnitTypeComponent implements OnInit, OnDestroy {
   unitTypeWeightControl = new FormControl('', [
     Validators.required
   ]);
+
+  /** Invalid name error detection. */
+  unitTypeNameMatcher = new CustomErrorStateMatcher();
 
   /** The UnitTypeSubject model associated with this component. */
   @Input() unitType: UnitType;

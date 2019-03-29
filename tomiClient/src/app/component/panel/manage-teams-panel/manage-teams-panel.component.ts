@@ -15,6 +15,7 @@ import {
   PageEvent
 } from "@angular/material";
 import {AddTeamComponent} from "../../modal/add-team/add-team.component";
+import {CustomErrorStateMatcher} from "../../extra/CustomErrorStateMatcher";
 
 /**
  * @author Karol Talbot
@@ -40,6 +41,9 @@ export class ManageTeamsPanelComponent implements OnInit {
   teamNameControl = new FormControl('', [
     Validators.required
   ]);
+
+  /** Invalid name error detection. */
+  teamNameMatcher = new CustomErrorStateMatcher();
 
   /** The input field for the Team's name.*/
   @ViewChild('editTeamName') editTeamName: MatInput;

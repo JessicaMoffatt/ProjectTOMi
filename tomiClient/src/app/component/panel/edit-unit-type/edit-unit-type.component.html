@@ -10,7 +10,10 @@
   </mat-expansion-panel-header>
   <form #editUnitTypeForm="ngForm">
     <mat-form-field id="unit_type_name">
-      <input matInput #editUnitTypeName placeholder="Name" [formControl]="unitTypeNameControl">
+      <input matInput #editUnitTypeName placeholder="Name" [formControl]="unitTypeNameControl" [errorStateMatcher]="unitTypeNameMatcher">
+      <mat-error
+        *ngIf="unitTypeNameControl.hasError('required')">
+        Name is <strong>required</strong></mat-error>
     </mat-form-field>
     <mat-form-field id="unit_type_unit">
       <input matInput #editUnitTypeUnit placeholder="Unit" [formControl]="unitTypeUnitControl">

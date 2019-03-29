@@ -111,13 +111,12 @@
 
 #menu_btn {
   float: right;
+  background-color:$blue_faded;
 }
 
 #menu {
   overflow: hidden;
 }
-
-
 
 @keyframes spin {
   to {

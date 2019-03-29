@@ -1,13 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {TeamMemberTimesheetService} from "../../../service/team-member-timesheet.service";
+import {Component, Inject, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {UserAccount} from "../../../model/userAccount";
 import {TimesheetService} from "../../../service/timesheet.service";
-import {ProductivityReportLine} from "../../../model/productivityReportLine";
 import {MatSnackBar} from "@angular/material";
 import {TeamService2} from "../../../service/team2.service";
 import {BehaviorSubject} from "rxjs";
 import {Team} from "../../../model/team";
-import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-teams-panel.component";
 import {TeamPanelComponent} from "../../panel/team-panel/team-panel.component";
 
 /**
@@ -85,4 +82,19 @@ export class TeamMemberSidebarComponent implements OnInit {
   //     });
   //   });
   // }
+}
+
+@Pipe({name: 'FilterTeamMemberByName'})
+export class FilterTeamMemberByName implements PipeTransform {
+  transform(teamMemberList: Array<UserAccount>, nameFilter: string): any {
+    nameFilter = nameFilter.toLowerCase();
+    if (!nameFilter) return teamMemberList;
+
+    return teamMemberList.filter(n => {
+      let name  = n.firstName + n.lastName;
+      name = name.toLowerCase();
+
+      return name.indexOf(nameFilter) >= 0;
+    });
+  }
 }

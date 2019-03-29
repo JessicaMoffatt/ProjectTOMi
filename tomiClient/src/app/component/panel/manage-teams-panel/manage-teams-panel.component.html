@@ -11,7 +11,10 @@
       <mat-card-content>
         <form #editTeamForm="ngForm">
           <mat-form-field id="team">
-            <input matInput #editTeamName placeholder="Team Name" [formControl]="teamNameControl">
+            <input matInput #editTeamName placeholder="Team Name" [formControl]="teamNameControl" [errorStateMatcher]="teamNameMatcher">
+            <mat-error
+              *ngIf="teamNameControl.hasError('required')">
+              Name is <strong>required</strong></mat-error>
           </mat-form-field>
           <mat-form-field id="team_lead">
             <mat-select #editTeamLeadId placeholder="Team Lead" [value]="this.getSelectedTeam().leadId">
