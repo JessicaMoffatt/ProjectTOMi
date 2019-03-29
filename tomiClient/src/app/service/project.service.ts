@@ -14,6 +14,7 @@ import {MatSnackBar} from "@angular/material";
 import {ExpenseService} from "./expense.service";
 import {Entry} from "../model/entry";
 import {Team} from "../model/team";
+import {ErrorService} from "./error.service";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -43,7 +44,10 @@ export class ProjectService {
   /** the user accounts assigned to the current project; for display in project-member-list-component */
   userAccountList: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject([]);
 
-  constructor(private http: HttpClient, public snackBar: MatSnackBar, private expenseService: ExpenseService) {
+  constructor(private http: HttpClient,
+              public snackBar: MatSnackBar,
+              private expenseService: ExpenseService,
+              private errorService: ErrorService) {
   }
 
   /**
@@ -161,10 +165,11 @@ export class ProjectService {
           this.setSelected(project);
           console.log("update complete, project:" + project);
         })
-      // .catch(() => {
-      //   //TODO Add an error display
-      //   console.log("update rejected")
-      // });
+        .catch(() => {
+
+          this.errorService.alertError("save project put");
+          console.log("update rejected")
+        });
     }
   }
 

@@ -53,7 +53,7 @@ export class ProjectEntriesService {
         } else {
           return [];
         }
-      }));
+      }))
   }
 
   async submit(){

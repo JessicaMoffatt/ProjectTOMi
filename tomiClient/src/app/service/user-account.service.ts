@@ -111,7 +111,7 @@ export class UserAccountService {
    */
   GETAllUserAccounts() {
     let obsUsers : Observable<Array<UserAccount>>;
-    obsUsers = this.http.get(userAccountUrl).pipe(map((response:Response) => response))
+    obsUsers = this.http.get(userAccountUrl)
       .pipe(map((data: any) => {
         return data._embedded.userAccounts as UserAccount[];
       }));

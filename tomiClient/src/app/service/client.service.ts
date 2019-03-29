@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Client} from "../model/client";
 import {collectExternalReferences} from "@angular/compiler";
 import {UserAccount} from "../model/userAccount";
 import {Project} from "../model/project";
+import {ErrorService} from "./error.service";
 
 /**
  * Clients service provides services relates to Clients.
@@ -37,7 +38,8 @@ export class ClientService {
   /** used to pass list to project related components */
   clients: BehaviorSubject<Array<Client>> = new BehaviorSubject<Array<Client>>([]);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private errorService: ErrorService) {
     this.initializeClients();
   }
 
@@ -50,10 +52,11 @@ export class ClientService {
 
 
   /**
-   * Gets all projects.
+   * Gets all clients.
    */
   getClients(): Observable<Array<Client>> {
     return this.http.get(`${this.clientsUrl}`)
+      .pipe(catchError(this.errorService.handleError<Client[]>('getHeroes', [])))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.clients as Client[];
@@ -64,6 +67,7 @@ export class ClientService {
   }
 
 
+
   async getAsyncClients() {
     return await this.http.get(`${this.clientsUrl}`)
       .pipe(map((data: any) => {
@@ -72,7 +76,9 @@ export class ClientService {
         } else {
           return [];
         }
-      })).toPromise().then(value => this.clients = new BehaviorSubject(value));
+      })).toPromise()
+      .then(value => this.clients = new BehaviorSubject(value))
+      .catch( () => this.errorService.alertError("client async get"))
   }
 
   /**
@@ -106,14 +112,15 @@ export class ClientService {
    */
 
   getClientById(id: number) {
-    return this.http.get(`${this.clientsUrl}/${id}`).pipe(map((response: Response) => response))
+    return this.http.get(`${this.clientsUrl}/${id}`)
       .pipe(map((data: any) => {
         if (data !== undefined) {
           return data as Client;
         } else {
           return null;
         }
-      }));
+      }))
+
   }
 
   /**
@@ -143,24 +150,13 @@ export class ClientService {
    * @param account The UserAccount to be created/updated.
    */
   save(client: Client) {
-
-    if (client.id === -1) {
-      return this.http.post<Client>(this.clientsUrl, JSON.stringify(client), httpOptions).toPromise()
-        .then(response => {
-          return response as Client
-        })
-        .catch(() => {
-          //TODO Add an error display
-        });
-    } else {
-      const url = client._links["update"];
-      return this.http.put<Client>(url["href"], JSON.stringify(client), httpOptions).toPromise()
-        .then(response => {
-          return response as Client
-        }).catch(() => {
-          //TODO Add an error display
-        });
-    }
+    return this.http.post<Client>(this.clientsUrl, JSON.stringify(client), httpOptions).toPromise()
+      .then(response => {
+        return response as Client
+      })
+      .catch(() => {
+        this.errorService.alertError("client service post");
+      });
   }
 
 }

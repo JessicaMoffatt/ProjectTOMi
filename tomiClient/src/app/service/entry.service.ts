@@ -45,7 +45,7 @@ export class EntryService {
         } else {
           return [];
         }
-      }));
+      }))
   }
 
   /**
