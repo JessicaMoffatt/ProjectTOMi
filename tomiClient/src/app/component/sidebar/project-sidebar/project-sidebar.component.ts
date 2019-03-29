@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
 import {ProjectService} from "../../../service/project.service";
-import {ProjectsPanelComponent} from "../../panel/projects-panel/projects-panel.component";
+import {ManageProjectsPanelComponent} from "../../panel/manage-projects-panel/manage-projects-panel.component";
 import {Project} from "../../../model/project";
 import {BehaviorSubject} from "rxjs";
 import {UserAccount} from "../../../model/userAccount";
@@ -30,7 +30,9 @@ export class ProjectSidebarComponent implements OnInit {
     this.projectService.setSelected(project);
   }
 
-
+  public unselect(projectId: number): void {
+    this.buttonGroup.selected.checked = false;
+  }
 }
 
 

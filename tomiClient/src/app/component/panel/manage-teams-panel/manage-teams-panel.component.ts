@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Team} from "../../../model/team";
 import {FormControl, Validators} from "@angular/forms";
 import {TeamService2} from "../../../service/team2.service";

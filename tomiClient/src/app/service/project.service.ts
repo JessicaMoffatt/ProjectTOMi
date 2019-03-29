@@ -6,7 +6,7 @@ import {catchError} from "rxjs/operators";
 import {HttpErrorResponse} from "@angular/common/http";
 import {throwError} from "rxjs";
 import {Project} from "../model/project";
-import {projectsUrl} from "../configuration/domainConfiguration";
+import {projectsUrl, teamUrl} from "../configuration/domainConfiguration";
 import {dataDumpUrl} from "../configuration/domainConfiguration";
 import {userAccountUrl} from "../configuration/domainConfiguration";
 import {BudgetReport} from "../model/budgetReport";
@@ -61,18 +61,21 @@ export class ProjectService {
   constructor(private http: HttpClient, public snackBar: MatSnackBar, private expenseService: ExpenseService) {
   }
 
-  /**
-   * Gets all projects.
-   */
-  getAllProjects(): Observable<Array<Project>> {
-    return this.http.get(`${projectsUrl}`)
+  initializeProjects(){
+    this.requestAllProjects().forEach(projects => {
+      this.projects = new BehaviorSubject<Array<Project>>(projects);
+    }).catch((error: any) => {
+      console.log("Project error " + error);
+    });
+  }
+
+  public requestAllProjects() {
+    let obsProjects: Observable<Array<Project>>;
+    obsProjects = this.http.get(`${projectsUrl}`)
       .pipe(map((data: any) => {
-        if (data._embedded !== undefined) {
-          return data._embedded.projects as Project[];
-        } else {
-          return [];
-        }
+        return data._embedded.projects as Project[];
       }));
+    return obsProjects;
   }
 
   /**
@@ -246,7 +249,7 @@ export class ProjectService {
   }
 
   refreshProjectList() {
-    return this.getAllProjects().forEach(project => {
+    return this.requestAllProjects().forEach(project => {
       this.projects = new BehaviorSubject<Array<Project>>(project);
       // this.sort();
     }).catch(() => {
@@ -296,4 +299,6 @@ export class ProjectService {
   getProjectSubjectList(): BehaviorSubject<Array<Project>> {
     return this.projects;
   }
+
+
 }
