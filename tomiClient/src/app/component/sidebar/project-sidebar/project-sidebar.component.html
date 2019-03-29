@@ -5,7 +5,7 @@
                                  placeholder="search" (keyup)="0"></div>
   <mat-action-list>
     <mat-button-toggle-group #btn_group="matButtonToggleGroup" [name]="buttonGroup" class="btn_list" vertical>
-      <mat-button-toggle id="{{project.id}}_btn" class="list_btns" (click)='this.selectedProject(project)'
+      <mat-button-toggle id="{{project.id}}_btn" class="list_btns" (click)='this.selectProject(project)'
                          *ngFor='let project of projectService.getProjectSubjectList().getValue() | FilterProjectByName:project_search.value '>{{project.projectName}}</mat-button-toggle>
     </mat-button-toggle-group>
 

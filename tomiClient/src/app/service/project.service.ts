@@ -99,7 +99,7 @@ export class ProjectService {
    */
   async setSelected(project: Project) {
     this.selectedProject = await project;
-    this.refreshProjectList()
+    this.refreshProjectList();
     if (this.selectedProject != null && this.selectedProject.id.match(this.regExp)) {
       this.refreshUserAccountList();
       this.expenseService.refreshExpenses(this.selectedProject);
