@@ -29,7 +29,7 @@ export class UserAccountComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.teamService.refreshTeams();
+    this.teamService.initializeTeams();
     this.userAccountService.initializeUserAccounts();
     this.list = this.userAccountService.userSubject.getValue();
   }

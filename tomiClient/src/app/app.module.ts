@@ -93,7 +93,6 @@ import {ProjectEntriesService} from "./service/project-entries.service";
 import {SignInService} from "./service/sign-in.service";
 import {TaskService} from "./service/task.service";
 import {TeamService} from "./service/team.service";
-import {TeamService2} from "./service/team2.service";
 import {TeamSidebarService} from "./service/team-sidebar.service";
 import {TimesheetService} from "./service/timesheet.service";
 import {UserAccountService} from "./service/user-account.service";
@@ -234,7 +233,6 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     SignInService,
     TaskService,
     TeamService,
-    TeamService2,
     TeamSidebarService,
     TimesheetService,
     UserAccountService,
@@ -251,8 +249,6 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
       provide: DateAdapter,
       useClass: CustomDateAdapter
     },
-
-    TeamService,
     TimesheetService,
     ProjectEntriesService,
     UserAccountService,
