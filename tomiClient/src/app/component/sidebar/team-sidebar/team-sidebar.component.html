@@ -10,7 +10,7 @@
     <mat-action-list>
       <mat-button-toggle-group #btn_group="matButtonToggleGroup" [name]="buttonGroup" class="btn_list" vertical>
         <mat-button-toggle id="{{team.id}}_btn" class="list_btns" (click)='this.selectTeam(team)'
-                           *ngFor='let team of teamService.getTeamSubjectList() | async'>{{team.teamName}}</mat-button-toggle>
+                           *ngFor='let team of teamService.getTeamSubjectList().getValue() | FilterTeamByName:team_search.value '>{{team.teamName}}</mat-button-toggle>
       </mat-button-toggle-group>
 
     </mat-action-list>

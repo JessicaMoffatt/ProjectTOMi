@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
 import {Team} from "../../../model/team";
 import {FormControl, Validators} from "@angular/forms";
 import {TeamService2} from "../../../service/team2.service";
@@ -14,9 +14,7 @@ import {
   MatSelect,
   PageEvent
 } from "@angular/material";
-import {AddUserAccountComponent} from "../../modal/add-user-account/add-user-account.component";
 import {AddTeamComponent} from "../../modal/add-team/add-team.component";
-import {DeleteUserAccountModal, EditUserComponent} from "../edit-user/edit-user.component";
 
 /**
  * @author Karol Talbot

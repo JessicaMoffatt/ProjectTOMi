@@ -66,7 +66,7 @@ export class UserAccountComponent implements OnInit, OnDestroy {
 }
 
 @Pipe({name: 'FilterUserAccountByName'})
-export class FilterUserAccountByNamePipe implements PipeTransform {
+export class FilterUserAccountByName implements PipeTransform {
   transform(userList: Array<UserAccount>, nameFilter: string): any {
     nameFilter = nameFilter.toLowerCase();
     if (!nameFilter) return userList;

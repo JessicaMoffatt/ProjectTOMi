@@ -1,29 +1,13 @@
+<cdk-virtual-scroll-viewport [itemSize]="10" class="sidebar">
 
-Projects
-<br/>
-<!--the keyup function below is used to trigger an update-->
-<input #box (keyup)="0" id="search_value" type="text" placeholder="Search"/>
-<br/>
+  <h2>Projects</h2>
+  <div class="search_bar"><input #project_search id="project_search" [ngClass]="'input_search'"
+                                 placeholder="search" (keyup)="0"></div>
+  <mat-action-list>
+    <mat-button-toggle-group #btn_group="matButtonToggleGroup" [name]="buttonGroup" class="btn_list" vertical>
+      <mat-button-toggle id="{{project.id}}_btn" class="list_btns" (click)='this.selectedProject(project)'
+                         *ngFor='let project of projectService.getProjectSubjectList().getValue() | FilterProjectByName:project_search.value '>{{project.projectName}}</mat-button-toggle>
+    </mat-button-toggle-group>
 
-<br/>
-
-Active Projects
-<br/>
-
-<mat-list>
-  <!--orderBy:'projectName'" -->
-  <!-- [class.highlighted]="p.id === this.projectService.selectedProject.id" -->
-  <!--"-->
-  <!--|orderBy:'projectName'-->
-  <mat-list-item
-    *ngFor="let p of this.projectService.projects|async"
-    (click)="this.selectProject(p)">
-
-        <span *ngIf="p.projectName.toLowerCase().includes(box.value.toLowerCase())">
-          {{p.active}} {{p.projectName}}
-        </span>
-
-  </mat-list-item>
-</mat-list>
-
-<button (click)="displayBlankProject()" mat-raised-button color="primary">NEW PROJECT</button>
+  </mat-action-list>
+</cdk-virtual-scroll-viewport>
