@@ -4,21 +4,11 @@
  */
 @import '~src/variables';
 
-.sidebar {
-  margin-top: 0;
-
-  h2 {
-    text-align: center;
-  }
-
-  height: 100vh;
-  width: 15vw;
-  background: $white;
-  color: $blue;
-}
 
 .list_btns {
   display: block;
+  overflow-wrap: break-spaces;
+  text-overflow: ellipsis;
   width: 100%;
 }
 
@@ -36,7 +26,4 @@
   width: 100%;
 }
 
-.search_bar {
-  padding: 5%;
-  width: 90%;
-}
+

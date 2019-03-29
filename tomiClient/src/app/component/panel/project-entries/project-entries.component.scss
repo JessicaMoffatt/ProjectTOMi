@@ -1,6 +1,25 @@
 @import "~src/variables";
 
-.submit{
-  background-color:$blue;
-  color: $white;
+.floating_action_button {
+  position: fixed;
+  right: 4vw;
+  bottom: 4vh;
+  background-color: $blue;
+
+  i {
+    color: white;
+  }
+}
+
+.container{
+  padding-top: 2%;
+  width: inherit;
+  height: 90vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+h2{
+  color:$blue;
+  text-align: center;
 }
