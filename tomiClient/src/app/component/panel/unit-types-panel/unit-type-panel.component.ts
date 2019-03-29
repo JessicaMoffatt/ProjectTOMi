@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Pipe, PipeTransform} from '@angular/core';
 import {Input} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {ViewChild} from "@angular/core";
@@ -8,6 +8,7 @@ import {MatDialog} from '@angular/material';
 import {UnitType} from "../../../model/unitType";
 import {UnitTypeService} from "../../../service/unit-type.service";
 import {AddUnitTypeComponent} from "../../modal/add-unit-type/add-unit-type.component";
+import {UserAccount} from "../../../model/userAccount";
 
 /**
  *
@@ -51,4 +52,19 @@ export class UnitTypePanelComponent implements OnInit{
     });
   }
   
+}
+
+@Pipe({name: 'FilterUnitTypeByName'})
+export class FilterUnitTypeByName implements PipeTransform {
+  transform(unitTypeList: Array<UnitType>, nameFilter: string): any {
+    nameFilter = nameFilter.toLowerCase();
+    if (!nameFilter) return unitTypeList;
+
+    return unitTypeList.filter(n => {
+      let name = n.name;
+      name = name.toLowerCase();
+
+      return name.indexOf(nameFilter) >= 0;
+    });
+  }
 }

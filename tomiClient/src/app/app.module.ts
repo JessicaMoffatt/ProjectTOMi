@@ -100,7 +100,9 @@ import { AddProjectExpenseComponent } from './component/modal/add-project-expens
 import { DataDumpReportComponent } from './component/extra/data-dump-report/data-dump-report.component';
 
 //Other stuff
-import {DoAFilter} from "./component/panel/user-account/user-account.component";
+import {FilterUserAccountByNamePipe} from "./component/panel/user-account/user-account.component";
+import {FilterUnitTypeByName} from "./component/panel/unit-types-panel/unit-type-panel.component";
+import {FilterTeamByName} from "./component/panel/team/team.component";
 
 @NgModule({
   declarations: [
@@ -159,7 +161,9 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     ProjectSidebarComponent,
     AddProjectExpenseComponent,
     DataDumpReportComponent,
-    DoAFilter
+    FilterUserAccountByNamePipe,
+    FilterUnitTypeByName,
+    FilterTeamByName
   ],
   imports: [
     MatSidenavModule,
@@ -281,7 +285,9 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     MatTabsModule,
     MatTableModule,
     MatProgressBarModule,
-    DoAFilter
+    FilterUserAccountByNamePipe,
+    FilterUnitTypeByName,
+    FilterTeamByName
   ]
 })
 export class AppModule {

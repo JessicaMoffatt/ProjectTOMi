@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
 import {TeamService} from "../../../service/team.service";
 import {Team} from "../../../model/team";
 import {UserAccount} from "../../../model/userAccount";
@@ -174,5 +174,20 @@ export class AddTeamMemberComponent implements OnInit {
    */
   closeAddMemberComponent(): void {
     this.dialogRef.close();
+  }
+}
+
+@Pipe({name: 'FilterTeamByName'})
+export class FilterTeamByName implements PipeTransform {
+  transform(teamList: Array<Team>, nameFilter: string): any {
+    nameFilter = nameFilter.toLowerCase();
+    if (!nameFilter) return teamList;
+
+    return teamList.filter(n => {
+      let name = n.teamName;
+      name = name.toLowerCase();
+
+      return name.indexOf(nameFilter) >= 0;
+    });
   }
 }
