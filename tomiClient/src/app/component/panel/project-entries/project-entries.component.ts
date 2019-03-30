@@ -45,7 +45,6 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
   async setProject(project:Project){
     this.selectedProject = project;
     this.projectEntries = await this.projectService.getEntries(project);
-    console.log(this.projectEntries);
   }
 
   /**
@@ -71,17 +70,15 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
     })
   }
-  //
-  // /**
-  //  * Submits the entries for approval/rejection.
-  //  */
-  // async submitApproval() {
-  //   let promise = new Promise((resolve,reject)=>{
-  //     resolve(this.projectEntriesService.submit());
-  //   });
-  //
-  //   return await promise;
-  // }
+
+  /**
+   * Submits the entries for approval/rejection.
+   */
+  async submitApproval() {
+    await this.projectService.submit(this.entryComponentsRef.toArray());
+    this.projectEntries = null;
+    this.parent.unselect();
+  }
 }
 
 /* Approval Modal */
@@ -91,15 +88,8 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
  */
 @Component({
   selector: 'app-approval-modal',
-  template: `
-
-    <h1 mat-dialog-title>Submit Timesheet</h1>
-    <div mat-dialog-content>
-      <p>Confirm SUBMISSION of APPROVAL/REJECTION for entries</p>
-      <!--<button mat-button [ngClass]="'confirm_button'" (click)="confirmSubmission()">SUBMIT</button>-->
-      <button mat-button [ngClass]="'cancel_btn'" (click)="cancel()">CANCEL</button>
-    </div>
-  `
+  templateUrl: './project-submit.component.html',
+  styleUrls: ['./project-submit.component.scss']
 })
 
 /**
@@ -114,29 +104,21 @@ export class SubmitApprovalModalComponent implements OnInit {
 
   }
 
-  // /** Facilitates the submission of the current timesheet, as well as closes the modal.*/
-  // confirmSubmission(): void {
-  //   this.submitApproval().then();
-  //   this.dialogRef.close();
-  // }
+  /** Facilitates the submission of the current timesheet, as well as closes the modal.*/
+  confirmSubmission(): void {
+    this.submitApproval().then();
+    this.dialogRef.close();
+  }
 
   /** Closes the modal with no extra actions.*/
   cancel(): void {
     this.dialogRef.close();
   }
 
-  //
-  // /** Facilitates submission of the current timesheet.**/
-  // async submitApproval() {
-  //   await this.data.parent.submitApproval().then(()=>{
-  //     this.displayProjectEntries().then();
-  //   });
-  // }
 
-  // /**
-  //  * Displays the project's entries.
-  //  */
-  // async displayProjectEntries(){
-  //   await this.data.parent.projectEntriesService.displayProjectEntries().then();
-  // }
+  /** Facilitates submission of the current timesheet.**/
+  async submitApproval() {
+    await this.data.parent.submitApproval();
+  }
+
 }

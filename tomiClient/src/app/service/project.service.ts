@@ -1,24 +1,18 @@
 import {Injectable} from '@angular/core';
-import {map} from "rxjs/operators";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
-import {catchError} from "rxjs/operators";
-import {HttpErrorResponse} from "@angular/common/http";
-import {throwError} from "rxjs";
+import {catchError, map} from "rxjs/operators";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {Project} from "../model/project";
-import {projectsUrl} from "../configuration/domainConfiguration";
-import {dataDumpUrl} from "../configuration/domainConfiguration";
-import {userAccountUrl} from "../configuration/domainConfiguration";
+import {billableUrl, dataDumpUrl, projectsUrl, userAccountUrl} from "../configuration/domainConfiguration";
 import {BudgetReport} from "../model/budgetReport";
-import {billableUrl} from "../configuration/domainConfiguration";
 import {BillableHoursReportLine} from "../model/billableHoursReportLine";
-import {ProductivityReportLine} from "../model/productivityReportLine";
 import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
 import {ExpenseService} from "./expense.service";
 import {Entry} from "../model/entry";
-import {Team} from "../model/team";
 import {Status} from "../model/status";
+import {EntryComponent} from "../component/panel/entry/entry.component";
+import {EntryApproveComponent} from "../component/panel/entry-approve/entry-approve.component";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -318,7 +312,9 @@ export class ProjectService {
 
   async evaluateEntry(entry: Entry) {
     if (entry.status === Status.APPROVED) {
-      await this.promiseApproval(entry).then();
+      await this.putApprovalRequest(entry).then((data) =>{
+        return data;
+      });
     } else if (entry.status === Status.REJECTED) {
       await this.putRejectionRequest(entry).then((data) => {
         return data;
@@ -335,7 +331,7 @@ export class ProjectService {
   }
 
   async putApprovalRequest(entry: Entry) {
-    let url = entry._links["evaluate"];
+    let url:string = entry._links["evaluate"]["href"];
     let temp = null;
     await this.http.put(url, '"APPROVED"', {headers: headers, observe: "response"}).toPromise().then(response => {
       temp = response;
@@ -344,12 +340,11 @@ export class ProjectService {
     }).catch(() => {
       return null;
     });
-
     return temp;
   }
 
   async putRejectionRequest(entry: Entry): Promise<Entry> {
-    let url = entry._links["evaluate"];
+    let url:string = entry._links["evaluate"]["href"];
     let temp = null;
     await this.http.put(url, '"REJECTED"', {headers: headers, observe: "response"}).toPromise().then(response => {
       temp = response;
@@ -363,17 +358,22 @@ export class ProjectService {
 
   populateEntries(project: Project): Observable<Array<Entry>> {
     let url = project._links["entries"];
-   let stuff = this.http.get(url["href"]).pipe(map((response: Response) => response))
+    return this.http.get(url["href"]).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           let sorted = data._embedded.entries as Entry[];
-          console.log(sorted);
           sorted = sorted.sort((entry1, entry2) => entry1.timesheet - entry2.timesheet);
           return sorted;
         } else {
           return [];
         }
       }));
-   return stuff;
+  }
+
+  async submit(entries) {
+    return await entries.forEach((component: EntryApproveComponent) => {
+      let entry = component.entry;
+      return this.evaluateEntry(entry);
+    });
   }
 }

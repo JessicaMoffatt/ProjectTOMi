@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {FormControl, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material";
 import {Team} from "../../../model/team";
 import {TeamService} from "../../../service/team.service";

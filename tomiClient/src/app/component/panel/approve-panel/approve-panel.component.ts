@@ -10,6 +10,7 @@ export class ApprovePanelComponent implements OnInit {
   private selectedProject:Project = null;
 
   @ViewChild("projectEntries") projectEntries;
+  @ViewChild("sideBar") sideBar;
 
 
   public setSelectedProject(project:Project):void{
@@ -26,4 +27,8 @@ export class ApprovePanelComponent implements OnInit {
   ngOnInit() {
   }
 
+  public unselect(){
+    this.sideBar.unselect(this.selectedProject.id);
+    this.selectedProject = null;
+  }
 }

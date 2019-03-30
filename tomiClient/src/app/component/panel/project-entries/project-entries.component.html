@@ -3,7 +3,7 @@
 @version 1.0
 -->
 <div [ngClass]="'container'">
-  <div *ngIf="selectedProject">
+  <ng-template [ngIf]="this.selectedProject != null">
     <div>
       <h2>
         {{selectedProject.projectName}}
@@ -13,7 +13,7 @@
                              [entry]="entry"></app-entry-approve>
         </div>
     </div>
-  </div>
+  </ng-template>
   <div [ngClass]="'project_entries_footer'">
     <button mat-fab class="floating_action_button" (click)="displaySubmitModal()">
       <i class="material-icons">

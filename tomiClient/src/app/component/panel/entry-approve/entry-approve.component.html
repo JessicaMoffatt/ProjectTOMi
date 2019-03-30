@@ -7,7 +7,7 @@
 @author Karol Talbot
 @version 1.0
 -->
-<mat-card id="{{entry.id}}_card" class="entry_card">
+<mat-card #entry_card  id="{{entry.id}}_card" class="entry_card">
   <mat-card-content>
     <div class="row">
       <div class="top">
@@ -37,12 +37,12 @@
         </mat-form-field>
       </div>
       <div class="entry_btn_container" #buttons>
-        <button mat-flat-button class="entry_btn delete_btn" (click)='reject()'>
+        <button id="{{entry.id}}_reject"  mat-flat-button class="entry_btn delete_btn" (click)='reject()'>
           <i class="material-icons">
             not_interested
           </i>
         </button>
-        <button mat-flat-button class="entry_btn copy_btn" (click)='approve()'>
+        <button  id="{{entry.id}}_approve" mat-flat-button class="entry_btn copy_btn" (click)='approve()'>
           <i class="material-icons">
             check_circle_outline
           </i>
