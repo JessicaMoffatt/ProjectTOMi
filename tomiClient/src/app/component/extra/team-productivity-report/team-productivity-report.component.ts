@@ -1,6 +1,4 @@
 import {AfterViewInit, Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {TeamMemberTimesheetService} from "../../../service/team-member-timesheet.service";
-import {Team} from "../../../model/team";
 import {TeamPanelComponent} from "../../panel/team-panel/team-panel.component";
 
 @Component({
