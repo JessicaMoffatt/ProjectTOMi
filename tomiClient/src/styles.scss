@@ -44,6 +44,13 @@ body{
   overflow-y: auto;
 }
 
+.sidebar .mat-button-toggle:hover{
+  background-color: $blue;
+  color: $white;
+}
+.mat-button-toggle-focus-overlay{
+  display: none;
+}
 
 .sidebar_container{
   float:left;

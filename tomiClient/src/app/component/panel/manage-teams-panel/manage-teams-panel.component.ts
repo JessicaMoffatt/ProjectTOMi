@@ -1,7 +1,7 @@
 import {Component, HostListener, Inject, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
 import {Team} from "../../../model/team";
 import {FormControl, Validators} from "@angular/forms";
-import {TeamService2} from "../../../service/team2.service";
+import {TeamService} from "../../../service/team.service";
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
 import {BehaviorSubject} from "rxjs";
@@ -57,7 +57,8 @@ export class ManageTeamsPanelComponent implements OnInit {
     this.save().then();
   }
 
-  constructor(private dialog: MatDialog, public deleteTeamDialog: MatDialog, private teamService2: TeamService2, public userAccountService: UserAccountService) {
+  
+  constructor(private dialog: MatDialog, public deleteTeamDialog: MatDialog, private teamService: TeamService, public userAccountService: UserAccountService) {
   }
 
   ngOnInit() {
@@ -97,13 +98,13 @@ export class ManageTeamsPanelComponent implements OnInit {
   }
 
   public getTeamMembers() {
-    this.teamService2.getTeamMembers(this.selectedTeam).forEach(userAccount => {
+    this.teamService.getTeamMembers(this.selectedTeam).forEach(userAccount => {
       this.selectedTeamMembers = new BehaviorSubject<Array<UserAccount>>(userAccount);
       this.setTeamMembersPage();
     }).catch((error: any) => {
       console.log("Team Member error " + error);
     });
-    this.teamService2.getAllFreeMembers().forEach(userAccount => {
+    this.teamService.getAllFreeMembers().forEach(userAccount => {
       this.availableMembers = new BehaviorSubject<Array<UserAccount>>(userAccount);
       this.setAvailableMembersPage();
     }).catch((error: any) => {
@@ -208,16 +209,16 @@ export class ManageTeamsPanelComponent implements OnInit {
       this.dirtyUserBuffer.forEach(async (user: UserAccount) => {
         await this.userAccountService.save(user);
       });
-      await this.teamService2.save(this.selectedTeam);
+      await this.teamService.save(this.selectedTeam);
       this.sideBar.unselect(this.selectedTeam.id);
       this.selectedTeam = null;
     }
   }
 
   public async delete() {
-    await this.teamService2.delete(this.selectedTeam);
+    await this.teamService.delete(this.selectedTeam);
     this.sideBar.unselect(this.selectedTeam.id);
-    this.teamService2.initializeTeams();
+    this.teamService.initializeTeams();
     this.selectedTeam = null;
   }
 

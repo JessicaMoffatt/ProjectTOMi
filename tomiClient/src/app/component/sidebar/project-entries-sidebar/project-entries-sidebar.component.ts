@@ -31,7 +31,7 @@ export class ProjectEntriesSidebarComponent implements OnInit {
     this.parent.setSelectedProject(project);
   }
 
-  public unselect(teamId:number){
+  public unselect(projectId:string){
     this.btn_group.selected.checked = false;
     console.log(this.btn_group);
   }

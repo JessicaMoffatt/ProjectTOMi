@@ -86,14 +86,12 @@
 
 
 .approved {
-  color: $white;
-  background-color: $green;
+  background-color: $green_faded;
 
 }
 
 .rejected {
-  color: $white;
-  background-color: $red;
+  background-color: $red_faded;
 }
 
 .entry_btn {
@@ -106,12 +104,25 @@
 
 .delete_btn {
   float: right;
-  background-color: $red;
+  background-color: $white;
+  color: $red;
 }
 
+.delete_btn_inverted{
+  float:right;
+  background-color: $red;
+  color: $white;
+}
+
+.copy_btn_inverted{
+  float:right;
+  background-color: $blue;
+  color: $white;
+}
 .copy_btn {
   float: right;
-  background-color: $blue;
+  background-color: $white;
+  color: $blue;
 }
 
 .entry_btn_container {

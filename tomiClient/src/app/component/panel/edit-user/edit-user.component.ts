@@ -1,11 +1,10 @@
 import {Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {FormControl, Validators, FormGroupDirective, NgForm} from "@angular/forms";
 import {UserAccount} from "../../../model/userAccount";
-import {TeamService} from "../../../service/team.service";
 import {ErrorStateMatcher, MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSelect} from "@angular/material";
 import {Observable, Subscription} from "rxjs";
-import {TeamService2} from "../../../service/team2.service";
 import {CustomErrorStateMatcher} from "../../extra/CustomErrorStateMatcher";
+import {TeamService} from "../../../service/team.service";
 
 /**
  * EditUserComponent is an individual, editable entry for a UserAccount.
@@ -84,10 +83,10 @@ export class EditUserComponent implements OnInit, OnDestroy {
   @ViewChild('editUserAccountForm') editUserAccountForm;
 
 
-  constructor(public deleteUserDialog: MatDialog, public teamService2: TeamService2) { }
+  constructor(public deleteUserDialog: MatDialog, public teamService: TeamService) { }
 
   ngOnInit() {
-    this.teamService2.initializeTeams();
+    this.teamService.initializeTeams();
   }
 
   ngOnDestroy(): void {

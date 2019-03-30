@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {FormControl, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material";
 import {Team} from "../../../model/team";
-import {TeamService2} from "../../../service/team2.service";
+import {TeamService} from "../../../service/team.service";
 
 /**
  * AddTaskComponent is a modal form used to add a new Task to the back end.
@@ -28,7 +28,7 @@ export class AddTeamComponent implements OnInit {
   /** The ngForm for this component */
   @ViewChild('addTeamForm') addTeamForm;
 
-  constructor(public dialogRef: MatDialogRef<AddTeamComponent>, private teamService2:TeamService2) { }
+  constructor(public dialogRef: MatDialogRef<AddTeamComponent>, private teamService:TeamService) { }
 
   /**
    * Closes the modal component.
@@ -45,9 +45,9 @@ export class AddTeamComponent implements OnInit {
     if (this.teamNameControl.valid) {
       let teamToAdd = new Team();
       teamToAdd.teamName = this.addTeamName.nativeElement.value;
-      await this.teamService2.save(teamToAdd).then(
+      await this.teamService.save(teamToAdd).then(
         (value)=> {
-          this.teamService2.initializeTeams();
+          this.teamService.initializeTeams();
           return value;
         });
       this.dialogRef.close();

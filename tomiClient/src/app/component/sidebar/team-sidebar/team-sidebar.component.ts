@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import {Team} from "../../../model/team";
 import {MatDialog} from "@angular/material";
-import {TeamService2} from "../../../service/team2.service";
+import {TeamService} from "../../../service/team.service";
 import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-teams-panel.component";
 
 /**
@@ -24,7 +24,7 @@ export class TeamSidebarComponent implements OnInit {
   @ViewChild("btn_group") buttonGroup;
 
   constructor(@Inject(ManageTeamsPanelComponent) private parent: ManageTeamsPanelComponent,
-              public dialog: MatDialog, public teamService: TeamService2) {
+              public dialog: MatDialog, public teamService: TeamService) {
   }
 
   ngOnInit() {

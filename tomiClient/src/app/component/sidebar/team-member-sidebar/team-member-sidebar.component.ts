@@ -2,7 +2,7 @@ import {Component, Inject, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {UserAccount} from "../../../model/userAccount";
 import {TimesheetService} from "../../../service/timesheet.service";
 import {MatSnackBar} from "@angular/material";
-import {TeamService2} from "../../../service/team2.service";
+import {TeamService} from "../../../service/team.service";
 import {BehaviorSubject} from "rxjs";
 import {Team} from "../../../model/team";
 import {TeamPanelComponent} from "../../panel/team-panel/team-panel.component";
@@ -21,7 +21,7 @@ import {TeamPanelComponent} from "../../panel/team-panel/team-panel.component";
 export class TeamMemberSidebarComponent implements OnInit {
   private teamMembers: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject([]);
 
-  constructor(public teamService: TeamService2,
+  constructor(public teamService: TeamService,
               public timesheetService: TimesheetService, public snackBar: MatSnackBar, @Inject(TeamPanelComponent) private parent: TeamPanelComponent) {
   }
 
