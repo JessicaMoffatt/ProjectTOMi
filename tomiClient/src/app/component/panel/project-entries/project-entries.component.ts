@@ -77,6 +77,7 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
   async submitApproval() {
     await this.projectService.submit(this.entryComponentsRef.toArray());
     this.projectEntries = null;
+    this.selectedProject = null;
     this.parent.unselect();
   }
 }

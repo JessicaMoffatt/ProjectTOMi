@@ -3,7 +3,7 @@
 @version 1.0
 -->
 <div [ngClass]="'container'">
-  <ng-template [ngIf]="this.selectedProject != null">
+  <ng-template [ngIf]="this.selectedProject != null && this.selectedProject != undefined">
     <div>
       <h2>
         {{selectedProject.projectName}}
