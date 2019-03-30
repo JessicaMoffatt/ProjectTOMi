@@ -1,27 +1,26 @@
 import {Injectable} from '@angular/core';
-import {map} from "rxjs/operators";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
-import {catchError} from "rxjs/operators";
-import {HttpErrorResponse} from "@angular/common/http";
-import {throwError} from "rxjs";
+import {catchError, map} from "rxjs/operators";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {Project} from "../model/project";
-import {projectsUrl} from "../configuration/domainConfiguration";
-import {dataDumpUrl} from "../configuration/domainConfiguration";
-import {userAccountUrl} from "../configuration/domainConfiguration";
+import {billableUrl, dataDumpUrl, projectsUrl, userAccountUrl} from "../configuration/domainConfiguration";
 import {BudgetReport} from "../model/budgetReport";
-import {billableUrl} from "../configuration/domainConfiguration";
 import {BillableHoursReportLine} from "../model/billableHoursReportLine";
-import {ProductivityReportLine} from "../model/productivityReportLine";
 import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
 import {ExpenseService} from "./expense.service";
 import {Entry} from "../model/entry";
-import {Team} from "../model/team";
+import {Status} from "../model/status";
+import {EntryComponent} from "../component/panel/entry/entry.component";
+import {EntryApproveComponent} from "../component/panel/entry-approve/entry-approve.component";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
+
+const headers = new HttpHeaders({
+  'Content-Type': 'application/json'
+});
 
 
 /**
@@ -39,10 +38,10 @@ export class ProjectService {
   billableReport: BillableHoursReportLine[] = [];
 
   /** The actual hours spent working on a project.*/
-  percentActual:number = 0;
+  percentActual: number = 0;
 
   /** The percent of budgeted hours remaining.*/
-  percentRemaining:number = 0;
+  percentRemaining: number = 0;
 
   /** general expression used to check if projectId is valid */
   public readonly regExp: string = "[A-Z]{2}[0-9]{4}";
@@ -103,21 +102,21 @@ export class ProjectService {
       this.refreshUserAccountList();
       this.expenseService.refreshExpenses(this.selectedProject);
       this.getBudgetReportByProjectId(project)
-      .subscribe(
-        data => {
-          this.selectedBudget = data;
-          this.percentActual = this.calculatePercentActual();
-          this.percentRemaining = 100- this.percentActual;
-        },
-        error => {
-          this.handleError
-        });
-    this.getBillableReport().subscribe(data=>{
-      this.billableReport = data;
-      this.billableReport.sort(BillableHoursReportLine.compareName);
-    }, error =>{
+        .subscribe(
+          data => {
+            this.selectedBudget = data;
+            this.percentActual = this.calculatePercentActual();
+            this.percentRemaining = 100 - this.percentActual;
+          },
+          error => {
+            this.handleError
+          });
+      this.getBillableReport().subscribe(data => {
+        this.billableReport = data;
+        this.billableReport.sort(BillableHoursReportLine.compareName);
+      }, error => {
         this.handleError
-    });
+      });
     }
   }
 
@@ -129,10 +128,12 @@ export class ProjectService {
    * Gets a project with the specified ID.
    * @param id The ID of the project to get.
    */
-  getProjectById(id:string){
+  getProjectById(id: string) {
     return this.http.get(`${projectsUrl}/${id}`)
       .pipe(
-        map((res:Project) => {return res}),catchError(this.handleError)
+        map((res: Project) => {
+          return res
+        }), catchError(this.handleError)
       );
   }
 
@@ -140,37 +141,41 @@ export class ProjectService {
    *
    * @param project The project to get a report for.
    */
-  getBudgetReportByProjectId(project:Project){
+  getBudgetReportByProjectId(project: Project) {
     let url = project._links["budget"];
     return this.http.get(`${url["href"]}`)
       .pipe(
-        map((res:BudgetReport) => {return res}),catchError(this.handleError)
+        map((res: BudgetReport) => {
+          return res
+        }), catchError(this.handleError)
       );
   }
 
-  calculatePercentBillable():string{
-    if(this.selectedBudget){
-      let percent = this.selectedBudget.billableHours/this.selectedBudget.totalHours*100;
+  calculatePercentBillable(): string {
+    if (this.selectedBudget) {
+      let percent = this.selectedBudget.billableHours / this.selectedBudget.totalHours * 100;
       let percentString = percent.toFixed(2);
 
       return percentString;
-    }else{
+    } else {
       return "0";
     }
   }
 
-  calculatePercentActual():number{
-    if(this.selectedBudget){
-      return this.selectedBudget.totalHours/this.selectedBudget.project.budgetedHours*100;
-    }else{
+  calculatePercentActual(): number {
+    if (this.selectedBudget) {
+      return this.selectedBudget.totalHours / this.selectedBudget.project.budgetedHours * 100;
+    } else {
       return 0;
     }
   }
 
-  getBillableReport(){
+  getBillableReport() {
     return this.http.get(billableUrl)
       .pipe(
-        map((res:BillableHoursReportLine[]) => {return res}),catchError(this.handleError)
+        map((res: BillableHoursReportLine[]) => {
+          return res
+        }), catchError(this.handleError)
       );
   }
 
@@ -294,4 +299,81 @@ export class ProjectService {
     });
   }
 
+  async getEntries(project: Project) {
+    let entryList: BehaviorSubject<Array<Entry>>;
+    entryList = new BehaviorSubject([]);
+    await this.populateEntries(project).forEach(entries => {
+      entryList = new BehaviorSubject<Array<Entry>>(entries);
+    }).catch((error: any) => {
+      console.log("Project error " + error);
+    });
+    return entryList;
+  }
+
+  async evaluateEntry(entry: Entry) {
+    if (entry.status === Status.APPROVED) {
+      await this.putApprovalRequest(entry).then((data) =>{
+        return data;
+      });
+    } else if (entry.status === Status.REJECTED) {
+      await this.putRejectionRequest(entry).then((data) => {
+        return data;
+      });
+    }
+  }
+
+  async promiseApproval(currEntry: Entry) {
+    let promise = new Promise((resolve, reject) => {
+      resolve(this.putApprovalRequest(currEntry));
+    });
+
+    return await promise;
+  }
+
+  async putApprovalRequest(entry: Entry) {
+    let url:string = entry._links["evaluate"]["href"];
+    let temp = null;
+    await this.http.put(url, '"APPROVED"', {headers: headers, observe: "response"}).toPromise().then(response => {
+      temp = response;
+
+      return response;
+    }).catch(() => {
+      return null;
+    });
+    return temp;
+  }
+
+  async putRejectionRequest(entry: Entry): Promise<Entry> {
+    let url:string = entry._links["evaluate"]["href"];
+    let temp = null;
+    await this.http.put(url, '"REJECTED"', {headers: headers, observe: "response"}).toPromise().then(response => {
+      temp = response;
+      return response;
+    }).catch(() => {
+      return null;
+    });
+
+    return temp;
+  }
+
+  populateEntries(project: Project): Observable<Array<Entry>> {
+    let url = project._links["entries"];
+    return this.http.get(url["href"]).pipe(map((response: Response) => response))
+      .pipe(map((data: any) => {
+        if (data._embedded !== undefined) {
+          let sorted = data._embedded.entries as Entry[];
+          sorted = sorted.sort((entry1, entry2) => entry1.timesheet - entry2.timesheet);
+          return sorted;
+        } else {
+          return [];
+        }
+      }));
+  }
+
+  async submit(entries) {
+    return await entries.forEach((component: EntryApproveComponent) => {
+      let entry = component.entry;
+      return this.evaluateEntry(entry);
+    });
+  }
 }

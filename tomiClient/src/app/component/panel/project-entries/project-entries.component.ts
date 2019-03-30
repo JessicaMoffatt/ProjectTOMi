@@ -1,8 +1,13 @@
 import {AfterViewInit, Component, Inject, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {ProjectEntriesService} from "../../../service/project-entries.service";
+
 import {EntryApproveComponent} from "../entry-approve/entry-approve.component";
-import {DeleteEntryModalComponent, TimesheetComponent} from "../timesheet/timesheet.component";
+import {DeleteEntryModalComponent} from "../timesheet/timesheet.component";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
+import {ApprovePanelComponent} from "../approve-panel/approve-panel.component";
+import {Project} from "../../../model/project";
+import {ProjectService} from "../../../service/project.service";
+import {BehaviorSubject} from "rxjs";
+import {Entry} from "../../../model/entry";
 
 export interface DialogData {
   parent: ProjectEntriesComponent;
@@ -20,11 +25,14 @@ export interface DialogData {
   styleUrls: ['./project-entries.component.scss']
 })
 export class ProjectEntriesComponent implements OnInit, AfterViewInit {
+  selectedProject:Project;
+  projectEntries:BehaviorSubject<Array<Entry>>;
 
   @ViewChildren(EntryApproveComponent) entryComponentsRef: QueryList<'entryComponentsRef'>;
   entryComponents: EntryApproveComponent[] = [];
 
-  constructor(public projectEntriesService: ProjectEntriesService, public dialog: MatDialog) {
+  constructor(public projectService: ProjectService, public dialog: MatDialog,
+              @Inject(ApprovePanelComponent) private parent: ApprovePanelComponent) {
   }
 
   ngOnInit() {
@@ -32,6 +40,11 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.getEntryComponents();
+  }
+
+  async setProject(project:Project){
+    this.selectedProject = project;
+    this.projectEntries = await this.projectService.getEntries(project);
   }
 
   /**
@@ -62,11 +75,9 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
    * Submits the entries for approval/rejection.
    */
   async submitApproval() {
-    let promise = new Promise((resolve,reject)=>{
-      resolve(this.projectEntriesService.submit());
-    });
-
-    return await promise;
+    await this.projectService.submit(this.entryComponentsRef.toArray());
+    this.projectEntries = null;
+    this.parent.unselect();
   }
 }
 
@@ -77,15 +88,8 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
  */
 @Component({
   selector: 'app-approval-modal',
-  template: `
-
-    <h1 mat-dialog-title>Submit Timesheet</h1>
-    <div mat-dialog-content>
-      <p>Confirm SUBMISSION of APPROVAL/REJECTION for entries</p>
-      <button mat-button [ngClass]="'confirm_button'" (click)="confirmSubmission()">SUBMIT</button>
-      <button mat-button [ngClass]="'cancel_btn'" (click)="cancel()">CANCEL</button>
-    </div>
-  `
+  templateUrl: './project-submit.component.html',
+  styleUrls: ['./project-submit.component.scss']
 })
 
 /**
@@ -114,15 +118,7 @@ export class SubmitApprovalModalComponent implements OnInit {
 
   /** Facilitates submission of the current timesheet.**/
   async submitApproval() {
-    await this.data.parent.submitApproval().then(()=>{
-      this.displayProjectEntries().then();
-    });
+    await this.data.parent.submitApproval();
   }
 
-  /**
-   * Displays the project's entries.
-   */
-  async displayProjectEntries(){
-    await this.data.parent.projectEntriesService.displayProjectEntries().then();
-  }
 }
