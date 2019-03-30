@@ -1,4 +1,14 @@
-import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
 import {UnitType} from "../../../model/unitType";
@@ -55,7 +65,12 @@ export class EditUnitTypeComponent implements OnInit, OnDestroy {
   /** The ngForm for this component */
   @ViewChild('editUnitTypeForm') editUnitTypeForm;
 
-
+  @HostListener('window:keyup.Enter', ['$event']) enter(e: KeyboardEvent) {
+    e.preventDefault();
+    if(this.editUnitTypeExpansionPanel.expanded){
+      console.log("edit");
+    }
+  }
   constructor(public deleteUnitTypeDialog: MatDialog) {
   }
 

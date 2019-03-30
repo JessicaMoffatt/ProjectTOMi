@@ -1,4 +1,4 @@
-import {Component, Pipe, PipeTransform} from '@angular/core';
+import {Component, HostListener, Pipe, PipeTransform} from '@angular/core';
 import {Input} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {ViewChild} from "@angular/core";
@@ -29,6 +29,10 @@ export class UnitTypePanelComponent implements OnInit{
 
   @ViewChild('editUnitTypeComponent') editUnitTypeComponent : ElementRef;
 
+  @HostListener('window:keyup.Enter', ['$event']) enter(e: KeyboardEvent) {
+    e.preventDefault();
+    console.log("panel");
+  }
   constructor(private dialog: MatDialog, private unitTypeService: UnitTypeService) { }
 
   ngOnInit() {

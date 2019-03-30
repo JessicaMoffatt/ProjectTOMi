@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
+import {Component, HostListener, Inject, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
 import {Team} from "../../../model/team";
 import {FormControl, Validators} from "@angular/forms";
 import {TeamService2} from "../../../service/team2.service";
@@ -52,6 +52,10 @@ export class ManageTeamsPanelComponent implements OnInit {
   @ViewChild('sideBar') sideBar;
   @ViewChild('memberPaginator') memberPaginator: MatPaginator;
   @ViewChild('availablePaginator') availablePaginator: MatPaginator;
+
+  @HostListener('window:keyup.Enter', ['$event']) enter(e: KeyboardEvent) {
+    this.save().then();
+  }
 
   constructor(private dialog: MatDialog, public deleteTeamDialog: MatDialog, private teamService2: TeamService2, public userAccountService: UserAccountService) {
   }
