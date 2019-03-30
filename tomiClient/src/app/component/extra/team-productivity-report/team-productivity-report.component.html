@@ -1,42 +1,40 @@
-<div *ngIf="this.teamMemberTimesheetService?.teamMembersReports">
-  <h2> Team Productivity Report </h2>
-  <div *ngIf="this.teamMemberTimesheetService.teamMembersReports[0]">
-    <table mat-table [dataSource]="this.teamMemberTimesheetService.teamMembersReports" class="mat-elevation-z8">
+<div>
+  <h2>
+    Productivity Report for {{this.getTeam()}}
+  </h2>
+  <!--<table mat-table [dataSource]="this.teamMemberTimesheetService.teamMembersReports" class="mat-elevation-z8">-->
 
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef> Date </th>
-        <td mat-cell *matCellDef="let line"> {{line.date}} </td>
-      </ng-container>
+  <!--<ng-container matColumnDef="date">-->
+  <!--<th mat-header-cell *matHeaderCellDef> Date </th>-->
+  <!--<td mat-cell *matCellDef="let line"> {{line.date}} </td>-->
+  <!--</ng-container>-->
 
-      <ng-container matColumnDef="teamMember">
-        <th mat-header-cell *matHeaderCellDef> Team Member </th>
-        <td mat-cell *matCellDef="let line"> {{line.userAccount.firstName}} </td>
-      </ng-container>
+  <!--<ng-container matColumnDef="teamMember">-->
+  <!--<th mat-header-cell *matHeaderCellDef> Team Member </th>-->
+  <!--<td mat-cell *matCellDef="let line"> {{line.userAccount.firstName}} </td>-->
+  <!--</ng-container>-->
 
-      <ng-container matColumnDef="unitType">
-        <th mat-header-cell *matHeaderCellDef> Unit Type </th>
-        <td mat-cell *matCellDef="let line"> {{line.unitType.name}} </td>
-      </ng-container>
+  <!--<ng-container matColumnDef="unitType">-->
+  <!--<th mat-header-cell *matHeaderCellDef> Unit Type </th>-->
+  <!--<td mat-cell *matCellDef="let line"> {{line.unitType.name}} </td>-->
+  <!--</ng-container>-->
 
-      <ng-container matColumnDef="quantity">
-        <th mat-header-cell *matHeaderCellDef> Quantity </th>
-        <td mat-cell *matCellDef="let line"> {{line.quantity}} </td>
-      </ng-container>
+  <!--<ng-container matColumnDef="quantity">-->
+  <!--<th mat-header-cell *matHeaderCellDef> Quantity </th>-->
+  <!--<td mat-cell *matCellDef="let line"> {{line.quantity}} </td>-->
+  <!--</ng-container>-->
 
-      <ng-container matColumnDef="time">
-        <th mat-header-cell *matHeaderCellDef> Time </th>
-        <td mat-cell *matCellDef="let line"> {{line.time}} </td>
-      </ng-container>
+  <!--<ng-container matColumnDef="time">-->
+  <!--<th mat-header-cell *matHeaderCellDef> Time </th>-->
+  <!--<td mat-cell *matCellDef="let line"> {{line.time}} </td>-->
+  <!--</ng-container>-->
 
-      <ng-container matColumnDef="normalizedValue">
-        <th mat-header-cell *matHeaderCellDef> Normalized Value </th>
-        <td mat-cell *matCellDef="let line"> {{line.normalizedValue.toFixed(2)}} </td>
-      </ng-container>
+  <!--<ng-container matColumnDef="normalizedValue">-->
+  <!--<th mat-header-cell *matHeaderCellDef> Normalized Value </th>-->
+  <!--<td mat-cell *matCellDef="let line"> {{line.normalizedValue.toFixed(2)}} </td>-->
+  <!--</ng-container>-->
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </div>
-
-
+  <!--<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+  <!--<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+  <!--</table>-->
 </div>

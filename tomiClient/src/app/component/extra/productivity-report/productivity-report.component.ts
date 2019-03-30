@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {TeamMemberTimesheetService} from "../../../service/team-member-timesheet.service";
+import {Component, Inject, OnInit} from '@angular/core';
+import {TeamPanelComponent} from "../../panel/team-panel/team-panel.component";
+import {UserAccount} from "../../../model/userAccount";
 
 @Component({
   selector: 'app-productivity-report',
@@ -7,9 +8,10 @@ import {TeamMemberTimesheetService} from "../../../service/team-member-timesheet
   styleUrls: ['./productivity-report.component.scss']
 })
 export class ProductivityReportComponent implements OnInit {
+  selectedMember:UserAccount;
   displayedColumns: string[] = ['date', 'unitType','quantity','time', 'normalizedValue'];
 
-  constructor(public teamMemberTimesheetService:TeamMemberTimesheetService) { }
+  constructor( @Inject(TeamPanelComponent) private parent: TeamPanelComponent) { }
 
   ngOnInit() {
 

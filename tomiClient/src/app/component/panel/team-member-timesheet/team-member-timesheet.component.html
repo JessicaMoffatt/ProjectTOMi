@@ -1,33 +1,50 @@
 <!--
 @author Jessica Moffatt
+@author Karol Talbot
 @version 1.0
 -->
-<div *ngIf="teamMemberTimesheetService.selectedMember">
-  <div>
-    <div [ngClass]="'row'">
-      {{teamMemberTimesheetService.selectedMember.firstName}} {{teamMemberTimesheetService.selectedMember.lastName}}
+<div class="timesheet_content">
+  <div class="scroll_panel">
+    <div class="navigation">
+      <button mat-flat-button [ngClass]="['arrow']" (click)="displayPrevTimesheet()">
+        <i class="material-icons">
+          navigate_before
+        </i>
+      </button>
+      <div [ngClass]="'week_title'">
+        <h4>Week of {{timesheetService.currentDate}}</h4>
+      </div>
+      <app-date-picker [parent]="this" [minDate]="timesheetService.minDate"></app-date-picker>
+      <mat-chip-trailing-icon disabled [ngClass]="['submission_status']">
+        <mat-chip [disableRipple]="true" id="status">{{timesheetService.currentStatus}}</mat-chip>
+      </mat-chip-trailing-icon>
+      <button mat-flat-button [ngClass]="['arrow']" (click)="displayNextTimesheet()">
+        <i class="material-icons">
+          navigate_next
+        </i>
+      </button>
+    </div>
+    <div>
+      <div *ngFor="let entry of entries">
+        <app-entry [ngClass]="'entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.LOGGING" [entry]="entry"
+                   [projects]="projects" [unitTypes]="unitTypes" [tasks]="tasks"
+                   (requestCopy)="copyEntry($event)"
+                   (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>
+        <app-entry [ngClass]="'rejected_entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.REJECTED"
+                   [entry]="entry" [projects]="projects" [unitTypes]="unitTypes" [tasks]="tasks"
+                   (requestCopy)="copyEntry($event)"
+                   (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>
+        <app-entry-uneditable [ngClass]="'submitted_entry'"
+                              *ngIf="getStatusValue(entry.status.toString()) === sts.SUBMITTED"
+                              [entry]="entry"></app-entry-uneditable>
+        <app-entry-uneditable [ngClass]="'approved_entry'"
+                              *ngIf="getStatusValue(entry.status.toString()) === sts.APPROVED"
+                              [entry]="entry"></app-entry-uneditable>
+      </div>
+
     </div>
 
-    <div>
-      <div [ngClass]="'container'">
-  <span [ngClass]="['arrow', 'rounded-circle','back']" (click)="teamMemberTimesheetService.displayPrevTimesheet()">
-  </span>
-        <span [ngClass]="'week_title'">Week of {{timesheetService.currentDate}}</span>
-        <span [ngClass]="['arrow', 'rounded-circle','forward']"
-              (click)="teamMemberTimesheetService.displayNextTimesheet()">
-  </span>
-        <app-date-picker [parent]="this" [minDate]="timesheetService.minDate"></app-date-picker>
-        <div [ngClass]="'container'">
-          <div *ngFor="let entry of this.teamMemberTimesheetService.entries">
-            <app-entry-uneditable [ngClass]="'entry'"
-                                  [entry]="entry"></app-entry-uneditable>
-          </div>
-        </div>
-      </div>
-      <div [ngClass]="'timesheet_footer'">
-        <span [ngClass]="'hours_tally'">Hours:<strong> {{teamMemberTimesheetService.tally}}</strong></span>
-      </div>
-    </div>
+    <div #entryHolder></div>
   </div>
 </div>
 

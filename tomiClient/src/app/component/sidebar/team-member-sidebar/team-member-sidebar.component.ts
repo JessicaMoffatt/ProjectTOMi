@@ -1,11 +1,12 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {UserAccount} from "../../../model/userAccount";
 import {TimesheetService} from "../../../service/timesheet.service";
-import {MatSnackBar} from "@angular/material";
+import {MatButtonToggleGroup, MatSnackBar} from "@angular/material";
 import {TeamService} from "../../../service/team.service";
 import {BehaviorSubject} from "rxjs";
 import {Team} from "../../../model/team";
 import {TeamPanelComponent} from "../../panel/team-panel/team-panel.component";
+import {SignInService} from "../../../service/sign-in.service";
 
 /**
  * TeamMemberSidebarComponent is used to display the list of team members for a user to interact with when viewing timesheets.
@@ -18,28 +19,42 @@ import {TeamPanelComponent} from "../../panel/team-panel/team-panel.component";
   templateUrl: './team-member-sidebar.component.html',
   styleUrls: ['./team-member-sidebar.component.scss']
 })
-export class TeamMemberSidebarComponent implements OnInit {
+export class TeamMemberSidebarComponent implements OnInit, AfterViewInit {
   private teamMembers: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject([]);
+  private selectedMember:UserAccount;
+  private team:Team;
+  @ViewChild("buttonGroup") buttonGroup:MatButtonToggleGroup;
 
   constructor(public teamService: TeamService,
-              public timesheetService: TimesheetService, public snackBar: MatSnackBar, @Inject(TeamPanelComponent) private parent: TeamPanelComponent) {
+              public snackBar: MatSnackBar, private signInService:SignInService,
+              @Inject(TeamPanelComponent) private parent: TeamPanelComponent) {
+    this.selectedMember = this.signInService.userAccount;
   }
 
   //populate the team members, and get their productivity reports: in matching order.
   ngOnInit() {
-    let team: Team;
     this.teamService.getTeamById(this.parent.getTeamId()).forEach(value => {
-      team = value as Team;
+      this.team = value as Team;
     }).then(() => {
-      return this.teamService.getTeamMembers(team).forEach((value: UserAccount[]) => {
+      return this.teamService.getTeamMembers(this.team).forEach((value: UserAccount[]) => {
         this.teamMembers = new BehaviorSubject(value);
       })
     });
 
   }
+  getTeam(){
+    return this.team;
+  }
+  ngAfterViewInit(){
+  }
 
   getTeamMemberList() {
     return this.teamMembers;
+  }
+
+  selectTeamMember(member:UserAccount){
+    this.selectedMember = member;
+    this.parent.setSelectedMember(member);
   }
 
   // /**
