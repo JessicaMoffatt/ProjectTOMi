@@ -1,56 +1,28 @@
 <div *ngIf="this.projectService.selectedBudget">
   <mat-card class="mat-elevation-z2 report_card">
     <mat-progress-bar mode="determinate" [value]="projectService.percentActual"
-                      style="width:20vw;height:2vh"></mat-progress-bar>
-    <table>
-      <tr>
-        <td>
-          Total Planned Hours:
-        </td>
-        <td>
-          {{projectService.selectedBudget.project.budgetedHours}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Actual Hours:
-        </td>
-        <td>
-          {{projectService.selectedBudget.totalHours}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          % Remaining:
-        </td>
-        <td>
-          {{projectService.percentRemaining}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Billable Hours:
-        </td>
-        <td>
-          {{projectService.selectedBudget.billableHours}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Non-billable Hours:
-        </td>
-        <td>
-          {{projectService.selectedBudget.nonBillableHours}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          % Billable:
-        </td>
-        <td>
-          {{projectService.calculatePercentBillable()}}
-        </td>
-      </tr>
-    </table>
+                      id="progress"></mat-progress-bar>
+    <div class="row">
+      <div class="first">
+        Total Planned Hours: {{projectService.selectedBudget.project.budgetedHours}}
+      </div>
+      <div class="second">
+        Actual Hours: {{projectService.selectedBudget.totalHours}}
+      </div>
+      <div class="third">
+        Remaining:  {{projectService.percentRemaining.toFixed(2)}}%
+      </div>
+    </div>
+    <div class="row">
+      <div class="first">
+        Billable Hours: {{projectService.selectedBudget.billableHours}}
+      </div>
+      <div class="second">
+        Non-billable Hours: {{projectService.selectedBudget.nonBillableHours}}
+      </div>
+      <div class="third">
+        Billable: {{projectService.percentRemaining == 100 ? 0.00 : projectService.calculatePercentBillable()}}%
+      </div>
+    </div>
   </mat-card>
 </div>
