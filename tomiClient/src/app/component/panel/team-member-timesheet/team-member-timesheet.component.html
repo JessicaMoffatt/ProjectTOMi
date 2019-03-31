@@ -1,51 +1,40 @@
 <!--
 @author Jessica Moffatt
-@author Karol Talbot
 @version 1.0
 -->
-<div class="timesheet_content">
-  <div class="scroll_panel">
-    <div class="navigation">
-      <button mat-flat-button [ngClass]="['arrow']" (click)="displayPrevTimesheet()">
-        <i class="material-icons">
-          navigate_before
-        </i>
-      </button>
-      <div [ngClass]="'week_title'">
-        <h4>Week of {{timesheetService.currentDate}}</h4>
-      </div>
-      <app-date-picker [parent]="this" [minDate]="timesheetService.minDate"></app-date-picker>
-      <mat-chip-trailing-icon disabled [ngClass]="['submission_status']">
-        <mat-chip [disableRipple]="true" id="status">{{timesheetService.currentStatus}}</mat-chip>
-      </mat-chip-trailing-icon>
-      <button mat-flat-button [ngClass]="['arrow']" (click)="displayNextTimesheet()">
-        <i class="material-icons">
-          navigate_next
-        </i>
-      </button>
-    </div>
+<div *ngIf="teamMemberTimesheetService.selectedMember" class="timesheet_content">
+  <div class="scroll-pane">
+    <h2 [ngClass]="'row'">
+      {{teamMemberTimesheetService.selectedMember.firstName}} {{teamMemberTimesheetService.selectedMember.lastName}}
+    </h2>
+
     <div>
-      <div *ngFor="let entry of entries">
-        <app-entry [ngClass]="'entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.LOGGING" [entry]="entry"
-                   [projects]="projects" [unitTypes]="unitTypes" [tasks]="tasks"
-                   (requestCopy)="copyEntry($event)"
-                   (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>
-        <app-entry [ngClass]="'rejected_entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.REJECTED"
-                   [entry]="entry" [projects]="projects" [unitTypes]="unitTypes" [tasks]="tasks"
-                   (requestCopy)="copyEntry($event)"
-                   (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>
-        <app-entry-uneditable [ngClass]="'submitted_entry'"
-                              *ngIf="getStatusValue(entry.status.toString()) === sts.SUBMITTED"
-                              [entry]="entry"></app-entry-uneditable>
-        <app-entry-uneditable [ngClass]="'approved_entry'"
-                              *ngIf="getStatusValue(entry.status.toString()) === sts.APPROVED"
+      <div class="navigation">
+        <button mat-flat-button [ngClass]="['arrow']" (click)="teamMemberTimesheetService.displayPrevTimesheet()">
+          <i class="material-icons">
+            navigate_before
+          </i>
+        </button>
+        <div [ngClass]="'week_title'">
+          <h4>Week of {{timesheetService.currentDate}}</h4>
+        </div>
+        <app-date-picker [parent]="this" [minDate]="timesheetService.minDate"></app-date-picker>
+        <mat-chip-trailing-icon disabled [ngClass]="['submission_status']">
+          <mat-chip [disableRipple]="true" id="status">{{timesheetService.currentStatus}}</mat-chip>
+        </mat-chip-trailing-icon>
+        <button mat-flat-button [ngClass]="['arrow']" (click)="teamMemberTimesheetService.displayNextTimesheet()">
+          <i class="material-icons">
+            navigate_next
+          </i>
+        </button>
+      </div>
+      <div *ngFor="let entry of this.teamMemberTimesheetService.entries">
+        <app-entry-uneditable [ngClass]="'entry'"
                               [entry]="entry"></app-entry-uneditable>
       </div>
-
     </div>
-
-    <div #entryHolder></div>
+  </div>
+  <div [ngClass]="'timesheet_footer'">
+    <span [ngClass]="'hours_tally'">Hours:<strong> {{teamMemberTimesheetService.tally}}</strong></span>
   </div>
 </div>
-
-

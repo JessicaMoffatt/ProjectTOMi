@@ -6,6 +6,7 @@ import {TimesheetService} from "../../../service/timesheet.service";
  * TeamMemberTimesheetComponent is used to facilitate communication between the view and front end services.
  *
  * @author Jessica Moffatt
+ * @author Karol Talbot
  * @version 1.0
  */
 @Component({

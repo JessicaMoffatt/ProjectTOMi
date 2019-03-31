@@ -3,9 +3,9 @@
   @author Karol Talbot
  */
 .entry_card{
-  margin: 1rem 10vw;
-  padding: 1rem 2vw;
-  width: 76vw;
+  margin: 1% 10%;
+  padding: 1% 1%;
+  width: 78%;
   background-color: $white;
   color:$dark_grey;
   label{
@@ -25,19 +25,19 @@
 
 .row{
   display: inline;
-  width: 74.48vw;
-  padding: 0 0.76vw;
+  width: 98%;
+  padding: 0 1%;
 }
 
 .top{
   display: inline-block;
-  width: 55.86vw;
+  width: 75%;
 }
 
 .third{
   display: inline-block;
-  width: 16.758vw;
-  padding-right: 2.793vw;
+  width: 30%;
+  padding-right: 5%;
 }
 
 .third_last{

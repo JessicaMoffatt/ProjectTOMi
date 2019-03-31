@@ -10,18 +10,18 @@
   background-color: $orange;
   position: fixed;
   bottom: 0;
-  width: 100vw;
+  width: 75%;
   height: $footer_height;
   vertical-align: middle;
   z-index: 2;
 }
 
 .timesheet_content {
-  height: 100vh;
+  height: 75vh;
 }
 
 .scroll_panel {
-  height: 86vh;
+  height: 75vh;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -109,4 +109,8 @@
   }
 
   color: $orange;
+}
+
+h2{
+  margin: 1% 5%;
 }

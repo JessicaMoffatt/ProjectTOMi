@@ -1,13 +1,13 @@
 <cdk-virtual-scroll-viewport [itemSize]="10" class="sidebar">
-
   <h2>Team Members</h2>
   <div class="search_bar"><input #team_member_search id="team_member_search" [ngClass]="'input_search'"
                                  placeholder="search" (keyup)="0"></div>
-  <mat-action-list>
-    <mat-button-toggle-group #buttonGroup="matButtonToggleGroup"  [value]="this.selectedMember" [name]="buttonGroup" class="btn_list" vertical>
-      <mat-button-toggle [checked]="this.selectedMember.id == member.id ? true : false" id="{{member.id}}_btn" [value]="member" class="list_btns" (click)='this.selectTeamMember(member)'
-                         *ngFor='let member of this.getTeamMemberList().getValue() '>{{member.firstName}} {{member.lastName}}</mat-button-toggle>
-    </mat-button-toggle-group>
-
-  </mat-action-list>
+    <mat-action-list *ngIf="teamMemberTimesheetService.teamMembers">
+      <mat-button-toggle-group #btn_group="matButtonToggleGroup" [value]="" [name]="btn_group" class="btn_list" vertical>
+        <mat-button-toggle id="{{t.id}}_btn" [value]="t.id" *ngFor="let t of (teamMemberTimesheetService.teamMembers)" (click)="displayTimesheet(t)">
+          {{t.firstName}} {{t.lastName}}
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </mat-action-list>
 </cdk-virtual-scroll-viewport>
+

@@ -8,6 +8,9 @@
 @version 1.0
 -->
 <mat-card #entry_card  id="{{entry.id}}_card" class="entry_card">
+  <mat-card-title>
+    {{entry.timesheet.userAccount.firstName}} {{entry.timesheet.userAccount.lastName}}
+  </mat-card-title>
   <mat-card-content>
     <div class="row">
       <div class="top">

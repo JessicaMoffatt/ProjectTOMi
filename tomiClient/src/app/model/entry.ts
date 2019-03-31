@@ -10,6 +10,7 @@ import {Status} from "./status";
 import {Project} from "./project";
 import {Task} from "./task";
 import {UnitType} from "./unitType";
+import {Timesheet} from "./timesheet";
 
 export class Entry{
   /** The unique identifier for this entry.*/
@@ -21,7 +22,7 @@ export class Entry{
   /** The unit type corresponding to the component worked on for this entry.*/
   unitType: UnitType;
   /** The timesheet associated with the entry.*/
-  timesheet: number;
+  timesheet: Timesheet;
   /** Represents whether or not the entry has been approved by the project manager.*/
   status: Status;
   /** The component worked on for this entry.*/

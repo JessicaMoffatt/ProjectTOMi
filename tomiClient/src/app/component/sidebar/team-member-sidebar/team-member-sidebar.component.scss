@@ -10,6 +10,7 @@
 }
 
 .list_btns:active {
+  display: block;
   background-color: $blue;
   color: white;
 }
@@ -22,5 +23,3 @@
 .btn_list {
   width: 100%;
 }
-
-
