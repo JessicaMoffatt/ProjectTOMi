@@ -1,4 +1,5 @@
-import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ViewChild} from '@angular/core';
+import {Component, HostListener, Inject, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {UserAccount} from "../../../model/userAccount";
 import {TimesheetService} from "../../../service/timesheet.service";
 import {MatButtonToggleGroup, MatSnackBar} from "@angular/material";
@@ -27,6 +28,11 @@ export class TeamMemberSidebarComponent implements OnInit, AfterViewInit {
   private selectedMember:UserAccount;
   private team:Team;
   @ViewChild("buttonGroup") buttonGroup:MatButtonToggleGroup;
+
+  @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
+    e.preventDefault();
+    document.getElementById("team_member_search").focus();
+  }
 
   constructor(public teamService: TeamService,
               public snackBar: MatSnackBar, private signInService:SignInService,
@@ -109,4 +115,19 @@ export class TeamMemberSidebarComponent implements OnInit, AfterViewInit {
   //     });
   //   });
   // }
+}
+
+@Pipe({name: 'FilterTeamMemberByName'})
+export class FilterTeamMemberByName implements PipeTransform {
+  transform(teamMemberList: Array<UserAccount>, nameFilter: string): any {
+    nameFilter = nameFilter.toLowerCase();
+    if (!nameFilter) return teamMemberList;
+
+    return teamMemberList.filter(n => {
+      let name  = n.firstName + n.lastName;
+      name = name.toLowerCase();
+
+      return name.indexOf(nameFilter) >= 0;
+    });
+  }
 }

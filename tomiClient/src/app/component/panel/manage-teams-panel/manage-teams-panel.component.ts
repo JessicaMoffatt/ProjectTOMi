@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, Inject, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
 import {Team} from "../../../model/team";
 import {FormControl, Validators} from "@angular/forms";
 import {TeamService} from "../../../service/team.service";
@@ -14,9 +14,8 @@ import {
   MatSelect,
   PageEvent
 } from "@angular/material";
-import {AddUserAccountComponent} from "../../modal/add-user-account/add-user-account.component";
 import {AddTeamComponent} from "../../modal/add-team/add-team.component";
-import {DeleteUserAccountModal, EditUserComponent} from "../edit-user/edit-user.component";
+import {CustomErrorStateMatcher} from "../../extra/CustomErrorStateMatcher";
 
 /**
  * @author Karol Talbot
@@ -43,6 +42,9 @@ export class ManageTeamsPanelComponent implements OnInit {
     Validators.required
   ]);
 
+  /** Invalid name error detection. */
+  teamNameMatcher = new CustomErrorStateMatcher();
+
   /** The input field for the Team's name.*/
   @ViewChild('editTeamName') editTeamName: MatInput;
   @ViewChild('editTeamLeadId') editTeamLeadId: MatSelect;
@@ -50,6 +52,10 @@ export class ManageTeamsPanelComponent implements OnInit {
   @ViewChild('sideBar') sideBar;
   @ViewChild('memberPaginator') memberPaginator: MatPaginator;
   @ViewChild('availablePaginator') availablePaginator: MatPaginator;
+
+  @HostListener('window:keyup.Enter', ['$event']) enter(e: KeyboardEvent) {
+    this.save().then();
+  }
 
   constructor(private dialog: MatDialog, public deleteTeamDialog: MatDialog, private teamService: TeamService, public userAccountService: UserAccountService) {
   }

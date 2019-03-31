@@ -10,6 +10,8 @@ import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
 import {ExpenseService} from "./expense.service";
 import {Entry} from "../model/entry";
+import {Team} from "../model/team";
+import {UnitType} from "../model/unitType";
 import {Status} from "../model/status";
 import {EntryComponent} from "../component/panel/entry/entry.component";
 import {EntryApproveComponent} from "../component/panel/entry-approve/entry-approve.component";
@@ -63,7 +65,7 @@ export class ProjectService {
    * Gets all projects.
    */
   getAllProjects(): Observable<Array<Project>> {
-    return this.http.get(`${projectsUrl}`).pipe(map((response: Response) => response))
+    return this.http.get(`${projectsUrl}`)
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];
@@ -97,7 +99,7 @@ export class ProjectService {
    */
   async setSelected(project: Project) {
     this.selectedProject = await project;
-    this.refreshProjectList()
+    this.refreshProjectList();
     if (this.selectedProject != null && this.selectedProject.id.match(this.regExp)) {
       this.refreshUserAccountList();
       this.expenseService.refreshExpenses(this.selectedProject);
@@ -249,9 +251,8 @@ export class ProjectService {
     });
   }
 
-
   refreshProjectList() {
-    this.getAllProjects().forEach(project => {
+    return this.getAllProjects().forEach(project => {
       this.projects = new BehaviorSubject<Array<Project>>(project);
       // this.sort();
     }).catch(() => {
@@ -264,7 +265,6 @@ export class ProjectService {
       });
     });
   }
-
 
   refreshUserAccountList() {
     this.http.get(`${projectsUrl}/${this.selectedProject.id}/members`)
@@ -375,5 +375,9 @@ export class ProjectService {
       let entry = component.entry;
       return this.evaluateEntry(entry);
     });
+  }
+
+  getProjects(): BehaviorSubject<Array<Project>>{
+    return this.projects;
   }
 }

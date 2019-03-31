@@ -1,6 +1,6 @@
 import {
   AfterViewInit,
-  Component, Inject,
+  Component, HostListener, Inject,
   OnInit,
   QueryList,
   ViewChild,
@@ -48,13 +48,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
   /** List of all entries for current timesheet.*/
   entries: Entry[] = [];
-  /** List of all projects this user is allowed to access.*/
-  projects: Project[] = [];
 
-  /** List of all tasks.*/
-  tasks: Task[];
-  /** List of all unit types.*/
-  unitTypes: UnitType[];
 
   /**
    * Holds the total number of hours worked this week.
@@ -71,6 +65,10 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   /** The list of entry components that are children of the timesheet.*/
   entryComponents: EntryComponent[] = [];
 
+  @HostListener('window:keyup.Enter', ['$event']) enter(e: KeyboardEvent) {
+    this.savePromise().then();
+  }
+
   constructor(private router: Router, public timesheetService: TimesheetService,
               private projectService: ProjectService, private entryService: EntryService,
               public dialog: MatDialog, private signInService:SignInService) {
@@ -81,13 +79,15 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * On initialization, calls getEntries to populate the entries variable as well as the projects variable.
    */
   ngOnInit() {
-    this.populateTimesheets().then((value) => {
-      let timesheet = value as Timesheet;
-      this.getEntries(timesheet);
-      this.getProjects(this.userId);
-      this.populateTasks();
-      this.populateUnitTypes();
-    });
+    if(this.timesheetService.timesheets.length === 0){
+      this.firstLoad();
+    }else{
+      this.timesheetService.getCurrentTimesheet().then(data=>{
+        this.getEntries(data);
+        this.timesheetService.setCurrentDate();
+        this.timesheetService.setCurrentStatus().then();
+      });
+    }
   }
 
   /** After the view has initialized, gets all entry components.*/
@@ -95,14 +95,14 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     this.getEntryComponents();
   }
 
-  /** Populates tasks.*/
-  populateTasks() {
-    this.entryService.getTasks().subscribe((data => this.tasks = data))
-  }
-
-  /** Populates unitTypes.*/
-  populateUnitTypes() {
-    this.entryService.getUnitTypes().subscribe((data => this.unitTypes = data))
+  firstLoad(){
+    this.populateTimesheets().then((value) => {
+      let timesheet = value as Timesheet;
+      this.getEntries(timesheet);
+      this.populateProjects(this.userId);
+      this.timesheetService.populateTasks().then();
+      this.timesheetService.populateUnitTypes().then();
+    });
   }
 
   /** Gets all the entry components currently on the timesheet.*/
@@ -138,8 +138,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Gets all projects this user is associated with.
    * @param id The ID of the user.
    */
-  getProjects(id: number): void {
-    this.projectService.getProjectsForUser(id).subscribe((data => this.projects = data));
+  populateProjects(id: number): void {
+    this.projectService.getProjectsForUser(id).subscribe((data => this.timesheetService.projects = data));
   }
 
   /**

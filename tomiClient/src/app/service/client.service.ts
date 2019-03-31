@@ -3,9 +3,6 @@ import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Client} from "../model/client";
-import {collectExternalReferences} from "@angular/compiler";
-import {UserAccount} from "../model/userAccount";
-import {Project} from "../model/project";
 
 /**
  * Clients service provides services relates to Clients.

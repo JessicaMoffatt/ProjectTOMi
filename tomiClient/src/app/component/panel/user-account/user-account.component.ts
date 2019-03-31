@@ -1,4 +1,14 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Pipe,
+  PipeTransform,
+  ViewChild
+} from '@angular/core';
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
 import {Observable, Subject, Subscription} from "rxjs";
@@ -26,6 +36,11 @@ export class UserAccountComponent implements OnInit, OnDestroy {
 
   @ViewChild('editUserComponent') editUserComponent: ElementRef;
   @ViewChild('user_account_search') user_account_search;
+
+  @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
+    e.preventDefault();
+    document.getElementById("user_account_search").focus();
+  }
 
   constructor(private dialog: MatDialog, public userAccountService: UserAccountService, private teamService: TeamService) {
   }
@@ -68,8 +83,8 @@ export class UserAccountComponent implements OnInit, OnDestroy {
 
 }
 
-@Pipe({name: 'filterByName'})
-export class DoAFilter implements PipeTransform {
+@Pipe({name: 'FilterUserAccountByName'})
+export class FilterUserAccountByName implements PipeTransform {
   transform(userList: Array<UserAccount>, nameFilter: string): any {
     nameFilter = nameFilter.toLowerCase();
     if (!nameFilter) return userList;

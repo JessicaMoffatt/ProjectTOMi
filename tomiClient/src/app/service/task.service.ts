@@ -37,7 +37,7 @@ export class TaskService {
    * Loads a list of tasks retrieved from the back end into a BehaviorSubject object that can be used to retrieve the Tasks.
    */
   public initializeTasks() {
-    this.requestAllTasks().forEach(tasks => {
+    return this.requestAllTasks().forEach(tasks => {
       this.taskSubjectList = new BehaviorSubject<Array<Task>>(tasks);
     }).catch((error: any) => {
       console.log("Task error " + error);

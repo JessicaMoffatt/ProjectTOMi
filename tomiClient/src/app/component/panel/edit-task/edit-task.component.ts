@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
+import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {ErrorStateMatcher, MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
 import {Task} from 'src/app/model/task';
+import {CustomErrorStateMatcher} from "../../extra/CustomErrorStateMatcher";
 
 /**
  * EditUserComponent is an individual, editable entry for a Task.
@@ -42,6 +43,8 @@ export class EditTaskComponent implements OnInit, OnDestroy {
   /** The ngForm for this component */
   @ViewChild('editTaskForm') editTaskForm;
 
+  /** Invalid name error detection. */
+  taskNameMatcher = new CustomErrorStateMatcher();
 
   constructor(public deleteTaskDialog: MatDialog) {
   }
