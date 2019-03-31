@@ -1,6 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {SignInService} from "../../../service/sign-in.service";
 import {UserAccount} from "../../../model/userAccount";
+import {TeamMemberTimesheetService} from "../../../service/team-member-timesheet.service";
+import {ProductivityReportLine} from "../../../model/productivityReportLine";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-team-panel',
@@ -9,7 +12,7 @@ import {UserAccount} from "../../../model/userAccount";
 })
 export class TeamPanelComponent implements OnInit {
   private selectedMember:UserAccount;
-  constructor(private signInService:SignInService) { }
+  constructor(private signInService:SignInService, private teamMemberTimesheetService:TeamMemberTimesheetService) { }
   @ViewChild("individualReport")individualReport;
   @ViewChild("sideBar")sideBar;
   @ViewChild("teamReport")teamReport;
@@ -25,6 +28,7 @@ export class TeamPanelComponent implements OnInit {
   public setSelectedMember(teamMember:UserAccount){
     this.selectedMember = teamMember;
     this.individualReport.selectedMember = teamMember;
+    this.individualReport.getReport();
   }
 
   public getSelectedMember():UserAccount{

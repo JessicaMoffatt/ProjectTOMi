@@ -7,6 +7,7 @@ import {MatDialog} from "@angular/material";
 import {TeamService} from "../../../service/team.service";
 import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-teams-panel.component";
 
+
 /**
  * TeamSideBarComponent is used to house the list of teams to be managed.
  *
@@ -29,6 +30,7 @@ export class TeamSidebarComponent implements OnInit {
 
   ngOnInit() {
     this.teamService.initializeTeams();
+
   }
 
   selectTeam(team: Team): void {

@@ -7,6 +7,9 @@ import {BehaviorSubject} from "rxjs";
 import {Team} from "../../../model/team";
 import {TeamPanelComponent} from "../../panel/team-panel/team-panel.component";
 import {SignInService} from "../../../service/sign-in.service";
+import {__await} from "tslib";
+import {TeamMemberTimesheetService} from "../../../service/team-member-timesheet.service";
+import {ProductivityReportLine} from "../../../model/productivityReportLine";
 
 /**
  * TeamMemberSidebarComponent is used to display the list of team members for a user to interact with when viewing timesheets.
@@ -27,7 +30,8 @@ export class TeamMemberSidebarComponent implements OnInit, AfterViewInit {
 
   constructor(public teamService: TeamService,
               public snackBar: MatSnackBar, private signInService:SignInService,
-              @Inject(TeamPanelComponent) private parent: TeamPanelComponent) {
+              @Inject(TeamPanelComponent) private parent: TeamPanelComponent,
+              private teamMembersTimesheetService:TeamMemberTimesheetService) {
     this.selectedMember = this.signInService.userAccount;
   }
 
@@ -38,14 +42,22 @@ export class TeamMemberSidebarComponent implements OnInit, AfterViewInit {
     }).then(() => {
       return this.teamService.getTeamMembers(this.team).forEach((value: UserAccount[]) => {
         this.teamMembers = new BehaviorSubject(value);
+      }).then(async ()=>{
+        await this.teamMembers.getValue().forEach((member:UserAccount)=>{
+          if(member.id === this.signInService.userAccount.id){
+            this.selectTeamMember(member);
+          }
+        });
+        return;
       })
     });
-
   }
   getTeam(){
     return this.team;
   }
+
   ngAfterViewInit(){
+
   }
 
   getTeamMemberList() {

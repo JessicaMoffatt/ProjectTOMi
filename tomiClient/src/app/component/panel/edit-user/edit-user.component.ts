@@ -4,6 +4,8 @@ import {UserAccount} from "../../../model/userAccount";
 import {ErrorStateMatcher, MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSelect} from "@angular/material";
 import {Observable, Subscription} from "rxjs";
 import {TeamService} from "../../../service/team.service";
+import {ManageTeamsPanelComponent} from "../manage-teams-panel/manage-teams-panel.component";
+import {UserAccountComponent} from "../user-account/user-account.component";
 
 /**
  * EditUserComponent is an individual, editable entry for a UserAccount.
@@ -82,10 +84,9 @@ export class EditUserComponent implements OnInit, OnDestroy {
   @ViewChild('editUserAccountForm') editUserAccountForm;
 
 
-  constructor(public deleteUserDialog: MatDialog, public teamService: TeamService) { }
+  constructor(public deleteUserDialog: MatDialog, public teamService:TeamService) { }
 
   ngOnInit() {
-    this.teamService.initializeTeams();
   }
 
   ngOnDestroy(): void {

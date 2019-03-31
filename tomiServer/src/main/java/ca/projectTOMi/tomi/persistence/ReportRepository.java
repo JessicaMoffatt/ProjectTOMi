@@ -56,7 +56,7 @@ public class ReportRepository {
 				"JOIN Timesheet t ON e.timesheet = t " +
 				"JOIN UnitType u ON e.unitType = u " +
 				"WHERE t.userAccount = :userAccount " +
-				"GROUP BY t, u", ProductivityReportLine.class);
+				"GROUP BY t, u ", ProductivityReportLine.class);
 
 		return q.setParameter("userAccount", userAccount).getResultList();
 	}
