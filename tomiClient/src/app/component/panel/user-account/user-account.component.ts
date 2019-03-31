@@ -15,6 +15,7 @@ import {Observable, Subject, Subscription} from "rxjs";
 import {AddUserAccountComponent} from "../../modal/add-user-account/add-user-account.component";
 import {MatDialog} from "@angular/material";
 import {TeamService} from "../../../service/team.service";
+import {Team} from "../../../model/team";
 
 /**
  * @author Karol Talbot
@@ -29,6 +30,7 @@ export class UserAccountComponent implements OnInit, OnDestroy {
 
   private userAccount: UserAccount;
   private list: Array<UserAccount>;
+  private teams: Array<Team>;
 
   @Input() userSelectedEvent: Observable<UserAccount>;
 
@@ -45,6 +47,7 @@ export class UserAccountComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.teamService.initializeTeams();
+    this.teams = this.teamService.getTeamSubjectList().getValue();
     this.userAccountService.initializeUserAccounts();
     this.list = this.userAccountService.userSubject.getValue();
   }

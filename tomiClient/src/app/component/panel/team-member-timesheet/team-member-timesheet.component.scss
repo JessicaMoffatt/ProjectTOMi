@@ -1,0 +1,116 @@
+/*
+@author Jessica Moffatt
+@author Karol Talbot
+@version 2.0
+ */
+@import '~src/variables';
+
+
+.timesheet_footer {
+  background-color: $orange;
+  position: fixed;
+  bottom: 0;
+  width: 75%;
+  height: $footer_height;
+  vertical-align: middle;
+  z-index: 2;
+}
+
+.timesheet_content {
+  height: 75vh;
+}
+
+.scroll_panel {
+  height: 75vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.footer_btn {
+  bottom: 0;
+  height: $footer_height;
+  width: $btn_md_wh;
+  margin: 0.5vh 0.5vw;
+}
+
+.hours_tally {
+  vertical-align: middle;
+  float: right;
+  font-size: 1.5rem;
+  margin: 0.5vh 0.5vw;
+  color: #FFFFFF;
+}
+
+
+.add_btn, .save_btn {
+  background-color: $save_btn;
+
+  i {
+
+    color: white;
+  }
+}
+
+.arrow {
+  box-shadow: none;
+  margin: 0vh 3vw;
+  i {
+    color: $arrow_color;
+  }
+}
+
+.arrow:hover {
+  transition-delay: .05s;
+  background-color: $light_grey;
+}
+
+.week_title {
+  flex-grow: 2;
+  position: relative;
+  height: 5vh;
+  width: fit-content;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: none;
+  h4 {
+    text-align: center;
+    font-size: 2em;
+    color: $arrow_color;
+  }
+}
+
+.navigation {
+  width: 100%;
+  display: inline-flex;
+  flex-direction: row;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+.submission_status {
+  display: inline-flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#status {
+  padding: 0.4em;
+  border-radius: 0.5vw;
+}
+
+.hidden_btn {
+  background: none;
+
+  i {
+    color: $orange;
+  }
+
+  color: $orange;
+}
+
+h2{
+  margin: 1% 5%;
+}

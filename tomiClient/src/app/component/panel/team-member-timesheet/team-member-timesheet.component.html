@@ -2,33 +2,39 @@
 @author Jessica Moffatt
 @version 1.0
 -->
-<div *ngIf="teamMemberTimesheetService.selectedMember">
-  <div>
-    <div [ngClass]="'row'">
+<div *ngIf="teamMemberTimesheetService.selectedMember" class="timesheet_content">
+  <div class="scroll-pane">
+    <h2 [ngClass]="'row'">
       {{teamMemberTimesheetService.selectedMember.firstName}} {{teamMemberTimesheetService.selectedMember.lastName}}
-    </div>
+    </h2>
 
     <div>
-      <div [ngClass]="'container'">
-  <span [ngClass]="['arrow', 'rounded-circle','back']" (click)="teamMemberTimesheetService.displayPrevTimesheet()">
-  </span>
-        <span [ngClass]="'week_title'">Week of {{timesheetService.currentDate}}</span>
-        <span [ngClass]="['arrow', 'rounded-circle','forward']"
-              (click)="teamMemberTimesheetService.displayNextTimesheet()">
-  </span>
-        <app-date-picker [parent]="this" [minDate]="timesheetService.minDate"></app-date-picker>
-        <div [ngClass]="'container'">
-          <div *ngFor="let entry of this.teamMemberTimesheetService.entries">
-            <app-entry-uneditable [ngClass]="'entry'"
-                                  [entry]="entry"></app-entry-uneditable>
-          </div>
+      <div class="navigation">
+        <button mat-flat-button [ngClass]="['arrow']" (click)="teamMemberTimesheetService.displayPrevTimesheet()">
+          <i class="material-icons">
+            navigate_before
+          </i>
+        </button>
+        <div [ngClass]="'week_title'">
+          <h4>Week of {{timesheetService.currentDate}}</h4>
         </div>
+        <app-date-picker [parent]="this" [minDate]="timesheetService.minDate"></app-date-picker>
+        <mat-chip-trailing-icon disabled [ngClass]="['submission_status']">
+          <mat-chip [disableRipple]="true" id="status">{{timesheetService.currentStatus}}</mat-chip>
+        </mat-chip-trailing-icon>
+        <button mat-flat-button [ngClass]="['arrow']" (click)="teamMemberTimesheetService.displayNextTimesheet()">
+          <i class="material-icons">
+            navigate_next
+          </i>
+        </button>
       </div>
-      <div [ngClass]="'timesheet_footer'">
-        <span [ngClass]="'hours_tally'">Hours:<strong> {{teamMemberTimesheetService.tally}}</strong></span>
+      <div *ngFor="let entry of this.teamMemberTimesheetService.entries">
+        <app-entry-uneditable [ngClass]="'entry'"
+                              [entry]="entry"></app-entry-uneditable>
       </div>
     </div>
   </div>
+  <div [ngClass]="'timesheet_footer'">
+    <span [ngClass]="'hours_tally'">Hours:<strong> {{teamMemberTimesheetService.tally}}</strong></span>
+  </div>
 </div>
-
-

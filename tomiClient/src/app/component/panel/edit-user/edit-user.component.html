@@ -49,7 +49,7 @@
       <mat-form-field id="team">
         <mat-select #editUserTeamId placeholder="Team" [value]="userAccount.teamId">
           <mat-option [value]="-1">None</mat-option>
-          <mat-option *ngFor="let team of teamService.getTeamSubjectList() | async" [value]="team.id">{{team.teamName}}</mat-option>
+          <mat-option *ngFor="let team of this.teamService.getTeamSubjectList() | async" [value]="team.id">{{team.teamName}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

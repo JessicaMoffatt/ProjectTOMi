@@ -158,7 +158,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
       let newEntry = new Entry();
 
       this.timesheetService.getCurrentTimesheet().then((data) => {
-        newEntry.timesheet = data.id;
+        newEntry.timesheet = data;
 
         this.entryService.save(newEntry).then((data => {
           this.entries.push(data);
