@@ -82,11 +82,17 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     if(this.timesheetService.timesheets.length === 0){
       this.firstLoad();
     }else{
-      this.timesheetService.getCurrentTimesheet().then(data=>{
-        this.getEntries(data);
-        this.timesheetService.setCurrentDate();
-        this.timesheetService.setCurrentStatus().then();
-      });
+      if(this.timesheetService.getRepopulateTimesheets()){
+        this.timesheetService.setRepopulateTimesheets(false);
+        this.populateTimesheets().then(()=>{
+          this.timesheetService.getCurrentTimesheet().then(data=>{
+          this.getEntries(data);
+        });})
+      }else{
+        this.timesheetService.getCurrentTimesheet().then(data=>{
+          this.getEntries(data);
+        });
+      }
     }
   }
 
@@ -131,6 +137,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     this.timesheetService.getEntries(timesheet).subscribe((data) => {
       this.entries = data;
       this.updateTally();
+      this.timesheetService.setCurrentStatus().then();
+      this.timesheetService.setCurrentDate();
     });
   }
 
@@ -213,7 +221,13 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
       if (valid) {
         await this.timesheetService.submit().then((data:Timesheet) => {
-          this.reloadPromise(data).then();
+          let promise = new Promise((resolve)=>{
+            resolve(this.timesheetService.updateTimesheet(data))
+          }).then(()=>{
+            this.reloadPromise().then();
+          });
+
+          promise.then();
         });
       } else if (!valid) {
         //TODO add error handling!!
@@ -226,9 +240,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   /**
    * Waits for reloadAfterSerCurrentStatus to compelte.
    */
-  async reloadPromise(timesheet:Timesheet) {
+  async reloadPromise() {
     let promise = new Promise((resolve) => {
-      resolve(this.reloadAfterSetCurrentStatus(timesheet));
+      resolve(this.reloadAfterSetCurrentStatus());
     });
 
     return await promise;
@@ -237,9 +251,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   /**
    * Reloads the page once setCurrentStatus has completed.
    */
-  async reloadAfterSetCurrentStatus(timesheet:Timesheet) {
-    await this.updateCurrentStatusPromise(timesheet).then((data) => {
-        console.log(data);
+  async reloadAfterSetCurrentStatus() {
+    await this.setCurrentStatusPromise().then((data) => {
         this.navigateToTimesheet();
       }
     );
@@ -256,14 +269,6 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   async setCurrentStatusPromise() {
     let promise = new Promise((resolve) => {
       resolve(this.timesheetService.setCurrentStatus());
-    });
-
-    return await promise;
-  }
-
-  async updateCurrentStatusPromise(timesheet:Timesheet){
-    let promise = new Promise((resolve)=>{
-      resolve(this.timesheetService.updateCurrentStatus(timesheet))
     });
 
     return await promise;

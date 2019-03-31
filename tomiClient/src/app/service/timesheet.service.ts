@@ -11,6 +11,7 @@ import {Task} from "../model/task";
 import {UnitType} from "../model/unitType";
 import {TaskService} from "./task.service";
 import {UnitTypeService} from "./unit-type.service";
+import {SignInService} from "./sign-in.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -52,6 +53,8 @@ export class TimesheetService{
    * The earliest date that can be selectedProject.
    */
   minDate: Date;
+
+  private repopulateTimesheets:boolean = false;
 
   constructor(private http: HttpClient, public taskService:TaskService, public unitTypeService:UnitTypeService) {
   }
@@ -170,8 +173,7 @@ export class TimesheetService{
         if(this.currentTimesheetIndex >= this.timesheets.length){
           this.currentTimesheetIndex = this.timesheets.length -1;
         }
-        this.setCurrentDate();
-        this.setCurrentStatus().then();
+
         return this.getCurrentTimesheet();
       });
     });
@@ -204,12 +206,17 @@ export class TimesheetService{
     }
   }
 
-  async updateCurrentStatus(timesheet:Timesheet){
-    // this.currentStatus = timesheet.status.toString();
-    this.currentStatus = "HELLOOOO";
-    console.log(1);
+  async updateTimesheet(timesheet:Timesheet){
+    return this.timesheets[this.currentTimesheetIndex] = timesheet;
   }
 
+  setRepopulateTimesheets(reset:boolean){
+    this.repopulateTimesheets = reset;
+  }
+
+  getRepopulateTimesheets(): boolean{
+    return this.repopulateTimesheets;
+  }
   /**
    * Submits the current timesheet.
    */
