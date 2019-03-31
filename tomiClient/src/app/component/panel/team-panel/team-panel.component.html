@@ -1,5 +1,5 @@
 <div class="sidebar_container">
-  <app-team-member-sidebar></app-team-member-sidebar>
+  <app-team-member-sidebar #sideBar></app-team-member-sidebar>
 </div>
 <div class="content_view">
   <mat-tab-group animationDuration="200ms">
@@ -7,10 +7,10 @@
       <app-team-member-timesheet></app-team-member-timesheet>
     </mat-tab>
     <mat-tab label="Individual Productivity Report">
-      <app-productivity-report></app-productivity-report>
+      <app-productivity-report #individualReport></app-productivity-report>
     </mat-tab>
     <mat-tab label="Team Productivity Report">
-      <app-team-productivity-report></app-team-productivity-report>
+      <app-team-productivity-report #teamReport></app-team-productivity-report>
     </mat-tab>
   </mat-tab-group>
 </div>
