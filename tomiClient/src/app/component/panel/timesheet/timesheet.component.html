@@ -27,11 +27,11 @@
     <div>
       <div *ngFor="let entry of entries">
         <app-entry [ngClass]="'entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.LOGGING" [entry]="entry"
-                   [projects]="projects" [unitTypes]="unitTypes" [tasks]="tasks"
+                   [projects]="this.timesheetService.projects" [unitTypes]="this.timesheetService.unitTypes.getValue()" [tasks]="this.timesheetService.tasks.getValue()"
                    (requestCopy)="copyEntry($event)"
                    (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>
         <app-entry [ngClass]="'rejected_entry'" *ngIf="getStatusValue(entry.status.toString()) === sts.REJECTED"
-                   [entry]="entry" [projects]="projects" [unitTypes]="unitTypes" [tasks]="tasks"
+                   [entry]="entry" [projects]="this.timesheetService.projects" [unitTypes]="this.timesheetService.unitTypes.getValue()" [tasks]="this.timesheetService.tasks.getValue()"
                    (requestCopy)="copyEntry($event)"
                    (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>
         <app-entry-uneditable [ngClass]="'submitted_entry'"
@@ -74,7 +74,7 @@
 
   <span [ngClass]="'hours_tally'"><strong> {{tally}}</strong> Hours</span>
   <ng-template [ngIf]="timesheetService.currentStatus.match('LOGGING|REJECTED')">
-    <button mat-flat-button [ngClass]="['footer_btn', 'save_btn']" (click)="save().then()">
+    <button mat-flat-button [ngClass]="['footer_btn', 'save_btn']" (click)="save().then()" >
       <i class="material-icons">
         save_alt
       </i>

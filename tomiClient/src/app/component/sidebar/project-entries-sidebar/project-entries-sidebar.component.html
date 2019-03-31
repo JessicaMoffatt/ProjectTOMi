@@ -10,7 +10,7 @@
   <mat-action-list>
     <mat-button-toggle-group #btn_group="matButtonToggleGroup" [name]="buttonGroup" class="btn_list" vertical>
       <mat-button-toggle id="{{project.id}}_btn" class="list_btns" (click)='this.getProjectEntries(project)'
-                         *ngFor='let project of this.projectService.projects.getValue()'>{{project.projectName}}</mat-button-toggle>
+                         *ngFor='let project of this.projectService.projects.getValue()| FilterProjectByName:project_entry_search.value '>{{project.projectName}}</mat-button-toggle>
     </mat-button-toggle-group>
   </mat-action-list>
 </cdk-virtual-scroll-viewport>

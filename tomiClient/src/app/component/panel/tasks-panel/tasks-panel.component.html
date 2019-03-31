@@ -13,7 +13,7 @@
     <div id="left">&nbsp;</div>
     <div id="center">
       <mat-accordion>
-        <ng-container *ngFor="let task of taskService.getTaskSubjectList() | async">
+        <ng-container *ngFor="let task of taskService.getTaskSubjectList().getValue() | FilterUnitTypeByName:task_search.value ">
           <app-edit-task id="edit_task{{task.id}}" #editTaskComponent
                          (saveRequested)="save($event)"
                          (deleteRequested)="delete($event)"

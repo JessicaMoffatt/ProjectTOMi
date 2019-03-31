@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostListener, Pipe, PipeTransform} from '@angular/core';
 import {Input} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {ViewChild} from "@angular/core";
@@ -8,6 +8,7 @@ import {Task} from '../../../model/task';
 import {Observable} from 'rxjs';
 import {MatDialog} from '@angular/material';
 import {AddTaskComponent} from '../../modal/add-task/add-task.component';
+import {UserAccount} from "../../../model/userAccount";
 
 /**
  *
@@ -27,6 +28,11 @@ export class TasksPanelComponent implements OnInit{
   @Input() taskSelectedEvent: Observable<Task>;
 
   @ViewChild('editTaskComponent') editTaskComponent : ElementRef;
+
+  @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
+    e.preventDefault();
+    document.getElementById("task_search").focus();
+  }
 
   constructor(private dialog: MatDialog, private taskService: TaskService) { }
 
@@ -60,4 +66,19 @@ export class TasksPanelComponent implements OnInit{
     });
   }
   
+}
+
+@Pipe({name: 'FilterTaskByName'})
+export class FilterTaskByName implements PipeTransform {
+  transform(taskList: Array<Task>, nameFilter: string): any {
+    nameFilter = nameFilter.toLowerCase();
+    if (!nameFilter) return taskList;
+
+    return taskList.filter(n => {
+      let name = n.name;
+      name = name.toLowerCase();
+
+      return name.indexOf(nameFilter) >= 0;
+    });
+  }
 }

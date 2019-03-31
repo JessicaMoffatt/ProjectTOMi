@@ -99,7 +99,12 @@ import {UserAccountService} from "./service/user-account.service";
 
 
 //Other stuff
-import {DoAFilter} from "./component/panel/user-account/user-account.component";
+import {FilterUserAccountByName} from "./component/panel/user-account/user-account.component";
+import {FilterUnitTypeByName} from "./component/panel/unit-types-panel/unit-type-panel.component";
+import {FilterTaskByName} from "./component/panel/tasks-panel/tasks-panel.component";
+import {FilterTeamByName} from "./component/sidebar/team-sidebar/team-sidebar.component";
+import {FilterProjectByName} from "./component/sidebar/project-sidebar/project-sidebar.component";
+import {FilterTeamMemberByName} from "./component/sidebar/team-member-sidebar/team-member-sidebar.component";
 
 @NgModule({
   declarations: [
@@ -155,7 +160,12 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     ProjectSidebarComponent,
     AddProjectExpenseComponent,
     DataDumpReportComponent,
-    DoAFilter,
+    FilterUserAccountByName,
+    FilterUnitTypeByName,
+    FilterTaskByName,
+    FilterTeamByName,
+    FilterProjectByName,
+    FilterTeamMemberByName,
     DeleteTeamModal
   ],
   imports: [
@@ -274,7 +284,12 @@ import {DoAFilter} from "./component/panel/user-account/user-account.component";
     MatTabsModule,
     MatTableModule,
     MatProgressBarModule,
-    DoAFilter
+    FilterUserAccountByName,
+    FilterUnitTypeByName,
+    FilterTaskByName,
+    FilterProjectByName,
+    FilterTeamMemberByName,
+    FilterTeamByName
   ]
 })
 export class AppModule {

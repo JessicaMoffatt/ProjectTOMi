@@ -1,11 +1,16 @@
-import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import {Injectable, OnInit} from '@angular/core';
+import {BehaviorSubject, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {Entry} from "../model/entry";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Timesheet} from "../model/timesheet";
 import {timesheetUrl} from "../configuration/domainConfiguration";
 import {userTimesheetUrl} from "../configuration/domainConfiguration";
+import {Project} from "../model/project";
+import {Task} from "../model/task";
+import {UnitType} from "../model/unitType";
+import {TaskService} from "./task.service";
+import {UnitTypeService} from "./unit-type.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -22,9 +27,17 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class TimesheetService {
+export class TimesheetService{
   /** The list of all timehseets for this user.*/
   timesheets: Timesheet[] = [];
+
+  /** List of all projects this user is allowed to access.*/
+  projects: Project[] = [];
+
+  /** List of all tasks.*/
+  tasks: BehaviorSubject<Array<Task>> = new BehaviorSubject<Array<Task>>([]);
+  /** List of all unit types.*/
+  unitTypes: BehaviorSubject<Array<UnitType>> = new BehaviorSubject<Array<UnitType>>([]);
 
   /** The position in timesheets for the current timesheet.*/
   private currentTimesheetIndex = 0;
@@ -40,7 +53,29 @@ export class TimesheetService {
    */
   minDate: Date;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public taskService:TaskService, public unitTypeService:UnitTypeService) {
+  }
+
+  /** Populates tasks.*/
+  async populateTasks() {
+    let promise = new Promise((resolve)=>{
+      resolve( this.taskService.initializeTasks())
+    }).then(()=>{
+      this.tasks = this.taskService.getTaskSubjectList();
+    });
+
+   return await promise;
+  }
+
+  /** Populates unitTypes.*/
+  async populateUnitTypes() {
+    let promise = new Promise((resolve)=>{
+      resolve(this.unitTypeService.initializeUnitTypes())
+    }).then(()=>{
+      this.unitTypes = this.unitTypeService.getUnitTypeSubjectList();
+    });
+
+    return await promise;
   }
 
   /**

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, Inject, OnInit, ViewChild} from '@angular/core';
 import {Project} from "../../../model/project";
 import {ApprovePanelComponent} from "../../panel/approve-panel/approve-panel.component";
 import {ProjectService} from "../../../service/project.service";
@@ -18,7 +18,10 @@ import {Entry} from "../../../model/entry";
 export class ProjectEntriesSidebarComponent implements OnInit {
   @ViewChild("btn_group") btn_group;
 
-
+  @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
+    e.preventDefault();
+    document.getElementById("project_entry_search").focus();
+  }
   constructor(@Inject(ApprovePanelComponent) private parent: ApprovePanelComponent,
               public projectService:ProjectService) {
   }
@@ -40,3 +43,4 @@ export class ProjectEntriesSidebarComponent implements OnInit {
     this.parent.setSelectedProject(project);
   }
 }
+
