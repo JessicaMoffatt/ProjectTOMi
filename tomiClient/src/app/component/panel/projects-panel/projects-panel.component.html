@@ -1,13 +1,14 @@
-<!-- @author James Andrade, Jan 27,2019
+<!--
+@author James Andrade
 @author Jessica Moffatt
+@author Karol Talbot
 -->
 
-<mat-sidenav-container style="width:100%">
-  <mat-sidenav mode="side" opened>
+<div class="sidebar_container">
     <app-project-sidebar></app-project-sidebar>
-  </mat-sidenav>
+</div>
 
-  <mat-sidenav-content style="width: 75vw">
+<div class="team_view">
     <mat-tab-group animationDuration="200ms" (selectedTabChange)="tabEvent($event)">
       <mat-tab label="Project">
         <app-project-detail></app-project-detail>
@@ -19,10 +20,4 @@
           <app-data-dump-report #dataDumpReport></app-data-dump-report>
         </mat-tab>
     </mat-tab-group>
-  </mat-sidenav-content>
-
-  <!--[ngIf]="this.signInService.navList['create_project']"-->
-</mat-sidenav-container>
-
-
-
+</div>
