@@ -69,6 +69,7 @@ export class EditUnitTypeComponent implements OnInit, OnDestroy {
     e.preventDefault();
     if(this.editUnitTypeExpansionPanel.expanded){
       console.log("edit");
+      document.getElementById("saveunittype").click();
     }
   }
   constructor(public deleteUnitTypeDialog: MatDialog) {

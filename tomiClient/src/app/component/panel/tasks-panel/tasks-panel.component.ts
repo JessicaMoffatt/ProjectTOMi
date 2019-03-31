@@ -1,4 +1,4 @@
-import {Component, Pipe, PipeTransform} from '@angular/core';
+import {Component, HostListener, Pipe, PipeTransform} from '@angular/core';
 import {Input} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {ViewChild} from "@angular/core";
@@ -28,6 +28,11 @@ export class TasksPanelComponent implements OnInit{
   @Input() taskSelectedEvent: Observable<Task>;
 
   @ViewChild('editTaskComponent') editTaskComponent : ElementRef;
+
+  @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
+    e.preventDefault();
+    document.getElementById("task_search").focus();
+  }
 
   constructor(private dialog: MatDialog, private taskService: TaskService) { }
 

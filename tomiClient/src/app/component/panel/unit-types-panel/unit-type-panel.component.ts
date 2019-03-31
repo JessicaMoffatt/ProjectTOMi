@@ -29,10 +29,11 @@ export class UnitTypePanelComponent implements OnInit{
 
   @ViewChild('editUnitTypeComponent') editUnitTypeComponent : ElementRef;
 
-  @HostListener('window:keyup.Enter', ['$event']) enter(e: KeyboardEvent) {
+  @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
     e.preventDefault();
-    console.log("panel");
+    document.getElementById("unit_type_search").focus();
   }
+
   constructor(private dialog: MatDialog, private unitTypeService: UnitTypeService) { }
 
   ngOnInit() {

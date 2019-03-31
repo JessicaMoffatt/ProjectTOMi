@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, Pipe, PipeTransform} from '@angular/core';
+import {Component, HostListener, Inject, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {UserAccount} from "../../../model/userAccount";
 import {TimesheetService} from "../../../service/timesheet.service";
 import {MatSnackBar} from "@angular/material";
@@ -20,6 +20,11 @@ import {TeamPanelComponent} from "../../panel/team-panel/team-panel.component";
 })
 export class TeamMemberSidebarComponent implements OnInit {
   private teamMembers: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject([]);
+
+  @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
+    e.preventDefault();
+    document.getElementById("team_member_search").focus();
+  }
 
   constructor(public teamService: TeamService,
               public timesheetService: TimesheetService, public snackBar: MatSnackBar, @Inject(TeamPanelComponent) private parent: TeamPanelComponent) {

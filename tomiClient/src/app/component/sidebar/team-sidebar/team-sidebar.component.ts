@@ -1,5 +1,5 @@
 import {
-  Component, Inject,
+  Component, HostListener, Inject,
   OnInit, Pipe, PipeTransform, ViewChild
 } from '@angular/core';
 import {Team} from "../../../model/team";
@@ -22,6 +22,11 @@ import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-t
 })
 export class TeamSidebarComponent implements OnInit {
   @ViewChild("btn_group") buttonGroup;
+
+  @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
+    e.preventDefault();
+    document.getElementById("team_search").focus();
+  }
 
   constructor(@Inject(ManageTeamsPanelComponent) private parent: ManageTeamsPanelComponent,
               public dialog: MatDialog, public teamService: TeamService) {

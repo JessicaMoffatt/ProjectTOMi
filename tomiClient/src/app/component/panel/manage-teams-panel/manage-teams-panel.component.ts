@@ -57,7 +57,6 @@ export class ManageTeamsPanelComponent implements OnInit {
     this.save().then();
   }
 
-  
   constructor(private dialog: MatDialog, public deleteTeamDialog: MatDialog, private teamService: TeamService, public userAccountService: UserAccountService) {
   }
 

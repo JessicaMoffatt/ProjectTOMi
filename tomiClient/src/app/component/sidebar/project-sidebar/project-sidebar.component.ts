@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
+import {Component, HostListener, Inject, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
 import {ProjectService} from "../../../service/project.service";
 import {ProjectsPanelComponent} from "../../panel/projects-panel/projects-panel.component";
 import {Project} from "../../../model/project";
@@ -15,6 +15,10 @@ import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-t
 export class ProjectSidebarComponent implements OnInit {
   @ViewChild("btn_group") buttonGroup;
 
+  @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
+    e.preventDefault();
+    document.getElementById("project_search").focus();
+  }
   constructor(public projectService: ProjectService) { }
 
   ngOnInit() {
@@ -32,7 +36,6 @@ export class ProjectSidebarComponent implements OnInit {
 
 
 }
-
 
 @Pipe({name: 'FilterProjectByName'})
 export class FilterProjectByName implements PipeTransform {
