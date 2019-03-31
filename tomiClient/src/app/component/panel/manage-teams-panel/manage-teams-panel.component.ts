@@ -261,3 +261,4 @@ export interface DeleteDialogData {
   teamToDelete : Team;
   parent: ManageTeamsPanelComponent;
 }
+

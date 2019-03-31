@@ -35,4 +35,8 @@ export class ProjectsPanelComponent implements OnInit {
     }
   }
 
+  public openDialog(){
+    alert("Hello");
+  }
+
 }

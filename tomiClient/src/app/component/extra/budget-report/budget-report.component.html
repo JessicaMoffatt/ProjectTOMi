@@ -1,53 +1,56 @@
 <div *ngIf="this.projectService.selectedBudget">
-  <mat-progress-bar mode="determinate" [value]="projectService.percentActual" style="width:20vw;height:2vh"></mat-progress-bar>
-  <table>
-    <tr>
-      <td>
-        Total Planned Hours:
-      </td>
-      <td>
-        {{projectService.selectedBudget.project.budgetedHours}}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        Actual Hours:
-      </td>
-      <td>
-        {{projectService.selectedBudget.totalHours}}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        % Remaining:
-      </td>
-      <td>
-        {{projectService.percentRemaining}}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        Billable Hours:
-      </td>
-      <td>
-        {{projectService.selectedBudget.billableHours}}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        Non-billable Hours:
-      </td>
-      <td>
-        {{projectService.selectedBudget.nonBillableHours}}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        % Billable:
-      </td>
-      <td>
-        {{projectService.calculatePercentBillable()}}
-      </td>
-    </tr>
-  </table>
+  <mat-card class="mat-elevation-z2 report_card">
+    <mat-progress-bar mode="determinate" [value]="projectService.percentActual"
+                      style="width:20vw;height:2vh"></mat-progress-bar>
+    <table>
+      <tr>
+        <td>
+          Total Planned Hours:
+        </td>
+        <td>
+          {{projectService.selectedBudget.project.budgetedHours}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Actual Hours:
+        </td>
+        <td>
+          {{projectService.selectedBudget.totalHours}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          % Remaining:
+        </td>
+        <td>
+          {{projectService.percentRemaining}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Billable Hours:
+        </td>
+        <td>
+          {{projectService.selectedBudget.billableHours}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Non-billable Hours:
+        </td>
+        <td>
+          {{projectService.selectedBudget.nonBillableHours}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          % Billable:
+        </td>
+        <td>
+          {{projectService.calculatePercentBillable()}}
+        </td>
+      </tr>
+    </table>
+  </mat-card>
 </div>

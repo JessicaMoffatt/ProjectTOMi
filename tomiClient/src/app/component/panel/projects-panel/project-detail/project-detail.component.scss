@@ -1,4 +1,41 @@
 
-#project_details{
-  width: 300px;
+#project_details {
+  width: 90%;
+  padding: 1%;
+  margin: 3% 4%;
+}
+
+.row {
+  width: 98%;
+  margin: 1%;
+}
+
+#projectManager {
+  width: 48%;
+  margin-right: 4%;
+}
+
+#billingRate {
+  width: 22%;
+  margin-right: 4%;
+}
+
+#budget {
+  width: 22%;
+}
+
+#name {
+  width:48%;
+  padding-right: 4%;
+}
+
+#client {
+  width: 48%;
+}
+
+.content_scroll{
+  width: 100%;
+  height:83vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
