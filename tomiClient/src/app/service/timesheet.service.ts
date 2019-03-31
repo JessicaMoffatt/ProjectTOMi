@@ -198,7 +198,16 @@ export class TimesheetService{
   async setCurrentStatus(){
     if(this.currentTimesheetIndex != -1){
       this.currentStatus = this.timesheets[this.currentTimesheetIndex].status.toString();
+      return this.currentStatus;
+    }else{
+      return this.currentStatus;
     }
+  }
+
+  async updateCurrentStatus(timesheet:Timesheet){
+    // this.currentStatus = timesheet.status.toString();
+    this.currentStatus = "HELLOOOO";
+    console.log(1);
   }
 
   /**
@@ -231,7 +240,6 @@ export class TimesheetService{
     }).catch(() => {
       return null;
     });
-
     return tempSheet;
   }
 

@@ -116,7 +116,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
   /** Populates the list of timesheets.*/
   async populateTimesheets() {
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise((resolve) => {
       resolve(this.timesheetService.populateTimesheets(this.userId))
     });
 
@@ -209,16 +209,14 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
       let valid: boolean = false;
       this.entryComponents.forEach(item => {
         valid = item.validateEntry();
-        if (!valid) {
-          return;
-        }
       });
 
       if (valid) {
-        await this.timesheetService.submit().then(() => {
-          this.reloadPromise().then();
+        await this.timesheetService.submit().then((data:Timesheet) => {
+          this.reloadPromise(data).then();
         });
       } else if (!valid) {
+        //TODO add error handling!!
         alert("All fields must have a value to submit!");
       }
       }
@@ -228,9 +226,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   /**
    * Waits for reloadAfterSerCurrentStatus to compelte.
    */
-  async reloadPromise() {
-    let promise = new Promise((resolve, reject) => {
-      resolve(this.reloadAfterSetCurrentStatus());
+  async reloadPromise(timesheet:Timesheet) {
+    let promise = new Promise((resolve) => {
+      resolve(this.reloadAfterSetCurrentStatus(timesheet));
     });
 
     return await promise;
@@ -239,8 +237,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   /**
    * Reloads the page once setCurrentStatus has completed.
    */
-  async reloadAfterSetCurrentStatus() {
-    await this.setCurrentStatusPromise().finally(() => {
+  async reloadAfterSetCurrentStatus(timesheet:Timesheet) {
+    await this.updateCurrentStatusPromise(timesheet).then((data) => {
+        console.log(data);
         this.navigateToTimesheet();
       }
     );
@@ -249,16 +248,22 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   navigateToTimesheet() {
     this.router.navigateByUrl('/', {skipLocationChange: true}).finally(() =>
       this.router.navigate(["/my_timesheets"]));
-    // console.log(1);
-    //   this.timesheetService.setCurrentDate();
   }
 
   /**
    * Waits for setCurrentStatus to complete.
    */
   async setCurrentStatusPromise() {
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise((resolve) => {
       resolve(this.timesheetService.setCurrentStatus());
+    });
+
+    return await promise;
+  }
+
+  async updateCurrentStatusPromise(timesheet:Timesheet){
+    let promise = new Promise((resolve)=>{
+      resolve(this.timesheetService.updateCurrentStatus(timesheet))
     });
 
     return await promise;
