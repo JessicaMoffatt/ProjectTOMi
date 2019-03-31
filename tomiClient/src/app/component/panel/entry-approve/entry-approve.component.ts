@@ -41,7 +41,7 @@ export class EntryApproveComponent implements OnInit {
    * Gets the user associated with this entry.
    */
   getUserForEntry(){
-    this.timesheetService.getTimesheetById(this.entry.timesheet).subscribe(async(data)=>{
+    this.timesheetService.getTimesheetById(this.entry.timesheet.id).subscribe(async(data)=>{
       this.userName = data.userAccount.firstName + " " + data.userAccount.lastName + ": " + data.submitDate;
     });
   }

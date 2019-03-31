@@ -48,7 +48,7 @@ export class ProjectEntriesService {
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           let sorted = data._embedded.entries as Entry[];
-          sorted = sorted.sort((entry1, entry2) => entry1.timesheet - entry2.timesheet);
+          sorted = sorted.sort((entry1, entry2) => entry1.timesheet.id - entry2.timesheet.id);
           return sorted;
         } else {
           return [];
