@@ -43,10 +43,12 @@ export class ClientService {
     this.initializeClients();
   }
 
+  /**
+   * used to refresh the list of clients used by the components.
+   */
   initializeClients() {
     this.getClients().forEach(client => {
       this.clients = new BehaviorSubject<Array<Client>>(client);
-      //console.log(this.clients.value);
     });
   }
 
@@ -67,70 +69,12 @@ export class ClientService {
   }
 
 
-
-  async getAsyncClients() {
-    return await this.http.get(`${this.clientsUrl}`)
-      .pipe(map((data: any) => {
-        if (data._embedded !== undefined) {
-          return data._embedded.clients as Client[];
-        } else {
-          return [];
-        }
-      })).toPromise()
-      .then(value => this.clients = new BehaviorSubject(value))
-      .catch( () => this.errorService.alertError("client async get"))
-  }
-
-  /**
-   * Gets the projects for a specified user.
-   * @param userId The ID of the user whose projects we want.
-
-   getProjectsForUser(userId:number): Observable<Array<Project>>{
-    return this.http.get(`${this.userAccountProjectsUrl}/${userId}/projects`).pipe(map((response: Response) => response))
-      .pipe(map((data: any) => {
-        if (data._embedded !== undefined) {
-          return data._embedded.projects as Project[];
-        } else {
-          return [];
-        }
-      }));
-  } */
-
-  /**
-   * sets the selectedProject project that will be used in project-panel and manage-projects component
-   * added by: James Andrade
-   * @param project the project to be stored as 'selectedProject'
-   */
-  setSelected(client: Client) {
-    this.selected = client;
-  }
-
-
-  /**
-   * Gets a project with the specified ID.
-   * @param id The ID of the project to get.
-   */
-
-  getClientById(id: number) {
-    return this.http.get(`${this.clientsUrl}/${id}`)
-      .pipe(map((data: any) => {
-        if (data !== undefined) {
-          return data as Client;
-        } else {
-          return null;
-        }
-      }))
-
-  }
-
   /**
    * @author James Andrade
-   * returns the id if it is within the observable, otherwise -1
-   * @param clientName the client name to be searched for
+   * returns the client if they exist, otherwise null
+   * @param clientName the name of the client being searched for
    */
   getClientByName(clientName: string): Client {
-    //  console.log(this.clients.value);
-    //  console.log(clientName);
     for (let c of this.clients.value) {
       if (c.name === clientName) {
         return c as Client;
@@ -155,9 +99,8 @@ export class ClientService {
         return response as Client
       })
       .catch(() => {
-        this.errorService.alertError("client service post");
+        this.errorService.handleError();
       });
   }
-
 }
 
