@@ -83,12 +83,18 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     if (this.timesheetService.timesheets.length === 0) {
       this.firstLoad();
-    } else {
-      this.timesheetService.getCurrentTimesheet().then(data => {
-        this.getEntries(data);
-        this.timesheetService.setCurrentDate();
-        this.timesheetService.setCurrentStatus().then();
-      });
+    }else{
+      if(this.timesheetService.getRepopulateTimesheets()){
+        this.timesheetService.setRepopulateTimesheets(false);
+        this.populateTimesheets().then(()=>{
+          this.timesheetService.getCurrentTimesheet().then(data=>{
+          this.getEntries(data);
+        });})
+      }else{
+        this.timesheetService.getCurrentTimesheet().then(data=>{
+          this.getEntries(data);
+        });
+      }
     }
   }
 
@@ -118,7 +124,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
   /** Populates the list of timesheets.*/
   async populateTimesheets() {
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise((resolve) => {
       resolve(this.timesheetService.populateTimesheets(this.userId))
     });
 
@@ -133,6 +139,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     this.timesheetService.getEntries(timesheet).subscribe((data) => {
       this.entries = data;
       this.updateTally();
+      this.timesheetService.setCurrentStatus().then();
+      this.timesheetService.setCurrentDate();
     });
   }
 
@@ -207,22 +215,25 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Submits the current timesheet.
    */
   async submitTimesheet() {
-    await this.savePromise().then(async () => {
-        let valid: boolean = false;
-        this.entryComponents.forEach(item => {
-          valid = item.validateEntry();
-          if (!valid) {
-            return;
-          }
-        });
+     await this.savePromise().then(async()=>{
+      let valid: boolean = false;
+      this.entryComponents.forEach(item => {
+        valid = item.validateEntry();
+      });
 
-        if (valid) {
-          await this.timesheetService.submit().then(() => {
+      if (valid) {
+        await this.timesheetService.submit().then((data:Timesheet) => {
+          let promise = new Promise((resolve)=>{
+            resolve(this.timesheetService.updateTimesheet(data))
+          }).then(()=>{
             this.reloadPromise().then();
           });
-        } else if (!valid) {
-          this.errorService.displayError();
-        }
+
+          promise.then();
+        });
+      } else if (!valid) {
+        this.errorService.displayError();
+      }
       }
     );
   }
@@ -231,7 +242,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Waits for reloadAfterSerCurrentStatus to compelte.
    */
   async reloadPromise() {
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise((resolve) => {
       resolve(this.reloadAfterSetCurrentStatus());
     });
 
@@ -242,7 +253,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Reloads the page once setCurrentStatus has completed.
    */
   async reloadAfterSetCurrentStatus() {
-    await this.setCurrentStatusPromise().finally(() => {
+    await this.setCurrentStatusPromise().then((data) => {
         this.navigateToTimesheet();
       }
     );
@@ -251,15 +262,13 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   navigateToTimesheet() {
     this.router.navigateByUrl('/', {skipLocationChange: true}).finally(() =>
       this.router.navigate(["/my_timesheets"]));
-    // console.log(1);
-    //   this.timesheetService.setCurrentDate();
   }
 
   /**
    * Waits for setCurrentStatus to complete.
    */
   async setCurrentStatusPromise() {
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise((resolve) => {
       resolve(this.timesheetService.setCurrentStatus());
     });
 
