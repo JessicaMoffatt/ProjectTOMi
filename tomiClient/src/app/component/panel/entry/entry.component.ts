@@ -102,9 +102,9 @@ export class EntryComponent implements OnInit {
       && this.wednesdayInput.nativeElement.value != null && this.thursdayInput.nativeElement.value != null
       && this.fridayInput.nativeElement.value != null && this.saturdayInput.nativeElement.value != null
       && this.sundayInput.nativeElement.value != null
-      && this.projectInput.selected.value != null && this.projectInput.selected.value != "-1"
-      && this.taskInput.selected.value != null && this.taskInput.selected.value != -1
-      && this.unitTypeInput.selected.value != null && this.unitTypeInput.selected.value != -1){
+      && this.projectInput.selected && this.projectInput.selected.value != null && this.projectInput.selected.value != "-1"
+      && this.taskInput.select && this.taskInput.selected.value != null && this.taskInput.selected.value != -1
+      && this.unitTypeInput.selected && this.unitTypeInput.selected.value != null && this.unitTypeInput.selected.value != -1){
       valid = true;
     }
 

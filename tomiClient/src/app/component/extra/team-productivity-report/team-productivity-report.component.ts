@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {TeamMemberTimesheetService} from "../../../service/team-member-timesheet.service";
 import {MatDatepicker} from "@angular/material";
+import {ErrorService} from "../../../service/error.service";
 
 @Component({
   selector: 'app-team-productivity-report',
@@ -13,7 +14,7 @@ export class TeamProductivityReportComponent implements OnInit {
   @ViewChild('startTeamPicker') startTeamPicker: MatDatepicker<Date>;
   @ViewChild('endTeamPicker') endTeamPicker: MatDatepicker<Date>;
 
-  constructor(public teamMemberTimesheetService:TeamMemberTimesheetService) { }
+  constructor(public teamMemberTimesheetService:TeamMemberTimesheetService, private errorService:ErrorService) { }
 
   ngOnInit() {
   }
@@ -22,7 +23,7 @@ export class TeamProductivityReportComponent implements OnInit {
     if(this.startTeamPicker._selected != null && this.endTeamPicker._selected != null && this.startTeamPicker._selected <= this.endTeamPicker._selected){
       this.teamMemberTimesheetService.setRangeOfTeamProductivityReport(this.startTeamPicker._selected, this.endTeamPicker._selected);
     }else{
-      //TODO display error snack bar!!
+      this.errorService.displayError();
     }
   }
 

@@ -20,6 +20,7 @@ import {Task} from "../../../model/task";
 import {UnitType} from "../../../model/unitType";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
 import {SignInService} from "../../../service/sign-in.service";
+import {ErrorService} from "../../../service/error.service";
 
 /**
  *  @author Karol Talbot
@@ -71,7 +72,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router, public timesheetService: TimesheetService,
               private projectService: ProjectService, private entryService: EntryService,
-              public dialog: MatDialog, private signInService:SignInService) {
+              public dialog: MatDialog, private signInService:SignInService,
+              private errorService:ErrorService) {
 
   }
 
@@ -219,7 +221,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
           this.reloadPromise().then();
         });
       } else if (!valid) {
-        alert("All fields must have a value to submit!");
+        this.errorService.displayError();
       }
       }
     );
