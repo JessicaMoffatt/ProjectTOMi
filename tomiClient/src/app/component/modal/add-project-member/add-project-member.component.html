@@ -3,7 +3,7 @@
   @version 1.0
 -->
 
-<h1 mat-dialog-title>Add Member to Project</h1>
+<h2 mat-dialog-title>Add Member to Project</h2>
 <div mat-dialog-content>
   <form>
 
@@ -21,10 +21,10 @@
     </mat-form-field>
 
     <div mat-dialog-actions>
-      <button mat-raised-button color="primary"
+      <button mat-raised-button
               [disabled]="selectedUserId == undefined"
-              (click)="addUserAccount()">ADD</button>
-      <button mat-raised-button color="accent" (click)="cancel()">CANCEL</button>
+              (click)="addUserAccount()">Add</button>
+      <button mat-raised-button (click)="cancel()">Cancel</button>
     </div>
   </form>
 </div>
