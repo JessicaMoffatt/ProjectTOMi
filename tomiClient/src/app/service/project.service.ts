@@ -10,10 +10,7 @@ import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
 import {ExpenseService} from "./expense.service";
 import {Entry} from "../model/entry";
-import {Team} from "../model/team";
-import {UnitType} from "../model/unitType";
 import {Status} from "../model/status";
-import {EntryComponent} from "../component/panel/entry/entry.component";
 import {EntryApproveComponent} from "../component/panel/entry-approve/entry-approve.component";
 
 const httpOptions = {
@@ -82,6 +79,9 @@ export class ProjectService {
   getProjectsForUser(userId: number): Observable<Array<Project>> {
     return this.http.get(`${userAccountUrl}/${userId}/projects`)
       .pipe(map((data: any) => {
+        if(data === null){
+          return [];
+        }
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];
         } else {
@@ -99,7 +99,6 @@ export class ProjectService {
    */
   async setSelected(project: Project) {
     this.selectedProject = await project;
-    this.refreshProjectList();
     if (this.selectedProject != null && this.selectedProject.id.match(this.regExp)) {
       this.refreshUserAccountList();
       this.expenseService.refreshExpenses(this.selectedProject);
@@ -236,11 +235,15 @@ export class ProjectService {
 
 
   addUser(userAccountId: number) {
-    this.http.put<UserAccount>(`${projectsUrl}/${this.selectedProject.id}/add_member/${userAccountId}`, httpOptions).toPromise()
+    let url = `${projectsUrl}/${this.getSelectedProject().id}/add_member/${userAccountId}`;
+    console.log(this.selectedProject.id);
+    console.log(url);
+    this.http.put<UserAccount>(url, httpOptions).toPromise()
       .then((response) => {
         this.refreshUserAccountList();
         return response;
-      }).catch(() => {
+      }).catch((reason) => {
+        console.log(reason);
       return null;
     });
   }

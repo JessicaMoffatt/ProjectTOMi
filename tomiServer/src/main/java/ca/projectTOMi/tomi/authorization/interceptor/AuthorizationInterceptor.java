@@ -58,7 +58,12 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) {
 		final String authToken = request.getHeader("SignIn");
+		final String requestMethod = request.getMethod();
+		final String requestURI = request.getRequestURI();
+		String controller;
+		final UserAccount user;
 
+		System.out.printf("%5s %30s%n", requestMethod, requestURI);
 		// Initial Login
 		if ("/tokensignin".equals(request.getRequestURI())) {
 			return true;
@@ -66,7 +71,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			return true;
 		}
 
-		final UserAccount user;
 		try {
 			user = this.userAuthenticationService.checkLogin(authToken);
 		} catch (final Exception e) {
@@ -77,9 +81,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			return false;
 		}
 
-		final String requestMethod = request.getMethod();
-		final String requestURI = request.getRequestURI();
-		String controller;
+
+
 		try {
 			controller = ((HandlerMethod) handler).getMethod().getDeclaringClass().toString();
 			controller = controller.replace("class ca.projectTOMi.tomi.controller.", "");
@@ -149,7 +152,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		}
 
 		boolean fish = ((AuthManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
-		System.out.printf("%5s %30s: %6s%n", requestMethod, requestURI, fish ? "true" : "false");
+
 		return fish;
 	}
 

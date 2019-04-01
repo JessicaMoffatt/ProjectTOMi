@@ -1,53 +1,61 @@
 <div *ngIf="this.projectService.selectedBudget">
-  <mat-progress-bar mode="determinate" [value]="projectService.percentActual" style="width:20vw;height:2vh"></mat-progress-bar>
-  <table>
-    <tr>
-      <td>
-        Total Planned Hours:
-      </td>
-      <td>
-        {{projectService.selectedBudget.project.budgetedHours}}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        Actual Hours:
-      </td>
-      <td>
-        {{projectService.selectedBudget.totalHours}}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        % Remaining:
-      </td>
-      <td>
-        {{projectService.percentRemaining}}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        Billable Hours:
-      </td>
-      <td>
-        {{projectService.selectedBudget.billableHours}}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        Non-billable Hours:
-      </td>
-      <td>
-        {{projectService.selectedBudget.nonBillableHours}}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        % Billable:
-      </td>
-      <td>
-        {{projectService.calculatePercentBillable()}}
-      </td>
-    </tr>
-  </table>
+  <mat-card class="mat-elevation-z1 report_card">
+    <mat-card-subtitle>
+      Budget Report
+    </mat-card-subtitle>
+    <mat-progress-bar mode="determinate" [value]="projectService.percentActual"
+                      id="progress"></mat-progress-bar>
+    <div class="row">
+      <div class="first">
+        <div class="value_name">
+          <strong>Total Planned Hours</strong>
+        </div>
+        <div class="value_value">
+          {{projectService.selectedBudget.project.budgetedHours}}
+        </div>
+      </div>
+      <div class="second">
+        <div class="value_name">
+          <strong>Actual Hours</strong>
+        </div>
+        <div class="value_value">
+          {{projectService.selectedBudget.totalHours}}
+        </div>
+      </div>
+      <div class="third">
+        <div class="value_name">
+          <strong>Remaining</strong>
+        </div>
+        <div class="value_value">
+          {{projectService.percentRemaining.toFixed(2)}}%
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="first">
+        <div class="value_name">
+          <strong>Billable Hours</strong>
+        </div>
+        <div class="value_value">
+          {{projectService.selectedBudget.billableHours}}
+        </div>
+      </div>
+      <div class="second">
+        <div class="value_name">
+          <strong>Non-billable Hours</strong>
+        </div>
+        <div class="value_value">
+          {{projectService.selectedBudget.nonBillableHours}}
+        </div>
+      </div>
+      <div class="third">
+        <div class="value_name">
+          <strong>Billable</strong>
+        </div>
+        <div class="value_value">
+          {{projectService.percentRemaining == 100 ? 0.00 : projectService.calculatePercentBillable()}}%
+        </div>
+      </div>
+    </div>
+  </mat-card>
 </div>

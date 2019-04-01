@@ -76,8 +76,7 @@ export class UserAccountComponent implements OnInit, OnDestroy {
    */
   openDialog(): void {
     this.dialog.open(AddUserAccountComponent, {
-      width: "70vw",
-      height: "70vh"
+      width: "70vw"
     });
   }
 

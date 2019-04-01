@@ -190,6 +190,8 @@ public final class Entry {
 			final Project p = new Project();
 			p.setId(project.getId());
 			this.project = p;
+		}else{
+			this.project = null;
 		}
 	}
 }

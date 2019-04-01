@@ -1,96 +1,86 @@
-<mat-card id="project_details">
-  <form>
+<!--
+  @author Karol Talbot
+  @author James Andrade
+-->
+<div class="content_scroll">
+  <mat-card id="project_details" class="mat-elevation-z2">
+    <mat-card-header>
+      <mat-card-title>
+        Project Id {{this.projectService.getSelectedProject().id}}
+      </mat-card-title>
+    </mat-card-header>
+    <form>
+      <div class="row">
+        <mat-form-field id="name">
+          <input type="text"
+                 placeholder="Project Name"
+                 aria-label="Project Name"
+                 matInput
+                 [(ngModel)]="this.projectService.getSelectedProject().projectName"
+                 [formControl]="this.nameControl">
+        </mat-form-field>
+        <mat-form-field id="client">
+          <input type="text"
+                 placeholder="Client"
+                 aria-label="Client"
+                 matInput
+                 [(ngModel)]="this.projectService.getSelectedProject().client.name"
+                 [formControl]="clientControl"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let c of this.clientService.clients | async" [value]="c.name">
+              {{c.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field id="projectManager" #projectManager>
+          <mat-select placeholder="Project Manager"
+                      aria-label="Project Manager"
+                      [(value)]="this.projectService.getSelectedProject().projectManagerId">
+            <mat-option [value]="-1">None</mat-option>
+            <mat-option *ngFor="let u of this.projectService.userAccountList.getValue()" [value]="u.id">
+              {{u.firstName}} {{u.lastName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    <mat-form-field>
-      <input type="text"
-             placeholder="Project Name"
-             aria-label="Project Name"
-             matInput
-             [(ngModel)]="this.projectService.getSelectedProject().projectName"
-             [formControl]="this.nameControl">
-    </mat-form-field>
-    <br/>
-
-    <mat-form-field>
-      <input type="text"
-             placeholder="Client"
-             aria-label="Client"
-             matInput
-             [(ngModel)]="this.projectService.getSelectedProject().client.name"
-             [formControl]="clientControl"
-             [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let c of this.clientService.clients | async" [value]="c.name">
-          {{c.name}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <br/>
-
-    <mat-form-field>
-      <mat-select placeholder="Project Manager"
-                  aria-label="Project Manager"
-                  [(value)]="this.projectService.getSelectedProject().projectManagerId">
-        <mat-option [value]="null">None</mat-option>
-        <mat-option *ngFor="let u of this.userAccountService.userSubject | async" [value]="u.id">
-          {{u.firstName}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <br/>
-
-    <mat-form-field>
-      <input type="text"
-             placeholder="{{this.projectService.getSelectedProject().id.match(this.projectService.regExp) ? 'Account ID' : 'Account Manager'}}"
-             attr.aria-label="{{this.projectService.getSelectedProject().id.match(this.projectService.regExp) ? 'Account ID' : 'Account Manager'}}"
-             matInput
-             [(ngModel)]="this.projectService.getSelectedProject().id"
-             [formControl]="idControl">
-    </mat-form-field>
-    <br/>
-
-    <mat-form-field>
-      <input placeholder="Billing Rate"
-             aria-label="Billing Rate"
-             type="number"
-             min="0.00"
-             matInput
-             [(ngModel)]="this.projectService.getSelectedProject().billableRate"
-             [formControl]="this.billingControl">
-      <span matPrefix>$&nbsp;</span>
-    </mat-form-field>
-    <br/>
-
-    <mat-form-field>
-      <input type="number"
-             placeholder="Budget Total"
-             aria-label="Budget Total"
-             min="0.00"
-             matInput
-             [(ngModel)]="this.projectService.getSelectedProject().budget"
-             [formControl]="this.budgetControl">
-      <span matPrefix>$&nbsp;</span>
-    </mat-form-field>
-    <br/>
-
-      Budget Report
+        <mat-form-field id="billingRate">
+          <input placeholder="Billing Rate"
+                 aria-label="Billing Rate"
+                 type="number"
+                 min="0.00"
+                 matInput
+                 [(ngModel)]="this.projectService.getSelectedProject().billableRate"
+                 [formControl]="this.billingControl">
+          <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field id="budget">
+          <input type="number"
+                 placeholder="Budget Total"
+                 aria-label="Budget Total"
+                 min="0.00"
+                 matInput
+                 [(ngModel)]="this.projectService.getSelectedProject().budget"
+                 [formControl]="this.budgetControl">
+          <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+      </div>
       <app-budget-report></app-budget-report>
-
-    <div style="display: flex; justify-content: flex-end">
-      <button (click)="delete()" mat-button color="primary" style="order: 2">DELETE</button>
-    </div>
-
-
-
-
-    <div style="display: flex; justify-content: flex-end">
-      <button (click)="save()" mat-button color="primary" style="order: 2">SAVE</button>
-    </div>
-
-  </form>
-</mat-card>
-
-<app-project-member-list></app-project-member-list>
-<br>
-
-<app-expense-list></app-expense-list>
+      <app-project-member-list id="members"></app-project-member-list>
+      <app-expense-list id="expenses"></app-expense-list>
+    </form>
+    <mat-card-actions class="row">
+      <button class="delete_btn" (click)="delete()" mat-button>
+        Delete
+      </button>
+      <button class="cancel_btn" (click)="cancel()" mat-button>
+        Cancel
+      </button>
+      <button class="save_btn" (click)="save()" mat-button>
+        Save
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -3,10 +3,6 @@
   @author Karol Talbot
   @version 2.0
  */
-.dialog_pane{
-  width: available;
-  padding: 1vh 5vw;
-}
 
 #toggles{
   display: inline-block;
@@ -18,9 +14,8 @@
 }
 
 #buttons{
-  padding-top: 5vh;
+  padding-top: 1%;
   padding-right:1%;
-  width: 100%;
 }
 
 .manage_cancel_btn{
@@ -38,6 +33,22 @@
   margin-right: 1%;
 }
 
-#user_role{
-  width: 100%;
+#task {
+  width: 98%;
+  padding: 1% 1%;
+}
+
+.billable {
+  padding-left: 1%;
+  padding-bottom: 1em;
+}
+
+#toggles {
+  display: inline-block;
+  width: 48%;
+  padding: 1%;
+
+  mat-slide-toggle {
+    display: block;
+  }
 }

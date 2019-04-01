@@ -9,6 +9,7 @@ import {UserAccountService} from "../../../../service/user-account.service";
 import {UserAccount} from "../../../../model/userAccount";
 import {map} from "rxjs/operators";
 import {UnitType} from "../../../../model/unitType";
+import {MatFormField} from "@angular/material";
 
 
 @Component({
@@ -19,6 +20,7 @@ import {UnitType} from "../../../../model/unitType";
 
 export class ProjectDetailComponent implements OnInit {
 
+  @ViewChild('projectManager') public projectManager;
   constructor(public projectService: ProjectService,
               public clientService: ClientService,
               public expenseService: ExpenseService,
@@ -37,15 +39,20 @@ export class ProjectDetailComponent implements OnInit {
 
 
   ngOnInit() {
-    this.projectService.setSelected(new Project());
     this.userAccountService.initializeUserAccounts();
   }
 
   save() {
 
+    let project:Project = this.projectService.getSelectedProject();
+
+    if(this.projectManager._selected === null || this.projectManager._selected === undefined){
+
+      project.projectManagerId = -1;
+    }
     // 1. Validate project name is not taken
     // TODO: move to validation in form control
-    if (!this.projectService.projectNameIsAvailable(this.projectService.getSelectedProject().projectName)) {
+    if (!this.projectService.projectNameIsAvailable(project.projectName)) {
       alert("Invalid project name.  This project name is already taken by another project.")
     }
 
@@ -65,27 +72,27 @@ export class ProjectDetailComponent implements OnInit {
       // 4.1 Create a new project if necessary along with the initials that will be passed
       // to the backend to create the id (for new projects only).
       // if the selected project is null, it means we are creating a new project
-      if (!this.projectService.getSelectedProject().id.match(this.projectService.regExp)) {
-        this.projectService.getSelectedProject().id = ProjectDetailComponent.getInitialsFromName(this.projectService.getSelectedProject().id);
+      if (!project.id.match(this.projectService.regExp)) {
+        project.id = ProjectDetailComponent.getInitialsFromName(project.id);
       }
 
 
       // a null return value indicates that no matching client is found
-      if (this.clientService.getClientByName(this.projectService.getSelectedProject().client.name) == null) {
+      if (this.clientService.getClientByName(project.client.name) == null) {
       //  console.log('new client');
-        this.clientService.save(this.projectService.getSelectedProject().client).then((client) => {
+        this.clientService.save(project.client).then((client) => {
           if (client instanceof Client) {
 
-            this.projectService.getSelectedProject().client = client;
+            project.client = client;
           }
         //  this.logValues()
-          this.projectService.save(this.projectService.getSelectedProject())
+          this.projectService.save(project)
         });
       } else {
        // console.log("existing client");
-        this.projectService.getSelectedProject().client
-          = this.clientService.getClientByName(this.projectService.getSelectedProject().client.name);
-        this.projectService.save(this.projectService.getSelectedProject())
+        project.client
+          = this.clientService.getClientByName(project.client.name);
+        this.projectService.save(project)
       }
     }
   }
