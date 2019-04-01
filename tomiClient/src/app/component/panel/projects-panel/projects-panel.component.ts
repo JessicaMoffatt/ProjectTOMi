@@ -17,6 +17,7 @@ export class ProjectsPanelComponent implements OnInit {
 
   @ViewChild('dumpTab') dumpTab: MatTab;
   @ViewChild('dataDumpReport') dataDumpReport: DataDumpReportComponent;
+  @ViewChild("sideBar") sideBar;
 
   constructor(private projectService: ProjectService,
               public snackBar:MatSnackBar, public signInService:SignInService) {
@@ -24,8 +25,8 @@ export class ProjectsPanelComponent implements OnInit {
 
   project: Project;
 
-  ngOnInit() {
-    this.projectService.setSelected(null);
+  async ngOnInit() {
+    await this.projectService.setSelected(null);
     this.projectService.userAccountList = new BehaviorSubject<Array<UserAccount>>([]);
   }
 
@@ -33,6 +34,10 @@ export class ProjectsPanelComponent implements OnInit {
     if(event.tab === this.dumpTab){
       this.dataDumpReport.getDataDump();
     }
+  }
+
+  public openDialog(){
+    alert("Hello");
   }
 
 }

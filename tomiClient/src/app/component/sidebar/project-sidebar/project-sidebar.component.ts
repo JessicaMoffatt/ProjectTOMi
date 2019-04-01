@@ -6,6 +6,7 @@ import {BehaviorSubject} from "rxjs";
 import {UserAccount} from "../../../model/userAccount";
 import {Team} from "../../../model/team";
 import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-teams-panel.component";
+import {MatButtonToggleGroup} from "@angular/material";
 
 @Component({
   selector: 'app-project-sidebar',
@@ -13,7 +14,8 @@ import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-t
   styleUrls: ['./project-sidebar.component.scss']
 })
 export class ProjectSidebarComponent implements OnInit {
-  @ViewChild("btn_group") buttonGroup;
+  @ViewChild("btn_group") buttonGroup:MatButtonToggleGroup;
+  selected:boolean = false;
 
   @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
     e.preventDefault();
@@ -31,9 +33,13 @@ export class ProjectSidebarComponent implements OnInit {
   }
 
   selectProject(project : Project){
+    this.selected = true;
     this.projectService.setSelected(project);
   }
 
+  checkSelected(){
+    return this.selected;
+  }
 
 }
 
