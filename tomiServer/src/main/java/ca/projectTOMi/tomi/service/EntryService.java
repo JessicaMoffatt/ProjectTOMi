@@ -120,8 +120,6 @@ public class EntryService {
 				entry.setTimesheet(updatedEntry.getTimesheet());
 				entry.setStatus(Status.LOGGING);
 				entry.setActive(true);
-				System.out.println(entry);
-
 				this.entryRepository.save(entry);
 				break;
 		}

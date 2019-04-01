@@ -42,7 +42,7 @@ export class EntryApproveComponent implements OnInit {
    */
   getUserForEntry(){
     this.timesheetService.getTimesheetById(this.entry.timesheet.id).subscribe(async(data)=>{
-      this.userName = data.userAccount.firstName + " " + data.userAccount.lastName + ": " + data.submitDate;
+      this.userName = data.userAccount.firstName + " " + data.userAccount.lastName;
     });
   }
 
