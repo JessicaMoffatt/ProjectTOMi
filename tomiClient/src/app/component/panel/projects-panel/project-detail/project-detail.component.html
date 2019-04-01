@@ -39,8 +39,8 @@
           <mat-select placeholder="Project Manager"
                       aria-label="Project Manager"
                       [(value)]="this.projectService.getSelectedProject().projectManagerId">
-            <mat-option [value]="null">None</mat-option>
-            <mat-option *ngFor="let u of this.userAccountService.userSubject | async" [value]="u.id">
+            <mat-option [value]="-1">None</mat-option>
+            <mat-option *ngFor="let u of this.projectService.userAccountList | async" [value]="u.id">
               {{u.firstName}} {{u.lastName}}
             </mat-option>
           </mat-select>
@@ -68,8 +68,8 @@
         </mat-form-field>
       </div>
       <app-budget-report></app-budget-report>
-      <app-project-member-list id="members"></app-project-member-list>
       <app-expense-list id="expenses"></app-expense-list>
+      <app-project-member-list id="members"></app-project-member-list>
     </form>
     <mat-card-actions class="row">
       <button class="delete_btn" (click)="delete()" mat-button>

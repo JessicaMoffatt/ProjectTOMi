@@ -1,12 +1,10 @@
 <mat-card class="mat-elevation-z2">
   <mat-card-header>
-
-    <mat-card-title>Expenses</mat-card-title>
-
+    <mat-card-subtitle>Expenses</mat-card-subtitle>
   </mat-card-header>
 
 
-<table mat-table [dataSource]="this.expenseService.expenses" >
+<table mat-table [dataSource]="this.expenseService.expenses" class="expense_table">
   <!-- Checkbox Column -->
   <ng-container matColumnDef="select">
 
@@ -30,7 +28,7 @@
   <!-- Cost Column -->
   <ng-container matColumnDef="amount">
     <th mat-header-cell *matHeaderCellDef> Cost</th>
-    <td mat-cell *matCellDef="let expense" align="right"> {{expense.amount}} </td>
+    <td mat-cell *matCellDef="let expense"> ${{(expense.amount/100).toFixed(2)}} </td>
   </ng-container>
 
   <!-- align="right" -->
