@@ -266,7 +266,6 @@ public class EntryService {
 	public Timesheet updateTimesheet(final Long id, final Timesheet newTimesheet) {
 		return this.timesheetRepository.findById(id).map(timesheet -> {
 				timesheet.setStatus(newTimesheet.getStatus());
-				timesheet.setSubmitDate(newTimesheet.getSubmitDate());
 				timesheet.setId(newTimesheet.getId());
 				return timesheet;
 			}

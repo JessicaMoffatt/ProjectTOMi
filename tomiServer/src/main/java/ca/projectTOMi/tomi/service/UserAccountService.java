@@ -256,7 +256,7 @@ public final class UserAccountService {
 		final LocalDate date = LocalDate.now().with(fieldISO, 1);
 		final List<Timesheet> timesheets = this.entryService.getTimesheetsByDate(date);
 		for(final Timesheet timesheet: timesheets){
-			if(timesheet.getSubmitDate().isEmpty() && (timesheet.getUserAccount().getGoogleId() != null)){
+			if(timesheet.getSubmitDate() != null && (timesheet.getUserAccount().getGoogleId() != null)){
 				final String email = timesheet.getUserAccount().getEmail();
 				final String subject = TOMiEmailService.SUBJECT;
 				final String body = String.format(TOMiEmailService.EMAIL_BODY, timesheet.getUserAccount().getFirstName(), date);
