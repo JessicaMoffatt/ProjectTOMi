@@ -29,9 +29,6 @@ export class ClientService {
   /** The URL for accessing projects.*/
   private clientsUrl = 'http://localhost:8080/clients';
 
-  /** The URL for accessing user accounts.
-   private userAccountProjectsUrl = 'http://localhost:8080/user_accounts/'; */
-
   /** tracks which project is selectedProject in project-panel component and manage-project modal */
   selected: Client;
 
@@ -85,13 +82,9 @@ export class ClientService {
 
 
   /**
-   * Saves a specified client. If the team is new (ID of -1) an HTTP POST is performed, else a PUT is performed to update the existing team.
-   * @param team The team to update/create.
-   */
-  /**
-   * Saves a specified UserAccount. If the UserAccount is new (id = -1), an HTTP POST is performed, else an HTTP PUT is performed to update the existing UserAccount.
+   * Saves a specified client by performing an HTTP post.
    *
-   * @param account The UserAccount to be created/updated.
+   * @param client the client to be created/updated.
    */
   save(client: Client) {
     return this.http.post<Client>(this.clientsUrl, JSON.stringify(client), httpOptions).toPromise()
@@ -103,4 +96,3 @@ export class ClientService {
       });
   }
 }
-

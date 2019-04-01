@@ -12,9 +12,8 @@ import {userAccountUrl} from "../configuration/domainConfiguration";
 import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
 import {ExpenseService} from "./expense.service";
-import {Entry} from "../model/entry";
-import {Team} from "../model/team";
 import {ErrorService} from "./error.service";
+import {Client} from "../model/client";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -50,11 +49,13 @@ export class ProjectService {
               private errorService: ErrorService) {
   }
 
+
   /**
    * Gets all projects.
    */
   getAllProjects(): Observable<Array<Project>> {
     return this.http.get(`${projectsUrl}`).pipe(map((response: Response) => response))
+      .pipe(catchError(this.errorService.handleError<Client[]>()))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];
@@ -69,7 +70,8 @@ export class ProjectService {
    * @param userId The ID of the user whose projects we want.
    */
   getProjectsForUser(userId: number): Observable<Array<Project>> {
-    return this.http.get(`${userAccountUrl}/${userId}/projects`).pipe(map((response: Response) => response))
+    return this.http.get(`${userAccountUrl}/${userId}/projects`)
+      .pipe(catchError(this.errorService.handleError<Client[]>()))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];
@@ -93,6 +95,7 @@ export class ProjectService {
       this.expenseService.refreshExpenses(this.selectedProject);
     }
   }
+
 
   getSelectedProject() {
     return this.selectedProject;
@@ -166,8 +169,7 @@ export class ProjectService {
           console.log("update complete, project:" + project);
         })
         .catch(() => {
-
-          this.errorService.alertError("save project put");
+          this.errorService.handleError();
           console.log("update rejected")
         });
     }
@@ -180,6 +182,7 @@ export class ProjectService {
         this.refreshUserAccountList();
         return response;
       }).catch(() => {
+        this.errorService.displayError();
       return null;
     });
   }
@@ -188,21 +191,14 @@ export class ProjectService {
   refreshProjectList() {
     this.getAllProjects().forEach(project => {
       this.projects = new BehaviorSubject<Array<Project>>(project);
-      // this.sort();
-    }).catch(() => {
-      let getUsersErrorMessage = 'Something went wrong when getting the list of projects. Please contact your system administrator.';
-      this.snackBar.open(getUsersErrorMessage, null, {
-        duration: 5000,
-        politeness: 'assertive',
-        panelClass: 'snackbar-fail',
-        horizontalPosition: 'right'
-      });
-    });
+    })
   }
+
 
 
   refreshUserAccountList() {
     this.http.get(`${projectsUrl}/${this.selectedProject.id}/members`)
+      .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         if (data !== undefined) {
           return data as UserAccount[];
@@ -211,20 +207,14 @@ export class ProjectService {
         }
       })).forEach(userAccount => {
       this.userAccountList = new BehaviorSubject<Array<UserAccount>>(userAccount);
-    }).catch(() => {
-      let getUsersErrorMessage = 'Something went wrong when getting the list of project members. Please contact your system administrator.';
-      this.snackBar.open(getUsersErrorMessage, null, {
-        duration: 5000,
-        politeness: 'assertive',
-        panelClass: 'snackbar-fail',
-        horizontalPosition: 'right'
-      });
-    });
+    })
   }
+
 
   removeUser(userId: number) {
     this.http.put(`${projectsUrl}/${this.selectedProject.id}/remove_member/${userId}`, httpOptions).toPromise()
       .then(() => this.refreshUserAccountList())
+      .catch( () => this.errorService.displayError())
   }
 
   delete(project: Project) {

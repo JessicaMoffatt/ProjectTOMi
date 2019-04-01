@@ -40,16 +40,23 @@ export class ErrorService {
   public handleError<T>(result?: T) {
     return (error: any): Observable<T> => {
 
-      this.snackBar.open(message, null, {
-        duration: 5000,
-        politeness: 'assertive',
-        panelClass: 'snackbar-fail',
-        horizontalPosition: 'right',
-        verticalPosition: 'top'
-      });
+      this.displayError();
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
+
+  public displayError(){
+    this.snackBar.open(message, null, {
+      duration: 5000,
+      politeness: 'assertive',
+      panelClass: 'snackbar-fail',
+      horizontalPosition: 'right',
+      verticalPosition: 'top'
+    });
+
+
+  }
+
 }
