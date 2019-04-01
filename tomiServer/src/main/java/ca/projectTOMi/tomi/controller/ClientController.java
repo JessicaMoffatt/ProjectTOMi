@@ -62,7 +62,7 @@ public class ClientController {
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
-		if(1==1)throw new ClientNotFoundException();
+		//if(1==1)throw new ClientNotFoundException();
 
 		return new Resources<>(clientList, linkTo(methodOn(ClientController.class).getActiveClients(authMan)).withSelfRel());
 	}

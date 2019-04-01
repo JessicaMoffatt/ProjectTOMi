@@ -58,7 +58,7 @@ export class ClientService {
    */
   getClients(): Observable<Array<Client>> {
     return this.http.get(`${this.clientsUrl}`)
-      .pipe(catchError(this.errorService.handleError<Client[]>('getHeroes', [])))
+      .pipe(catchError(this.errorService.handleError<Client[]>()))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.clients as Client[];
@@ -83,7 +83,7 @@ export class ClientService {
     return null;
   }
 
-  //TODO add error handling!!
+
   /**
    * Saves a specified client. If the team is new (ID of -1) an HTTP POST is performed, else a PUT is performed to update the existing team.
    * @param team The team to update/create.
