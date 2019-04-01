@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EntryApproveComponent } from './entry-approve.component';
+import { BillableHourReportComponent } from './billable-hour-report.component';
 
-describe('EntryApproveComponent', () => {
-  let component: EntryApproveComponent;
-  let fixture: ComponentFixture<EntryApproveComponent>;
+describe('BillableHourReportComponent', () => {
+  let component: BillableHourReportComponent;
+  let fixture: ComponentFixture<BillableHourReportComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EntryApproveComponent ]
+      declarations: [ BillableHourReportComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EntryApproveComponent);
+    fixture = TestBed.createComponent(BillableHourReportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

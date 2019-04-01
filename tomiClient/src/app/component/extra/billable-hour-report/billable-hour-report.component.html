@@ -1,0 +1,30 @@
+<div *ngIf="this.projectService.billableReport">
+    <h2>
+      Billable Hour Report
+    </h2>
+    <table mat-table [dataSource]="this.projectService.billableReport" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let line"> {{line.project.projectName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="billableHours">
+        <th mat-header-cell *matHeaderCellDef>Billable Hours </th>
+        <td mat-cell *matCellDef="let line"> {{line.billableHours}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nonBillableHours">
+        <th mat-header-cell *matHeaderCellDef> Non-billable Hours </th>
+        <td mat-cell *matCellDef="let line"> {{line.nonbillableHours}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="billable%">
+        <th mat-header-cell *matHeaderCellDef> Billable % </th>
+        <td mat-cell *matCellDef="let line"> {{(line.billableHours/(line.billableHours + line.nonbillableHours)*100).toFixed(2)}}% </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

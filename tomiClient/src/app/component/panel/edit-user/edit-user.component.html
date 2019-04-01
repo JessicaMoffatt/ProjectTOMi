@@ -49,13 +49,13 @@
       <mat-form-field id="team">
         <mat-select #editUserTeamId placeholder="Team" [value]="userAccount.teamId">
           <mat-option [value]="-1">None</mat-option>
-          <mat-option *ngFor="let team of teamService2.getTeamSubjectList() | async" [value]="team.id">{{team.teamName}}</mat-option>
+          <mat-option *ngFor="let team of this.teamService.getTeamSubjectList() | async" [value]="team.id">{{team.teamName}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <div #buttons>
-      <button mat-raised-button class="manage_delete_btn" (click)="openDeleteDialog()">Delete</button>
-      <button mat-raised-button class="manage_cancel_btn" (click)="cancel()">Cancel</button>
+      <button type="button" mat-raised-button class="manage_delete_btn" (click)="openDeleteDialog()">Delete</button>
+      <button type="button" mat-raised-button class="manage_cancel_btn" (click)="cancel()">Cancel</button>
       <button type="submit" mat-raised-button class="manage_save_btn" (click)="save()">Save</button>
     </div>
   </form>

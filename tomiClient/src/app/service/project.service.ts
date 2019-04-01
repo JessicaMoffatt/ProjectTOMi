@@ -1,23 +1,27 @@
 import {Injectable} from '@angular/core';
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
-import {catchError} from "rxjs/operators";
-import {HttpErrorResponse} from "@angular/common/http";
-import {throwError} from "rxjs";
 import {Project} from "../model/project";
-import {projectsUrl} from "../configuration/domainConfiguration";
-import {dataDumpUrl} from "../configuration/domainConfiguration";
-import {userAccountUrl} from "../configuration/domainConfiguration";
+import {billableUrl, dataDumpUrl, projectsUrl, userAccountUrl} from "../configuration/domainConfiguration";
+import {BudgetReport} from "../model/budgetReport";
+import {BillableHoursReportLine} from "../model/billableHoursReportLine";
 import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
 import {ExpenseService} from "./expense.service";
+import {Entry} from "../model/entry";
+import {Status} from "../model/status";
+import {EntryApproveComponent} from "../component/panel/entry-approve/entry-approve.component";
 import {ErrorService} from "./error.service";
 import {Client} from "../model/client";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
+
+const headers = new HttpHeaders({
+  'Content-Type': 'application/json'
+});
 
 
 /**
@@ -29,6 +33,16 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ProjectService {
+
+  selectedBudget: BudgetReport;
+
+  billableReport: BillableHoursReportLine[] = [];
+
+  /** The actual hours spent working on a project.*/
+  percentActual: number = 0;
+
+  /** The percent of budgeted hours remaining.*/
+  percentRemaining: number = 0;
 
   /** general expression used to check if projectId is valid */
   public readonly regExp: string = "[A-Z]{2}[0-9]{4}";
@@ -45,17 +59,15 @@ export class ProjectService {
 
   constructor(private http: HttpClient,
               public snackBar: MatSnackBar,
-              private expenseService: ExpenseService,
-              private errorService: ErrorService) {
+              private expenseService: ExpenseService) {
   }
-
 
   /**
    * Gets all projects.
    */
   getAllProjects(): Observable<Array<Project>> {
     return this.http.get(`${projectsUrl}`).pipe(map((response: Response) => response))
-      .pipe(catchError(this.errorService.handleError<Client[]>()))
+      .pipe(catchError(ErrorService.handleError<Client[]>()))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];
@@ -71,7 +83,7 @@ export class ProjectService {
    */
   getProjectsForUser(userId: number): Observable<Array<Project>> {
     return this.http.get(`${userAccountUrl}/${userId}/projects`)
-      .pipe(catchError(this.errorService.handleError<Client[]>()))
+      .pipe(catchError(ErrorService.handleError<Client[]>()))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];
@@ -84,38 +96,77 @@ export class ProjectService {
 
   /**
    * sets the selectedProject project that will be used in project-panel and manage-projects component
-   * added by: James Andrade
+   * @author James Andrade
+   * @author Jessica Moffatt
    * @param project the project to be stored as 'selectedProject'
    */
   async setSelected(project: Project) {
     this.selectedProject = await project;
-    this.refreshProjectList()
+    this.refreshProjectList();
     if (this.selectedProject != null && this.selectedProject.id.match(this.regExp)) {
       this.refreshUserAccountList();
       this.expenseService.refreshExpenses(this.selectedProject);
+      this.getBudgetReportByProjectId(project).toPromise()
+        .then(
+          data => {
+            this.selectedBudget = data;
+            this.percentActual = this.calculatePercentActual();
+            this.percentRemaining = 100 - this.percentActual;
+          },
+          () => ErrorService.displayError()
+          );
     }
   }
 
-
+  /**
+   * returns the project that is actively being used in the projects panel
+   */
   getSelectedProject() {
     return this.selectedProject;
   }
 
-
   /**
-   * Gets a project with the specified ID.
-   * @param id The ID of the project to get.
+   * gets the budget report for the selected project
+   * @param project The project to get a report for.
    */
-  getProjectById(id: string) {
-    return this.http.get(`${projectsUrl}/${id}`).pipe(map((response: Response) => response))
-      .pipe(map((data: any) => {
-        if (data !== undefined) {
-          return data as Project;
-        } else {
-          return null;
-        }
-      }));
+  getBudgetReportByProjectId(project: Project) {
+    let url = project._links["budget"];
+    return this.http.get(`${url["href"]}`)
+      .pipe(catchError(ErrorService.handleError()))
+      .pipe(
+        map((res: BudgetReport) => {
+          return res
+        })
+      );
   }
+
+  calculatePercentBillable(): string {
+    if (this.selectedBudget) {
+      let percent = this.selectedBudget.billableHours / this.selectedBudget.totalHours * 100;
+      return percent.toFixed(2);
+    } else {
+      return "0";
+    }
+  }
+
+  calculatePercentActual(): number {
+    if (this.selectedBudget) {
+      return this.selectedBudget.totalHours / this.selectedBudget.project.budgetedHours * 100;
+    } else {
+      return 0;
+    }
+  }
+
+  getBillableReport() {
+    return this.http.get(billableUrl)
+      .pipe(catchError(ErrorService.handleError()))
+      .pipe(
+        map((res: BillableHoursReportLine[]) => {
+          return res
+        })
+      );
+  }
+
 
   /**
    * Retrieves the data dump report as an xls file download.
@@ -125,17 +176,11 @@ export class ProjectService {
       .pipe(
         map((res) => {
           return res
-        }), catchError(ProjectService.handleError)
+        }), catchError(ErrorService.handleError())
       );
   }
 
-  /**
-   * General error handling method.
-   * @param error The error that occurred.
-   */
-  private static handleError(error: HttpErrorResponse) {
-    return throwError(error.message);
-  }
+
 
 
   // @ts-ignore
@@ -156,22 +201,13 @@ export class ProjectService {
     if (project.id.length == 2) {
       return this.http.post<Project>(`${projectsUrl}`, JSON.stringify(project), httpOptions)
         .toPromise()
-        .then((project) => this.setSelected(project));
-      console.log('project saved')
-      //.catch((error: any) => {
-      //TODO Add an error display
-      //});
+        .then((project) => this.setSelected(project))
+      .catch( () => ErrorService.displayError() );
     } else {
       const url = project._links["update"];
       return this.http.put<Project>(url["href"], JSON.stringify(project), httpOptions).toPromise()
-        .then((project) => {
-          this.setSelected(project);
-          console.log("update complete, project:" + project);
-        })
-        .catch(() => {
-          this.errorService.handleError();
-          console.log("update rejected")
-        });
+        .then((project) => this.setSelected(project))
+        .catch(() => ErrorService.displayError() );
     }
   }
 
@@ -182,39 +218,34 @@ export class ProjectService {
         this.refreshUserAccountList();
         return response;
       }).catch(() => {
-        this.errorService.displayError();
+        ErrorService.displayError();
       return null;
     });
   }
 
-
   refreshProjectList() {
-    this.getAllProjects().forEach(project => {
-      this.projects = new BehaviorSubject<Array<Project>>(project);
-    })
+    this.getAllProjects().toPromise().then(project =>
+      this.projects = new BehaviorSubject<Array<Project>>(project))
   }
-
-
 
   refreshUserAccountList() {
     this.http.get(`${projectsUrl}/${this.selectedProject.id}/members`)
-      .pipe(catchError(this.errorService.handleError()))
+      .pipe(catchError(ErrorService.handleError()))
       .pipe(map((data: any) => {
         if (data !== undefined) {
           return data as UserAccount[];
         } else {
           return [];
         }
-      })).forEach(userAccount => {
+      })).toPromise().then(userAccount => {
       this.userAccountList = new BehaviorSubject<Array<UserAccount>>(userAccount);
     })
   }
 
-
   removeUser(userId: number) {
     this.http.put(`${projectsUrl}/${this.selectedProject.id}/remove_member/${userId}`, httpOptions).toPromise()
       .then(() => this.refreshUserAccountList())
-      .catch( () => this.errorService.displayError())
+      .catch( () => ErrorService.displayError())
   }
 
   delete(project: Project) {
@@ -224,4 +255,82 @@ export class ProjectService {
     });
   }
 
+  async getEntries(project: Project) {
+    let entryList: BehaviorSubject<Array<Entry>>;
+    entryList = new BehaviorSubject([]);
+    await this.populateEntries(project).forEach(entries => {
+      entryList = new BehaviorSubject<Array<Entry>>(entries);
+    }).catch((error: any) => {
+      console.log("Project error " + error);
+    });
+    return entryList;
+  }
+
+  async evaluateEntry(entry: Entry) {
+    if (entry.status === Status.APPROVED) {
+      await this.putApprovalRequest(entry).then((data) =>{
+        return data;
+      });
+    } else if (entry.status === Status.REJECTED) {
+      await this.putRejectionRequest(entry).then((data) => {
+        return data;
+      });
+    }
+  }
+
+  async promiseApproval(currEntry: Entry) {
+    let promise = new Promise(resolve => resolve(this.putApprovalRequest(currEntry)));
+    return await promise;
+  }
+
+  async putApprovalRequest(entry: Entry) {
+    let url:string = entry._links["evaluate"]["href"];
+    let temp = null;
+    await this.http.put(url, '"APPROVED"', {headers: headers, observe: "response"}).toPromise().then(response => {
+      temp = response;
+
+      return response;
+    }).catch(() => {
+      return null;
+    });
+    return temp;
+  }
+
+  async putRejectionRequest(entry: Entry): Promise<Entry> {
+    let url:string = entry._links["evaluate"]["href"];
+    let temp = null;
+    await this.http.put(url, '"REJECTED"', {headers: headers, observe: "response"}).toPromise().then(response => {
+      temp = response;
+      return response;
+    }).catch(() => {
+      return null;
+    });
+
+    return temp;
+  }
+
+  populateEntries(project: Project): Observable<Array<Entry>> {
+    let url = project._links["entries"];
+    return this.http.get(url["href"]).pipe(map((response: Response) => response))
+      .pipe(map((data: any) => {
+        if (data._embedded !== undefined) {
+          let sorted = data._embedded.entries as Entry[];
+          sorted = sorted.sort((entry1, entry2) => entry1.timesheet.id - entry2.timesheet.id);
+          return sorted;
+        } else {
+          return [];
+        }
+      }));
+  }
+
+  async submit(entries) {
+    return await entries.forEach((component: EntryApproveComponent) => {
+      let entry = component.entry;
+      return this.evaluateEntry(entry);
+    });
+  }
+
+  getProjects(): BehaviorSubject<Array<Project>>{
+    return this.projects;
+  }
 }

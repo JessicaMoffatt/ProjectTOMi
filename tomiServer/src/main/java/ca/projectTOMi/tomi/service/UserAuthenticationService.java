@@ -99,6 +99,9 @@ public class UserAuthenticationService {
 
 		policy.setPermission(UserPermission.CREATE_USER_ACCOUNT);
 		navs.put("manage_user_accounts", policies.contains(policy));
+
+		policy.setPermission(UserPermission.CREATE_PROJECT);
+		navs.put("create_project", policies.contains(policy));
 		return navs;
 	}
 }

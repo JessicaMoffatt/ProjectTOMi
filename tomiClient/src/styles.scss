@@ -28,6 +28,42 @@ body{
   width: 90%;
 }
 
+.sidebar {
+  margin-top: 0;
+
+  h2 {
+    text-align: center;
+  }
+
+  height: 92vh;
+  width: 98%;
+  padding: 1%;
+  background: $white;
+  color: $blue;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.sidebar .mat-button-toggle:hover{
+  background-color: $blue;
+  color: $white;
+}
+.mat-button-toggle-focus-overlay{
+  display: none;
+}
+
+.sidebar_container{
+  float:left;
+  width: 25vw;
+  height: 94vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.content_view{
+  float:right;
+  width:75vw;
+}
 /** Snackbar styling */
 .snackbar-success {
   background-color: $green;

@@ -2,13 +2,17 @@
 @author Karol Talbot
 @version 2.0
 -->
-<div class="sidebar">
-  <mat-action-list>
-    <h2>Teams</h2>
-    <div class="search_bar"><input #team_search id="team_search" [ngClass]="'input_search'"
-                                   placeholder="search" (keyup)="0"></div>
-    <mat-button-toggle-group #btn_group="matButtonToggleGroup" [name]="btn_group" class="btn_list" vertical>
-      <mat-button-toggle id="{{team.id}}_btn" class="list_btns" (click)='this.selectTeam(team)' *ngFor='let team of team2.getTeamSubjectList() | async'>{{team.teamName}}</mat-button-toggle>
-    </mat-button-toggle-group>
-  </mat-action-list>
-</div>
+<cdk-virtual-scroll-viewport [itemSize]="10" class="sidebar">
+
+  <h2>Teams</h2>
+  <div class="search_bar"><input #team_search id="team_search" [ngClass]="'input_search'"
+                                 placeholder="search" (keyup)="0"></div>
+    <mat-action-list>
+      <mat-button-toggle-group #btn_group="matButtonToggleGroup" [name]="buttonGroup" class="btn_list" vertical>
+        <mat-button-toggle id="{{team.id}}_btn" class="list_btns" (click)='this.selectTeam(team)'
+                           *ngFor='let team of teamService.getTeamSubjectList().getValue() | FilterTeamByName:team_search.value'>{{team.teamName}}</mat-button-toggle>
+      </mat-button-toggle-group>
+
+    </mat-action-list>
+</cdk-virtual-scroll-viewport>
+

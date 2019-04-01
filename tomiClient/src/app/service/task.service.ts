@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Task} from '../model/task';
 import {BehaviorSubject, Observable} from "rxjs";
 import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
-import {taskUrl} from "../configuration/domainConfiguration";
+import {ErrorService} from "./error.service";
 
 
 const httpOptions: any = {
@@ -37,7 +37,7 @@ export class TaskService {
    * Loads a list of tasks retrieved from the back end into a BehaviorSubject object that can be used to retrieve the Tasks.
    */
   public initializeTasks() {
-    this.requestAllTasks().forEach(tasks => {
+    return this.requestAllTasks().forEach(tasks => {
       this.taskSubjectList = new BehaviorSubject<Array<Task>>(tasks);
     }).catch((error: any) => {
       console.log("Task error " + error);
@@ -89,7 +89,8 @@ export class TaskService {
 
   requestAllTasks() {
     let obsTasks: Observable<Array<Task>>;
-    obsTasks = this.http.get(this.taskUrl).pipe(map((response: Response) => response))
+    obsTasks = this.http.get(this.taskUrl).pipe(catchError(ErrorService.handleError()))
+      .pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         return data._embedded.tasks as Task[];
       }));

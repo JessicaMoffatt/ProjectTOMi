@@ -12,7 +12,7 @@ import {UnitType} from "../../../../model/unitType";
 
 
 @Component({
-  selector: 'app-edit-project-sub-panel',
+  selector: 'app-project-detail',
   templateUrl: './project-detail.component.html',
   styleUrls: ['./project-detail.component.scss']
 })

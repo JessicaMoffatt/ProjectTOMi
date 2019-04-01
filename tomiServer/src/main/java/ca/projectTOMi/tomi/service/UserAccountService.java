@@ -14,6 +14,8 @@ import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.model.Timesheet;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.UserAccountRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -37,6 +39,7 @@ public final class UserAccountService {
 	private final TimesheetAuthService timesheetAuthService;
 	private final ProjectAuthService projectAuthService;
 	private final TOMiEmailService emailService;
+	private final Logger logger = LoggerFactory.getLogger("Email sent");
 
 	@Autowired
 	public UserAccountService(final UserAccountRepository repository,
@@ -143,7 +146,7 @@ public final class UserAccountService {
 	/**
 	 * Creates a new timesheet every monday at 1am for all active users.
 	 */
-	@Scheduled (cron = "0 * * * * MON")
+	@Scheduled (cron = "0 0 * * * MON")
 	public void createWeeklyTimesheet() {
 		final List<UserAccount> accounts = this.repository.getAllByActiveOrderById(true);
 		final List<Timesheet> timesheets = this.entryService.getActiveTimesheets();
@@ -247,7 +250,7 @@ public final class UserAccountService {
 		}
 	}
 
-	@Scheduled (cron = "0 16 * * * FRI")
+	@Scheduled (cron = "0 0 16 * * FRI")
 	public void emailReminder() {
 		final TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
 		final LocalDate date = LocalDate.now().with(fieldISO, 1);
@@ -258,6 +261,7 @@ public final class UserAccountService {
 				final String subject = TOMiEmailService.SUBJECT;
 				final String body = String.format(TOMiEmailService.EMAIL_BODY, timesheet.getUserAccount().getFirstName(), date);
 				this.emailService.sendSimpleMessage(email, subject, body);
+				this.logger.info("sent reminder to " + email);
 			}
 		}
 	}

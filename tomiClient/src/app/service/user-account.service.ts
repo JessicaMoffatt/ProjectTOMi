@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {UserAccount} from "../model/userAccount";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material";
 import {userAccountUrl} from "../configuration/domainConfiguration";
+import {ErrorService} from "./error.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -21,9 +22,8 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserAccountService {
-  /** The UserAccount selected from the list of UserAccounts.*/
-  private selectedUserAccount: UserAccount;
 
   /** Listing of all active UserAccounts */
   userAccounts: Observable<Array<UserAccount>>;
@@ -40,10 +40,7 @@ export class UserAccountService {
     this.GETAllUserAccounts().forEach( users => {
       this.userSubject = new BehaviorSubject<Array<UserAccount>>(users);
       this.sortUserAccounts();
-    }).catch( (error: any) => {
-      let getUsersErrorMessage = 'Something went wrong when getting the list of users. Please contact your system administrator.';
-      this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
-    });
+    }).catch( () => ErrorService.displayError());
   }
 
   /**
@@ -98,12 +95,9 @@ export class UserAccountService {
            this.userSubject.getValue().splice(indexToBeRemoved, 1);
         }
       });
-    }).then(value => {
+    }).then(() => {
       this.sortUserAccounts();
-    }).catch( (error: any) => {
-      let getUsersErrorMessage = 'Something went wrong when updating the list of Users.';
-      this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
-    });
+    }).catch( () => ErrorService.displayErrorMessage('Something went wrong when updating the list of Users.'));
   }
 
   /**
@@ -112,6 +106,7 @@ export class UserAccountService {
   GETAllUserAccounts() {
     let obsUsers : Observable<Array<UserAccount>>;
     obsUsers = this.http.get(userAccountUrl)
+      .pipe(catchError(ErrorService.handleError()))
       .pipe(map((data: any) => {
         return data._embedded.userAccounts as UserAccount[];
       }));
@@ -121,23 +116,24 @@ export class UserAccountService {
   /**
    * Saves a specified UserAccount. If the UserAccount is new (id = -1), an HTTP POST is performed, else an HTTP PUT is performed to update the existing UserAccount.
    *
-   * @param account The UserAccount to be created/updated.
+   * @param userAccount The UserAccount to be created/updated.
    */
   async save(userAccount: UserAccount) {
     if (userAccount.id === -1) {
-      await this.http.post<UserAccount>(userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
+      await this.http.post<UserAccount>(userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise()
+        .then(() => {
         this.refreshUserAccounts();
-      }).catch((error: any) => {
-        let addUserErrorMessage = 'Something went wrong when adding ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
-        this.snackBar.open(addUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
+      }).catch(() => {
+        ErrorService.displayErrorMessage('Something went wrong when adding ' + userAccount.firstName + ' '
+          + userAccount.lastName + '.');
       });
     } else {
       const url = userAccount._links["update"];
-      await this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
+      await this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(() => {
         this.refreshUserAccounts();
-      }).catch((error: any) => {
-        let editUserErrorMessage = 'Something went wrong when updating ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
-        this.snackBar.open(editUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
+      }).catch(() => {
+        ErrorService.displayErrorMessage('Something went wrong when updating ' + userAccount.firstName + ' '
+          + userAccount.lastName + '.')
       });
     }
   }
@@ -145,16 +141,16 @@ export class UserAccountService {
   /**
    * Logically deletes the selected user account (sets the active status to false.)
    *
-   * @param account The UserAccount to be deleted.
+   * @param userAccount The UserAccount to be deleted.
    */
     delete(userAccount: UserAccount) {
       const url = userAccount._links["delete"];
-      this.http.delete(url["href"], httpOptions).toPromise().then( response => {
+      this.http.delete(url["href"], httpOptions).toPromise().then( () => {
         this.refreshUserAccounts();
-      }).catch((error: any) => {
-        let deleteUserErrorMessage = 'Something went wrong when deleting ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
-        this.snackBar.open(deleteUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
-      });
+      }).catch(() => ErrorService.displayErrorMessage('Something went wrong when deleting '
+        + userAccount.firstName + ' '
+          + userAccount.lastName + '.')
+      );
   }
 
   /**
@@ -163,7 +159,8 @@ export class UserAccountService {
    * @param id id of the user.
    */
   getUserById(id:number): Observable<UserAccount>{
-    return this.http.get(`${userAccountUrl}/${id}`).pipe(map((response:Response) => response))
+    return this.http.get(`${userAccountUrl}/${id}`)
+      .pipe(catchError(ErrorService.handleError()))
       .pipe(map((data: any) => {
         return data as UserAccount;
       }));

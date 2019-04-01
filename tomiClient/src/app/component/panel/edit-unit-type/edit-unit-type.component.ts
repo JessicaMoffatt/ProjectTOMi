@@ -1,7 +1,18 @@
-import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
 import {UnitType} from "../../../model/unitType";
+import {CustomErrorStateMatcher} from "../../extra/CustomErrorStateMatcher";
 
 /**
  *
@@ -29,6 +40,9 @@ export class EditUnitTypeComponent implements OnInit, OnDestroy {
     Validators.required
   ]);
 
+  /** Invalid name error detection. */
+  unitTypeNameMatcher = new CustomErrorStateMatcher();
+
   /** The UnitTypeSubject model associated with this component. */
   @Input() unitType: UnitType;
   /** Event Emitter used to notify the UnitTypeComponent parent that the EditUnitTypeComponent save had been requested. */
@@ -51,7 +65,13 @@ export class EditUnitTypeComponent implements OnInit, OnDestroy {
   /** The ngForm for this component */
   @ViewChild('editUnitTypeForm') editUnitTypeForm;
 
-
+  @HostListener('window:keyup.Enter', ['$event']) enter(e: KeyboardEvent) {
+    e.preventDefault();
+    if(this.editUnitTypeExpansionPanel.expanded){
+      console.log("edit");
+      document.getElementById("saveunittype").click();
+    }
+  }
   constructor(public deleteUnitTypeDialog: MatDialog) {
   }
 

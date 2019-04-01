@@ -2,81 +2,106 @@
 @author Jessica Moffatt
 @version 1.0
 -->
-<mat-card [ngClass]="{'approved': entry.status === sts.APPROVED,'rejected': entry.status === sts.REJECTED,'entry_card':true}">
+<!--
+@author Jessica Moffatt
+@author Karol Talbot
+@version 1.0
+-->
+<mat-card #entry_card  id="{{entry.id}}_card" class="entry_card">
+  <mat-card-title>
+    {{entry.timesheet.userAccount.firstName}} {{entry.timesheet.userAccount.lastName}}
+  </mat-card-title>
   <mat-card-content>
-    <label><strong>Component:</strong>
-      <span *ngIf="entry.component">{{entry.component}}</span>
-    </label>
-
-    <br/>
-    <label><strong>Project:</strong>
-      <span *ngIf="entry.project">{{entry.project.projectName}}</span>
-    </label>
-
-    <br/>
-    <div>
-      <label><strong>Task:</strong>
-        <span *ngIf="entry.task">{{entry.task.name}}</span>
-      </label>
-    </div>
-
-    <div>
-      <label *ngIf="entry.unitType"><strong>Unit Type:</strong>
-        {{entry.unitType.name}}
-      </label>
-      <span *ngIf="entry.quantity">
-        ,
-        {{entry.quantity}}
-    </span>
-      <span *ngIf="entry.unitType">
-      {{entry.unitType.unit}}
-    </span>
-    </div>
-
-    <!-- days of the week -->
-    <label><strong>M</strong>
-      {{entry.mondayHours}}
-    </label>
-
-    <label><strong>T</strong>
-      {{entry.tuesdayHours}}
-    </label>
-
-    <label><strong>W</strong>
-      {{entry.wednesdayHours}}
-    </label>
-
-    <label><strong>R</strong>
-      {{entry.thursdayHours}}
-    </label>
-
-    <label><strong>F</strong>
-      {{entry.fridayHours}}
-    </label>
-
-    <label><strong>S</strong>
-      {{entry.saturdayHours}}
-    </label>
-
-    <label><strong>U</strong>
-      {{entry.sundayHours}}
-    </label>
-
-    <!-- end of days of week-->
-
-    <div [ngClass]="'row'">
-      <div [ngClass]="['col-xs-4','flex_btn_container']">
-        <button mat-flat-button class='approved' (click)="approve()">
+    <div class="row">
+      <div class="top">
+        <mat-form-field class="third">
+        <span *ngIf="entry.project">
+          <input matInput type="text"
+                 placeholder="Project"
+                 [(ngModel)]="entry.project.projectName"
+                 [readonly]="true">
+        </span>
+        </mat-form-field>
+        <mat-form-field class="third">
+        <span *ngIf="entry.task">
+        <input matInput type="text"
+               placeholder="Task"
+               [(ngModel)]="entry.task.name"
+               [readonly]="true">
+        </span>
+        </mat-form-field>
+        <mat-form-field class="third_last">
+        <span *ngIf="entry.unitType">
+          <input matInput type="text"
+                 placeholder="Unit Type"
+                 [(ngModel)]="entry.unitType.name"
+                 [readonly]="true">
+        </span>
+        </mat-form-field>
+      </div>
+      <div class="entry_btn_container" #buttons>
+        <button id="{{entry.id}}_reject"  mat-flat-button class="entry_btn delete_btn" (click)='reject()'>
           <i class="material-icons">
-            check
+            not_interested
           </i>
         </button>
-        <button mat-flat-button class='rejected' (click)="reject()">
+        <button  id="{{entry.id}}_approve" mat-flat-button class="entry_btn copy_btn" (click)='approve()'>
           <i class="material-icons">
-            close
+            check_circle_outline
           </i>
         </button>
       </div>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="component">
+        <input matInput placeholder="Component" [(ngModel)]="entry.component" [readonly]="true">
+      </mat-form-field>
+
+      <mat-form-field class="quantity">
+        <input matInput type="text"
+               [placeholder]="entry.unitType ? entry.unitType.unit : 'Units'"
+               [(ngModel)]="entry.quantity"
+               [readonly]="true">
+      </mat-form-field>
+    </div>
+    <!-- days of the week -->
+    <div class="weekday">
+      <mat-form-field id="monday" class="day">
+        <input matInput [(ngModel)]="entry.mondayHours" type="text" placeholder="Monday"
+               [readonly]="true">
+      </mat-form-field>
+
+      <mat-form-field id="tuesday" class="day">
+        <input  matInput [(ngModel)]="entry.tuesdayHours" type="text" placeholder="Tuesday"
+                [readonly]="true">
+      </mat-form-field>
+
+      <mat-form-field id="wednesday" class="day">
+        <input matInput [(ngModel)]="entry.wednesdayHours" type="text" placeholder="Wednesday"
+               [readonly]="true">
+      </mat-form-field>
+
+      <mat-form-field id="thursday" class="day">
+        <input matInput [(ngModel)]="entry.thursdayHours" type="text" placeholder="Thursday"
+               [readonly]="true">
+      </mat-form-field>
+
+      <mat-form-field id="friday" class="day">
+        <input matInput [(ngModel)]="entry.fridayHours" type="text" placeholder="Friday"
+               [readonly]="true">
+      </mat-form-field>
+
+      <mat-form-field id="saturday" class="day">
+        <input matInput [(ngModel)]="entry.saturdayHours" type="text" placeholder="Saturday"
+               [readonly]="true">
+      </mat-form-field>
+
+      <mat-form-field id="sunday" class="day">
+        <input matInput [(ngModel)]="entry.sundayHours" type="text" placeholder="Sunday"
+               [readonly]="true">
+      </mat-form-field>
+      <!-- end of days of week-->
     </div>
   </mat-card-content>
 </mat-card>

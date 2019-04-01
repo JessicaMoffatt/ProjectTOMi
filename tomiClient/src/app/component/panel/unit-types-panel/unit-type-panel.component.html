@@ -3,7 +3,7 @@
   @version 2.0
 -->
 <div class="content_pane">
-
+  <h2>Manage Unit Types</h2>
   <div class="search_bar">
     <input #unit_type_search id="unit_type_search" [ngClass]="'input_search'" placeholder="search" (keyup)="0">
   </div>
@@ -12,7 +12,7 @@
     <div id="left">&nbsp;</div>
     <div id="center">
       <mat-accordion>
-        <ng-container *ngFor="let unitType of unitTypeService.unitTypes | async">
+        <ng-container *ngFor="let unitType of unitTypeService.unitTypes.getValue() | FilterUnitTypeByName:unit_type_search.value ">
           <app-edit-unit-type id="edit_unit_type{{unitType.id}}" #editUnitTypeComponent
                          (saveRequested)="save($event)"
                          (deleteRequested)="delete($event)"

@@ -8,7 +8,7 @@
     <ng-template [ngIf]="screenSize === 0">
 
       <ng-template [ngIf]="signInService.navList['my_timesheets']">
-        <button mat-ripple mat-flat-button class="link" [routerLink]="'/my_timesheets'">Timesheets</button>
+        <button mat-ripple mat-flat-button class="link" (click)="reloadTimesheets()" [routerLink]="'/my_timesheets'">Timesheets</button>
       </ng-template>
 
       <ng-template [ngIf]="signInService.navList['approve_timesheets']">
@@ -51,7 +51,7 @@
 
     <ng-template [ngIf]="screenSize===1">
       <ng-template [ngIf]="signInService.navList['my_timesheets']">
-        <button mat-ripple mat-flat-button class="link" [routerLink]="'/my_timesheets'">Timesheets</button>
+        <button mat-ripple mat-flat-button class="link" (click)="reloadTimesheets()" [routerLink]="'/my_timesheets'">Timesheets</button>
       </ng-template>
 
       <ng-template [ngIf]="signInService.navList['approve_timesheets']">
@@ -97,7 +97,7 @@
     <ng-template [ngIf]="screenSize===2">
       <mat-menu #appMenuSmall="matMenu">
         <ng-template [ngIf]="signInService.navList['my_timesheets']">
-          <button mat-menu-item class="menu" [routerLink]="'/my_timesheets'">Timesheets</button>
+          <button mat-menu-item class="menu" (click)="reloadTimesheets()" [routerLink]="'/my_timesheets'">Timesheets</button>
         </ng-template>
 
         <ng-template [ngIf]="signInService.navList['approve_timesheets']">

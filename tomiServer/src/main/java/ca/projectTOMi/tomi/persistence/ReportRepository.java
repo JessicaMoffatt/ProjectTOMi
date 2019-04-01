@@ -27,7 +27,7 @@ public class ReportRepository {
 	public List<BillableHoursReportLine> generateBillableHoursReport() {
 		return this.entityManager.createQuery(
 			"SELECT NEW " +
-				"ca.projectTOMi.tomi.viewModel.BillableHoursReportLine( " +
+				"ca.projectTOMi.tomi.viewModel.BillableHoursReportLine(" +
 				"SUM( CASE WHEN (e.task.billable = true ) THEN e.totalHours ELSE 0 END), " +
 				"SUM( CASE WHEN (e.task.billable = false ) THEN e.totalHours ELSE 0 END) , p) " +
 				"FROM Timesheet t " +
@@ -56,7 +56,7 @@ public class ReportRepository {
 				"JOIN Timesheet t ON e.timesheet = t " +
 				"JOIN UnitType u ON e.unitType = u " +
 				"WHERE t.userAccount = :userAccount " +
-				"GROUP BY t, u", ProductivityReportLine.class);
+				"GROUP BY t, u ", ProductivityReportLine.class);
 
 		return q.setParameter("userAccount", userAccount).getResultList();
 	}

@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Entry} from "../../../model/entry";
 import {TimesheetService} from "../../../service/timesheet.service";
 import {Status} from "../../../model/status";
 import {EntryService} from "../../../service/entry.service";
+import {MatCard} from "@angular/material";
 
 /**
  * EntryApproveComponent is used to facilitate communication between the view and front end services.
@@ -18,6 +19,7 @@ import {EntryService} from "../../../service/entry.service";
 export class EntryApproveComponent implements OnInit {
   /** The entry model instance associated with this component. */
   @Input() entry: Entry;
+
 
   /**
    * An reference to the Status enum.
@@ -39,7 +41,7 @@ export class EntryApproveComponent implements OnInit {
    * Gets the user associated with this entry.
    */
   getUserForEntry(){
-    this.timesheetService.getTimesheetById(this.entry.timesheet).subscribe(async(data)=>{
+    this.timesheetService.getTimesheetById(this.entry.timesheet.id).subscribe(async(data)=>{
       this.userName = data.userAccount.firstName + " " + data.userAccount.lastName + ": " + data.submitDate;
     });
   }
@@ -50,8 +52,11 @@ export class EntryApproveComponent implements OnInit {
   approve(){
     if(this.entry.status === Status.APPROVED){
       this.entry.status = Status.SUBMITTED;
+      document.getElementById(this.entry.id+"_approve").setAttribute("class", "mat-flat-button entry_btn copy_btn");
     }else{
       this.entry.status = Status.APPROVED;
+      document.getElementById(this.entry.id+"_approve").setAttribute("class", "mat-flat-button entry_btn copy_btn_inverted");
+      document.getElementById(this.entry.id +"_reject").setAttribute("class", "mat-flat-button entry_btn delete_btn");
     }
   }
 
@@ -61,8 +66,11 @@ export class EntryApproveComponent implements OnInit {
   reject(){
     if(this.entry.status === Status.REJECTED){
       this.entry.status = Status.SUBMITTED;
+      document.getElementById(this.entry.id +"_reject").setAttribute("class", "mat-flat-button entry_btn delete_btn");
     }else{
       this.entry.status = Status.REJECTED;
+      document.getElementById(this.entry.id+"_approve").setAttribute("class", "mat-flat-button entry_btn copy_btn");
+      document.getElementById(this.entry.id +"_reject").setAttribute("class", "mat-flat-button entry_btn delete_btn_inverted");
     }
   }
 

@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TimesheetService} from "../../../service/timesheet.service";
 import {MatDatepickerInputEvent, NativeDateAdapter} from "@angular/material";
-import {FormControl} from '@angular/forms';
 
 const millisecondsToDays: number = 86400000;
 
@@ -17,20 +16,20 @@ export class DatePickerComponent implements OnInit{
   /**
    * The latest date that can be selectedProject.
    */
-  maxDate: Date;
+  private maxDate: Date;
   /**
    * The earliest date that can be selectedProject.
    */
-  @Input() minDate: Date;
+  @Input() private minDate: Date;
 
   /**
    * The selectedProject date.
    */
-  selectedDate: Date;
+  private selectedDate: Date;
   /**
    * The parent component of this component.
    */
-  @Input() parent;
+  @Input() private parent;
 
   constructor(private timesheetService: TimesheetService){
     this.maxDate = new Date();

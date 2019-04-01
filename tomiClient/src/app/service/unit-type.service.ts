@@ -5,6 +5,7 @@ import {UnitType} from "../model/unitType";
 import {BehaviorSubject, Observable} from "rxjs";
 import {unitTypeUrl} from "../configuration/domainConfiguration";
 import {MatSnackBar} from "@angular/material";
+import {Task} from "../model/task";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -36,7 +37,7 @@ export class UnitTypeService {
    * Get the list of all active unit types and populate into the unitTypes list.
    */
   initializeUnitTypes() {
-    this.GETAllUnitTypes().forEach(unitTypes => {
+   return this.GETAllUnitTypes().forEach(unitTypes => {
       this.unitTypes = new BehaviorSubject<Array<UnitType>>(unitTypes);
       this.sortUnitTypes();
     }).catch((error: any) => {
@@ -222,5 +223,9 @@ export class UnitTypeService {
         horizontalPosition: 'right'
       });
     });
+  }
+
+  getUnitTypeSubjectList(): BehaviorSubject<Array<UnitType>> {
+    return this.unitTypes;
   }
 }

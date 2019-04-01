@@ -35,8 +35,7 @@ export class ClientService {
   /** used to pass list to project related components */
   clients: BehaviorSubject<Array<Client>> = new BehaviorSubject<Array<Client>>([]);
 
-  constructor(private http: HttpClient,
-              private errorService: ErrorService) {
+  constructor(private http: HttpClient) {
     this.initializeClients();
   }
 
@@ -44,7 +43,7 @@ export class ClientService {
    * used to refresh the list of clients used by the components.
    */
   initializeClients() {
-    this.getClients().forEach(client => {
+    this.getClients().toPromise().then(client => {
       this.clients = new BehaviorSubject<Array<Client>>(client);
     });
   }
@@ -55,7 +54,7 @@ export class ClientService {
    */
   getClients(): Observable<Array<Client>> {
     return this.http.get(`${this.clientsUrl}`)
-      .pipe(catchError(this.errorService.handleError<Client[]>()))
+      .pipe(catchError(ErrorService.handleError<Client[]>()))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.clients as Client[];
@@ -92,7 +91,7 @@ export class ClientService {
         return response as Client
       })
       .catch(() => {
-        this.errorService.handleError();
+        ErrorService.handleError();
       });
   }
 }

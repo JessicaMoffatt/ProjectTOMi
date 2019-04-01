@@ -10,15 +10,18 @@
   </mat-expansion-panel-header>
   <form #editTaskForm="ngForm">
     <mat-form-field id="task">
-      <input matInput #editTaskName placeholder="Name" [formControl]="taskNameControl">
+      <input matInput #editTaskName placeholder="Name" [formControl]="taskNameControl" [errorStateMatcher]="taskNameMatcher">
+      <mat-error
+        *ngIf="taskNameControl.hasError('required')">
+        Name is <strong>required</strong></mat-error>
     </mat-form-field>
     <br/>
     <mat-slide-toggle color="warn" #editBillable [checked]="task.billable" id="billable">
       Billable
     </mat-slide-toggle>
     <div #buttons>
-      <button mat-raised-button class="manage_delete_btn" (click)="openDeleteDialog()">Delete</button>
-      <button mat-raised-button class="manage_cancel_btn" (click)="cancel()">Cancel</button>
+      <button type="button" mat-raised-button class="manage_delete_btn" (click)="openDeleteDialog()">Delete</button>
+      <button type="button" mat-raised-button class="manage_cancel_btn" (click)="cancel()">Cancel</button>
       <button type="submit" mat-raised-button class="manage_save_btn" (click)="save()">Save</button>
     </div>
   </form>

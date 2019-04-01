@@ -27,21 +27,16 @@ const httpOptions = {
 })
 export class EntryService {
 
-  /** The URL used to get,post, and delete entries. */
-  private entriesUrl = '/entries';
-  /** The URL used to get,post, and delete tasks. */
-  private tasksUrl = 'http://localhost:8080/tasks';
-  /** The URL used to get,post, and delete unit types. */
-  private unitTypeUrl = 'http://localhost:8080/unit_types';
 
-  constructor(private http: HttpClient, private errorService: ErrorService) { }
+
+  constructor(private http: HttpClient) { }
 
   /**
    * Gets all tasks.
    */
   getTasks(): Observable<Array<Task>> {
     return this.http.get(`${taskUrl}`)
-      .pipe(catchError(this.errorService.handleError<Client[]>([])))
+      .pipe(catchError(ErrorService.handleError<Client[]>([])))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.tasks as Task[];
@@ -56,7 +51,7 @@ export class EntryService {
    */
   getUnitTypes(): Observable<Array<UnitType>> {
     return this.http.get(`${unitTypeUrl}`)
-      .pipe(catchError(this.errorService.handleError<Client[]>([])))
+      .pipe(catchError(ErrorService.handleError<Client[]>([])))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.unitTypes as UnitType[];
@@ -73,22 +68,24 @@ export class EntryService {
   async save(entry: Entry) {
     let tempEntry: Entry = null;
     if (entry.id === -1) {
-      await this.http.post<Entry>(entryUrl, JSON.stringify(entry), httpOptions).toPromise().then(response => {
+      await this.http.post<Entry>(entryUrl, JSON.stringify(entry), httpOptions).toPromise()
+        .then(response => {
         tempEntry = response;
         return response;
       }).catch(() => {
-        catchError(this.errorService.handleError<Client[]>([]))
+        catchError(ErrorService.handleError<Client[]>([]));
         return null;
       });
     } else if(entry.id >= 1){
       const url = entry._links["update"];
 
-      await this.http.put<Entry>(url["href"], JSON.stringify(entry), httpOptions).toPromise().then((response) => {
+      await this.http.put<Entry>(url["href"], JSON.stringify(entry), httpOptions).toPromise()
+        .then((response) => {
 
         tempEntry = response;
         return response;
       }).catch(() => {
-        catchError(this.errorService.handleError<Client[]>([]))
+        catchError(ErrorService.handleError<Client[]>([]));
         return null;
       });
     }

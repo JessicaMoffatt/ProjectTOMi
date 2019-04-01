@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TeamMemberSidebarComponent } from './team-member-sidebar.component';
+import { DataDumpReportComponent } from './data-dump-report.component';
 
-describe('TeamMemberSidebarComponent', () => {
-  let component: TeamMemberSidebarComponent;
-  let fixture: ComponentFixture<TeamMemberSidebarComponent>;
+describe('DataDumpReportComponent', () => {
+  let component: DataDumpReportComponent;
+  let fixture: ComponentFixture<DataDumpReportComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TeamMemberSidebarComponent ]
+      declarations: [ DataDumpReportComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TeamMemberSidebarComponent);
+    fixture = TestBed.createComponent(DataDumpReportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

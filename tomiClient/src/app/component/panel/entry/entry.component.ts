@@ -23,11 +23,11 @@ export class EntryComponent implements OnInit {
   /** The entry model instance associated with this component. */
   @Input() entry: Entry;
   /** The list of projects this user is allowed to access.*/
-  @Input() projects: Project[];
+  @Input() projects: Project[] = [];
   /** The list of unit types this user is allowed to access.*/
-  @Input() unitTypes: UnitType[];
+  @Input() unitTypes: UnitType[] = [];
   /** The list of tasks this user is allowed to access.*/
-  @Input() tasks: Task[];
+  @Input() tasks: Task[] = [];
   /** Event emitter used to notify the parent component that a copy of an entry has been requested. */
   @Output() requestCopy = new EventEmitter<any>();
   /** Event emitter used to notify the parent component that a delete of an entry has been requested. */
@@ -102,9 +102,9 @@ export class EntryComponent implements OnInit {
       && this.wednesdayInput.nativeElement.value != null && this.thursdayInput.nativeElement.value != null
       && this.fridayInput.nativeElement.value != null && this.saturdayInput.nativeElement.value != null
       && this.sundayInput.nativeElement.value != null
-      && this.projectInput.selected.value != null && this.projectInput.selected.value != "-1"
-      && this.taskInput.selected.value != null && this.taskInput.selected.value != -1
-      && this.unitTypeInput.selected.value != null && this.unitTypeInput.selected.value != -1){
+      && this.projectInput.selected && this.projectInput.selected.value != null && this.projectInput.selected.value != "-1"
+      && this.taskInput.selected && this.taskInput.selected.value != null && this.taskInput.selected.value != -1
+      && this.unitTypeInput.selected && this.unitTypeInput.selected.value != null && this.unitTypeInput.selected.value != -1){
       valid = true;
     }
 

@@ -1,22 +1,27 @@
-<!-- James Andrade, Jan 27,2019 -->
+<!-- @author James Andrade, Jan 27,2019
+@author Jessica Moffatt
+-->
 
-<mat-sidenav-container>
-  <mat-sidenav mode="side"
-               opened>
+<mat-sidenav-container style="width:100%">
+  <mat-sidenav mode="side" opened>
     <app-project-sidebar></app-project-sidebar>
   </mat-sidenav>
 
-  <mat-sidenav-content>
-
-    <div *ngIf="this.subPanelDisplay=='manageProject'">
-      <app-edit-project-sub-panel></app-edit-project-sub-panel>
-    </div>
-    <div *ngIf="this.subPanelDisplay=='productivityReport'">
-      <app-budget-report [project]="project"></app-budget-report>
-      <button mat-input-button (click)="getDataDump()">Data Dump Report</button>
-    </div>
-
+  <mat-sidenav-content style="width: 75vw">
+    <mat-tab-group animationDuration="200ms" (selectedTabChange)="tabEvent($event)">
+      <mat-tab label="Project">
+        <app-project-detail></app-project-detail>
+      </mat-tab>
+      <mat-tab label="Billable Hour Report">
+        <app-billable-hour-report></app-billable-hour-report>
+      </mat-tab>
+        <mat-tab #dumpTab  label="Data Dump Report" *ngIf="this.signInService.navList['create_project']">
+          <app-data-dump-report #dataDumpReport></app-data-dump-report>
+        </mat-tab>
+    </mat-tab-group>
   </mat-sidenav-content>
+
+  <!--[ngIf]="this.signInService.navList['create_project']"-->
 </mat-sidenav-container>
 
 

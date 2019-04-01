@@ -1,0 +1,32 @@
+@import "~src/variables";
+/**
+  @author Karol Talbot
+ */
+.modal_submit {
+  float: right;
+  margin-right: 1%;
+  background-color: $save_btn;
+  color:$save_btn_text;
+}
+
+.modal_heading {
+  background-color: $blue;
+  border-radius: 1vh;
+  width: 100%;
+
+  h1 {
+    padding-left: 5%;
+    color: #FFFFFF;
+  }
+}
+
+.manage_cancel_btn {
+  background-color: $cancel_btn;
+  color: $cancel_btn_text;
+  float: right;
+  margin-right: 1%;
+}
+
+body{
+  overflow: hidden;
+}

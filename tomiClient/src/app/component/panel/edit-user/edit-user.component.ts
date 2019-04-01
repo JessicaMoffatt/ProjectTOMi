@@ -1,10 +1,12 @@
 import {Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {FormControl, Validators, FormGroupDirective, NgForm} from "@angular/forms";
 import {UserAccount} from "../../../model/userAccount";
-import {TeamService} from "../../../service/team.service";
 import {ErrorStateMatcher, MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSelect} from "@angular/material";
 import {Observable, Subscription} from "rxjs";
-import {TeamService2} from "../../../service/team2.service";
+import {CustomErrorStateMatcher} from "../../extra/CustomErrorStateMatcher";
+import {TeamService} from "../../../service/team.service";
+import {ManageTeamsPanelComponent} from "../manage-teams-panel/manage-teams-panel.component";
+import {UserAccountComponent} from "../user-account/user-account.component";
 
 /**
  * EditUserComponent is an individual, editable entry for a UserAccount.
@@ -39,9 +41,9 @@ export class EditUserComponent implements OnInit, OnDestroy {
   ]);
 
   /** Invalid name error detection. */
-  userAccountNameMatcher = new MyErrorStateMatcher();
+  userAccountNameMatcher = new CustomErrorStateMatcher();
   /** Invalid email error detection. */
-  userAccountEmailMatcher = new MyErrorStateMatcher();
+  userAccountEmailMatcher = new CustomErrorStateMatcher();
 
   /** The Event emitted indicating that a user has been selected in the sidebar. */
   @Input() userSelectedEvent: Observable<UserAccount>;
@@ -83,10 +85,9 @@ export class EditUserComponent implements OnInit, OnDestroy {
   @ViewChild('editUserAccountForm') editUserAccountForm;
 
 
-  constructor(public deleteUserDialog: MatDialog, public teamService2: TeamService2) { }
+  constructor(public deleteUserDialog: MatDialog, public teamService:TeamService) { }
 
   ngOnInit() {
-    this.teamService2.initializeTeams();
   }
 
   ngOnDestroy(): void {
@@ -185,12 +186,4 @@ export class DeleteUserAccountModal {
 export interface DeleteDialogData {
   userAccountToDelete : UserAccount;
   parent: EditUserComponent;
-}
-
-/** Inner class for error detection of the Angular Material input fields. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || isSubmitted));
-  }
 }

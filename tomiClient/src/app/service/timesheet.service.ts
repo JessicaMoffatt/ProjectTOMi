@@ -1,11 +1,17 @@
-import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import {Injectable, OnInit} from '@angular/core';
+import {BehaviorSubject, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {Entry} from "../model/entry";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Timesheet} from "../model/timesheet";
 import {timesheetUrl} from "../configuration/domainConfiguration";
 import {userTimesheetUrl} from "../configuration/domainConfiguration";
+import {Project} from "../model/project";
+import {Task} from "../model/task";
+import {UnitType} from "../model/unitType";
+import {TaskService} from "./task.service";
+import {UnitTypeService} from "./unit-type.service";
+import {SignInService} from "./sign-in.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -22,9 +28,17 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class TimesheetService {
+export class TimesheetService{
   /** The list of all timehseets for this user.*/
   timesheets: Timesheet[] = [];
+
+  /** List of all projects this user is allowed to access.*/
+  projects: Project[] = [];
+
+  /** List of all tasks.*/
+  tasks: BehaviorSubject<Array<Task>> = new BehaviorSubject<Array<Task>>([]);
+  /** List of all unit types.*/
+  unitTypes: BehaviorSubject<Array<UnitType>> = new BehaviorSubject<Array<UnitType>>([]);
 
   /** The position in timesheets for the current timesheet.*/
   private currentTimesheetIndex = 0;
@@ -40,7 +54,31 @@ export class TimesheetService {
    */
   minDate: Date;
 
-  constructor(private http: HttpClient) {
+  private repopulateTimesheets:boolean = false;
+
+  constructor(private http: HttpClient, public taskService:TaskService, public unitTypeService:UnitTypeService) {
+  }
+
+  /** Populates tasks.*/
+  async populateTasks() {
+    let promise = new Promise((resolve)=>{
+      resolve( this.taskService.initializeTasks())
+    }).then(()=>{
+      this.tasks = this.taskService.getTaskSubjectList();
+    });
+
+   return await promise;
+  }
+
+  /** Populates unitTypes.*/
+  async populateUnitTypes() {
+    let promise = new Promise((resolve)=>{
+      resolve(this.unitTypeService.initializeUnitTypes())
+    }).then(()=>{
+      this.unitTypes = this.unitTypeService.getUnitTypeSubjectList();
+    });
+
+    return await promise;
   }
 
   /**
@@ -135,8 +173,7 @@ export class TimesheetService {
         if(this.currentTimesheetIndex >= this.timesheets.length){
           this.currentTimesheetIndex = this.timesheets.length -1;
         }
-        this.setCurrentDate();
-        this.setCurrentStatus().then();
+
         return this.getCurrentTimesheet();
       });
     });
@@ -163,9 +200,23 @@ export class TimesheetService {
   async setCurrentStatus(){
     if(this.currentTimesheetIndex != -1){
       this.currentStatus = this.timesheets[this.currentTimesheetIndex].status.toString();
+      return this.currentStatus;
+    }else{
+      return this.currentStatus;
     }
   }
 
+  async updateTimesheet(timesheet:Timesheet){
+    return this.timesheets[this.currentTimesheetIndex] = timesheet;
+  }
+
+  setRepopulateTimesheets(reset:boolean){
+    this.repopulateTimesheets = reset;
+  }
+
+  getRepopulateTimesheets(): boolean{
+    return this.repopulateTimesheets;
+  }
   /**
    * Submits the current timesheet.
    */
@@ -196,7 +247,6 @@ export class TimesheetService {
     }).catch(() => {
       return null;
     });
-
     return tempSheet;
   }
 

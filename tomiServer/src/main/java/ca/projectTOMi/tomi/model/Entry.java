@@ -75,9 +75,9 @@ public final class Entry {
 
 	@ManyToOne (fetch = FetchType.EAGER)
 	@MapKeyColumn (name = "id")
-	@JsonProperty (value = "timesheet")
-	@JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference (alwaysAsId = true)
+//	@JsonProperty (value = "timesheet")
+//	@JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//	@JsonIdentityReference (alwaysAsId = true)
 	private Timesheet timesheet;
 
 	/**
@@ -167,17 +167,17 @@ public final class Entry {
 	@Column (nullable = false)
 	private boolean active;
 
-	@JsonProperty
-	public void setTimesheet(final Long id) {
-		final Timesheet t = new Timesheet();
-		t.setId(id);
-		this.timesheet = t;
-	}
-
-	@JsonIgnore
-	public void setTimesheet(final Timesheet timesheet) {
-		this.timesheet = timesheet;
-	}
+//	@JsonProperty
+//	public void setTimesheet(final Long id) {
+//		final Timesheet t = new Timesheet();
+//		t.setId(id);
+//		this.timesheet = t;
+//	}
+//
+//	@JsonIgnore
+//	public void setTimesheet(final Timesheet timesheet) {
+//		this.timesheet = timesheet;
+//	}
 
 	@JsonProperty
 	public ProjectViewModel getProject() {

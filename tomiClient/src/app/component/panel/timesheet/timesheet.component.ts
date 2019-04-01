@@ -1,6 +1,6 @@
 import {
   AfterViewInit,
-  Component, Inject,
+  Component, HostListener, Inject,
   OnInit,
   QueryList,
   ViewChild,
@@ -48,13 +48,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
   /** List of all entries for current timesheet.*/
   entries: Entry[] = [];
-  /** List of all projects this user is allowed to access.*/
-  projects: Project[] = [];
 
-  /** List of all tasks.*/
-  tasks: Task[];
-  /** List of all unit types.*/
-  unitTypes: UnitType[];
 
   /**
    * Holds the total number of hours worked this week.
@@ -71,6 +65,10 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   /** The list of entry components that are children of the timesheet.*/
   entryComponents: EntryComponent[] = [];
 
+  @HostListener('window:keyup.Enter', ['$event']) enter(e: KeyboardEvent) {
+    this.savePromise().then();
+  }
+
   constructor(private router: Router, public timesheetService: TimesheetService,
               private projectService: ProjectService, private entryService: EntryService,
               public dialog: MatDialog, private signInService:SignInService) {
@@ -81,13 +79,21 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * On initialization, calls getEntries to populate the entries variable as well as the projects variable.
    */
   ngOnInit() {
-    this.populateTimesheets().then((value) => {
-      let timesheet = value as Timesheet;
-      this.getEntries(timesheet);
-      this.getProjects(this.userId);
-      this.populateTasks();
-      this.populateUnitTypes();
-    });
+    if(this.timesheetService.timesheets.length === 0){
+      this.firstLoad();
+    }else{
+      if(this.timesheetService.getRepopulateTimesheets()){
+        this.timesheetService.setRepopulateTimesheets(false);
+        this.populateTimesheets().then(()=>{
+          this.timesheetService.getCurrentTimesheet().then(data=>{
+          this.getEntries(data);
+        });})
+      }else{
+        this.timesheetService.getCurrentTimesheet().then(data=>{
+          this.getEntries(data);
+        });
+      }
+    }
   }
 
   /** After the view has initialized, gets all entry components.*/
@@ -95,14 +101,14 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     this.getEntryComponents();
   }
 
-  /** Populates tasks.*/
-  populateTasks() {
-    this.entryService.getTasks().subscribe((data => this.tasks = data))
-  }
-
-  /** Populates unitTypes.*/
-  populateUnitTypes() {
-    this.entryService.getUnitTypes().subscribe((data => this.unitTypes = data))
+  firstLoad(){
+    this.populateTimesheets().then((value) => {
+      let timesheet = value as Timesheet;
+      this.getEntries(timesheet);
+      this.populateProjects(this.userId);
+      this.timesheetService.populateTasks().then();
+      this.timesheetService.populateUnitTypes().then();
+    });
   }
 
   /** Gets all the entry components currently on the timesheet.*/
@@ -116,7 +122,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
   /** Populates the list of timesheets.*/
   async populateTimesheets() {
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise((resolve) => {
       resolve(this.timesheetService.populateTimesheets(this.userId))
     });
 
@@ -131,6 +137,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     this.timesheetService.getEntries(timesheet).subscribe((data) => {
       this.entries = data;
       this.updateTally();
+      this.timesheetService.setCurrentStatus().then();
+      this.timesheetService.setCurrentDate();
     });
   }
 
@@ -138,8 +146,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Gets all projects this user is associated with.
    * @param id The ID of the user.
    */
-  getProjects(id: number): void {
-    this.projectService.getProjectsForUser(id).subscribe((data => this.projects = data));
+  populateProjects(id: number): void {
+    this.projectService.getProjectsForUser(id).subscribe((data => this.timesheetService.projects = data));
   }
 
   /**
@@ -150,7 +158,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
       let newEntry = new Entry();
 
       this.timesheetService.getCurrentTimesheet().then((data) => {
-        newEntry.timesheet = data.id;
+        newEntry.timesheet = data;
 
         this.entryService.save(newEntry).then((data => {
           this.entries.push(data);
@@ -209,16 +217,20 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
       let valid: boolean = false;
       this.entryComponents.forEach(item => {
         valid = item.validateEntry();
-        if (!valid) {
-          return;
-        }
       });
 
       if (valid) {
-        await this.timesheetService.submit().then(() => {
-          this.reloadPromise().then();
+        await this.timesheetService.submit().then((data:Timesheet) => {
+          let promise = new Promise((resolve)=>{
+            resolve(this.timesheetService.updateTimesheet(data))
+          }).then(()=>{
+            this.reloadPromise().then();
+          });
+
+          promise.then();
         });
       } else if (!valid) {
+        //TODO add error handling!!
         alert("All fields must have a value to submit!");
       }
       }
@@ -229,7 +241,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Waits for reloadAfterSerCurrentStatus to compelte.
    */
   async reloadPromise() {
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise((resolve) => {
       resolve(this.reloadAfterSetCurrentStatus());
     });
 
@@ -240,7 +252,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Reloads the page once setCurrentStatus has completed.
    */
   async reloadAfterSetCurrentStatus() {
-    await this.setCurrentStatusPromise().finally(() => {
+    await this.setCurrentStatusPromise().then((data) => {
         this.navigateToTimesheet();
       }
     );
@@ -249,15 +261,13 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   navigateToTimesheet() {
     this.router.navigateByUrl('/', {skipLocationChange: true}).finally(() =>
       this.router.navigate(["/my_timesheets"]));
-    // console.log(1);
-    //   this.timesheetService.setCurrentDate();
   }
 
   /**
    * Waits for setCurrentStatus to complete.
    */
   async setCurrentStatusPromise() {
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise((resolve) => {
       resolve(this.timesheetService.setCurrentStatus());
     });
 

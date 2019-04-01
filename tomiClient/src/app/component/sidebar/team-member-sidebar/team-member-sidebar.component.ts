@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {TeamMemberTimesheetService} from "../../../service/team-member-timesheet.service";
 import {UserAccount} from "../../../model/userAccount";
 import {TimesheetService} from "../../../service/timesheet.service";
@@ -9,6 +9,7 @@ import {MatSnackBar} from "@angular/material";
  * TeamMemberSidebarComponent is used to display the list of team members for a user to interact with when viewing timesheets.
  *
  * @author Jessica Moffatt
+ * @author Karol Talbot
  * @version 1.0
  */
 @Component({
@@ -35,7 +36,6 @@ export class TeamMemberSidebarComponent implements OnInit {
       this.teamMemberTimesheetService.selectedMember = data;
       this.timesheetService.minDate = null;
       this.teamMemberTimesheetService.displayTimesheet();
-      this.teamMemberTimesheetService.reloadTeamMembers();
 
       this.displayProductivityReport(data);
     }, error =>{
@@ -54,6 +54,21 @@ export class TeamMemberSidebarComponent implements OnInit {
     },error =>{
       let errorMessage = 'Something went wrong when loading the productivity report.';
       this.snackBar.open(errorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
+    });
+  }
+}
+
+@Pipe({name: 'FilterTeamMemberByName'})
+export class FilterTeamMemberByName implements PipeTransform {
+  transform(teamMemberList: Array<UserAccount>, nameFilter: string): any {
+    nameFilter = nameFilter.toLowerCase();
+    if (!nameFilter) return teamMemberList;
+
+    return teamMemberList.filter(n => {
+      let name  = n.firstName + n.lastName;
+      name = name.toLowerCase();
+
+      return name.indexOf(nameFilter) >= 0;
     });
   }
 }
