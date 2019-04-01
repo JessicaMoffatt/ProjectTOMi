@@ -33,7 +33,10 @@ export class TeamMemberTimesheetService{
   selectedMember: UserAccount;
 
   selectedMemberReport: ProductivityReportLine[] = [];
+  selectedMemberReportToDisplay: ProductivityReportLine[] = [];
+
   teamMembersReports: ProductivityReportLine[] = [];
+  teamMembersReportsToDisplay: ProductivityReportLine[] = [];
 
   teamid: number = this.signInService.userAccount.teamId;
   team: Team;
@@ -90,6 +93,8 @@ export class TeamMemberTimesheetService{
             this.teamMembersReports = this.teamMembersReports.concat(data);
             this.teamMembersReports.sort(ProductivityReportLine.compareDate);
             this.teamMembersReports.sort(ProductivityReportLine.compareUser);
+            this.teamMembersReports.sort(ProductivityReportLine.compareUnitType);
+            this.setRangeOfTeamProductivityReport(new Date(0), new Date());
           }, error => {
             let errorMessage = 'Something went wrong when loading team member productivity reports.';
             this.snackBar.open(errorMessage, null, {
@@ -109,6 +114,55 @@ export class TeamMemberTimesheetService{
         horizontalPosition: 'right'
       });
     });
+  }
+
+  setRangeOfProductivityReport(startDate:Date,endDate:Date){
+    this.selectedMemberReportToDisplay = this.setRangeOfReport(this.selectedMemberReportToDisplay, this.selectedMemberReport, startDate, endDate);
+  }
+
+  setRangeOfTeamProductivityReport(startDate:Date,endDate:Date){
+    this.teamMembersReportsToDisplay = this.setRangeOfReport(this.teamMembersReportsToDisplay, this.teamMembersReports, startDate,endDate);
+  }
+
+  setRangeOfReport(newReport:ProductivityReportLine[], baseReport:ProductivityReportLine[], startDate:Date, endDate:Date): ProductivityReportLine[]{
+    newReport = [];
+
+    let lastLine:ProductivityReportLine = null;
+    let thisLine:ProductivityReportLine = new ProductivityReportLine();
+
+    for(let i = 0; i < baseReport.length; i ++){
+      thisLine = new ProductivityReportLine();
+
+      thisLine.date = baseReport[i].date;
+      thisLine.quantity = baseReport[i].quantity;
+      thisLine.time = baseReport[i].time;
+      thisLine.unitType = baseReport[i].unitType;
+      thisLine.userAccount = baseReport[i].userAccount;
+      thisLine.normalizedValue = baseReport[i].normalizedValue;
+
+      let thisLineDate = new Date(thisLine.date);
+
+      if(thisLineDate >= startDate && thisLineDate <= endDate){
+        if(lastLine != null){
+          if(lastLine.unitType.name === thisLine.unitType.name && (lastLine.userAccount.firstName+lastLine.userAccount.lastName) === (thisLine.userAccount.firstName+thisLine.userAccount.lastName)){
+            lastLine.quantity += thisLine.quantity;
+            lastLine.time += thisLine.time;
+            lastLine.normalizedValue += thisLine.normalizedValue;
+          }else{
+            newReport.push(lastLine);
+            lastLine = thisLine;
+          }
+        }else{
+          lastLine = thisLine;
+        }
+      }
+
+      if(i === baseReport.length -1 && lastLine != null){
+        newReport.push(lastLine);
+      }
+    }
+
+    return newReport;
   }
 
   /**
