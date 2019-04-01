@@ -112,12 +112,6 @@ export class ProjectService {
           error => {
             this.handleError
           });
-      this.getBillableReport().subscribe(data => {
-        this.billableReport = data;
-        this.billableReport.sort(BillableHoursReportLine.compareName);
-      }, error => {
-        this.handleError
-      });
     }
   }
 
