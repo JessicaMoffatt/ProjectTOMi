@@ -79,6 +79,9 @@ export class ProjectService {
   getProjectsForUser(userId: number): Observable<Array<Project>> {
     return this.http.get(`${userAccountUrl}/${userId}/projects`)
       .pipe(map((data: any) => {
+        if(data === null){
+          return [];
+        }
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];
         } else {
