@@ -19,8 +19,6 @@ export class Timesheet{
   status: Status;
   /** The day of the week that the timesheet begins on.*/
   startDate: string;
-  /** The date that the timesheet was submitted.*/
-  submitDate: string;
   /** The list of links used for communicating with the back end.*/
   _links: [];
 
@@ -29,7 +27,6 @@ export class Timesheet{
     this.userAccount = null;
     this.status = Status.LOGGING;
     this.startDate = null;
-    this.submitDate = null;
     this._links = [];
   }
 }

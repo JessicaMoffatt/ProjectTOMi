@@ -72,8 +72,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router, public timesheetService: TimesheetService,
               private projectService: ProjectService, private entryService: EntryService,
-              public dialog: MatDialog, private signInService:SignInService,
-              private errorService:ErrorService) {
+              public dialog: MatDialog, private signInService: SignInService,
+              private errorService: ErrorService) {
 
   }
 
@@ -81,10 +81,10 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * On initialization, calls getEntries to populate the entries variable as well as the projects variable.
    */
   ngOnInit() {
-    if(this.timesheetService.timesheets.length === 0){
+    if (this.timesheetService.timesheets.length === 0) {
       this.firstLoad();
-    }else{
-      this.timesheetService.getCurrentTimesheet().then(data=>{
+    } else {
+      this.timesheetService.getCurrentTimesheet().then(data => {
         this.getEntries(data);
         this.timesheetService.setCurrentDate();
         this.timesheetService.setCurrentStatus().then();
@@ -97,7 +97,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     this.getEntryComponents();
   }
 
-  firstLoad(){
+  firstLoad() {
     this.populateTimesheets().then((value) => {
       let timesheet = value as Timesheet;
       this.getEntries(timesheet);
@@ -129,7 +129,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Gets all entries for this timesheet.
    * @param id The ID of the timesheet we want the entries of.
    */
-  getEntries(timesheet:Timesheet) {
+  getEntries(timesheet: Timesheet) {
     this.timesheetService.getEntries(timesheet).subscribe((data) => {
       this.entries = data;
       this.updateTally();
@@ -148,7 +148,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Creates an empty entry for the timesheet.
    */
   public addEntry(): void {
-    if ((this.timesheetService.currentStatus === this.sts[this.sts.LOGGING])||(this.timesheetService.currentStatus === this.sts[this.sts.REJECTED])) {
+    if ((this.timesheetService.currentStatus === this.sts[this.sts.LOGGING]) || (this.timesheetService.currentStatus === this.sts[this.sts.REJECTED])) {
       let newEntry = new Entry();
 
       this.timesheetService.getCurrentTimesheet().then((data) => {
@@ -207,22 +207,22 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Submits the current timesheet.
    */
   async submitTimesheet() {
-     await this.savePromise().then(async()=>{
-      let valid: boolean = false;
-      this.entryComponents.forEach(item => {
-        valid = item.validateEntry();
-        if (!valid) {
-          return;
-        }
-      });
-
-      if (valid) {
-        await this.timesheetService.submit().then(() => {
-          this.reloadPromise().then();
+    await this.savePromise().then(async () => {
+        let valid: boolean = false;
+        this.entryComponents.forEach(item => {
+          valid = item.validateEntry();
+          if (!valid) {
+            return;
+          }
         });
-      } else if (!valid) {
-        this.errorService.displayError();
-      }
+
+        if (valid) {
+          await this.timesheetService.submit().then(() => {
+            this.reloadPromise().then();
+          });
+        } else if (!valid) {
+          this.errorService.displayError();
+        }
       }
     );
   }
@@ -266,7 +266,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     return await promise;
   }
 
-  async savePromise(){
+  async savePromise() {
     let promise = new Promise((resolve, reject) => {
       resolve(this.save());
     });
@@ -278,9 +278,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Saves the state of all entries for the current timesheet.
    */
   async save() {
-    if ((this.timesheetService.currentStatus === this.sts[this.sts.LOGGING])||(this.timesheetService.currentStatus === this.sts[this.sts.REJECTED])) {
-      return Promise.all(this.entryComponents.map((comp)=> {
-          return Promise.resolve(comp.save()).then(() => {
+    if ((this.timesheetService.currentStatus === this.sts[this.sts.LOGGING]) || (this.timesheetService.currentStatus === this.sts[this.sts.REJECTED])) {
+      return Promise.all(this.entryComponents.map((comp) => {
+        return Promise.resolve(comp.save()).then(() => {
           this.updateTally();
         });
       }));
@@ -291,7 +291,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    * Displays the submit modal.
    */
   displaySubmitModal() {
-    if ((this.timesheetService.currentStatus === this.sts[this.sts.LOGGING])||(this.timesheetService.currentStatus === this.sts[this.sts.REJECTED])) {
+    if ((this.timesheetService.currentStatus === this.sts[this.sts.LOGGING]) || (this.timesheetService.currentStatus === this.sts[this.sts.REJECTED])) {
       const dialogRef = this.dialog.open(SubmitTimesheetModalComponent, {
         width: '400px',
         data: {parent: this}
@@ -331,7 +331,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   displayPrevTimesheet() {
     let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
 
-    if (currentIndex < this.timesheetService.timesheets.length -1) {
+    if (currentIndex < this.timesheetService.timesheets.length - 1) {
       let newIndex: number = currentIndex + 1;
       this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() => {
           this.navigateToTimesheet();
@@ -340,7 +340,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     }
   }
 
-  displayNextTimesheet(){
+  displayNextTimesheet() {
     let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
 
     if (currentIndex > 0) {
@@ -352,7 +352,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     }
   }
 
-  displaySpecifiedTimesheet(index:number){
+  displaySpecifiedTimesheet(index: number) {
     let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
     let newIndex: number = currentIndex + index;
 
@@ -374,7 +374,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 @Component({
   selector: 'app-delete-modal',
   template: `
-    
+
     <h1 mat-dialog-title>Delete Entry</h1>
     <div mat-dialog-content>
       <p>Confirm DELETION of entry</p>

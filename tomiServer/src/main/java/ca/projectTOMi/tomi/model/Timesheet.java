@@ -76,7 +76,7 @@ public final class Timesheet {
 		return this.startDate == null ? "" : this.startDate.toString();
 	}
 
-	@JsonProperty (value = "submitDate")
+	@JsonIgnore
 	public String getSubmitDate() {
 		return this.submitDate == null ? "" : this.submitDate.toString();
 	}
