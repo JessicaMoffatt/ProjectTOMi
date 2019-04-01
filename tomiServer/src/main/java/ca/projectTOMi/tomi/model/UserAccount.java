@@ -48,9 +48,7 @@ public final class UserAccount {
 	 */
 	@ManyToOne
 	@OnDelete (action = OnDeleteAction.NO_ACTION)
-	@JsonProperty (value = "teamId")
-	@JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference (alwaysAsId = true)
+	@JsonIgnore
 	private Team team;
 
 	/**
@@ -92,7 +90,7 @@ public final class UserAccount {
 	@JsonIgnore
 	private String googleId;
 
-	@JsonProperty
+	@JsonProperty("teamId")
 	public void setTeamId(final Long id) {
 		Team team = null;
 		if (id != -1) {
@@ -100,6 +98,14 @@ public final class UserAccount {
 			team.setId(id);
 		}
 		this.setTeam(team);
+	}
+
+	@JsonProperty("teamId")
+	public Long getTeamId(){
+		if(this.team == null){
+			return -1L;
+		}
+		return this.team.getId();
 	}
 
 	@Override

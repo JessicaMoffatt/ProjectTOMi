@@ -9,6 +9,7 @@ import {UserAccountService} from "../../../../service/user-account.service";
 import {UserAccount} from "../../../../model/userAccount";
 import {map} from "rxjs/operators";
 import {UnitType} from "../../../../model/unitType";
+import {MatFormField} from "@angular/material";
 
 
 @Component({
@@ -19,6 +20,7 @@ import {UnitType} from "../../../../model/unitType";
 
 export class ProjectDetailComponent implements OnInit {
 
+  @ViewChild('projectManager') public projectManager: MatFormField;
   constructor(public projectService: ProjectService,
               public clientService: ClientService,
               public expenseService: ExpenseService,
