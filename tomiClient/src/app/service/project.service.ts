@@ -10,10 +10,7 @@ import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
 import {ExpenseService} from "./expense.service";
 import {Entry} from "../model/entry";
-import {Team} from "../model/team";
-import {UnitType} from "../model/unitType";
 import {Status} from "../model/status";
-import {EntryComponent} from "../component/panel/entry/entry.component";
 import {EntryApproveComponent} from "../component/panel/entry-approve/entry-approve.component";
 
 const httpOptions = {
@@ -82,6 +79,9 @@ export class ProjectService {
   getProjectsForUser(userId: number): Observable<Array<Project>> {
     return this.http.get(`${userAccountUrl}/${userId}/projects`)
       .pipe(map((data: any) => {
+        if(data === null){
+          return [];
+        }
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];
         } else {

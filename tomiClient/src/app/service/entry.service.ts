@@ -77,7 +77,6 @@ export class EntryService {
       });
     } else if(entry.id >= 1){
       const url = entry._links["update"];
-
       await this.http.put<Entry>(url["href"], JSON.stringify(entry), httpOptions).toPromise().then((response) => {
 
         tempEntry = response;

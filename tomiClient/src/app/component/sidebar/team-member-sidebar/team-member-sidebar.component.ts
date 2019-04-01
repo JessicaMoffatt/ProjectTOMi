@@ -51,6 +51,9 @@ export class TeamMemberSidebarComponent implements OnInit {
   displayProductivityReport(teamMember: UserAccount){
     this.teamMemberTimesheetService.getProductivityReportByMember(teamMember).subscribe((data:ProductivityReportLine[])=>{
       this.teamMemberTimesheetService.selectedMemberReport = data;
+      this.teamMemberTimesheetService.selectedMemberReport.sort(ProductivityReportLine.compareDate);
+      this.teamMemberTimesheetService.selectedMemberReport.sort(ProductivityReportLine.compareUnitType);
+      this.teamMemberTimesheetService.setRangeOfProductivityReport(new Date(0), new Date());
     },error =>{
       let errorMessage = 'Something went wrong when loading the productivity report.';
       this.snackBar.open(errorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'right'});
