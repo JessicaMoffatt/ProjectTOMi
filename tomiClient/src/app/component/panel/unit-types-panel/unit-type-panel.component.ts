@@ -52,8 +52,7 @@ export class UnitTypePanelComponent implements OnInit{
   
   openDialog(): void {
     this.dialog.open(AddUnitTypeComponent, {
-      width: "70vw",
-      height: "70vh"
+      width: "70vw"
     });
   }
   

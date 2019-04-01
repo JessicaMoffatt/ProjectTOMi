@@ -61,8 +61,7 @@ export class TasksPanelComponent implements OnInit{
    */
   openDialog(): void {
     this.dialog.open(AddTaskComponent, {
-      width: "70vw",
-      height: "70vh"
+      width: "70vw"
     });
   }
   

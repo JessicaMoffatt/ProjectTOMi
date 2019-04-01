@@ -76,7 +76,6 @@ export class ManageTeamsPanelComponent implements OnInit {
   }
 
   public setSelectedTeam(team: Team): void {
-    console.log(team);
     this.selectedTeam = team;
     this.setValuesOnOpen();
     this.getTeamMembers();
@@ -91,8 +90,7 @@ export class ManageTeamsPanelComponent implements OnInit {
    */
   openDialog(): void {
     this.dialog.open(AddTeamComponent, {
-      width: "70vw",
-      height: "70vh"
+      width: "70vw"
     });
   }
 
@@ -258,7 +256,7 @@ export class DeleteTeamModal {
 
 /** Data interface for the DeleteUserModal */
 export interface DeleteDialogData {
-  teamToDelete : Team;
+  teamToDelete: Team;
   parent: ManageTeamsPanelComponent;
 }
 

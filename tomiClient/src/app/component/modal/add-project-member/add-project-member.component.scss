@@ -1,0 +1,20 @@
+@import "~src/variables";
+
+.manage_cancel_btn {
+  position: relative;
+  background-color: $cancel_btn;
+  color: $cancel_btn_text;
+  float: right;
+  margin-right: 1%;
+}
+
+.manage_save_btn {
+  background-color: $save_btn;
+  color: $save_btn_text;
+  float: right;
+  margin-right: 1%;
+}
+.action_buttons{
+  float:bottom;
+}
+

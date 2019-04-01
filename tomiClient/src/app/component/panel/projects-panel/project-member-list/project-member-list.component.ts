@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatDialog, MatSelectionList} from "@angular/material";
 import {AddProjectMemberComponent} from "../../../modal/add-project-member/add-project-member.component";
 import {ProjectService} from "../../../../service/project.service";
@@ -18,7 +18,9 @@ export class ProjectMemberListComponent implements OnInit {
   }
 
   addMemberToProject() {
-    this.dialog.open(AddProjectMemberComponent);
+    this.dialog.open(AddProjectMemberComponent, {
+      width: "70vw"
+    });
   }
 
   deleteMembers(userAccounts: MatSelectionList) {

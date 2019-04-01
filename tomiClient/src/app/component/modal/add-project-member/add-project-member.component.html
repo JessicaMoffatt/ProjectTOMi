@@ -2,8 +2,11 @@
   @author James
   @version 1.0
 -->
-
-<h2 mat-dialog-title>Add Member to Project</h2>
+<div mat-dialog-title>
+  <h2>
+    Add Member to Project
+  </h2>
+</div>
 <div mat-dialog-content>
   <form>
 
@@ -12,19 +15,19 @@
                   placeholder="New Project Member"
                   aria-label="New Project Member"
                   [(ngModel)]="selectedUserId"
-        name="user">
+                  name="user">
         <mat-option *ngFor="let u of this.availUsersList | async"
-          [value]="u.id">
+                    [value]="u.id">
           {{u.firstName}} {{u.lastName}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-
-    <div mat-dialog-actions>
-      <button mat-raised-button
-              [disabled]="selectedUserId == undefined"
-              (click)="addUserAccount()">Add</button>
-      <button mat-raised-button (click)="cancel()">Cancel</button>
-    </div>
   </form>
+</div>
+<div mat-dialog-actions class="action_buttons" align="end">
+  <button mat-raised-button class="manage_save_btn"
+          [disabled]="selectedUserId == undefined"
+          (click)="addUserAccount()">Add
+  </button>
+  <button mat-raised-button (click)="cancel()" class="manage_cancel_btn">Cancel</button>
 </div>
