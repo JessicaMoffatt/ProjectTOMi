@@ -1,9 +1,9 @@
 @import '~src/variables';
 
 .report_card{
-  width: 94%;
+  width: 96%;
   padding: 2%;
-  margin: 1%;
+  margin-bottom: 1%;
 }
 
 #progress{
@@ -25,4 +25,18 @@
 .third{
   display: inline-block;
   width: 30%;
+}
+
+.value_name{
+  display: inline-block;
+  width: 60%;
+}
+.value_value{
+  display: inline-block;
+  text-align: right;
+  width: 40%;
+}
+
+:host::ng-deep .mat-progress-bar-fill::after {
+  background-color: $orange;
 }

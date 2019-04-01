@@ -27,7 +27,7 @@ import {CustomErrorStateMatcher} from "../../extra/CustomErrorStateMatcher";
   styleUrls: ['./manage-teams-panel.component.scss']
 })
 export class ManageTeamsPanelComponent implements OnInit {
-  PAGE_SIZE: number = 8;
+  PAGE_SIZE: number = 6;
   private selectedTeam: Team = null;
   private selectedTeamMembers: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject([]);
   private availableMembers: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject([]);

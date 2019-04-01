@@ -17,6 +17,7 @@ export class ProjectsPanelComponent implements OnInit {
 
   @ViewChild('dumpTab') dumpTab: MatTab;
   @ViewChild('dataDumpReport') dataDumpReport: DataDumpReportComponent;
+  @ViewChild("sideBar") sideBar;
 
   constructor(private projectService: ProjectService,
               public snackBar:MatSnackBar, public signInService:SignInService) {

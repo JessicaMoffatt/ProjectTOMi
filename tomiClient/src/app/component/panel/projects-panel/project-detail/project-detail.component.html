@@ -6,7 +6,7 @@
   <mat-card id="project_details" class="mat-elevation-z2">
     <mat-card-header>
       <mat-card-title>
-        Project Id {{this.projectService.selectedProject.id}}
+        Project Id {{this.projectService.getSelectedProject().id}}
       </mat-card-title>
     </mat-card-header>
     <form>
@@ -67,17 +67,18 @@
           <span matPrefix>$&nbsp;</span>
         </mat-form-field>
       </div>
-      Budget Report
       <app-budget-report></app-budget-report>
-
-      <app-project-member-list></app-project-member-list>
-      <app-expense-list></app-expense-list>
+      <app-project-member-list id="members"></app-project-member-list>
+      <app-expense-list id="expenses"></app-expense-list>
     </form>
-    <mat-card-actions>
-      <button (click)="delete()" mat-button>
+    <mat-card-actions class="row">
+      <button class="delete_btn" (click)="delete()" mat-button>
         Delete
       </button>
-      <button (click)="save()" mat-button>
+      <button class="cancel_btn" (click)="cancel()" mat-button>
+        Cancel
+      </button>
+      <button class="save_btn" (click)="save()" mat-button>
         Save
       </button>
     </mat-card-actions>

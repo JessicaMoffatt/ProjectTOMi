@@ -99,7 +99,6 @@ export class ProjectService {
    */
   async setSelected(project: Project) {
     this.selectedProject = await project;
-    // this.refreshProjectList();
     if (this.selectedProject != null && this.selectedProject.id.match(this.regExp)) {
       this.refreshUserAccountList();
       this.expenseService.refreshExpenses(this.selectedProject);
@@ -242,11 +241,15 @@ export class ProjectService {
 
 
   addUser(userAccountId: number) {
-    this.http.put<UserAccount>(`${projectsUrl}/${this.selectedProject.id}/add_member/${userAccountId}`, httpOptions).toPromise()
+    let url = `${projectsUrl}/${this.getSelectedProject().id}/add_member/${userAccountId}`;
+    console.log(this.selectedProject.id);
+    console.log(url);
+    this.http.put<UserAccount>(url, httpOptions).toPromise()
       .then((response) => {
         this.refreshUserAccountList();
         return response;
-      }).catch(() => {
+      }).catch((reason) => {
+        console.log(reason);
       return null;
     });
   }

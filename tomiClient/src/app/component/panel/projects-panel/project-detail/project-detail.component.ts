@@ -37,7 +37,6 @@ export class ProjectDetailComponent implements OnInit {
 
 
   ngOnInit() {
-    this.projectService.setSelected(new Project());
     this.userAccountService.initializeUserAccounts();
   }
 
