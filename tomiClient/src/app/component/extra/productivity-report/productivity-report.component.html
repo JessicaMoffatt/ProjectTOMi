@@ -1,47 +1,50 @@
 <div *ngIf="this.teamMemberTimesheetService?.selectedMemberReportToDisplay" class="container">
-  <h2 *ngIf="this.teamMemberTimesheetService.selectedMember">
-    {{this.teamMemberTimesheetService.selectedMember.firstName}} {{this.teamMemberTimesheetService.selectedMember.lastName}}
-    Productivity Report
-  </h2>
+  <mat-card>
+    <mat-card-title *ngIf="this.teamMemberTimesheetService.selectedMember">
+      {{this.teamMemberTimesheetService.selectedMember.firstName}} {{this.teamMemberTimesheetService.selectedMember.lastName}}
+      Productivity Report
+    </mat-card-title>
+    <mat-card-content>
+      <mat-form-field>
+        <input matInput #startInput [matDatepicker]="startPicker" placeholder="Choose a Start date">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
 
-  <mat-form-field>
-    <input matInput #startInput [matDatepicker]="startPicker" placeholder="Choose a Start date">
-    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-    <mat-datepicker #startPicker></mat-datepicker>
-  </mat-form-field>
+      <mat-form-field>
+        <input matInput #endInput [matDatepicker]="endPicker" placeholder="Choose an End date">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
 
-  <mat-form-field>
-    <input matInput #endInput [matDatepicker]="endPicker" placeholder="Choose an End date">
-    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-    <mat-datepicker #endPicker></mat-datepicker>
-  </mat-form-field>
+      <button mat-button (click)="setRangeOfProductivityReport()">Set Range</button>
+      <button mat-button (click)="clearRange(startInput, endInput)">Clear Range</button>
 
-  <button mat-button (click)="setRangeOfProductivityReport()">Set Range</button>
-  <button mat-button (click)="clearRange(startInput, endInput)">Clear Range</button>
+      <table mat-table [dataSource]="this.teamMemberTimesheetService.selectedMemberReportToDisplay" class="mat-elevation-z0 team_table">
+        <ng-container matColumnDef="unitType">
+          <th mat-header-cell *matHeaderCellDef> Unit Type </th>
+          <td mat-cell *matCellDef="let line"> {{line.unitType.name}} </td>
+        </ng-container>
 
-  <table mat-table [dataSource]="this.teamMemberTimesheetService.selectedMemberReportToDisplay" class="mat-elevation-z2 team_table">
-    <ng-container matColumnDef="unitType">
-      <th mat-header-cell *matHeaderCellDef> Unit Type </th>
-      <td mat-cell *matCellDef="let line"> {{line.unitType.name}} </td>
-    </ng-container>
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef> Quantity </th>
+          <td mat-cell *matCellDef="let line"> {{line.quantity}} </td>
+        </ng-container>
 
-    <ng-container matColumnDef="quantity">
-      <th mat-header-cell *matHeaderCellDef> Quantity </th>
-      <td mat-cell *matCellDef="let line"> {{line.quantity}} </td>
-    </ng-container>
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef> Time </th>
+          <td mat-cell *matCellDef="let line"> {{line.time}} </td>
+        </ng-container>
 
-    <ng-container matColumnDef="time">
-      <th mat-header-cell *matHeaderCellDef> Time </th>
-      <td mat-cell *matCellDef="let line"> {{line.time}} </td>
-    </ng-container>
+        <ng-container matColumnDef="normalizedValue">
+          <th mat-header-cell *matHeaderCellDef> Normalized Value </th>
+          <td mat-cell *matCellDef="let line"> {{line.normalizedValue.toFixed(2)}} </td>
+        </ng-container>
 
-    <ng-container matColumnDef="normalizedValue">
-      <th mat-header-cell *matHeaderCellDef> Normalized Value </th>
-      <td mat-cell *matCellDef="let line"> {{line.normalizedValue.toFixed(2)}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
 </div>
 
