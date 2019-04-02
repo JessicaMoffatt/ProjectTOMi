@@ -1,5 +1,7 @@
 @import "~src/variables";
-
+/**
+  @author Karol Talbot
+ */
 .manage_cancel_btn {
   position: relative;
   background-color: $cancel_btn;
@@ -16,5 +18,10 @@
 }
 .action_buttons{
   float:bottom;
+}
+
+.input_selector{
+  width:98%;
+  padding: 1%;
 }
 

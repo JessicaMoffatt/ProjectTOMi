@@ -42,12 +42,13 @@ export class AddTeamComponent implements OnInit {
   }
 
   private async addTeam() {
+    let teamToAdd = new Team();
     if (this.teamNameControl.valid) {
-      let teamToAdd = new Team();
       teamToAdd.teamName = this.addTeamName.nativeElement.value;
-      await this.teamService.save(teamToAdd).then(
+      teamToAdd = await this.teamService.save(teamToAdd).then(
         (value)=> {
           this.teamService.initializeTeams();
+          console.log(value);
           return value;
         });
       this.dialogRef.close();

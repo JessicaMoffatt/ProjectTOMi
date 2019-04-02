@@ -3,7 +3,6 @@ package ca.projectTOMi.tomi.service;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import ca.projectTOMi.tomi.exception.ProjectManagerException;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
 import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
@@ -112,11 +111,10 @@ public final class ProjectService {
 	 * @param project
 	 * 	Project to be persisted
 	 *
-	 * @return the Project that was persisted
 	 */
-	public Project deleteProject(final Project project) {
+	public void deleteProject(final Project project) {
 		project.setActive(false);
-		return this.repository.save(project);
+		this.repository.save(project);
 	}
 
 	public Project createProject(final Project project) {
@@ -147,6 +145,7 @@ public final class ProjectService {
 		final UserAccount userAccount = this.userAccountService.getUserAccount(userAccountId);
 
 		if (project.getProjectManager() != null && userAccount.equals(project.getProjectManager())) {
+			this.projectAuthService.changeProjectManager(project, null);
 			project.setProjectManager(null);
 		}
 

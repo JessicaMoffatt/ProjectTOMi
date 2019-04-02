@@ -129,6 +129,7 @@ export class ManageTeamsPanelComponent implements OnInit {
   }
 
   public cancel() {
+    this.dirtyUserBuffer = [];
     this.sideBar.unselect(this.selectedTeam.id);
     this.selectedTeam = null;
   }
@@ -214,6 +215,7 @@ export class ManageTeamsPanelComponent implements OnInit {
   }
 
   public async delete() {
+    this.dirtyUserBuffer= [];
     await this.teamService.delete(this.selectedTeam);
     this.sideBar.unselect(this.selectedTeam.id);
     this.teamService.initializeTeams();

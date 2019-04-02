@@ -105,6 +105,7 @@ import {FilterTaskByName} from "./component/panel/tasks-panel/tasks-panel.compon
 import {FilterTeamByName} from "./component/sidebar/team-sidebar/team-sidebar.component";
 import {FilterProjectByName} from "./component/sidebar/project-sidebar/project-sidebar.component";
 import {FilterTeamMemberByName} from "./component/sidebar/team-member-sidebar/team-member-sidebar.component";
+import {AddProjectComponent} from "./component/modal/add-project/add-project";
 
 @NgModule({
   declarations: [
@@ -166,7 +167,8 @@ import {FilterTeamMemberByName} from "./component/sidebar/team-member-sidebar/te
     FilterTeamByName,
     FilterProjectByName,
     FilterTeamMemberByName,
-    DeleteTeamModal
+    DeleteTeamModal,
+    AddProjectComponent
   ],
   imports: [
     MatSidenavModule,
@@ -234,7 +236,8 @@ import {FilterTeamMemberByName} from "./component/sidebar/team-member-sidebar/te
     DeleteTaskModal,
     DeleteUnitTypeModal,
     AddTeamComponent,
-    DeleteTeamModal
+    DeleteTeamModal,
+    AddProjectComponent
   ],
   providers: [
     AccessGuard,

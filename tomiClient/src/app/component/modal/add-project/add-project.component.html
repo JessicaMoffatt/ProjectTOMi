@@ -1,0 +1,17 @@
+<!--
+  @author Karol Talbot
+  @version 1.1
+-->
+
+<h2 mat-dialog-title>Add New Project</h2>
+<div mat-dialog-content class="dialog_pane">
+  <form #addProjectForm="ngForm">
+    <mat-form-field id="project">
+      <input matInput #addProjectName placeholder="Project Name" [formControl]="projectNameControl">
+    </mat-form-field>
+  </form>
+</div>
+<div id="buttons" mat-dialog-actions align="end">
+  <button mat-raised-button class="manage_save_btn" (click)="addProject()">Add</button>
+  <button mat-raised-button class="manage_cancel_btn" (click)="onNoClick()">Cancel</button>
+</div>
