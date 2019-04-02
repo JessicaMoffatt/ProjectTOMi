@@ -209,6 +209,7 @@ export class ManageTeamsPanelComponent implements OnInit {
       await this.teamService.save(this.selectedTeam);
       this.sideBar.unselect(this.selectedTeam.id);
       this.selectedTeam = null;
+      this.dirtyUserBuffer = [];
     }
   }
 

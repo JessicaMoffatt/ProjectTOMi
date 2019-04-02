@@ -5,6 +5,7 @@ import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 import ca.projectTOMi.tomi.exception.MinimumAdminAccountException;
 import ca.projectTOMi.tomi.exception.MinimumProgramDirectorAccountException;
 import ca.projectTOMi.tomi.exception.TimesheetNotFoundException;
@@ -96,6 +97,8 @@ public final class UserAccountService {
 		final UserAccount temp = new UserAccount();
 		this.checkAdmins(userAccount, temp);
 		this.checkProgramDirectors(userAccount, temp);
+		userAccount.setEmail(UUID.randomUUID().toString());
+		userAccount.setGoogleId(null);
 		userAccount.setProgramDirector(false);
 		userAccount.setAdmin(false);
 		userAccount.setActive(false);
@@ -176,7 +179,7 @@ public final class UserAccountService {
 	public UserAccount createUserAccount(final UserAccount userAccount) {
 		userAccount.setActive(true);
 		final UserAccount newUserAccount = this.repository.save(userAccount);
-		if(newUserAccount.getTeam() != null){
+		if (newUserAccount.getTeam() != null) {
 			this.timesheetAuthService.addMemberToTeam(newUserAccount, newUserAccount.getTeam());
 		}
 		final TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
@@ -255,8 +258,8 @@ public final class UserAccountService {
 		final TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
 		final LocalDate date = LocalDate.now().with(fieldISO, 1);
 		final List<Timesheet> timesheets = this.entryService.getTimesheetsByDate(date);
-		for(final Timesheet timesheet: timesheets){
-			if(timesheet.getSubmitDate() != null && (timesheet.getUserAccount().getGoogleId() != null)){
+		for (final Timesheet timesheet : timesheets) {
+			if (timesheet.getSubmitDate() != null && (timesheet.getUserAccount().getGoogleId() != null)) {
 				final String email = timesheet.getUserAccount().getEmail();
 				final String subject = TOMiEmailService.SUBJECT;
 				final String body = String.format(TOMiEmailService.EMAIL_BODY, timesheet.getUserAccount().getFirstName(), date);
@@ -283,7 +286,7 @@ public final class UserAccountService {
 			this.createUserAccount(primeAccount);
 		}
 	}
-	
+
 	List<UserAccount> getUserAccountsByProjects(final Project project) {
 		return this.repository.getAllByActiveTrueAndProjectsOrderById(project);
 	}
