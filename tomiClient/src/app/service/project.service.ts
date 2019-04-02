@@ -12,6 +12,7 @@ import {ExpenseService} from "./expense.service";
 import {Entry} from "../model/entry";
 import {Status} from "../model/status";
 import {EntryApproveComponent} from "../component/panel/entry-approve/entry-approve.component";
+import {SignInService} from "./sign-in.service";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -55,7 +56,10 @@ export class ProjectService {
   /** the user accounts assigned to the current project; for display in project-member-list-component */
   userAccountList: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject([]);
 
-  constructor(private http: HttpClient, public snackBar: MatSnackBar, private expenseService: ExpenseService) {
+  constructor(private http: HttpClient,
+              public snackBar: MatSnackBar,
+              private expenseService: ExpenseService,
+              private signInService:SignInService) {
   }
 
   /**
@@ -231,6 +235,7 @@ export class ProjectService {
       //   console.log("update rejected")
       // });
     }
+    this.signInService.getNavBarList();
   }
 
 
