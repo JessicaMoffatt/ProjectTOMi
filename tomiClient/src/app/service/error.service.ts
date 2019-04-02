@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {MatSnackBar} from "@angular/material";
+import {MatSnackBar, MatSnackBarRef} from "@angular/material";
 import {Observable, of} from "rxjs";
-
+import {Injector} from '@angular/core';
 
 const MESSAGE: string = 'Oopsie Doopsie, Something went Poopsie!';
 
@@ -9,16 +9,18 @@ const MESSAGE: string = 'Oopsie Doopsie, Something went Poopsie!';
   providedIn: 'root'
 })
 
+
 export class ErrorService {
 
-  private static snackBar: MatSnackBar;
+  constructor(private snackBar: MatSnackBar){}
+
 
   /**
    * Handle Http operation that failed.
    * Let the app continue.
    * @param result - optional value to return as the observable result
    */
-  public static handleError<T>(result?: T) {
+  public handleError<T>(result?: T) {
     return (): Observable<T> => {
       this.displayError();
       // Let the app keep running by returning an empty result.
@@ -26,8 +28,8 @@ export class ErrorService {
     };
   }
 
-  public static displayError(){
-    ErrorService.snackBar.open(MESSAGE, null, {
+  public displayError(){
+     this.snackBar.open(MESSAGE, null, {
       duration: 5000,
       politeness: 'assertive',
       panelClass: 'snackbar-fail',
@@ -42,8 +44,8 @@ export class ErrorService {
    * to be used for troubleshooting in the future
    * @param extraInfo additional information about the error
    */
-  public static displayErrorMessage(extraInfo: string){
-    ErrorService.displayError();
+  public displayErrorMessage(extraInfo: string){
+    this.displayError();
   }
 
 }

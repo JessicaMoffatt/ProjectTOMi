@@ -1,8 +1,8 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {UserAccount} from "../model/userAccount";
-import {Observable, throwError} from "rxjs";
+import {Observable} from "rxjs";
 import {catchError, map} from "rxjs/operators";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {TeamService} from "./team.service";
 import {Timesheet} from "../model/timesheet";
 import {TimesheetService} from "./timesheet.service";
@@ -14,6 +14,7 @@ import {MatSnackBar} from "@angular/material";
 import {SignInService} from "./sign-in.service";
 import {Team} from "../model/team";
 import {TeamSidebarService} from "./team-sidebar.service";
+import {ErrorService} from "./error.service";
 
 /**
  * TeamMemberTimesheetService is used to control the flow of data regarding timesheets to/from the view.
@@ -46,7 +47,8 @@ export class TeamMemberTimesheetService{
   constructor(private http: HttpClient, private router: Router,
               private userAccountService: UserAccountService, private teamService: TeamService,
               public timesheetService: TimesheetService, public snackBar: MatSnackBar,
-              private signInService:SignInService, private teamSidebarService:TeamSidebarService) {
+              private signInService:SignInService, private teamSidebarService:TeamSidebarService,
+              private errorService: ErrorService) {
   }
 
   /**
@@ -90,24 +92,13 @@ export class TeamMemberTimesheetService{
             this.teamMembersReports = this.teamMembersReports.concat(data);
             this.teamMembersReports.sort(ProductivityReportLine.compareDate);
             this.teamMembersReports.sort(ProductivityReportLine.compareUser);
-          }, error => {
-            let errorMessage = 'Something went wrong when loading team member productivity reports.';
-            this.snackBar.open(errorMessage, null, {
-              duration: 5000,
-              politeness: 'assertive',
-              panelClass: 'snackbar-fail',
-              horizontalPosition: 'right'
-            });
-          });
+          }, () =>
+            this.errorService.displayErrorMessage(
+              'Something went wrong when loading team member productivity reports.')
+          );
       }
-    }, error => {
-      let errorMessage = 'Something went wrong when loading team members.';
-      this.snackBar.open(errorMessage, null, {
-        duration: 5000,
-        politeness: 'assertive',
-        panelClass: 'snackbar-fail',
-        horizontalPosition: 'right'
-      });
+    }, () => {
+      this.errorService.displayErrorMessage('Something went wrong when loading team members.');
     });
   }
 
@@ -119,44 +110,31 @@ export class TeamMemberTimesheetService{
       let timesheet = value as Timesheet;
       this.populateEntries(timesheet);
       this.timesheetService.setCurrentDate();
-    }, reject => {
-      let errorMessage = 'Something went wrong when retrieving timesheets.';
-      this.snackBar.open(errorMessage, null, {
-        duration: 5000,
-        politeness: 'assertive',
-        panelClass: 'snackbar-fail',
-        horizontalPosition: 'right'
-      });
-    });
+    }, () =>
+      this.errorService.displayErrorMessage('Something went wrong when retrieving timesheets.')
+    );
   }
 
   /**
    * Populates the list of timesheets in timesheet service.
    */
   private async populateTimesheets() {
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise(resolve => {
       resolve(this.timesheetService.populateTimesheets(this.selectedMember.id));
     });
-
     return await promise;
   }
 
   /**
    * Populates the list of entries for the specified timesheet.
-   * @param id The ID of the timesheet to display entries for.
+   * @param timesheet The timesheet to display entries for.
    */
   private populateEntries(timesheet: Timesheet) {
     this.timesheetService.getEntries(timesheet).subscribe((data) => {
       this.entries = data;
       this.updateTally();
-    }, error => {
-      let errorMessage = 'Something went wrong when retrieving entries.';
-      this.snackBar.open(errorMessage, null, {
-        duration: 5000,
-        politeness: 'assertive',
-        panelClass: 'snackbar-fail',
-        horizontalPosition: 'right'
-      });
+    }, () => {
+      this.errorService.displayErrorMessage('Something went wrong when retrieving entries.')
     });
   }
 
@@ -168,7 +146,6 @@ export class TeamMemberTimesheetService{
     this.entries.forEach(function (entry) {
       hours += +entry.mondayHours + +entry.tuesdayHours + +entry.wednesdayHours + +entry.thursdayHours + +entry.fridayHours + +entry.saturdayHours + +entry.sundayHours;
     });
-
     this.tally = hours;
   }
 
@@ -177,19 +154,12 @@ export class TeamMemberTimesheetService{
    */
   displayPrevTimesheet() {
     let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
-
     if (currentIndex < this.timesheetService.timesheets.length - 1) {
       let newIndex: number = currentIndex + 1;
       this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() => {
           this.displayTimesheet();
-        }, reject => {
-          let errorMessage = 'Something went wrong when retrieving the timesheet.';
-          this.snackBar.open(errorMessage, null, {
-            duration: 5000,
-            politeness: 'assertive',
-            panelClass: 'snackbar-fail',
-            horizontalPosition: 'right'
-          });
+        }, () => {
+          this.errorService.displayErrorMessage('Something went wrong when retrieving the timesheet.' )
         }
       );
     }
@@ -205,14 +175,8 @@ export class TeamMemberTimesheetService{
       let newIndex: number = currentIndex - 1;
       this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() => {
           this.displayTimesheet();
-        }, reject => {
-          let errorMessage = 'Something went wrong when retrieving the timesheet.';
-          this.snackBar.open(errorMessage, null, {
-            duration: 5000,
-            politeness: 'assertive',
-            panelClass: 'snackbar-fail',
-            horizontalPosition: 'right'
-          });
+        }, () => {
+          this.errorService.displayErrorMessage('Something went wrong when retrieving the timesheet.');
         }
       );
     }
@@ -229,14 +193,8 @@ export class TeamMemberTimesheetService{
     if (newIndex < this.timesheetService.timesheets.length) {
       this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() => {
           this.displayTimesheet();
-        }, reject => {
-          let errorMessage = 'Something went wrong when retrieving the timesheet.';
-          this.snackBar.open(errorMessage, null, {
-            duration: 5000,
-            politeness: 'assertive',
-            panelClass: 'snackbar-fail',
-            horizontalPosition: 'right'
-          });
+        }, () => {
+          this.errorService.displayErrorMessage( 'Something went wrong when retrieving the timesheet.')
         }
       );
     }
@@ -246,14 +204,11 @@ export class TeamMemberTimesheetService{
     let url = member._links["productivityreport"];
 
     return this.http.get(`${url["href"]}`)
+      .pipe(catchError(this.errorService.handleError()))
       .pipe(
         map((res: ProductivityReportLine[]) => {
           return res
-        }), catchError(this.handleError)
+        })
       );
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    return throwError(error.message);
   }
 }

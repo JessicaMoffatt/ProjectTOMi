@@ -23,7 +23,7 @@ export class SignInService {
   public navList:Array<any> = [];
   userAccount:UserAccount = null;
 
-  constructor(private router:Router, private snackBar:MatSnackBar, private http:HttpClient) {
+  constructor(private router:Router, private snackBar:MatSnackBar, private http:HttpClient, private errorService: ErrorService) {
     this.router = router;
     this.snackBar = snackBar;
     this.http = http;
@@ -47,7 +47,7 @@ export class SignInService {
 
   getNavBarList(){
   return this.http.get(buildNavBarUrl)
-    .pipe(catchError(ErrorService.handleError()))
+    .pipe(catchError(this.errorService.handleError()))
     .pipe(map(value => {
       return value;})).subscribe((value) => {
         this.navList["my_timesheets"] = value["my_timesheets"];
@@ -72,7 +72,7 @@ export class SignInService {
     await promise.then(()=>{
       let snackBarRef = this.snackBar.open('Signed out', null, {duration: 2000, politeness: "assertive", });
       return this.signOutOperations();
-    }).catch( ()=>ErrorService.displayError())
+    }).catch( ()=> this.errorService.displayError())
   }
 
   signOutOperations() {

@@ -28,15 +28,15 @@ const httpOptions = {
 export class EntryService {
 
 
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private errorService: ErrorService) {
+  }
 
   /**
    * Gets all tasks.
    */
   getTasks(): Observable<Array<Task>> {
     return this.http.get(`${taskUrl}`)
-      .pipe(catchError(ErrorService.handleError<Client[]>([])))
+      .pipe(catchError(this.errorService.handleError<Client[]>([])))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.tasks as Task[];
@@ -51,7 +51,7 @@ export class EntryService {
    */
   getUnitTypes(): Observable<Array<UnitType>> {
     return this.http.get(`${unitTypeUrl}`)
-      .pipe(catchError(ErrorService.handleError<Client[]>([])))
+      .pipe(catchError(this.errorService.handleError<Client[]>([])))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.unitTypes as UnitType[];
@@ -70,26 +70,23 @@ export class EntryService {
     if (entry.id === -1) {
       await this.http.post<Entry>(entryUrl, JSON.stringify(entry), httpOptions).toPromise()
         .then(response => {
-        tempEntry = response;
-        return response;
-      }).catch(() => {
-        catchError(ErrorService.handleError<Client[]>([]));
-        return null;
-      });
-    } else if(entry.id >= 1){
+          tempEntry = response;
+          return response;
+        }).catch(() => {
+          this.errorService.displayError();
+          return null;
+        });
+    } else if (entry.id >= 1) {
       const url = entry._links["update"];
-
       await this.http.put<Entry>(url["href"], JSON.stringify(entry), httpOptions).toPromise()
         .then((response) => {
-
-        tempEntry = response;
-        return response;
-      }).catch(() => {
-        catchError(ErrorService.handleError<Client[]>([]));
-        return null;
-      });
+          tempEntry = response;
+          return response;
+        }).catch(() => {
+          this.errorService.displayError();
+          return null;
+        });
     }
-
     return tempEntry;
   }
 
@@ -100,13 +97,13 @@ export class EntryService {
   async copy(entry: Entry) {
     let tempEntry: Entry = null;
     const url = entry._links["copy"];
-      await this.http.post<Entry>(url["href"],null, httpOptions).toPromise().then(response => {
-        tempEntry = response;
-        return response;
-      }).catch(() => {
-        return null;
-      });
-
+    await this.http.post<Entry>(url["href"], null, httpOptions).toPromise().then(response => {
+      tempEntry = response;
+      return response;
+    }).catch(() => {
+      this.errorService.displayError();
+      return null;
+    });
     return tempEntry;
   }
 
@@ -114,12 +111,13 @@ export class EntryService {
    * Deletes the specified entry.
    * @param entry The entry to delete.
    */
-  delete(entry:Entry){
+  delete(entry: Entry) {
     const url = entry._links["delete"];
-
-    this.http.delete(url["href"], httpOptions).subscribe((response) => {
-      return response as Team;
-    });
+    this.http.delete(url["href"], httpOptions).toPromise()
+      .then((response) => {
+        return response as Team
+      })
+      .catch(() => this.errorService.displayError());
   }
 }
 

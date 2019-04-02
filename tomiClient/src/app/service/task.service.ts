@@ -29,7 +29,7 @@ export class TaskService {
   private taskUrl = "http://localhost:8080/tasks";
   private taskSubjectList: BehaviorSubject<Array<Task>> = new BehaviorSubject<Array<Task>>([]);
 
-  public constructor(private http: HttpClient, public snackBar: MatSnackBar) {
+  public constructor(private http: HttpClient, public snackBar: MatSnackBar, private errorService: ErrorService) {
 
   }
 
@@ -81,15 +81,13 @@ export class TaskService {
           this.taskSubjectList.getValue().splice(indexToBeRemoved, 1);
         }
       });
-    }).catch((error: any) => {
-      console.log("Task Error")
-    });
+    }).catch(() => this.errorService.displayErrorMessage("Task Error"));
   }
 
 
   requestAllTasks() {
     let obsTasks: Observable<Array<Task>>;
-    obsTasks = this.http.get(this.taskUrl).pipe(catchError(ErrorService.handleError()))
+    obsTasks = this.http.get(this.taskUrl).pipe(catchError(this.errorService.handleError()))
       .pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         return data._embedded.tasks as Task[];
@@ -100,7 +98,7 @@ export class TaskService {
 
   async save(task: Task) {
     if (task.id === -1) {
-      await this.http.post<UserAccount>(this.taskUrl, JSON.stringify(task), httpOptions).toPromise().then(response => {
+      await this.http.post<UserAccount>(this.taskUrl, JSON.stringify(task), httpOptions).toPromise().then(() => {
         this.refreshTasks();
         let addUserSuccessMessage = task.name + ' added successfully.';
         this.snackBar.open(addUserSuccessMessage, null, {
@@ -109,18 +107,13 @@ export class TaskService {
           panelClass: 'snackbar-success',
           horizontalPosition: 'right'
         });
-      }).catch((error: any) => {
-        let addUserErrorMessage = 'Something went wrong when adding ' + task.name + ' ' + '. Please contact your system administrator.';
-        this.snackBar.open(addUserErrorMessage, null, {
-          duration: 5000,
-          politeness: 'assertive',
-          panelClass: 'snackbar-fail',
-          horizontalPosition: 'right'
-        });
-      });
+      }).catch(() =>
+        this.errorService.displayErrorMessage('Something went wrong when adding ' + task.name + ' '
+          + '. Please contact your system administrator.')
+      );
     } else {
       const url = task._links["self"];
-      await this.http.put<UserAccount>(url["href"], JSON.stringify(task), httpOptions).toPromise().then(response => {
+      await this.http.put<UserAccount>(url["href"], JSON.stringify(task), httpOptions).toPromise().then(() => {
         this.refreshTasks();
         let editUserSuccessMessage = task.name + ' ' + ' updated successfully.';
         this.snackBar.open(editUserSuccessMessage, null, {
@@ -129,14 +122,9 @@ export class TaskService {
           panelClass: 'snackbar-success',
           horizontalPosition: 'right'
         });
-      }).catch((error: any) => {
-        let editUserErrorMessage = 'Something went wrong when updating ' + task.name + ' ' + '. Please contact your system administrator.';
-        this.snackBar.open(editUserErrorMessage, null, {
-          duration: 5000,
-          politeness: 'assertive',
-          panelClass: 'snackbar-fail',
-          horizontalPosition: 'right'
-        });
+      }).catch(() => {
+        this.errorService.displayErrorMessage('Something went wrong when updating ' + task.name + ' '
+          + '. Please contact your system administrator.')
       });
     }
   }
@@ -144,7 +132,7 @@ export class TaskService {
 
   delete(task: Task) {
     const url = task._links["self"];
-    this.http.delete(url["href"], httpOptions).toPromise().then(response => {
+    this.http.delete(url["href"], httpOptions).toPromise().then(() => {
       this.refreshTasks();
       let deleteUserSuccessMessage = task.name + ' ' + ' deleted successfully.';
       this.snackBar.open(deleteUserSuccessMessage, null, {
@@ -153,14 +141,9 @@ export class TaskService {
         panelClass: 'snackbar-success',
         horizontalPosition: 'right'
       });
-    }).catch((error: any) => {
-      let deleteUserErrorMessage = 'Something went wrong when deleting ' + task.name + ' ' + '. Please contact your system administrator.';
-      this.snackBar.open(deleteUserErrorMessage, null, {
-        duration: 5000,
-        politeness: 'assertive',
-        panelClass: 'snackbar-fail',
-        horizontalPosition: 'right'
-      });
+    }).catch(() => {
+      this.errorService.displayErrorMessage('Something went wrong when deleting ' + task.name + ' '
+        + '. Please contact your system administrator.')
     });
   }
 

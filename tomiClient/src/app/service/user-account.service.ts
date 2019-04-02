@@ -29,7 +29,7 @@ export class UserAccountService {
   userAccounts: Observable<Array<UserAccount>>;
   userSubject: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject<Array<UserAccount>>([]);
 
-  public constructor(private http: HttpClient, public snackBar:MatSnackBar) {
+  public constructor(private http: HttpClient, public snackBar:MatSnackBar, private errorService: ErrorService) {
 
   }
 
@@ -40,7 +40,7 @@ export class UserAccountService {
     this.GETAllUserAccounts().forEach( users => {
       this.userSubject = new BehaviorSubject<Array<UserAccount>>(users);
       this.sortUserAccounts();
-    }).catch( () => ErrorService.displayError());
+    }).catch( () => this.errorService.displayError());
   }
 
   /**
@@ -97,7 +97,7 @@ export class UserAccountService {
       });
     }).then(() => {
       this.sortUserAccounts();
-    }).catch( () => ErrorService.displayErrorMessage('Something went wrong when updating the list of Users.'));
+    }).catch( () => this.errorService.displayErrorMessage('Something went wrong when updating the list of Users.'));
   }
 
   /**
@@ -106,7 +106,7 @@ export class UserAccountService {
   GETAllUserAccounts() {
     let obsUsers : Observable<Array<UserAccount>>;
     obsUsers = this.http.get(userAccountUrl)
-      .pipe(catchError(ErrorService.handleError()))
+      .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         return data._embedded.userAccounts as UserAccount[];
       }));
@@ -124,7 +124,7 @@ export class UserAccountService {
         .then(() => {
         this.refreshUserAccounts();
       }).catch(() => {
-        ErrorService.displayErrorMessage('Something went wrong when adding ' + userAccount.firstName + ' '
+        this.errorService.displayErrorMessage('Something went wrong when adding ' + userAccount.firstName + ' '
           + userAccount.lastName + '.');
       });
     } else {
@@ -132,7 +132,7 @@ export class UserAccountService {
       await this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(() => {
         this.refreshUserAccounts();
       }).catch(() => {
-        ErrorService.displayErrorMessage('Something went wrong when updating ' + userAccount.firstName + ' '
+        this.errorService.displayErrorMessage('Something went wrong when updating ' + userAccount.firstName + ' '
           + userAccount.lastName + '.')
       });
     }
@@ -147,7 +147,7 @@ export class UserAccountService {
       const url = userAccount._links["delete"];
       this.http.delete(url["href"], httpOptions).toPromise().then( () => {
         this.refreshUserAccounts();
-      }).catch(() => ErrorService.displayErrorMessage('Something went wrong when deleting '
+      }).catch(() => this.errorService.displayErrorMessage('Something went wrong when deleting '
         + userAccount.firstName + ' '
           + userAccount.lastName + '.')
       );
@@ -160,7 +160,7 @@ export class UserAccountService {
    */
   getUserById(id:number): Observable<UserAccount>{
     return this.http.get(`${userAccountUrl}/${id}`)
-      .pipe(catchError(ErrorService.handleError()))
+      .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         return data as UserAccount;
       }));

@@ -72,7 +72,7 @@ export class ProjectDetailComponent implements OnInit {
 
       // a null return value indicates that no matching client is found
       if (this.clientService.getClientByName(this.projectService.getSelectedProject().client.name) == null) {
-        console.log('new client');
+
         this.clientService.save(this.projectService.getSelectedProject().client).then((client) => {
           if (client instanceof Client) {
 
@@ -82,7 +82,7 @@ export class ProjectDetailComponent implements OnInit {
           this.projectService.save(this.projectService.getSelectedProject())
         });
       } else {
-        console.log("existing client");
+        this.logValues();
         this.projectService.getSelectedProject().client
           = this.clientService.getClientByName(this.projectService.getSelectedProject().client.name);
         this.projectService.save(this.projectService.getSelectedProject())

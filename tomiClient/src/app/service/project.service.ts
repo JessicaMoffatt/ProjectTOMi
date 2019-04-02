@@ -59,7 +59,8 @@ export class ProjectService {
 
   constructor(private http: HttpClient,
               public snackBar: MatSnackBar,
-              private expenseService: ExpenseService) {
+              private expenseService: ExpenseService,
+              private errorService: ErrorService) {
   }
 
   /**
@@ -67,7 +68,7 @@ export class ProjectService {
    */
   getAllProjects(): Observable<Array<Project>> {
     return this.http.get(`${projectsUrl}`).pipe(map((response: Response) => response))
-      .pipe(catchError(ErrorService.handleError<Client[]>()))
+      .pipe(catchError(this.errorService.handleError<Client[]>()))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];
@@ -83,7 +84,7 @@ export class ProjectService {
    */
   getProjectsForUser(userId: number): Observable<Array<Project>> {
     return this.http.get(`${userAccountUrl}/${userId}/projects`)
-      .pipe(catchError(ErrorService.handleError<Client[]>()))
+      .pipe(catchError(this.errorService.handleError<Client[]>()))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];
@@ -113,7 +114,7 @@ export class ProjectService {
             this.percentActual = this.calculatePercentActual();
             this.percentRemaining = 100 - this.percentActual;
           },
-          () => ErrorService.displayError()
+          () => this.errorService.displayError()
           );
     }
   }
@@ -132,7 +133,7 @@ export class ProjectService {
   getBudgetReportByProjectId(project: Project) {
     let url = project._links["budget"];
     return this.http.get(`${url["href"]}`)
-      .pipe(catchError(ErrorService.handleError()))
+      .pipe(catchError(this.errorService.handleError()))
       .pipe(
         map((res: BudgetReport) => {
           return res
@@ -159,7 +160,7 @@ export class ProjectService {
 
   getBillableReport() {
     return this.http.get(billableUrl)
-      .pipe(catchError(ErrorService.handleError()))
+      .pipe(catchError(this.errorService.handleError()))
       .pipe(
         map((res: BillableHoursReportLine[]) => {
           return res
@@ -176,25 +177,17 @@ export class ProjectService {
       .pipe(
         map((res) => {
           return res
-        }), catchError(ErrorService.handleError())
+        }), catchError(this.errorService.handleError())
       );
   }
 
 
 
 
-  // @ts-ignore
-  async projectNameIsAvailable(projectName: string): boolean {
 
-    this.projects.subscribe(projects => {
-        for (let c of projects) {
-          if (c.projectName === projectName) {
-            return false;
-          }
-        }
-        return true;
-      }
-    );
+  projectNameIsAvailable(projectName: string): boolean {
+    this.projects.value.forEach( project => {if(project.projectName === projectName) return false});
+    return true;
   }
 
   async save(project: Project) {
@@ -202,12 +195,12 @@ export class ProjectService {
       return this.http.post<Project>(`${projectsUrl}`, JSON.stringify(project), httpOptions)
         .toPromise()
         .then((project) => this.setSelected(project))
-      .catch( () => ErrorService.displayError() );
+      .catch( () => this.errorService.displayError() );
     } else {
       const url = project._links["update"];
       return this.http.put<Project>(url["href"], JSON.stringify(project), httpOptions).toPromise()
         .then((project) => this.setSelected(project))
-        .catch(() => ErrorService.displayError() );
+        .catch(() => this.errorService.displayError() );
     }
   }
 
@@ -218,7 +211,7 @@ export class ProjectService {
         this.refreshUserAccountList();
         return response;
       }).catch(() => {
-        ErrorService.displayError();
+        this.errorService.displayError();
       return null;
     });
   }
@@ -230,7 +223,7 @@ export class ProjectService {
 
   refreshUserAccountList() {
     this.http.get(`${projectsUrl}/${this.selectedProject.id}/members`)
-      .pipe(catchError(ErrorService.handleError()))
+      .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         if (data !== undefined) {
           return data as UserAccount[];
@@ -245,7 +238,7 @@ export class ProjectService {
   removeUser(userId: number) {
     this.http.put(`${projectsUrl}/${this.selectedProject.id}/remove_member/${userId}`, httpOptions).toPromise()
       .then(() => this.refreshUserAccountList())
-      .catch( () => ErrorService.displayError())
+      .catch( () => this.errorService.displayError())
   }
 
   delete(project: Project) {

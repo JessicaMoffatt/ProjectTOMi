@@ -3,10 +3,11 @@ import {Observable} from "rxjs";
 import {Project} from "../model/project";
 import {ProjectService} from "./project.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {Entry} from "../model/entry";
 import {Status} from "../model/status";
 import {SignInService} from "./sign-in.service";
+import {ErrorService} from "./error.service";
 
 const headers = new HttpHeaders({
     'Content-Type': 'application/json'
@@ -24,7 +25,7 @@ export class ProjectEntriesService {
 
   selectedProject: Project;
 
-  constructor(private projectService: ProjectService, private http: HttpClient, private signInService:SignInService) {
+  constructor(private projectService: ProjectService, private http: HttpClient, private signInService:SignInService, private errorService: ErrorService) {
 
   }
 
@@ -42,7 +43,8 @@ export class ProjectEntriesService {
 
   populateEntries(project: Project): Observable<Array<Entry>> {
     let url = project._links["entries"];
-    return this.http.get(url["href"]).pipe(map((response: Response) => response))
+    return this.http.get(url["href"])
+      .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           let sorted = data._embedded.entries as Entry[];
@@ -62,19 +64,20 @@ export class ProjectEntriesService {
 
   async evaluateEntry(entry:Entry){
     if(entry.status === Status.APPROVED){
-          await this.promiseApproval(entry).then();
+          await this.promiseApproval(entry).then().catch( ()=> this.errorService.displayError())
         }else if(entry.status === Status.REJECTED){
           await this.putRejectionRequest(entry).then((data) => {
             return data;
-          });
+          })
+            .catch(()=> this.errorService.displayError())
         }
   }
 
   async promiseApproval(currEntry:Entry){
     let promise = new Promise((resolve,reject)=>{
       resolve(this.putApprovalRequest(currEntry));
+      reject(this.errorService.displayError());
     });
-
     return await promise;
   }
 
@@ -86,9 +89,9 @@ export class ProjectEntriesService {
 
       return response;
     }).catch(() => {
+      this.errorService.displayError()
       return null;
     });
-
     return temp;
   }
 
@@ -99,9 +102,9 @@ export class ProjectEntriesService {
       temp = response;
       return response;
     }).catch(() => {
+      this.errorService.displayError();
       return null;
     });
-
     return temp;
   }
 }

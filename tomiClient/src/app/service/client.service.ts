@@ -35,7 +35,7 @@ export class ClientService {
   /** used to pass list to project related components */
   clients: BehaviorSubject<Array<Client>> = new BehaviorSubject<Array<Client>>([]);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private errorService: ErrorService) {
     this.initializeClients();
   }
 
@@ -54,7 +54,7 @@ export class ClientService {
    */
   getClients(): Observable<Array<Client>> {
     return this.http.get(`${this.clientsUrl}`)
-      .pipe(catchError(ErrorService.handleError<Client[]>()))
+      .pipe(catchError(this.errorService.handleError<Client[]>()))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.clients as Client[];
@@ -91,7 +91,7 @@ export class ClientService {
         return response as Client
       })
       .catch(() => {
-        ErrorService.handleError();
+        this.errorService.handleError();
       });
   }
 }
