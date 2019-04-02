@@ -67,15 +67,16 @@ export class ProjectService {
    * Gets all projects.
    */
   getAllProjects(): Observable<Array<Project>> {
-    return this.http.get(`${projectsUrl}`).pipe(map((response: Response) => response))
-      .pipe(catchError(this.errorService.handleError<Client[]>()))
-      .pipe(map((data: any) => {
+    return this.http.get(`${projectsUrl}`)
+      .pipe(    map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.projects as Project[];
         } else {
           return [];
         }
-      }));
+      }) //, catchError(this.errorService.handleError<any>())
+
+  );
   }
 
   /**
