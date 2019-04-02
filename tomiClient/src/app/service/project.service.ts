@@ -3,7 +3,13 @@ import {catchError, map} from "rxjs/operators";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {Project} from "../model/project";
-import {billableUrl, dataDumpUrl, projectsUrl, userAccountUrl} from "../configuration/domainConfiguration";
+import {
+  billableHourDownloadUrl,
+  billableUrl,
+  dataDumpUrl,
+  projectsUrl,
+  userAccountUrl
+} from "../configuration/domainConfiguration";
 import {BudgetReport} from "../model/budgetReport";
 import {BillableHoursReportLine} from "../model/billableHoursReportLine";
 import {UserAccount} from "../model/userAccount";
@@ -180,6 +186,15 @@ export class ProjectService {
    */
   getDataDump() {
     return this.http.get(`${dataDumpUrl}`, {responseType: 'blob'})
+      .pipe(
+        map((res) => {
+          return res
+        }), catchError(this.handleError)
+      );
+  }
+
+  downloadBillableReport(){
+    return this.http.get(`${billableHourDownloadUrl}`, {responseType: 'blob'})
       .pipe(
         map((res) => {
           return res
