@@ -3,6 +3,7 @@
     <mat-card-title *ngIf="this.teamMemberTimesheetService.selectedMember">
       {{this.teamMemberTimesheetService.selectedMember.firstName}} {{this.teamMemberTimesheetService.selectedMember.lastName}}
       Productivity Report
+      <button mat-button (click)="this.downloadProductivityReport()">DOWNLOAD</button>
     </mat-card-title>
     <mat-card-content>
       <mat-form-field>

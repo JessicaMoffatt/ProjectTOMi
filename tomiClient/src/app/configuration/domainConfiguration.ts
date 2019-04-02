@@ -19,6 +19,8 @@ export const buildNavBarUrl = domain + 'build_nav_bar';
 export const projectsUrl = domain + 'projects';
 /** The link used to retrieve the data dump report in xls format.*/
 export const dataDumpUrl = domain + 'data_dump_report/xls';
+/** The link used to retrieve the billable hour report in xls format.*/
+export const billableHourDownloadUrl = domain + 'billable_hours_report/xls';
 /** The link used to access the billable hour report.*/
 export const billableUrl = domain + 'billable_hours_report';
 /** The URL used to get,post, and delete entries. */
