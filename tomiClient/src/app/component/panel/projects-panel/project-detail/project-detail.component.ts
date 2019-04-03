@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {ProjectService} from "../../../../service/project.service";
 import {ClientService} from "../../../../service/client.service";
 import {Project} from "../../../../model/project";
@@ -6,10 +6,7 @@ import {FormControl} from "@angular/forms";
 import {ExpenseService} from "../../../../service/expense.service";
 import {Client} from "../../../../model/client";
 import {UserAccountService} from "../../../../service/user-account.service";
-import {UserAccount} from "../../../../model/userAccount";
-import {map} from "rxjs/operators";
-import {UnitType} from "../../../../model/unitType";
-import {MatFormField} from "@angular/material";
+import {ProjectsPanelComponent} from "../projects-panel.component";
 
 
 @Component({
@@ -20,11 +17,15 @@ import {MatFormField} from "@angular/material";
 
 export class ProjectDetailComponent implements OnInit {
 
+  @ViewChild('budget') budget;
+  @ViewChild('billing') billing;
   @ViewChild('projectManager') public projectManager;
+
   constructor(public projectService: ProjectService,
               public clientService: ClientService,
               public expenseService: ExpenseService,
-              public userAccountService: UserAccountService) {
+              public userAccountService: UserAccountService,
+              @Inject(ProjectsPanelComponent)private parent:ProjectsPanelComponent) {
   }
 
   nameControl = new FormControl();
@@ -40,13 +41,19 @@ export class ProjectDetailComponent implements OnInit {
 
   ngOnInit() {
     this.userAccountService.initializeUserAccounts();
+    this.setProject();
+  }
+
+  setProject() {
+    this.billingControl.setValue(this.projectService.getSelectedProject().budget);
+    this.budgetControl.setValue(this.projectService.getSelectedProject().billableRate);
   }
 
   save() {
-
-    let project:Project = this.projectService.getSelectedProject();
-
-    if(this.projectManager._selected === null || this.projectManager._selected === undefined){
+    this.projectService.getSelectedProject().budget = this.budget.nativeElement.value * 100;
+    this.projectService.getSelectedProject().billableRate = this.billing.nativeElement.value * 100;
+    let project: Project = this.projectService.getSelectedProject();
+    if (this.projectManager._selected === null || this.projectManager._selected === undefined) {
 
       project.projectManagerId = -1;
     }
@@ -79,22 +86,24 @@ export class ProjectDetailComponent implements OnInit {
 
       // a null return value indicates that no matching client is found
       if (this.clientService.getClientByName(project.client.name) == null) {
-      //  console.log('new client');
+        //  console.log('new client');
         this.clientService.save(project.client).then((client) => {
           if (client instanceof Client) {
 
             project.client = client;
           }
-        //  this.logValues()
+          //  this.logValues()
           this.projectService.save(project)
         });
       } else {
-       // console.log("existing client");
+        // console.log("existing client");
         project.client
           = this.clientService.getClientByName(project.client.name);
         this.projectService.save(project)
       }
     }
+    this.projectService.setSelected(new Project());
+    this.parent.unselect();
   }
 
   private static isValidAccountManagerName(accountManagerName: string) {
@@ -113,7 +122,6 @@ export class ProjectDetailComponent implements OnInit {
   }
 
 
-
   logValues() {
     console.log("project name " + this.projectService.getSelectedProject().projectName);
     console.log("client " + this.projectService.getSelectedProject().client.name);
@@ -124,17 +132,16 @@ export class ProjectDetailComponent implements OnInit {
     console.log("budget " + this.projectService.getSelectedProject().budget);
   }
 
-  // getProjectManager(): UserAccount {
-  //   for (let u of this.userAccountService.userSubject.getValue()) {
-  //     if (u.id == this.projectService.getSelectedProject().projectManagerId) return u;
-  //   }
-  //   return new UserAccount();
-  // }
   delete() {
-    if (this.projectService.getSelectedProject().id.match(this.projectService.regExp)){
+    if (this.projectService.getSelectedProject().id.match(this.projectService.regExp)) {
       this.projectService.delete(this.projectService.getSelectedProject());
     }
-      this.projectService.setSelected(new Project());
+    this.projectService.setSelected(new Project());
+    this.parent.unselect();
+  }
 
+  cancel(){
+    this.projectService.setSelected(new Project());
+    this.parent.unselect();
   }
 }

@@ -20,7 +20,9 @@
       <input matInput
              #addExpenseAmount
              placeholder="Amount"
-             [value]="this.expenseService.selectedExpense.amount"
+             min="0.00"
+             step="0.01"
+             [value]="this.expenseService.selectedExpense.amount.toFixed(2)"
              [formControl]=""
              [errorStateMatcher]="">
       <mat-error *ngIf="expenseAmountControl.hasError('required')">Unit is <strong>required</strong></mat-error>

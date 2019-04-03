@@ -5,12 +5,12 @@
 -->
 
 <div class="sidebar_container">
-  <app-project-sidebar #sidebar></app-project-sidebar>
+  <app-project-sidebar #sideBar></app-project-sidebar>
 </div>
 <div class="content_view">
   <mat-tab-group animationDuration="200ms" (selectedTabChange)="tabEvent($event)">
     <mat-tab label="Project">
-      <ng-template [ngIf]="sidebar.checkSelected()">
+      <ng-template [ngIf]="sideBar.checkSelected()">
         <app-project-detail></app-project-detail>
       </ng-template>
     </mat-tab>

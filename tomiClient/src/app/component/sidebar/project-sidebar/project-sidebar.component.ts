@@ -6,7 +6,7 @@ import {BehaviorSubject} from "rxjs";
 import {UserAccount} from "../../../model/userAccount";
 import {Team} from "../../../model/team";
 import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-teams-panel.component";
-import {MatButtonToggleGroup} from "@angular/material";
+import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material";
 
 @Component({
   selector: 'app-project-sidebar',
@@ -21,7 +21,8 @@ export class ProjectSidebarComponent implements OnInit {
     e.preventDefault();
     document.getElementById("project_search").focus();
   }
-  constructor(public projectService: ProjectService) { }
+  constructor(public projectService: ProjectService,
+              @Inject(ProjectsPanelComponent) private parent:ProjectsPanelComponent) { }
 
   ngOnInit() {
     this.projectService.refreshProjectList();
@@ -35,6 +36,13 @@ export class ProjectSidebarComponent implements OnInit {
   selectProject(project : Project){
     this.selected = true;
     this.projectService.setSelected(project);
+  }
+
+  unselect(){
+    this.selected = false;
+    if (this.buttonGroup.selected instanceof MatButtonToggle) {
+      this.buttonGroup.selected.checked = false;
+    }
   }
 
   checkSelected(){

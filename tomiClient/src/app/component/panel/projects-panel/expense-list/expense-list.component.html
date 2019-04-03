@@ -1,60 +1,53 @@
+<!--
+  @author Karol Talbot
+  @author James Andrade
+-->
 <mat-card class="mat-elevation-z2">
   <mat-card-header>
     <mat-card-subtitle>Expenses</mat-card-subtitle>
   </mat-card-header>
 
 
-<table mat-table [dataSource]="this.expenseService.expenses" class="expense_table">
-  <!-- Checkbox Column -->
-  <ng-container matColumnDef="select">
+  <table mat-table [dataSource]="this.expenseService.expenses" class="expense_table">
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
 
-    <th mat-header-cell *matHeaderCellDef></th>
+      <th mat-header-cell *matHeaderCellDef></th>
 
-    <td mat-cell *matCellDef="let row" style="text-align: center; vertical-align: middle;">
-      <mat-checkbox
-        (click)="$event.stopPropagation()"
-        (change)="$event ? selection.toggle(row) : null"
-        [checked]="selection.isSelected(row)">
-      </mat-checkbox>
-    </td>
-  </ng-container>
+      <td mat-cell *matCellDef="let row" style="text-align: center; vertical-align: middle;">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
 
-  <!-- Item Column -->
-  <ng-container matColumnDef="notes">
-    <th mat-header-cell *matHeaderCellDef> Notes</th>
-    <td mat-cell *matCellDef="let expense"> {{expense.notes}} </td>
-  </ng-container>
+    <!-- Item Column -->
+    <ng-container matColumnDef="notes">
+      <th mat-header-cell *matHeaderCellDef> Notes</th>
+      <td mat-cell *matCellDef="let expense"> {{expense.notes}} </td>
+    </ng-container>
 
-  <!-- Cost Column -->
-  <ng-container matColumnDef="amount">
-    <th mat-header-cell *matHeaderCellDef> Cost</th>
-    <td mat-cell *matCellDef="let expense"> ${{(expense.amount/100).toFixed(2)}} </td>
-  </ng-container>
+    <!-- Cost Column -->
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef> Cost</th>
+      <td mat-cell *matCellDef="let expense"> ${{(expense.amount / 100).toFixed(2)}} </td>
+    </ng-container>
 
-  <!-- align="right" -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 
-  <!--<ng-container matColumnDef="edit">-->
-    <!--<th mat-header-cell *matHeaderCellDef> Edit</th>-->
-    <!--<td>-->
-    <!--<mat-icon>home</mat-icon>-->
-    <!--</td>-->
-  <!--</ng-container>-->
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-
-
-<button  (click)="addExpense()" mat-button color="primary">ADD</button>
-<button (click)="edit()"
-        [disabled]="selection.selected.length != 1"
-        mat-button color="primary">
-  EDIT
-</button>
-  <button (click)="delete()"
-          [disabled]="selection.selected.length == 0"
-          mat-button color="primary">
-    DELETE
-  </button>
-
+  <div class="buttons">
+    <button (click)="addExpense()" mat-flat-button class="manage_save_btn">Add</button>
+    <button (click)="edit()" mat-flat-button class="manage_cancel_btn"
+            [disabled]="selection.selected.length != 1">
+      Edit
+    </button>
+    <button (click)="delete()" mat-flat-button class="manage_delete_btn"
+            [disabled]="selection.selected.length == 0">
+      Delete
+    </button>
+  </div>
 </mat-card>

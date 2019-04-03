@@ -1,13 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Project} from "../../../model/project";
 import {ProjectService} from "../../../service/project.service";
-import {DatePipe} from '@angular/common';
 import {MatDialog, MatSnackBar, MatTab, MatTabChangeEvent} from "@angular/material";
 import {BehaviorSubject} from "rxjs";
 import {UserAccount} from "../../../model/userAccount";
 import {SignInService} from "../../../service/sign-in.service";
 import {DataDumpReportComponent} from "../../extra/data-dump-report/data-dump-report.component";
-import {AddTeamComponent} from "../../modal/add-team/add-team.component";
 import {AddProjectComponent} from "../../modal/add-project/add-project";
 
 @Component({
@@ -38,10 +36,13 @@ export class ProjectsPanelComponent implements OnInit {
     }
   }
 
+  public unselect(){
+    this.sideBar.unselect();
+  }
+
   public openDialog() {
     this.dialog.open(AddProjectComponent, {
       width: "70vw"
     });
   }
-
 }
