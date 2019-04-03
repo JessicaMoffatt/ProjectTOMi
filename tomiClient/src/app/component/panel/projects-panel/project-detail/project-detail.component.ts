@@ -25,7 +25,7 @@ export class ProjectDetailComponent implements OnInit {
               public clientService: ClientService,
               public expenseService: ExpenseService,
               public userAccountService: UserAccountService,
-              @Inject(ProjectsPanelComponent)private parent:ProjectsPanelComponent) {
+              @Inject(ProjectsPanelComponent) private parent: ProjectsPanelComponent) {
   }
 
   nameControl = new FormControl();
@@ -57,51 +57,25 @@ export class ProjectDetailComponent implements OnInit {
 
       project.projectManagerId = -1;
     }
-    // 1. Validate project name is not taken
-    // TODO: move to validation in form control
-    if (!this.projectService.projectNameIsAvailable(project.projectName)) {
-      alert("Invalid project name.  This project name is already taken by another project.")
-    }
 
-    // 3. Validate account manager name (for new projects only)
-    // if selected is null, then the user is trying to create a new project and
-    // we must validate the account manager
+    // a null return value indicates that no matching client is found
+    if (this.clientService.getClientByName(project.client.name) == null) {
+      //  console.log('new client');
+      this.clientService.save(project.client).then((client) => {
+        if (client instanceof Client) {
 
-    //   alert("account manager name is required.")
-    // } else if (this.projectService.getSelectedProject() == null &&
-    //   !ProjectDetailComponent.isValidAccountManagerName(this.inAccountManager.nativeElement.value)) {
-    //   alert("account manager name is invalid.  Must take the format 'John Smith' or 'j s'");
-    // }
-
-    // 4. All necessary data is validated, persist the project
-
-    else {
-      // 4.1 Create a new project if necessary along with the initials that will be passed
-      // to the backend to create the id (for new projects only).
-      // if the selected project is null, it means we are creating a new project
-      if (!project.id.match(this.projectService.regExp)) {
-        project.id = ProjectDetailComponent.getInitialsFromName(project.id);
-      }
-
-
-      // a null return value indicates that no matching client is found
-      if (this.clientService.getClientByName(project.client.name) == null) {
-        //  console.log('new client');
-        this.clientService.save(project.client).then((client) => {
-          if (client instanceof Client) {
-
-            project.client = client;
-          }
-          //  this.logValues()
-          this.projectService.save(project)
-        });
-      } else {
-        // console.log("existing client");
-        project.client
-          = this.clientService.getClientByName(project.client.name);
+          project.client = client;
+        }
+        //  this.logValues()
         this.projectService.save(project)
-      }
+      });
+    } else {
+      // console.log("existing client");
+      project.client
+        = this.clientService.getClientByName(project.client.name);
+      this.projectService.save(project)
     }
+
     this.projectService.setSelected(new Project());
     this.parent.unselect();
   }
@@ -140,7 +114,7 @@ export class ProjectDetailComponent implements OnInit {
     this.parent.unselect();
   }
 
-  cancel(){
+  cancel() {
     this.projectService.setSelected(new Project());
     this.parent.unselect();
   }
