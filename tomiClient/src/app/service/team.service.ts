@@ -6,6 +6,7 @@ import {MatSnackBar} from "@angular/material";
 import {map} from "rxjs/operators";
 import {teamUrl} from "../configuration/domainConfiguration";
 import {UserAccount} from "../model/userAccount";
+import {SignInService} from "./sign-in.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -28,7 +29,7 @@ export class TeamService {
   private teamSubjectList: BehaviorSubject<Array<Team>> = new BehaviorSubject<Array<Team>>([]);
 
 
-  public constructor(private http: HttpClient, public snackBar: MatSnackBar) {
+  public constructor(private http: HttpClient, public snackBar: MatSnackBar, private signInService:SignInService) {
 
   }
 
@@ -77,7 +78,7 @@ export class TeamService {
         console.log(error);
       });
     }
-
+    this.signInService.getNavBarList();
     return tempTeam;
   }
 

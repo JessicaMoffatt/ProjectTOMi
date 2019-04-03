@@ -16,31 +16,29 @@
       <mat-error *ngIf="expenseNoteControl.hasError('required')">Note is <strong>required</strong></mat-error>
     </mat-form-field>
   <br/>
-    <mat-form-field>
+    <mat-form-field id ="">
       <input matInput
              #addExpenseAmount
              placeholder="Amount"
-             [value]="this.expenseService.selectedExpense.amount"
+             min="0.00"
+             step="0.01"
+             [value]="this.expenseService.selectedExpense.amount.toFixed(2)"
              [formControl]=""
              [errorStateMatcher]="">
-
       <mat-error *ngIf="expenseAmountControl.hasError('required')">Unit is <strong>required</strong></mat-error>
       <mat-error *ngIf="expenseAmountControl.hasError('pattern')">Must be a dollar amount</mat-error>
     </mat-form-field>
-
-    <div mat-dialog-actions>
-      <!-- TODO: disable save button until both fields are filled in -->
-      <button mat-raised-button
-              color="primary"
-              [disabled]="false "
-              (click)="save()">
-        SAVE
-      </button>
-      <button mat-raised-button
-              color="primary"
-              (click)="cancel()">
-        CANCEL
-      </button>
-    </div>
   </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button
+          class="manage_save_btn"
+          (click)="save()">
+    Save
+  </button>
+  <button mat-raised-button
+          class="manage_cancel_btn"
+          (click)="cancel()">
+    Cancel
+  </button>
 </div>

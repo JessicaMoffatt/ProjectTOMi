@@ -5,6 +5,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material";
 import {userAccountUrl} from "../configuration/domainConfiguration";
+import {SignInService} from "./sign-in.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -29,7 +30,7 @@ export class UserAccountService {
   userAccounts: Observable<Array<UserAccount>>;
   userSubject: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject<Array<UserAccount>>([]);
 
-  public constructor(private http: HttpClient, public snackBar:MatSnackBar) {
+  public constructor(private http: HttpClient, public snackBar:MatSnackBar, private signInService:SignInService) {
 
   }
 
@@ -140,6 +141,7 @@ export class UserAccountService {
         this.snackBar.open(editUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
       });
     }
+    this.signInService.getNavBarList();
   }
 
   /**

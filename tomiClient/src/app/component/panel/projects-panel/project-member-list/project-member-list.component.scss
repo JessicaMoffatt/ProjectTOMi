@@ -1,1 +1,18 @@
+@import "~src/variables";
+
+.manage_delete_btn {
+  background-color: $delete_btn;
+  color: $delete_btn_text;
+  margin-right: 1%;
+}
+
+.manage_save_btn {
+  background-color: $save_btn;
+  color: $save_btn_text;
+  margin-right: 1%;
+}
+
+.buttons{
+  margin: 1%;
+}
 
