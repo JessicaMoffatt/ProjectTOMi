@@ -14,6 +14,7 @@ import {MatSnackBar} from "@angular/material";
 import {SignInService} from "./sign-in.service";
 import {Team} from "../model/team";
 import {TeamSidebarService} from "./team-sidebar.service";
+import {billableHourDownloadUrl} from "../configuration/domainConfiguration";
 
 /**
  * TeamMemberTimesheetService is used to control the flow of data regarding timesheets to/from the view.
@@ -302,6 +303,16 @@ export class TeamMemberTimesheetService{
     return this.http.get(`${url["href"]}`)
       .pipe(
         map((res: ProductivityReportLine[]) => {
+          return res
+        }), catchError(this.handleError)
+      );
+  }
+
+  downloadProductivityReport(){
+    let url = this.selectedMember._links["productivityreport"];
+    return this.http.get(`${url['href']}/xls`, {responseType: 'blob'})
+      .pipe(
+        map((res) => {
           return res
         }), catchError(this.handleError)
       );

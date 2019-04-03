@@ -86,6 +86,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     }else{
       if(this.timesheetService.getRepopulateTimesheets()){
         this.timesheetService.setRepopulateTimesheets(false);
+
+        this.populateProjects(this.userId);
+
         this.populateTimesheets().then(()=>{
           this.timesheetService.getCurrentTimesheet().then(data=>{
           this.getEntries(data);

@@ -1,4 +1,4 @@
-import {Component, HostListener, Inject, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
+import {Component, HostListener, Inject, Input, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
 import {Team} from "../../../model/team";
 import {FormControl, Validators} from "@angular/forms";
 import {TeamService} from "../../../service/team.service";
@@ -56,6 +56,9 @@ export class ManageTeamsPanelComponent implements OnInit {
   @HostListener('window:keyup.Enter', ['$event']) enter(e: KeyboardEvent) {
     this.save().then();
   }
+
+  @ViewChild('member_filter') member_filter;
+  @ViewChild('available_filter') available_filter;
 
   constructor(private dialog: MatDialog, public deleteTeamDialog: MatDialog, private teamService: TeamService, public userAccountService: UserAccountService) {
   }
@@ -175,7 +178,13 @@ export class ManageTeamsPanelComponent implements OnInit {
   }
 
   public getTeamMembersPage() {
-    return this.teamMembersPage.slice(this.teamMembersPageNumber * this.PAGE_SIZE, this.teamMembersPageNumber * this.PAGE_SIZE + this.PAGE_SIZE);
+    let filter = new FilterTeamUserAccountByName();
+    let filterList = this.teamMembersPage;
+
+    if(this.member_filter != undefined){
+      filterList = filter.transform(this.teamMembersPage, this.member_filter.nativeElement.value);
+    }
+    return filterList.slice(this.teamMembersPageNumber * this.PAGE_SIZE, this.teamMembersPageNumber * this.PAGE_SIZE + this.PAGE_SIZE);
   }
 
   public setAvailableMembersPage() {
@@ -183,7 +192,13 @@ export class ManageTeamsPanelComponent implements OnInit {
   }
 
   public getAvailableMembersPage() {
-    return this.availableMembersPage.slice(this.availableMembersPageNumber * this.PAGE_SIZE, this.availableMembersPageNumber * this.PAGE_SIZE + this.PAGE_SIZE);
+    let filter = new FilterTeamUserAccountByName();
+    let filterList = this.availableMembersPage;
+
+    if(this.available_filter != undefined){
+      filterList = filter.transform(this.availableMembersPage, this.available_filter.nativeElement.value);
+    }
+    return filterList.slice(this.availableMembersPageNumber * this.PAGE_SIZE, this.availableMembersPageNumber * this.PAGE_SIZE + this.PAGE_SIZE);
   }
 
 
@@ -263,3 +278,16 @@ export interface DeleteDialogData {
   parent: ManageTeamsPanelComponent;
 }
 
+export class FilterTeamUserAccountByName {
+  transform(userList: Array<UserAccount>, nameFilter: string): any {
+    nameFilter = nameFilter.toLowerCase();
+    if (!nameFilter) return userList;
+
+    return userList.filter(n => {
+      let name = n.firstName + n.lastName;
+      name = name.toLowerCase();
+
+      return name.indexOf(nameFilter) >= 0;
+    });
+  }
+}
