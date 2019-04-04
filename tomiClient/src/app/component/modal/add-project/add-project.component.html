@@ -31,17 +31,6 @@
     </div>
 
     <div class="row">
-      <mat-form-field id="projectManager" #projectManager>
-        <mat-select placeholder="Project Manager"
-                    aria-label="Project Manager">
-          <mat-option [value]="-1">None</mat-option>
-          <mat-option *ngFor="let u of this.projectService.userAccountList.getValue()" [value]="u.id">
-            {{u.firstName}} {{u.lastName}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-
       <mat-form-field id="billingRate">
         <input placeholder="Billing Rate"
                #billing
