@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {UserAccount} from "../model/userAccount";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {TeamService} from "./team.service";
 import {Timesheet} from "../model/timesheet";
 import {TimesheetService} from "./timesheet.service";
@@ -14,7 +14,6 @@ import {MatSnackBar} from "@angular/material";
 import {SignInService} from "./sign-in.service";
 import {Team} from "../model/team";
 import {TeamSidebarService} from "./team-sidebar.service";
-import {ErrorService} from "./error.service";
 
 /**
  * TeamMemberTimesheetService is used to control the flow of data regarding timesheets to/from the view.
@@ -34,7 +33,10 @@ export class TeamMemberTimesheetService{
   selectedMember: UserAccount;
 
   selectedMemberReport: ProductivityReportLine[] = [];
+  selectedMemberReportToDisplay: ProductivityReportLine[] = [];
+
   teamMembersReports: ProductivityReportLine[] = [];
+  teamMembersReportsToDisplay: ProductivityReportLine[] = [];
 
   teamid: number = this.signInService.userAccount.teamId;
   team: Team;
@@ -47,8 +49,7 @@ export class TeamMemberTimesheetService{
   constructor(private http: HttpClient, private router: Router,
               private userAccountService: UserAccountService, private teamService: TeamService,
               public timesheetService: TimesheetService, public snackBar: MatSnackBar,
-              private signInService:SignInService, private teamSidebarService:TeamSidebarService,
-              private errorService: ErrorService) {
+              private signInService:SignInService, private teamSidebarService:TeamSidebarService) {
   }
 
   /**
@@ -77,14 +78,14 @@ export class TeamMemberTimesheetService{
       this.teamSidebarService.getTeamById(this.teamid).subscribe((data)=>{
         this.team = data;
         this.getAllTeamMembersAndReports(data);
-      });
+      })
     }else{
       this.getAllTeamMembersAndReports(this.team);
     }
   }
 
   getAllTeamMembersAndReports(team:Team){
-    this.getAllTeamMembers(team).subscribe((data: Array<UserAccount>) => {
+    this.getAllTeamMembers(team).toPromise().then((data: Array<UserAccount>) => {
       this.teamMembers = data;
       for (let i = 0; i < this.teamMembers.length; i++) {
         this.getProductivityReportByMember(this.teamMembers[i])
@@ -92,14 +93,76 @@ export class TeamMemberTimesheetService{
             this.teamMembersReports = this.teamMembersReports.concat(data);
             this.teamMembersReports.sort(ProductivityReportLine.compareDate);
             this.teamMembersReports.sort(ProductivityReportLine.compareUser);
-          }, () =>
-            this.errorService.displayErrorMessage(
-              'Something went wrong when loading team member productivity reports.')
-          );
+            this.teamMembersReports.sort(ProductivityReportLine.compareUnitType);
+            this.setRangeOfTeamProductivityReport(new Date(0), new Date());
+          }, error => {
+            let errorMessage = 'Something went wrong when loading team member productivity reports.';
+            this.snackBar.open(errorMessage, null, {
+              duration: 5000,
+              politeness: 'assertive',
+              panelClass: 'snackbar-fail',
+              horizontalPosition: 'right'
+            });
+          });
       }
-    }, () => {
-      this.errorService.displayErrorMessage('Something went wrong when loading team members.');
+    }, error => {
+      let errorMessage = 'Something went wrong when loading team members.';
+      this.snackBar.open(errorMessage, null, {
+        duration: 5000,
+        politeness: 'assertive',
+        panelClass: 'snackbar-fail',
+        horizontalPosition: 'right'
+      });
     });
+  }
+
+  setRangeOfProductivityReport(startDate:Date,endDate:Date){
+    this.selectedMemberReportToDisplay = this.setRangeOfReport(this.selectedMemberReportToDisplay, this.selectedMemberReport, startDate, endDate);
+  }
+
+  setRangeOfTeamProductivityReport(startDate:Date,endDate:Date){
+    this.teamMembersReportsToDisplay = this.setRangeOfReport(this.teamMembersReportsToDisplay, this.teamMembersReports, startDate,endDate);
+  }
+
+  setRangeOfReport(newReport:ProductivityReportLine[], baseReport:ProductivityReportLine[], startDate:Date, endDate:Date): ProductivityReportLine[]{
+    newReport = [];
+
+    let lastLine:ProductivityReportLine = null;
+    let thisLine:ProductivityReportLine = new ProductivityReportLine();
+
+    for(let i = 0; i < baseReport.length; i ++){
+      thisLine = new ProductivityReportLine();
+
+      thisLine.date = baseReport[i].date;
+      thisLine.quantity = baseReport[i].quantity;
+      thisLine.time = baseReport[i].time;
+      thisLine.unitType = baseReport[i].unitType;
+      thisLine.userAccount = baseReport[i].userAccount;
+      thisLine.normalizedValue = baseReport[i].normalizedValue;
+
+      let thisLineDate = new Date(thisLine.date);
+
+      if(thisLineDate >= startDate && thisLineDate <= endDate){
+        if(lastLine != null){
+          if(lastLine.unitType.name === thisLine.unitType.name && (lastLine.userAccount.firstName+lastLine.userAccount.lastName) === (thisLine.userAccount.firstName+thisLine.userAccount.lastName)){
+            lastLine.quantity += thisLine.quantity;
+            lastLine.time += thisLine.time;
+            lastLine.normalizedValue += thisLine.normalizedValue;
+          }else{
+            newReport.push(lastLine);
+            lastLine = thisLine;
+          }
+        }else{
+          lastLine = thisLine;
+        }
+      }
+
+      if(i === baseReport.length -1 && lastLine != null){
+        newReport.push(lastLine);
+      }
+    }
+
+    return newReport;
   }
 
   /**
@@ -110,31 +173,44 @@ export class TeamMemberTimesheetService{
       let timesheet = value as Timesheet;
       this.populateEntries(timesheet);
       this.timesheetService.setCurrentDate();
-    }, () =>
-      this.errorService.displayErrorMessage('Something went wrong when retrieving timesheets.')
-    );
+    }, reject => {
+      let errorMessage = 'Something went wrong when retrieving timesheets.';
+      this.snackBar.open(errorMessage, null, {
+        duration: 5000,
+        politeness: 'assertive',
+        panelClass: 'snackbar-fail',
+        horizontalPosition: 'right'
+      });
+    });
   }
 
   /**
    * Populates the list of timesheets in timesheet service.
    */
   private async populateTimesheets() {
-    let promise = new Promise(resolve => {
+    let promise = new Promise((resolve, reject) => {
       resolve(this.timesheetService.populateTimesheets(this.selectedMember.id));
     });
+
     return await promise;
   }
 
   /**
    * Populates the list of entries for the specified timesheet.
-   * @param timesheet The timesheet to display entries for.
+   * @param id The ID of the timesheet to display entries for.
    */
   private populateEntries(timesheet: Timesheet) {
     this.timesheetService.getEntries(timesheet).subscribe((data) => {
       this.entries = data;
       this.updateTally();
-    }, () => {
-      this.errorService.displayErrorMessage('Something went wrong when retrieving entries.')
+    }, error => {
+      let errorMessage = 'Something went wrong when retrieving entries.';
+      this.snackBar.open(errorMessage, null, {
+        duration: 5000,
+        politeness: 'assertive',
+        panelClass: 'snackbar-fail',
+        horizontalPosition: 'right'
+      });
     });
   }
 
@@ -146,6 +222,7 @@ export class TeamMemberTimesheetService{
     this.entries.forEach(function (entry) {
       hours += +entry.mondayHours + +entry.tuesdayHours + +entry.wednesdayHours + +entry.thursdayHours + +entry.fridayHours + +entry.saturdayHours + +entry.sundayHours;
     });
+
     this.tally = hours;
   }
 
@@ -154,12 +231,19 @@ export class TeamMemberTimesheetService{
    */
   displayPrevTimesheet() {
     let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
+
     if (currentIndex < this.timesheetService.timesheets.length - 1) {
       let newIndex: number = currentIndex + 1;
       this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() => {
           this.displayTimesheet();
-        }, () => {
-          this.errorService.displayErrorMessage('Something went wrong when retrieving the timesheet.' )
+        }, reject => {
+          let errorMessage = 'Something went wrong when retrieving the timesheet.';
+          this.snackBar.open(errorMessage, null, {
+            duration: 5000,
+            politeness: 'assertive',
+            panelClass: 'snackbar-fail',
+            horizontalPosition: 'right'
+          });
         }
       );
     }
@@ -175,8 +259,14 @@ export class TeamMemberTimesheetService{
       let newIndex: number = currentIndex - 1;
       this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() => {
           this.displayTimesheet();
-        }, () => {
-          this.errorService.displayErrorMessage('Something went wrong when retrieving the timesheet.');
+        }, reject => {
+          let errorMessage = 'Something went wrong when retrieving the timesheet.';
+          this.snackBar.open(errorMessage, null, {
+            duration: 5000,
+            politeness: 'assertive',
+            panelClass: 'snackbar-fail',
+            horizontalPosition: 'right'
+          });
         }
       );
     }
@@ -193,8 +283,14 @@ export class TeamMemberTimesheetService{
     if (newIndex < this.timesheetService.timesheets.length) {
       this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() => {
           this.displayTimesheet();
-        }, () => {
-          this.errorService.displayErrorMessage( 'Something went wrong when retrieving the timesheet.')
+        }, reject => {
+          let errorMessage = 'Something went wrong when retrieving the timesheet.';
+          this.snackBar.open(errorMessage, null, {
+            duration: 5000,
+            politeness: 'assertive',
+            panelClass: 'snackbar-fail',
+            horizontalPosition: 'right'
+          });
         }
       );
     }
@@ -204,11 +300,14 @@ export class TeamMemberTimesheetService{
     let url = member._links["productivityreport"];
 
     return this.http.get(`${url["href"]}`)
-      .pipe(catchError(this.errorService.handleError()))
       .pipe(
         map((res: ProductivityReportLine[]) => {
           return res
-        })
+        }), catchError(this.handleError)
       );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    return throwError(error.message);
   }
 }

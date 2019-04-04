@@ -68,15 +68,14 @@ export class ProjectService {
    */
   getAllProjects(): Observable<Array<Project>> {
     return this.http.get(`${projectsUrl}`)
-      .pipe(    map((data: any) => {
-        if (data._embedded !== undefined) {
-          return data._embedded.projects as Project[];
-        } else {
-          return [];
-        }
-      }) //, catchError(this.errorService.handleError<any>())
-
-  );
+      .pipe(map((data: any) => {
+          if (data !== undefined && data._embedded !== undefined) {
+            return data._embedded.projects as Project[];
+          } else {
+            return [];
+          }
+        }), catchError(this.errorService.handleError<Project[]>())
+      );
   }
 
   /**
@@ -87,7 +86,7 @@ export class ProjectService {
     return this.http.get(`${userAccountUrl}/${userId}/projects`)
       .pipe(catchError(this.errorService.handleError<Client[]>()))
       .pipe(map((data: any) => {
-        if (data._embedded !== undefined) {
+        if (data !== undefined && data._embedded !== undefined) {
           return data._embedded.projects as Project[];
         } else {
           return [];
@@ -115,8 +114,8 @@ export class ProjectService {
             this.percentActual = this.calculatePercentActual();
             this.percentRemaining = 100 - this.percentActual;
           },
-          () => this.errorService.displayError()
-          );
+          () => this.errorService.displayErrorMessage('project.service setSelected()')
+        );
     }
   }
 
@@ -134,7 +133,7 @@ export class ProjectService {
   getBudgetReportByProjectId(project: Project) {
     let url = project._links["budget"];
     return this.http.get(`${url["href"]}`)
-      .pipe(catchError(this.errorService.handleError()))
+     // .pipe(catchError(this.errorService.handleError()))
       .pipe(
         map((res: BudgetReport) => {
           return res
@@ -164,7 +163,10 @@ export class ProjectService {
       .pipe(catchError(this.errorService.handleError()))
       .pipe(
         map((res: BillableHoursReportLine[]) => {
-          return res
+          if (res !== undefined)
+            return res
+          else
+            return []
         })
       );
   }
@@ -183,11 +185,10 @@ export class ProjectService {
   }
 
 
-
-
-
   projectNameIsAvailable(projectName: string): boolean {
-    this.projects.value.forEach( project => {if(project.projectName === projectName) return false});
+    this.projects.value.forEach(project => {
+      if (project.projectName === projectName) return false
+    });
     return true;
   }
 
@@ -196,12 +197,12 @@ export class ProjectService {
       return this.http.post<Project>(`${projectsUrl}`, JSON.stringify(project), httpOptions)
         .toPromise()
         .then((project) => this.setSelected(project))
-      .catch( () => this.errorService.displayError() );
+        .catch(() => this.errorService.displayError());
     } else {
       const url = project._links["update"];
       return this.http.put<Project>(url["href"], JSON.stringify(project), httpOptions).toPromise()
         .then((project) => this.setSelected(project))
-        .catch(() => this.errorService.displayError() );
+        .catch(() => this.errorService.displayError());
     }
   }
 
@@ -212,7 +213,7 @@ export class ProjectService {
         this.refreshUserAccountList();
         return response;
       }).catch(() => {
-        this.errorService.displayError();
+      this.errorService.displayError();
       return null;
     });
   }
@@ -239,7 +240,7 @@ export class ProjectService {
   removeUser(userId: number) {
     this.http.put(`${projectsUrl}/${this.selectedProject.id}/remove_member/${userId}`, httpOptions).toPromise()
       .then(() => this.refreshUserAccountList())
-      .catch( () => this.errorService.displayError())
+      .catch(() => this.errorService.displayError())
   }
 
   delete(project: Project) {
@@ -262,7 +263,7 @@ export class ProjectService {
 
   async evaluateEntry(entry: Entry) {
     if (entry.status === Status.APPROVED) {
-      await this.putApprovalRequest(entry).then((data) =>{
+      await this.putApprovalRequest(entry).then((data) => {
         return data;
       });
     } else if (entry.status === Status.REJECTED) {
@@ -278,7 +279,7 @@ export class ProjectService {
   }
 
   async putApprovalRequest(entry: Entry) {
-    let url:string = entry._links["evaluate"]["href"];
+    let url: string = entry._links["evaluate"]["href"];
     let temp = null;
     await this.http.put(url, '"APPROVED"', {headers: headers, observe: "response"}).toPromise().then(response => {
       temp = response;
@@ -291,7 +292,7 @@ export class ProjectService {
   }
 
   async putRejectionRequest(entry: Entry): Promise<Entry> {
-    let url:string = entry._links["evaluate"]["href"];
+    let url: string = entry._links["evaluate"]["href"];
     let temp = null;
     await this.http.put(url, '"REJECTED"', {headers: headers, observe: "response"}).toPromise().then(response => {
       temp = response;
@@ -324,7 +325,7 @@ export class ProjectService {
     });
   }
 
-  getProjects(): BehaviorSubject<Array<Project>>{
+  getProjects(): BehaviorSubject<Array<Project>> {
     return this.projects;
   }
 }

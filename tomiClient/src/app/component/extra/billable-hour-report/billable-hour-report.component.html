@@ -1,8 +1,8 @@
-<div *ngIf="this.projectService.billableReport">
+<div *ngIf="this.projectService.selectedBudget" class="container">
     <h2>
       Billable Hour Report
     </h2>
-    <table mat-table [dataSource]="this.projectService.billableReport" class="mat-elevation-z8">
+    <table mat-table [dataSource]="this.projectService.billableReport" class="mat-elevation-z2 team_table">
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>

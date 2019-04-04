@@ -96,7 +96,7 @@ public class ProjectController {
 			.map(this.projectResourceAssembler::toResource)
 			.collect(Collectors.toList());
 
-
+		//if(1==1) throw new InvalidIDPrefix();
 
 		return new Resources<>(projectResources,
 			linkTo(methodOn(ProjectController.class).getActiveProjects(authMan)).withSelfRel());
@@ -163,8 +163,6 @@ public class ProjectController {
 		final Project project = this.projectService.getProjectById(id);
 		this.projectService.deleteProject(project);
 
-		//if(1==1) throw new ProjectNotFoundException();
-
 		return ResponseEntity.noContent().build();
 	}
 
@@ -181,7 +179,7 @@ public class ProjectController {
 			.map(this.projectResourceAssembler::toResource)
 			.collect(Collectors.toList());
 
-		//if(1==1) throw new ProjectNotFoundException();
+		// if(1==1) throw new InvalidIDPrefix();
 
 		return new Resources<>(projectResources,
 			linkTo(methodOn(ProjectController.class).getProjectsByUserAccount(userAccountId, authMan)).withSelfRel());
@@ -213,26 +211,17 @@ public class ProjectController {
 	@PutMapping ("/projects/{projectId}/add_member/{userAccountId}")
 	public ResponseEntity<?> addTeamMember(@PathVariable final String projectId, @PathVariable final Long userAccountId) {
 		this.projectService.addTeamMember(projectId, userAccountId);
-
-		// if(1==1) throw new ProjectNotFoundException();
-
 		return ResponseEntity.accepted().build();
 	}
 
 	@PutMapping ("/projects/{projectId}/remove_member/{userAccountId}")
 	public ResponseEntity<?> removeTeamMember(@PathVariable final String projectId, @PathVariable final Long userAccountId) {
 		this.projectService.removeTeamMember(projectId, userAccountId);
-
-		//if(1==1) throw new ProjectNotFoundException();
-
 		return ResponseEntity.accepted().build();
 	}
 
 	@GetMapping("/projects/{projectId}/members")
 	public List<UserAccount> getProjectMembers(@PathVariable final String projectId){
-
-		//if(1==1) throw new ProjectNotFoundException();
-
 		return this.projectService.getProjectMembers(projectId);
 	}
 

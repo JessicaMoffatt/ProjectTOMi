@@ -47,9 +47,12 @@ export class TeamService {
   public requestAllTeams() {
     let obsTeams: Observable<Array<Team>>;
     obsTeams = this.http.get(`${teamUrl}`)
-      .pipe(catchError(this.errorService.handleError()))
+      //.pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
-        return data._embedded.teams as Team[];
+        if (data !== undefined && data._embedded !== undefined)
+          return data._embedded.teams as Team[];
+        else
+          return [];
       }));
     return obsTeams;
   }
@@ -88,7 +91,7 @@ export class TeamService {
     return this.http.get(`${teamUrl}/unassigned`)
       .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
-        if (data._embedded !== undefined) {
+        if (data !== undefined && data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];
         } else {
           return [];
@@ -103,11 +106,13 @@ export class TeamService {
   getTeamMembers(team: Team): Observable<Array<UserAccount>> {
     let url = team._links["getAccounts"];
     return this.http.get(url["href"])
-      .pipe(catchError(this.errorService.handleError()))
+     // .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
-        if (data._embedded !== undefined) {
+        if (data !== undefined && data._embedded !== undefined) {
+          console.log('returning user accounts')
           return data._embedded.userAccounts as UserAccount[];
         } else {
+          console.log('returning user accounts');
           return [];
         }
       }));

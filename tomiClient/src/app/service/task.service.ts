@@ -40,7 +40,7 @@ export class TaskService {
     return this.requestAllTasks().forEach(tasks => {
       this.taskSubjectList = new BehaviorSubject<Array<Task>>(tasks);
     }).catch((error: any) => {
-      console.log("Task error " + error);
+      this.errorService.displayErrorMessage("Task error " + error);
     });
   }
 

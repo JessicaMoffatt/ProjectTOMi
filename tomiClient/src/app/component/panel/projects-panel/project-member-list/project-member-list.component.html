@@ -1,31 +1,21 @@
-<mat-card>
+<mat-card class="mat-elevation-z2">
   <mat-card-header>
-    <mat-card-title>Members on Project</mat-card-title>
+    <mat-card-subtitle>Members on Project</mat-card-subtitle>
   </mat-card-header>
   <mat-selection-list role="list" #userAccounts>
     <mat-list-option *ngFor="let userAccount of this.projectService.userAccountList | async"
                      [value]="userAccount.id">
-
-      <h4 matLine>{{userAccount.firstName}} {{userAccount.lastName}}</h4>
-      <!--p matLine class="demo-2"> {{folder.updated}} </p-->
+      <h5 matLine>{{userAccount.firstName}} {{userAccount.lastName}}</h5>
     </mat-list-option>
   </mat-selection-list>
-
-  <div style="display: flex; justify-content: flex-end">
-    <button (click)="this.addMemberToProject()"
-            mat-button
-            color="primary"
-            [disabled]="this.projectService.selectedProject == null"
-            style="order: 1">
-      ADD MEMBER
-    </button>
-    <button (click)="deleteMembers(userAccounts)"
-            mat-button
-            color="accent"
-            [disabled]="userAccounts.selectedOptions.selected.length == 0">
-      DELETE
-    </button>
-  </div>
-
-
+  <button (click)="this.addMemberToProject()"
+          mat-button
+          [disabled]="this.projectService.selectedProject == null">
+    Add Members
+  </button>
+  <button (click)="deleteMembers(userAccounts)"
+          mat-button
+          [disabled]="userAccounts.selectedOptions.selected.length == 0">
+    Remove Members
+  </button>
 </mat-card>

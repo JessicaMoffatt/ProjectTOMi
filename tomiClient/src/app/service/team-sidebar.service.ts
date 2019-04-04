@@ -45,7 +45,10 @@ export class TeamSidebarService {
     return this.http.get(`${teamUrl}/${id}`)
       .pipe(this.errorService.handleError())
       .pipe(map((data: any) => {
+        if (data !== undefined)
           return data as Team;
+        else
+          return null
       }));
   }
 

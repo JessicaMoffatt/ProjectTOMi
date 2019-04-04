@@ -56,7 +56,7 @@ export class ClientService {
     return this.http.get(`${this.clientsUrl}`)
       .pipe(catchError(this.errorService.handleError<Client[]>()))
       .pipe(map((data: any) => {
-        if (data._embedded !== undefined) {
+        if (data !== undefined && data._embedded !== undefined) {
           return data._embedded.clients as Client[];
         } else {
           return [];

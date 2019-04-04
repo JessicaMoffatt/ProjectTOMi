@@ -10,7 +10,6 @@ import {UserAccount} from "../../../model/userAccount";
   templateUrl: './add-project-member.component.html',
   styleUrls: ['./add-project-member.component.scss']
 })
-
 export class AddProjectMemberComponent implements OnInit {
 
   selectedUserId: number;

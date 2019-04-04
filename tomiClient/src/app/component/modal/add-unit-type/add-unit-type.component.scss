@@ -1,4 +1,54 @@
 @import "~src/variables";
 /**
   @author Karol Talbot
+  @version 2.0
  */
+.dialog_pane{
+  width: available;
+  padding: 1vh 5vw;
+}
+
+#toggles{
+  display: inline-block;
+  width: 48%;
+  padding: 1%;
+  mat-slide-toggle{
+    display: block;
+  }
+}
+
+#buttons{
+  padding-top: 5vh;
+  padding-right:1%;
+  width: 100%;
+}
+
+.manage_cancel_btn{
+  position: relative;
+  background-color: $cancel_btn;
+  color:$cancel_btn_text;
+  float:right;
+  margin-right: 1%;
+}
+
+.manage_save_btn{
+  background-color: $save_btn;
+  color: $save_btn_text;
+  float:right;
+  margin-right: 1%;
+}
+
+#unit_type_name{
+  width: 48%;
+  padding: 1%;
+}
+
+#unit_type_unit{
+  width: 23%;
+  padding: 1%;
+}
+
+#unit_type_weight{
+  width: 23%;
+  padding: 1%;
+}

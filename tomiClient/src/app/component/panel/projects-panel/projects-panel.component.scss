@@ -1,7 +1,16 @@
-mat-sidenav{
-  width: 220px;
-}
+@import "~src/variables";
 
-mat-sidenav-container{
-  width: 600px;
+/**
+  @author Karol Talbot
+  @version 2.0
+ */
+.floating_action_button {
+  position: fixed;
+  right: 4vw;
+  bottom: 4vh;
+  background-color: $blue;
+  z-index: 2;
+  i {
+    color: white;
+  }
 }

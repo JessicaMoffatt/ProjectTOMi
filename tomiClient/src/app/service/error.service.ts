@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
-import {MatSnackBar, MatSnackBarRef} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 import {Observable, of} from "rxjs";
-import {Injector} from '@angular/core';
 
-const MESSAGE: string = 'Oopsie Doopsie, Something went Poopsie!';
+const MESSAGE: string = 'The requested operation is unavailable.  Please try again later.';
 
 @Injectable({
   providedIn: 'root'

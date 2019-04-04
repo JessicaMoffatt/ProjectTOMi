@@ -1,0 +1,27 @@
+/*
+@author Karol Talbot
+@version 2.0
+ */
+@import '~src/variables';
+
+.list_btns {
+  display: block;
+  width: 100%;
+}
+
+.list_btns:active {
+  display: block;
+  background-color: $blue;
+  color: white;
+}
+
+.mat-button-toggle-checked {
+  background-color: $blue;
+  color: white;
+}
+
+.btn_list {
+  width: 100%;
+}
+
+

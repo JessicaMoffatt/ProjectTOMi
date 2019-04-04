@@ -68,10 +68,10 @@ export class UnitTypeService {
   GETAllUnitTypes() {
     let obsUnitTypes: Observable<Array<UnitType>>;
     obsUnitTypes = this.http.get(unitTypeUrl)
-      .pipe(catchError(this.errorService.handleError()))
+      //.pipe(catchError(this.errorService.handleError()))
       .pipe(map((response: Response) =>
         response))
-      .pipe(catchError(this.errorService.handleError()))
+      //.pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         return data._embedded.unitTypes as UnitType[];
       }));

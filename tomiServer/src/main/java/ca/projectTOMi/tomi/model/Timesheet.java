@@ -17,7 +17,8 @@ import lombok.Data;
  * class representing a single timesheet for a user for a specific week.  Entries (task ,client,
  * hours) on the timesheet are attached by referencing it.
  *
- * @author James Andrade and Karol Talbot
+ * @author James Andrade
+ * @author Karol Talbot
  * @version 1.1
  */
 
@@ -76,7 +77,7 @@ public final class Timesheet {
 		return this.startDate == null ? "" : this.startDate.toString();
 	}
 
-	@JsonProperty (value = "submitDate")
+	@JsonIgnore
 	public String getSubmitDate() {
 		return this.submitDate == null ? "" : this.submitDate.toString();
 	}
