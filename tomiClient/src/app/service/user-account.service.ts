@@ -52,8 +52,8 @@ export class UserAccountService {
    */
   sortUserAccounts(users:BehaviorSubject<Array<UserAccount>>){
     users.getValue().sort((user1, user2) => {
-      let name1 = user1.firstName.toLowerCase() + user1.lastName.toLowerCase();
-      let name2 = user2.firstName.toLowerCase() + user2.lastName.toLowerCase();
+      let name1 = user1.lastName.toLowerCase() + user1.firstName.toLowerCase();
+      let name2 = user2.lastName.toLowerCase() + user2.firstName.toLowerCase() ;
       if (name1 > name2) { return 1; }
       if (name1 < name2) { return -1; }
       return 0;
