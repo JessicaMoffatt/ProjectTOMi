@@ -3,6 +3,7 @@ import {FormControl, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material";
 import {ClientService} from "../../../service/client.service";
 import {Project} from "../../../model/project";
+import {ProjectService} from "../../../service/project.service";
 
 /**
  * AddTaskComponent is a modal form used to add a new Task to the back end.
@@ -43,7 +44,8 @@ export class AddProjectComponent implements OnInit {
   /** The ngForm for this component */
   @ViewChild('addProjectForm') addProjectForm;
 
-  constructor(public dialogRef: MatDialogRef<AddProjectComponent>, public clientService: ClientService) {
+  constructor(public dialogRef: MatDialogRef<AddProjectComponent>,private projectService:ProjectService,
+              public clientService: ClientService) {
   }
 
   /**
@@ -73,7 +75,7 @@ export class AddProjectComponent implements OnInit {
       });
       project.id = initials;
       project.client = this.clientControl.value;
-      console.log(project);
+      // this.projectService.save(project);
       this.dialogRef.close();
     }
   }
