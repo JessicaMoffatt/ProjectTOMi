@@ -65,10 +65,7 @@ export class TeamService {
     obsTeams = this.http.get(`${teamUrl}`)
       //.pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
-        if (data !== undefined && data._embedded !== undefined)
-          return data._embedded.teams as Team[];
-        else
-          return [];
+        return data._embedded.teams as Team[];
       }));
     return obsTeams;
   }
@@ -123,7 +120,7 @@ export class TeamService {
     let url = team._links["getAccounts"];
     return this.http.get(url["href"])
       .pipe(map((data: any) => {
-        if (data !== undefined && data._embedded !== undefined) {
+        if (data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];
         } else {
           return [];
