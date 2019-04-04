@@ -42,7 +42,7 @@ export class TeamService {
       this.teamSubjectList = new BehaviorSubject<Array<Team>>(teams);
       this.sortTeams();
     }).catch((error: any) => {
-      this.errorService.displayErrorMessage("Team error " + error);
+      console.log("Team error " + error);
     });
   }
 
@@ -102,9 +102,9 @@ export class TeamService {
    */
   getAllFreeMembers(): Observable<Array<UserAccount>> {
     return this.http.get(`${teamUrl}/unassigned`)
-      .pipe(catchError(this.errorService.handleError()))
+    //  .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
-        if (data !== undefined && data._embedded !== undefined) {
+        if (data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];
         } else {
           return [];
@@ -151,7 +151,7 @@ export class TeamService {
    */
   getTeamById(id: number): Observable<Team> {
     return this.http.get(`${teamUrl}/${id}`)
-      .pipe(catchError(this.errorService.handleError()))
+      //.pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         return data as Team;
       }));

@@ -80,7 +80,7 @@ export class TeamMemberTimesheetService{
       this.teamSidebarService.getTeamById(this.teamid).subscribe((data)=>{
         this.team = data;
         this.getAllTeamMembersAndReports(data);
-      })
+      });
     }else{
       this.getAllTeamMembersAndReports(this.team);
     }
@@ -101,7 +101,7 @@ export class TeamMemberTimesheetService{
   }
 
   getAllTeamMembersAndReports(team:Team){
-    this.getAllTeamMembers(team).toPromise().then((data: Array<UserAccount>) => {
+    this.getAllTeamMembers(team).subscribe((data: Array<UserAccount>) => {
       this.teamMembers = data;
       this.sortTeamMembers();
       for (let i = 0; i < this.teamMembers.length; i++) {
