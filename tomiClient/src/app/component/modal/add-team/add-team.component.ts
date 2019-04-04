@@ -48,7 +48,6 @@ export class AddTeamComponent implements OnInit {
       teamToAdd = await this.teamService.save(teamToAdd).then(
         (value)=> {
           this.teamService.initializeTeams();
-          console.log(value);
           return value;
         });
       this.dialogRef.close();

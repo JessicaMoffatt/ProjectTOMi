@@ -100,12 +100,14 @@ export class ManageTeamsPanelComponent implements OnInit {
   public getTeamMembers() {
     this.teamService.getTeamMembers(this.selectedTeam).forEach(userAccount => {
       this.selectedTeamMembers = new BehaviorSubject<Array<UserAccount>>(userAccount);
+      this.userAccountService.sortUserAccounts(this.selectedTeamMembers);
       this.setTeamMembersPage();
     }).catch((error: any) => {
       console.log("Team Member error " + error);
     });
     this.teamService.getAllFreeMembers().forEach(userAccount => {
       this.availableMembers = new BehaviorSubject<Array<UserAccount>>(userAccount);
+      this.userAccountService.sortUserAccounts(this.availableMembers);
       this.setAvailableMembersPage();
     }).catch((error: any) => {
       console.log("Team Member error " + error);
