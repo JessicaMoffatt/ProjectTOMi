@@ -39,8 +39,23 @@ export class TeamService {
   public initializeTeams() {
     this.requestAllTeams().forEach(teams => {
       this.teamSubjectList = new BehaviorSubject<Array<Team>>(teams);
+      this.sortTeams();
     }).catch((error: any) => {
       console.log("Team error " + error);
+    });
+  }
+
+  sortTeams() {
+    this.teamSubjectList.getValue().sort((team1, team2) => {
+      let name1 = team1.teamName.toLowerCase();
+      let name2 = team2.teamName.toLowerCase();
+      if (name1 > name2) {
+        return 1;
+      }
+      if (name1 < name2) {
+        return -1;
+      }
+      return 0;
     });
   }
 

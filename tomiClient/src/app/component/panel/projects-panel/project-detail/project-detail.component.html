@@ -24,11 +24,11 @@
                  placeholder="Client"
                  aria-label="Client"
                  matInput
-                 [(ngModel)]="this.projectService.getSelectedProject().client.name"
+                 [(ngModel)]="this.projectService.getSelectedClient().name"
                  [formControl]="clientControl"
                  [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let c of this.clientService.clients | async" [value]="c.name">
+            <mat-option *ngFor="let c of this.clientService.clients.getValue()" [value]="c.name">
               {{c.name}}
             </mat-option>
           </mat-autocomplete>

@@ -19,6 +19,7 @@ import {Entry} from "../model/entry";
 import {Status} from "../model/status";
 import {EntryApproveComponent} from "../component/panel/entry-approve/entry-approve.component";
 import {SignInService} from "./sign-in.service";
+import {Client} from "../model/client";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -61,6 +62,8 @@ export class ProjectService {
 
   /** the user accounts assigned to the current project; for display in project-member-list-component */
   userAccountList: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject([]);
+
+  private selectedClient:Client = new Client();
 
   constructor(private http: HttpClient,
               public snackBar: MatSnackBar,
@@ -123,10 +126,20 @@ export class ProjectService {
             this.handleError
           });
     }
+    this.selectedClient.name = this.selectedProject.client.name;
+    this.selectedClient.id = this.selectedProject.client.id;
+    this.selectedClient._links = this.selectedClient._links;
+
+
+    return this.selectedProject;
   }
 
   getSelectedProject() {
     return this.selectedProject;
+  }
+
+  getSelectedClient(){
+    return this.selectedClient;
   }
 
   /**
@@ -230,25 +243,21 @@ export class ProjectService {
   }
 
   async save(project: Project) {
+    console.log(project.client.id);
     if (project.id.length == 2) {
       return this.http.post<Project>(`${projectsUrl}`, JSON.stringify(project), httpOptions)
         .toPromise()
         .then((project) => this.setSelected(project));
-      console.log('project saved')
       //.catch((error: any) => {
       //TODO Add an error display
       //});
     } else {
       const url = project._links["update"];
+
       return this.http.put<Project>(url["href"], JSON.stringify(project), httpOptions).toPromise()
         .then((project) => {
-          this.setSelected(project);
-          console.log("update complete, project:" + project);
+          // this.setSelected(project);
         })
-      // .catch(() => {
-      //   //TODO Add an error display
-      //   console.log("update rejected")
-      // });
     }
     this.signInService.getNavBarList();
   }
@@ -256,8 +265,6 @@ export class ProjectService {
 
   addUser(userAccountId: number) {
     let url = `${projectsUrl}/${this.getSelectedProject().id}/add_member/${userAccountId}`;
-    console.log(this.selectedProject.id);
-    console.log(url);
     this.http.put<UserAccount>(url, httpOptions).toPromise()
       .then((response) => {
         this.refreshUserAccountList();
@@ -271,7 +278,7 @@ export class ProjectService {
   refreshProjectList() {
     return this.getAllProjects().forEach(project => {
       this.projects = new BehaviorSubject<Array<Project>>(project);
-      // this.sort();
+      this.sortProjects();
     }).catch(() => {
       let getUsersErrorMessage = 'Something went wrong when getting the list of projects. Please contact your system administrator.';
       this.snackBar.open(getUsersErrorMessage, null, {
@@ -280,6 +287,20 @@ export class ProjectService {
         panelClass: 'snackbar-fail',
         horizontalPosition: 'right'
       });
+    });
+  }
+
+  sortProjects() {
+    this.projects.getValue().sort((project1, project2) => {
+      let name1 = project1.projectName.toLowerCase();
+      let name2 = project2.projectName.toLowerCase();
+      if (name1 > name2) {
+        return 1;
+      }
+      if (name1 < name2) {
+        return -1;
+      }
+      return 0;
     });
   }
 
