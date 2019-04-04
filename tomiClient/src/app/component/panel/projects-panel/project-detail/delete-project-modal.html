@@ -1,0 +1,9 @@
+<!--
+  @author Karol Talbot
+-->
+<div class="modal_heading"><h1 mat-dialog-title>Delete Project</h1></div>
+<div mat-dialog-content>
+  <p>Confirm deletion of {{projectToDelete.projectName}}</p>
+  <button mat-raised-button class="manage_cancel_btn" (click)="canceledDelete()">Cancel</button>
+  <button mat-raised-button class="manage_delete_btn modal_delete" (click)="confirmedDelete()">Delete</button>
+</div>

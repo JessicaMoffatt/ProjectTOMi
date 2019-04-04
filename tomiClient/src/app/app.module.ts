@@ -69,7 +69,10 @@ import {ProjectEntriesSidebarComponent} from './component/sidebar/project-entrie
 import {EntryApproveComponent} from './component/panel/entry-approve/entry-approve.component';
 import {BudgetReportComponent} from './component/extra/budget-report/budget-report.component';
 import {ProjectService} from "./service/project.service";
-import {ProjectDetailComponent} from './component/panel/projects-panel/project-detail/project-detail.component';
+import {
+  DeleteProjectModal,
+  ProjectDetailComponent
+} from './component/panel/projects-panel/project-detail/project-detail.component';
 import {MatFormFieldModule} from "@angular/material";
 import {ExpenseListComponent} from './component/panel/projects-panel/expense-list/expense-list.component';
 import {ProjectMemberListComponent} from './component/panel/projects-panel/project-member-list/project-member-list.component';
@@ -168,7 +171,8 @@ import {AddProjectComponent} from "./component/modal/add-project/add-project";
     FilterProjectByName,
     FilterTeamMemberByName,
     DeleteTeamModal,
-    AddProjectComponent
+    AddProjectComponent,
+    DeleteProjectModal
   ],
   imports: [
     MatSidenavModule,
@@ -237,7 +241,8 @@ import {AddProjectComponent} from "./component/modal/add-project/add-project";
     DeleteUnitTypeModal,
     AddTeamComponent,
     DeleteTeamModal,
-    AddProjectComponent
+    AddProjectComponent,
+    DeleteProjectModal
   ],
   providers: [
     AccessGuard,

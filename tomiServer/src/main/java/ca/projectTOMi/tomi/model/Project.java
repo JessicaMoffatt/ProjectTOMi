@@ -50,9 +50,7 @@ public final class Project {
 	 * The UserAccount managing this Project.
 	 */
 	@OneToOne
-	@JsonProperty (value = "projectManagerId")
-	@JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference (alwaysAsId = true)
+	@JsonIgnore
 	private UserAccount projectManager;
 
 	/**
@@ -91,6 +89,15 @@ public final class Project {
 	@JsonIgnore
 	@Column (nullable = false)
 	private boolean active;
+
+	@JsonProperty("projectManagerId")
+	public Long getProjectMangerId(){
+		if(this.projectManager == null){
+			return -1L;
+		}else{
+			return this.projectManager.getId();
+		}
+	}
 
 	@JsonProperty
 	public void setProjectManagerId(final Long id) {

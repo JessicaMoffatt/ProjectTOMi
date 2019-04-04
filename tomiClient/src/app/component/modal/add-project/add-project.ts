@@ -1,6 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material";
+import {ClientService} from "../../../service/client.service";
+import {Project} from "../../../model/project";
+import {ProjectService} from "../../../service/project.service";
+import {Client} from "../../../model/client";
 
 /**
  * AddTaskComponent is a modal form used to add a new Task to the back end.
@@ -15,8 +19,23 @@ import {MatDialogRef} from "@angular/material";
 })
 export class AddProjectComponent implements OnInit {
 
+  accountManagerControl = new FormControl('', [
+    Validators.required
+  ]);
 
   projectNameControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  clientControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  billingControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  budgetControl = new FormControl('', [
     Validators.required
   ]);
 
@@ -26,7 +45,9 @@ export class AddProjectComponent implements OnInit {
   /** The ngForm for this component */
   @ViewChild('addProjectForm') addProjectForm;
 
-  constructor(public dialogRef: MatDialogRef<AddProjectComponent>) { }
+  constructor(public dialogRef: MatDialogRef<AddProjectComponent>,private projectService:ProjectService,
+              public clientService: ClientService) {
+  }
 
   /**
    * Closes the modal component.
@@ -40,8 +61,38 @@ export class AddProjectComponent implements OnInit {
   }
 
   private async addProject() {
-    if (this.projectNameControl.valid) {
-      this.dialogRef.close();
+    let initials: string;
+    let project: Project;
+    if (this.projectNameControl.valid && this.accountManagerControl && this.billingControl && this.budgetControl && this.clientControl) {
+      project = new Project();
+      initials = '';
+      project.projectName = this.projectNameControl.value;
+      project.billableRate = this.billingControl.value;
+      project.budget = this.budgetControl.value;
+      this.accountManagerControl.value.toString().split(" ").forEach(name => {
+        if (initials.length < 2) {
+          initials += name.charAt(0).toUpperCase();
+        }
+      });
+      project.id = initials;
+      let saveClient = new Client();
+      saveClient.name = this.clientControl.value;
+      let matchClient = this.clientService.getClientByName(saveClient.name);
+      if ( matchClient === null) {
+        this.clientService.save(saveClient).then((client:Client) => {
+          project.client = client;
+
+          this.projectService.save(project);
+        });
+      } else {
+        project.client = matchClient;
+      }
+      this.projectService.save(project).then(()=>{
+        this.projectService.refreshProjectList();
+        this.dialogRef.close();
+      });
+
+
     }
   }
 }

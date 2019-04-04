@@ -328,7 +328,8 @@ export class ProjectService {
 
   delete(project: Project) {
     const url = project._links["delete"];
-    this.http.delete(url["href"], httpOptions).subscribe((response) => {
+    this.http.delete(url["href"], httpOptions).toPromise().then((response) => {
+      this.refreshProjectList();
       return response as Project;
     });
   }
