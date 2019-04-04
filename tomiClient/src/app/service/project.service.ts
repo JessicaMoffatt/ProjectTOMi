@@ -3,7 +3,13 @@ import {catchError, map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Project} from "../model/project";
-import {billableUrl, dataDumpUrl, projectsUrl, userAccountUrl} from "../configuration/domainConfiguration";
+import {
+  billableHourDownloadUrl,
+  billableUrl,
+  dataDumpUrl,
+  projectsUrl,
+  userAccountUrl
+} from "../configuration/domainConfiguration";
 import {BudgetReport} from "../model/budgetReport";
 import {BillableHoursReportLine} from "../model/billableHoursReportLine";
 import {UserAccount} from "../model/userAccount";
@@ -12,8 +18,9 @@ import {ExpenseService} from "./expense.service";
 import {Entry} from "../model/entry";
 import {Status} from "../model/status";
 import {EntryApproveComponent} from "../component/panel/entry-approve/entry-approve.component";
-import {ErrorService} from "./error.service";
+import {SignInService} from "./sign-in.service";
 import {Client} from "../model/client";
+import {ErrorService} from "./error.service";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -57,9 +64,12 @@ export class ProjectService {
   /** the user accounts assigned to the current project; for display in project-member-list-component */
   userAccountList: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject([]);
 
+  private selectedClient:Client = new Client();
+
   constructor(private http: HttpClient,
               public snackBar: MatSnackBar,
               private expenseService: ExpenseService,
+              private signInService:SignInService,
               private errorService: ErrorService) {
   }
 
@@ -103,7 +113,6 @@ export class ProjectService {
    */
   async setSelected(project: Project) {
     this.selectedProject = await project;
-    this.refreshProjectList();
     if (this.selectedProject != null && this.selectedProject.id.match(this.regExp)) {
       this.refreshUserAccountList();
       this.expenseService.refreshExpenses(this.selectedProject);
@@ -117,6 +126,12 @@ export class ProjectService {
           () => this.errorService.displayErrorMessage('project.service setSelected()')
         );
     }
+    this.selectedClient.name = this.selectedProject.client.name;
+    this.selectedClient.id = this.selectedProject.client.id;
+    this.selectedClient._links = this.selectedClient._links;
+
+
+    return this.selectedProject;
   }
 
   /**
@@ -126,14 +141,30 @@ export class ProjectService {
     return this.selectedProject;
   }
 
+  getSelectedClient(){
+    return this.selectedClient;
+  }
+
   /**
-   * gets the budget report for the selected project
+   * Gets a project with the specified ID.
+   * @param id The ID of the project to get.
+   */
+  getProjectById(id: string) {
+    return this.http.get(`${projectsUrl}/${id}`)
+      .pipe(
+        map((res: Project) => {
+          return res
+        }), catchError(this.errorService.handleError())
+      );
+  }
+
+  /**
+   *
    * @param project The project to get a report for.
    */
   getBudgetReportByProjectId(project: Project) {
     let url = project._links["budget"];
     return this.http.get(`${url["href"]}`)
-     // .pipe(catchError(this.errorService.handleError()))
       .pipe(
         map((res: BudgetReport) => {
           return res
@@ -144,7 +175,9 @@ export class ProjectService {
   calculatePercentBillable(): string {
     if (this.selectedBudget) {
       let percent = this.selectedBudget.billableHours / this.selectedBudget.totalHours * 100;
-      return percent.toFixed(2);
+      let percentString = percent.toFixed(2);
+
+      return percentString;
     } else {
       return "0";
     }
@@ -184,6 +217,14 @@ export class ProjectService {
       );
   }
 
+  downloadBillableReport(){
+    return this.http.get(`${billableHourDownloadUrl}`, {responseType: 'blob'})
+      .pipe(
+        map((res) => {
+          return res
+        }), catchError(this.errorService.handleError())
+      );
+  }
 
   projectNameIsAvailable(projectName: string): boolean {
     this.projects.value.forEach(project => {
@@ -200,15 +241,18 @@ export class ProjectService {
         .catch(() => this.errorService.displayError());
     } else {
       const url = project._links["update"];
+
       return this.http.put<Project>(url["href"], JSON.stringify(project), httpOptions).toPromise()
         .then((project) => this.setSelected(project))
         .catch(() => this.errorService.displayError());
     }
+    this.signInService.getNavBarList();
   }
 
 
   addUser(userAccountId: number) {
-    this.http.put<UserAccount>(`${projectsUrl}/${this.selectedProject.id}/add_member/${userAccountId}`, httpOptions).toPromise()
+    let url = `${projectsUrl}/${this.getSelectedProject().id}/add_member/${userAccountId}`;
+    this.http.put<UserAccount>(url, httpOptions).toPromise()
       .then((response) => {
         this.refreshUserAccountList();
         return response;
@@ -219,8 +263,34 @@ export class ProjectService {
   }
 
   refreshProjectList() {
+    return this.getAllProjects().forEach(project => {
+      this.projects = new BehaviorSubject<Array<Project>>(project);
+      this.sortProjects();
+    }).catch(() => {
+      let getUsersErrorMessage = 'Something went wrong when getting the list of projects. Please contact your system administrator.';
+      this.snackBar.open(getUsersErrorMessage, null, {
+        duration: 5000,
+        politeness: 'assertive',
+        panelClass: 'snackbar-fail',
+        horizontalPosition: 'right'
+      });
+    });
     this.getAllProjects().toPromise().then(project =>
       this.projects = new BehaviorSubject<Array<Project>>(project))
+  }
+
+  sortProjects() {
+    this.projects.getValue().sort((project1, project2) => {
+      let name1 = project1.projectName.toLowerCase();
+      let name2 = project2.projectName.toLowerCase();
+      if (name1 > name2) {
+        return 1;
+      }
+      if (name1 < name2) {
+        return -1;
+      }
+      return 0;
+    });
   }
 
   refreshUserAccountList() {
@@ -245,7 +315,8 @@ export class ProjectService {
 
   delete(project: Project) {
     const url = project._links["delete"];
-    this.http.delete(url["href"], httpOptions).subscribe((response) => {
+    this.http.delete(url["href"], httpOptions).toPromise().then((response) => {
+      this.refreshProjectList();
       return response as Project;
     });
   }

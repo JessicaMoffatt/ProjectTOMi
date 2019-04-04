@@ -8,14 +8,18 @@
       <h5 matLine>{{userAccount.firstName}} {{userAccount.lastName}}</h5>
     </mat-list-option>
   </mat-selection-list>
-  <button (click)="this.addMemberToProject()"
-          mat-button
-          [disabled]="this.projectService.selectedProject == null">
-    Add Members
-  </button>
-  <button (click)="deleteMembers(userAccounts)"
-          mat-button
-          [disabled]="userAccounts.selectedOptions.selected.length == 0">
-    Remove Members
-  </button>
+  <div class="buttons">
+    <button (click)="this.addMemberToProject()"
+            class="manage_save_btn"
+            mat-flat-button
+            [disabled]="this.projectService.selectedProject == null">
+      Add Members
+    </button>
+    <button (click)="deleteMembers(userAccounts)"
+            mat-flat-button
+            class="manage_delete_btn"
+            [disabled]="userAccounts.selectedOptions.selected.length == 0">
+      Remove Members
+    </button>
+  </div>
 </mat-card>

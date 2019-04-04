@@ -1,4 +1,4 @@
-import {Component, HostListener, Inject, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
+import {Component, HostListener, Inject, Input, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
 import {Team} from "../../../model/team";
 import {FormControl, Validators} from "@angular/forms";
 import {TeamService} from "../../../service/team.service";
@@ -57,6 +57,9 @@ export class ManageTeamsPanelComponent implements OnInit {
     this.save().then();
   }
 
+  @ViewChild('member_filter') member_filter;
+  @ViewChild('available_filter') available_filter;
+
   constructor(private dialog: MatDialog, public deleteTeamDialog: MatDialog, private teamService: TeamService, public userAccountService: UserAccountService) {
   }
 
@@ -97,12 +100,14 @@ export class ManageTeamsPanelComponent implements OnInit {
   public getTeamMembers() {
     this.teamService.getTeamMembers(this.selectedTeam).forEach(userAccount => {
       this.selectedTeamMembers = new BehaviorSubject<Array<UserAccount>>(userAccount);
+      this.userAccountService.sortUserAccounts(this.selectedTeamMembers);
       this.setTeamMembersPage();
     }).catch((error: any) => {
       console.log("Team Member error " + error);
     });
     this.teamService.getAllFreeMembers().forEach(userAccount => {
       this.availableMembers = new BehaviorSubject<Array<UserAccount>>(userAccount);
+      this.userAccountService.sortUserAccounts(this.availableMembers);
       this.setAvailableMembersPage();
     }).catch((error: any) => {
       console.log("Team Member error " + error);
@@ -129,6 +134,7 @@ export class ManageTeamsPanelComponent implements OnInit {
   }
 
   public cancel() {
+    this.dirtyUserBuffer = [];
     this.sideBar.unselect(this.selectedTeam.id);
     this.selectedTeam = null;
   }
@@ -174,7 +180,13 @@ export class ManageTeamsPanelComponent implements OnInit {
   }
 
   public getTeamMembersPage() {
-    return this.teamMembersPage.slice(this.teamMembersPageNumber * this.PAGE_SIZE, this.teamMembersPageNumber * this.PAGE_SIZE + this.PAGE_SIZE);
+    let filter = new FilterTeamUserAccountByName();
+    let filterList = this.teamMembersPage;
+
+    if(this.member_filter != undefined){
+      filterList = filter.transform(this.teamMembersPage, this.member_filter.nativeElement.value);
+    }
+    return filterList.slice(this.teamMembersPageNumber * this.PAGE_SIZE, this.teamMembersPageNumber * this.PAGE_SIZE + this.PAGE_SIZE);
   }
 
   public setAvailableMembersPage() {
@@ -182,7 +194,13 @@ export class ManageTeamsPanelComponent implements OnInit {
   }
 
   public getAvailableMembersPage() {
-    return this.availableMembersPage.slice(this.availableMembersPageNumber * this.PAGE_SIZE, this.availableMembersPageNumber * this.PAGE_SIZE + this.PAGE_SIZE);
+    let filter = new FilterTeamUserAccountByName();
+    let filterList = this.availableMembersPage;
+
+    if(this.available_filter != undefined){
+      filterList = filter.transform(this.availableMembersPage, this.available_filter.nativeElement.value);
+    }
+    return filterList.slice(this.availableMembersPageNumber * this.PAGE_SIZE, this.availableMembersPageNumber * this.PAGE_SIZE + this.PAGE_SIZE);
   }
 
 
@@ -209,10 +227,12 @@ export class ManageTeamsPanelComponent implements OnInit {
       await this.teamService.save(this.selectedTeam);
       this.sideBar.unselect(this.selectedTeam.id);
       this.selectedTeam = null;
+      this.dirtyUserBuffer = [];
     }
   }
 
   public async delete() {
+    this.dirtyUserBuffer= [];
     await this.teamService.delete(this.selectedTeam);
     this.sideBar.unselect(this.selectedTeam.id);
     this.teamService.initializeTeams();
@@ -236,7 +256,8 @@ export class ManageTeamsPanelComponent implements OnInit {
 export class DeleteTeamModal {
   teamToDelete: Team;
 
-  constructor(public dialogRef: MatDialogRef<DeleteTeamModal>, @Inject(MAT_DIALOG_DATA) public data: DeleteDialogData) {
+  constructor(public dialogRef: MatDialogRef<DeleteTeamModal>,
+              @Inject(MAT_DIALOG_DATA) public data: DeleteDialogData) {
 
   }
 
@@ -254,9 +275,22 @@ export class DeleteTeamModal {
   }
 }
 
-/** Data interface for the DeleteUserModal */
+/** Data interface for the DeleteTeamModal */
 export interface DeleteDialogData {
   teamToDelete: Team;
   parent: ManageTeamsPanelComponent;
 }
 
+export class FilterTeamUserAccountByName {
+  transform(userList: Array<UserAccount>, nameFilter: string): any {
+    nameFilter = nameFilter.toLowerCase();
+    if (!nameFilter) return userList;
+
+    return userList.filter(n => {
+      let name = n.firstName + n.lastName;
+      name = name.toLowerCase();
+
+      return name.indexOf(nameFilter) >= 0;
+    });
+  }
+}

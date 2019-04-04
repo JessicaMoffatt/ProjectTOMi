@@ -69,7 +69,10 @@ import {ProjectEntriesSidebarComponent} from './component/sidebar/project-entrie
 import {EntryApproveComponent} from './component/panel/entry-approve/entry-approve.component';
 import {BudgetReportComponent} from './component/extra/budget-report/budget-report.component';
 import {ProjectService} from "./service/project.service";
-import {ProjectDetailComponent} from './component/panel/projects-panel/project-detail/project-detail.component';
+import {
+  DeleteProjectModal,
+  ProjectDetailComponent
+} from './component/panel/projects-panel/project-detail/project-detail.component';
 import {MatFormFieldModule} from "@angular/material";
 import {ExpenseListComponent} from './component/panel/projects-panel/expense-list/expense-list.component';
 import {ProjectMemberListComponent} from './component/panel/projects-panel/project-member-list/project-member-list.component';
@@ -105,6 +108,7 @@ import {FilterTaskByName} from "./component/panel/tasks-panel/tasks-panel.compon
 import {FilterTeamByName} from "./component/sidebar/team-sidebar/team-sidebar.component";
 import {FilterProjectByName} from "./component/sidebar/project-sidebar/project-sidebar.component";
 import {FilterTeamMemberByName} from "./component/sidebar/team-member-sidebar/team-member-sidebar.component";
+import {AddProjectComponent} from "./component/modal/add-project/add-project";
 
 @NgModule({
   declarations: [
@@ -166,7 +170,9 @@ import {FilterTeamMemberByName} from "./component/sidebar/team-member-sidebar/te
     FilterTeamByName,
     FilterProjectByName,
     FilterTeamMemberByName,
-    DeleteTeamModal
+    DeleteTeamModal,
+    AddProjectComponent,
+    DeleteProjectModal
   ],
   imports: [
     MatSidenavModule,
@@ -234,7 +240,9 @@ import {FilterTeamMemberByName} from "./component/sidebar/team-member-sidebar/te
     DeleteTaskModal,
     DeleteUnitTypeModal,
     AddTeamComponent,
-    DeleteTeamModal
+    DeleteTeamModal,
+    AddProjectComponent,
+    DeleteProjectModal
   ],
   providers: [
     AccessGuard,

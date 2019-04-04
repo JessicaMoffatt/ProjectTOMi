@@ -7,6 +7,7 @@ import {catchError, map} from "rxjs/operators";
 import {teamUrl} from "../configuration/domainConfiguration";
 import {UserAccount} from "../model/userAccount";
 import {ErrorService} from "./error.service";
+import {SignInService} from "./sign-in.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -29,7 +30,7 @@ export class TeamService {
   private teamSubjectList: BehaviorSubject<Array<Team>> = new BehaviorSubject<Array<Team>>([]);
 
 
-  public constructor(private http: HttpClient, public snackBar: MatSnackBar, private errorService: ErrorService) {
+  public constructor(private http: HttpClient, public snackBar: MatSnackBar, private signInService:SignInService, private errorService: ErrorService) {
 
   }
 
@@ -39,8 +40,23 @@ export class TeamService {
   public initializeTeams() {
     this.requestAllTeams().forEach(teams => {
       this.teamSubjectList = new BehaviorSubject<Array<Team>>(teams);
+      this.sortTeams();
     }).catch((error: any) => {
       this.errorService.displayErrorMessage("Team error " + error);
+    });
+  }
+
+  sortTeams() {
+    this.teamSubjectList.getValue().sort((team1, team2) => {
+      let name1 = team1.teamName.toLowerCase();
+      let name2 = team2.teamName.toLowerCase();
+      if (name1 > name2) {
+        return 1;
+      }
+      if (name1 < name2) {
+        return -1;
+      }
+      return 0;
     });
   }
 
@@ -80,7 +96,7 @@ export class TeamService {
         this.errorService.displayErrorMessage(error);
       });
     }
-
+    this.signInService.getNavBarList();
     return tempTeam;
   }
 
@@ -106,13 +122,10 @@ export class TeamService {
   getTeamMembers(team: Team): Observable<Array<UserAccount>> {
     let url = team._links["getAccounts"];
     return this.http.get(url["href"])
-     // .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         if (data !== undefined && data._embedded !== undefined) {
-          console.log('returning user accounts')
           return data._embedded.userAccounts as UserAccount[];
         } else {
-          console.log('returning user accounts');
           return [];
         }
       }));

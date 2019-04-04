@@ -45,9 +45,23 @@ export class ClientService {
   initializeClients() {
     this.getClients().toPromise().then(client => {
       this.clients = new BehaviorSubject<Array<Client>>(client);
+      this.sortClients();
     });
   }
 
+  sortClients() {
+    this.clients.getValue().sort((client1, client2) => {
+      let name1 = client1.name.toLowerCase();
+      let name2 = client2.name.toLowerCase();
+      if (name1 > name2) {
+        return 1;
+      }
+      if (name1 < name2) {
+        return -1;
+      }
+      return 0;
+    });
+  }
 
   /**
    * Gets all clients.
@@ -64,6 +78,46 @@ export class ClientService {
       }))
   }
 
+  /**
+   * Gets the projects for a specified user.
+   * @param userId The ID of the user whose projects we want.
+
+   getProjectsForUser(userId:number): Observable<Array<Project>>{
+    return this.http.get(`${this.userAccountProjectsUrl}/${userId}/projects`).pipe(map((response: Response) => response))
+      .pipe(map((data: any) => {
+        if (data._embedded !== undefined) {
+          return data._embedded.projects as Project[];
+        } else {
+          return [];
+        }
+      }));
+  } */
+
+  /**
+   * sets the selectedProject project that will be used in project-panel and manage-projects component
+   * added by: James Andrade
+   * @param project the project to be stored as 'selectedProject'
+   */
+  setSelected(client: Client) {
+    this.selected = client;
+  }
+
+
+  /**
+   * Gets a project with the specified ID.
+   * @param id The ID of the project to get.
+   */
+
+  getClientById(id: number) {
+    return this.http.get(`${this.clientsUrl}/${id}`).pipe(map((response: Response) => response))
+      .pipe(map((data: any) => {
+        if (data !== undefined) {
+          return data as Client;
+        } else {
+          return null;
+        }
+      }));
+  }
 
   /**
    * @author James Andrade
@@ -79,19 +133,43 @@ export class ClientService {
     return null;
   }
 
-
   /**
    * Saves a specified client by performing an HTTP post.
    *
    * @param client the client to be created/updated.
    */
   save(client: Client) {
-    return this.http.post<Client>(this.clientsUrl, JSON.stringify(client), httpOptions).toPromise()
-      .then(response => {
-        return response as Client
-      })
-      .catch(() => {
-        this.errorService.handleError();
-      });
+    let newClient: boolean = true;
+
+    this.clients.subscribe(result => {
+      for (let i = 0; i < result.length; i++) {
+        if (result[i].name === client.name) {
+          newClient = false;
+          break;
+        }
+      }
+    });
+
+    if (newClient === true) {
+      client.id = -1;
+    }
+
+    if (client.id === -1) {
+      return this.http.post<Client>(this.clientsUrl, JSON.stringify(client), httpOptions).toPromise()
+        .then(response => {
+          return response as Client
+        })
+        .catch(() => {
+          //TODO Add an error display
+        });
+    } else {
+      const url = client._links["update"];
+      return this.http.put<Client>(url["href"], JSON.stringify(client), httpOptions).toPromise()
+        .then(response => {
+          return response as Client
+        }).catch(() => {
+          //TODO Add an error display
+        });
+    }
   }
 }

@@ -6,6 +6,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
 import {ErrorService} from "./error.service";
+import {taskUrl} from "../configuration/domainConfiguration";
 
 
 const httpOptions: any = {
@@ -24,9 +25,6 @@ const httpOptions: any = {
   providedIn: 'root'
 })
 export class TaskService {
-
-
-  private taskUrl = "http://localhost:8080/tasks";
   private taskSubjectList: BehaviorSubject<Array<Task>> = new BehaviorSubject<Array<Task>>([]);
 
   public constructor(private http: HttpClient, public snackBar: MatSnackBar, private errorService: ErrorService) {
@@ -39,6 +37,7 @@ export class TaskService {
   public initializeTasks() {
     return this.requestAllTasks().forEach(tasks => {
       this.taskSubjectList = new BehaviorSubject<Array<Task>>(tasks);
+      this.sortTasks();
     }).catch((error: any) => {
       this.errorService.displayErrorMessage("Task error " + error);
     });
@@ -84,11 +83,9 @@ export class TaskService {
     }).catch(() => this.errorService.displayErrorMessage("Task Error"));
   }
 
-
   requestAllTasks() {
     let obsTasks: Observable<Array<Task>>;
-    obsTasks = this.http.get(this.taskUrl).pipe(catchError(this.errorService.handleError()))
-      .pipe(map((response: Response) => response))
+    obsTasks = this.http.get(taskUrl).pipe(map((response: Response) => response))
       .pipe(map((data: any) => {
         return data._embedded.tasks as Task[];
       }));
@@ -98,7 +95,7 @@ export class TaskService {
 
   async save(task: Task) {
     if (task.id === -1) {
-      await this.http.post<UserAccount>(this.taskUrl, JSON.stringify(task), httpOptions).toPromise().then(() => {
+      await this.http.post<UserAccount>(taskUrl, JSON.stringify(task), httpOptions).toPromise().then(response => {
         this.refreshTasks();
         let addUserSuccessMessage = task.name + ' added successfully.';
         this.snackBar.open(addUserSuccessMessage, null, {
@@ -149,5 +146,19 @@ export class TaskService {
 
   public getTaskSubjectList(): BehaviorSubject<Array<Task>> {
     return this.taskSubjectList;
+  }
+
+  sortTasks() {
+    this.taskSubjectList.getValue().sort((client1, client2) => {
+      let name1 = client1.name.toLowerCase();
+      let name2 = client2.name.toLowerCase();
+      if (name1 > name2) {
+        return 1;
+      }
+      if (name1 < name2) {
+        return -1;
+      }
+      return 0;
+    });
   }
 }

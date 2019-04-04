@@ -14,6 +14,7 @@ import {MatSnackBar} from "@angular/material";
 import {SignInService} from "./sign-in.service";
 import {Team} from "../model/team";
 import {TeamSidebarService} from "./team-sidebar.service";
+import {billableHourDownloadUrl} from "../configuration/domainConfiguration";
 
 /**
  * TeamMemberTimesheetService is used to control the flow of data regarding timesheets to/from the view.
@@ -39,6 +40,7 @@ export class TeamMemberTimesheetService{
   teamMembersReportsToDisplay: ProductivityReportLine[] = [];
 
   teamid: number = this.signInService.userAccount.teamId;
+
   team: Team;
   /** The list of entries for the displaying timesheet*/
   entries: Entry[] = [];
@@ -84,9 +86,24 @@ export class TeamMemberTimesheetService{
     }
   }
 
+  sortTeamMembers() {
+    this.teamMembers.sort((user1, user2) => {
+      let name1 = user1.firstName.toLowerCase() + user1.lastName.toLowerCase();
+      let name2 = user2.firstName.toLowerCase() + user2.lastName.toLowerCase();
+      if (name1 > name2) {
+        return 1;
+      }
+      if (name1 < name2) {
+        return -1;
+      }
+      return 0;
+    });
+  }
+
   getAllTeamMembersAndReports(team:Team){
     this.getAllTeamMembers(team).toPromise().then((data: Array<UserAccount>) => {
       this.teamMembers = data;
+      this.sortTeamMembers();
       for (let i = 0; i < this.teamMembers.length; i++) {
         this.getProductivityReportByMember(this.teamMembers[i])
           .subscribe((data: ProductivityReportLine[]) => {
@@ -302,6 +319,16 @@ export class TeamMemberTimesheetService{
     return this.http.get(`${url["href"]}`)
       .pipe(
         map((res: ProductivityReportLine[]) => {
+          return res
+        }), catchError(this.handleError)
+      );
+  }
+
+  downloadProductivityReport(){
+    let url = this.selectedMember._links["productivityreport"];
+    return this.http.get(`${url['href']}/xls`, {responseType: 'blob'})
+      .pipe(
+        map((res) => {
           return res
         }), catchError(this.handleError)
       );

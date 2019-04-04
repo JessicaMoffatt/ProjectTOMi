@@ -1,8 +1,11 @@
-<div *ngIf="this.projectService.selectedBudget" class="container">
-    <h2>
+<div *ngIf="this.projectService.billableReport" class="container">
+  <mat-card>
+    <mat-card-title>
       Billable Hour Report
-    </h2>
-    <table mat-table [dataSource]="this.projectService.billableReport" class="mat-elevation-z2 team_table">
+      <button mat-button (click)="this.downloadBillableHourReport()">DOWNLOAD</button>
+    </mat-card-title>
+
+    <table mat-table [dataSource]="this.projectService.billableReport" class="mat-elevation-z0 team_table">
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -27,4 +30,5 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+  </mat-card>
 </div>

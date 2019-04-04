@@ -77,11 +77,6 @@ public final class Timesheet {
 		return this.startDate == null ? "" : this.startDate.toString();
 	}
 
-	@JsonIgnore
-	public String getSubmitDate() {
-		return this.submitDate == null ? "" : this.submitDate.toString();
-	}
-
 	public void setSubmitDate(final String date) {
 		this.submitDate = LocalDate.parse(date);
 	}

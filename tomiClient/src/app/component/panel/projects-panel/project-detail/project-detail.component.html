@@ -24,19 +24,19 @@
                  placeholder="Client"
                  aria-label="Client"
                  matInput
-                 [(ngModel)]="this.projectService.getSelectedProject().client.name"
+                 [(ngModel)]="this.projectService.getSelectedClient().name"
                  [formControl]="clientControl"
                  [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let c of this.clientService.clients | async" [value]="c.name">
+            <mat-option *ngFor="let c of this.clientService.clients.getValue()" [value]="c.name">
               {{c.name}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
       </div>
       <div class="row">
-        <mat-form-field id="projectManager" #projectManager>
-          <mat-select placeholder="Project Manager"
+        <mat-form-field id="projectManager">
+          <mat-select #projectManager placeholder="Project Manager"
                       aria-label="Project Manager"
                       [(value)]="this.projectService.getSelectedProject().projectManagerId">
             <mat-option [value]="-1">None</mat-option>
@@ -48,31 +48,35 @@
 
         <mat-form-field id="billingRate">
           <input placeholder="Billing Rate"
+                 #billing
                  aria-label="Billing Rate"
                  type="number"
-                 min="0.00"
+                 min="0.01"
+                 step="0.01"
                  matInput
-                 [(ngModel)]="this.projectService.getSelectedProject().billableRate"
+                 [value]="(this.projectService.getSelectedProject().billableRate/100).toFixed(2)"
                  [formControl]="this.billingControl">
           <span matPrefix>$&nbsp;</span>
         </mat-form-field>
         <mat-form-field id="budget">
           <input type="number"
+                 #budget
                  placeholder="Budget Total"
                  aria-label="Budget Total"
-                 min="0.00"
+                 min="0.01"
+                 step="0.01"
                  matInput
-                 [(ngModel)]="this.projectService.getSelectedProject().budget"
+                 [value]="(this.projectService.getSelectedProject().budget/100).toFixed(2)"
                  [formControl]="this.budgetControl">
           <span matPrefix>$&nbsp;</span>
         </mat-form-field>
       </div>
       <app-budget-report></app-budget-report>
-      <app-project-member-list id="members"></app-project-member-list>
       <app-expense-list id="expenses"></app-expense-list>
+      <app-project-member-list id="members"></app-project-member-list>
     </form>
     <mat-card-actions class="row">
-      <button class="delete_btn" (click)="delete()" mat-button>
+      <button class="delete_btn" (click)="openDeleteDialog()" mat-button>
         Delete
       </button>
       <button class="cancel_btn" (click)="cancel()" mat-button>

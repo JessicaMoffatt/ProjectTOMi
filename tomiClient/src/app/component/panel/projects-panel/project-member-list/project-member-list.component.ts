@@ -21,7 +21,7 @@ export class ProjectMemberListComponent implements OnInit {
 
   addMemberToProject() {
     this.dialog.open(AddProjectMemberComponent, {
-      width: "70vw"
+      width: "50vw"
     });
   }
 

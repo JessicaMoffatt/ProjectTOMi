@@ -45,6 +45,10 @@ export class TeamSidebarComponent implements OnInit {
   public unselect(teamId: number): void {
     this.buttonGroup.selected.checked = false;
   }
+
+  setSelectedTeam(team:Team){
+    this.buttonGroup = team;
+  }
 }
 
 @Pipe({name: 'FilterTeamByName'})

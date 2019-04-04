@@ -1,0 +1,62 @@
+<!--
+  @author Karol Talbot
+  @version 1.1
+-->
+
+<h2 mat-dialog-title>Add New Project</h2>
+<div mat-dialog-content class="dialog_pane">
+  <form #addProjectForm="ngForm">
+    <div class="row">
+      <mat-form-field id="account_manager">
+        <input matInput #accountManager placeholder="Account Manager" [formControl]="accountManagerControl">
+      </mat-form-field>
+
+      <mat-form-field id="project">
+        <input matInput #addProjectName placeholder="Project Name" [formControl]="projectNameControl">
+      </mat-form-field>
+
+      <mat-form-field id="client">
+        <input type="text"
+               placeholder="Client"
+               aria-label="Client"
+               matInput
+               [formControl]="clientControl"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let c of this.clientService.clients | async" [value]="c.name">
+            {{c.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field id="billingRate">
+        <input placeholder="Billing Rate"
+               #billing
+               aria-label="Billing Rate"
+               type="number"
+               min="0.01"
+               step="0.01"
+               matInput
+               [formControl]="this.billingControl">
+        <span matPrefix>$&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field id="budget">
+        <input type="number"
+               #budget
+               placeholder="Budget Total"
+               aria-label="Budget Total"
+               min="0.01"
+               step="0.01"
+               matInput
+               [formControl]="this.budgetControl">
+        <span matPrefix>$&nbsp;</span>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div id="buttons" mat-dialog-actions align="end">
+  <button mat-raised-button class="manage_save_btn" (click)="addProject()">Add</button>
+  <button mat-raised-button class="manage_cancel_btn" (click)="onNoClick()">Cancel</button>
+</div>

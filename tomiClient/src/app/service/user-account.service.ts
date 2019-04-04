@@ -6,6 +6,7 @@ import {catchError, map} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material";
 import {userAccountUrl} from "../configuration/domainConfiguration";
 import {ErrorService} from "./error.service";
+import {SignInService} from "./sign-in.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -22,14 +23,15 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-
 export class UserAccountService {
+  /** The UserAccount selected from the list of UserAccounts.*/
+  private selectedUserAccount: UserAccount;
 
   /** Listing of all active UserAccounts */
   userAccounts: Observable<Array<UserAccount>>;
   userSubject: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject<Array<UserAccount>>([]);
 
-  public constructor(private http: HttpClient, public snackBar:MatSnackBar, private errorService: ErrorService) {
+  public constructor(private http: HttpClient, public snackBar:MatSnackBar, private errorService: ErrorService, private signInService:SignInService) {
 
   }
 
@@ -39,17 +41,18 @@ export class UserAccountService {
   initializeUserAccounts() {
     this.GETAllUserAccounts().forEach( users => {
       this.userSubject = new BehaviorSubject<Array<UserAccount>>(users);
-      this.sortUserAccounts();
+      this.sortUserAccounts(this.userSubject);
+
     }).catch( () => this.errorService.displayError());
   }
 
   /**
    * Sorts the user accounts in the userSubject list by ascending last name.
    */
-  sortUserAccounts() {
-    this.userSubject.getValue().sort((user1, user2) => {
-      let name1 = user1.lastName.toLowerCase();
-      let name2 = user2.lastName.toLowerCase();
+  sortUserAccounts(users:BehaviorSubject<Array<UserAccount>>){
+    users.getValue().sort((user1, user2) => {
+      let name1 = user1.lastName.toLowerCase() + user1.firstName.toLowerCase();
+      let name2 = user2.lastName.toLowerCase() + user2.firstName.toLowerCase() ;
       if (name1 > name2) { return 1; }
       if (name1 < name2) { return -1; }
       return 0;
@@ -95,8 +98,8 @@ export class UserAccountService {
            this.userSubject.getValue().splice(indexToBeRemoved, 1);
         }
       });
-    }).then(() => {
-      this.sortUserAccounts();
+    }).then(value => {
+      this.sortUserAccounts(this.userSubject);
     }).catch( () => this.errorService.displayErrorMessage('Something went wrong when updating the list of Users.'));
   }
 
@@ -136,6 +139,7 @@ export class UserAccountService {
           + userAccount.lastName + '.')
       });
     }
+    this.signInService.getNavBarList();
   }
 
   /**

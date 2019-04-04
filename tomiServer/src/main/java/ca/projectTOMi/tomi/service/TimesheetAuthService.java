@@ -69,7 +69,9 @@ public class TimesheetAuthService {
 		authPolicy.setRequestingUser(newTeamLead);
 		for (final UserAccount member : teamMembers) {
 			authPolicy.setTimesheetOwner(member);
-			this.timesheetAuthRepository.save(authPolicy);
+			if (!member.equals(newTeamLead)) {
+				this.timesheetAuthRepository.save(authPolicy);
+			}
 		}
 	}
 
