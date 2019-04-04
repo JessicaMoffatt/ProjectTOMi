@@ -35,8 +35,8 @@
         </mat-form-field>
       </div>
       <div class="row">
-        <mat-form-field id="projectManager" #projectManager>
-          <mat-select placeholder="Project Manager"
+        <mat-form-field id="projectManager">
+          <mat-select #projectManager placeholder="Project Manager"
                       aria-label="Project Manager"
                       [(value)]="this.projectService.getSelectedProject().projectManagerId">
             <mat-option [value]="-1">None</mat-option>

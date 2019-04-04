@@ -58,7 +58,8 @@ export class ProjectDetailComponent implements OnInit {
     this.projectService.getSelectedProject().budget = this.budget.nativeElement.value * 100;
     this.projectService.getSelectedProject().billableRate = this.billing.nativeElement.value * 100;
     let project: Project = this.projectService.getSelectedProject();
-    if (this.projectManager._selected === null || this.projectManager._selected === undefined) {
+    console.log(this.projectManager.value);
+    if (this.projectManager.value === null || this.projectManager.value === undefined) {
 
       project.projectManagerId = -1;
     }
