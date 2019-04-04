@@ -4,6 +4,7 @@ import {MatDialogRef} from "@angular/material";
 import {ClientService} from "../../../service/client.service";
 import {Project} from "../../../model/project";
 import {ProjectService} from "../../../service/project.service";
+import {Client} from "../../../model/client";
 
 /**
  * AddTaskComponent is a modal form used to add a new Task to the back end.
@@ -74,9 +75,24 @@ export class AddProjectComponent implements OnInit {
         }
       });
       project.id = initials;
-      project.client = this.clientControl.value;
-      // this.projectService.save(project);
-      this.dialogRef.close();
+      let saveClient = new Client();
+      saveClient.name = this.clientControl.value;
+      let matchClient = this.clientService.getClientByName(saveClient.name);
+      if ( matchClient === null) {
+        this.clientService.save(saveClient).then((client:Client) => {
+          project.client = client;
+
+          this.projectService.save(project);
+        });
+      } else {
+        project.client = matchClient;
+      }
+      this.projectService.save(project).then(()=>{
+        this.projectService.refreshProjectList();
+        this.dialogRef.close();
+      });
+
+
     }
   }
 }

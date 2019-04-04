@@ -256,7 +256,8 @@ export class ManageTeamsPanelComponent implements OnInit {
 export class DeleteTeamModal {
   teamToDelete: Team;
 
-  constructor(public dialogRef: MatDialogRef<DeleteTeamModal>, @Inject(MAT_DIALOG_DATA) public data: DeleteDialogData) {
+  constructor(public dialogRef: MatDialogRef<DeleteTeamModal>,
+              @Inject(MAT_DIALOG_DATA) public data: DeleteDialogData) {
 
   }
 
@@ -274,7 +275,7 @@ export class DeleteTeamModal {
   }
 }
 
-/** Data interface for the DeleteUserModal */
+/** Data interface for the DeleteTeamModal */
 export interface DeleteDialogData {
   teamToDelete: Team;
   parent: ManageTeamsPanelComponent;

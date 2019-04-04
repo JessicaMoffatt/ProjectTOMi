@@ -7,6 +7,7 @@ import {ExpenseService} from "../../../../service/expense.service";
 import {Client} from "../../../../model/client";
 import {UserAccountService} from "../../../../service/user-account.service";
 import {ProjectsPanelComponent} from "../projects-panel.component";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
 
 
 @Component({
@@ -25,7 +26,8 @@ export class ProjectDetailComponent implements OnInit {
               public clientService: ClientService,
               public expenseService: ExpenseService,
               public userAccountService: UserAccountService,
-              @Inject(ProjectsPanelComponent) private parent: ProjectsPanelComponent) {
+              @Inject(ProjectsPanelComponent) private parent: ProjectsPanelComponent,
+              public deleteProjectDialog: MatDialog) {
   }
 
   nameControl = new FormControl();
@@ -62,9 +64,9 @@ export class ProjectDetailComponent implements OnInit {
     }
 
     let matchClient = this.clientService.getClientByName(saveClient.name);
-    if ( matchClient === null) {
-      this.clientService.save(saveClient).then((client:Client) => {
-          project.client = client;
+    if (matchClient === null) {
+      this.clientService.save(saveClient).then((client: Client) => {
+        project.client = client;
 
         this.projectService.save(project);
       });
@@ -103,15 +105,56 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   delete() {
-    if (this.projectService.getSelectedProject().id.match(this.projectService.regExp)) {
-      this.projectService.delete(this.projectService.getSelectedProject());
-    }
-    // this.projectService.setSelected(new Project());
+    this.projectService.delete(this.projectService.getSelectedProject());
     this.parent.unselect();
+
+
   }
 
   cancel() {
-    // this.projectService.setSelected(new Project());
+    this.projectService.refreshProjectList();
     this.parent.unselect();
   }
+
+  openDeleteDialog() {
+    let selectedProject = this.projectService.getSelectedProject();
+    this.deleteProjectDialog.open(DeleteProjectModal, {
+      width: '40vw',
+      data: {projectToDelete: selectedProject, parent: this}
+    });
+  }
+}
+
+@Component({
+  selector: 'app-delete-project-modal',
+  templateUrl: './delete-project-modal.html',
+  styleUrls: ['./delete-project-modal.scss']
+})
+/** Inner class for confirmation modal of delete Team. */
+export class DeleteProjectModal {
+  projectToDelete: Project;
+
+  constructor(public dialogRef: MatDialogRef<DeleteProjectModal>,
+              @Inject(MAT_DIALOG_DATA) public data: DeleteDialogData) {
+
+  }
+
+  ngOnInit() {
+    this.projectToDelete = this.data.projectToDelete;
+  }
+
+  canceledDelete(): void {
+    this.dialogRef.close();
+  }
+
+  confirmedDelete() {
+    this.data.parent.delete();
+    this.dialogRef.close();
+  }
+}
+
+/** Data interface for the DeleteProjectModal */
+export interface DeleteDialogData {
+  projectToDelete: Project;
+  parent: ProjectDetailComponent;
 }

@@ -193,7 +193,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
    */
   displayDeleteEntryModal(entry: Entry) {
     const dialogRef = this.dialog.open(DeleteEntryModalComponent, {
-      width: '400px',
+      width: '40wv',
       data: {entry: entry, parent: this}
     });
 
@@ -385,16 +385,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
  */
 @Component({
   selector: 'app-delete-modal',
-  template: `
-
-    <h1 mat-dialog-title>Delete Entry</h1>
-    <div mat-dialog-content>
-      <p>Confirm DELETION of entry</p>
-      <button mat-button [ngClass]="'confirm_button'" (click)="confirmDelete()">DELETE</button>
-      <button mat-button [ngClass]="'cancel_btn'" (click)="cancelDelete()">CANCEL</button>
-    </div>
-
-  `
+  templateUrl: './delete-entry-modal.html',
+  styleUrls: ['./delete-entry-modal.scss']
 })
 
 /**
@@ -442,11 +434,12 @@ export class DeleteEntryModalComponent implements OnInit {
 
     <h1 mat-dialog-title>Submit Timesheet</h1>
     <div mat-dialog-content>
-      <p>Confirm SUBMISSION of Timesheet</p>
-      <button mat-button [ngClass]="'confirm_button'" (click)="confirmSubmission()">SUBMIT</button>
-      <button mat-button [ngClass]="'cancel_btn'" (click)="cancel()">CANCEL</button>
+      <p>Confirm submission of Timesheet</p>
+      <button mat-button [ngClass]="'manage_cancel_btn'" (click)="cancel()">Cancel</button>
+      <button mat-button [ngClass]="'modal_submit'" (click)="confirmSubmission()">Submit</button>
     </div>
-  `
+  `,
+  styleUrls: ['./delete-entry-modal.scss']
 })
 
 /**
