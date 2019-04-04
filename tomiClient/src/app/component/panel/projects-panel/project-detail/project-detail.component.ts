@@ -42,7 +42,6 @@ export class ProjectDetailComponent implements OnInit {
   ngOnInit() {
     this.userAccountService.initializeUserAccounts();
     this.setProject();
-    this.clientService.initializeClients();
   }
 
   setProject() {
@@ -51,8 +50,6 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   save() {
-    let saveClient = this.projectService.getSelectedClient();
-
     this.projectService.getSelectedProject().budget = this.budget.nativeElement.value * 100;
     this.projectService.getSelectedProject().billableRate = this.billing.nativeElement.value * 100;
     let project: Project = this.projectService.getSelectedProject();
@@ -61,18 +58,25 @@ export class ProjectDetailComponent implements OnInit {
       project.projectManagerId = -1;
     }
 
-    let matchClient = this.clientService.getClientByName(saveClient.name);
-    if ( matchClient === null) {
-      this.clientService.save(saveClient).then((client:Client) => {
-          project.client = client;
+    // a null return value indicates that no matching client is found
+    if (this.clientService.getClientByName(project.client.name) == null) {
+      //  console.log('new client');
+      this.clientService.save(project.client).then((client) => {
+        if (client instanceof Client) {
 
-        this.projectService.save(project);
+          project.client = client;
+        }
+        //  this.logValues()
+        this.projectService.save(project)
       });
     } else {
-      project.client = matchClient;
-
-      this.projectService.save(project);
+      // console.log("existing client");
+      project.client
+        = this.clientService.getClientByName(project.client.name);
+      this.projectService.save(project)
     }
+
+    this.projectService.setSelected(new Project());
     this.parent.unselect();
   }
 
@@ -106,12 +110,12 @@ export class ProjectDetailComponent implements OnInit {
     if (this.projectService.getSelectedProject().id.match(this.projectService.regExp)) {
       this.projectService.delete(this.projectService.getSelectedProject());
     }
-    // this.projectService.setSelected(new Project());
+    this.projectService.setSelected(new Project());
     this.parent.unselect();
   }
 
   cancel() {
-    // this.projectService.setSelected(new Project());
+    this.projectService.setSelected(new Project());
     this.parent.unselect();
   }
 }

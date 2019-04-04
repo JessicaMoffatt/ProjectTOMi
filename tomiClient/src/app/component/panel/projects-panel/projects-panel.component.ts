@@ -7,7 +7,6 @@ import {UserAccount} from "../../../model/userAccount";
 import {SignInService} from "../../../service/sign-in.service";
 import {DataDumpReportComponent} from "../../extra/data-dump-report/data-dump-report.component";
 import {AddProjectComponent} from "../../modal/add-project/add-project";
-import {ClientService} from "../../../service/client.service";
 
 @Component({
   selector: 'app-projects-panel',
@@ -27,6 +26,7 @@ export class ProjectsPanelComponent implements OnInit {
   project: Project;
 
   async ngOnInit() {
+    await this.projectService.setSelected(null);
     this.projectService.userAccountList = new BehaviorSubject<Array<UserAccount>>([]);
   }
 

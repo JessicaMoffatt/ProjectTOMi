@@ -85,24 +85,9 @@ export class TeamMemberTimesheetService{
     }
   }
 
-  sortTeamMembers() {
-    this.teamMembers.sort((user1, user2) => {
-      let name1 = user1.firstName.toLowerCase() + user1.lastName.toLowerCase();
-      let name2 = user2.firstName.toLowerCase() + user2.lastName.toLowerCase();
-      if (name1 > name2) {
-        return 1;
-      }
-      if (name1 < name2) {
-        return -1;
-      }
-      return 0;
-    });
-  }
-
   getAllTeamMembersAndReports(team:Team){
     this.getAllTeamMembers(team).subscribe((data: Array<UserAccount>) => {
       this.teamMembers = data;
-      this.sortTeamMembers();
       for (let i = 0; i < this.teamMembers.length; i++) {
         this.getProductivityReportByMember(this.teamMembers[i])
           .subscribe((data: ProductivityReportLine[]) => {

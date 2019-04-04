@@ -41,23 +41,10 @@ export class ClientService {
   initializeClients() {
     this.getClients().forEach(client => {
       this.clients = new BehaviorSubject<Array<Client>>(client);
-      this.sortClients();
+      //console.log(this.clients.value);
     });
   }
 
-  sortClients() {
-    this.clients.getValue().sort((client1, client2) => {
-      let name1 = client1.name.toLowerCase();
-      let name2 = client2.name.toLowerCase();
-      if (name1 > name2) {
-        return 1;
-      }
-      if (name1 < name2) {
-        return -1;
-      }
-      return 0;
-    });
-  }
 
   /**
    * Gets all projects.
@@ -132,6 +119,8 @@ export class ClientService {
    * @param clientName the client name to be searched for
    */
   getClientByName(clientName: string): Client {
+    //  console.log(this.clients.value);
+    //  console.log(clientName);
     for (let c of this.clients.value) {
       if (c.name === clientName) {
         return c as Client;
@@ -140,6 +129,7 @@ export class ClientService {
     return null;
   }
 
+  //TODO add error handling!!
   /**
    * Saves a specified client. If the team is new (ID of -1) an HTTP POST is performed, else a PUT is performed to update the existing team.
    * @param team The team to update/create.
@@ -150,20 +140,6 @@ export class ClientService {
    * @param account The UserAccount to be created/updated.
    */
   save(client: Client) {
-    let newClient:boolean = true;
-
-    this.clients.subscribe(result => {
-      for(let i = 0; i < result.length; i ++){
-        if(result[i].name === client.name){
-          newClient = false;
-          break;
-        }
-      }
-    });
-
-    if(newClient === true){
-      client.id = -1;
-    }
 
     if (client.id === -1) {
       return this.http.post<Client>(this.clientsUrl, JSON.stringify(client), httpOptions).toPromise()

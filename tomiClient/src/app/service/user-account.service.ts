@@ -40,7 +40,7 @@ export class UserAccountService {
   initializeUserAccounts() {
     this.GETAllUserAccounts().forEach( users => {
       this.userSubject = new BehaviorSubject<Array<UserAccount>>(users);
-      this.sortUserAccounts(this.userSubject);
+      this.sortUserAccounts();
     }).catch( (error: any) => {
       let getUsersErrorMessage = 'Something went wrong when getting the list of users. Please contact your system administrator.';
       this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
@@ -50,10 +50,10 @@ export class UserAccountService {
   /**
    * Sorts the user accounts in the userSubject list by ascending last name.
    */
-  sortUserAccounts(users:BehaviorSubject<Array<UserAccount>>){
-    users.getValue().sort((user1, user2) => {
-      let name1 = user1.firstName.toLowerCase() + user1.lastName.toLowerCase();
-      let name2 = user2.firstName.toLowerCase() + user2.lastName.toLowerCase();
+  sortUserAccounts() {
+    this.userSubject.getValue().sort((user1, user2) => {
+      let name1 = user1.lastName.toLowerCase();
+      let name2 = user2.lastName.toLowerCase();
       if (name1 > name2) { return 1; }
       if (name1 < name2) { return -1; }
       return 0;
@@ -100,7 +100,7 @@ export class UserAccountService {
         }
       });
     }).then(value => {
-      this.sortUserAccounts(this.userSubject);
+      this.sortUserAccounts();
     }).catch( (error: any) => {
       let getUsersErrorMessage = 'Something went wrong when updating the list of Users.';
       this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
