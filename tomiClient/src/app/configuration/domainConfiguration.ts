@@ -25,7 +25,6 @@ export const billableHourDownloadUrl = domain + 'billable_hours_report/xls';
 export const billableUrl = domain + 'billable_hours_report';
 /** The URL used to get,post, and delete entries. */
 export const entryUrl = domain + 'entries';
-
-/** The URL used to get,post, and delete tasks. */
-export const expenseUrl = domain + 'expenses';
+/** The URL used to get,post, and delete clients. */
+export const clientUrl = domain + 'clients';
 

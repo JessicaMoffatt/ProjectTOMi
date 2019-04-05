@@ -93,17 +93,6 @@ export class ProjectDetailComponent implements OnInit {
       return first + second;
   }
 
-
-  logValues() {
-    console.log("project name " + this.projectService.getSelectedProject().projectName);
-    console.log("client " + this.projectService.getSelectedProject().client.name);
-    console.log("client id " + this.projectService.getSelectedProject().client.id);
-    console.log("project manager " + this.projectService.getSelectedProject().projectManagerId);
-    console.log("account id " + this.projectService.getSelectedProject().id);
-    console.log("billable " + this.projectService.getSelectedProject().billableRate);
-    console.log("budget " + this.projectService.getSelectedProject().budget);
-  }
-
   delete() {
     this.projectService.delete(this.projectService.getSelectedProject());
     this.parent.unselect();

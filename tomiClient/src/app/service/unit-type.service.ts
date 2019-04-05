@@ -31,7 +31,7 @@ export class UnitTypeService {
   }
 
   /**
-   * Gets the list of all active unit types and populates them into the unitTypes list.
+   * Gets the list of all active UnitTypes and populates them into the unitTypes list.
    */
   initializeUnitTypes() {
     return this.getAllUnitTypes().forEach(unitTypes => {
@@ -73,7 +73,7 @@ export class UnitTypeService {
   }
 
   /**
-   * Logically deletes the unit type (sets the active status to false).
+   * Logically deletes the UnitType (sets the active status to false).
    *
    * @param unitType the UnitType to be deleted.
    */
