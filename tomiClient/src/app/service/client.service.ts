@@ -86,8 +86,8 @@ export class ClientService {
   }
 
   /**
-   * returns the client if they exist, otherwise null
-   * @param clientName the name of the client being searched for
+   * Returns the Client with a matching name if they exist, otherwise null.
+   * @param clientName the name of the Client being searched for.
    */
   getClientByName(clientName: string): Client {
     for (let c of this.clients.value) {
@@ -99,9 +99,10 @@ export class ClientService {
   }
 
   /**
-   * Saves a specified client by performing an HTTP post.
+   * Saves the specified Client. If the Client is new (id = -1), an HTTP POST is performed,
+   * else an HTTP PUT is performed to update the existing Client.
    *
-   * @param client the client to be created/updated.
+   * @param client The Client to be created/updated.
    */
   save(client: Client) {
     let newClient: boolean = true;
