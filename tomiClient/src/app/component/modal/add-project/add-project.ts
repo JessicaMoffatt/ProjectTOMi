@@ -63,7 +63,7 @@ export class AddProjectComponent implements OnInit {
   private async addProject() {
     let initials: string;
     let project: Project;
-    if (this.projectNameControl.valid && this.accountManagerControl && this.billingControl && this.budgetControl && this.clientControl) {
+    if (this.projectNameControl.valid && this.accountManagerControl.valid && this.billingControl.valid  && this.budgetControl.valid  && this.clientControl.valid ) {
       project = new Project();
       initials = '';
       project.projectName = this.projectNameControl.value;
@@ -91,7 +91,6 @@ export class AddProjectComponent implements OnInit {
         this.projectService.refreshProjectList();
         this.dialogRef.close();
       });
-
 
     }
   }
