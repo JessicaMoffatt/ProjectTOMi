@@ -108,6 +108,11 @@ export class ProjectEntriesService {
         }
   }
 
+  /**
+   * Wraps the putApprovalRequest method call in a promise.
+   *
+   * @param currEntry The Entry currently being evaluated.
+   */
   async promiseApproval(currEntry:Entry){
     let promise = new Promise((resolve,reject)=>{
       resolve(this.putApprovalRequest(currEntry));
@@ -116,6 +121,10 @@ export class ProjectEntriesService {
     return await promise;
   }
 
+  /**
+   * Performs an http PUT request to change the Entry's status to APPROVED.
+   * @param entry The Entry to be approved.
+   */
   async putApprovalRequest(entry:Entry){
     let url = entry._links["evaluate"];
     let temp = null;
@@ -130,6 +139,10 @@ export class ProjectEntriesService {
     return temp;
   }
 
+  /**
+   * Performs an http PUT request to change the Entry's status to REJECTED.
+   * @param entry The Entry to be rejected.
+   */
   async putRejectionRequest(entry:Entry): Promise<Entry>{
     let url = entry._links["evaluate"];
     let temp = null;
