@@ -56,6 +56,8 @@ public class EntryController {
 	                                @RequestAttribute final TimesheetAuthManager authMan) {
 		final Entry entry = this.entryService.getEntry(id);
 
+		//if (1==1) throw new IndexOutOfBoundsException();
+
 		return this.assembler.toResource(new TimesheetAuthLinkWrapper<>(entry, authMan));
 	}
 

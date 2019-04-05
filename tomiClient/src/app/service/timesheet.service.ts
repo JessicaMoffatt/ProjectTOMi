@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {Entry} from "../model/entry";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Timesheet} from "../model/timesheet";
@@ -11,6 +11,7 @@ import {Task} from "../model/task";
 import {UnitType} from "../model/unitType";
 import {TaskService} from "./task.service";
 import {UnitTypeService} from "./unit-type.service";
+import {ErrorService} from "./error.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -54,10 +55,11 @@ export class TimesheetService {
    */
   minDate: Date;
 
-  /** Represents whether timesheets should be repopulated on init or not. */
+/** Represents whether timesheets should be repopulated on init or not. */
   private repopulateTimesheets: boolean = false;
 
-  constructor(private http: HttpClient, public taskService: TaskService, public unitTypeService: UnitTypeService) {
+  constructor(private http: HttpClient, public taskService: TaskService, public unitTypeService: UnitTypeService,
+              private errorService: ErrorService) {
   }
 
   /** Populates tasks with list of Tasks.*/
@@ -66,7 +68,7 @@ export class TimesheetService {
       resolve(this.taskService.initializeTasks())
     }).then(() => {
       this.tasks = this.taskService.getTaskSubjectList();
-    });
+    }).catch(() => this.errorService.displayError());
 
     return await promise;
   }
@@ -77,7 +79,7 @@ export class TimesheetService {
       resolve(this.unitTypeService.initializeUnitTypes())
     }).then(() => {
       this.unitTypes = this.unitTypeService.getUnitTypeSubjectList();
-    });
+    }).catch(() => this.errorService.displayError());
 
     return await promise;
   }
@@ -113,10 +115,9 @@ export class TimesheetService {
   async setMinDate() {
     await this.getEarliestDate().then((data) => {
       let dateString = data.toString().replace(/-/g, '\/').replace(/T.+/, '');
-
       this.minDate = new Date(dateString);
       return this.minDate;
-    });
+    }).catch(() => this.errorService.displayError())
   }
 
   /**
@@ -126,6 +127,7 @@ export class TimesheetService {
   getEntries(timesheet: Timesheet): Observable<Array<Entry>> {
     let url = timesheet._links["getEntries"];
     return this.http.get(url["href"])
+      .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           let sorted = data._embedded.entries as Entry[];
@@ -152,6 +154,7 @@ export class TimesheetService {
    */
   async getAllTimesheets(userId: number) {
     return this.http.get(`${userTimesheetUrl}/${userId}`)
+      .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.timesheets as Timesheet[];
@@ -167,15 +170,16 @@ export class TimesheetService {
    */
   async populateTimesheets(userId: number) {
     return await this.getAllTimesheets(userId).then((response) => {
-      return response.toPromise().then((data) => {
-        this.timesheets = data;
+      return response.toPromise()
+        .then((data) => {
+          this.timesheets = data;
 
-        if (this.currentTimesheetIndex >= this.timesheets.length) {
-          this.currentTimesheetIndex = this.timesheets.length - 1;
-        }
+          if (this.currentTimesheetIndex >= this.timesheets.length) {
+            this.currentTimesheetIndex = this.timesheets.length - 1;
+          }
 
-        return this.getCurrentTimesheet();
-      });
+          return this.getCurrentTimesheet();
+        }).catch(() => this.errorService.displayError())
     });
   }
 
@@ -230,15 +234,16 @@ export class TimesheetService {
   async submit(): Promise<Timesheet> {
     let tempSheet: Timesheet = null;
 
-    return await this.getCurrentTimesheet().then(
-      (data) => {
+    return await this.getCurrentTimesheet()
+      .then((data) => {
         let url = data._links["submit"];
 
-        return this.putTimesheetRequest(data, tempSheet, url).then((data) => {
-          tempSheet = data;
-          return tempSheet;
-        });
-      });
+        return this.putTimesheetRequest(data, tempSheet, url)
+          .then((data) => {
+            tempSheet = data;
+            return tempSheet;
+          })
+      })
   }
 
   /**
@@ -248,12 +253,14 @@ export class TimesheetService {
    * @param url The PUT url for the Timesheet.
    */
   async putTimesheetRequest(data: any, tempSheet: Timesheet, url: string[]): Promise<Timesheet> {
-    await this.http.put<Timesheet>(url["href"], data, httpOptions).toPromise().then(response => {
-      tempSheet = response;
-      return response;
-    }).catch(() => {
-      return null;
-    });
+    await this.http.put<Timesheet>(url["href"], data, httpOptions).toPromise()
+      .then(response => {
+        tempSheet = response;
+        return response;
+      }).catch(() => {
+        this.errorService.displayError();
+        return null;
+      });
     return tempSheet;
   }
 
@@ -274,6 +281,7 @@ export class TimesheetService {
    */
   getTimesheetById(timesheetId: number): Observable<Timesheet> {
     return this.http.get(`${timesheetUrl}/${timesheetId}`)
+      .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         return data as Timesheet;
       }));

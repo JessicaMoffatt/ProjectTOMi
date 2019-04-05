@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {catchError, map} from "rxjs/operators";
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, Observable, throwError} from "rxjs";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Project} from "../model/project";
 import {
   billableHourDownloadUrl,
@@ -20,6 +20,7 @@ import {Status} from "../model/status";
 import {EntryApproveComponent} from "../component/panel/entry-approve/entry-approve.component";
 import {SignInService} from "./sign-in.service";
 import {Client} from "../model/client";
+import {ErrorService} from "./error.service";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -72,7 +73,8 @@ export class ProjectService {
   constructor(private http: HttpClient,
               public snackBar: MatSnackBar,
               private expenseService: ExpenseService,
-              private signInService: SignInService) {
+              private signInService:SignInService,
+              private errorService: ErrorService) {
   }
 
   /**
@@ -81,12 +83,13 @@ export class ProjectService {
   getAllProjects(): Observable<Array<Project>> {
     return this.http.get(`${projectsUrl}`)
       .pipe(map((data: any) => {
-        if (data._embedded !== undefined) {
-          return data._embedded.projects as Project[];
-        } else {
-          return [];
-        }
-      }));
+          if (data !== undefined && data._embedded !== undefined) {
+            return data._embedded.projects as Project[];
+          } else {
+            return [];
+          }
+        }), catchError(this.errorService.handleError<Project[]>())
+      );
   }
 
   /**
@@ -95,6 +98,7 @@ export class ProjectService {
    */
   getProjectsForUser(userId: number): Observable<Array<Project>> {
     return this.http.get(`${userAccountUrl}/${userId}/projects`)
+      .pipe(catchError(this.errorService.handleError<Client[]>()))
       .pipe(map((data: any) => {
         if (data === null) {
           return [];
@@ -116,16 +120,15 @@ export class ProjectService {
     if (this.selectedProject != null && this.selectedProject.id.match(this.regExp)) {
       this.refreshUserAccountList();
       this.expenseService.refreshExpenses(this.selectedProject);
-      this.getBudgetReportByProjectId(project)
-        .subscribe(
+      this.getBudgetReportByProjectId(project).toPromise()
+        .then(
           data => {
             this.selectedBudget = data;
             this.percentActual = this.calculatePercentActual();
             this.percentRemaining = 100 - this.percentActual;
           },
-          error => {
-            this.handleError
-          });
+          () => this.errorService.displayErrorMessage('project.service setSelected()')
+        );
     }
     this.selectedClient.name = this.selectedProject.client.name;
     this.selectedClient.id = this.selectedProject.client.id;
@@ -153,7 +156,7 @@ export class ProjectService {
       .pipe(
         map((res: Project) => {
           return res
-        }), catchError(this.handleError)
+        }), catchError(this.errorService.handleError())
       );
   }
 
@@ -167,7 +170,7 @@ export class ProjectService {
       .pipe(
         map((res: BudgetReport) => {
           return res
-        }), catchError(this.handleError)
+        })
       );
   }
 
@@ -201,10 +204,14 @@ export class ProjectService {
    */
   getBillableReport() {
     return this.http.get(billableUrl)
+      .pipe(catchError(this.errorService.handleError()))
       .pipe(
         map((res: BillableHoursReportLine[]) => {
-          return res
-        }), catchError(this.handleError)
+          if (res !== undefined)
+            return res
+          else
+            return []
+        })
       );
   }
 
@@ -217,7 +224,7 @@ export class ProjectService {
       .pipe(
         map((res) => {
           return res
-        }), catchError(this.handleError)
+        }), catchError(this.errorService.handleError())
       );
   }
 
@@ -229,16 +236,8 @@ export class ProjectService {
       .pipe(
         map((res) => {
           return res
-        }), catchError(this.handleError)
+        }), catchError(this.errorService.handleError())
       );
-  }
-
-  /**
-   * General error handling method.
-   * @param error The error that occurred.
-   */
-  private handleError(error: HttpErrorResponse) {
-    return throwError(error.message);
   }
 
   /**
@@ -254,7 +253,8 @@ export class ProjectService {
         .then((project) => {
           this.setSelected(project);
           this.signInService.getNavBarList();
-        });
+        })
+        .catch(() => this.errorService.displayError());;
     } else {
       const url = project._links["update"];
 
@@ -262,6 +262,7 @@ export class ProjectService {
         .then((project) => {
           this.signInService.getNavBarList();
         })
+        .catch(() => this.errorService.displayError());
     }
   }
 
@@ -275,8 +276,9 @@ export class ProjectService {
       .then((response) => {
         this.refreshUserAccountList();
         return response;
-      }).catch((reason) => {
-        return null;
+      }).catch(() => {
+      this.errorService.displayError();
+      return null;
     });
   }
 
@@ -296,6 +298,8 @@ export class ProjectService {
         horizontalPosition: 'right'
       });
     });
+    this.getAllProjects().toPromise().then(project =>
+      this.projects = new BehaviorSubject<Array<Project>>(project))
   }
 
   /**
@@ -320,23 +324,16 @@ export class ProjectService {
    */
   refreshUserAccountList() {
     this.http.get(`${projectsUrl}/${this.selectedProject.id}/members`)
+      .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         if (data !== undefined) {
           return data as UserAccount[];
         } else {
           return [];
         }
-      })).forEach(userAccount => {
+      })).toPromise().then(userAccount => {
       this.userAccountList = new BehaviorSubject<Array<UserAccount>>(userAccount);
-    }).catch(() => {
-      let getUsersErrorMessage = 'Something went wrong when getting the list of project members. Please contact your system administrator.';
-      this.snackBar.open(getUsersErrorMessage, null, {
-        duration: 5000,
-        politeness: 'assertive',
-        panelClass: 'snackbar-fail',
-        horizontalPosition: 'right'
-      });
-    });
+    })
   }
 
   /**
@@ -346,6 +343,7 @@ export class ProjectService {
   removeUser(userId: number) {
     this.http.put(`${projectsUrl}/${this.selectedProject.id}/remove_member/${userId}`, httpOptions).toPromise()
       .then(() => this.refreshUserAccountList())
+      .catch(() => this.errorService.displayError())
   }
 
   /**
@@ -398,10 +396,7 @@ export class ProjectService {
    * @param currEntry The Entry currently being evaluated.
    */
   async promiseApproval(currEntry: Entry) {
-    let promise = new Promise((resolve, reject) => {
-      resolve(this.putApprovalRequest(currEntry));
-    });
-
+    let promise = new Promise(resolve => resolve(this.putApprovalRequest(currEntry)));
     return await promise;
   }
 

@@ -235,7 +235,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
           promise.then();
         });
       } else if (!valid) {
-        this.errorService.displayError();
+        this.errorService.displayErrorMessage("All fields need a value to submit the timesheet.");
       }
       }
     );

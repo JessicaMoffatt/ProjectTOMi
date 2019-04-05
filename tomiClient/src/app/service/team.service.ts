@@ -3,9 +3,10 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {Team} from "../model/team";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {teamUrl} from "../configuration/domainConfiguration";
 import {UserAccount} from "../model/userAccount";
+import {ErrorService} from "./error.service";
 import {SignInService} from "./sign-in.service";
 
 const httpOptions = {
@@ -30,7 +31,7 @@ export class TeamService {
   /** The list of all active Teams. */
   private teamSubjectList: BehaviorSubject<Array<Team>> = new BehaviorSubject<Array<Team>>([]);
 
-  public constructor(private http: HttpClient, public snackBar: MatSnackBar, private signInService:SignInService) {
+  public constructor(private http: HttpClient, public snackBar: MatSnackBar, private signInService:SignInService, private errorService: ErrorService) {
 
   }
 
@@ -95,17 +96,16 @@ export class TeamService {
         tempTeam = response;
         return response;
       }).catch((error: any) => {
-
+        this.errorService.displayErrorMessage(error);
       });
     } else {
       const url = team._links["update"];
       await this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).toPromise().then((response) => {
         this.requestAllTeams();
-
         tempTeam = response;
         return response;
-      }).catch((error: Error) => {
-
+      }).catch((error: any) => {
+        this.errorService.displayErrorMessage(error);
       });
     }
     this.signInService.getNavBarList();
@@ -118,6 +118,7 @@ export class TeamService {
    */
   getAllFreeMembers(): Observable<Array<UserAccount>> {
     return this.http.get(`${teamUrl}/unassigned`)
+    //  .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];
@@ -154,8 +155,8 @@ export class TeamService {
     await this.http.delete(url["href"], httpOptions).toPromise().then((response) => {
       this.requestAllTeams();
       return response;
-    }).catch((error: Error) => {
-
+    }).catch((error: any) => {
+      this.errorService.displayErrorMessage(error);
     });
   }
 
@@ -165,6 +166,7 @@ export class TeamService {
    */
   getTeamById(id: number): Observable<Team> {
     return this.http.get(`${teamUrl}/${id}`)
+      //.pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         return data as Team;
       }));

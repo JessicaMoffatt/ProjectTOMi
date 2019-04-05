@@ -35,21 +35,26 @@ public class ReportController {
 
 	@GetMapping ("/billable_hours_report")
 	public List<BillableHoursReportLine> getBillableHoursReport() {
+		//confirmed. if (1==1) throw new IndexOutOfBoundsException();
 		return this.reportService.getBillableHoursReport();
 	}
 
 	@GetMapping ("/billable_hours_report/xls")
 	public BillableHoursReportExcelView getBillableHoursReportExcel() {
+
+		//if (1==1) throw new IndexOutOfBoundsException();
 		return new BillableHoursReportExcelView(this.reportService.getBillableHoursReport());
 	}
 
 	@GetMapping ("/projects/{id}/budget_report")
 	public BudgetReport getBudgetReport(@PathVariable final String id) {
+		//tested. if (1==1) throw new IndexOutOfBoundsException();
 		return this.reportService.getBudgetReport(id);
 	}
 
 	@GetMapping ("/user_accounts/{id}/productivity_report")
 	public List<ProductivityReportLine> getProductivityReport(@PathVariable final Long id) {
+		// if (1==1) throw new IndexOutOfBoundsException();
 		return this.reportService.getProductivityReport(id);
 	}
 

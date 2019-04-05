@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Task} from '../model/task';
 import {BehaviorSubject, Observable} from "rxjs";
 import {UserAccount} from "../model/userAccount";
 import {MatSnackBar} from "@angular/material";
+import {ErrorService} from "./error.service";
 import {taskUrl} from "../configuration/domainConfiguration";
 
 
@@ -28,7 +29,7 @@ export class TaskService {
   /** The list of all active Tasks. */
   private taskSubjectList: BehaviorSubject<Array<Task>> = new BehaviorSubject<Array<Task>>([]);
 
-  public constructor(private http: HttpClient, public snackBar: MatSnackBar) {
+  public constructor(private http: HttpClient, public snackBar: MatSnackBar, private errorService: ErrorService) {
 
   }
 
@@ -40,7 +41,7 @@ export class TaskService {
       this.taskSubjectList = new BehaviorSubject<Array<Task>>(tasks);
       this.sortTasks();
     }).catch((error: any) => {
-      console.log("Task error " + error);
+      this.errorService.displayErrorMessage("Task error " + error);
     });
   }
 
@@ -73,15 +74,10 @@ export class TaskService {
           panelClass: 'snackbar-success',
           horizontalPosition: 'right'
         });
-      }).catch((error: any) => {
-        let addUserErrorMessage = 'Something went wrong when adding ' + task.name + ' ' + '. Please contact your system administrator.';
-        this.snackBar.open(addUserErrorMessage, null, {
-          duration: 5000,
-          politeness: 'assertive',
-          panelClass: 'snackbar-fail',
-          horizontalPosition: 'right'
-        });
-      });
+      }).catch(() =>
+        this.errorService.displayErrorMessage('Something went wrong when adding ' + task.name + ' '
+          + '. Please contact your system administrator.')
+      );
     } else {
       const url = task._links["self"];
       await this.http.put<UserAccount>(url["href"], JSON.stringify(task), httpOptions).toPromise().then(response => {
@@ -93,14 +89,9 @@ export class TaskService {
           panelClass: 'snackbar-success',
           horizontalPosition: 'right'
         });
-      }).catch((error: any) => {
-        let editUserErrorMessage = 'Something went wrong when updating ' + task.name + ' ' + '. Please contact your system administrator.';
-        this.snackBar.open(editUserErrorMessage, null, {
-          duration: 5000,
-          politeness: 'assertive',
-          panelClass: 'snackbar-fail',
-          horizontalPosition: 'right'
-        });
+      }).catch(() => {
+        this.errorService.displayErrorMessage('Something went wrong when updating ' + task.name + ' '
+          + '. Please contact your system administrator.')
       });
     }
   }
@@ -121,14 +112,9 @@ export class TaskService {
         panelClass: 'snackbar-success',
         horizontalPosition: 'right'
       });
-    }).catch((error: any) => {
-      let deleteUserErrorMessage = 'Something went wrong when deleting ' + task.name + ' ' + '. Please contact your system administrator.';
-      this.snackBar.open(deleteUserErrorMessage, null, {
-        duration: 5000,
-        politeness: 'assertive',
-        panelClass: 'snackbar-fail',
-        horizontalPosition: 'right'
-      });
+    }).catch(() => {
+      this.errorService.displayErrorMessage('Something went wrong when deleting ' + task.name + ' '
+        + '. Please contact your system administrator.')
     });
   }
 

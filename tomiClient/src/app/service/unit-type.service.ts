@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UnitType} from "../model/unitType";
 import {BehaviorSubject, Observable} from "rxjs";
 import {unitTypeUrl} from "../configuration/domainConfiguration";
 import {MatSnackBar} from "@angular/material";
+import {ErrorService} from "./error.service";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -26,8 +27,7 @@ export class UnitTypeService {
   /** The list of all active UnitTypes. */
   unitTypes: BehaviorSubject<Array<UnitType>> = new BehaviorSubject<Array<UnitType>>([]);
 
-  constructor(private http: HttpClient, public snackBar: MatSnackBar) {
-
+  constructor(private http: HttpClient, public snackBar: MatSnackBar, private errorService: ErrorService) {
   }
 
   /**
@@ -37,14 +37,9 @@ export class UnitTypeService {
     return this.getAllUnitTypes().forEach(unitTypes => {
       this.unitTypes = new BehaviorSubject<Array<UnitType>>(unitTypes);
       this.sortUnitTypes();
-    }).catch((error: any) => {
-      let getUnitTypesErrorMessage = 'Something went wrong when getting the list unit types. Please contact your system administrator.';
-      this.snackBar.open(getUnitTypesErrorMessage, null, {
-        duration: 5000,
-        politeness: 'assertive',
-        panelClass: 'snackbar-fail',
-        horizontalPosition: 'right'
-      });
+    }).catch(() => {
+      this.errorService.displayErrorMessage(
+        'Something went wrong when getting the list unit types. Please contact your system administrator.')
     });
   }
 
@@ -93,14 +88,8 @@ export class UnitTypeService {
         panelClass: 'snackbar-success',
         horizontalPosition: 'right'
       });
-    }).catch((error: any) => {
-      let deleteUnitTypeErrorMessage = 'Something went wrong when deleting ' + unitType.name + '. Please contact your system administrator.';
-      this.snackBar.open(deleteUnitTypeErrorMessage, null, {
-        duration: 5000,
-        politeness: 'assertive',
-        panelClass: 'snackbar-fail',
-        horizontalPosition: 'right'
-      });
+    }).catch(() => {
+      this.errorService.displayErrorMessage('Something went wrong when deleting')
     });
   }
 
@@ -121,37 +110,25 @@ export class UnitTypeService {
           panelClass: 'snackbar-success',
           horizontalPosition: 'right'
         });
-      }).catch((error: any) => {
-        let addUnitTypeErrorMessage = 'Something went wrong when adding ' + unitType.name + '. Please contact your system administrator.';
-        this.snackBar.open(addUnitTypeErrorMessage, null, {
-          duration: 5000,
-          politeness: 'assertive',
-          panelClass: 'snackbar-fail',
-          horizontalPosition: 'right'
-        });
+      }).catch(() => {
+        this.errorService.displayErrorMessage('Something went wrong when adding')
       });
     } else {
       const url = unitType._links["update"];
       await this.http.put<UnitType>(url["href"],
         JSON.stringify(unitType), httpOptions)
         .toPromise()
-        .then(response => {
+        .then(() => {
           this.initializeUnitTypes();
-          let editUnitTypeSucessMessage = unitType.name + ' updated successfully.';
+          let editUnitTypeSucessMessage = 'Updated successfully.';
           this.snackBar.open(editUnitTypeSucessMessage, null, {
             duration: 4000,
             politeness: 'assertive',
             panelClass: 'snackbar-success',
             horizontalPosition: 'right'
           });
-        }).catch((error: any) => {
-          let editUnitTypeFailMessage = 'Something went wrong when updating ' + unitType.name + '. Please contact your system administrator.';
-          this.snackBar.open(editUnitTypeFailMessage, null, {
-            duration: 5000,
-            politeness: 'assertive',
-            panelClass: 'snackbar-fail',
-            horizontalPosition: 'right'
-          });
+        }).catch(() => {
+          this.errorService.displayErrorMessage('Something went wrong when updating')
         });
     }
   }
@@ -163,6 +140,7 @@ export class UnitTypeService {
    */
   getUnitTypeById(id: number) {
     return this.http.get(`${unitTypeUrl}/${id}`)
+      .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         if (data !== undefined) {
           return data as UnitType;

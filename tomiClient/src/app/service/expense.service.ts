@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject} from "rxjs";
 import {Expense} from "../model/expense";
 import {projectsUrl} from "../configuration/domainConfiguration";
 import {Project} from "../model/project";
+import {ErrorService} from "./error.service";
 
 /**
  * Expense service provides services related to Expenses
@@ -28,7 +29,7 @@ export class ExpenseService {
   /** used to track the expense being selectedExpense and edited in the components */
   selectedExpense: Expense;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private errorService: ErrorService) {
   }
 
   refreshExpenses(selectedProject: Project) {
@@ -37,7 +38,7 @@ export class ExpenseService {
     } else {
       this.getExpensesByProjectId(selectedProject).toPromise()
         .then(expense => this.expenses = new BehaviorSubject<Array<Expense>>(expense))
-        .catch();
+        .catch(() => this.errorService.displayError());
     }
   }
 
@@ -47,7 +48,7 @@ export class ExpenseService {
    */
   private getExpensesByProjectId(selectedProject: Project) {
     return this.http.get(`${projectsUrl}/${selectedProject.id}/expenses`)
-      .pipe(map((response: Response) => response))
+      .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.expenses as Expense[];
@@ -64,7 +65,7 @@ export class ExpenseService {
           this.refreshExpenses(selectedProject);
           return response;
         }).catch(() => {
-        //TODO
+        this.errorService.displayError()
       });
     } else {
       const url = this.selectedExpense._links["update"];
@@ -73,17 +74,16 @@ export class ExpenseService {
           this.refreshExpenses(selectedProject);
           return response;
         }).catch(() => {
-        //TODO
+        this.errorService.displayError()
       });
     }
   }
 
   delete(expense: Expense, project: Project) {
-    //TODO: can we make this link work?
-    //const url = expense._links["delete"];
     const url = `${projectsUrl}/${project.id}/expenses/${expense.id}`;
-      this.http.delete<Expense>(url).toPromise()
-        .then( () => this.refreshExpenses(project))
-    }
+    this.http.delete<Expense>(url).toPromise()
+      .then(() => this.refreshExpenses(project))
+      .catch(() => this.errorService.displayError());
+  }
 
 }

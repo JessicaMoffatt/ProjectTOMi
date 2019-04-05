@@ -55,6 +55,8 @@ public class ExpenseController {
 	public Resource<Expense> getExpense(@PathVariable final Long expenseId,
 	                                    @PathVariable final String projectId,
 	                                    @RequestAttribute final ProjectAuthManager authMan) {
+		//is this even used?? if(1==1) throw new IndexOutOfBoundsException();
+
 		return this.assembler.toResource(new ProjectAuthLinkWrapper<>(this.expenseService.getExpenseById(expenseId), authMan));
 	}
 
@@ -71,6 +73,8 @@ public class ExpenseController {
 			.map(expense -> (new ProjectAuthLinkWrapper<>(expense, authMan)))
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
+
+		// works! if(1==1) throw new IndexOutOfBoundsException();
 
 		return new Resources<>(expenseList,
 			linkTo(methodOn(ExpenseController.class).getActiveExpenses(projectId, authMan)).withSelfRel());

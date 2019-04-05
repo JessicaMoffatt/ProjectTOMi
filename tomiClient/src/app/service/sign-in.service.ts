@@ -3,9 +3,10 @@ import {BehaviorSubject} from 'rxjs';
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {UserAccount} from "../model/userAccount";
 import {buildNavBarUrl} from "../configuration/domainConfiguration";
+import {ErrorService} from "./error.service";
 
 declare let gapi:any;
 
@@ -31,7 +32,7 @@ export class SignInService {
   /** The UserAccount object representing the signed in user.*/
   userAccount:UserAccount;
 
-  constructor(private router:Router, private snackBar:MatSnackBar, private http:HttpClient) {
+  constructor(private router:Router, private snackBar:MatSnackBar, private http:HttpClient, private errorService: ErrorService) {
     this.router = router;
     this.snackBar = snackBar;
     this.http = http;
@@ -52,9 +53,8 @@ export class SignInService {
    * After retrieving the navigation bar list, sets isUseLoggedIn to true.
    */
   async setLoggedIn(){
-    let promise = new Promise((resolve)=>{
+    new Promise((resolve)=>{
       resolve(this.getNavBarList());
-
     });
     this.isUserLoggedIn.next(true);
   }
@@ -64,7 +64,9 @@ export class SignInService {
    * navList is populated from through checking the retrieved values from this list.
    */
   getNavBarList(){
-  return this.http.get(buildNavBarUrl).pipe(map(value => {
+  return this.http.get(buildNavBarUrl)
+    .pipe(catchError(this.errorService.handleError()))
+    .pipe(map(value => {
       return value;})).subscribe((value) => {
         this.navList["my_timesheets"] = value["my_timesheets"];
         this.navList["approve_timesheets"] = value["approve_timesheets"];
@@ -91,7 +93,7 @@ export class SignInService {
     await promise.then(()=>{
       let snackBarRef = this.snackBar.open('Signed out', null, {duration: 2000, politeness: "assertive", });
       return this.signOutOperations();
-    });
+    }).catch( ()=> this.errorService.displayError())
   }
 
   /**

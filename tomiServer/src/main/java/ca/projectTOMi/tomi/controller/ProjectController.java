@@ -96,6 +96,8 @@ public class ProjectController {
 			.map(this.projectResourceAssembler::toResource)
 			.collect(Collectors.toList());
 
+		//if(1==1) throw new InvalidIDPrefix();
+
 		return new Resources<>(projectResources,
 			linkTo(methodOn(ProjectController.class).getActiveProjects(authMan)).withSelfRel());
 	}
@@ -176,6 +178,8 @@ public class ProjectController {
 			.map(project -> (new ProjectAuthLinkWrapper<>(project, authMan)))
 			.map(this.projectResourceAssembler::toResource)
 			.collect(Collectors.toList());
+
+		// if(1==1) throw new InvalidIDPrefix();
 
 		return new Resources<>(projectResources,
 			linkTo(methodOn(ProjectController.class).getProjectsByUserAccount(userAccountId, authMan)).withSelfRel());
