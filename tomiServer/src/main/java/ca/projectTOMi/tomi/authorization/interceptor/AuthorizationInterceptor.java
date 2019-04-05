@@ -13,8 +13,7 @@ import ca.projectTOMi.tomi.authorization.manager.UserAuthManager;
 import ca.projectTOMi.tomi.authorization.policy.UserAuthorizationPolicy;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.ProjectAuthorizationRepository;
-import ca.projectTOMi.tomi.persistence.TimesheetAuthRepository;
-import ca.projectTOMi.tomi.persistence.UserAccountRepository;
+import ca.projectTOMi.tomi.persistence.TimesheetAuthorizationRepository;
 import ca.projectTOMi.tomi.persistence.UserAuthorizationRepository;
 import ca.projectTOMi.tomi.service.EntryService;
 import ca.projectTOMi.tomi.service.UserAccountService;
@@ -33,7 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 @CrossOrigin (origins = "http://localhost:4200")
 public class AuthorizationInterceptor implements HandlerInterceptor {
 	private final ProjectAuthorizationRepository projectAuthRepository;
-	private final TimesheetAuthRepository timesheetAuthRepository;
+	private final TimesheetAuthorizationRepository timesheetAuthorizationRepository;
 	private final UserAuthorizationRepository userAuthRepository;
 	private final UserAccountService userAccountService;
 	private final EntryService entryService;
@@ -43,12 +42,12 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	@Autowired
 	public AuthorizationInterceptor(final UserAuthorizationRepository userAuthRepository,
 	                                final ProjectAuthorizationRepository projectAuthRepository,
-	                                final TimesheetAuthRepository timesheetAuthRepository,
+	                                final TimesheetAuthorizationRepository timesheetAuthorizationRepository,
 	                                final UserAccountService userAccountService,
 	                                final EntryService entryService,
 	                                final UserAuthenticationService userAuthenticationService) {
 		this.projectAuthRepository = projectAuthRepository;
-		this.timesheetAuthRepository = timesheetAuthRepository;
+		this.timesheetAuthorizationRepository = timesheetAuthorizationRepository;
 		this.userAuthRepository = userAuthRepository;
 		this.userAccountService = userAccountService;
 		this.entryService = entryService;
@@ -98,7 +97,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		} else if ("TimesheetController".matches(controller) || "EntryController".matches(controller)) {
 			final AuthManager<TimesheetAuthorizationPolicy> authMan;
 			authMan = new TimesheetAuthManager(user, this.getOwner(requestURI, requestMethod, user));
-			authMan.loadUserPolicies(this.timesheetAuthRepository.getAllByRequestingUser(user));
+			authMan.loadUserPolicies(this.timesheetAuthorizationRepository.getAllByRequestingUser(user));
 			request.setAttribute("authMan", authMan);
 		} else if ("ProjectController".matches(controller)) {
 			if ("POST".equals(requestMethod) || "DELETE".equals(requestMethod)) {
@@ -139,7 +138,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 				final AuthManager<TimesheetAuthorizationPolicy> authMan;
 				final UserAccount owner = this.userAccountService.getUserAccount(Long.parseLong(requestURI.split("/")[2]));
 				authMan = new TimesheetAuthManager(user, owner);
-				authMan.loadUserPolicies(this.timesheetAuthRepository.getAllByRequestingUser(user));
+				authMan.loadUserPolicies(this.timesheetAuthorizationRepository.getAllByRequestingUser(user));
 				request.setAttribute("authMan", authMan);
 			} else {
 				return false;

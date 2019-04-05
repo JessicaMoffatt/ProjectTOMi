@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public final class TeamService {
 	private final TeamRepository repository;
-	private final TimesheetAuthService timesheetAuthService;
+	private final TimesheetAuthorizationService timesheetAuthorizationService;
 
 	/**
 	 * Constructor for the TeamService service.
@@ -25,9 +25,9 @@ public final class TeamService {
 	 * 	Repository responsible for persisting Team instances
 	 */
 	public TeamService(final TeamRepository repository,
-	                   final TimesheetAuthService timesheetAuthService) {
+	                   final TimesheetAuthorizationService timesheetAuthorizationService) {
 		this.repository = repository;
-		this.timesheetAuthService = timesheetAuthService;
+		this.timesheetAuthorizationService = timesheetAuthorizationService;
 	}
 
 	/**
@@ -45,10 +45,10 @@ public final class TeamService {
 			team.setTeamName(newTeam.getTeamName());
 			team.setActive(true);
 			if (team.getTeamLead() != null) {
-				timesheetAuthService.removeTeamLead(team.getTeamLead(), team);
+				timesheetAuthorizationService.removeTeamLead(team.getTeamLead(), team);
 			}
 			if (newTeam.getTeamLead() != null) {
-				this.timesheetAuthService.setTeamLead(newTeam.getTeamLead(), team);
+				this.timesheetAuthorizationService.setTeamLead(newTeam.getTeamLead(), team);
 			}
 			team.setTeamLead(newTeam.getTeamLead());
 			return this.repository.save(team);

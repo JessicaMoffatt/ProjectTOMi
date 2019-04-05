@@ -7,12 +7,6 @@ import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.persistence.ExpenseRepository;
 import org.springframework.stereotype.Service;
 
-/**
- * NOTE TO SELF: get project expenses in the form like project 'projects/[project_id]/expenses'
- */
-
-
-
 
 /**
  * Provides services for {@link Expense} objects.

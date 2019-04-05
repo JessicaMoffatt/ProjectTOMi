@@ -17,7 +17,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 /**
  * TaskResourceAssembler is responsible for creating a standard resource for {@link Task}.
  *
- * @author Iliya Kiritchkov and Karol Talbot
+ * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1.1
  */
 @Component

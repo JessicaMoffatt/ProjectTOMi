@@ -20,7 +20,8 @@ import java.util.List;
 /**
  * Provides services for {@link Entry} objects.
  *
- * @author Iliya Kiritchkov and Karol Talbot
+ * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1.1
  */
 @Service

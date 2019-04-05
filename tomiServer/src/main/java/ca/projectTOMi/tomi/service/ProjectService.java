@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 public final class ProjectService {
 	private final ProjectRepository repository;
 	private final UserAccountService userAccountService;
-	private final ProjectAuthService projectAuthService;
+	private final ProjectAuthorizationService projectAuthorizationService;
 
 	/**
 	 * Constructor for the ProjectService service.
@@ -32,10 +32,10 @@ public final class ProjectService {
 	@Autowired
 	public ProjectService(final ProjectRepository repository,
 	                      final UserAccountService userAccountService,
-	                      final ProjectAuthService projectAuthService) {
+	                      final ProjectAuthorizationService projectAuthorizationService) {
 		this.repository = repository;
 		this.userAccountService = userAccountService;
-		this.projectAuthService = projectAuthService;
+		this.projectAuthorizationService = projectAuthorizationService;
 	}
 
 	/**
@@ -61,7 +61,7 @@ public final class ProjectService {
 
 			// Change Project Permissions
 			newProject.setId(project.getId());
-			this.projectAuthService.changeProjectManager(project, newProject);
+			this.projectAuthorizationService.changeProjectManager(project, newProject);
 
 			project.setProjectManager(newProject.getProjectManager());
 			project.setActive(true);
@@ -121,7 +121,7 @@ public final class ProjectService {
 		project.setActive(true);
 		project.setProjectMembers(new HashSet<>());
 		final Project savedProject = this.repository.save(project);
-		this.projectAuthService.newProjectPolicies(savedProject);
+		this.projectAuthorizationService.newProjectPolicies(savedProject);
 		return savedProject;
 	}
 
@@ -135,7 +135,7 @@ public final class ProjectService {
 		final UserAccount userAccount = this.userAccountService.getUserAccount(userAccountId);
 		if (!project.getProjectMembers().contains(userAccount)) {
 			project.getProjectMembers().add(userAccount);
-			this.projectAuthService.addProjectMember(userAccount, project);
+			this.projectAuthorizationService.addProjectMember(userAccount, project);
 		}
 		this.repository.save(project);
 	}
@@ -145,7 +145,7 @@ public final class ProjectService {
 		final UserAccount userAccount = this.userAccountService.getUserAccount(userAccountId);
 
 		if (project.getProjectManager() != null && userAccount.equals(project.getProjectManager())) {
-			this.projectAuthService.changeProjectManager(project, null);
+			this.projectAuthorizationService.changeProjectManager(project, null);
 			project.setProjectManager(null);
 		}
 

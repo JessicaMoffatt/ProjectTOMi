@@ -8,6 +8,11 @@ import {Team} from "../../../model/team";
 import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-teams-panel.component";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material";
 
+
+/**
+ * @author Karol Talbot
+ * @author James Andrade
+ */
 @Component({
   selector: 'app-project-sidebar',
   templateUrl: './project-sidebar.component.html',

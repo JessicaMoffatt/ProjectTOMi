@@ -12,7 +12,9 @@ import {ProjectService} from "../../../service/project.service";
   styleUrls: ['./add-project-expense.component.scss']
 })
 
-
+/**
+ * @author James Andrade
+ */
 export class AddProjectExpenseComponent implements OnInit {
 
   // value is set by the parent component that opens the dialog

@@ -10,7 +10,8 @@ import java.util.List;
 /**
  * Provides services for {@link UnitType} objects.
  *
- * @author Iliya Kiritchkov and Karol Talbot
+ * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1
  */
 @Service

@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 /**
  * Provides services for {@link Task} objects.
  *
- * @author Iliya Kiritchkov and Karol Talbot
+ * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1.1
  */
 @Service

@@ -28,7 +28,8 @@ import javax.validation.constraints.Size;
  * An entry is one weeks' worth of work on a specific component. Entries are part of timesheets and
  * are used to determine billable and non billable hours, as well as the productivity of users.
  *
- * @author Iliya Kiritchkov and Karol Talbot
+ * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1.2
  */
 @Entity

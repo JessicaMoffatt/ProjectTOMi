@@ -1,3 +1,6 @@
+/**
+ * @author Jessica Moffatt
+ */
 /** The domain portion of all links used in this application.*/
 export const domain: string ='http://localhost:8080/';
 

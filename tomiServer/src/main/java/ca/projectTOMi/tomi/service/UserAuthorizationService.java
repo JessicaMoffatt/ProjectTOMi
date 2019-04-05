@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * @author Karol Talbot
  */
 @Service
-public class UserAuthService {
+public class UserAuthorizationService {
 	private static final UserPermission[] ADMIN_PERMISSIONS = new UserPermission[]{
 		UserPermission.READ_LISTS,
 		UserPermission.CREATE_USER_ACCOUNT,
@@ -23,7 +23,7 @@ public class UserAuthService {
 	private final UserAuthorizationRepository userAuthorizationRepository;
 
 	@Autowired
-	public UserAuthService(final UserAuthorizationRepository userAuthorizationRepository) {
+	public UserAuthorizationService(final UserAuthorizationRepository userAuthorizationRepository) {
 		this.userAuthorizationRepository = userAuthorizationRepository;
 	}
 

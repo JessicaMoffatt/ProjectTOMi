@@ -16,7 +16,8 @@ const httpOptions = {
 /**
  * UserAccountService is used to control the flow of data regarding user accounts to/from the view.
  *
- * @author Jessica Moffatt, Iliya Kiritchkov
+ * @author Jessica Moffatt
+ * @author Iliya Kiritchkov
  * @version 1.1
  */
 @Injectable({

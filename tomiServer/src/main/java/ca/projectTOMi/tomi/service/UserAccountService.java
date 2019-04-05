@@ -36,9 +36,9 @@ public final class UserAccountService {
 	private final UserAccountRepository repository;
 	private final TeamService teamService;
 	private final EntryService entryService;
-	private final UserAuthService userAuthService;
-	private final TimesheetAuthService timesheetAuthService;
-	private final ProjectAuthService projectAuthService;
+	private final UserAuthorizationService userAuthorizationService;
+	private final TimesheetAuthorizationService timesheetAuthorizationService;
+	private final ProjectAuthorizationService projectAuthorizationService;
 	private final TOMiEmailService emailService;
 	private final Logger logger = LoggerFactory.getLogger("Email sent");
 
@@ -46,16 +46,16 @@ public final class UserAccountService {
 	public UserAccountService(final UserAccountRepository repository,
 	                          final TeamService teamService,
 	                          final EntryService entryService,
-	                          final UserAuthService userAuthService,
-	                          final TimesheetAuthService timesheetAuthService,
-	                          final ProjectAuthService projectAuthService,
+	                          final UserAuthorizationService userAuthorizationService,
+	                          final TimesheetAuthorizationService timesheetAuthorizationService,
+	                          final ProjectAuthorizationService projectAuthorizationService,
 	                          final TOMiEmailService emailService) {
 		this.repository = repository;
 		this.teamService = teamService;
 		this.entryService = entryService;
-		this.userAuthService = userAuthService;
-		this.timesheetAuthService = timesheetAuthService;
-		this.projectAuthService = projectAuthService;
+		this.userAuthorizationService = userAuthorizationService;
+		this.timesheetAuthorizationService = timesheetAuthorizationService;
+		this.projectAuthorizationService = projectAuthorizationService;
 		this.emailService = emailService;
 	}
 
@@ -103,7 +103,7 @@ public final class UserAccountService {
 		userAccount.setAdmin(false);
 		userAccount.setActive(false);
 		final UserAccount deletedAccount = this.repository.save(userAccount);
-		this.userAuthService.updatedUserAccount(deletedAccount);
+		this.userAuthorizationService.updatedUserAccount(deletedAccount);
 	}
 
 	/**
@@ -123,10 +123,10 @@ public final class UserAccountService {
 			userAccount.setFirstName(newUserAccount.getFirstName());
 			userAccount.setLastName(newUserAccount.getLastName());
 			if (userAccount.getTeam() != null) {
-				this.timesheetAuthService.removeMemberFromTeam(userAccount, userAccount.getTeam());
+				this.timesheetAuthorizationService.removeMemberFromTeam(userAccount, userAccount.getTeam());
 			}
 			if (newUserAccount.getTeam() != null) {
-				this.timesheetAuthService.addMemberToTeam(newUserAccount, newUserAccount.getTeam());
+				this.timesheetAuthorizationService.addMemberToTeam(newUserAccount, newUserAccount.getTeam());
 			}
 			userAccount.setTeam(newUserAccount.getTeam());
 			userAccount.setEmail(newUserAccount.getEmail());
@@ -134,15 +134,15 @@ public final class UserAccountService {
 			userAccount.setActive(true);
 			userAccount.setAdmin(newUserAccount.isAdmin());
 			if (newUserAccount.isProgramDirector() && !userAccount.isProgramDirector()) {
-				this.projectAuthService.newProgramDirector(newUserAccount);
+				this.projectAuthorizationService.newProgramDirector(newUserAccount);
 			} else if (!newUserAccount.isProgramDirector() && userAccount.isProgramDirector()) {
-				this.projectAuthService.removeProgramDirector(newUserAccount);
+				this.projectAuthorizationService.removeProgramDirector(newUserAccount);
 			}
 			userAccount.setProgramDirector(newUserAccount.isProgramDirector());
 			return this.repository.save(userAccount);
 		}).orElseThrow(UserAccountNotFoundException::new);
 
-		this.userAuthService.updatedUserAccount(account);
+		this.userAuthorizationService.updatedUserAccount(account);
 		return account;
 	}
 
@@ -180,17 +180,17 @@ public final class UserAccountService {
 		userAccount.setActive(true);
 		final UserAccount newUserAccount = this.repository.save(userAccount);
 		if (newUserAccount.getTeam() != null) {
-			this.timesheetAuthService.addMemberToTeam(newUserAccount, newUserAccount.getTeam());
+			this.timesheetAuthorizationService.addMemberToTeam(newUserAccount, newUserAccount.getTeam());
 		}
 		final TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
 		final LocalDate date = LocalDate.now().with(fieldISO, 1);
 		if (!this.entryService.createTimesheet(date, newUserAccount)) {
 			throw new TimesheetNotFoundException();
 		}
-		this.userAuthService.updatedUserAccount(newUserAccount);
-		this.timesheetAuthService.setNewUserAccountPolicy(newUserAccount);
+		this.userAuthorizationService.updatedUserAccount(newUserAccount);
+		this.timesheetAuthorizationService.setNewUserAccountPolicy(newUserAccount);
 		if (newUserAccount.isProgramDirector()) {
-			this.projectAuthService.newProgramDirector(newUserAccount);
+			this.projectAuthorizationService.newProgramDirector(newUserAccount);
 		}
 		return newUserAccount;
 	}

@@ -10,7 +10,8 @@ import java.util.List;
  * UnitTypeRepository is used to persist and retrieve data regarding {@link UnitType} from the
  * database.
  *
- * @author Karol Talbot and Iliya Kiritchkov
+ * @author Karol Talbot
+ * @author Iliya Kiritchkov
  * @version 1.2
  */
 @Repository

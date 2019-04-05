@@ -17,7 +17,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 /**
  * UnitTypeResourceAssembler is responsible for creating a standard resource for {@link UnitType}.
  *
- * @author Iliya Kiritchkov and Karol Talbot
+ * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1.2
  */
 @Component

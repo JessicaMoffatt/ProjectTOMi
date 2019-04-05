@@ -21,7 +21,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 /**
  * EntryResourceAssembler is responsible for creating a standard resource for {@link Entry}.
  *
- * @author Iliya Kiritchkov and Karol Talbot
+ * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1.2
  */
 @Component

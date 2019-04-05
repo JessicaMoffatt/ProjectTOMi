@@ -10,7 +10,7 @@ import ca.projectTOMi.tomi.authorization.manager.ProjectAuthManager;
 import ca.projectTOMi.tomi.authorization.wrapper.ProjectAuthLinkWrapper;
 import ca.projectTOMi.tomi.authorization.wrapper.TimesheetAuthLinkWrapper;
 import ca.projectTOMi.tomi.exception.EmptyProjectListException;
-import ca.projectTOMi.tomi.exception.InvalidIDPrefix;
+import ca.projectTOMi.tomi.exception.InvalidIDPrefixException;
 import ca.projectTOMi.tomi.exception.ProjectManagerException;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
 import ca.projectTOMi.tomi.model.Entry;
@@ -114,7 +114,7 @@ public class ProjectController {
 	@PostMapping ("/projects")
 	public ResponseEntity<?> createProject(@RequestBody final Project newProject) throws URISyntaxException {
 		if (newProject.getId() == null || !newProject.getId().trim().matches("^\\p{Alpha}\\p{Alpha}\\d{0,5}+$")) {
-			throw new InvalidIDPrefix();
+			throw new InvalidIDPrefixException();
 		}
 		newProject.setId(this.projectService.getId(newProject.getId()));
 		final Resource<Project> resource = this.projectResourceAssembler.toResource(new ProjectAuthLinkWrapper<>(this.projectService.createProject(newProject), null));
@@ -226,7 +226,7 @@ public class ProjectController {
 		return ResponseEntity.status(204).build();
 	}
 
-	@ExceptionHandler ({ProjectNotFoundException.class, InvalidIDPrefix.class, ProjectManagerException.class})
+	@ExceptionHandler ({ProjectNotFoundException.class, InvalidIDPrefixException.class, ProjectManagerException.class})
 	public ResponseEntity<?> handleExceptions(final Exception e) {
 		this.logger.warn("Project Exception: " + e.getClass());
 		return ResponseEntity.status(400).build();

@@ -35,7 +35,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 /**
  * Handles HTTP requests for {@link UnitType} objects in the ProjectTOMi system.
  *
- * @author Karol Talbot and Iliya Kiritchkov
+ * @author Karol Talbot
+ * @author Iliya Kiritchkov
  * @version 1.2
  */
 @RestController

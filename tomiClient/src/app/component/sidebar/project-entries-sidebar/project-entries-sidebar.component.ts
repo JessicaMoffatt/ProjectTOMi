@@ -8,6 +8,7 @@ import {Entry} from "../../../model/entry";
  * ProjectEntriesSidebarComponent is used to display the list of projects for a user to interact with when viewing entries for approval.
  *
  * @author Jessica Moffatt
+ * @author Karol Talbot
  * @version 1.0
  */
 @Component({

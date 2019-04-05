@@ -33,7 +33,6 @@ public final class Timesheet {
 		sequenceName = "timesheet_sequence",
 		allocationSize = 1
 	)
-
 	/*
 	 * the unique id of the timesheet
 	 */

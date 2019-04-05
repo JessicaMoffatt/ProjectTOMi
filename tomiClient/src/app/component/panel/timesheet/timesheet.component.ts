@@ -23,7 +23,7 @@ import {SignInService} from "../../../service/sign-in.service";
 import {ErrorService} from "../../../service/error.service";
 
 /**
- *  @author Karol Talbot
+ *
  *  @author Jessica Moffatt
  */
 export interface DialogData {
@@ -34,6 +34,7 @@ export interface DialogData {
 /**
  * TimesheetComponent is used to facilitate communication between the view and front end services.
  *
+ * @author Karol Talbot
  * @author Jessica Moffatt
  * @version 2.0
  */

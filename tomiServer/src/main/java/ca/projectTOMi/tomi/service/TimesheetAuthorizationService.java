@@ -7,7 +7,7 @@ import ca.projectTOMi.tomi.exception.TeamNotFoundException;
 import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.TeamRepository;
-import ca.projectTOMi.tomi.persistence.TimesheetAuthRepository;
+import ca.projectTOMi.tomi.persistence.TimesheetAuthorizationRepository;
 import ca.projectTOMi.tomi.persistence.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,16 +15,16 @@ import org.springframework.stereotype.Service;
  * @author Karol Talbot
  */
 @Service
-public class TimesheetAuthService {
-	private final TimesheetAuthRepository timesheetAuthRepository;
+public class TimesheetAuthorizationService {
+	private final TimesheetAuthorizationRepository timesheetAuthorizationRepository;
 	private final UserAccountRepository userAccountRepository;
 	private final TeamRepository teamRepository;
 
 	@Autowired
-	public TimesheetAuthService(final TimesheetAuthRepository timesheetAuthRepository,
-	                            final UserAccountRepository userAccountRepository,
-	                            final TeamRepository teamRepository) {
-		this.timesheetAuthRepository = timesheetAuthRepository;
+	public TimesheetAuthorizationService(final TimesheetAuthorizationRepository timesheetAuthorizationRepository,
+	                                     final UserAccountRepository userAccountRepository,
+	                                     final TeamRepository teamRepository) {
+		this.timesheetAuthorizationRepository = timesheetAuthorizationRepository;
 		this.userAccountRepository = userAccountRepository;
 		this.teamRepository = teamRepository;
 	}
@@ -36,7 +36,7 @@ public class TimesheetAuthService {
 			authPolicy.setPermission(t);
 			authPolicy.setRequestingUser(newUserAccount);
 			authPolicy.setTimesheetOwner(newUserAccount);
-			this.timesheetAuthRepository.save(authPolicy);
+			this.timesheetAuthorizationRepository.save(authPolicy);
 		}
 	}
 
@@ -47,7 +47,7 @@ public class TimesheetAuthService {
 			authPolicy.setTimesheetOwner(newMember);
 			authPolicy.setRequestingUser(team.getTeamLead());
 			authPolicy.setPermission(TimesheetPermission.READ);
-			this.timesheetAuthRepository.save(authPolicy);
+			this.timesheetAuthorizationRepository.save(authPolicy);
 		}
 	}
 
@@ -58,7 +58,7 @@ public class TimesheetAuthService {
 			authPolicy.setTimesheetOwner(oldMember);
 			authPolicy.setRequestingUser(team.getTeamLead());
 			authPolicy.setPermission(TimesheetPermission.READ);
-			this.timesheetAuthRepository.delete(authPolicy);
+			this.timesheetAuthorizationRepository.delete(authPolicy);
 		}
 	}
 
@@ -70,7 +70,7 @@ public class TimesheetAuthService {
 		for (final UserAccount member : teamMembers) {
 			authPolicy.setTimesheetOwner(member);
 			if (!member.equals(newTeamLead)) {
-				this.timesheetAuthRepository.save(authPolicy);
+				this.timesheetAuthorizationRepository.save(authPolicy);
 			}
 		}
 	}
@@ -83,7 +83,7 @@ public class TimesheetAuthService {
 		for (final UserAccount member : teamMembers) {
 			if (!member.equals(oldTeamLead)) {
 				authPolicy.setTimesheetOwner(member);
-				this.timesheetAuthRepository.delete(authPolicy);
+				this.timesheetAuthorizationRepository.delete(authPolicy);
 			}
 		}
 	}

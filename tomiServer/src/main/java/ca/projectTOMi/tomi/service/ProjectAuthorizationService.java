@@ -3,9 +3,7 @@ package ca.projectTOMi.tomi.service;
 import java.util.List;
 import ca.projectTOMi.tomi.authorization.permission.ProjectPermission;
 import ca.projectTOMi.tomi.authorization.policy.ProjectAuthorizationPolicy;
-import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.Project;
-import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.persistence.ProjectAuthorizationRepository;
 import ca.projectTOMi.tomi.persistence.ProjectRepository;
@@ -18,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @author Karol Talbot
  */
 @Service
-public class ProjectAuthService {
+public class ProjectAuthorizationService {
 	final private static ProjectPermission[] PROJECT_MANAGER_PERMISSION = new ProjectPermission[]{
 		ProjectPermission.EVALUATE_ENTRIES,
 		ProjectPermission.READ,
@@ -33,10 +31,10 @@ public class ProjectAuthService {
 	final private TeamRepository teamRepository;
 
 	@Autowired
-	public ProjectAuthService(final ProjectAuthorizationRepository projectAuthorizationRepository,
-	                          final UserAccountRepository userAccountRepository,
-	                          final ProjectRepository projectRepository,
-	                          final TeamRepository teamRepository) {
+	public ProjectAuthorizationService(final ProjectAuthorizationRepository projectAuthorizationRepository,
+	                                   final UserAccountRepository userAccountRepository,
+	                                   final ProjectRepository projectRepository,
+	                                   final TeamRepository teamRepository) {
 		this.projectAuthorizationRepository = projectAuthorizationRepository;
 		this.userAccountRepository = userAccountRepository;
 		this.projectRepository = projectRepository;
@@ -101,7 +99,7 @@ public class ProjectAuthService {
 			policy.setProject(newProject);
 			policy.setRequestingUser(oldProjectManager);
 			if (!oldProjectManager.isProgramDirector()) {
-				for (final ProjectPermission permission : ProjectAuthService.PROJECT_MANAGER_PERMISSION) {
+				for (final ProjectPermission permission : ProjectAuthorizationService.PROJECT_MANAGER_PERMISSION) {
 					policy.setPermission(permission);
 					this.projectAuthorizationRepository.delete(policy);
 				}
@@ -111,7 +109,7 @@ public class ProjectAuthService {
 			final ProjectAuthorizationPolicy policy = new ProjectAuthorizationPolicy();
 			policy.setProject(newProject);
 			policy.setRequestingUser(newProjectManager);
-			for (final ProjectPermission permission : ProjectAuthService.PROJECT_MANAGER_PERMISSION) {
+			for (final ProjectPermission permission : ProjectAuthorizationService.PROJECT_MANAGER_PERMISSION) {
 				policy.setPermission(permission);
 				this.projectAuthorizationRepository.save(policy);
 			}

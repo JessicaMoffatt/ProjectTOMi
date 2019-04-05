@@ -26,7 +26,8 @@ import org.hibernate.annotations.Formula;
  * (dependent on it's active status.) Projects are worked on by specific {@link UserAccount} lead by
  * a project manager.
  *
- * @author Karol Talbot and Iliya Kiritchkov
+ * @author Karol Talbot
+ * @author Iliya Kiritchkov
  * @version 1.2
  */
 @Entity
