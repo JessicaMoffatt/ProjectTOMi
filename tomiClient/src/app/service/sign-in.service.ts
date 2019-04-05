@@ -3,9 +3,10 @@ import {BehaviorSubject} from 'rxjs';
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material";
 import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {UserAccount} from "../model/userAccount";
 import {buildNavBarUrl} from "../configuration/domainConfiguration";
+import {ErrorService} from "./error.service";
 
 declare let gapi:any;
 
@@ -22,7 +23,7 @@ export class SignInService {
   public navList:Array<any> = [];
   userAccount:UserAccount = null;
 
-  constructor(private router:Router, private snackBar:MatSnackBar, private http:HttpClient) {
+  constructor(private router:Router, private snackBar:MatSnackBar, private http:HttpClient, private errorService: ErrorService) {
     this.router = router;
     this.snackBar = snackBar;
     this.http = http;
@@ -38,15 +39,16 @@ export class SignInService {
   }
 
   async setLoggedIn(){
-    let promise = new Promise((resolve, reject)=>{
+    new Promise((resolve)=>{
       resolve(this.getNavBarList());
-
     });
     this.isUserLoggedIn.next(true);
   }
 
   getNavBarList(){
-  return this.http.get(buildNavBarUrl).pipe(map(value => {
+  return this.http.get(buildNavBarUrl)
+    .pipe(catchError(this.errorService.handleError()))
+    .pipe(map(value => {
       return value;})).subscribe((value) => {
         this.navList["my_timesheets"] = value["my_timesheets"];
         this.navList["approve_timesheets"] = value["approve_timesheets"];
@@ -59,6 +61,7 @@ export class SignInService {
         this.navList["create_project"] = value["create_project"];
       return value;});
   }
+
   async signOut() {
     let auth2 = gapi.auth2.getAuthInstance();
 
@@ -69,7 +72,7 @@ export class SignInService {
     await promise.then(()=>{
       let snackBarRef = this.snackBar.open('Signed out', null, {duration: 2000, politeness: "assertive", });
       return this.signOutOperations();
-    });
+    }).catch( ()=> this.errorService.displayError())
   }
 
   signOutOperations() {

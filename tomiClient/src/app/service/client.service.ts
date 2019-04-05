@@ -1,8 +1,12 @@
 import {Injectable} from '@angular/core';
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Client} from "../model/client";
+import {collectExternalReferences} from "@angular/compiler";
+import {UserAccount} from "../model/userAccount";
+import {Project} from "../model/project";
+import {ErrorService} from "./error.service";
 
 /**
  * Clients service provides services relates to Clients.
@@ -25,21 +29,21 @@ export class ClientService {
   /** The URL for accessing projects.*/
   private clientsUrl = 'http://localhost:8080/clients';
 
-  /** The URL for accessing user accounts.
-   private userAccountProjectsUrl = 'http://localhost:8080/user_accounts/'; */
-
   /** tracks which project is selectedProject in project-panel component and manage-project modal */
   selected: Client;
 
   /** used to pass list to project related components */
   clients: BehaviorSubject<Array<Client>> = new BehaviorSubject<Array<Client>>([]);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private errorService: ErrorService) {
     this.initializeClients();
   }
 
+  /**
+   * used to refresh the list of clients used by the components.
+   */
   initializeClients() {
-    this.getClients().forEach(client => {
+    this.getClients().toPromise().then(client => {
       this.clients = new BehaviorSubject<Array<Client>>(client);
       this.sortClients();
     });
@@ -60,29 +64,18 @@ export class ClientService {
   }
 
   /**
-   * Gets all projects.
+   * Gets all clients.
    */
   getClients(): Observable<Array<Client>> {
     return this.http.get(`${this.clientsUrl}`)
+      .pipe(catchError(this.errorService.handleError<Client[]>()))
       .pipe(map((data: any) => {
-        if (data._embedded !== undefined) {
+        if (data !== undefined && data._embedded !== undefined) {
           return data._embedded.clients as Client[];
         } else {
           return [];
         }
       }))
-  }
-
-
-  async getAsyncClients() {
-    return await this.http.get(`${this.clientsUrl}`)
-      .pipe(map((data: any) => {
-        if (data._embedded !== undefined) {
-          return data._embedded.clients as Client[];
-        } else {
-          return [];
-        }
-      })).toPromise().then(value => this.clients = new BehaviorSubject(value));
   }
 
   /**
@@ -128,8 +121,8 @@ export class ClientService {
 
   /**
    * @author James Andrade
-   * returns the id if it is within the observable, otherwise -1
-   * @param clientName the client name to be searched for
+   * returns the client if they exist, otherwise null
+   * @param clientName the name of the client being searched for
    */
   getClientByName(clientName: string): Client {
     for (let c of this.clients.value) {
@@ -141,27 +134,23 @@ export class ClientService {
   }
 
   /**
-   * Saves a specified client. If the team is new (ID of -1) an HTTP POST is performed, else a PUT is performed to update the existing team.
-   * @param team The team to update/create.
-   */
-  /**
-   * Saves a specified UserAccount. If the UserAccount is new (id = -1), an HTTP POST is performed, else an HTTP PUT is performed to update the existing UserAccount.
+   * Saves a specified client by performing an HTTP post.
    *
-   * @param account The UserAccount to be created/updated.
+   * @param client the client to be created/updated.
    */
   save(client: Client) {
-    let newClient:boolean = true;
+    let newClient: boolean = true;
 
     this.clients.subscribe(result => {
-      for(let i = 0; i < result.length; i ++){
-        if(result[i].name === client.name){
+      for (let i = 0; i < result.length; i++) {
+        if (result[i].name === client.name) {
           newClient = false;
           break;
         }
       }
     });
 
-    if(newClient === true){
+    if (newClient === true) {
       client.id = -1;
     }
 
@@ -183,6 +172,4 @@ export class ClientService {
         });
     }
   }
-
 }
-

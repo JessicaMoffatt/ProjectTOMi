@@ -55,11 +55,14 @@ public class ClientController {
 	 */
 	@GetMapping ("/clients")
 	public Resources<Resource<Client>> getActiveClients(@RequestAttribute final UserAuthManager authMan) {
+
 		final List<Resource<Client>> clientList = this.service.getActiveClients()
 			.stream()
 			.map(client -> new UserAuthLinkWrapper<>(client, authMan))
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
+
+		//if(1==1)throw new ClientNotFoundException();
 
 		return new Resources<>(clientList, linkTo(methodOn(ClientController.class).getActiveClients(authMan)).withSelfRel());
 	}

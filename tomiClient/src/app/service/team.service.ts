@@ -3,9 +3,10 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {Team} from "../model/team";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {teamUrl} from "../configuration/domainConfiguration";
 import {UserAccount} from "../model/userAccount";
+import {ErrorService} from "./error.service";
 import {SignInService} from "./sign-in.service";
 
 const httpOptions = {
@@ -29,7 +30,7 @@ export class TeamService {
   private teamSubjectList: BehaviorSubject<Array<Team>> = new BehaviorSubject<Array<Team>>([]);
 
 
-  public constructor(private http: HttpClient, public snackBar: MatSnackBar, private signInService:SignInService) {
+  public constructor(private http: HttpClient, public snackBar: MatSnackBar, private signInService:SignInService, private errorService: ErrorService) {
 
   }
 
@@ -61,7 +62,8 @@ export class TeamService {
 
   public requestAllTeams() {
     let obsTeams: Observable<Array<Team>>;
-    obsTeams = this.http.get(`${teamUrl}`).pipe(map((response: Response) => response))
+    obsTeams = this.http.get(`${teamUrl}`)
+      //.pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         return data._embedded.teams as Team[];
       }));
@@ -79,18 +81,16 @@ export class TeamService {
         tempTeam = response;
         return response;
       }).catch((error: any) => {
-        //TODO
+        this.errorService.displayErrorMessage(error);
       });
     } else {
       const url = team._links["update"];
       await this.http.put<Team>(url["href"], JSON.stringify(team), httpOptions).toPromise().then((response) => {
         this.requestAllTeams();
-
         tempTeam = response;
         return response;
-      }).catch((error: Error) => {
-        //TODO
-        console.log(error);
+      }).catch((error: any) => {
+        this.errorService.displayErrorMessage(error);
       });
     }
     this.signInService.getNavBarList();
@@ -99,10 +99,10 @@ export class TeamService {
 
   /**
    * Gets all members who aren't on the team, as well as not a team lead of any other teams.
-   * @param id The ID of the team to be omitted from the selection of user accounts.
    */
   getAllFreeMembers(): Observable<Array<UserAccount>> {
     return this.http.get(`${teamUrl}/unassigned`)
+    //  .pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           return data._embedded.userAccounts as UserAccount[];
@@ -128,7 +128,6 @@ export class TeamService {
       }));
   }
 
-  //TODO add error handling!!
   /**
    * Logically deletes the selected team (sets their active status to false.)
    *
@@ -137,23 +136,22 @@ export class TeamService {
   async delete(team: Team) {
     const url = team._links["delete"];
 
-    await this.http.delete(url["href"], httpOptions).toPromise().then((response) => {
-      this.requestAllTeams();
-
-      return response;
-    }).catch((error: Error) => {
-      //TODO
-      console.log(error);
-    });
+    await this.http.delete(url["href"], httpOptions).toPromise()
+      .then((response) => {
+        this.requestAllTeams();
+        return response;
+      }).catch((error: any) => {
+        this.errorService.displayErrorMessage(error);
+      });
   }
 
-  //TODO account for 400 error
   /**
    * Gets a team with the specified ID.
    * @param id The id of the team to get.
    */
   getTeamById(id: number): Observable<Team> {
     return this.http.get(`${teamUrl}/${id}`)
+      //.pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         return data as Team;
       }));

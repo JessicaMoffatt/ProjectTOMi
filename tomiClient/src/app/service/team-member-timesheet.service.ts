@@ -40,6 +40,7 @@ export class TeamMemberTimesheetService{
   teamMembersReportsToDisplay: ProductivityReportLine[] = [];
 
   teamid: number = this.signInService.userAccount.teamId;
+
   team: Team;
   /** The list of entries for the displaying timesheet*/
   entries: Entry[] = [];

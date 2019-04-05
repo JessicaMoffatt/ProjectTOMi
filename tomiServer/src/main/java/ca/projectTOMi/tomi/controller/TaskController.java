@@ -65,6 +65,8 @@ public class TaskController {
 			.map(this.assembler::toResource)
 			.collect(Collectors.toList());
 
+		// good. if(1==1) throw new IndexOutOfBoundsException();
+
 		return new Resources<>(taskList,
 			linkTo(methodOn(TaskController.class).getActiveTasks(authMan)).withSelfRel());
 	}

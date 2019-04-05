@@ -36,7 +36,6 @@ export class ProjectEntriesSidebarComponent implements OnInit {
 
   public unselect(projectId:string){
     this.btn_group.selected.checked = false;
-    console.log(this.btn_group);
   }
 
   public getProjectEntries(project:Project){
