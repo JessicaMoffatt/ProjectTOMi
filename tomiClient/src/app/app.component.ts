@@ -6,11 +6,7 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  // constructor(private localeService: BsLocaleService){
-  //   defineLocale('en-gb', enGbLocale);
-  // }
 
   ngOnInit(){
-    // this.localeService.use('en-gb');
   }
 }

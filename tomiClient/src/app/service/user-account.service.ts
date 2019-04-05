@@ -23,96 +23,54 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserAccountService {
-  /** The UserAccount selected from the list of UserAccounts.*/
-  private selectedUserAccount: UserAccount;
-
-  /** Listing of all active UserAccounts */
-  userAccounts: Observable<Array<UserAccount>>;
+  /** The list of all active UserAccounts. */
   userSubject: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject<Array<UserAccount>>([]);
 
-  public constructor(private http: HttpClient, public snackBar:MatSnackBar, private signInService:SignInService) {
+  public constructor(private http: HttpClient, public snackBar: MatSnackBar, private signInService: SignInService) {
 
   }
 
   /**
-   * Get the list of all active users and populate into the userSubject list.
+   * Gets the list of all active users and populates them into the userSubject list.
    */
   initializeUserAccounts() {
-    this.GETAllUserAccounts().forEach( users => {
+    this.getAllUserAccounts().forEach(users => {
       this.userSubject = new BehaviorSubject<Array<UserAccount>>(users);
       this.sortUserAccounts(this.userSubject);
-    }).catch( (error: any) => {
+    }).catch((error: any) => {
       let getUsersErrorMessage = 'Something went wrong when getting the list of users. Please contact your system administrator.';
-      this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
+      this.snackBar.open(getUsersErrorMessage, null, {
+        duration: 5000,
+        politeness: 'assertive',
+        panelClass: 'snackbar-fail',
+        horizontalPosition: 'center'
+      });
     });
   }
 
   /**
    * Sorts the user accounts in the userSubject list by ascending last name.
    */
-  sortUserAccounts(users:BehaviorSubject<Array<UserAccount>>){
+  sortUserAccounts(users: BehaviorSubject<Array<UserAccount>>) {
     users.getValue().sort((user1, user2) => {
       let name1 = user1.lastName.toLowerCase() + user1.firstName.toLowerCase();
-      let name2 = user2.lastName.toLowerCase() + user2.firstName.toLowerCase() ;
-      if (name1 > name2) { return 1; }
-      if (name1 < name2) { return -1; }
+      let name2 = user2.lastName.toLowerCase() + user2.firstName.toLowerCase();
+      if (name1 > name2) {
+        return 1;
+      }
+      if (name1 < name2) {
+        return -1;
+      }
       return 0;
     });
   }
 
   /**
-   * Refresh the List of UserAccounts to keep up-to-date with the server.
+   * Sends a GET message to the server to retrieve all active UserAccounts.
    */
-  refreshUserAccounts() {
-    let freshUsers :UserAccount[];
-
-    this.GETAllUserAccounts().forEach(users => {
-      freshUsers = users;
-      //Replace all users with fresh user data
-
-      freshUsers.forEach( freshUser => {
-        let index = this.userSubject.getValue().findIndex((staleUser) => {
-          return (staleUser.id === freshUser.id);
-        });
-
-        // If the id didn't match any of the existing ids then add it to the list.
-        if (index === -1) {
-          this.userSubject.getValue().push(freshUser);
-
-          // id was found and this UserAccount will be replaced with fresh data
-        } else {
-          this.userSubject.getValue().splice(index, 1, freshUser);
-        }
-      });
-
-      // Check for any deleted userAccounts
-      this.userSubject.getValue().forEach(oldUser => {
-        let index = freshUsers.findIndex(newUser => {
-          return (newUser.id === oldUser.id);
-        });
-
-        if (index === -1) {
-          let indexToBeRemoved = this.userSubject.getValue().findIndex( (userToBeRemoved) => {
-            return (userToBeRemoved.id === oldUser.id);
-          });
-
-           this.userSubject.getValue().splice(indexToBeRemoved, 1);
-        }
-      });
-    }).then(value => {
-      this.sortUserAccounts(this.userSubject);
-    }).catch( (error: any) => {
-      let getUsersErrorMessage = 'Something went wrong when updating the list of Users.';
-      this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
-    });
-  }
-
-  /**
-   * Sends a GET message to the server for a fresh list of all UserAccounts.
-   */
-  GETAllUserAccounts() {
-    let obsUsers : Observable<Array<UserAccount>>;
-    obsUsers = this.http.get(userAccountUrl).pipe(map((response:Response) => response))
+  getAllUserAccounts(): Observable<Array<UserAccount>> {
+    let obsUsers: Observable<Array<UserAccount>>;
+    obsUsers = this.http.get(userAccountUrl)
       .pipe(map((data: any) => {
         return data._embedded.userAccounts as UserAccount[];
       }));
@@ -120,52 +78,68 @@ export class UserAccountService {
   }
 
   /**
-   * Saves a specified UserAccount. If the UserAccount is new (id = -1), an HTTP POST is performed, else an HTTP PUT is performed to update the existing UserAccount.
+   * Saves the specified UserAccount. If the UserAccount is new (id = -1), an HTTP POST is performed,
+   * else an HTTP PUT is performed to update the existing UserAccount.
    *
    * @param account The UserAccount to be created/updated.
    */
   async save(userAccount: UserAccount) {
     if (userAccount.id === -1) {
       await this.http.post<UserAccount>(userAccountUrl, JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
-        this.refreshUserAccounts();
+        this.initializeUserAccounts();
       }).catch((error: any) => {
         let addUserErrorMessage = 'Something went wrong when adding ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
-        this.snackBar.open(addUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
+        this.snackBar.open(addUserErrorMessage, null, {
+          duration: 5000,
+          politeness: 'assertive',
+          panelClass: 'snackbar-fail',
+          horizontalPosition: 'center'
+        });
       });
     } else {
       const url = userAccount._links["update"];
       await this.http.put<UserAccount>(url["href"], JSON.stringify(userAccount), httpOptions).toPromise().then(response => {
-        this.refreshUserAccounts();
+        this.initializeUserAccounts();
       }).catch((error: any) => {
         let editUserErrorMessage = 'Something went wrong when updating ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
-        this.snackBar.open(editUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
+        this.snackBar.open(editUserErrorMessage, null, {
+          duration: 5000,
+          politeness: 'assertive',
+          panelClass: 'snackbar-fail',
+          horizontalPosition: 'center'
+        });
       });
     }
     this.signInService.getNavBarList();
   }
 
   /**
-   * Logically deletes the selected user account (sets the active status to false.)
+   * Logically deletes the selected UserAccount (sets the active status to false.)
    *
    * @param account The UserAccount to be deleted.
    */
-    delete(userAccount: UserAccount) {
-      const url = userAccount._links["delete"];
-      this.http.delete(url["href"], httpOptions).toPromise().then( response => {
-        this.refreshUserAccounts();
-      }).catch((error: any) => {
-        let deleteUserErrorMessage = 'Something went wrong when deleting ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
-        this.snackBar.open(deleteUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
+  delete(userAccount: UserAccount) {
+    const url = userAccount._links["delete"];
+    this.http.delete(url["href"], httpOptions).toPromise().then(response => {
+      this.initializeUserAccounts();
+    }).catch((error: any) => {
+      let deleteUserErrorMessage = 'Something went wrong when deleting ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
+      this.snackBar.open(deleteUserErrorMessage, null, {
+        duration: 5000,
+        politeness: 'assertive',
+        panelClass: 'snackbar-fail',
+        horizontalPosition: 'center'
       });
+    });
   }
 
   /**
-   * Get a UserAccount by their id.
+   * Sends a GET message to the server to retrieve the UserAccount by their ID.
    *
-   * @param id id of the user.
+   * @param id ID of the UserAccount.
    */
-  getUserById(id:number): Observable<UserAccount>{
-    return this.http.get(`${userAccountUrl}/${id}`).pipe(map((response:Response) => response))
+  getUserById(id: number): Observable<UserAccount> {
+    return this.http.get(`${userAccountUrl}/${id}`)
       .pipe(map((data: any) => {
         return data as UserAccount;
       }));

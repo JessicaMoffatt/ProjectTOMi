@@ -93,7 +93,6 @@ import {ProjectEntriesService} from "./service/project-entries.service";
 import {SignInService} from "./service/sign-in.service";
 import {TaskService} from "./service/task.service";
 import {TeamService} from "./service/team.service";
-import {TeamSidebarService} from "./service/team-sidebar.service";
 import {TimesheetService} from "./service/timesheet.service";
 import {UserAccountService} from "./service/user-account.service";
 
@@ -246,7 +245,6 @@ import {AddProjectComponent} from "./component/modal/add-project/add-project";
     SignInService,
     TaskService,
     TeamService,
-    TeamSidebarService,
     TimesheetService,
     UserAccountService,
     {
