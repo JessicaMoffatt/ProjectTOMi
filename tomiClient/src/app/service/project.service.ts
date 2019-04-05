@@ -134,16 +134,18 @@ export class ProjectService {
     return this.selectedProject;
   }
 
+  /** Returns selectedProject.*/
   getSelectedProject() {
     return this.selectedProject;
   }
 
+  /** Returns selectedClient.*/
   getSelectedClient() {
     return this.selectedClient;
   }
 
   /**
-   * Gets a project with the specified ID.
+   * Sends a GET message to the server to retrieve the Project by their ID.
    * @param id The ID of the project to get.
    */
   getProjectById(id: string) {
@@ -156,8 +158,8 @@ export class ProjectService {
   }
 
   /**
-   *
-   * @param project The project to get a report for.
+   * Sends a GET message to the server to retrieve the BudgetReport for the specified Project.
+   * @param project The Project to get a budget report for.
    */
   getBudgetReportByProjectId(project: Project) {
     let url = project._links["budget"];
@@ -169,6 +171,9 @@ export class ProjectService {
       );
   }
 
+  /**
+   * Calculates the percent billable for the Budget Report.
+   */
   calculatePercentBillable(): string {
     if (this.selectedBudget) {
       let percent = this.selectedBudget.billableHours / this.selectedBudget.totalHours * 100;
@@ -180,6 +185,9 @@ export class ProjectService {
     }
   }
 
+  /**
+   * Calculates the percent of actual hours spent on the Project, for the Budget Report.
+   */
   calculatePercentActual(): number {
     if (this.selectedBudget) {
       return this.selectedBudget.totalHours / this.selectedBudget.project.budgetedHours * 100;
@@ -188,6 +196,9 @@ export class ProjectService {
     }
   }
 
+  /**
+   * Sends a GET message to the server to retrieve the lines for the billable hours report.
+   */
   getBillableReport() {
     return this.http.get(billableUrl)
       .pipe(
@@ -210,6 +221,9 @@ export class ProjectService {
       );
   }
 
+  /**
+   * Retrieves the billable hour report as an xls file download.
+   */
   downloadBillableReport() {
     return this.http.get(`${billableHourDownloadUrl}`, {responseType: 'blob'})
       .pipe(

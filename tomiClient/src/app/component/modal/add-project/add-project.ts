@@ -20,7 +20,6 @@ export class AddProjectComponent implements OnInit {
     Validators.required
   ]);
 
-
   @ViewChild('addProjectName') addProjectName;
 
   /** The ngForm for this component */
