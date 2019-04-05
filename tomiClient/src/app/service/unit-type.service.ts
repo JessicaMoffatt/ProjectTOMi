@@ -14,7 +14,7 @@ const httpOptions = {
 };
 
 /**
- * UnitTypeService is used to provide methods for the Manage UnitTypes page.
+ * UnitTypeService is used to control the flow of data regarding unit types to/from the view.
  *
  * @author Iliya Kiritchkov
  * @version 1.1
@@ -24,9 +24,7 @@ const httpOptions = {
 })
 export class UnitTypeService {
 
-  /**
-   * Lists all active Unit Types. This list can be subscribed to provide an always updated list of Unit Types.
-   */
+  /** The list of all active UnitTypes. */
   unitTypes: BehaviorSubject<Array<UnitType>> = new BehaviorSubject<Array<UnitType>>([]);
 
   constructor(private http: HttpClient, public snackBar: MatSnackBar) {
