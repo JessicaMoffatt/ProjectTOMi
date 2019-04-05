@@ -8,7 +8,7 @@
   <form #addProjectForm="ngForm">
     <div class="row">
       <mat-form-field id="account_manager">
-        <input matInput #accountManager placeholder="Account Manager">
+        <input matInput #accountManager placeholder="Account Manager" [formControl]="accountManagerControl">
       </mat-form-field>
 
       <mat-form-field id="project">
@@ -20,6 +20,7 @@
                placeholder="Client"
                aria-label="Client"
                matInput
+               [formControl]="clientControl"
                [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete">
           <mat-option *ngFor="let c of this.clientService.clients | async" [value]="c.name">

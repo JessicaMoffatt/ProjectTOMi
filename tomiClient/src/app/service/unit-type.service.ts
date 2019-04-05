@@ -49,7 +49,7 @@ export class UnitTypeService {
   }
 
   /**
-   * Sorts the unit types in the unitTypes list by ascending name.
+   * Sorts the UnitTypes in the unitTypes list by ascending name.
    */
   sortUnitTypes() {
     this.unitTypes.getValue().sort((unit1, unit2) => {

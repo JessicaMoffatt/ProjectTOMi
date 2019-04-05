@@ -47,7 +47,7 @@ export class TeamService {
   }
 
   /**
-   * Sorts the teams in the teamSubjectList by ascending name.
+   * Sorts the Teams in the teamSubjectList by ascending name.
    */
   sortTeams() {
     this.teamSubjectList.getValue().sort((team1, team2) => {

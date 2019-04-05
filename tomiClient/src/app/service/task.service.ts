@@ -33,7 +33,7 @@ export class TaskService {
   }
 
   /**
-   * Gets the list of all active tasks and populates them into the taskSubjectList.
+   * Gets the list of all active Tasks and populates them into the taskSubjectList.
    */
   public initializeTasks() {
     return this.requestAllTasks().forEach(tasks => {
@@ -140,7 +140,7 @@ export class TaskService {
   }
 
   /**
-   * Sorts the tasks in the taskSubjectList by ascending name.
+   * Sorts the Tasks in the taskSubjectList by ascending name.
    */
   sortTasks() {
     this.taskSubjectList.getValue().sort((client1, client2) => {

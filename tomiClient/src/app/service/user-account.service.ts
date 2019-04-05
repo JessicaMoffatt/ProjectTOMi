@@ -55,7 +55,7 @@ export class UserAccountService {
   }
 
   /**
-   * Sorts the user accounts in the userSubject list by ascending last name.
+   * Sorts the UserAccounts in the userSubject list by ascending last name.
    */
   sortUserAccounts(users: BehaviorSubject<Array<UserAccount>>) {
     users.getValue().sort((user1, user2) => {

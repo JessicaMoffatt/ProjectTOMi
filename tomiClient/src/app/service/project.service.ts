@@ -241,38 +241,34 @@ export class ProjectService {
     return throwError(error.message);
   }
 
-
-  // @ts-ignore
-  async projectNameIsAvailable(projectName: string): boolean {
-
-    this.projects.subscribe(projects => {
-        for (let c of projects) {
-          if (c.projectName === projectName) {
-            return false;
-          }
-        }
-        return true;
-      }
-    );
-  }
-
+  /**
+   * Saves the specified Project. If the Project is new (id = 2), an HTTP POST is performed,
+   * else an HTTP PUT is performed to update the existing Project.
+   *
+   * @param project The Project to be created/updated.
+   */
   async save(project: Project) {
     if (project.id.length == 2) {
       return this.http.post<Project>(`${projectsUrl}`, JSON.stringify(project), httpOptions)
         .toPromise()
-        .then((project) => this.setSelected(project));
+        .then((project) => {
+          this.setSelected(project);
+          this.signInService.getNavBarList();
+        });
     } else {
       const url = project._links["update"];
 
       return this.http.put<Project>(url["href"], JSON.stringify(project), httpOptions).toPromise()
         .then((project) => {
-          // this.setSelected(project);
+          this.signInService.getNavBarList();
         })
     }
-    this.signInService.getNavBarList();
   }
 
-
+  /**
+   * Performs an http PUT request to add the specified UserAccount(using their ID) to the Project.
+   * @param userAccountId The ID of the UserAccount to add to the Project.
+   */
   addUser(userAccountId: number) {
     let url = `${projectsUrl}/${this.getSelectedProject().id}/add_member/${userAccountId}`;
     this.http.put<UserAccount>(url, httpOptions).toPromise()
@@ -280,11 +276,13 @@ export class ProjectService {
         this.refreshUserAccountList();
         return response;
       }).catch((reason) => {
-      console.log(reason);
-      return null;
+        return null;
     });
   }
 
+  /**
+   * Gets the list of all active Projects and populates them into the projects list.
+   */
   refreshProjectList() {
     return this.getAllProjects().forEach(project => {
       this.projects = new BehaviorSubject<Array<Project>>(project);
@@ -300,6 +298,9 @@ export class ProjectService {
     });
   }
 
+  /**
+   * Sorts the Projects in the projects list by ascending name.
+   */
   sortProjects() {
     this.projects.getValue().sort((project1, project2) => {
       let name1 = project1.projectName.toLowerCase();
@@ -314,6 +315,9 @@ export class ProjectService {
     });
   }
 
+  /**
+   * Sends a GET message to the server to retrieve all UserAccounts associated with this Project.
+   */
   refreshUserAccountList() {
     this.http.get(`${projectsUrl}/${this.selectedProject.id}/members`)
       .pipe(map((data: any) => {
@@ -335,11 +339,19 @@ export class ProjectService {
     });
   }
 
+  /**
+   * Performs an http PUT request to remove the specified UserAccount from the Project.
+   * @param userId
+   */
   removeUser(userId: number) {
     this.http.put(`${projectsUrl}/${this.selectedProject.id}/remove_member/${userId}`, httpOptions).toPromise()
       .then(() => this.refreshUserAccountList())
   }
 
+  /**
+   * Logically deletes the selected Project (sets the active status to false.)
+   * @param project The Project to be deleted.
+   */
   delete(project: Project) {
     const url = project._links["delete"];
     this.http.delete(url["href"], httpOptions).toPromise().then((response) => {
@@ -348,17 +360,26 @@ export class ProjectService {
     });
   }
 
+  /**
+   * Gets the Entries for the selected Project.
+   * @param project The Project to get Entries for.
+   */
   async getEntries(project: Project) {
     let entryList: BehaviorSubject<Array<Entry>>;
     entryList = new BehaviorSubject([]);
     await this.populateEntries(project).forEach(entries => {
       entryList = new BehaviorSubject<Array<Entry>>(entries);
     }).catch((error: any) => {
-      console.log("Project error " + error);
     });
     return entryList;
   }
 
+  /**
+   * Evaluates the specified entry. If the Entry's status is approved, begins the process of PUTing the approval request,
+   * else if the Entry's status is rejected, begins the process of PUTing the rejection request.
+   * If the Entry has neither status, no further action is taken.
+   * @param entry The entry to evaluate the status of.
+   */
   async evaluateEntry(entry: Entry) {
     if (entry.status === Status.APPROVED) {
       await this.putApprovalRequest(entry).then((data) => {
@@ -371,6 +392,11 @@ export class ProjectService {
     }
   }
 
+  /**
+   * Wraps the putApprovalRequest method call in a promise.
+   *
+   * @param currEntry The Entry currently being evaluated.
+   */
   async promiseApproval(currEntry: Entry) {
     let promise = new Promise((resolve, reject) => {
       resolve(this.putApprovalRequest(currEntry));
@@ -379,6 +405,10 @@ export class ProjectService {
     return await promise;
   }
 
+  /**
+   * Performs an http PUT request to change the Entry's status to APPROVED.
+   * @param entry The Entry to be approved.
+   */
   async putApprovalRequest(entry: Entry) {
     let url: string = entry._links["evaluate"]["href"];
     let temp = null;
@@ -392,6 +422,10 @@ export class ProjectService {
     return temp;
   }
 
+  /**
+   * Performs an http PUT request to change the Entry's status to REJECTED.
+   * @param entry The Entry to be rejected.
+   */
   async putRejectionRequest(entry: Entry): Promise<Entry> {
     let url: string = entry._links["evaluate"]["href"];
     let temp = null;
@@ -405,6 +439,10 @@ export class ProjectService {
     return temp;
   }
 
+  /**
+   * Sends a GET message to the server to retrieve all submitted Entries for the specified Project.
+   * @param project The Project to get entries for.
+   */
   populateEntries(project: Project): Observable<Array<Entry>> {
     let url = project._links["entries"];
     return this.http.get(url["href"]).pipe(map((response: Response) => response))
@@ -419,6 +457,9 @@ export class ProjectService {
       }));
   }
 
+  /**
+   * For each entry of the selected project, calls evaluateEntry which in tern performs either an approval or rejection.
+   */
   async submit(entries) {
     return await entries.forEach((component: EntryApproveComponent) => {
       let entry = component.entry;
@@ -426,6 +467,9 @@ export class ProjectService {
     });
   }
 
+  /**
+   * Returns projects.
+   */
   getProjects(): BehaviorSubject<Array<Project>> {
     return this.projects;
   }
