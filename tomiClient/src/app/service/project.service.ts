@@ -31,48 +31,52 @@ const headers = new HttpHeaders({
 
 
 /**
- * Project service provides services relates to Projects.
+ * ProjectService is used to control the flow of data regarding user accounts to/from the view.
  * @author Jessica Moffatt
- * @version 1.0
+ * @author James Andrade
+ * @author Karol Talbot
+ * @version 3.0
  */
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
 
+  /** The budget associated with the selected Project.*/
   selectedBudget: BudgetReport;
 
+  /** The billable hour report for all Projects.*/
   billableReport: BillableHoursReportLine[] = [];
 
-  /** The actual hours spent working on a project.*/
+  /** The actual hours spent working on a Project.*/
   percentActual: number = 0;
 
   /** The percent of budgeted hours remaining.*/
   percentRemaining: number = 0;
 
-  /** general expression used to check if projectId is valid */
+  /** The general expression used to check if projectId is valid */
   public readonly regExp: string = "[A-Z]{2}[0-9]{4}";
 
-  /** tracks which project is selectedProject in project-panel component and manage-project modal.
-   */
-  private selectedProject: Project = new Project(); // added by: James Andrade
+  /** Tracks which Project is selectedProject in project-panel component and manage-project modal.*/
+  private selectedProject: Project = new Project();
 
-  /** used to pass list to project related components */
-  projects: BehaviorSubject<Array<Project>> = new BehaviorSubject([]); // added by: James Andrade
+  /** The list of all active Projects. */
+  projects: BehaviorSubject<Array<Project>> = new BehaviorSubject([]);
 
-  /** the user accounts assigned to the current project; for display in project-member-list-component */
+  /** The UserAccounts assigned to the current project.*/
   userAccountList: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject([]);
 
-  private selectedClient:Client = new Client();
+  /** The client associated with the selected Project.*/
+  private selectedClient: Client = new Client();
 
   constructor(private http: HttpClient,
               public snackBar: MatSnackBar,
               private expenseService: ExpenseService,
-              private signInService:SignInService) {
+              private signInService: SignInService) {
   }
 
   /**
-   * Gets all projects.
+   * Sends a GET message to the server to retrieve all active Projects.
    */
   getAllProjects(): Observable<Array<Project>> {
     return this.http.get(`${projectsUrl}`)
@@ -86,13 +90,13 @@ export class ProjectService {
   }
 
   /**
-   * Gets the projects for a specified user.
-   * @param userId The ID of the user whose projects we want.
+   * Sends a GET message to the server to retrieve the Projects for a specified UserAccount by their ID.
+   * @param userId The ID of the UserAccount whose Projects we want.
    */
   getProjectsForUser(userId: number): Observable<Array<Project>> {
     return this.http.get(`${userAccountUrl}/${userId}/projects`)
       .pipe(map((data: any) => {
-        if(data === null){
+        if (data === null) {
           return [];
         }
         if (data._embedded !== undefined) {
@@ -103,12 +107,9 @@ export class ProjectService {
       }));
   }
 
-
   /**
-   * sets the selectedProject project that will be used in project-panel and manage-projects component
-   * @author James Andrade
-   * @author Jessica Moffatt
-   * @param project the project to be stored as 'selectedProject'
+   * Sets the selected Project.
+   * @param project the project to be stored as selectedProject.
    */
   async setSelected(project: Project) {
     this.selectedProject = await project;
@@ -128,22 +129,23 @@ export class ProjectService {
     }
     this.selectedClient.name = this.selectedProject.client.name;
     this.selectedClient.id = this.selectedProject.client.id;
-    this.selectedClient._links = this.selectedClient._links;
-
+    this.selectedClient._links = this.selectedProject._links;
 
     return this.selectedProject;
   }
 
+  /** Returns selectedProject.*/
   getSelectedProject() {
     return this.selectedProject;
   }
 
-  getSelectedClient(){
+  /** Returns selectedClient.*/
+  getSelectedClient() {
     return this.selectedClient;
   }
 
   /**
-   * Gets a project with the specified ID.
+   * Sends a GET message to the server to retrieve the Project by their ID.
    * @param id The ID of the project to get.
    */
   getProjectById(id: string) {
@@ -156,8 +158,8 @@ export class ProjectService {
   }
 
   /**
-   *
-   * @param project The project to get a report for.
+   * Sends a GET message to the server to retrieve the BudgetReport for the specified Project.
+   * @param project The Project to get a budget report for.
    */
   getBudgetReportByProjectId(project: Project) {
     let url = project._links["budget"];
@@ -169,6 +171,9 @@ export class ProjectService {
       );
   }
 
+  /**
+   * Calculates the percent billable for the Budget Report.
+   */
   calculatePercentBillable(): string {
     if (this.selectedBudget) {
       let percent = this.selectedBudget.billableHours / this.selectedBudget.totalHours * 100;
@@ -180,6 +185,9 @@ export class ProjectService {
     }
   }
 
+  /**
+   * Calculates the percent of actual hours spent on the Project, for the Budget Report.
+   */
   calculatePercentActual(): number {
     if (this.selectedBudget) {
       return this.selectedBudget.totalHours / this.selectedBudget.project.budgetedHours * 100;
@@ -188,6 +196,9 @@ export class ProjectService {
     }
   }
 
+  /**
+   * Sends a GET message to the server to retrieve the lines for the billable hours report.
+   */
   getBillableReport() {
     return this.http.get(billableUrl)
       .pipe(
@@ -210,7 +221,10 @@ export class ProjectService {
       );
   }
 
-  downloadBillableReport(){
+  /**
+   * Retrieves the billable hour report as an xls file download.
+   */
+  downloadBillableReport() {
     return this.http.get(`${billableHourDownloadUrl}`, {responseType: 'blob'})
       .pipe(
         map((res) => {
@@ -266,7 +280,7 @@ export class ProjectService {
         this.refreshUserAccountList();
         return response;
       }).catch((reason) => {
-        console.log(reason);
+      console.log(reason);
       return null;
     });
   }
@@ -347,7 +361,7 @@ export class ProjectService {
 
   async evaluateEntry(entry: Entry) {
     if (entry.status === Status.APPROVED) {
-      await this.putApprovalRequest(entry).then((data) =>{
+      await this.putApprovalRequest(entry).then((data) => {
         return data;
       });
     } else if (entry.status === Status.REJECTED) {
@@ -366,7 +380,7 @@ export class ProjectService {
   }
 
   async putApprovalRequest(entry: Entry) {
-    let url:string = entry._links["evaluate"]["href"];
+    let url: string = entry._links["evaluate"]["href"];
     let temp = null;
     await this.http.put(url, '"APPROVED"', {headers: headers, observe: "response"}).toPromise().then(response => {
       temp = response;
@@ -379,7 +393,7 @@ export class ProjectService {
   }
 
   async putRejectionRequest(entry: Entry): Promise<Entry> {
-    let url:string = entry._links["evaluate"]["href"];
+    let url: string = entry._links["evaluate"]["href"];
     let temp = null;
     await this.http.put(url, '"REJECTED"', {headers: headers, observe: "response"}).toPromise().then(response => {
       temp = response;
@@ -412,7 +426,7 @@ export class ProjectService {
     });
   }
 
-  getProjects(): BehaviorSubject<Array<Project>>{
+  getProjects(): BehaviorSubject<Array<Project>> {
     return this.projects;
   }
 }

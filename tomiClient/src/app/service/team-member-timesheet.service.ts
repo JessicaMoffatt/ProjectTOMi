@@ -1,4 +1,4 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {UserAccount} from "../model/userAccount";
 import {Observable, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
@@ -13,8 +13,6 @@ import {ProductivityReportLine} from "../model/productivityReportLine";
 import {MatSnackBar} from "@angular/material";
 import {SignInService} from "./sign-in.service";
 import {Team} from "../model/team";
-import {TeamSidebarService} from "./team-sidebar.service";
-import {billableHourDownloadUrl} from "../configuration/domainConfiguration";
 
 /**
  * TeamMemberTimesheetService is used to control the flow of data regarding timesheets to/from the view.
@@ -30,27 +28,37 @@ export class TeamMemberTimesheetService{
   /** The list of team members for this team lead's team.*/
   teamMembers: UserAccount[] = [];
 
-  /** The team member selectedProject in the sidebar.*/
+  /** The team member selected in the sidebar.*/
   selectedMember: UserAccount;
 
+  /** The Productivity Report for the selected member, raw.*/
   selectedMemberReport: ProductivityReportLine[] = [];
+
+  /** The Productivity Report for the selected member, edited for display purposes.*/
   selectedMemberReportToDisplay: ProductivityReportLine[] = [];
 
+  /** The Productivity Report for this team, raw. */
   teamMembersReports: ProductivityReportLine[] = [];
+
+  /** The Productivity Report for this team, edited for display purposes.*/
   teamMembersReportsToDisplay: ProductivityReportLine[] = [];
 
+  /** The ID of this team.*/
   teamid: number = this.signInService.userAccount.teamId;
+
+  /** The Team object for this team.*/
   team: Team;
-  /** The list of entries for the displaying timesheet*/
+
+  /** The list of entries for the displayed timesheet.*/
   entries: Entry[] = [];
 
-  /** The total number of hours worked for the displaying timesheet*/
+  /** The total number of hours worked for the displayed timesheet.*/
   tally: number = 0;
 
   constructor(private http: HttpClient, private router: Router,
               private userAccountService: UserAccountService, private teamService: TeamService,
               public timesheetService: TimesheetService, public snackBar: MatSnackBar,
-              private signInService:SignInService, private teamSidebarService:TeamSidebarService) {
+              private signInService:SignInService) {
   }
 
   /**
@@ -76,7 +84,7 @@ export class TeamMemberTimesheetService{
     this.teamMembersReports =[];
 
     if(this.team === null || this.team === undefined){
-      this.teamSidebarService.getTeamById(this.teamid).subscribe((data)=>{
+      this.teamService.getTeamById(this.teamid).subscribe((data)=>{
         this.team = data;
         this.getAllTeamMembersAndReports(data);
       });
@@ -85,6 +93,9 @@ export class TeamMemberTimesheetService{
     }
   }
 
+  /**
+   *  Sorts the team members in the teamMembers list by ascending name.
+   */
   sortTeamMembers() {
     this.teamMembers.sort((user1, user2) => {
       let name1 = user1.firstName.toLowerCase() + user1.lastName.toLowerCase();
@@ -99,6 +110,12 @@ export class TeamMemberTimesheetService{
     });
   }
 
+  /**
+   * Gets all the team members and assigns them into teamMembers.
+   * At the same time, also retrieves and combines the productivity reports
+   * for the whole team.
+   * @param team
+   */
   getAllTeamMembersAndReports(team:Team){
     this.getAllTeamMembers(team).subscribe((data: Array<UserAccount>) => {
       this.teamMembers = data;
@@ -132,16 +149,32 @@ export class TeamMemberTimesheetService{
     });
   }
 
+  /**
+   * Changes the data within the selectedMemberReportToDisplay to reflect the specified date range.
+   * @param startDate The starting date for the report period.
+   * @param endDate The ending date for the report period.
+   */
   setRangeOfProductivityReport(startDate:Date,endDate:Date){
-    this.selectedMemberReportToDisplay = this.setRangeOfReport(this.selectedMemberReportToDisplay, this.selectedMemberReport, startDate, endDate);
+    this.selectedMemberReportToDisplay = this.setRangeOfReport(this.selectedMemberReport, startDate, endDate);
   }
 
+  /**
+   * Changes the data within the teamMembersReportsToDisplay to reflect the specified date range.
+   * @param startDate The starting date for the report period.
+   * @param endDate The ending date for the report period.
+   */
   setRangeOfTeamProductivityReport(startDate:Date,endDate:Date){
-    this.teamMembersReportsToDisplay = this.setRangeOfReport(this.teamMembersReportsToDisplay, this.teamMembersReports, startDate,endDate);
+    this.teamMembersReportsToDisplay = this.setRangeOfReport(this.teamMembersReports, startDate,endDate);
   }
 
-  setRangeOfReport(newReport:ProductivityReportLine[], baseReport:ProductivityReportLine[], startDate:Date, endDate:Date): ProductivityReportLine[]{
-    newReport = [];
+  /**
+   * Used to edit out lines from an array of ProductivityReportLine objects.
+   * @param baseReport The report to edit.
+   * @param startDate The start date of the report period.
+   * @param endDate The end date of the report period.
+   */
+  setRangeOfReport(baseReport:ProductivityReportLine[], startDate:Date, endDate:Date): ProductivityReportLine[]{
+    let newReport:ProductivityReportLine[] = [];
 
     let lastLine:ProductivityReportLine = null;
     let thisLine:ProductivityReportLine = new ProductivityReportLine();
@@ -182,7 +215,7 @@ export class TeamMemberTimesheetService{
   }
 
   /**
-   * Displays the most recent timesheet.
+   * Displays the most recent Timesheet.
    */
   displayTimesheet() {
     this.populateTimesheets().then((value) => {
@@ -212,8 +245,8 @@ export class TeamMemberTimesheetService{
   }
 
   /**
-   * Populates the list of entries for the specified timesheet.
-   * @param id The ID of the timesheet to display entries for.
+   * Populates the list of entries for the specified Timesheet.
+   * @param id The ID of the Timesheet to display entries for.
    */
   private populateEntries(timesheet: Timesheet) {
     this.timesheetService.getEntries(timesheet).subscribe((data) => {
@@ -243,7 +276,7 @@ export class TeamMemberTimesheetService{
   }
 
   /**
-   * Displays the previous timesheet.
+   * Displays the previous Timesheet.
    */
   displayPrevTimesheet() {
     let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
@@ -266,7 +299,7 @@ export class TeamMemberTimesheetService{
   }
 
   /**
-   * Displays the next timesheet.
+   * Displays the next Timesheet.
    */
   displayNextTimesheet() {
     let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
@@ -289,8 +322,8 @@ export class TeamMemberTimesheetService{
   }
 
   /**
-   * Displays the specified timesheet.
-   * @param index The index of the timesheet to display.
+   * Displays the Timesheet located at the specified index.
+   * @param index The index of the Timesheet to display.
    */
   displaySpecifiedTimesheet(index: number) {
     let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
@@ -312,8 +345,12 @@ export class TeamMemberTimesheetService{
     }
   }
 
-  getProductivityReportByMember(member: UserAccount) {
-    let url = member._links["productivityreport"];
+  /**
+   * Sends a GET message to the server to retrieve the productivity report for the specified user.
+   * @param userAccount The user this report is for.
+   */
+  getProductivityReportByMember(userAccount: UserAccount) {
+    let url = userAccount._links["productivityreport"];
 
     return this.http.get(`${url["href"]}`)
       .pipe(
@@ -323,6 +360,10 @@ export class TeamMemberTimesheetService{
       );
   }
 
+  /**
+   * Sends a GET message to the server to retrieve the productivity report for the specified user
+   * as a download in xsl format.
+   */
   downloadProductivityReport(){
     let url = this.selectedMember._links["productivityreport"];
     return this.http.get(`${url['href']}/xls`, {responseType: 'blob'})
@@ -333,6 +374,10 @@ export class TeamMemberTimesheetService{
       );
   }
 
+  /**
+   * Throws the passed error.
+   * @param error The error to be thrown.
+   */
   private handleError(error: HttpErrorResponse) {
     return throwError(error.message);
   }

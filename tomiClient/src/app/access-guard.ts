@@ -21,7 +21,7 @@ export class AccessGuard implements CanActivate {
   /**
    * Checks whether or not a user is logged in. If they are logged in, returns true.
    * If they are not logged in, routes them back to the sign in page and returns false.
-   * @param route The route to check if it requires being logged in.
+   * @param route The rout to check if it requires being logged in.
    */
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean>|Promise<boolean>|boolean {
     const requiresLogin = route.data.requiresLogin || false;

@@ -17,34 +17,61 @@ const headers = new HttpHeaders({
 })
 export class ProjectEntriesService {
 
+  /**
+   * The ID of this signed in user.
+   */
   userId = this.signInService.userAccount.id;
 
+  /**
+   * The list of projects for this user.
+   */
   projects: Project[] = [];
+
+  /**
+   * The list of entries this user is allowed to view.
+   */
   entries: Entry[] = [];
 
+  /**
+   * The selected project.
+   */
   selectedProject: Project;
 
   constructor(private projectService: ProjectService, private http: HttpClient, private signInService:SignInService) {
 
   }
 
+  /**
+   * Sends a GET message to the server to retrieve all active Projects for the signed in user.
+   */
   getAllProjects(): Observable<Array<Project>> {
     return this.projectService.getProjectsForUser(this.userId);
   }
 
+  /**
+   * Sends a GET message to the server to retrieve the Project by their ID.
+   * @param id
+   */
   getProjectById(id: string): Observable<Project> {
     return this.projectService.getProjectById(id);
   }
 
+  /**
+   * Sets entries to the Entries retrieved through populateEntries.
+   */
   async displayProjectEntries() {
     this.populateEntries(this.selectedProject).subscribe((data) => {
       this.entries = data;
     });
   }
 
+  /**
+   * Sends a GET message to the server to retrieve all submitted Entries for the specified Project.
+   * @param project The Project to get entries for.
+   */
   populateEntries(project: Project): Observable<Array<Entry>> {
     let url = project._links["entries"];
-    return this.http.get(url["href"]).pipe(map((response: Response) => response))
+    return this.http.get(url["href"])
       .pipe(map((data: any) => {
         if (data._embedded !== undefined) {
           let sorted = data._embedded.entries as Entry[];
@@ -56,12 +83,21 @@ export class ProjectEntriesService {
       }));
   }
 
+  /**
+   * For each entry of the selected project, calls evaluateEntry which in tern performs either an approval or rejection.
+   */
   async submit(){
     for(const item of this.entries){
       await this.evaluateEntry(item);
     }
   }
 
+  /**
+   * Evaluates the specified entry. If the Entry's status is approved, begins the process of PUTing the approval request,
+   * else if the Entry's status is rejected, begins the process of PUTing the rejection request.
+   * If the Entry has neither status, no further action is taken.
+   * @param entry The entry to evaluate the status of.
+   */
   async evaluateEntry(entry:Entry){
     if(entry.status === Status.APPROVED){
           await this.promiseApproval(entry).then();
@@ -72,6 +108,11 @@ export class ProjectEntriesService {
         }
   }
 
+  /**
+   * Wraps the putApprovalRequest method call in a promise.
+   *
+   * @param currEntry The Entry currently being evaluated.
+   */
   async promiseApproval(currEntry:Entry){
     let promise = new Promise((resolve,reject)=>{
       resolve(this.putApprovalRequest(currEntry));
@@ -80,6 +121,10 @@ export class ProjectEntriesService {
     return await promise;
   }
 
+  /**
+   * Performs an http PUT request to change the Entry's status to APPROVED.
+   * @param entry The Entry to be approved.
+   */
   async putApprovalRequest(entry:Entry){
     let url = entry._links["evaluate"];
     let temp = null;
@@ -94,6 +139,10 @@ export class ProjectEntriesService {
     return temp;
   }
 
+  /**
+   * Performs an http PUT request to change the Entry's status to REJECTED.
+   * @param entry The Entry to be rejected.
+   */
   async putRejectionRequest(entry:Entry): Promise<Entry>{
     let url = entry._links["evaluate"];
     let temp = null;

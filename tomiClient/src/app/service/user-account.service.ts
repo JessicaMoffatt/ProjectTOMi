@@ -32,32 +32,41 @@ export class UserAccountService {
   /** The list of all active UserAccounts. */
   userSubject: BehaviorSubject<Array<UserAccount>> = new BehaviorSubject<Array<UserAccount>>([]);
 
-  public constructor(private http: HttpClient, public snackBar:MatSnackBar, private signInService:SignInService) {
+  public constructor(private http: HttpClient, public snackBar: MatSnackBar, private signInService: SignInService) {
 
   }
 
   /**
-   * Get the list of all active users and populate into the userSubject list.
+   * Gets the list of all active users and populates them into the userSubject list.
    */
   initializeUserAccounts() {
-    this.GETAllUserAccounts().forEach( users => {
+    this.GETAllUserAccounts().forEach(users => {
       this.userSubject = new BehaviorSubject<Array<UserAccount>>(users);
       this.sortUserAccounts(this.userSubject);
-    }).catch( (error: any) => {
+    }).catch((error: any) => {
       let getUsersErrorMessage = 'Something went wrong when getting the list of users. Please contact your system administrator.';
-      this.snackBar.open(getUsersErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
+      this.snackBar.open(getUsersErrorMessage, null, {
+        duration: 5000,
+        politeness: 'assertive',
+        panelClass: 'snackbar-fail',
+        horizontalPosition: 'center'
+      });
     });
   }
 
   /**
    * Sorts the user accounts in the userSubject list by ascending last name.
    */
-  sortUserAccounts(users:BehaviorSubject<Array<UserAccount>>){
+  sortUserAccounts(users: BehaviorSubject<Array<UserAccount>>) {
     users.getValue().sort((user1, user2) => {
       let name1 = user1.lastName.toLowerCase() + user1.firstName.toLowerCase();
-      let name2 = user2.lastName.toLowerCase() + user2.firstName.toLowerCase() ;
-      if (name1 > name2) { return 1; }
-      if (name1 < name2) { return -1; }
+      let name2 = user2.lastName.toLowerCase() + user2.firstName.toLowerCase();
+      if (name1 > name2) {
+        return 1;
+      }
+      if (name1 < name2) {
+        return -1;
+      }
       return 0;
     });
   }
@@ -86,7 +95,12 @@ export class UserAccountService {
         this.initializeUserAccounts();
       }).catch((error: any) => {
         let addUserErrorMessage = 'Something went wrong when adding ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
-        this.snackBar.open(addUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
+        this.snackBar.open(addUserErrorMessage, null, {
+          duration: 5000,
+          politeness: 'assertive',
+          panelClass: 'snackbar-fail',
+          horizontalPosition: 'center'
+        });
       });
     } else {
       const url = userAccount._links["update"];
@@ -94,14 +108,19 @@ export class UserAccountService {
         this.initializeUserAccounts();
       }).catch((error: any) => {
         let editUserErrorMessage = 'Something went wrong when updating ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
-        this.snackBar.open(editUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
+        this.snackBar.open(editUserErrorMessage, null, {
+          duration: 5000,
+          politeness: 'assertive',
+          panelClass: 'snackbar-fail',
+          horizontalPosition: 'center'
+        });
       });
     }
     this.signInService.getNavBarList();
   }
 
   /**
-   * Logically deletes the selected user account (sets the active status to false.)
+   * Logically deletes the selected UserAccount (sets the active status to false.)
    *
    * @param account The UserAccount to be deleted.
    */
@@ -113,8 +132,8 @@ export class UserAccountService {
         let deleteUserErrorMessage = 'Something went wrong when deleting ' + userAccount.firstName + ' ' + userAccount.lastName + '.';
         this.snackBar.open(deleteUserErrorMessage, null, {duration: 5000, politeness: 'assertive', panelClass: 'snackbar-fail', horizontalPosition: 'center'});
       });
-  }
-
+    }
+  
   /**
    * Sends a GET message to the server to retrieve the UserAccount by their ID.
    *

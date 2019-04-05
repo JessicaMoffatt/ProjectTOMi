@@ -15,7 +15,7 @@ const httpOptions: any = {
 };
 
 /**
- * Service class responsible for communication of task model objects with the back end.
+ * TaskService is used to control the flow of data regarding tasks to/from the view.
  *
  * @author Karol Talbot
  * @version 2.0
@@ -24,14 +24,16 @@ const httpOptions: any = {
   providedIn: 'root'
 })
 export class TaskService {
+
+  /** The list of all active Tasks. */
   private taskSubjectList: BehaviorSubject<Array<Task>> = new BehaviorSubject<Array<Task>>([]);
 
   public constructor(private http: HttpClient, public snackBar: MatSnackBar) {
 
   }
 
-  /*
-   * Loads a list of tasks retrieved from the back end into a BehaviorSubject object that can be used to retrieve the Tasks.
+  /**
+   * Gets the list of all active tasks and populates them into the taskSubjectList.
    */
   public initializeTasks() {
     return this.requestAllTasks().forEach(tasks => {
@@ -42,62 +44,28 @@ export class TaskService {
     });
   }
 
-
-  refreshTasks() {
-    let freshTasks: Task[];
-
-    this.requestAllTasks().forEach(tasks => {
-      freshTasks = tasks;
-
-      //Replace all tasks with fresh task data
-      freshTasks.forEach(freshTask => {
-        let index = this.taskSubjectList.getValue().findIndex((staleTask) => {
-          return (staleTask.id === freshTask.id);
-        });
-
-        // If the id didn't match any of the existing ids then add it to the list.
-        if (index === -1) {
-          this.taskSubjectList.getValue().push(freshTask);
-
-          // id was found and this UserAccount will be replaced with fresh data
-        } else {
-          this.taskSubjectList.getValue().splice(index, 1, freshTask);
-        }
-      });
-
-      // Check for any deleted task
-      this.taskSubjectList.getValue().forEach(oldTask => {
-        let index = freshTasks.findIndex(newTask => {
-          return (newTask.id === oldTask.id);
-        });
-
-        if (index === -1) {
-          let indexToBeRemoved = this.taskSubjectList.getValue().findIndex((taskToBeRemoved) => {
-            return (taskToBeRemoved.id === oldTask.id);
-          });
-
-          this.taskSubjectList.getValue().splice(indexToBeRemoved, 1);
-        }
-      });
-    }).catch((error: any) => {
-      console.log("Task Error")
-    });
-  }
-
+  /**
+   * Sends a GET message to the server to retrieve all active Tasks.
+   */
   requestAllTasks() {
     let obsTasks: Observable<Array<Task>>;
-    obsTasks = this.http.get(taskUrl).pipe(map((response: Response) => response))
+    obsTasks = this.http.get(taskUrl)
       .pipe(map((data: any) => {
         return data._embedded.tasks as Task[];
       }));
     return obsTasks;
   }
 
-
+  /**
+   * Saves the specified Task. If the Task is new (id = -1), an HTTP POST is performed,
+   * else an HTTP PUT is performed to update the existing Task.
+   *
+   * @param task The Task to be created/updated.
+   */
   async save(task: Task) {
     if (task.id === -1) {
       await this.http.post<UserAccount>(taskUrl, JSON.stringify(task), httpOptions).toPromise().then(response => {
-        this.refreshTasks();
+        this.initializeTasks();
         let addUserSuccessMessage = task.name + ' added successfully.';
         this.snackBar.open(addUserSuccessMessage, null, {
           duration: 4000,
@@ -117,7 +85,7 @@ export class TaskService {
     } else {
       const url = task._links["self"];
       await this.http.put<UserAccount>(url["href"], JSON.stringify(task), httpOptions).toPromise().then(response => {
-        this.refreshTasks();
+        this.initializeTasks();
         let editUserSuccessMessage = task.name + ' ' + ' updated successfully.';
         this.snackBar.open(editUserSuccessMessage, null, {
           duration: 4000,
@@ -137,11 +105,15 @@ export class TaskService {
     }
   }
 
-
+  /**
+   * Logically deletes the selected Task (sets the active status to false.)
+   *
+   * @param task The Task to be deleted.
+   */
   delete(task: Task) {
     const url = task._links["self"];
     this.http.delete(url["href"], httpOptions).toPromise().then(response => {
-      this.refreshTasks();
+      this.initializeTasks();
       let deleteUserSuccessMessage = task.name + ' ' + ' deleted successfully.';
       this.snackBar.open(deleteUserSuccessMessage, null, {
         duration: 4000,
@@ -160,10 +132,16 @@ export class TaskService {
     });
   }
 
+  /**
+   * Returns taskSubjectList.
+   */
   public getTaskSubjectList(): BehaviorSubject<Array<Task>> {
     return this.taskSubjectList;
   }
 
+  /**
+   * Sorts the tasks in the taskSubjectList by ascending name.
+   */
   sortTasks() {
     this.taskSubjectList.getValue().sort((client1, client2) => {
       let name1 = client1.name.toLowerCase();

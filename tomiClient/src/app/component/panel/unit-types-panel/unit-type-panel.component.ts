@@ -42,7 +42,7 @@ export class UnitTypePanelComponent implements OnInit{
 
 
   delete(unitType:UnitType) {
-    this.unitTypeService.DELETEUnitType(unitType);
+    this.unitTypeService.deleteUnitType(unitType);
   }
 
 
