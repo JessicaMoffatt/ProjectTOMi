@@ -2,13 +2,12 @@ import {Component, HostListener, Inject, OnInit, ViewChild} from '@angular/core'
 import {Project} from "../../../model/project";
 import {ApprovePanelComponent} from "../../panel/approve-panel/approve-panel.component";
 import {ProjectService} from "../../../service/project.service";
-import {BehaviorSubject} from "rxjs";
-import {Entry} from "../../../model/entry";
+
 /**
- * ProjectEntriesSidebarComponent is used to display the list of projects for a user to interact with when viewing entries for approval.
+ * ProjectEntriesSidebarComponent is used to house the list of projects whose entries are to be viewed.
  *
  * @author Jessica Moffatt
- * @version 1.0
+ * @version 2.0
  */
 @Component({
   selector: 'app-project-entries-sidebar',
@@ -30,14 +29,26 @@ export class ProjectEntriesSidebarComponent implements OnInit {
     this.projectService.refreshProjectList();
   }
 
+  /**
+   * Sets the selected Project.
+   * @param project The Project to set selected to.
+   */
   selectProject(project: Project): void {
     this.parent.setSelectedProject(project);
   }
 
+  /**
+   * Unselects the project.
+   * @param projectId
+   */
   public unselect(projectId:string){
     this.btn_group.selected.checked = false;
   }
 
+  /**
+   * Gets the Entries for this Project.
+   * @param project The Project to get Entries for.
+   */
   public getProjectEntries(project:Project){
     this.parent.setSelectedProject(project);
   }

@@ -38,19 +38,34 @@ export class TeamSidebarComponent implements OnInit {
 
   }
 
+  /**
+   * Sets the selected Team.
+   * @param team The Team to set the selected Team to.
+   */
   selectTeam(team: Team): void {
     this.parent.setSelectedTeam(team);
   }
 
+  /**
+   * Unselects the specified Team.
+   * @param teamId
+   */
   public unselect(teamId: number): void {
     this.buttonGroup.selected.checked = false;
   }
 
+  /**
+   * Sets the button group to the specified Team.
+   * @param teamId The Team to set the button group to.
+   */
   setSelectedTeam(team:Team){
     this.buttonGroup = team;
   }
 }
 
+/**
+ * Pipe used to filter Teams by their name.
+ */
 @Pipe({name: 'FilterTeamByName'})
 export class FilterTeamByName implements PipeTransform {
   transform(teamList: Array<Team>, nameFilter: string): any {

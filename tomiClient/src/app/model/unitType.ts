@@ -1,18 +1,18 @@
 /**
- * A Unit Type is used to distinguish between types of units.
+ * A UnitType is used to distinguish between types of units.
  *
  * @author Jessica Moffatt and Iliya Kiritchkov
  * @version 1.0
  */
 export class UnitType{
 
-  /** The unique identifier of this Unit Type. Used to distinguish between Unit Types.*/
+  /** The unique identifier of this UnitType. Used to distinguish between UnitTypes.*/
   id: number;
-  /** The name of this Unit Type.*/
+  /** The name of this UnitType.*/
   name: string;
-  /** The unit of measurement for this Unit Type.*/
+  /** The unit of measurement for this UnitType.*/
   unit: string;
-  /** The measurement of value of for this Unit Type.*/
+  /** The measurement of value of for this UnitType.*/
   weight: number;
   /** The list of links used for communicating with the back end.*/
   _links: [];

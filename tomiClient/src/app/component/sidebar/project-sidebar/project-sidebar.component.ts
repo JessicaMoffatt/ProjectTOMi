@@ -4,10 +4,15 @@ import {ProjectsPanelComponent} from "../../panel/projects-panel/projects-panel.
 import {Project} from "../../../model/project";
 import {BehaviorSubject} from "rxjs";
 import {UserAccount} from "../../../model/userAccount";
-import {Team} from "../../../model/team";
-import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-teams-panel.component";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material";
 
+/**
+ * ProjectSidebarComponent is used to house the list of projects to be managed.
+ *
+ * @author Jessica Moffatt
+ * @author Karol Talbot
+ * @version 2.0
+ */
 @Component({
   selector: 'app-project-sidebar',
   templateUrl: './project-sidebar.component.html',
@@ -28,29 +33,26 @@ export class ProjectSidebarComponent implements OnInit {
     this.projectService.refreshProjectList();
   }
 
-  displayBlankProject() {
-    this.projectService.setSelected(new Project());
-    this.projectService.userAccountList = new BehaviorSubject<Array<UserAccount>>([]);
-  }
-
+  /**
+   * Sets the selected Project.
+   * @param project The Project to set selected to.
+   */
   selectProject(project : Project){
     this.selected = true;
     this.projectService.setSelected(project);
   }
 
-  unselect(){
-    this.selected = false;
-    if (this.buttonGroup.selected instanceof MatButtonToggle) {
-      this.buttonGroup.selected.checked = false;
-    }
-  }
-
+  /**
+   * Checks the value of selected.
+   */
   checkSelected(){
     return this.selected;
   }
-
 }
 
+/**
+ * Pipe used to filter Projects by their name.
+ */
 @Pipe({name: 'FilterProjectByName'})
 export class FilterProjectByName implements PipeTransform {
   transform(projectList: Array<Project>, nameFilter: string): any {

@@ -1,15 +1,15 @@
 /**
- * A task is
+ * A Task is used to distinguish between types of tasks.
  *
  * @author James Andrade
  * @version 1.0
  */
 export class Task{
-  /** The unique identifier for this team.*/
+  /** The unique identifier for this Task.*/
   id: number;
-  /** The name of this taskSubject.  100 char max*/
+  /** The name of this Task.*/
   name: string;
-  /** If this taskSubject is billable*/
+  /** Represents if this Task is billable*/
   billable: boolean;
   /** The list of links used for communicating with the back end.*/
   _links: [];
@@ -18,6 +18,6 @@ export class Task{
     this.name = "";
     this.billable = false;
     this.id = -1;
-    _links: new Array();
+    this._links = [];
   }
 }
