@@ -29,7 +29,7 @@ export class ErrorService {
 
   public displayError(){
      this.snackBar.open(MESSAGE, null, {
-      duration: 5000,
+      duration: 2000,
       politeness: 'assertive',
       panelClass: 'snackbar-fail',
       horizontalPosition: 'right',
@@ -39,12 +39,16 @@ export class ErrorService {
 
   /**
    * This method allows the caller to pass an extra info parameter
-   * Although it is not implemented to do anything, the intent is to allow these messages
-   * to be used for troubleshooting in the future
-   * @param extraInfo additional information about the error
+   * @param message The message to be displayed
    */
-  public displayErrorMessage(extraInfo: string){
-    this.displayError();
+  public displayErrorMessage(message: string){
+    this.snackBar.open(message, null, {
+      duration: 2000,
+      politeness: 'assertive',
+      panelClass: 'snackbar-fail',
+      horizontalPosition: 'right',
+      verticalPosition: 'top'
+    });
   }
 
 }
