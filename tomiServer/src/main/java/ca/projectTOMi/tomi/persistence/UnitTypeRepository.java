@@ -27,5 +27,13 @@ public interface UnitTypeRepository extends JpaRepository<UnitType, Long> {
 	 */
 	List<UnitType> getAllByActiveOrderById(boolean active);
 
+	/**
+	 * Finds a UnitType with the provided name.
+	 *
+	 * @param name
+	 * 	The name of the UnitType to be found
+	 *
+	 * @return The UnitType with the provided name
+	 */
 	UnitType findByName(String name);
 }
