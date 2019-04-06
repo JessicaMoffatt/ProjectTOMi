@@ -2,7 +2,6 @@ import {
   Component,
   ElementRef,
   HostListener,
-  Input,
   OnDestroy,
   OnInit,
   Pipe,
@@ -11,13 +10,12 @@ import {
 } from '@angular/core';
 import {UserAccountService} from "../../../service/user-account.service";
 import {UserAccount} from "../../../model/userAccount";
-import {Observable, Subject, Subscription} from "rxjs";
 import {AddUserAccountComponent} from "../../modal/add-user-account/add-user-account.component";
 import {MatDialog} from "@angular/material";
 import {TeamService} from "../../../service/team.service";
-import {Team} from "../../../model/team";
 
 /**
+ * UserAccountComponent holds code to be used with the manage users html page.
  * @author Karol Talbot
  * @author Iliya Kiritchkov
  */
@@ -28,13 +26,18 @@ import {Team} from "../../../model/team";
 })
 export class UserAccountComponent implements OnInit, OnDestroy {
 
+  /**
+   * The UserAccount being viewed.
+   */
   private userAccount: UserAccount;
-  private list: Array<UserAccount>;
-  private teams: Array<Team>;
 
-  @Input() userSelectedEvent: Observable<UserAccount>;
-
+  /**
+   * The edit user component within this user account component.
+   */
   @ViewChild('editUserComponent') editUserComponent: ElementRef;
+  /**
+   * The user account search bar within this uer account component.
+   */
   @ViewChild('user_account_search') user_account_search;
 
   @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
@@ -47,9 +50,7 @@ export class UserAccountComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.teamService.initializeTeams();
-    this.teams = this.teamService.getTeamSubjectList().getValue();
     this.userAccountService.initializeUserAccounts();
-    this.list = this.userAccountService.userSubject.getValue();
   }
 
   ngOnDestroy() {
@@ -64,7 +65,7 @@ export class UserAccountComponent implements OnInit, OnDestroy {
   }
 
   /**
-   *
+   * Passes on the request to save a UserAccount to the UserAccountService.
    * @param userAccount
    */
   save(userAccount: UserAccount) {
@@ -82,6 +83,9 @@ export class UserAccountComponent implements OnInit, OnDestroy {
 
 }
 
+/**
+ * Pipe used to filter UserAccounts by their name.
+ */
 @Pipe({name: 'FilterUserAccountByName'})
 export class FilterUserAccountByName implements PipeTransform {
   transform(userList: Array<UserAccount>, nameFilter: string): any {
