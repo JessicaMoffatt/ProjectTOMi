@@ -9,11 +9,23 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.servlet.view.document.AbstractXlsView;
 /**
+ * Creates an excel representation of the ProductivityReport.
+ *
  * @author Karol Talbot
+ * @version 1
  */
 public class ProductivityReportExcelView extends AbstractXlsView {
+	/**
+	 * List containing the ProductivityReport.
+	 */
 	private final List<ProductivityReportLine> report;
 
+	/**
+	 * Creates an ExcelView of a ProductivityReport.
+	 *
+	 * @param report
+	 * 	Report to be converted to an Excel document
+	 */
 	public ProductivityReportExcelView(final List<ProductivityReportLine> report) {
 		super();
 		this.report = report;
