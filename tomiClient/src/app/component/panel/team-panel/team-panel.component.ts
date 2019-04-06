@@ -9,10 +9,6 @@ import {Component, OnInit, ViewChild} from '@angular/core';
   styleUrls: ['./team-panel.component.scss']
 })
 export class TeamPanelComponent implements OnInit {
-  
-  constructor() {
-    
-  }
 
   /**
    * The individual productivity report component within this team panel component.
@@ -28,6 +24,10 @@ export class TeamPanelComponent implements OnInit {
    * The team productivity report component within this team panel component.
    */
   @ViewChild("teamReport")teamReport;
+
+  constructor() {
+
+  }
 
   ngOnInit() {
   }

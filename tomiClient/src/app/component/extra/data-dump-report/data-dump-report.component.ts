@@ -1,8 +1,13 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProjectService} from "../../../service/project.service";
 import {DatePipe} from "@angular/common";
 import {MatSnackBar} from "@angular/material";
 
+/**
+ *  DataDumpReportComponent is used to facilitate the download of the data dump report.
+ *
+ *  @author Jessica Moffatt
+ */
 @Component({
   selector: 'app-data-dump-report',
   templateUrl: './data-dump-report.component.html',
