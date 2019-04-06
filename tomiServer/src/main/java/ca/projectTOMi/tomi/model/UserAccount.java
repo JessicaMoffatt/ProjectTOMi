@@ -9,14 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
@@ -31,6 +27,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Data
 public final class UserAccount {
+
 	/**
 	 * The unique identifier for this UserAccount. Used to distinguish between Accounts.
 	 */
@@ -70,6 +67,9 @@ public final class UserAccount {
 	@Column (unique = true)
 	private String email;
 
+	/**
+	 * The projects this UserAccount is assigned to.
+	 */
 	@ManyToMany (mappedBy = "projectMembers", targetEntity = Project.class)
 	@JsonIgnore
 	private Set<Project> projects = new HashSet<>();
@@ -81,16 +81,31 @@ public final class UserAccount {
 	@NotNull
 	private boolean active;
 
+	/**
+	 * If this UserAccount is a program director.
+	 */
 	@ColumnDefault ("false")
 	private boolean programDirector;
 
+	/**
+	 * If this UserAccount is an admin.
+	 */
 	@ColumnDefault ("false")
 	private boolean admin;
 
+	/**
+	 * The google id associated with this UserAccount.
+	 */
 	@JsonIgnore
 	private String googleId;
 
-	@JsonProperty("teamId")
+	/**
+	 * Sets this UserAccount's team to the team with the provided id.
+	 *
+	 * @param id
+	 * 	Long representing the unique identifier for the team to add this UserAccount to
+	 */
+	@JsonProperty ("teamId")
 	public void setTeamId(final Long id) {
 		Team team = null;
 		if (id != -1) {
@@ -100,9 +115,14 @@ public final class UserAccount {
 		this.setTeam(team);
 	}
 
-	@JsonProperty("teamId")
-	public Long getTeamId(){
-		if(this.team == null){
+	/**
+	 * Gets the unique identifier for the team this UserAccount belongs to.
+	 *
+	 * @return Long representing the Team this UserAccount belongs to
+	 */
+	@JsonProperty ("teamId")
+	public Long getTeamId() {
+		if (this.team == null) {
 			return -1L;
 		}
 		return this.team.getId();

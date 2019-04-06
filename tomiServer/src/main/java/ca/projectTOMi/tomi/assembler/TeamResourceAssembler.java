@@ -21,6 +21,16 @@ import org.springframework.stereotype.Component;
 @Component
 public final class TeamResourceAssembler implements ResourceAssembler<UserAuthLinkWrapper<Team>, Resource<Team>> {
 
+	/**
+	 * Converts a Team instance into a Resource instance with HATEOAS links based on the requesting
+	 * user's {@link ca.projectTOMi.tomi.authorization.policy.UserAuthorizationPolicy}s.
+	 *
+	 * @param authLinkWrapper
+	 * 	a {@link ca.projectTOMi.tomi.model.Team} object paired with the {@link
+	 * 	ca.projectTOMi.tomi.authorization.manager.AuthManager} created for the request
+	 *
+	 * @return Resource of the provided Team
+	 */
 	@Override
 	public Resource<Team> toResource(final UserAuthLinkWrapper<Team> authLinkWrapper) {
 		final Team team = authLinkWrapper.getModelObject();

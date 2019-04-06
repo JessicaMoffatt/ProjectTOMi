@@ -1,16 +1,12 @@
 package ca.projectTOMi.tomi.model;
 
 import ca.projectTOMi.tomi.viewModel.ProjectViewModel;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -49,7 +45,7 @@ public final class Entry {
 	private Long id;
 
 	/**
-	 * The Project associated with the entry.
+	 * The Project associated with this entry.
 	 */
 	@ManyToOne
 	@OnDelete (action = OnDeleteAction.NO_ACTION)
@@ -58,7 +54,7 @@ public final class Entry {
 	private Project project;
 
 	/**
-	 * The Task associated with the entry.
+	 * The Task associated with this entry.
 	 */
 	@ManyToOne
 	@OnDelete (action = OnDeleteAction.NO_ACTION)
@@ -66,7 +62,7 @@ public final class Entry {
 	private Task task;
 
 	/**
-	 * The UnitType associated with the entry.
+	 * The UnitType associated with this entry.
 	 */
 	@ManyToOne
 	@OnDelete (action = OnDeleteAction.NO_ACTION)
@@ -74,11 +70,11 @@ public final class Entry {
 	private UnitType unitType;
 
 
+	/**
+	 * The Timesheet associated with this entry
+	 */
 	@ManyToOne (fetch = FetchType.EAGER)
 	@MapKeyColumn (name = "id")
-//	@JsonProperty (value = "timesheet")
-//	@JsonIdentityInfo (generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-//	@JsonIdentityReference (alwaysAsId = true)
 	private Timesheet timesheet;
 
 	/**
@@ -156,7 +152,7 @@ public final class Entry {
 	private Double totalHours;
 
 	/**
-	 * The quantity of the unit type's unit that was produced.
+	 * The quantity of the unit type units that were produced.
 	 */
 	@Min (0)
 	private Double quantity;
@@ -168,30 +164,32 @@ public final class Entry {
 	@Column (nullable = false)
 	private boolean active;
 
-//	@JsonProperty
-//	public void setTimesheet(final Long id) {
-//		final Timesheet t = new Timesheet();
-//		t.setId(id);
-//		this.timesheet = t;
-//	}
-//
-//	@JsonIgnore
-//	public void setTimesheet(final Timesheet timesheet) {
-//		this.timesheet = timesheet;
-//	}
 
+	/**
+	 * Returns a viewModel representation of this entry's project when this entry is serialized into
+	 * JSON. This is performed to keep some {@link Project} fields from being included in an entry's
+	 * JSON.
+	 *
+	 * @return ProjectViewModel representation of this Entry's Project
+	 */
 	@JsonProperty
 	public ProjectViewModel getProject() {
 		return this.project == null ? null : new ProjectViewModel(this.project);
 	}
 
+	/**
+	 * Converts a ProjectViewModel into a persistable Project when this Entry is converted from JSON.
+	 *
+	 * @param project
+	 * 	ProjectViewModel to be converted to a Project
+	 */
 	@JsonProperty
 	public void setProject(final ProjectViewModel project) {
 		if (project != null) {
 			final Project p = new Project();
 			p.setId(project.getId());
 			this.project = p;
-		}else{
+		} else {
 			this.project = null;
 		}
 	}

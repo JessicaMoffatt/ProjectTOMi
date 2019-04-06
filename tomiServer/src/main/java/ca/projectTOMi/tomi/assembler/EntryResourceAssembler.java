@@ -1,5 +1,8 @@
 package ca.projectTOMi.tomi.assembler;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import ca.projectTOMi.tomi.authorization.wrapper.TimesheetAuthLinkWrapper;
 import ca.projectTOMi.tomi.controller.EntryController;
 import ca.projectTOMi.tomi.controller.ProjectController;
@@ -11,12 +14,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.stereotype.Component;
-
 import java.net.URISyntaxException;
-
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * EntryResourceAssembler is responsible for creating a standard resource for {@link Entry}.
@@ -27,8 +25,21 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  */
 @Component
 public class EntryResourceAssembler implements ResourceAssembler<TimesheetAuthLinkWrapper<Entry>, Resource<Entry>> {
+	/**
+	 * Provides access to the logs for error reporting.
+	 */
 	private final Logger logger = LoggerFactory.getLogger("Entry Assembler");
 
+	/**
+	 * Converts a Entry instance into a Resource instance with HATEOAS links based on the requesting
+	 * user's {@link ca.projectTOMi.tomi.authorization.policy.TimesheetAuthorizationPolicy}s.
+	 *
+	 * @param timesheetAuthLinkWrapper
+	 * 	a {@link ca.projectTOMi.tomi.model.Entry} object paired with the {@link
+	 * 	ca.projectTOMi.tomi.authorization.manager.AuthManager} created for the request
+	 *
+	 * @return Resource of the provided Entry
+	 */
 	@Override
 	public Resource<Entry> toResource(final TimesheetAuthLinkWrapper<Entry> timesheetAuthLinkWrapper) {
 		final Entry entry = timesheetAuthLinkWrapper.getModelObject();
@@ -36,6 +47,7 @@ public class EntryResourceAssembler implements ResourceAssembler<TimesheetAuthLi
 			linkTo(methodOn(EntryController.class).getEntry(entry.getId(), timesheetAuthLinkWrapper.getManager())).withSelfRel(),
 			linkTo(methodOn(EntryController.class).getAllTimesheetEntries(entry.getTimesheet().getId(), timesheetAuthLinkWrapper.getManager())).withRel("entries")
 		);
+
 		if (Status.SUBMITTED == entry.getStatus()) {
 			resource.add(linkTo(methodOn(ProjectController.class).evaluateEntry(entry.getProject() != null ? entry.getProject().getId() : null, entry.getId(), null)).withRel("evaluate"));
 		}

@@ -11,7 +11,6 @@ import ca.projectTOMi.tomi.authorization.wrapper.ProjectAuthLinkWrapper;
 import ca.projectTOMi.tomi.authorization.wrapper.TimesheetAuthLinkWrapper;
 import ca.projectTOMi.tomi.exception.EmptyProjectListException;
 import ca.projectTOMi.tomi.exception.InvalidIDPrefixException;
-import ca.projectTOMi.tomi.exception.ProjectManagerException;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.model.Project;
@@ -226,7 +225,7 @@ public class ProjectController {
 		return ResponseEntity.status(204).build();
 	}
 
-	@ExceptionHandler ({ProjectNotFoundException.class, InvalidIDPrefixException.class, ProjectManagerException.class})
+	@ExceptionHandler ({ProjectNotFoundException.class, InvalidIDPrefixException.class})
 	public ResponseEntity<?> handleExceptions(final Exception e) {
 		this.logger.warn("Project Exception: " + e.getClass());
 		return ResponseEntity.status(400).build();
