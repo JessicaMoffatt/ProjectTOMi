@@ -1,7 +1,10 @@
 package ca.projectTOMi.tomi.authorization.permission;
 
 /**
+ * List of Permissions associated with {@link ca.projectTOMi.tomi.model.UserAccount}s.
+ *
  * @author Karol Talbot
+ * @version 1
  */
 public enum UserPermission {
 	READ_LISTS,

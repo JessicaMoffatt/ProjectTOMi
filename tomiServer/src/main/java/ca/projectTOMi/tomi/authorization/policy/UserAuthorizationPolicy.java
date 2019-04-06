@@ -11,17 +11,27 @@ import ca.projectTOMi.tomi.model.UserAccount;
 import lombok.Data;
 
 /**
+ * The intersection of a UserAccount, and Permission that is used to control access to many
+ * operations performed in the TOMi system.
+ *
  * @author Karol Talbot
+ * @version 1
  */
 @Data
 @Entity
 @IdClass (UserAuthId.class)
 public class UserAuthorizationPolicy {
 
+	/**
+	 * The UserAccount requesting the operation.
+	 */
 	@Id
 	@ManyToOne (targetEntity = UserAccount.class, optional = false)
 	private UserAccount requestingUser;
 
+	/**
+	 * The permission for the operation.
+	 */
 	@Id
 	@Enumerated
 	private UserPermission permission;

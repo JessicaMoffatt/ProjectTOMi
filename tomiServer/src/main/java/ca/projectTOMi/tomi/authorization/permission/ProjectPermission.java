@@ -1,6 +1,8 @@
 package ca.projectTOMi.tomi.authorization.permission;
 
 /**
+ * List of Permissions associated with {@link ca.projectTOMi.tomi.model.Project}s.
+ *
  * @author Karol Talbot
  * @version 1
  */

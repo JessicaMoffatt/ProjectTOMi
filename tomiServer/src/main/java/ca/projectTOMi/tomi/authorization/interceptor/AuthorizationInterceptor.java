@@ -26,19 +26,61 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
+ * Intercepts HTTP requests and ensures the requesting user has authorization to perform the
+ * requested operation.
+ *
  * @author Karol Talbot
+ * @version 1
  */
 @Component
 @CrossOrigin (origins = "http://localhost:4200")
 public class AuthorizationInterceptor implements HandlerInterceptor {
+	/**
+	 * Provides database access for {@link ProjectAuthorizationPolicy} objects.
+	 */
 	private final ProjectAuthorizationRepository projectAuthRepository;
-	private final TimesheetAuthorizationRepository timesheetAuthorizationRepository;
-	private final UserAuthorizationRepository userAuthRepository;
-	private final UserAccountService userAccountService;
-	private final EntryService entryService;
-	private final UserAuthenticationService userAuthenticationService;
-	private int i = 0;
 
+	/**
+	 * Provides database access for {@link TimesheetAuthorizationPolicy} objects.
+	 */
+	private final TimesheetAuthorizationRepository timesheetAuthorizationRepository;
+
+	/**
+	 * Provides database access for {@link UserAuthorizationPolicy} objects.
+	 */
+	private final UserAuthorizationRepository userAuthRepository;
+
+	/**
+	 * Provides services to maintain business logic for UserAccount requests.
+	 */
+	private final UserAccountService userAccountService;
+
+	/**
+	 * Provides services to maintain business logic for entry and timesheet requests.
+	 */
+	private final EntryService entryService;
+
+	/**
+	 * Provides services required for user authentication.
+	 */
+	private final UserAuthenticationService userAuthenticationService;
+
+	/**
+	 * Constructs a new AuthorizationInterceptor with the provided parameters.
+	 *
+	 * @param userAuthRepository
+	 * 	Provides database access for {@link ProjectAuthorizationPolicy} objects
+	 * @param projectAuthRepository
+	 * 	Provides database access for {@link TimesheetAuthorizationPolicy} objects
+	 * @param timesheetAuthorizationRepository
+	 * 	Provides database access for {@link UserAuthorizationPolicy} objects
+	 * @param userAccountService
+	 * 	Provides services to maintain business logic for UserAccount requests
+	 * @param entryService
+	 * 	Provides services to maintain business logic for entry and timesheet requests
+	 * @param userAuthenticationService
+	 * 	Provides services required for user authentication
+	 */
 	@Autowired
 	public AuthorizationInterceptor(final UserAuthorizationRepository userAuthRepository,
 	                                final ProjectAuthorizationRepository projectAuthRepository,
@@ -54,6 +96,18 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		this.userAuthenticationService = userAuthenticationService;
 	}
 
+	/**
+	 * Intercepts HTTP requests and performs check prior to allowing the request to be permitted.
+	 *
+	 * @param request
+	 * 	The request made by the requesting entity
+	 * @param response
+	 * 	The response to the requesting entity
+	 * @param handler
+	 * 	The spring component that will handle the request
+	 *
+	 * @return if the operation is permitted
+	 */
 	@Override
 	public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) {
 		final String authToken = request.getHeader("SignIn");
@@ -62,7 +116,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		String controller;
 		final UserAccount user;
 
-		System.out.printf("%5s %30s%n", requestMethod, requestURI);
 		// Initial Login
 		if ("/tokensignin".equals(request.getRequestURI())) {
 			return true;
@@ -79,7 +132,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		if (user == null) {
 			return false;
 		}
-
 
 
 		try {
@@ -105,13 +157,13 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 				authMan = new UserAuthManager(user);
 				authMan.loadUserPolicies(this.userAuthRepository.getAllByRequestingUser(user));
 				request.setAttribute("authMan", authMan);
-			} else{
+			} else {
 				final AuthManager<ProjectAuthorizationPolicy> authMan;
 				authMan = new ProjectAuthManager(user);
 				List<ProjectAuthorizationPolicy> f;
-				try{
+				try {
 					f = this.projectAuthRepository.findAllByRequestingUser(user).orElse(new ArrayList<>());
-				}catch (Exception e){
+				} catch (Exception e) {
 					System.out.println("this");
 					f = new ArrayList<>();
 				}
@@ -150,9 +202,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 			request.setAttribute("authMan", authMan);
 		}
 
-		boolean fish = ((AuthManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
-
-		return fish;
+		return ((AuthManager) request.getAttribute("authMan")).requestAuthorization(requestURI, requestMethod);
 	}
 
 	@Override
@@ -166,6 +216,18 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 	                            final Object handler, final Exception exception) {
 	}
 
+	/**
+	 * Gets the UserAccount that owns the object that is being requested.
+	 *
+	 * @param URI
+	 * 	URI of the request being made to the server
+	 * @param requestMethod
+	 * 	Type of HTTP request being made
+	 * @param requestingUser
+	 * 	UserAccount of user making the HTTP request
+	 *
+	 * @return The owner of the object being requested
+	 */
 	private UserAccount getOwner(final String URI, final String requestMethod, final UserAccount requestingUser) {
 		UserAccount owner = null;
 		if ("POST".equals(requestMethod)) {
