@@ -7,7 +7,7 @@ import {ProjectService} from "../../../service/project.service";
 import {Client} from "../../../model/client";
 
 /**
- * AddTaskComponent is a modal form used to add a new Task to the back end.
+ * AddTaskComponent is used to facilitate communication between the add project view and front end services.
  *
  * @author Karol Talbot
  * @version 2.0
@@ -19,27 +19,32 @@ import {Client} from "../../../model/client";
 })
 export class AddProjectComponent implements OnInit {
 
+  /** Validations for the account manager. */
   accountManagerControl = new FormControl('', [
     Validators.required
   ]);
 
+  /** Validations for the project name. */
   projectNameControl = new FormControl('', [
     Validators.required
   ]);
 
+  /** Validations for the client. */
   clientControl = new FormControl('', [
     Validators.required
   ]);
 
+  /** Validations for the billing rate. */
   billingControl = new FormControl('', [
     Validators.required
   ]);
 
+  /** Validations for the budget amount. */
   budgetControl = new FormControl('', [
     Validators.required
   ]);
 
-
+  /** The input field for the Project's name.*/
   @ViewChild('addProjectName') addProjectName;
 
   /** The ngForm for this component */
@@ -49,6 +54,10 @@ export class AddProjectComponent implements OnInit {
               public clientService: ClientService) {
   }
 
+  ngOnInit() {
+
+  }
+
   /**
    * Closes the modal component.
    */
@@ -56,10 +65,10 @@ export class AddProjectComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  ngOnInit() {
-
-  }
-
+  /**
+   * Passes the request to save a new Project to the ProjectService.
+   * As well, if a new Client is creaed, passes the request to save the new Client to the ClientService.
+   */
   private async addProject() {
     let initials: string;
     let project: Project;
@@ -91,7 +100,6 @@ export class AddProjectComponent implements OnInit {
         this.projectService.refreshProjectList();
         this.dialogRef.close();
       });
-
     }
   }
 }

@@ -4,18 +4,18 @@ import {UnitTypeService} from "../../../service/unit-type.service";
 import {ErrorStateMatcher, MatDialogRef} from "@angular/material";
 import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 
-@Component({
-  selector: 'app-add-unit-type',
-  templateUrl: './add-unit-type.component.html',
-  styleUrls: ['./add-unit-type.component.scss']
-})
 /**
- * AddUnitTypeComponent is a modal for adding new Unit Types.
+ * AddUnitTypeComponent is used to facilitate communication between the add unit type view and front end services.
  *
  * @author Iliya Kiritchkov
  * @author Karol Talbot
  * @version 1.1
  */
+@Component({
+  selector: 'app-add-unit-type',
+  templateUrl: './add-unit-type.component.html',
+  styleUrls: ['./add-unit-type.component.scss']
+})
 export class AddUnitTypeComponent implements OnInit {
 
   /** Validations for the name. */
@@ -44,13 +44,13 @@ export class AddUnitTypeComponent implements OnInit {
   /** Invalid weight error detection. */
   unitTypeWeightMatcher = new MyErrorStateMatcher();
 
-  /** The input field for the Unit Types's name.*/
+  /** The input field for the UnitTypes's name.*/
   @ViewChild('addUnitTypeName') addUnitTypeName;
 
-  /** The input field for the Unit Types's unit.*/
+  /** The input field for the UnitTypes's unit.*/
   @ViewChild('addUnitTypeUnit') addUnitTypeUnit;
 
-  /** The input field for the Unit Types's weight.*/
+  /** The input field for the UnitTypes's weight.*/
   @ViewChild('addUnitTypeWeight') addUnitTypeWeight;
 
   /** The ngForm for this component. */
@@ -63,11 +63,11 @@ export class AddUnitTypeComponent implements OnInit {
   }
 
   /**
-   * Dynamically generate a unique name regex pattern to ensure that new Unit Types have unique names.
+   * Dynamically generate a unique name regex pattern to ensure that new UnitTypes have unique names.
    */
   applyUniqueNameValidator() {
     let existingUnitTypeNamesRegex = "^(?!.*(";
-    //Add every existing unit type name to the regex
+    //Add every existing unittype name to the regex
     this.unitTypeService.unitTypes.getValue().forEach(existingUnitType => {
       existingUnitTypeNamesRegex += "^" + existingUnitType.name + "$|";
     });
@@ -79,7 +79,7 @@ export class AddUnitTypeComponent implements OnInit {
   }
 
   /**
-   * Adds a new Unit Type. Passes the request to save the new Unit Type to the UnitTypeService.
+   * Passes the request to save a new UnitType to the UnitTypeService.
    */
   addUnitType() {
     if (this.unitTypeNameControl.valid && this.unitTypeUnitControl.valid && this.unitTypeWeightControl.valid) {
@@ -95,7 +95,7 @@ export class AddUnitTypeComponent implements OnInit {
   }
 
   /**
-   * Closes the modal component.
+   * Closes this modal component.
    */
   onNoClick(): void {
     this.dialogRef.close();

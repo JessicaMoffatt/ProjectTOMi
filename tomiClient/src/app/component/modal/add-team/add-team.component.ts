@@ -5,7 +5,7 @@ import {Team} from "../../../model/team";
 import {TeamService} from "../../../service/team.service";
 
 /**
- * AddTaskComponent is a modal form used to add a new Task to the back end.
+ * AddTaskComponent is used to facilitate communication between the add team view and front end services.
  *
  * @author Karol Talbot
  * @version 2.0
@@ -17,12 +17,12 @@ import {TeamService} from "../../../service/team.service";
 })
 export class AddTeamComponent implements OnInit {
 
-
+  /** Validations for the team name. */
   teamNameControl = new FormControl('', [
     Validators.required
   ]);
 
-
+  /** The input field for the Team's name. */
   @ViewChild('addTeamName') addTeamName;
 
   /** The ngForm for this component */
@@ -30,17 +30,20 @@ export class AddTeamComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<AddTeamComponent>, private teamService:TeamService) { }
 
+  ngOnInit() {
+
+  }
+
   /**
-   * Closes the modal component.
+   * Closes this modal component.
    */
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  ngOnInit() {
-
-  }
-
+  /**
+   * Passes the request to save a new Tean to the TeamService.
+   */
   private async addTeam() {
     let teamToAdd = new Team();
     if (this.teamNameControl.valid) {
