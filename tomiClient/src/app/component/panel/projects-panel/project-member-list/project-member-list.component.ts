@@ -4,12 +4,14 @@ import {AddProjectMemberComponent} from "../../../modal/add-project-member/add-p
 import {ProjectService} from "../../../../service/project.service";
 import {ProjectDetailComponent} from "../project-detail/project-detail.component";
 
+/**
+ * ProjectMemberListComponent is used to facilitate communication between the project member view and front end services.
+ */
 @Component({
   selector: 'app-project-member-list',
   templateUrl: './project-member-list.component.html',
   styleUrls: ['./project-member-list.component.scss']
 })
-
 export class ProjectMemberListComponent implements OnInit {
 
   constructor(public dialog: MatDialog, public projectService: ProjectService,
@@ -19,12 +21,19 @@ export class ProjectMemberListComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   *  Displays a Modal component for adding a new member to this Project.
+   */
   addMemberToProject() {
     this.dialog.open(AddProjectMemberComponent, {
       width: "50vw"
     });
   }
 
+  /**
+   * Removes the specified UserAccounts from this Project.
+   * @param userAccounts The list of UserAccounts to be removed from this Project.
+   */
   deleteMembers(userAccounts: MatSelectionList) {
     userAccounts.selectedOptions.selected
       .forEach(each => this.projectService.removeUser(each.value));

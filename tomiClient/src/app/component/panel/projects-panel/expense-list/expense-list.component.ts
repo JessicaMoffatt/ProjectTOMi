@@ -6,13 +6,15 @@ import {MatDialog} from "@angular/material";
 import {AddProjectExpenseComponent} from "../../../modal/add-project-expense/add-project-expense.component";
 import {ProjectService} from "../../../../service/project.service";
 
+/**
+ * ExpenseListComponent is used to facilitate communication between the project expense view and front end services.
+ */
 @Component({
   selector: 'app-expense-list',
   templateUrl: './expense-list.component.html',
   styleUrls: ['./expense-list.component.scss']
 })
 export class ExpenseListComponent implements OnInit {
-
 
   /** determines columns and in what order they will be displayed in expenses table */
   displayedColumns: string[] = ['select', 'notes', 'amount'];

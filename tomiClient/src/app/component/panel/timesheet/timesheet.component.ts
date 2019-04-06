@@ -424,7 +424,7 @@ export class DeleteEntryModalComponent implements OnInit {
 
   }
 
-  /** Facilitates the deletion of entry, as well as closes the modal.*/
+  /** Facilitates the deletion of the Entry, as well as closes the modal.*/
   confirmDelete(): void {
     this.deleteEntry();
     this.dialogRef.close();
