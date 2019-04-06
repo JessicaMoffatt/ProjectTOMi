@@ -1,15 +1,13 @@
-import {Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {FormControl, Validators, FormGroupDirective, NgForm} from "@angular/forms";
+import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {FormControl, Validators} from "@angular/forms";
 import {UserAccount} from "../../../model/userAccount";
-import {ErrorStateMatcher, MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSelect} from "@angular/material";
-import {Observable, Subscription} from "rxjs";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSelect} from "@angular/material";
+import {Observable} from "rxjs";
 import {CustomErrorStateMatcher} from "../../extra/CustomErrorStateMatcher";
 import {TeamService} from "../../../service/team.service";
-import {ManageTeamsPanelComponent} from "../manage-teams-panel/manage-teams-panel.component";
-import {UserAccountComponent} from "../user-account/user-account.component";
 
 /**
- * EditUserComponent is an individual, editable entry for a UserAccount.
+ * EditUserComponent is used to facilitate communication between the edit user account view and front end services.
  *
  * @author Iliya Kiritchkov
  * @author Karol Talbot
@@ -20,7 +18,7 @@ import {UserAccountComponent} from "../user-account/user-account.component";
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.scss']
 })
-export class EditUserComponent implements OnInit, OnDestroy {
+export class EditUserComponent implements OnInit {
 
   /** Validations for the first name. */
   userAccountFirstNameControl = new FormControl('', [
@@ -42,6 +40,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
   /** Invalid name error detection. */
   userAccountNameMatcher = new CustomErrorStateMatcher();
+
   /** Invalid email error detection. */
   userAccountEmailMatcher = new CustomErrorStateMatcher();
 
@@ -50,10 +49,13 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
   /** The UserAccount model associated with this component. */
   @Input() userAccount: UserAccount;
+
   /** Event Emitter used to notify the UserAccountComponent parent that the EditUserComponent save had been requested. */
   @Output() saveRequested = new EventEmitter<any>();
+
   /** Event Emitter used to notify the UserAccountComponent parent that the EditUserComponent delete had been requested. */
   @Output() deleteRequested = new EventEmitter<any>();
+
   /** Event Emitter used to notify the UserAccountComponent parent that the EditUserComponent cancel had been requested. */
   @Output() cancelRequested = new EventEmitter<any>();
 
@@ -84,16 +86,10 @@ export class EditUserComponent implements OnInit, OnDestroy {
   /** The ngForm for this component */
   @ViewChild('editUserAccountForm') editUserAccountForm;
 
-
   constructor(public deleteUserDialog: MatDialog, public teamService:TeamService) { }
 
   ngOnInit() {
   }
-
-  ngOnDestroy(): void {
-
-  }
-
 
   /**
    * Initialize the value inputs on the template. This fixes issues caused by the Validators.required when an input is pristine.
@@ -147,6 +143,9 @@ export class EditUserComponent implements OnInit, OnDestroy {
     this.editUserExpansionPanel.toggle();
   }
 
+  /**
+   * Displays a Modal component for deleting the selcted UserAccount.
+   */
   openDeleteDialog() {
     this.deleteUserDialog.open(DeleteUserAccountModal, {
       width: '40vw',
@@ -155,13 +154,22 @@ export class EditUserComponent implements OnInit, OnDestroy {
   }
 }
 
+// Delete UserAccount Modal
+
+/**
+ * DeleteUserAccountModel is used to get confirmation from the user regarding their desire to delete a UserAccount.
+ *
+ * @author Iliya Kiritchkov
+ */
 @Component({
   selector: 'app-delete-user-modal',
   templateUrl: './delete-user-modal.html',
   styleUrls: ['./delete-user-modal.scss']
 })
-/** Inner class for confirmation modal of delete User Account. */
 export class DeleteUserAccountModal {
+  /**
+   * The UserAccount to be deleted.
+   */
   userAccountToDelete: UserAccount;
 
   constructor(public dialogRef: MatDialogRef<DeleteUserAccountModal>, @Inject(MAT_DIALOG_DATA) public data: DeleteDialogData) {
@@ -172,10 +180,12 @@ export class DeleteUserAccountModal {
     this.userAccountToDelete = this.data.userAccountToDelete;
   }
 
+  /** Closes the modal with no extra actions.*/
   canceledDelete(): void {
     this.dialogRef.close();
   }
 
+  /** Facilitates the deletion of the selected UserAccount, as well as closes the modal.*/
   confirmedDelete() {
     this.data.parent.delete();
     this.dialogRef.close();

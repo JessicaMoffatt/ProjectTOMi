@@ -6,6 +6,8 @@ import {ProjectDetailComponent} from "../project-detail/project-detail.component
 
 /**
  * ProjectMemberListComponent is used to facilitate communication between the project member view and front end services.
+ * @author James Andrade
+ * @author Karol Talbot
  */
 @Component({
   selector: 'app-project-member-list',

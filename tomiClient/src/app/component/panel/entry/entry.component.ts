@@ -22,42 +22,61 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 export class EntryComponent implements OnInit {
   /** The entry model instance associated with this component. */
   @Input() entry: Entry;
-  /** The list of projects this user is allowed to access.*/
+
+  /** The list of Projects this user is allowed to access.*/
   @Input() projects: Project[] = [];
-  /** The list of unit types this user is allowed to access.*/
+
+  /** The list of UnitTypes this user is allowed to access.*/
   @Input() unitTypes: UnitType[] = [];
-  /** The list of tasks this user is allowed to access.*/
+
+  /** The list of Tasks this user is allowed to access.*/
   @Input() tasks: Task[] = [];
+
   /** Event emitter used to notify the parent component that a copy of an entry has been requested. */
   @Output() requestCopy = new EventEmitter<any>();
+
   /** Event emitter used to notify the parent component that a delete of an entry has been requested. */
   @Output() showDeleteModal = new EventEmitter<any>();
 
-  /** The input field for the entry's component.*/
+  /** The input field for the Entry's component.*/
   @ViewChild('componentInput') componentInput;
-  /** The input field for the entry's project.*/
+
+  /** The input field for the Entry's project.*/
   @ViewChild('projectInput') projectInput;
-  /** The input field for the entry's taskSubject.*/
+
+  /** The input field for the Entry's Task.*/
   @ViewChild('taskInput') taskInput;
-  /** The input field for the entry's unit type.*/
+
+  /** The input field for the Entry's UnitType.*/
   @ViewChild('unitTypeInput') unitTypeInput;
-  /** The input field for the entry's quantity.*/
+
+  /** The input field for the Entry's quantity.*/
   @ViewChild('quantityInput') quantityInput;
-  /** The input field for the entry's monday hours.*/
+
+  /** The input field for the Entry's monday hours.*/
   @ViewChild('mondayInput') mondayInput;
-  /** The input field for the entry's tuesday hours.*/
+
+  /** The input field for the Entry's tuesday hours.*/
   @ViewChild('tuesdayInput') tuesdayInput;
-  /** The input field for the entry's wednesday hours.*/
+
+  /** The input field for the Entry's wednesday hours.*/
   @ViewChild('wednesdayInput') wednesdayInput;
-  /** The input field for the entry's thursday hours.*/
+
+  /** The input field for the Entry's thursday hours.*/
   @ViewChild('thursdayInput') thursdayInput;
-  /** The input field for the entry's friday hours.*/
+
+  /** The input field for the Entry's friday hours.*/
   @ViewChild('fridayInput') fridayInput;
-  /** The input field for the entry's saturday hours.*/
+
+  /** The input field for the Entry's saturday hours.*/
   @ViewChild('saturdayInput') saturdayInput;
-  /** The input field for the entry's sunday hours.*/
+
+  /** The input field for the Entry's sunday hours.*/
   @ViewChild('sundayInput') sundayInput;
 
+  /**
+   * Represents whether the screen size is small.
+   */
   smallScreen: boolean = false;
 
   constructor(private entryService: EntryService, public timesheetService: TimesheetService, private  breakpointObserver: BreakpointObserver) {
@@ -73,7 +92,6 @@ export class EntryComponent implements OnInit {
     });
   }
 
-  /** On initialization, populates the list of tasks and unit types.*/
   ngOnInit() {
 
   }
@@ -160,10 +178,10 @@ export class EntryComponent implements OnInit {
   }
 
   /**
-   * This method uses a promise to force populateEntry to complete before continuing.
+   * Waits for populateEntry to complete.
    */
   async populateEntryPromise() {
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise((resolve) => {
       resolve(
         this.populateEntry()
       )
@@ -173,7 +191,7 @@ export class EntryComponent implements OnInit {
   }
 
   /**
-   * Populates this entry with project, taskSubject and unit type information.
+   * Populates this Entry with Project, Task and UnitType information.
    */
   private populateEntry(){
       if(this.projectInput.selected &&  this.projectInput.selected.value != "-1"){
@@ -210,6 +228,10 @@ export class EntryComponent implements OnInit {
       return this.entry;
   }
 
+  /**
+   * Validates that neither a '-' or '+' character are entered as an event.
+   * @param event The captured event.
+   */
   validateNumber(event){
     if(event.key === '-' || event.key === '+'){
       return false;

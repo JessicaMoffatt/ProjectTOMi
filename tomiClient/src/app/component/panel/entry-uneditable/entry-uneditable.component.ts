@@ -1,10 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Entry} from "../../../model/entry";
-import {TimesheetComponent} from "../timesheet/timesheet.component";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 /**
- * The component used to display entries with a stats of submitted.
+ * EntryUneditableComponent is used to display Entries with a stats of SUBMITTED.
  *
  * @author Jessica Moffatt
  * @author Karol Talbot
@@ -18,6 +17,10 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 export class EntryUneditableComponent implements OnInit {
   /** The entry model instance associated with this component. */
   @Input() entry: Entry;
+
+  /**
+   * Represents whether the screen size is small.
+   */
   smallScreen:Boolean = false;
 
   constructor(private breakpointObserver:BreakpointObserver) {
@@ -31,5 +34,4 @@ export class EntryUneditableComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
