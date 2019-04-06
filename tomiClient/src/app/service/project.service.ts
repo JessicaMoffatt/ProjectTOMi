@@ -298,8 +298,6 @@ export class ProjectService {
         horizontalPosition: 'right'
       });
     });
-    this.getAllProjects().toPromise().then(project =>
-      this.projects = new BehaviorSubject<Array<Project>>(project))
   }
 
   /**
