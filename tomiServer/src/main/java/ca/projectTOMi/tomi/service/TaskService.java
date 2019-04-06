@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Provides services for {@link Task} objects.
@@ -18,6 +17,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public final class TaskService {
+	/**
+	 * Repository responsible for persisting Tasks.
+	 */
 	private final TaskRepository repository;
 
 	/**
@@ -89,12 +91,12 @@ public final class TaskService {
 	}
 
 	/**
-	 * Persists the provided {@link Task}
+	 * Creates the provided {@link Task}
 	 *
 	 * @param task
-	 * 	Task to be persisted.
+	 * 	Task to be created.
 	 *
-	 * @return Task that was persisted.
+	 * @return Task that was created.
 	 */
 	public Task createTask(final Task task) {
 		Task taskToSave = this.repository.findByName(task.getName());
@@ -105,6 +107,14 @@ public final class TaskService {
 		return this.repository.save(taskToSave);
 	}
 
+	/**
+	 * Saves the provided Task.
+	 *
+	 * @param task
+	 * 	Task to be saved
+	 *
+	 * @return Task that was saved
+	 */
 	public Task saveTask(final Task task) {
 		return this.repository.save(task);
 	}

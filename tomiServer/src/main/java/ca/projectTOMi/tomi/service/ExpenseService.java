@@ -16,7 +16,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public final class ExpenseService {
+	/**
+	 * Repository responsible for accessing and persisting for Expense objects.
+	 */
 	private final ExpenseRepository expenseRepository;
+
+	/**
+	 * Services for maintaining business logic surrounding {@link Project}s.
+	 */
 	private final ProjectService projectService;
 
 	/**
@@ -24,8 +31,11 @@ public final class ExpenseService {
 	 *
 	 * @param expenseRepository
 	 * 	Repository responsible for persisting Expense instances
+	 * @param projectService
+	 * 	Service class responsible for handling Projects
 	 */
-	public ExpenseService(final ExpenseRepository expenseRepository, final ProjectService projectService) {
+	public ExpenseService(final ExpenseRepository expenseRepository,
+	                      final ProjectService projectService) {
 		this.expenseRepository = expenseRepository;
 		this.projectService = projectService;
 	}
@@ -33,10 +43,13 @@ public final class ExpenseService {
 	/**
 	 * Gets a list of all {@link Expense} that are active.
 	 *
+	 * @param projectId
+	 * 	The unique identifier for the project
+	 *
 	 * @return List containing all Expense that are active
 	 */
 	public List<Expense> getActiveExpensesByProject(final String projectId) {
-		Project project = projectService.getProjectById(projectId);
+		final Project project = this.projectService.getProjectById(projectId);
 		return this.expenseRepository.getAllByActiveTrueAndProjectOrderById(project);
 	}
 
@@ -49,7 +62,7 @@ public final class ExpenseService {
 	 * @return Expense object matching the provided id
 	 */
 	public Expense getExpenseById(final Long id) {
-		return this.expenseRepository.findById(id).orElseThrow(() -> new ExpenseNotFoundException());
+		return this.expenseRepository.findById(id).orElseThrow(ExpenseNotFoundException::new);
 	}
 
 	/**
@@ -81,6 +94,6 @@ public final class ExpenseService {
 			expense.setAmount(newExpense.getAmount());
 			expense.setActive(true);
 			return this.expenseRepository.save(expense);
-		}).orElseThrow(() -> new ExpenseNotFoundException());
+		}).orElseThrow(ExpenseNotFoundException::new);
 	}
 }

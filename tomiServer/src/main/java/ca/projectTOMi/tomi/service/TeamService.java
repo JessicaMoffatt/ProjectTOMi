@@ -1,7 +1,7 @@
 package ca.projectTOMi.tomi.service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import ca.projectTOMi.tomi.exception.TeamNotFoundException;
 import ca.projectTOMi.tomi.model.Team;
 import ca.projectTOMi.tomi.persistence.TeamRepository;
@@ -15,7 +15,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public final class TeamService {
+	/**
+	 * Repository responsible for accessing and persisting for Team objects.
+	 */
 	private final TeamRepository repository;
+
+	/**
+	 * Services for maintaining business logic surrounding {@link ca.projectTOMi.tomi.authorization.policy.TimesheetAuthorizationPolicy}s.
+	 */
 	private final TimesheetAuthorizationService timesheetAuthorizationService;
 
 	/**
@@ -23,6 +30,8 @@ public final class TeamService {
 	 *
 	 * @param repository
 	 * 	Repository responsible for persisting Team instances
+	 * @param timesheetAuthorizationService
+	 * 	Service responsible for maintaining TimesheetAuthorizationPolicy objects
 	 */
 	public TeamService(final TeamRepository repository,
 	                   final TimesheetAuthorizationService timesheetAuthorizationService) {
@@ -45,7 +54,7 @@ public final class TeamService {
 			team.setTeamName(newTeam.getTeamName());
 			team.setActive(true);
 			if (team.getTeamLead() != null) {
-				timesheetAuthorizationService.removeTeamLead(team.getTeamLead(), team);
+				this.timesheetAuthorizationService.removeTeamLead(team.getTeamLead(), team);
 			}
 			if (newTeam.getTeamLead() != null) {
 				this.timesheetAuthorizationService.setTeamLead(newTeam.getTeamLead(), team);
@@ -64,7 +73,7 @@ public final class TeamService {
 	 * @return Team object matching the provided id
 	 */
 	public Team getTeamById(final Long id) {
-		return this.repository.findById(id).orElseThrow(() -> new TeamNotFoundException());
+		return this.repository.findById(id).orElseThrow(TeamNotFoundException::new);
 	}
 
 	/**
@@ -73,22 +82,28 @@ public final class TeamService {
 	 * @return List containing all teams that are active
 	 */
 	public List<Team> getActiveTeams() {
-		return this.repository.getAllByActiveOrderById(true).stream().collect(Collectors.toList());
+		return new ArrayList<>(this.repository.getAllByActiveOrderById(true));
 	}
 
 	/**
-	 * Persists the provided {@link Team}.
+	 * Creates the provided {@link Team}.
 	 *
 	 * @param team
-	 * 	Team to be persisted
+	 * 	Team to be created
 	 *
-	 * @return the Team that was persisted
+	 * @return the Team that was created
 	 */
 	public Team createTeam(final Team team) {
 		team.setActive(true);
 		return this.repository.save(team);
 	}
 
+	/**
+	 * Deletes the provided {@link Team}.
+	 *
+	 * @param teamId
+	 * 	Unique identifier for the team to be deleted
+	 */
 	public void deleteTeam(final Long teamId) {
 
 		final Team team = this.getTeamById(teamId);

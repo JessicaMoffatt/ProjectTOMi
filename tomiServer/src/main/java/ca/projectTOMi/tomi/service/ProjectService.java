@@ -19,15 +19,31 @@ import org.springframework.stereotype.Service;
 
 @Service
 public final class ProjectService {
+	/**
+	 * Repository responsible for accessing and persisting for Project objects.
+	 */
 	private final ProjectRepository repository;
+
+	/**
+	 * Services for maintaining business logic surrounding {@link UserAccount}s.
+	 */
 	private final UserAccountService userAccountService;
+
+	/**
+	 * Services for maintaining business logic surrounding {@link ca.projectTOMi.tomi.authorization.policy.ProjectAuthorizationPolicy}s.
+	 */
 	private final ProjectAuthorizationService projectAuthorizationService;
+
 
 	/**
 	 * Constructor for the ProjectService service.
 	 *
 	 * @param repository
 	 * 	Repository responsible for persisting Project instances
+	 * @param userAccountService
+	 * 	Service responsible for maintaining UserAccounts
+	 * @param projectAuthorizationService
+	 * 	Service responsible for maintaining ProjectAuthorizationPolicy objects
 	 */
 	@Autowired
 	public ProjectService(final ProjectRepository repository,
@@ -106,17 +122,24 @@ public final class ProjectService {
 	}
 
 	/**
-	 * Persists the provided {@link Project}.
+	 * Deletes the provided {@link Project}.
 	 *
 	 * @param project
 	 * 	Project to be persisted
-	 *
 	 */
 	public void deleteProject(final Project project) {
 		project.setActive(false);
 		this.repository.save(project);
 	}
 
+	/**
+	 * Creates a new Project.
+	 *
+	 * @param project
+	 * 	the Project to be created
+	 *
+	 * @return The created project
+	 */
 	public Project createProject(final Project project) {
 		project.setActive(true);
 		project.setProjectMembers(new HashSet<>());
@@ -125,11 +148,27 @@ public final class ProjectService {
 		return savedProject;
 	}
 
+	/**
+	 * Gets a list of Projects the provided user is a member of.
+	 *
+	 * @param userAccountId
+	 * 	the unique identifier for the user
+	 *
+	 * @return The list of projects the user is a member of
+	 */
 	public List<Project> getProjectsByUserAccount(final Long userAccountId) {
 		final UserAccount userAccount = this.userAccountService.getUserAccount(userAccountId);
 		return this.repository.getAllByActiveTrueAndProjectMembersContainsOrderById(userAccount);
 	}
 
+	/**
+	 * Adds a user to the provided project.
+	 *
+	 * @param projectId
+	 * 	the unique identifier for the project
+	 * @param userAccountId
+	 * 	the unique identifier for the user
+	 */
 	public void addTeamMember(final String projectId, final Long userAccountId) {
 		final Project project = this.repository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 		final UserAccount userAccount = this.userAccountService.getUserAccount(userAccountId);
@@ -140,6 +179,14 @@ public final class ProjectService {
 		this.repository.save(project);
 	}
 
+	/**
+	 * Removes a user from the provided project.
+	 *
+	 * @param projectId
+	 * 	the unique identifier for the project
+	 * @param userAccountId
+	 * 	the unique identifier for the user
+	 */
 	public void removeTeamMember(final String projectId, final Long userAccountId) {
 		final Project project = this.repository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 		final UserAccount userAccount = this.userAccountService.getUserAccount(userAccountId);
@@ -153,6 +200,14 @@ public final class ProjectService {
 		this.repository.save(project);
 	}
 
+	/**
+	 * Gets a list of UserAccounts working on the provided project.
+	 *
+	 * @param projectId
+	 * 	The unique identifier for the project
+	 *
+	 * @return List of UserAccounts working on the project
+	 */
 	public List<UserAccount> getProjectMembers(final String projectId) {
 		final Project project = this.repository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 		return this.userAccountService.getUserAccountsByProjects(project);
