@@ -24,7 +24,7 @@ import {TeamService} from "../../../service/team.service";
   templateUrl: './user-account.component.html',
   styleUrls: ['./user-account.component.scss']
 })
-export class UserAccountComponent implements OnInit, OnDestroy {
+export class UserAccountComponent implements OnInit {
 
   /**
    * The UserAccount being viewed.
@@ -40,6 +40,10 @@ export class UserAccountComponent implements OnInit, OnDestroy {
    */
   @ViewChild('user_account_search') user_account_search;
 
+  /**
+   * Listens for the Ctrl+f key's keydown event; Moves focus to the search bar on that event.
+   * @param e The event captured.
+   */
   @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
     e.preventDefault();
     document.getElementById("user_account_search").focus();
@@ -51,9 +55,6 @@ export class UserAccountComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.teamService.initializeTeams();
     this.userAccountService.initializeUserAccounts();
-  }
-
-  ngOnDestroy() {
   }
 
   /**

@@ -15,8 +15,16 @@ import {ProjectService} from "../../../service/project.service";
   styleUrls: ['./project-entries-sidebar.component.scss']
 })
 export class ProjectEntriesSidebarComponent implements OnInit {
+
+  /**
+   * The button group for displaying all the projects.
+   */
   @ViewChild("btn_group") btn_group;
 
+  /**
+   * Listens for the Ctrl+f key's keydown event; Moves focus to the search bar on that event.
+   * @param e The event captured.
+   */
   @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
     e.preventDefault();
     document.getElementById("project_entry_search").focus();

@@ -19,6 +19,7 @@ export class ProjectMemberListComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   /**

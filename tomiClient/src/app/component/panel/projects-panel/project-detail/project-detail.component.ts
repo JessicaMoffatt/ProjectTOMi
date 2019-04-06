@@ -62,10 +62,6 @@ export class ProjectDetailComponent implements OnInit {
    */
   budgetControl = new FormControl();
 
-  /**
-   * Initializes UserAccountService's user accounts list, sets the selected Project, and initializes
-   * ClientService's clients list.
-   */
   ngOnInit() {
     this.userAccountService.initializeUserAccounts();
     this.setProject();

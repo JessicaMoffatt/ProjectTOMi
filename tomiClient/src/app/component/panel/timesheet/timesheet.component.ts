@@ -64,6 +64,10 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   /** The list of entry components that are children of the timesheet.*/
   entryComponents: EntryComponent[] = [];
 
+  /**
+   * Listens for the Enter key's keyup event; Performs a save on that event.
+   * @param e The event captured.
+   */
   @HostListener('window:keyup.Enter', ['$event']) enter(e: KeyboardEvent) {
     this.savePromise().then();
   }
@@ -75,9 +79,6 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
   }
 
-  /**
-   * On initialization, calls getEntries to populate the entries variable as well as the projects variable.
-   */
   ngOnInit() {
     if (this.timesheetService.timesheets.length === 0) {
       this.firstLoad();

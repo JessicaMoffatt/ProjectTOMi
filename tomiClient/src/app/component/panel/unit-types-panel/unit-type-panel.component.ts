@@ -29,6 +29,10 @@ export class UnitTypePanelComponent implements OnInit{
    */
   @ViewChild('editUnitTypeComponent') editUnitTypeComponent : ElementRef;
 
+  /**
+   * Listens for the Ctrl+f key's keydown event; Moves focus to the search bar on that event.
+   * @param e The event captured.
+   */
   @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
     e.preventDefault();
     document.getElementById("unit_type_search").focus();

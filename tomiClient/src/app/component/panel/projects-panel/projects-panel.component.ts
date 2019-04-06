@@ -42,9 +42,6 @@ export class ProjectsPanelComponent implements OnInit {
    */
   project: Project;
 
-  /**
-   * Initializes the ProjectService's userAccountList.
-   */
   async ngOnInit() {
     this.projectService.userAccountList = new BehaviorSubject<Array<UserAccount>>([]);
   }

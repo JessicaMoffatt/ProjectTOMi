@@ -8,6 +8,7 @@ import {ProjectService} from "../../../../service/project.service";
 
 /**
  * ExpenseListComponent is used to facilitate communication between the project expense view and front end services.
+ * @author James Andrade
  */
 @Component({
   selector: 'app-expense-list',
@@ -16,9 +17,12 @@ import {ProjectService} from "../../../../service/project.service";
 })
 export class ExpenseListComponent implements OnInit {
 
-  /** determines columns and in what order they will be displayed in expenses table */
+  /** Determines columns and in what order they will be displayed in the expenses table. */
   displayedColumns: string[] = ['select', 'notes', 'amount'];
 
+  /**
+   * List of the selected Expenses.
+   */
   selection = new SelectionModel<Expense>(true, []);
 
   constructor(private dialog: MatDialog, public expenseService: ExpenseService, private projectService: ProjectService) {
@@ -27,6 +31,9 @@ export class ExpenseListComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Displays a Modal component for adding a new Expense.
+   */
   addExpense() {
     this.expenseService.selectedExpense = new Expense();
     this.dialog.open(AddProjectExpenseComponent)
@@ -38,7 +45,6 @@ export class ExpenseListComponent implements OnInit {
    * only execute for one item.
    */
   edit() {
-    // note: because the list selection only allow
     this.selection.selected
       .forEach(expense => {
         this.expenseService.selectedExpense = expense;
@@ -47,6 +53,9 @@ export class ExpenseListComponent implements OnInit {
       });
   }
 
+  /**
+   * Passes on the request to delete the selected Expenses to the ProjectService.
+   */
   delete() {
     this.selection.selected
       .forEach(expense => this.expenseService.delete(expense, this.projectService.getSelectedProject()));

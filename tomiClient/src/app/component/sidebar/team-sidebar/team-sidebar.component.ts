@@ -22,8 +22,15 @@ import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-t
   styleUrls: ['./team-sidebar.component.scss']
 })
 export class TeamSidebarComponent implements OnInit {
+  /**
+   * The button group for displaying all the teams.
+   */
   @ViewChild("btn_group") buttonGroup;
 
+  /**
+   * Listens for the Ctrl+f key's keydown event; Moves focus to the search bar on that event.
+   * @param e The event captured.
+   */
   @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
     e.preventDefault();
     document.getElementById("team_search").focus();

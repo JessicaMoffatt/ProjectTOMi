@@ -19,9 +19,20 @@ import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material";
   styleUrls: ['./project-sidebar.component.scss']
 })
 export class ProjectSidebarComponent implements OnInit {
+  /**
+   * The button group for displaying all the projects.
+   */
   @ViewChild("btn_group") buttonGroup:MatButtonToggleGroup;
+
+  /**
+   * Represents whether a project has been selected of not.
+   */
   selected:boolean = false;
 
+  /**
+   * Listens for the Ctrl+f key's keydown event; Moves focus to the search bar on that event.
+   * @param e The event captured.
+   */
   @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
     e.preventDefault();
     document.getElementById("project_search").focus();

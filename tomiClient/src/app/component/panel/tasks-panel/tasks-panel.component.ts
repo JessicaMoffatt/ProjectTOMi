@@ -30,6 +30,10 @@ export class TasksPanelComponent implements OnInit{
    */
   @ViewChild('editTaskComponent') editTaskComponent : ElementRef;
 
+  /**
+   * Listens for the Ctrl+f key's keydown event; Moves focus to the search bar on that event.
+   * @param e The event captured.
+   */
   @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
     e.preventDefault();
     document.getElementById("task_search").focus();

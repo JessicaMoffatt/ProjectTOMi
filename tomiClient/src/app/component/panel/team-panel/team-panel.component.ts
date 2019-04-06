@@ -9,7 +9,10 @@ import {Component, OnInit, ViewChild} from '@angular/core';
   styleUrls: ['./team-panel.component.scss']
 })
 export class TeamPanelComponent implements OnInit {
-  constructor() { }
+  
+  constructor() {
+    
+  }
 
   /**
    * The individual productivity report component within this team panel component.
