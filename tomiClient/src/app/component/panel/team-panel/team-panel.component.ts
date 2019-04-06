@@ -1,22 +1,31 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {SignInService} from "../../../service/sign-in.service";
-import {UserAccount} from "../../../model/userAccount";
-import {TeamMemberTimesheetService} from "../../../service/team-member-timesheet.service";
-import {ProductivityReportLine} from "../../../model/productivityReportLine";
-import {BehaviorSubject} from "rxjs";
 
+/**
+ * TeamPanelComponent is used to hold other components related to teams.
+ */
 @Component({
   selector: 'app-team-panel',
   templateUrl: './team-panel.component.html',
   styleUrls: ['./team-panel.component.scss']
 })
 export class TeamPanelComponent implements OnInit {
-  constructor(private signInService:SignInService, private teamMemberTimesheetService:TeamMemberTimesheetService) { }
+  constructor() { }
+
+  /**
+   * The individual productivity report component within this team panel component.
+   */
   @ViewChild("individualReport")individualReport;
+
+  /**
+   * The team side bar component within this team panel component.
+   */
   @ViewChild("sideBar")sideBar;
+
+  /**
+   * The team productivity report component within this team panel component.
+   */
   @ViewChild("teamReport")teamReport;
 
   ngOnInit() {
   }
-
 }

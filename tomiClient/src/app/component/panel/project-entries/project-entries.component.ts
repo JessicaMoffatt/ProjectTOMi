@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, Inject, OnInit, QueryList, ViewChildren} from '@angular/core';
-
 import {EntryApproveComponent} from "../entry-approve/entry-approve.component";
 import {DeleteEntryModalComponent} from "../timesheet/timesheet.component";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
@@ -25,10 +24,21 @@ export interface DialogData {
   styleUrls: ['./project-entries.component.scss']
 })
 export class ProjectEntriesComponent implements OnInit, AfterViewInit {
+
+  /**
+   * The currently selected Project.
+   */
   selectedProject:Project;
+
+  /**
+   * The Entries for the currently selected Project.
+   */
   projectEntries:BehaviorSubject<Array<Entry>>;
 
+  /** The entry components references within this project entries component. */
   @ViewChildren(EntryApproveComponent) entryComponentsRef: QueryList<'entryComponentsRef'>;
+
+  /** The list of entry components that are children of this project entries component.*/
   entryComponents: EntryApproveComponent[] = [];
 
   constructor(public projectService: ProjectService, public dialog: MatDialog,
@@ -38,10 +48,16 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
   ngOnInit() {
   }
 
+  /** After the view has initialized, gets all entry components.*/
   ngAfterViewInit(): void {
     this.getEntryComponents();
   }
 
+  /**
+   * Sets selectedProject to the specified Project.
+   * Also retrieves all Entries for this Project.
+   * @param project
+   */
   async setProject(project:Project){
     this.selectedProject = project;
     this.projectEntries = await this.projectService.getEntries(project);
@@ -72,7 +88,7 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Submits the entries for approval/rejection.
+   * Submits the Entries for approval/rejection.
    */
   async submitApproval() {
     await this.projectService.submit(this.entryComponentsRef.toArray());
@@ -82,7 +98,8 @@ export class ProjectEntriesComponent implements OnInit, AfterViewInit {
   }
 }
 
-/* Approval Modal */
+// Approval Modal
+
 /**
  * @author Jessica Moffatt
  * @version 1.0
@@ -121,5 +138,4 @@ export class SubmitApprovalModalComponent implements OnInit {
   async submitApproval() {
     await this.data.parent.submitApproval();
   }
-
 }

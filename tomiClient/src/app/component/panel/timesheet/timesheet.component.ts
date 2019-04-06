@@ -29,7 +29,7 @@ export interface DialogData {
 }
 
 /**
- * TimesheetComponent holds code to be used with the timesheets html page.
+ * TimesheetComponent is used to facilitate communication between the timesheet view and front end services.
  *
  * @author Jessica Moffatt
  * @version 2.0
@@ -58,7 +58,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   /** A view container ref for the template that will be used to house the entry component.*/
   @ViewChild('entryHolder', {read: ViewContainerRef}) entry_container: ViewContainerRef;
 
-  /** Reference to all the entry components references within this timesheet component. */
+  /** The entry components references within this timesheet component. */
   @ViewChildren(EntryComponent) entryComponentsRef: QueryList<'entryComponentsRef'>;
 
   /** The list of entry components that are children of the timesheet.*/

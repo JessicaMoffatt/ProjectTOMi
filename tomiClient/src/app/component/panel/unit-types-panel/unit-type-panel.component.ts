@@ -8,7 +8,7 @@ import {UnitTypeService} from "../../../service/unit-type.service";
 import {AddUnitTypeComponent} from "../../modal/add-unit-type/add-unit-type.component";
 
 /**
- * UnitTypePanelComponent holds code to be used with the manage unit types html page.
+ * UnitTypePanelComponent is used to facilitate communication between the manage unit types view and front end services.
  * @author Karol Talbot
  * @version 2.0
  */

@@ -23,8 +23,8 @@ export class TeamMemberTimesheetComponent implements OnInit {
   }
 
   /**
-   * Displays the specified timesheet.
-   * @param index The index of the timesheet to display.
+   * Displays the Timesheet with the specified index.
+   * @param index The index of the Timesheet to display.
    */
   displaySpecifiedTimesheet(index:number){
     this.teamMemberTimesheetService.displaySpecifiedTimesheet(index);

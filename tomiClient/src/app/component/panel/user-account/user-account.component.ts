@@ -15,7 +15,7 @@ import {MatDialog} from "@angular/material";
 import {TeamService} from "../../../service/team.service";
 
 /**
- * UserAccountComponent holds code to be used with the manage users html page.
+ * UserAccountComponent is used to facilitate communication between the manage user accounts view and front end services.
  * @author Karol Talbot
  * @author Iliya Kiritchkov
  */

@@ -53,6 +53,9 @@ export class SignInComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   *
+   */
   ngAfterViewInit() {
     this.meta.addTag({
       name: 'google-signin-client_id',
