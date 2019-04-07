@@ -50,7 +50,7 @@ export class AddProjectComponent implements OnInit {
   /** The ngForm for this component */
   @ViewChild('addProjectForm') addProjectForm;
 
-  constructor(public dialogRef: MatDialogRef<AddProjectComponent>,private projectService:ProjectService,
+  constructor(public dialogRef: MatDialogRef<AddProjectComponent>, private projectService: ProjectService,
               public clientService: ClientService) {
   }
 
@@ -72,7 +72,7 @@ export class AddProjectComponent implements OnInit {
   private async addProject() {
     let initials: string;
     let project: Project;
-    if (this.projectNameControl.valid && this.accountManagerControl.valid && this.billingControl.valid  && this.budgetControl.valid  && this.clientControl.valid ) {
+    if (this.projectNameControl.valid && this.accountManagerControl.valid && this.billingControl.valid && this.budgetControl.valid && this.clientControl.valid) {
       project = new Project();
       initials = '';
       project.projectName = this.projectNameControl.value;
@@ -87,19 +87,22 @@ export class AddProjectComponent implements OnInit {
       let saveClient = new Client();
       saveClient.name = this.clientControl.value;
       let matchClient = this.clientService.getClientByName(saveClient.name);
-      if ( matchClient === null) {
-        this.clientService.save(saveClient).then((client:Client) => {
+      if (matchClient === null) {
+        this.clientService.save(saveClient).then((client: Client) => {
           project.client = client;
 
-          this.projectService.save(project);
+          this.projectService.save(project).then(() => {
+            this.projectService.refreshProjectList();
+            this.dialogRef.close();
+          });
         });
       } else {
         project.client = matchClient;
+        this.projectService.save(project).then(() => {
+          this.projectService.refreshProjectList();
+          this.dialogRef.close();
+        });
       }
-      this.projectService.save(project).then(()=>{
-        this.projectService.refreshProjectList();
-        this.dialogRef.close();
-      });
     }
   }
 }
