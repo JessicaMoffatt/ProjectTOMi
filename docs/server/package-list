@@ -1,0 +1,14 @@
+ca.projectTOMi.tomi
+ca.projectTOMi.tomi.assembler
+ca.projectTOMi.tomi.authorization.interceptor
+ca.projectTOMi.tomi.authorization.manager
+ca.projectTOMi.tomi.authorization.permission
+ca.projectTOMi.tomi.authorization.policy
+ca.projectTOMi.tomi.authorization.policy.id
+ca.projectTOMi.tomi.authorization.wrapper
+ca.projectTOMi.tomi.controller
+ca.projectTOMi.tomi.exception
+ca.projectTOMi.tomi.model
+ca.projectTOMi.tomi.persistence
+ca.projectTOMi.tomi.service
+ca.projectTOMi.tomi.viewModel
