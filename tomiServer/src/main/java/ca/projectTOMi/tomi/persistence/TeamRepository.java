@@ -23,5 +23,13 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
 	 */
 	List<Team> getAllByActiveOrderById(boolean active);
 
+	/**
+	 * Finds the first active Team where the provided UserAccount is team lead.
+	 *
+	 * @param teamLead
+	 * 	The UserAccount to find as team lead
+	 *
+	 * @return Team the UserAccount is team lead of
+	 */
 	Optional<Team> findFirstByActiveTrueAndTeamLead(UserAccount teamLead);
 }

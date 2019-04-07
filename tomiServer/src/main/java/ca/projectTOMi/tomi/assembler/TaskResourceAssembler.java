@@ -17,13 +17,27 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 /**
  * TaskResourceAssembler is responsible for creating a standard resource for {@link Task}.
  *
- * @author Iliya Kiritchkov and Karol Talbot
+ * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1.1
  */
 @Component
 public final class TaskResourceAssembler implements ResourceAssembler<UserAuthLinkWrapper<Task>, Resource<Task>> {
+	/**
+	 * Provides access to the logs for error reporting.
+	 */
 	private final Logger logger = LoggerFactory.getLogger("Task Assembler");
 
+	/**
+	 * Converts a Task instance into a Resource instance with HATEOAS links based on the requesting
+	 * user's {@link ca.projectTOMi.tomi.authorization.policy.UserAuthorizationPolicy}s.
+	 *
+	 * @param userAuthLinkWrapper
+	 * 	a {@link ca.projectTOMi.tomi.model.Task} object paired with the {@link
+	 * 	ca.projectTOMi.tomi.authorization.manager.AuthManager} created for the request
+	 *
+	 * @return Resource of the provided Task
+	 */
 	@Override
 	public Resource<Task> toResource(final UserAuthLinkWrapper<Task> userAuthLinkWrapper) {
 		final Task task = userAuthLinkWrapper.getModelObject();

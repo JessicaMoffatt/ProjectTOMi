@@ -1,9 +1,13 @@
 package ca.projectTOMi.tomi.authorization.manager;
 
 import java.util.List;
+
 /**
+ * Provides an interface to ensure all objects in a list are present in the policies of the
+ * requesting user.
  *
- * @author Karol Talbot
+ * @param <E>
+ * 	Object to be filtered.
  */
 public interface AuthorizationFilter<E> {
 	/**

@@ -8,12 +8,28 @@ import ca.projectTOMi.tomi.authorization.permission.UserPermission;
 import ca.projectTOMi.tomi.model.UserAccount;
 
 /**
+ * Manages access to object using the policy based access control list.
+ *
  * @author Karol Talbot
+ * @version 1
  */
 public final class UserAuthManager implements AuthManager<UserAuthorizationPolicy> {
+	/**
+	 * The Requesting user's UserAccount.
+	 */
 	private final UserAccount user;
+
+	/**
+	 * Contains a list of the requesting users ProjectAuthorizationPolicies.
+	 */
 	private HashSet<UserAuthorizationPolicy> policies;
 
+	/**
+	 * Creates a new UserAuthManager for the requesting user.
+	 *
+	 * @param user
+	 * 	The UserAccount of the requesting user.
+	 */
 	public UserAuthManager(final UserAccount user) {
 		this.user = user;
 	}

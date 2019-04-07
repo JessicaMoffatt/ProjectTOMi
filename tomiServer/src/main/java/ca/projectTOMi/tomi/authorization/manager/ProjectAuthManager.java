@@ -5,16 +5,34 @@ import java.util.HashSet;
 import java.util.List;
 import ca.projectTOMi.tomi.authorization.policy.ProjectAuthorizationPolicy;
 import ca.projectTOMi.tomi.authorization.permission.ProjectPermission;
+import ca.projectTOMi.tomi.model.Expense;
 import ca.projectTOMi.tomi.model.Project;
 import ca.projectTOMi.tomi.model.UserAccount;
 
 /**
+ * Manages access to {@link Project} and {@link Expense} object using the policy based access
+ * control list.
+ *
  * @author Karol Talbot
+ * @version 1
  */
 public final class ProjectAuthManager implements AuthManager<ProjectAuthorizationPolicy>, AuthorizationFilter<Project> {
+	/**
+	 * The Requesting user's UserAccount.
+	 */
 	private final UserAccount user;
+
+	/**
+	 * Contains a list of the requesting users ProjectAuthorizationPolicies.
+	 */
 	private HashSet<ProjectAuthorizationPolicy> policies;
 
+	/**
+	 * Creates a new ProjectAuthManager for the requesting user.
+	 *
+	 * @param user
+	 * 	The UserAccount of the requesting user.
+	 */
 	public ProjectAuthManager(final UserAccount user) {
 		this.user = user;
 	}

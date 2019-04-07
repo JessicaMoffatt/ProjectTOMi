@@ -22,6 +22,16 @@ import org.springframework.stereotype.Component;
 @Component
 public final class TimesheetResourceAssembler implements ResourceAssembler<TimesheetAuthLinkWrapper<Timesheet>, Resource<Timesheet>> {
 
+	/**
+	 * Converts a Timesheet instance into a Resource instance with HATEOAS links based on the requesting
+	 * user's {@link ca.projectTOMi.tomi.authorization.policy.TimesheetAuthorizationPolicy}s.
+	 *
+	 * @param timesheetAuthLinkWrapper
+	 * 	a {@link ca.projectTOMi.tomi.model.Timesheet} object paired with the {@link
+	 * 	ca.projectTOMi.tomi.authorization.manager.AuthManager} created for the request
+	 *
+	 * @return Resource of the provided Timesheet
+	 */
 	@Override
 	public Resource<Timesheet> toResource(final TimesheetAuthLinkWrapper<Timesheet> timesheetAuthLinkWrapper) {
 		final Timesheet timesheet = timesheetAuthLinkWrapper.getModelObject();

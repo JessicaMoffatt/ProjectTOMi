@@ -18,6 +18,7 @@ const httpOptions: any = {
 /**
  * Service class responsible for communication of task model objects with the back end.
  *
+ * @author James Andrade
  * @author Karol Talbot
  * @version 2.0
  */

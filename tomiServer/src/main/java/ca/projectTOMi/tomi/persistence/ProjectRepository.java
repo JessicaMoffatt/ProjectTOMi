@@ -16,6 +16,14 @@ import org.springframework.data.repository.query.Param;
  * @version 1
  */
 public interface ProjectRepository extends JpaRepository<Project, String> {
+	/**
+	 * Gets a list of project identifiers with the provided prefix.
+	 *
+	 * @param prefix
+	 * 	The prefix to search for
+	 *
+	 * @return List of strings representing the project ids
+	 */
 	@Query ("SELECT id FROM Project WHERE id LIKE CONCAT('%',:prefix,'%') ORDER BY id DESC")
 	List<String> getIds(@Param ("prefix") String prefix);
 
@@ -29,7 +37,23 @@ public interface ProjectRepository extends JpaRepository<Project, String> {
 	 */
 	List<Project> getAllByActiveOrderById(boolean active);
 
+	/**
+	 * Gets all active Projects where the provided UserAccount is a member of the project.
+	 *
+	 * @param user
+	 * 	The UserAccount to get projects for.
+	 *
+	 * @return List containing all active projects the provided UserAccount is a member of
+	 */
 	List<Project> getAllByActiveTrueAndProjectMembersContainsOrderById(UserAccount user);
 
+	/**
+	 * Finds the first active project where the provided UserAccount is the project manager.
+	 *
+	 * @param projectManager
+	 * 	The UserAccount to search for as project manager
+	 *
+	 * @return the first project containing the UserAccount as the project manager
+	 */
 	Optional<Project> findFirstByActiveTrueAndProjectManager(UserAccount projectManager);
 }

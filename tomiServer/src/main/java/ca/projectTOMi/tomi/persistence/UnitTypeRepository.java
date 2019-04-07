@@ -10,7 +10,8 @@ import java.util.List;
  * UnitTypeRepository is used to persist and retrieve data regarding {@link UnitType} from the
  * database.
  *
- * @author Karol Talbot and Iliya Kiritchkov
+ * @author Karol Talbot
+ * @author Iliya Kiritchkov
  * @version 1.2
  */
 @Repository
@@ -26,5 +27,13 @@ public interface UnitTypeRepository extends JpaRepository<UnitType, Long> {
 	 */
 	List<UnitType> getAllByActiveOrderById(boolean active);
 
+	/**
+	 * Finds a UnitType with the provided name.
+	 *
+	 * @param name
+	 * 	The name of the UnitType to be found
+	 *
+	 * @return The UnitType with the provided name
+	 */
 	UnitType findByName(String name);
 }

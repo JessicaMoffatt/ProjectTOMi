@@ -8,12 +8,25 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.servlet.view.document.AbstractXlsView;
+
 /**
+ * Creates an excel representation of the DataDumpReport.
+ *
  * @author Karol Talbot
+ * @version 1
  */
 public class DataDumpReportExcelView extends AbstractXlsView {
+	/**
+	 * List containing the DataDumpReport.
+	 */
 	private final List<DataDumpReportLine> report;
 
+	/**
+	 * Creates an ExcelView of a DataDumpReport.
+	 *
+	 * @param report
+	 * 	Report to be converted to an Excel document
+	 */
 	public DataDumpReportExcelView(final List<DataDumpReportLine> report) {
 		super();
 		this.report = report;

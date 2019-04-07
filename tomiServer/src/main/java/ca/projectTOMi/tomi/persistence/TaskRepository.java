@@ -24,6 +24,14 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 	 */
 	List<Task> getAllByBillableAndActiveOrderById(boolean billable, boolean active);
 
+	/**
+	 * Finds a Task with the provided name.
+	 *
+	 * @param name
+	 * 	The name of the Task to be found
+	 *
+	 * @return The Task with the provided name
+	 */
 	Task findByName(String name);
 
 	/**

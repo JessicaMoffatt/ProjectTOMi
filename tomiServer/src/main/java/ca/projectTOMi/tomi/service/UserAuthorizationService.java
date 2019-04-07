@@ -8,10 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * Provides services for {@link UserAuthorizationPolicy} objects.
+ *
  * @author Karol Talbot
+ * @version 1
  */
 @Service
-public class UserAuthService {
+public class UserAuthorizationService {
+	/**
+	 * Permissions granted to every admin account.
+	 */
 	private static final UserPermission[] ADMIN_PERMISSIONS = new UserPermission[]{
 		UserPermission.READ_LISTS,
 		UserPermission.CREATE_USER_ACCOUNT,
@@ -20,17 +26,32 @@ public class UserAuthService {
 		UserPermission.WRITE_USER_ACCOUNT
 	};
 
+	/**
+	 * Repository for persisting UserAuthorizationPolicy objects
+	 */
 	private final UserAuthorizationRepository userAuthorizationRepository;
 
+	/**
+	 * Creates the UserAuthorizationService.
+	 *
+	 * @param userAuthorizationRepository
+	 * 	Repository for persisting UserAuthorizationPolicy objects
+	 */
 	@Autowired
-	public UserAuthService(final UserAuthorizationRepository userAuthorizationRepository) {
+	public UserAuthorizationService(final UserAuthorizationRepository userAuthorizationRepository) {
 		this.userAuthorizationRepository = userAuthorizationRepository;
 	}
 
-	public void updatedUserAccount(final UserAccount updatedUserAccount) {
+	/**
+	 * Sets policies when a UserAccount is updated.
+	 *
+	 * @param updatedUserAccount
+	 * 	The UserAccount that was updated.
+	 */
+	void updatedUserAccount(final UserAccount updatedUserAccount) {
 		if (updatedUserAccount.isProgramDirector()) {
 			this.userAuthorizationRepository.deleteAll(this.userAuthorizationRepository.getAllByRequestingUser(updatedUserAccount));
-			for (UserPermission p : UserPermission.values()) {
+			for (final UserPermission p : UserPermission.values()) {
 				final UserAuthorizationPolicy authPolicy = new UserAuthorizationPolicy();
 				authPolicy.setPermission(p);
 				authPolicy.setRequestingUser(updatedUserAccount);
@@ -38,9 +59,9 @@ public class UserAuthService {
 			}
 		} else if (updatedUserAccount.isAdmin()) {
 			this.userAuthorizationRepository.deleteAll(this.userAuthorizationRepository.getAllByRequestingUser(updatedUserAccount));
-			for (int i = 0; i < ADMIN_PERMISSIONS.length; i++) {
+			for (final UserPermission adminPermission : ADMIN_PERMISSIONS) {
 				final UserAuthorizationPolicy authPolicy = new UserAuthorizationPolicy();
-				authPolicy.setPermission(ADMIN_PERMISSIONS[i]);
+				authPolicy.setPermission(adminPermission);
 				authPolicy.setRequestingUser(updatedUserAccount);
 				this.userAuthorizationRepository.save(authPolicy);
 			}

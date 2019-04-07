@@ -10,8 +10,7 @@ import ca.projectTOMi.tomi.authorization.manager.ProjectAuthManager;
 import ca.projectTOMi.tomi.authorization.wrapper.ProjectAuthLinkWrapper;
 import ca.projectTOMi.tomi.authorization.wrapper.TimesheetAuthLinkWrapper;
 import ca.projectTOMi.tomi.exception.EmptyProjectListException;
-import ca.projectTOMi.tomi.exception.InvalidIDPrefix;
-import ca.projectTOMi.tomi.exception.ProjectManagerException;
+import ca.projectTOMi.tomi.exception.InvalidIDPrefixException;
 import ca.projectTOMi.tomi.exception.ProjectNotFoundException;
 import ca.projectTOMi.tomi.model.Entry;
 import ca.projectTOMi.tomi.model.Project;
@@ -40,8 +39,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
- * Handles HTTP requests for {@link ca.projectTOMi.tomi.model.Project} objects in the ProjectTOMi
- * system.
+ * Rest Controller that handles HTTP requests for {@link Project} objects in the TOMi system.
  *
  * @author Karol Talbot
  * @version 1.1
@@ -49,12 +47,43 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class ProjectController {
+	/**
+	 * Provides services for maintaining Projects.
+	 */
 	private final ProjectService projectService;
+
+	/**
+	 * Provides services for maintaining Entries and Timesheets.
+	 */
 	private final EntryService entryService;
+
+	/**
+	 * Converts Project model objects into HATEOAS Resources.
+	 */
 	private final ProjectResourceAssembler projectResourceAssembler;
+
+	/**
+	 * Converts Entry model objects into HATEOAS Resources.
+	 */
 	private final EntryResourceAssembler entryResourceAssembler;
+
+	/**
+	 * Provides access to system logs for error reporting purposes.
+	 */
 	private final Logger logger = LoggerFactory.getLogger("Project Controller");
 
+	/**
+	 * Creates the ProjectController.
+	 *
+	 * @param projectService
+	 * 	Provides services for maintaining Projects
+	 * @param entryService
+	 * 	Provides services for maintaining Entries and Timesheets
+	 * @param projectResourceAssembler
+	 * 	Converts Projects to Resources
+	 * @param entryResourceAssembler
+	 * 	Converts Entries to Resources
+	 */
 	@Autowired
 	public ProjectController(final ProjectService projectService,
 	                         final EntryService entryService,
@@ -73,6 +102,8 @@ public class ProjectController {
 	 *
 	 * @param id
 	 * 	unique identifier for the Project
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
 	 * @return Resource representing the Project object.
 	 */
@@ -84,6 +115,9 @@ public class ProjectController {
 
 	/**
 	 * Returns a collection of all active {@link Project} the source of a GET request to /projects.
+	 *
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
 	 * @return Collection of resources representing all active Projects
 	 */
@@ -116,7 +150,7 @@ public class ProjectController {
 	@PostMapping ("/projects")
 	public ResponseEntity<?> createProject(@RequestBody final Project newProject) throws URISyntaxException {
 		if (newProject.getId() == null || !newProject.getId().trim().matches("^\\p{Alpha}\\p{Alpha}\\d{0,5}+$")) {
-			throw new InvalidIDPrefix();
+			throw new InvalidIDPrefixException();
 		}
 		newProject.setId(this.projectService.getId(newProject.getId()));
 		final Resource<Project> resource = this.projectResourceAssembler.toResource(new ProjectAuthLinkWrapper<>(this.projectService.createProject(newProject), null));
@@ -132,6 +166,8 @@ public class ProjectController {
 	 * 	the unique identifier for the Project to be updated
 	 * @param newProject
 	 * 	the updated Project
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
 	 * @return response containing a link to the updated Project
 	 *
@@ -166,11 +202,21 @@ public class ProjectController {
 		return ResponseEntity.noContent().build();
 	}
 
+	/**
+	 * Gets a list of Projects a UserAccount is assigned to.
+	 *
+	 * @param userAccountId
+	 * 	The Unique identifier for the UserAccount
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
+	 *
+	 * @return List of Resources representing Projects a user is assigned to
+	 */
 	@GetMapping ("/user_accounts/{userAccountId}/projects")
 	public Resources<Resource<Project>> getProjectsByUserAccount(@PathVariable final Long userAccountId,
 	                                                             @RequestAttribute final ProjectAuthManager authMan) {
 		final List<Project> projects = this.projectService.getProjectsByUserAccount(userAccountId);
-		if(projects.isEmpty()){
+		if (projects.isEmpty()) {
 			throw new EmptyProjectListException();
 		}
 		final List<Resource<Project>> projectResources = authMan.filterList(projects)
@@ -185,6 +231,15 @@ public class ProjectController {
 			linkTo(methodOn(ProjectController.class).getProjectsByUserAccount(userAccountId, authMan)).withSelfRel());
 	}
 
+	/**
+	 * Returns a list of Entries that need to be evaluated by a project manager for a specific
+	 * Project.
+	 *
+	 * @param projectId
+	 * 	The unique identifier for the Project
+	 *
+	 * @return List of Resources representing Entry objects that need to be evaluated
+	 */
 	@GetMapping ("/projects/{projectId}/evaluate_entries")
 	public Resources<Resource<Entry>> getEntriesToEvaluate(@PathVariable final String projectId) {
 		final Project project = this.projectService.getProjectById(projectId);
@@ -198,6 +253,18 @@ public class ProjectController {
 			linkTo(methodOn(ProjectController.class).getEntriesToEvaluate(projectId)).withSelfRel());
 	}
 
+	/**
+	 * Updates the status an Entry based on a project managers evaluation.
+	 *
+	 * @param projectId
+	 * 	The unique identifier for the Project
+	 * @param entryId
+	 * 	The unique identifier for the Entry
+	 * @param status
+	 * 	The updated status provided by the project manager
+	 *
+	 * @return Response informing the client if the request was accepted
+	 */
 	@PutMapping ("/projects/{projectId}/entries/{entryId}")
 	public ResponseEntity<?> evaluateEntry(@PathVariable final String projectId,
 	                                       @PathVariable final Long entryId,
@@ -208,29 +275,76 @@ public class ProjectController {
 		return this.entryService.evaluateEntry(entryId, status) ? ResponseEntity.accepted().build() : ResponseEntity.badRequest().build();
 	}
 
+	/**
+	 * Adds a specified UserAccount to a specified Project.
+	 *
+	 * @param projectId
+	 * 	The unique identifier for the Project
+	 * @param userAccountId
+	 * 	The unique identifier for the UserAccount
+	 *
+	 * @return Http response informing the client if the request was accepted
+	 */
 	@PutMapping ("/projects/{projectId}/add_member/{userAccountId}")
-	public ResponseEntity<?> addTeamMember(@PathVariable final String projectId, @PathVariable final Long userAccountId) {
+	public ResponseEntity<?> addTeamMember(@PathVariable final String projectId,
+	                                       @PathVariable final Long userAccountId) {
 		this.projectService.addTeamMember(projectId, userAccountId);
 		return ResponseEntity.accepted().build();
 	}
 
+	/**
+	 * Removes a specified UserAccount to a specified Project.
+	 *
+	 * @param projectId
+	 * 	The unique identifier for the Project
+	 * @param userAccountId
+	 * 	The unique identifier for the UserAccount
+	 *
+	 * @return Http response informing the client if the request was accepted
+	 */
 	@PutMapping ("/projects/{projectId}/remove_member/{userAccountId}")
-	public ResponseEntity<?> removeTeamMember(@PathVariable final String projectId, @PathVariable final Long userAccountId) {
+	public ResponseEntity<?> removeTeamMember(@PathVariable final String projectId,
+	                                          @PathVariable final Long userAccountId) {
 		this.projectService.removeTeamMember(projectId, userAccountId);
 		return ResponseEntity.accepted().build();
 	}
 
-	@GetMapping("/projects/{projectId}/members")
-	public List<UserAccount> getProjectMembers(@PathVariable final String projectId){
+	/**
+	 * Returns as list of UserAccounts assigned to a Project.
+	 *
+	 * @param projectId
+	 * 	The unique identifier for the Project
+	 *
+	 * @return List of UserAccounts assigned to a project
+	 */
+	@GetMapping ("/projects/{projectId}/members")
+	public List<UserAccount> getProjectMembers(@PathVariable final String projectId) {
 		return this.projectService.getProjectMembers(projectId);
 	}
 
+	/**
+	 * Informs the client that an empty list exception occurred.
+	 *
+	 * @param e
+	 * 	The exception that had occurred
+	 *
+	 * @return A 204 Response
+	 */
 	@ExceptionHandler ({EmptyProjectListException.class})
 	public ResponseEntity<?> handleEmptyList(final Exception e) {
 		return ResponseEntity.status(204).build();
 	}
 
-	@ExceptionHandler ({ProjectNotFoundException.class, InvalidIDPrefix.class, ProjectManagerException.class})
+	/**
+	 * Informs the client that an exception has occurred. In order to keep the server inner workings
+	 * private a generic 400 bad request is used.
+	 *
+	 * @param e
+	 * 	The exception that had occurred
+	 *
+	 * @return A 400 Bad Request Response
+	 */
+	@ExceptionHandler ({ProjectNotFoundException.class, InvalidIDPrefixException.class})
 	public ResponseEntity<?> handleExceptions(final Exception e) {
 		this.logger.warn("Project Exception: " + e.getClass());
 		return ResponseEntity.status(400).build();

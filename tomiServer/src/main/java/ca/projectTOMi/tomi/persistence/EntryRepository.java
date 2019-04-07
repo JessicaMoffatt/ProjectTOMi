@@ -8,15 +8,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 /**
- * EntryRepository is used to persist and retrieve data regarding {@Link Entry} from the database.
+ * EntryRepository is used to persist and retrieve data regarding {@link Entry} from the database.
  *
- * @author Iliya Kiritchkov and Karol Talbot
+ * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1.2
  */
 public interface EntryRepository extends JpaRepository<Entry, Long> {
 
 	/**
-	 * Get all {@Link Entry} objects that have the provided active status.
+	 * Get all {@link Entry} objects that have the provided active status.
 	 *
 	 * @param active
 	 * 	if the Entry is active.
@@ -26,7 +27,7 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
 	List<Entry> getAllByActiveOrderById(boolean active);
 
 	/**
-	 * Get all {@Link Entry} objects that are active status and part of the provided {@link
+	 * Get all {@link Entry} objects that are active status and part of the provided {@link
 	 * Timesheet}.
 	 *
 	 * @param timesheet
@@ -36,7 +37,25 @@ public interface EntryRepository extends JpaRepository<Entry, Long> {
 	 */
 	List<Entry> getAllByActiveTrueAndTimesheetOrderById(Timesheet timesheet);
 
+	/**
+	 * Gets all the active Entries with the provided status and project.
+	 *
+	 * @param project
+	 * 	project to search for
+	 * @param status
+	 * 	status to search for
+	 *
+	 * @return list of entries that have the provided project and status
+	 */
 	List<Entry> getAllByActiveTrueAndProjectAndStatus(Project project, Status status);
 
+	/**
+	 * Gets all active Entries for the provided project.
+	 *
+	 * @param project
+	 * 	project to search for
+	 *
+	 * @return list of entries for the provided project
+	 */
 	List<Entry> getAllByActiveTrueAndProject(Project project);
 }

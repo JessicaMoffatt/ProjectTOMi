@@ -12,20 +12,33 @@ import ca.projectTOMi.tomi.model.UserAccount;
 import lombok.Data;
 
 /**
+ * The intersection of a UserAccount, Permission, and Project that is used to control access to
+ * operations performed on {@link Project} objects in the TOMi system.
+ *
  * @author Karol Talbot
+ * @version 1
  */
 @Data
 @Entity
 @IdClass (ProjectAuthId.class)
 public class ProjectAuthorizationPolicy {
+	/**
+	 * The UserAccount requesting the operation.
+	 */
 	@Id
 	@ManyToOne (targetEntity = UserAccount.class, optional = false)
 	private UserAccount requestingUser;
 
+	/**
+	 * The permission for the operation.
+	 */
 	@Id
 	@Enumerated
 	private ProjectPermission permission;
 
+	/**
+	 * The project the operation is being performed on.
+	 */
 	@Id
 	@ManyToOne (targetEntity = Project.class, optional = false)
 	private Project project;

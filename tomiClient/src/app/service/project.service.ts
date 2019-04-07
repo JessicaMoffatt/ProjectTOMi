@@ -34,6 +34,8 @@ const headers = new HttpHeaders({
 /**
  * Project service provides services relates to Projects.
  * @author Jessica Moffatt
+ * @author James Andrade
+ * @author Karol Talbot
  * @version 1.0
  */
 @Injectable({

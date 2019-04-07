@@ -1,7 +1,7 @@
 package ca.projectTOMi.tomi.exception;
 
 /**
- * A requested {@Link Entry} was unavailable.
+ * A requested {@link ca.projectTOMi.tomi.model.Entry} was unavailable.
  *
  * @author Iliya Kiritchkov
  * @version 1

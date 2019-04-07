@@ -32,7 +32,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
- * Handles HTTP requests for {@link Expense} objects in the ProjectTOMi system.
+ * Rest Controller that handles HTTP requests for {@link Expense} objects in the TOMi system.
  *
  * @author Karol Talbot
  * @version 1
@@ -40,17 +40,47 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class ExpenseController {
+	/**
+	 * Provides services for maintaining expenses in the system.
+	 */
 	private final ExpenseService expenseService;
+
+	/**
+	 * Converts Expense model objects into HATEOAS Resources.
+	 */
 	private final ExpenseResourceAssembler assembler;
+
+	/**
+	 * Provides access to the system logs for error reporting purposes.
+	 */
 	private final Logger logger = LoggerFactory.getLogger("Expense Controller");
 
+	/**
+	 * Creates the ExpenseController.
+	 *
+	 * @param expenseService
+	 * 	Provides services for maintaining Expenses
+	 * @param assembler
+	 * 	Converts Expenses to Resources
+	 */
 	@Autowired
 	public ExpenseController(final ExpenseService expenseService, final ExpenseResourceAssembler assembler) {
 		this.expenseService = expenseService;
 		this.assembler = assembler;
 	}
 
-
+	/**
+	 * Gets a requested expense for a requested project.
+	 *
+	 * @param expenseId
+	 * 	The unique identifier for the requested expense
+	 * @param projectId
+	 * 	The unique identifier for the requested project
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
+	 *
+	 * @return Resource representing the requested expense
+	 */
 	@GetMapping ("/projects/{projectId}/expenses/{expenseId}")
 	public Resource<Expense> getExpense(@PathVariable final Long expenseId,
 	                                    @PathVariable final String projectId,
@@ -61,9 +91,14 @@ public class ExpenseController {
 	}
 
 	/**
-	 * Returns a collection of all active {@link Expense} the source of a GET request to /expenses.
+	 * Returns a collection of all active {@link Expense} for a requested project
 	 *
-	 * @return Collection of resources representing all active Expenses
+	 * @param projectId
+	 * 	The unique identifier for the project
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
+	 *
+	 * @return Collection of resources representing all active Expenses for the requested Project
 	 */
 	@GetMapping ("/projects/{projectId}/expenses")
 	public Resources<Resource<Expense>> getActiveExpenses(@PathVariable final String projectId,
@@ -81,15 +116,20 @@ public class ExpenseController {
 	}
 
 	/**
-	 * Creates a new {@link Expense} with the attributes provided in the POST request to /expenses.
+	 * Creates a new {@link Expense} with the attributes provided in the POST request for a requested
+	 * Project.
 	 *
 	 * @param newExpense
-	 * 	an Expense object with required information.
+	 * 	An Expense object with required information.
+	 * @param projectId
+	 * 	The unique identifier for the requested Project
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
 	 * @return response containing links to the newly created Expense
 	 *
 	 * @throws URISyntaxException
-	 * 	when the created URI is unable to be parsed
+	 * 	When the created URI is unable to be parsed
 	 */
 	@PostMapping ("/projects/{projectId}/expenses")
 	public ResponseEntity<?> createExpense(@RequestBody final Expense newExpense,
@@ -104,6 +144,23 @@ public class ExpenseController {
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 
+	/**
+	 * Updates a requested Expense for a specific Project.
+	 *
+	 * @param expenseId
+	 * 	The unique identifier for the Expense
+	 * @param projectId
+	 * 	The unique identifier for the Project
+	 * @param newExpense
+	 * 	The Expense created from the body of the PUT request
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
+	 *
+	 * @return Resource representing the updated Expense
+	 *
+	 * @throws URISyntaxException
+	 * 	When the created URI is unable to be parsed
+	 */
 	@PutMapping ("/projects/{projectId}/expenses/{expenseId}")
 	public ResponseEntity<?> updateExpense(@PathVariable final Long expenseId,
 	                                       @PathVariable final String projectId,
@@ -115,6 +172,16 @@ public class ExpenseController {
 		return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
 	}
 
+	/**
+	 * Deletes the provided Expense for the provided Project.
+	 *
+	 * @param expenseId
+	 * 	The unique identifier for the Expense
+	 * @param projectId
+	 * 	The unique identifier for the Project
+	 *
+	 * @return Empty HTTP response to inform the client of success
+	 */
 	@DeleteMapping ("/projects/{projectId}/expenses/{expenseId}")
 	public ResponseEntity<?> setExpenseInactive(@PathVariable final Long expenseId,
 	                                            @PathVariable final String projectId) {
@@ -125,6 +192,15 @@ public class ExpenseController {
 		return ResponseEntity.noContent().build();
 	}
 
+	/**
+	 * Informs the client that an exception has occurred. In order to keep the server inner workings
+	 * private a generic 400 bad request is used.
+	 *
+	 * @param e
+	 * 	The exception that had occurred
+	 *
+	 * @return A 400 Bad Request Response
+	 */
 	@ExceptionHandler ({ExpenseNotFoundException.class})
 	public ResponseEntity<?> handleExceptions(final Exception e) {
 		this.logger.warn("Expense Exception: " + e.getClass());

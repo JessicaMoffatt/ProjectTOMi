@@ -1,6 +1,5 @@
 package ca.projectTOMi.tomi.model;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -65,6 +64,12 @@ public final class Team {
 	@NotNull
 	private boolean active;
 
+	/**
+	 * Sets this Team's team lead using their id when converting this Team from JSON.
+	 *
+	 * @param id
+	 * 	Long representing the team lead
+	 */
 	@JsonProperty
 	public void setLeadId(final Long id) {
 		UserAccount userAccount = null;
