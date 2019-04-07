@@ -59,6 +59,13 @@ export class ProjectSidebarComponent implements OnInit {
   checkSelected(){
     return this.selected;
   }
+
+  unselect(){
+    this.selected = false;
+    if (this.buttonGroup.selected instanceof MatButtonToggle) {
+      this.buttonGroup.selected.checked = false;
+    }
+  }
 }
 
 /**
