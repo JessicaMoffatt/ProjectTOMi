@@ -1,6 +1,5 @@
 package ca.projectTOMi.tomi.controller;
 
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -32,16 +31,37 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
+ * Rest Controller that handle HTTP requests for {@link Client} objects in the TOMi system.
+ *
  * @author Karol Talbot
  * @version 1
  */
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class ClientController {
+	/**
+	 * Provides services for maintaining clients in the system.
+	 */
 	private final ClientService service;
+
+	/**
+	 * Converts client model objects into HATEOAS Resources.
+	 */
 	private final ClientResourceAssembler assembler;
+
+	/**
+	 * Provides access  to the system logs for error reporting purposes.
+	 */
 	private final Logger logger = LoggerFactory.getLogger("Client Controller");
 
+	/**
+	 * Creates the ClientController.
+	 *
+	 * @param service
+	 * 	Provides services for maintaining clients objects
+	 * @param assembler
+	 * 	Converts client model objects into resources
+	 */
 	@Autowired
 	public ClientController(final ClientService service, final ClientResourceAssembler assembler) {
 		this.service = service;
@@ -50,6 +70,9 @@ public class ClientController {
 
 	/**
 	 * Returns a collection of all active {@link Client} the source of a GET request to /clients.
+	 *
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
 	 * @return Collection of resources representing all active Client
 	 */
@@ -70,6 +93,8 @@ public class ClientController {
 	 *
 	 * @param id
 	 * 	unique identifier for the Client
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
 	 * @return Resource representing the Client object.
 	 */
@@ -84,6 +109,8 @@ public class ClientController {
 	 *
 	 * @param newClient
 	 * 	an Client object with required information.
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
 	 * @return response containing links to the newly created Client
 	 *
@@ -108,6 +135,8 @@ public class ClientController {
 	 * 	the unique identifier for the Client to be updated
 	 * @param newClient
 	 * 	the updated Client
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
 	 * @return response containing a link to the updated Client
 	 *
@@ -139,6 +168,15 @@ public class ClientController {
 		return ResponseEntity.noContent().build();
 	}
 
+	/**
+	 * Informs the client that an exception has occurred. In order to keep the server inner workings
+	 * private a generic 400 bad request is used.
+	 *
+	 * @param e
+	 * 	The exception that had occurred
+	 *
+	 * @return A 400 Bad Request Response
+	 */
 	@ExceptionHandler ({ClientNotFoundException.class})
 	public ResponseEntity<?> handleExceptions(final Exception e) {
 		this.logger.warn("Client Exception: " + e.getClass());

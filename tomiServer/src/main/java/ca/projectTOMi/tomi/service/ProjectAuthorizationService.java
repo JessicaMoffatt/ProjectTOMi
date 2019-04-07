@@ -28,7 +28,6 @@ public class ProjectAuthorizationService {
 		ProjectPermission.READ,
 		ProjectPermission.CREATE_EXPENSE,
 		ProjectPermission.DELETE_EXPENSE,
-		ProjectPermission.WRITE,
 		ProjectPermission.READ_BUDGET
 	};
 

@@ -32,19 +32,38 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
- * Handles HTTP requests for {@link Task} objects in the ProjectTOMi system.
+ * Rest Controller that handles HTTP requests for {@link Task} objects in the TOMi system.
  *
  * @author Karol Talbot
  * @author Iliya Kiritchkov
- * @version 2
+ * @version 1.1
  */
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class TaskController {
+	/**
+	 * Converts Task model objects into HATEOAS Resources.
+	 */
 	private final TaskResourceAssembler assembler;
+
+	/**
+	 * Provides services for maintaining Tasks.
+	 */
 	private final TaskService service;
+
+	/**
+	 * Provides access to the logging system for error reporting.
+	 */
 	private final Logger logger = LoggerFactory.getLogger("Task Controller");
 
+	/**
+	 * Creates the TaskController.
+	 *
+	 * @param assembler
+	 * 	Converts Tasks to Resources
+	 * @param service
+	 * 	Provides services related to tasks
+	 */
 	@Autowired
 	public TaskController(final TaskResourceAssembler assembler, final TaskService service) {
 		this.assembler = assembler;
@@ -55,7 +74,10 @@ public class TaskController {
 	 * Returns a collection of all active {@link Task} objects to the source of a GET request to
 	 * /tasks.
 	 *
-	 * @return Collection of resources representing all active Tasks.
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
+	 *
+	 * @return Collection of resources representing all active Tasks
 	 */
 	@GetMapping ("/tasks")
 	public Resources<Resource<Task>> getActiveTasks(@RequestAttribute final UserAuthManager authMan) {
@@ -74,9 +96,11 @@ public class TaskController {
 	 * /tasks/id.
 	 *
 	 * @param taskId
-	 * 	unique identifier for the Task.
+	 * 	unique identifier for the Task
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
-	 * @return Resource representing the Task object.
+	 * @return Resource representing the Task object
 	 */
 	@GetMapping ("/tasks/{taskId}")
 	public Resource<Task> getTask(@PathVariable final Long taskId,
@@ -88,12 +112,14 @@ public class TaskController {
 	 * Creates a new {@link Task} with the attributes provided in the POST request to /tasks.
 	 *
 	 * @param newTask
-	 * 	a Task object with required information.
+	 * 	a Task object with required information
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
-	 * @return response containing links to the newly created Task.
+	 * @return response containing links to the newly created Task
 	 *
 	 * @throws URISyntaxException
-	 * 	when the created URI is unable to be parsed.
+	 * 	when the created URI is unable to be parsed
 	 */
 	@PostMapping ("/tasks")
 	public ResponseEntity<?> createTask(@RequestBody final Task newTask,
@@ -108,14 +134,16 @@ public class TaskController {
 	 * the PUT request to /tasks/id.
 	 *
 	 * @param taskId
-	 * 	the unique identifier for the Task to update.
+	 * 	the unique identifier for the Task to update
 	 * @param newTask
-	 * 	the updated Task.
+	 * 	the updated Task
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
-	 * @return response containing a link to the updated Task.
+	 * @return response containing a link to the updated Task
 	 *
 	 * @throws URISyntaxException
-	 * 	when the created URI is unable to be parsed.
+	 * 	when the created URI is unable to be parsed
 	 */
 	@PutMapping ("/tasks/{taskId}")
 	public ResponseEntity<?> updateTask(@PathVariable final Long taskId,
@@ -145,6 +173,15 @@ public class TaskController {
 		return ResponseEntity.noContent().build();
 	}
 
+	/**
+	 * Informs the client that an exception has occurred. In order to keep the server inner workings
+	 * private a generic 400 bad request is used.
+	 *
+	 * @param e
+	 * 	The exception that had occurred
+	 *
+	 * @return A 400 Bad Request Response
+	 */
 	@ExceptionHandler ({TaskNotFoundException.class})
 	public ResponseEntity<?> handleExceptions(final Exception e) {
 		this.logger.warn("Task Exception: " + e.getClass());

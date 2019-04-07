@@ -6,7 +6,6 @@ import java.util.Map;
 import ca.projectTOMi.tomi.authorization.manager.UserAuthManager;
 import ca.projectTOMi.tomi.model.UserAccount;
 import ca.projectTOMi.tomi.service.UserAuthenticationService;
-import com.google.api.client.googleapis.auth.oauth2.GooglePublicKeysManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Rest controller for handling requests involving authentication and signing in.
+ * Rest Controller for handling requests involving authentication and signing in.
  *
  * @author Karol Talbot
  */
@@ -76,9 +75,11 @@ public class AuthenticationController {
 	 * able to be processed by the server.
 	 *
 	 * @param signIn
+	 * 	The user's identification token
 	 * @param authMan
+	 * 	The user's UserAuthorizationManager
 	 *
-	 * @return
+	 * @return Map containing which nav options to show
 	 *
 	 * @throws GeneralSecurityException
 	 * 	When a problem occurs with the GooglePublicKeysManager

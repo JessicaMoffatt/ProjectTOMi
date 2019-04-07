@@ -15,7 +15,6 @@ import ca.projectTOMi.tomi.exception.MinimumProgramDirectorAccountException;
 import ca.projectTOMi.tomi.exception.TeamNotFoundException;
 import ca.projectTOMi.tomi.exception.UserAccountNotFoundException;
 import ca.projectTOMi.tomi.model.UserAccount;
-import ca.projectTOMi.tomi.service.TOMiEmailService;
 import ca.projectTOMi.tomi.service.UserAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,22 +34,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Handles HTTP requests for {@link UserAccount} objects in the ProjectTOMi system.
+ * Rest Controller that handles HTTP requests for {@link UserAccount} objects in the TOMi system.
  *
  * @author Karol Talbot
- * @version 1.2
+ * @version 1.1
  */
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class UserAccountController {
+	/**
+	 * Converts UserAccounts into HATEOAS Resources.
+	 */
 	private final UserAccountResourceAssembler assembler;
-	private final UserAccountService userAccountService;
-	private final Logger logger = LoggerFactory.getLogger("UserAccount Controller");
-	@Autowired
-	TOMiEmailService email;
 
+	/**
+	 * Provides services for maintaining UserAccounts.
+	 */
+	private final UserAccountService userAccountService;
+
+	/**
+	 * Provides access to the system logs for error reporting.
+	 */
+	private final Logger logger = LoggerFactory.getLogger("UserAccount Controller");
+
+	/**
+	 * Creates the UserAccountController.
+	 *
+	 * @param assembler
+	 * 	Converts UserAccounts into Resources
+	 * @param userAccountService
+	 * 	Provides services required for maintaining UserAccounts
+	 */
 	@Autowired
-	public UserAccountController(final UserAccountResourceAssembler assembler, final UserAccountService userAccountService) {
+	public UserAccountController(final UserAccountResourceAssembler assembler,
+	                             final UserAccountService userAccountService) {
 		this.assembler = assembler;
 		this.userAccountService = userAccountService;
 	}
@@ -61,6 +78,8 @@ public class UserAccountController {
 	 *
 	 * @param id
 	 * 	unique identifier for the UserAccount
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
 	 * @return Resource representing the UserAccount object.
 	 */
@@ -74,6 +93,9 @@ public class UserAccountController {
 
 	/**
 	 * Returns a collection of all active accounts the source of a GET request to /accounts.
+	 *
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
 	 * @return Collection of resources representing all active accounts
 	 */
@@ -94,6 +116,8 @@ public class UserAccountController {
 	 *
 	 * @param teamId
 	 * 	unique identifier for the team to be retrieved
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
 	 * @return Collection of resources representing all active accounts on a team
 	 */
@@ -116,8 +140,13 @@ public class UserAccountController {
 	 *
 	 * @param newUserAccount
 	 * 	a userAccount object with required information.
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
 	 * @return the newly created UserAccount
+	 *
+	 * @throws URISyntaxException
+	 * 	When the created URI is unable to be parsed
 	 */
 	@PostMapping ("/user_accounts")
 	public ResponseEntity<?> createUserAccount(@RequestBody final UserAccount newUserAccount,
@@ -135,6 +164,8 @@ public class UserAccountController {
 	 * 	the unique identifier for the UserAccount to be updated
 	 * @param newUserAccount
 	 * 	the updated userAccount
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
 	 * @return the updated userAccount
 	 */
@@ -169,6 +200,8 @@ public class UserAccountController {
 	 *
 	 * @param teamId
 	 * 	the unique identifier for the Team
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
 	 * @return the team lead's UserAccount
 	 */
@@ -181,6 +214,9 @@ public class UserAccountController {
 	/**
 	 * Gets {@link UserAccount}s that are active but not a part of {@link
 	 * ca.projectTOMi.tomi.model.Team}.
+	 *
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
 	 * @return List of UserAccounts that are active, but not a part of any team
 	 */
@@ -196,6 +232,15 @@ public class UserAccountController {
 			linkTo(methodOn(UserAccountController.class).getUnassignedUserAccounts(authMan)).withSelfRel());
 	}
 
+	/**
+	 * Informs the client that an exception has occurred. In order to keep the server inner workings
+	 * private a generic 400 bad request is used.
+	 *
+	 * @param e
+	 * 	The exception that had occurred
+	 *
+	 * @return A 400 Bad Request Response
+	 */
 	@ExceptionHandler ({UserAccountNotFoundException.class})
 	public ResponseEntity<?> handleExceptions(final Exception e) {
 		this.logger.warn("UserAccount Exception: " + e.getClass());
@@ -203,6 +248,15 @@ public class UserAccountController {
 		return ResponseEntity.status(400).build();
 	}
 
+	/**
+	 * Informs the client that performing the requested action would result in less than the minimum
+	 * amount of admin accounts or program director accounts.
+	 *
+	 * @param e
+	 * 	The exception that had occurred
+	 *
+	 * @return An unprocessableEntity Response
+	 */
 	@ExceptionHandler ({MinimumProgramDirectorAccountException.class, MinimumAdminAccountException.class, TeamNotFoundException.class})
 	public ResponseEntity<?> handleMinimumAccountExceptions(final Exception e) {
 		this.logger.warn("UserAccount Exception: " + e.getClass());
