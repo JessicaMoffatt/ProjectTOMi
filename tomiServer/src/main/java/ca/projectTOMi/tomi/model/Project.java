@@ -13,11 +13,8 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import org.hibernate.annotations.Formula;
 
@@ -26,7 +23,8 @@ import org.hibernate.annotations.Formula;
  * (dependent on it's active status.) Projects are worked on by specific {@link UserAccount} lead by
  * a project manager.
  *
- * @author Karol Talbot and Iliya Kiritchkov
+ * @author Karol Talbot
+ * @author Iliya Kiritchkov
  * @version 1.2
  */
 @Entity
@@ -72,6 +70,9 @@ public final class Project {
 	@Min (0)
 	private Long billableRate;
 
+	/**
+	 * The total hours available to this Project based on its budget and billable rate.
+	 */
 	@Formula ("budget / billable_rate")
 	private Double budgetedHours;
 
@@ -90,15 +91,26 @@ public final class Project {
 	@Column (nullable = false)
 	private boolean active;
 
-	@JsonProperty("projectManagerId")
-	public Long getProjectMangerId(){
-		if(this.projectManager == null){
+	/**
+	 * Converts this Project's project manager into an id to prevent circular references when
+	 * converted into JSON.
+	 *
+	 * @return Long representing the unique identifier for the project manager
+	 */
+	@JsonProperty ("projectManagerId")
+	public Long getProjectMangerId() {
+		if (this.projectManager == null) {
 			return -1L;
-		}else{
+		} else {
 			return this.projectManager.getId();
 		}
 	}
 
+	/**
+	 * Sets this Project's project manager using their id when converted from JSON.
+	 *
+	 * @param id Long representing the id of this Project's project manager
+	 */
 	@JsonProperty
 	public void setProjectManagerId(final Long id) {
 		UserAccount projectManager = null;

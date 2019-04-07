@@ -18,6 +18,7 @@ const httpOptions: any = {
 /**
  * TaskService is used to control the flow of data regarding tasks to/from the view.
  *
+ * @author James Andrade
  * @author Karol Talbot
  * @version 2.0
  */

@@ -17,6 +17,7 @@ import org.springframework.data.repository.query.Param;
  * @version 1
  */
 public interface TimesheetRepository extends JpaRepository<Timesheet, Long> {
+
 	/**
 	 * Get all {@link Timesheet}s that have the provided active status.
 	 *

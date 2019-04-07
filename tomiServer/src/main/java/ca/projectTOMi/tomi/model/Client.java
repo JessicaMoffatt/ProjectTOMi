@@ -11,7 +11,8 @@ import lombok.Data;
 /**
  * A model class for storing information related to the Client.
  *
- * @author Karol Talbot and Iliya Kiritchkov
+ * @author Karol Talbot
+ * @author Iliya Kiritchkov
  * @version 1.1
  */
 

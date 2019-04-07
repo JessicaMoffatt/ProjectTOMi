@@ -14,5 +14,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
+	/**
+	 * Gets all active expenses for the provided project.
+	 *
+	 * @param project
+	 * 	the project to get expenses for
+	 *
+	 * @return list of expenses for the provided project
+	 */
 	List<Expense> getAllByActiveTrueAndProjectOrderById(Project project);
 }

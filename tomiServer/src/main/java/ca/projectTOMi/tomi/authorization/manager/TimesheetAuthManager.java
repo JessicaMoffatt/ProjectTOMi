@@ -7,13 +7,36 @@ import ca.projectTOMi.tomi.authorization.policy.TimesheetAuthorizationPolicy;
 import ca.projectTOMi.tomi.model.UserAccount;
 
 /**
+ * Manages access to {@link ca.projectTOMi.tomi.model.Timesheet} and {@link
+ * ca.projectTOMi.tomi.model.Entry} object using the policy based access control list.
+ *
  * @author Karol Talbot
+ * @version 1
  */
 public final class TimesheetAuthManager implements AuthManager<TimesheetAuthorizationPolicy> {
+	/**
+	 * The Requesting user's UserAccount.
+	 */
 	private final UserAccount user;
+
+	/**
+	 * The owner of the requested Timesheet or Entry.
+	 */
 	private final UserAccount owner;
+	/**
+	 * Contains a list of the requesting users TimesheetAuthorizationPolicies.
+	 */
 	private HashSet<TimesheetAuthorizationPolicy> policies;
 
+
+	/**
+	 * Creates a new TimesheetAuthManager for the requesting user.
+	 *
+	 * @param user
+	 * 	The UserAccount of the requesting user.
+	 * @param owner
+	 * 	The UserAccount of the owner of the requested object
+	 */
 	public TimesheetAuthManager(final UserAccount user, final UserAccount owner) {
 		this.user = user;
 		this.owner = owner;

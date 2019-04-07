@@ -9,7 +9,7 @@ import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material";
 /**
  * ProjectSidebarComponent is used to house the list of projects to be managed.
  *
- * @author Jessica Moffatt
+ * @author James Andrade
  * @author Karol Talbot
  * @version 2.0
  */

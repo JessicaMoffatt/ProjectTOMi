@@ -23,6 +23,16 @@ import org.springframework.stereotype.Component;
 @Component
 public final class UserAccountResourceAssembler implements ResourceAssembler<UserAuthLinkWrapper<UserAccount>, Resource<UserAccount>> {
 
+	/**
+	 * Converts a UserAccount instance into a Resource instance with HATEOAS links based on the requesting
+	 * user's {@link ca.projectTOMi.tomi.authorization.policy.UserAuthorizationPolicy}s.
+	 *
+	 * @param userAuthLinkWrapper
+	 * 	a {@link ca.projectTOMi.tomi.model.UserAccount} object paired with the {@link
+	 * 	ca.projectTOMi.tomi.authorization.manager.AuthManager} created for the request
+	 *
+	 * @return Resource of the provided UserAccount
+	 */
 	@Override
 	public Resource<UserAccount> toResource(final UserAuthLinkWrapper<UserAccount> userAuthLinkWrapper) {
 		final UserAccount userAccount = userAuthLinkWrapper.getModelObject();

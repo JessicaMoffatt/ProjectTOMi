@@ -33,24 +33,52 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
- * Handles HTTP requests for {@link UnitType} objects in the ProjectTOMi system.
+ * Rest Controller that handles HTTP requests for {@link UnitType} objects in the TOMi system.
  *
- * @author Karol Talbot and Iliya Kiritchkov
- * @version 1.2
+ * @author Karol Talbot
+ * @author Iliya Kiritchkov
+ * @version 1.1
  */
 @RestController
 @CrossOrigin (origins = "http://localhost:4200")
 public class UnitTypeController {
+	/**
+	 * Converts UnitTypes into HATEOAS Resource objects.
+	 */
 	private final UnitTypeResourceAssembler assembler;
+
+	/**
+	 * Provides services for managing UnitTypes.
+	 */
 	private final UnitTypeService unitTypeService;
+
+	/**
+	 * Provides access to the logs for error reporting.
+	 */
 	private final Logger logger = LoggerFactory.getLogger("UnitType Controller");
 
+	/**
+	 * Creates the UnitTypeController.
+	 *
+	 * @param assembler
+	 * 	Converts UnitTypes into Resources
+	 * @param unitTypeService
+	 * 	Services for UnitTypes
+	 */
 	@Autowired
 	public UnitTypeController(final UnitTypeResourceAssembler assembler, final UnitTypeService unitTypeService) {
 		this.assembler = assembler;
 		this.unitTypeService = unitTypeService;
 	}
 
+	/**
+	 * Gets all the active UnitTypes.
+	 *
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
+	 *
+	 * @return List of Resources representing the active UnitTypes
+	 */
 	@GetMapping ("/unit_types")
 	public Resources<Resource<UnitType>> getActiveUnitTypes(@RequestAttribute final UserAuthManager authMan) {
 		final List<Resource<UnitType>> unitTypeList = this.unitTypeService.getActiveUnitTypes()
@@ -68,9 +96,11 @@ public class UnitTypeController {
 	 * to /unit_types/id.
 	 *
 	 * @param id
-	 * 	unique identifier for the UnitType.
+	 * 	unique identifier for the UnitType
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
-	 * @return Resource representing the UnitType object.
+	 * @return Resource representing the UnitType object
 	 */
 	@GetMapping ("unit_types/{id}")
 	public Resource<UnitType> getUnitType(@PathVariable final Long id,
@@ -84,12 +114,14 @@ public class UnitTypeController {
 	 * /unit_types.
 	 *
 	 * @param newUnitType
-	 * 	a UnitType object with required information.
+	 * 	a UnitType object with required information
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
-	 * @return response containing links to the newly created UnitType.
+	 * @return response containing links to the newly created UnitType
 	 *
 	 * @throws URISyntaxException
-	 * 	when the created URI is unable to be parsed.
+	 * 	when the created URI is unable to be parsed
 	 */
 	@PostMapping ("/unit_types")
 	public ResponseEntity<?> createUnitType(@RequestBody final UnitType newUnitType,
@@ -106,14 +138,16 @@ public class UnitTypeController {
 	 * in the PUT request to /unit_types/id.
 	 *
 	 * @param id
-	 * 	the unique identifier for the UnitType to update.
+	 * 	the unique identifier for the UnitType to update
 	 * @param newUnitType
-	 * 	the updated UnitType.
+	 * 	the updated UnitType
+	 * @param authMan
+	 * 	AuthorizationManager for the requesting user
 	 *
-	 * @return response containing a link to the updated UnitType.
+	 * @return response containing a link to the updated UnitType
 	 *
 	 * @throws URISyntaxException
-	 * 	when the created URI is unable to be parsed.
+	 * 	when the created URI is unable to be parsed
 	 */
 	@PutMapping ("/unit_types/{id}")
 	public ResponseEntity<?> updateUnitType(@PathVariable final Long id,
@@ -131,9 +165,9 @@ public class UnitTypeController {
 	 * active UnitTypes. Responds to the DELETE requests to /unit_types/id.
 	 *
 	 * @param id
-	 * 	the unique identifier for the task to be set inactive.
+	 * 	the unique identifier for the task to be set inactive
 	 *
-	 * @return a response without any content.
+	 * @return a response without any content
 	 */
 	@DeleteMapping ("/unit_types/{id}")
 	public ResponseEntity<?> setUnitTypeInactive(@PathVariable final Long id) {
@@ -143,6 +177,15 @@ public class UnitTypeController {
 		return ResponseEntity.noContent().build();
 	}
 
+	/**
+	 * Informs the client that an exception has occurred. In order to keep the server inner workings
+	 * private a generic 400 bad request is used.
+	 *
+	 * @param e
+	 * 	The exception that had occurred
+	 *
+	 * @return A 400 Bad Request Response
+	 */
 	@ExceptionHandler ({UnitTypeNotFoundException.class})
 	public ResponseEntity<?> handleExceptions(final Exception e) {
 		this.logger.warn("UnitType Exception: " + e.getClass());

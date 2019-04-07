@@ -1,5 +1,8 @@
 package ca.projectTOMi.tomi.assembler;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import ca.projectTOMi.tomi.authorization.wrapper.UserAuthLinkWrapper;
 import ca.projectTOMi.tomi.controller.UnitTypeController;
 import ca.projectTOMi.tomi.model.UnitType;
@@ -11,19 +14,30 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.stereotype.Component;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 /**
  * UnitTypeResourceAssembler is responsible for creating a standard resource for {@link UnitType}.
  *
- * @author Iliya Kiritchkov and Karol Talbot
+ * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1.2
  */
 @Component
 public final class UnitTypeResourceAssembler implements ResourceAssembler<UserAuthLinkWrapper<UnitType>, Resource<UnitType>> {
+	/**
+	 * Provides access to the logs for error reporting.
+	 */
 	private final Logger logger = LoggerFactory.getLogger("UnitType Assembler");
 
+	/**
+	 * Converts a UnitType instance into a Resource instance with HATEOAS links based on the requesting
+	 * user's {@link ca.projectTOMi.tomi.authorization.policy.UserAuthorizationPolicy}s.
+	 *
+	 * @param userAuthLinkWrapper
+	 * 	a {@link ca.projectTOMi.tomi.model.UnitType} object paired with the {@link
+	 * 	ca.projectTOMi.tomi.authorization.manager.AuthManager} created for the request
+	 *
+	 * @return Resource of the provided UnitType
+	 */
 	@Override
 	public Resource<UnitType> toResource(final UserAuthLinkWrapper<UnitType> userAuthLinkWrapper) {
 		final UnitType unitType = userAuthLinkWrapper.getModelObject();

@@ -7,6 +7,7 @@ import {ProjectService} from "../../../service/project.service";
  * ProjectEntriesSidebarComponent is used to house the list of projects whose entries are to be viewed.
  *
  * @author Jessica Moffatt
+ * @author Karol Talbot
  * @version 2.0
  */
 @Component({

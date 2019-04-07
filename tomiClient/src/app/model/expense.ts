@@ -11,9 +11,7 @@ export class Expense{
   amount: number;
   /** A description of this Expense.*/
   notes: string;
-  /** Represents whether or not this Expense is active.*/
-  active: boolean;
-  /** The unique identifier for the Project that the Expense is assigned to.*/
+  /** The unique identifier for the project that the expense is assigned to*/
   project_id: number;
   /** The list of links used for communicating with the back end.*/
   _links: [];
@@ -22,7 +20,6 @@ export class Expense{
     this.id = -1;
     this.amount = 0;
     this.notes = "";
-    this.active = true;
     this.project_id = -1;
     this._links = [];
   }

@@ -32,30 +32,78 @@ import org.springframework.stereotype.Service;
 @Service
 public final class UserAccountService {
 
-
+	/**
+	 * Repository responsible for accessing and persisting for UserAccount objects.
+	 */
 	private final UserAccountRepository repository;
+
+	/**
+	 * Services for maintaining business logic surrounding {@link Team}s.
+	 */
 	private final TeamService teamService;
+
+	/**
+	 * Services for maintaining business logic surrounding {@link Timesheet}s.
+	 */
 	private final EntryService entryService;
-	private final UserAuthService userAuthService;
-	private final TimesheetAuthService timesheetAuthService;
-	private final ProjectAuthService projectAuthService;
+
+	/**
+	 * Services for maintaining business logic surrounding {@link ca.projectTOMi.tomi.authorization.policy.UserAuthorizationPolicy}s.
+	 */
+	private final UserAuthorizationService userAuthorizationService;
+
+	/**
+	 * Services for maintaining business logic surrounding {@link ca.projectTOMi.tomi.authorization.policy.TimesheetAuthorizationPolicy}s.
+	 */
+	private final TimesheetAuthorizationService timesheetAuthorizationService;
+
+	/**
+	 * Services for maintaining business logic surrounding {@link ca.projectTOMi.tomi.authorization.policy.ProjectAuthorizationPolicy}s.
+	 */
+	private final ProjectAuthorizationService projectAuthorizationService;
+
+	/**
+	 * Services for sending email.
+	 */
 	private final TOMiEmailService emailService;
+
+	/**
+	 * Provides access to write into the system logs.
+	 */
 	private final Logger logger = LoggerFactory.getLogger("Email sent");
 
+	/**
+	 * Creates the UserAccountService.
+	 *
+	 * @param repository
+	 * 	Repository responsible for accessing and persisting for UserAccount objects
+	 * @param teamService
+	 * 	Services for Teams
+	 * @param entryService
+	 * 	Services for Entries and Timesheets
+	 * @param userAuthorizationService
+	 * 	Services for updating UserAuthorizationPolicy objects
+	 * @param timesheetAuthorizationService
+	 * 	Services for updating TimesheetAuthorizationPolicy objects
+	 * @param projectAuthorizationService
+	 * 	Services for updating ProjectAuthorizationPolicy objects
+	 * @param emailService
+	 * 	Services for sending email
+	 */
 	@Autowired
 	public UserAccountService(final UserAccountRepository repository,
 	                          final TeamService teamService,
 	                          final EntryService entryService,
-	                          final UserAuthService userAuthService,
-	                          final TimesheetAuthService timesheetAuthService,
-	                          final ProjectAuthService projectAuthService,
+	                          final UserAuthorizationService userAuthorizationService,
+	                          final TimesheetAuthorizationService timesheetAuthorizationService,
+	                          final ProjectAuthorizationService projectAuthorizationService,
 	                          final TOMiEmailService emailService) {
 		this.repository = repository;
 		this.teamService = teamService;
 		this.entryService = entryService;
-		this.userAuthService = userAuthService;
-		this.timesheetAuthService = timesheetAuthService;
-		this.projectAuthService = projectAuthService;
+		this.userAuthorizationService = userAuthorizationService;
+		this.timesheetAuthorizationService = timesheetAuthorizationService;
+		this.projectAuthorizationService = projectAuthorizationService;
 		this.emailService = emailService;
 	}
 
@@ -93,6 +141,12 @@ public final class UserAccountService {
 		return this.repository.getUserAccountsByTeamOrderById(this.teamService.getTeamById(teamId));
 	}
 
+	/**
+	 * Logically deletes the provided UserAccount.
+	 *
+	 * @param userAccount
+	 * 	The userAccount to be deleted
+	 */
 	public void deleteUserAccount(final UserAccount userAccount) {
 		final UserAccount temp = new UserAccount();
 		this.checkAdmins(userAccount, temp);
@@ -103,7 +157,7 @@ public final class UserAccountService {
 		userAccount.setAdmin(false);
 		userAccount.setActive(false);
 		final UserAccount deletedAccount = this.repository.save(userAccount);
-		this.userAuthService.updatedUserAccount(deletedAccount);
+		this.userAuthorizationService.updatedUserAccount(deletedAccount);
 	}
 
 	/**
@@ -123,10 +177,10 @@ public final class UserAccountService {
 			userAccount.setFirstName(newUserAccount.getFirstName());
 			userAccount.setLastName(newUserAccount.getLastName());
 			if (userAccount.getTeam() != null) {
-				this.timesheetAuthService.removeMemberFromTeam(userAccount, userAccount.getTeam());
+				this.timesheetAuthorizationService.removeMemberFromTeam(userAccount, userAccount.getTeam());
 			}
 			if (newUserAccount.getTeam() != null) {
-				this.timesheetAuthService.addMemberToTeam(newUserAccount, newUserAccount.getTeam());
+				this.timesheetAuthorizationService.addMemberToTeam(newUserAccount, newUserAccount.getTeam());
 			}
 			userAccount.setTeam(newUserAccount.getTeam());
 			userAccount.setEmail(newUserAccount.getEmail());
@@ -134,15 +188,15 @@ public final class UserAccountService {
 			userAccount.setActive(true);
 			userAccount.setAdmin(newUserAccount.isAdmin());
 			if (newUserAccount.isProgramDirector() && !userAccount.isProgramDirector()) {
-				this.projectAuthService.newProgramDirector(newUserAccount);
+				this.projectAuthorizationService.newProgramDirector(newUserAccount);
 			} else if (!newUserAccount.isProgramDirector() && userAccount.isProgramDirector()) {
-				this.projectAuthService.removeProgramDirector(newUserAccount);
+				this.projectAuthorizationService.removeProgramDirector(newUserAccount);
 			}
 			userAccount.setProgramDirector(newUserAccount.isProgramDirector());
 			return this.repository.save(userAccount);
 		}).orElseThrow(UserAccountNotFoundException::new);
 
-		this.userAuthService.updatedUserAccount(account);
+		this.userAuthorizationService.updatedUserAccount(account);
 		return account;
 	}
 
@@ -180,17 +234,17 @@ public final class UserAccountService {
 		userAccount.setActive(true);
 		final UserAccount newUserAccount = this.repository.save(userAccount);
 		if (newUserAccount.getTeam() != null) {
-			this.timesheetAuthService.addMemberToTeam(newUserAccount, newUserAccount.getTeam());
+			this.timesheetAuthorizationService.addMemberToTeam(newUserAccount, newUserAccount.getTeam());
 		}
 		final TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
 		final LocalDate date = LocalDate.now().with(fieldISO, 1);
 		if (!this.entryService.createTimesheet(date, newUserAccount)) {
 			throw new TimesheetNotFoundException();
 		}
-		this.userAuthService.updatedUserAccount(newUserAccount);
-		this.timesheetAuthService.setNewUserAccountPolicy(newUserAccount);
+		this.userAuthorizationService.updatedUserAccount(newUserAccount);
+		this.timesheetAuthorizationService.setNewUserAccountPolicy(newUserAccount);
 		if (newUserAccount.isProgramDirector()) {
-			this.projectAuthService.newProgramDirector(newUserAccount);
+			this.projectAuthorizationService.newProgramDirector(newUserAccount);
 		}
 		return newUserAccount;
 	}
@@ -235,6 +289,15 @@ public final class UserAccountService {
 		return this.entryService.getTimesheetsByUserAccount(userAccount);
 	}
 
+	/**
+	 * Checks the database to ensure there is always at least 1 admin UserAccount and prevents
+	 * removing admin status from the last admin account.
+	 *
+	 * @param oldUserAccount
+	 * 	UserAccount before modification
+	 * @param newUserAccount
+	 * 	UserAccount after modification
+	 */
 	private void checkAdmins(final UserAccount oldUserAccount, final UserAccount newUserAccount) {
 		final int adminCount = this.repository.getAdminCount();
 		if (adminCount < 2) {
@@ -244,6 +307,15 @@ public final class UserAccountService {
 		}
 	}
 
+	/**
+	 * Checks the database to ensure there is always at least 1 program director UserAccount and
+	 * prevents removing program director status from the last program director account.
+	 *
+	 * @param oldUserAccount
+	 * 	UserAccount before modification
+	 * @param newUserAccount
+	 * 	UserAccount after modification
+	 */
 	private void checkProgramDirectors(final UserAccount oldUserAccount, final UserAccount newUserAccount) {
 		final int directorCount = this.repository.getDirectorCount();
 		if (directorCount < 2) {
@@ -253,6 +325,9 @@ public final class UserAccountService {
 		}
 	}
 
+	/**
+	 * Sends an email Reminder to users that have not submitted their {@link Timesheet} for the week.
+	 */
 	@Scheduled (cron = "0 0 16 * * FRI")
 	public void emailReminder() {
 		final TemporalField fieldISO = WeekFields.of(Locale.FRANCE).dayOfWeek();
@@ -263,16 +338,20 @@ public final class UserAccountService {
 				final String email = timesheet.getUserAccount().getEmail();
 				final String subject = TOMiEmailService.SUBJECT;
 				final String body = String.format(TOMiEmailService.EMAIL_BODY, timesheet.getUserAccount().getFirstName(), date);
-				this.emailService.sendSimpleMessage(email, subject, body);
+				this.emailService.sendSimpleMessage(email, body);
 				this.logger.info("sent reminder to " + email);
 			}
 		}
 	}
 
+	/**
+	 * Checks to ensure the UserAccount associated with the application both exists and has the admin
+	 * status. This prevents the system from being unable to create new users.
+	 */
 	@EventListener (ContextRefreshedEvent.class)
 	public void createUserPrime() {
 		final String email = this.emailService.getEmailAddress();
-		Boolean userExists = false;
+		final boolean userExists;
 		final UserAccount primeAccount = this.repository.findByEmail(email).orElse(new UserAccount());
 		userExists = primeAccount.getEmail() != null;
 		primeAccount.setFirstName("Project");
@@ -287,6 +366,14 @@ public final class UserAccountService {
 		}
 	}
 
+	/**
+	 * Gets a list of UserAccounts working on a project.
+	 *
+	 * @param project
+	 * 	The Project to get a list of UserAccounts for
+	 *
+	 * @return List of UserAccounts working on a Project
+	 */
 	List<UserAccount> getUserAccountsByProjects(final Project project) {
 		return this.repository.getAllByActiveTrueAndProjectsOrderById(project);
 	}

@@ -6,5 +6,5 @@ package ca.projectTOMi.tomi.exception;
  * @author Karol Talbot
  * @version 1
  */
-public class InvalidIDPrefix extends RuntimeException {
+public class InvalidIDPrefixException extends RuntimeException {
 }

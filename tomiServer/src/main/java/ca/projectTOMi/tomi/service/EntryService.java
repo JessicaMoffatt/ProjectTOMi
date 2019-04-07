@@ -18,21 +18,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Provides services for {@link Entry} objects.
+ * Provides services for {@link Entry}  and {@link Timesheet} objects.
  *
- * @author Iliya Kiritchkov and Karol Talbot
+ * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1.1
  */
 @Service
 public class EntryService {
+	/**
+	 * Repository responsible for accessing and persisting for Entry objects.
+	 */
 	private final EntryRepository entryRepository;
+
+	/**
+	 * Repository responsible for accessing and persisting for Timesheet objects.
+	 */
 	private final TimesheetRepository timesheetRepository;
 
 	/**
 	 * Constructor for the EntryService component.
 	 *
 	 * @param entryRepository
-	 * 	Repository responsible for persisting {@link Entry} instances.
+	 * 	Repository responsible for persisting {@link Entry} instances
+	 * @param timesheetRepository
+	 * 	Repository responsible for persisting {@link Timesheet} instances
 	 */
 	public EntryService(final EntryRepository entryRepository, final TimesheetRepository timesheetRepository) {
 		this.entryRepository = entryRepository;

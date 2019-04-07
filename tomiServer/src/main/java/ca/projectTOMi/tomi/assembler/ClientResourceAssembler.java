@@ -1,10 +1,9 @@
 package ca.projectTOMi.tomi.assembler;
 
-import java.net.URISyntaxException;
-
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+import java.net.URISyntaxException;
 import ca.projectTOMi.tomi.controller.ClientController;
 import ca.projectTOMi.tomi.model.Client;
 import ca.projectTOMi.tomi.authorization.wrapper.UserAuthLinkWrapper;
@@ -24,8 +23,21 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public final class ClientResourceAssembler implements ResourceAssembler<UserAuthLinkWrapper<Client>, Resource<Client>> {
+	/**
+	 * Provides access to the logs for error reporting.
+	 */
 	private final Logger logger = LoggerFactory.getLogger("Client Assembler");
 
+	/**
+	 * Converts a Client instance into a Resource instance with HATEOAS links based on the requesting
+	 * user's {@link ca.projectTOMi.tomi.authorization.policy.UserAuthorizationPolicy}s.
+	 *
+	 * @param userAuthLinkWrapper
+	 * 	a {@link ca.projectTOMi.tomi.model.Client} object paired with the {@link
+	 * 	ca.projectTOMi.tomi.authorization.manager.AuthManager} created for the request
+	 *
+	 * @return Resource of the provided Client
+	 */
 	@Override
 	public Resource<Client> toResource(final UserAuthLinkWrapper<Client> userAuthLinkWrapper) {
 		final Client client = userAuthLinkWrapper.getModelObject();

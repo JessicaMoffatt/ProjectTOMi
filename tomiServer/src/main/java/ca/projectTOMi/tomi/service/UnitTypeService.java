@@ -4,17 +4,20 @@ import ca.projectTOMi.tomi.exception.UnitTypeNotFoundException;
 import ca.projectTOMi.tomi.model.UnitType;
 import ca.projectTOMi.tomi.persistence.UnitTypeRepository;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Provides services for {@link UnitType} objects.
  *
- * @author Iliya Kiritchkov and Karol Talbot
+ * @author Iliya Kiritchkov
+ * @author Karol Talbot
  * @version 1
  */
 @Service
 public final class UnitTypeService {
+	/**
+	 * Repository for {@link UnitType}
+	 */
 	private final UnitTypeRepository repository;
 
 	/**
@@ -69,12 +72,12 @@ public final class UnitTypeService {
 	}
 
 	/**
-	 * Persists the provided @{Link UnitType}.
+	 * Creates the provided @{Link UnitType}.
 	 *
 	 * @param unitType
-	 * 	UnitType to be persisted.
+	 * 	UnitType to be created.
 	 *
-	 * @return the UnitType that was persisted.
+	 * @return the UnitType that was created.
 	 */
 	public UnitType createUnitType(final UnitType unitType) {
 		UnitType unitTypeToSave = this.repository.findByName(unitType.getName());
@@ -86,8 +89,14 @@ public final class UnitTypeService {
 		return this.repository.save(unitTypeToSave);
 	}
 
-	public UnitType deleteUnitType(final UnitType unitType) {
+	/**
+	 * Deletes the provided @{Link UnitType}.
+	 *
+	 * @param unitType
+	 * 	UnitType to be deleted.
+	 */
+	public void deleteUnitType(final UnitType unitType) {
 		unitType.setActive(false);
-		return this.repository.save(unitType);
+		this.repository.save(unitType);
 	}
 }

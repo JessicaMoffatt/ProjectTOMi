@@ -2,6 +2,7 @@
  * A UserAccount represents a user of the application.
  *
  * @author Jessica Moffatt
+ * @author Karol Talbot
  * @version 1.1
  */
 export class UserAccount{

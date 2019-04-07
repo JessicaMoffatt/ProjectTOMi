@@ -14,6 +14,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public final class ClientService {
+
+	/**
+	 * Repository responsible for accessing and persisting for Client objects.
+	 */
 	private final ClientRepository clientRepository;
 
 	/**
