@@ -2,14 +2,13 @@ import {Component, HostListener, Inject, OnInit, ViewChild} from '@angular/core'
 import {Project} from "../../../model/project";
 import {ApprovePanelComponent} from "../../panel/approve-panel/approve-panel.component";
 import {ProjectService} from "../../../service/project.service";
-import {BehaviorSubject} from "rxjs";
-import {Entry} from "../../../model/entry";
+
 /**
- * ProjectEntriesSidebarComponent is used to display the list of projects for a user to interact with when viewing entries for approval.
+ * ProjectEntriesSidebarComponent is used to house the list of projects whose entries are to be viewed.
  *
  * @author Jessica Moffatt
  * @author Karol Talbot
- * @version 1.0
+ * @version 2.0
  */
 @Component({
   selector: 'app-project-entries-sidebar',
@@ -17,8 +16,16 @@ import {Entry} from "../../../model/entry";
   styleUrls: ['./project-entries-sidebar.component.scss']
 })
 export class ProjectEntriesSidebarComponent implements OnInit {
+
+  /**
+   * The button group for displaying all the projects.
+   */
   @ViewChild("btn_group") btn_group;
 
+  /**
+   * Listens for the Ctrl+f key's keydown event; Moves focus to the search bar on that event.
+   * @param e The event captured.
+   */
   @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
     e.preventDefault();
     document.getElementById("project_entry_search").focus();
@@ -31,14 +38,26 @@ export class ProjectEntriesSidebarComponent implements OnInit {
     this.projectService.refreshProjectList();
   }
 
+  /**
+   * Sets the selected Project.
+   * @param project The Project to set selected to.
+   */
   selectProject(project: Project): void {
     this.parent.setSelectedProject(project);
   }
 
+  /**
+   * Unselects the project.
+   * @param projectId
+   */
   public unselect(projectId:string){
     this.btn_group.selected.checked = false;
   }
 
+  /**
+   * Gets the Entries for this Project.
+   * @param project The Project to get Entries for.
+   */
   public getProjectEntries(project:Project){
     this.parent.setSelectedProject(project);
   }

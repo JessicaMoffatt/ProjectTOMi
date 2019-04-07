@@ -1,6 +1,6 @@
 /**
  * An entry is one weeks' worth of work on a specific component.
- * Entries are part of timesheets and are used to determine billable and non billable hours,
+ * Entries are part of Timesheets and are used to determine billable and non billable hours,
  * as well as the productivity of users.
  *
  * @author Jessica Moffatt
@@ -13,19 +13,19 @@ import {UnitType} from "./unitType";
 import {Timesheet} from "./timesheet";
 
 export class Entry{
-  /** The unique identifier for this entry.*/
+  /** The unique identifier for this Entry.*/
   id: number;
-  /** The project this entry is for.*/
+  /** The Project this Entry is for.*/
   project: Project;
-  /** The taskSubject this entry is for.*/
+  /** The Task this Entry is for.*/
   task: Task;
-  /** The unit type corresponding to the component worked on for this entry.*/
+  /** The UnitTYpe corresponding to the component worked on for this Entry.*/
   unitType: UnitType;
-  /** The timesheet associated with the entry.*/
+  /** The Timesheet associated with the Entry.*/
   timesheet: Timesheet;
   /** Represents whether or not the entry has been approved by the project manager.*/
   status: Status;
-  /** The component worked on for this entry.*/
+  /** The component worked on for this Entry.*/
   component: string;
   /** The hours worked on the Monday of the week for this Entry.*/
   mondayHours: number;
@@ -43,7 +43,7 @@ export class Entry{
   sundayHours: number;
   /** The total hours worked for the week for this Entry..*/
   totalHours: number;
-  /** The quantity of the unit type's unit that was produced.*/
+  /** The quantity of the UnitType's unit that was produced.*/
   quantity: number;
   /** The list of links used for communicating with the back end.*/
   _links: [];

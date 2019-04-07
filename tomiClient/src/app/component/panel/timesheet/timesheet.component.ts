@@ -10,14 +10,11 @@ import {
 import {Entry} from "../../../model/entry";
 import {TimesheetService} from "../../../service/timesheet.service";
 import {ProjectService} from "../../../service/project.service";
-import {Project} from "../../../model/project";
 import {EntryService} from "../../../service/entry.service";
 import {Timesheet} from "../../../model/timesheet";
 import {EntryComponent} from "../entry/entry.component";
 import {Status} from "../../../model/status";
 import {Router} from "@angular/router";
-import {Task} from "../../../model/task";
-import {UnitType} from "../../../model/unitType";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
 import {SignInService} from "../../../service/sign-in.service";
 import {ErrorService} from "../../../service/error.service";
@@ -32,7 +29,7 @@ export interface DialogData {
 }
 
 /**
- * TimesheetComponent is used to facilitate communication between the view and front end services.
+ * TimesheetComponent is used to facilitate communication between the timesheet view and front end services.
  *
  * @author Karol Talbot
  * @author Jessica Moffatt
@@ -45,28 +42,33 @@ export interface DialogData {
 })
 export class TimesheetComponent implements OnInit, AfterViewInit {
 
-  /** The ID of the user.*/
+  /** The ID of the user of this application.*/
   private userId = this.signInService.userAccount.id;
 
-  /** List of all entries for current timesheet.*/
+  /** List of all Entries for current Timesheet.*/
   entries: Entry[] = [];
-
 
   /**
    * Holds the total number of hours worked this week.
    */
   tally: number = 0;
 
-  /** A Status; used to compare against the status of the timesheet.*/
+  /** A Status; used to compare against the status of the Timesheet.*/
   sts = Status;
 
   /** A view container ref for the template that will be used to house the entry component.*/
   @ViewChild('entryHolder', {read: ViewContainerRef}) entry_container: ViewContainerRef;
+
+  /** The entry components references within this timesheet component. */
   @ViewChildren(EntryComponent) entryComponentsRef: QueryList<'entryComponentsRef'>;
 
   /** The list of entry components that are children of the timesheet.*/
   entryComponents: EntryComponent[] = [];
 
+  /**
+   * Listens for the Enter key's keyup event; Performs a save on that event.
+   * @param e The event captured.
+   */
   @HostListener('window:keyup.Enter', ['$event']) enter(e: KeyboardEvent) {
     this.savePromise().then();
   }
@@ -78,9 +80,6 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
   }
 
-  /**
-   * On initialization, calls getEntries to populate the entries variable as well as the projects variable.
-   */
   ngOnInit() {
     if (this.timesheetService.timesheets.length === 0) {
       this.firstLoad();
@@ -107,6 +106,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     this.getEntryComponents();
   }
 
+  /**
+   * Populates the Timesheets for the user as well as getting the list of tasks and unit types.
+   */
   firstLoad() {
     this.populateTimesheets().then((value) => {
       let timesheet = value as Timesheet;
@@ -117,7 +119,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     });
   }
 
-  /** Gets all the entry components currently on the timesheet.*/
+  /** Gets all the entry components currently on the Timesheet.*/
   getEntryComponents() {
     this.entryComponentsRef.changes.subscribe(c => {
       c.toArray().forEach(item => {
@@ -126,7 +128,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     });
   }
 
-  /** Populates the list of timesheets.*/
+  /** Populates the list of Timesheets.*/
   async populateTimesheets() {
     let promise = new Promise((resolve) => {
       resolve(this.timesheetService.populateTimesheets(this.userId))
@@ -217,6 +219,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
   /**
    * Submits the current timesheet.
+   * Checks for validity of all entries for this timesheet before passing off the request to save to the
+   * entry service.
    */
   async submitTimesheet() {
      await this.savePromise().then(async()=>{
@@ -243,7 +247,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Waits for reloadAfterSerCurrentStatus to compelte.
+   * Waits for reloadAfterSetCurrentStatus to compelete.
    */
   async reloadPromise() {
     let promise = new Promise((resolve) => {
@@ -263,6 +267,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     );
   }
 
+  /**
+   * Navigates to the timesheets page.
+   */
   navigateToTimesheet() {
     this.router.navigateByUrl('/', {skipLocationChange: true}).finally(() =>
       this.router.navigate(["/my_timesheets"]));
@@ -279,6 +286,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     return await promise;
   }
 
+  /**
+   * Waits for save to complete.
+   */
   async savePromise() {
     let promise = new Promise((resolve, reject) => {
       resolve(this.save());
@@ -316,7 +326,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Updates the tally for the total worked hours for the timesheet.
+   * Updates the tally for the total worked hours for the Timesheet.
    */
   public updateTally(): void {
     let hours: number = 0;
@@ -341,6 +351,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     return null;
   }
 
+  /**
+   * Changes the Timesheet to display to the sequentially previous timesheet.
+   */
   displayPrevTimesheet() {
     let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
 
@@ -353,6 +366,9 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Changes the Timesheet to display to the sequentially next timesheet.
+   */
   displayNextTimesheet() {
     let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
 
@@ -365,6 +381,10 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Changes the Timesheet to display to the Timesheet at the specified index within timesheets.
+   * @param index The index of the Timesheet to display.
+   */
   displaySpecifiedTimesheet(index: number) {
     let currentIndex = this.timesheetService.getCurrentTimesheetIndex();
     let newIndex: number = currentIndex + index;
@@ -378,7 +398,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   }
 }
 
-/* Delete Modal */
+// Delete Modal
 
 /**
  * @author Jessica Moffatt
@@ -391,12 +411,13 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 })
 
 /**
- * DeleteEntryModalComponent is used to get confirmation from the user regarding their desire to delete an entry.
+ * DeleteEntryModalComponent is used to get confirmation from the user regarding their desire to delete an Entry.
  *
  * @author Jessica Moffatt
  * @version 1.0
  */
 export class DeleteEntryModalComponent implements OnInit {
+
   constructor(private entryService: EntryService, public dialogRef: MatDialogRef<DeleteEntryModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData) {
   }
@@ -405,7 +426,7 @@ export class DeleteEntryModalComponent implements OnInit {
 
   }
 
-  /** Facilitates the deletion of entry, as well as closes the modal.*/
+  /** Facilitates the deletion of the Entry, as well as closes the modal.*/
   confirmDelete(): void {
     this.deleteEntry();
     this.dialogRef.close();
@@ -444,7 +465,7 @@ export class DeleteEntryModalComponent implements OnInit {
 })
 
 /**
- * SubmitTimesheetModalComponent is used to get confirmation from the user regarding their desire to submit a timesheet.
+ * SubmitTimesheetModalComponent is used to get confirmation from the user regarding their desire to submit a Timesheet.
  */
 export class SubmitTimesheetModalComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DeleteEntryModalComponent>,
@@ -465,7 +486,6 @@ export class SubmitTimesheetModalComponent implements OnInit {
   cancel(): void {
     this.dialogRef.close();
   }
-
 
   /** Facilitates submission of the current timesheet.**/
   submitTimesheet() {

@@ -1,4 +1,4 @@
-import {Component, OnInit, NgZone, NgModule, ElementRef, Inject} from '@angular/core';
+import {Component, OnInit, NgZone, NgModule, ElementRef, Inject, AfterViewInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {DOCUMENT} from "@angular/common";
 import {SignInService} from "../../../service/sign-in.service";
@@ -8,6 +8,7 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {UserAccount} from "../../../model/userAccount";
 
 /**
+ * SignInComponent is used to facilitate communication between the view and Google's OAuth2 sign in services.
  * @author Karol Talbot
  * @version 1.0
  */
@@ -25,7 +26,7 @@ const httpOptions = {
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent implements OnInit, AfterViewInit {
   private large: boolean;
 
   constructor(@Inject(DOCUMENT) private document,
@@ -53,6 +54,9 @@ export class SignInComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * After the view is loaded, adds the Google API script to the meta data.
+   */
   ngAfterViewInit() {
     this.meta.addTag({
       name: 'google-signin-client_id',
@@ -64,6 +68,11 @@ export class SignInComponent implements OnInit {
     this.elementRef.nativeElement.appendChild(s);
   }
 
+  /**
+   * Method called by the Google API on completion of sign in.
+   * Navigates to the timesheets html page on successful log in.
+   * @param googleUser The user signing in.
+   */
   async onSignIn(googleUser) {
     this.signIn.setUser(googleUser);
     let id_token: string;
@@ -76,7 +85,6 @@ export class SignInComponent implements OnInit {
           this.router.navigate(['/my_timesheets']);
           this.signIn.setLoggedIn();
         });
-
       }
       return response;
     }).catch(() => {
@@ -85,10 +93,17 @@ export class SignInComponent implements OnInit {
     });
   }
 
+  /**
+   * Sets userAccount within the SignInService to the signed in user.
+   * @param userAccount The UserAccount to set userAccount to.
+   */
   async setUser(userAccount){
     return this.signIn.userAccount = userAccount as UserAccount;
   }
 
+  /**
+   * Returns the value of large.
+   */
   public isLarge():boolean{
     return this.large;
   }

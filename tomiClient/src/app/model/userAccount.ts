@@ -1,4 +1,3 @@
-//TODO add projects properly
 /**
  * A UserAccount represents a user of the application.
  *
@@ -7,21 +6,21 @@
  * @version 1.1
  */
 export class UserAccount{
-  /** The unique identifier for the user account.*/
+  /** The unique identifier for the UserAccount.*/
   id:number;
-  /** The first name of this user account.*/
+  /** The first name of this UserAccount.*/
   firstName:string;
-  /** The last name of this user account.*/
+  /** The last name of this UserAccount.*/
   lastName:string;
-  /** The email for this user account.*/
+  /** The email for this UserAccount.*/
   email:string;
-  /** The ID for the team this user account is a part of.*/
+  /** The ID for the team this UserAccount is a part of.*/
   teamId:number;
-  /** The admin status for this user account.*/
+  /** The admin status for this UserAccount.*/
   admin:boolean;
-  /** The program director status for this user account.*/
+  /** The program director status for this UserAccount.*/
   programDirector:boolean;
-  /** The list of all projects associated with this user account.*/
+  /** The list of all projects associated with this UserAccount.*/
   projects:[];
   /** The list of linked used to communicate with the backennd.*/
   _links: [];

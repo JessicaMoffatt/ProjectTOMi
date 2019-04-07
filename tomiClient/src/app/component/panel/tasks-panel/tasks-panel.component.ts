@@ -1,17 +1,14 @@
 import {Component, HostListener, Pipe, PipeTransform} from '@angular/core';
-import {Input} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {ViewChild} from "@angular/core";
 import {ElementRef} from "@angular/core";
 import {TaskService} from '../../../service/task.service';
 import {Task} from '../../../model/task';
-import {Observable} from 'rxjs';
 import {MatDialog} from '@angular/material';
 import {AddTaskComponent} from '../../modal/add-task/add-task.component';
-import {UserAccount} from "../../../model/userAccount";
 
 /**
- *
+ * TasksPanelComponent is used to facilitate communication between the view and front end services.
  *
  * @author Karol Talbot
  * @version 2.0
@@ -23,12 +20,20 @@ import {UserAccount} from "../../../model/userAccount";
 })
 export class TasksPanelComponent implements OnInit{
 
+  /**
+   * The task being viewed.
+   */
   private task: Task;
 
-  @Input() taskSelectedEvent: Observable<Task>;
-
+  /**
+   *  The edit task component within this tasks panel component.
+   */
   @ViewChild('editTaskComponent') editTaskComponent : ElementRef;
 
+  /**
+   * Listens for the Ctrl+f key's keydown event; Moves focus to the search bar on that event.
+   * @param e The event captured.
+   */
   @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
     e.preventDefault();
     document.getElementById("task_search").focus();
@@ -49,8 +54,8 @@ export class TasksPanelComponent implements OnInit{
   }
 
   /**
-   *
-   * @param Task
+   * Passes on the request to save a Task to the TaskService.
+   * @param task Task to be saved.
    */
   save(task: Task) {
     this.taskService.save(task);
@@ -67,6 +72,9 @@ export class TasksPanelComponent implements OnInit{
   
 }
 
+/**
+ * Pipe used to filter Tasks by their name.
+ */
 @Pipe({name: 'FilterTaskByName'})
 export class FilterTaskByName implements PipeTransform {
   transform(taskList: Array<Task>, nameFilter: string): any {

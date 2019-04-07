@@ -8,11 +8,10 @@ import {Project} from "../model/project";
 import {ErrorService} from "./error.service";
 
 /**
- * Expense service provides services related to Expenses
+ * ExpenseService is used to control the flow of data regarding user accounts to/from the view.
  * @author James Andrade
  * @version 1.0
  */
-
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
@@ -20,18 +19,21 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-
 export class ExpenseService {
 
-  /** used to pass list to project related components */
+  /** The list of all Expenses for the Project. */
   expenses: BehaviorSubject<Array<Expense>> = new BehaviorSubject<Array<Expense>>([]);
 
-  /** used to track the expense being selectedExpense and edited in the components */
+  /** The selected Expense. */
   selectedExpense: Expense;
 
   constructor(private http: HttpClient, private errorService: ErrorService) {
   }
 
+  /**
+   * Gets the list of Expenses for the selected Project.
+   * @param selectedProject The selected Project to get the expenses for.
+   */
   refreshExpenses(selectedProject: Project) {
     if (selectedProject.id == null) {
       return [];
@@ -43,7 +45,7 @@ export class ExpenseService {
   }
 
   /**
-   * Gets a project with the specified ID.
+   * Sends a GET message to the server to retrieve the Expenses for the specified Project.
    * @param selectedProject The ID of the project to get expenses for.
    */
   private getExpensesByProjectId(selectedProject: Project) {
@@ -58,6 +60,12 @@ export class ExpenseService {
       }));
   }
 
+  /**
+   * Saves the specified Project. If the Project is new (id = -1), an HTTP POST is performed,
+   * else an HTTP PUT is performed to update the existing Project.
+   *
+   * @param selectedProject The Project to be created/updated.
+   */
   save(selectedProject: Project) {
     if (this.selectedExpense.id === -1) {
       this.http.post<Expense>(`${projectsUrl}/${selectedProject.id}/expenses`, JSON.stringify(this.selectedExpense), httpOptions).toPromise()
@@ -79,11 +87,15 @@ export class ExpenseService {
     }
   }
 
+  /**
+   * Logically deletes the Expense (sets the active status to false).
+   * @param expense The Expense to delete.
+   * @param project The Project associated with the Expense to be deleted.
+   */
   delete(expense: Expense, project: Project) {
     const url = `${projectsUrl}/${project.id}/expenses/${expense.id}`;
     this.http.delete<Expense>(url).toPromise()
       .then(() => this.refreshExpenses(project))
       .catch(() => this.errorService.displayError());
   }
-
 }

@@ -29,7 +29,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class TimesheetService {
-  /** The list of all timehseets for this user.*/
+  /** The list of all timesheets for this user.*/
   timesheets: Timesheet[] = [];
 
   /** List of all projects this user is allowed to access.*/
@@ -37,30 +37,32 @@ export class TimesheetService {
 
   /** List of all tasks.*/
   tasks: BehaviorSubject<Array<Task>> = new BehaviorSubject<Array<Task>>([]);
+
   /** List of all unit types.*/
   unitTypes: BehaviorSubject<Array<UnitType>> = new BehaviorSubject<Array<UnitType>>([]);
 
-  /** The position in timesheets for the current timesheet.*/
+  /** The position in timesheets for the current Timesheet.*/
   private currentTimesheetIndex = 0;
 
-  /** The starting date for the current timesheet.*/
+  /** The starting date for the current Timesheet.*/
   public currentDate;
 
-  /** The status of the current timesheet.*/
+  /** The status of the current Timesheet.*/
   public currentStatus = "";
 
   /**
-   * The earliest date that can be selectedProject.
+   * The earliest date that can be selected.
    */
   minDate: Date;
 
+/** Represents whether timesheets should be repopulated on init or not. */
   private repopulateTimesheets: boolean = false;
 
   constructor(private http: HttpClient, public taskService: TaskService, public unitTypeService: UnitTypeService,
               private errorService: ErrorService) {
   }
 
-  /** Populates tasks.*/
+  /** Populates tasks with list of Tasks.*/
   async populateTasks() {
     let promise = new Promise((resolve) => {
       resolve(this.taskService.initializeTasks())
@@ -71,7 +73,7 @@ export class TimesheetService {
     return await promise;
   }
 
-  /** Populates unitTypes.*/
+  /** Populates unitTypes with list of UnitTypes.*/
   async populateUnitTypes() {
     let promise = new Promise((resolve) => {
       resolve(this.unitTypeService.initializeUnitTypes())
@@ -119,8 +121,8 @@ export class TimesheetService {
   }
 
   /**
-   * Gets all entries for the specified timesheet.
-   * @param timesheet the timesheet to get entries for
+   * Sends a GET message to the server to retrieve all Entries for the specified Timesheet.
+   * @param id The ID of the Timesheet.
    */
   getEntries(timesheet: Timesheet): Observable<Array<Entry>> {
     let url = timesheet._links["getEntries"];
@@ -138,7 +140,7 @@ export class TimesheetService {
   }
 
   /**
-   * Gets the current timesheet.
+   * Gets the current Timesheet.
    */
   async getCurrentTimesheet(): Promise<Timesheet> {
     if (this.currentTimesheetIndex != -1) {
@@ -147,7 +149,7 @@ export class TimesheetService {
   }
 
   /**
-   * Gets all timesheets for the specified user.
+   * Sends a GET message to the server to retrieve all Timesheets for the specified user.
    * @param userId The ID of the user.
    */
   async getAllTimesheets(userId: number) {
@@ -163,8 +165,8 @@ export class TimesheetService {
   }
 
   /**
-   * Populates timesheets for specified user.
-   * @param userId The ID of the user.
+   * Populates timesheets for the specified user.
+   * @param userId The ID of the user the get timesheets for.
    */
   async populateTimesheets(userId: number) {
     return await this.getAllTimesheets(userId).then((response) => {
@@ -208,20 +210,26 @@ export class TimesheetService {
     }
   }
 
+  /**
+   * Updates the Timesheet at the current timesheet index to the specified Timesheet.
+   * @param timesheet The Timesheet to replace the Timesheet located at the current timesheet index with.
+   */
   async updateTimesheet(timesheet: Timesheet) {
     return this.timesheets[this.currentTimesheetIndex] = timesheet;
   }
 
+  /** Sets repopulateTimesheets to the specified value.*/
   setRepopulateTimesheets(reset: boolean) {
     this.repopulateTimesheets = reset;
   }
 
+  /** Returns the value of repopulateTimesheets.*/
   getRepopulateTimesheets(): boolean {
     return this.repopulateTimesheets;
   }
 
   /**
-   * Submits the current timesheet.
+   * Submits the current Timesheet.
    */
   async submit(): Promise<Timesheet> {
     let tempSheet: Timesheet = null;
@@ -239,10 +247,10 @@ export class TimesheetService {
   }
 
   /**
-   * Does a PUT for the specified timesheet.
+   * Does a PUT request for the specified Timesheet.
    * @param data The data to be sent as the body of the request.
-   * @param tempSheet The timesheet to set the response to, as well as return.
-   * @param url The PUT url for the timesheet..
+   * @param tempSheet The Timesheet to set the response to, as well as return.
+   * @param url The PUT url for the Timesheet.
    */
   async putTimesheetRequest(data: any, tempSheet: Timesheet, url: string[]): Promise<Timesheet> {
     await this.http.put<Timesheet>(url["href"], data, httpOptions).toPromise()
@@ -268,8 +276,8 @@ export class TimesheetService {
   }
 
   /**
-   * Gets the specified timesheet.
-   * @param timesheetId The ID of the timesheet to get.
+   * Sends a GET message to the server to retrieve the Timesheets by their ID.
+   * @param timesheetId The ID of the Timesheet to get.
    */
   getTimesheetById(timesheetId: number): Observable<Timesheet> {
     return this.http.get(`${timesheetUrl}/${timesheetId}`)

@@ -6,7 +6,6 @@ import { HttpClient } from "@angular/common/http";
 })
 
 
-
 export class ApiService {
 
   API_URL = 'http://localhost:8080';

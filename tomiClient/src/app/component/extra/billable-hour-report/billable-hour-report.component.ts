@@ -7,12 +7,21 @@ import {DatePipe} from "@angular/common";
 import {MatSnackBar} from "@angular/material";
 import {ErrorService} from "../../../service/error.service";
 
+/**
+ *  BillableHourReportComponent is used to facilitate communication between the billable hour report view
+ *  and front end services.
+ *
+ *  @author Jessica Moffatt
+ */
 @Component({
   selector: 'app-billable-hour-report',
   templateUrl: './billable-hour-report.component.html',
   styleUrls: ['./billable-hour-report.component.scss']
 })
 export class BillableHourReportComponent implements OnInit {
+  /**
+   * The columns to be displayed for the billable hour report.
+   */
   displayedColumns: string[] = ['name', 'billableHours','nonBillableHours','billable%'];
 
   constructor(public projectService:ProjectService, private datePipe: DatePipe, public snackBar:MatSnackBar,
@@ -27,10 +36,17 @@ export class BillableHourReportComponent implements OnInit {
     });
   }
 
+  /**
+   * Generic error handling method. Throws the caught error.
+   * @param error The caught HttpErrorResponse error.
+   */
   private handleError(error: HttpErrorResponse) {
     return throwError(error.message);
   }
 
+  /**
+   * Retrieves the billable hour report for download in xls format.
+   */
   downloadBillableHourReport(){
     this.projectService.downloadBillableReport().subscribe(
       data => {

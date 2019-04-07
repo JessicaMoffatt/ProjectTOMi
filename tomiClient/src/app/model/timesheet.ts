@@ -3,21 +3,21 @@ import {Status} from "./status";
 
 
 /**
- * Timesheet represents a single timesheet for a user for a specific week.  Entries (taskSubject ,client, hours)
- * on the timesheet are attached by referencing it.
+ * Timesheet represents a single Timesheet for a user for a specific week.  Entries (taskSubject ,client, hours)
+ * on the Timesheet are attached by referencing it.
  *
  * @author Jessica Moffatt
  * @version 1.0
  */
 export class Timesheet{
 
-  /** The unique ID of the timesheet*/
+  /** The unique ID of this Timesheet*/
   id: number;
-  /** The userAccount of the user that the timesheet belongs to.*/
+  /** The UserAccount of the user that this Timesheet belongs to.*/
   userAccount: UserAccount;
-  /** The submission status of the timesheet, one of: logging, submitted, approved, rejected.*/
+  /** The submission status of the Timesheet, one of: logging, submitted, approved, rejected.*/
   status: Status;
-  /** The day of the week that the timesheet begins on.*/
+  /** The day of the week that the Timesheet begins on.*/
   startDate: string;
   /** The list of links used for communicating with the back end.*/
   _links: [];

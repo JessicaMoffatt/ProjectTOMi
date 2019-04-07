@@ -14,7 +14,7 @@ const httpOptions = {
 };
 
 /**
- * UnitTypeService is used to provide methods for the Manage UnitTypes page.
+ * UnitTypeService is used to control the flow of data regarding unit types to/from the view.
  *
  * @author Iliya Kiritchkov
  * @version 1.1
@@ -24,29 +24,25 @@ const httpOptions = {
 })
 export class UnitTypeService {
 
-  /**
-   * Lists all active Unit Types. This list can be subscribed to provide an always updated list of Unit Types.
-   */
+  /** The list of all active UnitTypes. */
   unitTypes: BehaviorSubject<Array<UnitType>> = new BehaviorSubject<Array<UnitType>>([]);
 
   constructor(private http: HttpClient, public snackBar: MatSnackBar, private errorService: ErrorService) {
   }
 
   /**
-   * Get the list of all active unit types and populate into the unitTypes list.
+   * Gets the list of all active UnitTypes and populates them into the unitTypes list.
    */
   initializeUnitTypes() {
-    return this.GETAllUnitTypes().forEach(unitTypes => {
+    return this.getAllUnitTypes().forEach(unitTypes => {
       this.unitTypes = new BehaviorSubject<Array<UnitType>>(unitTypes);
       this.sortUnitTypes();
     }).catch(() => {
-      this.errorService.displayErrorMessage(
-        'Something went wrong when getting the list unit types. Please contact your system administrator.')
     });
   }
 
   /**
-   * Sorts the unit types in the unitTypes list by ascending name.
+   * Sorts the UnitTypes in the unitTypes list by ascending name.
    */
   sortUnitTypes() {
     this.unitTypes.getValue().sort((unit1, unit2) => {
@@ -63,15 +59,11 @@ export class UnitTypeService {
   }
 
   /**
-   * Sends a GET message to the server for a fresh list of all UnitTypes.
+   * Sends a GET message to the server to retrieve all active UnitTypes.
    */
-  GETAllUnitTypes() {
+  getAllUnitTypes() {
     let obsUnitTypes: Observable<Array<UnitType>>;
     obsUnitTypes = this.http.get(unitTypeUrl)
-      //.pipe(catchError(this.errorService.handleError()))
-      .pipe(map((response: Response) =>
-        response))
-      //.pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         return data._embedded.unitTypes as UnitType[];
       }));
@@ -79,15 +71,15 @@ export class UnitTypeService {
   }
 
   /**
-   * Logically deletes the unit type (sets the active status to false).
+   * Logically deletes the UnitType (sets the active status to false).
    *
-   * @param unitTypeToDelete the UnitType to be deleted.
+   * @param unitType the UnitType to be deleted.
    */
-  DELETEUnitType(unitTypeToDelete: UnitType) {
-    const url = unitTypeToDelete._links["delete"];
-    this.http.delete(url["href"], httpOptions).toPromise().then(() => {
-      this.refreshUnitTypes();
-      let deleteUnitTypeSuccessMessage = unitTypeToDelete.name + ' deleted successfully.';
+  deleteUnitType(unitType: UnitType) {
+    const url = unitType._links["delete"];
+    this.http.delete(url["href"], httpOptions).toPromise().then((response) => {
+      this.initializeUnitTypes();
+      let deleteUnitTypeSuccessMessage = unitType.name + ' deleted successfully.';
       this.snackBar.open(deleteUnitTypeSuccessMessage, null, {
         duration: 4000,
         politeness: 'assertive',
@@ -95,20 +87,21 @@ export class UnitTypeService {
         horizontalPosition: 'right'
       });
     }).catch(() => {
-      this.errorService.displayErrorMessage('Something went wrong when deleting ' + unitTypeToDelete.name
-        + '. Please contact your system administrator.')
+      this.errorService.displayErrorMessage('Something went wrong when deleting')
     });
   }
 
   /**
+   * Saves the specified UnitType. If the UnitType is new (id = -1), an HTTP POST is performed,
+   * else an HTTP PUT is performed to update the existing UnitType.
    *
-   * @param unitTypeToSave
+   * @param unitType The UnitType to be created/updated.
    */
-  async saveUnitType(unitTypeToSave: UnitType) {
-    if (unitTypeToSave.id === -1) {
-      await this.http.post<UnitType>(unitTypeUrl, JSON.stringify(unitTypeToSave), httpOptions).toPromise().then(() => {
-        this.refreshUnitTypes();
-        let addUnitTypeSucessMessage = unitTypeToSave.name + ' added successfully.';
+  async saveUnitType(unitType: UnitType) {
+    if (unitType.id === -1) {
+      await this.http.post<UnitType>(unitTypeUrl, JSON.stringify(unitType), httpOptions).toPromise().then(response => {
+        this.initializeUnitTypes();
+        let addUnitTypeSucessMessage = unitType.name + ' added successfully.';
         this.snackBar.open(addUnitTypeSucessMessage, null, {
           duration: 4000,
           politeness: 'assertive',
@@ -116,17 +109,16 @@ export class UnitTypeService {
           horizontalPosition: 'right'
         });
       }).catch(() => {
-        this.errorService.displayErrorMessage('Something went wrong when adding ' + unitTypeToSave.name
-          + '. Please contact your system administrator.')
+        this.errorService.displayErrorMessage('Something went wrong when adding')
       });
     } else {
-      const url = unitTypeToSave._links["update"];
+      const url = unitType._links["update"];
       await this.http.put<UnitType>(url["href"],
-        JSON.stringify(unitTypeToSave), httpOptions)
+        JSON.stringify(unitType), httpOptions)
         .toPromise()
         .then(() => {
-          this.refreshUnitTypes();
-          let editUnitTypeSucessMessage = unitTypeToSave.name + ' updated successfully.';
+          this.initializeUnitTypes();
+          let editUnitTypeSucessMessage = 'Updated successfully.';
           this.snackBar.open(editUnitTypeSucessMessage, null, {
             duration: 4000,
             politeness: 'assertive',
@@ -134,16 +126,15 @@ export class UnitTypeService {
             horizontalPosition: 'right'
           });
         }).catch(() => {
-          this.errorService.displayErrorMessage('Something went wrong when updating ' + unitTypeToSave.name
-            + '. Please contact your system administrator.')
+          this.errorService.displayErrorMessage('Something went wrong when updating')
         });
     }
   }
 
   /**
-   * Returns a Unit Type by passing in it's id.
+   * Sends a GET message to the server to retrieve the UnitType by their ID.
    *
-   * @param id id of the unit type.
+   * @param id ID of the unit type.
    */
   getUnitTypeById(id: number) {
     return this.http.get(`${unitTypeUrl}/${id}`)
@@ -158,51 +149,8 @@ export class UnitTypeService {
   }
 
   /**
-   * Refresh the List of UnitTypes to keep up-to-date with the server.
+   * Returns a reference to unitTypes list.
    */
-  refreshUnitTypes() {
-    let freshUnitTypes: UnitType[];
-
-    this.GETAllUnitTypes().forEach(unitTypes => {
-      freshUnitTypes = unitTypes;
-
-      //Replace all unit types with fresh unit type data
-      freshUnitTypes.forEach(freshUnitType => {
-        let index = this.unitTypes.getValue().findIndex((staleUnitType) => {
-          return (staleUnitType.id === freshUnitType.id);
-        });
-
-        //If the id didn't match any of the existing ids then add it to the list.
-        if (index === -1) {
-          this.unitTypes.getValue().push(freshUnitType);
-
-          // id was found and this UnitType will be replaced with fresh data
-        } else {
-          this.unitTypes.getValue().splice(index, 1, freshUnitType);
-        }
-      });
-
-      //Check for any deleted UnitTypes
-      this.unitTypes.getValue().forEach(oldUnitType => {
-        let index = freshUnitTypes.findIndex(newUnitType => {
-          return (newUnitType.id === oldUnitType.id);
-        });
-
-        if (index === -1) {
-          let indexToBeRemoved = this.unitTypes.getValue().findIndex((unitTypeToBeRemoved) => {
-            return (unitTypeToBeRemoved.id === oldUnitType.id);
-          });
-
-          this.unitTypes.getValue().splice(indexToBeRemoved, 1);
-        }
-      });
-    }).then(() => this.sortUnitTypes())
-      .catch(() => {
-      this.errorService.displayErrorMessage(
-        'Something went wrong when updating the list of Unit Types. Please contact your system administrator.')
-    });
-  }
-
   getUnitTypeSubjectList(): BehaviorSubject<Array<UnitType>> {
     return this.unitTypes;
   }

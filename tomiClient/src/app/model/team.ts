@@ -7,11 +7,11 @@
  * @version 1.0
  */
 export class Team{
-  /** The unique identifier for this team.*/
+  /** The unique identifier for this Team.*/
   id: number;
-  /** The name of this team.*/
+  /** The name of this Team.*/
   teamName: string;
-  /** The ID for the team lead of this team.*/
+  /** The ID for the team lead of this Team.*/
   leadId: number;
   /** The list of links used for communicating with the back end.*/
   _links: [];
@@ -20,6 +20,6 @@ export class Team{
     this.teamName = "";
     this.leadId = -1;
     this.id = -1;
-    _links: [];
+    this._links =  [];
   }
 }

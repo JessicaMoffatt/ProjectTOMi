@@ -6,6 +6,8 @@ const millisecondsToDays: number = 86400000;
 
 /**
  * DatePickerComponent is used to display the datepicker used for timesheet selection.
+ *
+ * @author Jessica Moffatt
  */
 @Component({
   selector: 'app-date-picker',
@@ -38,6 +40,9 @@ export class DatePickerComponent implements OnInit{
   ngOnInit(): void {
   }
 
+  /**
+   * Sets the minimum date.
+   */
   doSetMinDate(){
     this.timesheetService.doSetMinDate();
   }
@@ -65,6 +70,9 @@ export class DatePickerComponent implements OnInit{
   }
 }
 
+/**
+ * Inner class used to set the starting day of the week to Monday.
+ */
 export class CustomDateAdapter extends NativeDateAdapter{
 
   getFirstDayOfWeek(): number {

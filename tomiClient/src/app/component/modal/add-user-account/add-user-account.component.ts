@@ -6,7 +6,7 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/form
 import {ErrorStateMatcher, MatDialogRef} from "@angular/material";
 
 /**
- * AddTaskComponent is a modal form used to add a new UserAccount to the database.
+ * AddTaskComponent is used to facilitate communication between the add user account view and front end services.
  *
  * @author Iliya Kiritchkov
  * @author Karol Talbot
@@ -39,6 +39,7 @@ export class AddUserAccountComponent implements OnInit {
 
   /** Invalid name error detection. */
   userAccountNameMatcher = new MyErrorStateMatcher();
+
   /** Invalid email error detection. */
   userAccountEmailMatcher = new MyErrorStateMatcher();
 
@@ -70,19 +71,19 @@ export class AddUserAccountComponent implements OnInit {
               private userAccountService: UserAccountService,
               private teamService: TeamService) { }
 
-  /**
-   * Closes the modal component.
-    */
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
   ngOnInit() {
 
   }
 
   /**
-   * Adds a new UserAccount. Passes the request to save the new UserAccount to the UserAccountService.
+   * Closes this modal component.
+   */
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  /**
+   * Passes the request to save a new UserAccount to the UserAccountService.
    */
   addUserAccount() {
     if (this.userAccountFirstNameControl.valid && this.userAccountLastNameControl.valid && this.userAccountEmailControl.valid) {

@@ -92,11 +92,9 @@ import {DataDumpReportComponent} from './component/extra/data-dump-report/data-d
 import {DeleteTeamModal} from "./component/panel/manage-teams-panel/manage-teams-panel.component";
 
 //Service Imports
-import {ProjectEntriesService} from "./service/project-entries.service";
 import {SignInService} from "./service/sign-in.service";
 import {TaskService} from "./service/task.service";
 import {TeamService} from "./service/team.service";
-import {TeamSidebarService} from "./service/team-sidebar.service";
 import {TimesheetService} from "./service/timesheet.service";
 import {UserAccountService} from "./service/user-account.service";
 
@@ -247,11 +245,9 @@ import {AddProjectComponent} from "./component/modal/add-project/add-project";
   providers: [
     AccessGuard,
     DatePipe,
-    ProjectEntriesService,
     SignInService,
     TaskService,
     TeamService,
-    TeamSidebarService,
     TimesheetService,
     UserAccountService,
     {
@@ -268,7 +264,6 @@ import {AddProjectComponent} from "./component/modal/add-project/add-project";
       useClass: CustomDateAdapter
     },
     TimesheetService,
-    ProjectEntriesService,
     UserAccountService,
     ProjectService,
     SignInService,

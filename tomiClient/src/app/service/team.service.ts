@@ -27,16 +27,17 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class TeamService {
-  private teamSubjectList: BehaviorSubject<Array<Team>> = new BehaviorSubject<Array<Team>>([]);
 
+  /** The list of all active Teams. */
+  private teamSubjectList: BehaviorSubject<Array<Team>> = new BehaviorSubject<Array<Team>>([]);
 
   public constructor(private http: HttpClient, public snackBar: MatSnackBar, private signInService:SignInService, private errorService: ErrorService) {
 
   }
 
-  /*
- * Loads a list of teams retrieved from the back end into a BehaviorSubject object that can be used to retrieve the Teams.
- */
+  /**
+   * Gets the list of all active teams and populates them into the teamSubjectList.
+   */
   public initializeTeams() {
     this.requestAllTeams().forEach(teams => {
       this.teamSubjectList = new BehaviorSubject<Array<Team>>(teams);
@@ -46,6 +47,9 @@ export class TeamService {
     });
   }
 
+  /**
+   * Sorts the Teams in the teamSubjectList by ascending name.
+   */
   sortTeams() {
     this.teamSubjectList.getValue().sort((team1, team2) => {
       let name1 = team1.teamName.toLowerCase();
@@ -60,20 +64,31 @@ export class TeamService {
     });
   }
 
+  /**
+   * Sends a GET message to the server to retrieve all active Teams.
+   */
   public requestAllTeams() {
     let obsTeams: Observable<Array<Team>>;
     obsTeams = this.http.get(`${teamUrl}`)
-      //.pipe(catchError(this.errorService.handleError()))
       .pipe(map((data: any) => {
         return data._embedded.teams as Team[];
       }));
     return obsTeams;
   }
 
+  /**
+   * Returns teamSubjectList.
+   */
   public getTeamSubjectList(): BehaviorSubject<Array<Team>> {
     return this.teamSubjectList;
   }
 
+  /**
+   * Saves the specified Team. If the Team is new (id = -1), an HTTP POST is performed,
+   * else an HTTP PUT is performed to update the existing Team.
+   *
+   * @param team The Team to be created/updated.
+   */
   public async save(team: Team) {
     let tempTeam: Team = null;
     if (team.id === -1) {
@@ -98,7 +113,8 @@ export class TeamService {
   }
 
   /**
-   * Gets all members who aren't on the team, as well as not a team lead of any other teams.
+   * Sends a GET message to the server to retrieve all members who aren't on this Team, as well as not a team lead of any other teams.
+   * @param id The ID of the Team to be omitted from the selection of UserAccounts.
    */
   getAllFreeMembers(): Observable<Array<UserAccount>> {
     return this.http.get(`${teamUrl}/unassigned`)
@@ -113,8 +129,8 @@ export class TeamService {
   }
 
   /**
-   * Gets all user accounts on the team with the specified ID.
-   * @param team The ID of the team whose members are to be gotten.
+   * Sends a GET message to the server to retrieve all UserAccounts on the Team with the specified ID.
+   * @param team The ID of the Team whose members are to be gotten.
    */
   getTeamMembers(team: Team): Observable<Array<UserAccount>> {
     let url = team._links["getAccounts"];
@@ -129,24 +145,23 @@ export class TeamService {
   }
 
   /**
-   * Logically deletes the selected team (sets their active status to false.)
+   * Logically deletes the selected Team (sets their active status to false.)
    *
-   * @param team The team to be deleted.
+   * @param team The Team to be deleted.
    */
   async delete(team: Team) {
     const url = team._links["delete"];
 
-    await this.http.delete(url["href"], httpOptions).toPromise()
-      .then((response) => {
-        this.requestAllTeams();
-        return response;
-      }).catch((error: any) => {
-        this.errorService.displayErrorMessage(error);
-      });
+    await this.http.delete(url["href"], httpOptions).toPromise().then((response) => {
+      this.requestAllTeams();
+      return response;
+    }).catch((error: any) => {
+      this.errorService.displayErrorMessage(error);
+    });
   }
 
   /**
-   * Gets a team with the specified ID.
+   * Sends a GET message to the server to retrieve the Team by their ID.
    * @param id The id of the team to get.
    */
   getTeamById(id: number): Observable<Team> {

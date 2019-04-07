@@ -1,9 +1,8 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Entry} from "../../../model/entry";
 import {TimesheetService} from "../../../service/timesheet.service";
 import {Status} from "../../../model/status";
 import {EntryService} from "../../../service/entry.service";
-import {MatCard} from "@angular/material";
 
 /**
  * EntryApproveComponent is used to facilitate communication between the view and front end services.
@@ -17,14 +16,9 @@ import {MatCard} from "@angular/material";
   styleUrls: ['../entry/entry.component.scss','./entry-approve.component.scss']
 })
 export class EntryApproveComponent implements OnInit {
+
   /** The entry model instance associated with this component. */
   @Input() entry: Entry;
-
-
-  /**
-   * An reference to the Status enum.
-   */
-  sts = Status;
 
   /**
    * The username of this entry.

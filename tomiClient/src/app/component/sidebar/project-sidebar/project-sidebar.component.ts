@@ -4,14 +4,14 @@ import {ProjectsPanelComponent} from "../../panel/projects-panel/projects-panel.
 import {Project} from "../../../model/project";
 import {BehaviorSubject} from "rxjs";
 import {UserAccount} from "../../../model/userAccount";
-import {Team} from "../../../model/team";
-import {ManageTeamsPanelComponent} from "../../panel/manage-teams-panel/manage-teams-panel.component";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material";
 
-
 /**
- * @author Karol Talbot
+ * ProjectSidebarComponent is used to house the list of projects to be managed.
+ *
  * @author James Andrade
+ * @author Karol Talbot
+ * @version 2.0
  */
 @Component({
   selector: 'app-project-sidebar',
@@ -19,9 +19,20 @@ import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material";
   styleUrls: ['./project-sidebar.component.scss']
 })
 export class ProjectSidebarComponent implements OnInit {
+  /**
+   * The button group for displaying all the projects.
+   */
   @ViewChild("btn_group") buttonGroup:MatButtonToggleGroup;
+
+  /**
+   * Represents whether a project has been selected of not.
+   */
   selected:boolean = false;
 
+  /**
+   * Listens for the Ctrl+f key's keydown event; Moves focus to the search bar on that event.
+   * @param e The event captured.
+   */
   @HostListener('window:keydown.Control.f', ['$event']) w(e: KeyboardEvent) {
     e.preventDefault();
     document.getElementById("project_search").focus();
@@ -33,14 +44,20 @@ export class ProjectSidebarComponent implements OnInit {
     this.projectService.refreshProjectList();
   }
 
-  displayBlankProject() {
-    this.projectService.setSelected(new Project());
-    this.projectService.userAccountList = new BehaviorSubject<Array<UserAccount>>([]);
-  }
-
+  /**
+   * Sets the selected Project.
+   * @param project The Project to set selected to.
+   */
   selectProject(project : Project){
     this.selected = true;
     this.projectService.setSelected(project);
+  }
+
+  /**
+   * Checks the value of selected.
+   */
+  checkSelected(){
+    return this.selected;
   }
 
   unselect(){
@@ -49,13 +66,11 @@ export class ProjectSidebarComponent implements OnInit {
       this.buttonGroup.selected.checked = false;
     }
   }
-
-  checkSelected(){
-    return this.selected;
-  }
-
 }
 
+/**
+ * Pipe used to filter Projects by their name.
+ */
 @Pipe({name: 'FilterProjectByName'})
 export class FilterProjectByName implements PipeTransform {
   transform(projectList: Array<Project>, nameFilter: string): any {

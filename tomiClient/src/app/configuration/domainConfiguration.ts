@@ -1,6 +1,8 @@
 /**
+ * domainConfiguration is used to house all the basic URLs used in this application.
  * @author Jessica Moffatt
  */
+
 /** The domain portion of all links used in this application.*/
 export const domain: string ='http://localhost:8080/';
 
@@ -28,7 +30,6 @@ export const billableHourDownloadUrl = domain + 'billable_hours_report/xls';
 export const billableUrl = domain + 'billable_hours_report';
 /** The URL used to get,post, and delete entries. */
 export const entryUrl = domain + 'entries';
-
-/** The URL used to get,post, and delete tasks. */
-export const expenseUrl = domain + 'expenses';
+/** The URL used to get,post, and delete clients. */
+export const clientUrl = domain + 'clients';
 

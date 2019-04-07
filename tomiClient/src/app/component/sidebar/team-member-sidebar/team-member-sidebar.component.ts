@@ -6,11 +6,11 @@ import {ProductivityReportLine} from "../../../model/productivityReportLine";
 import {MatSnackBar} from "@angular/material";
 
 /**
- * TeamMemberSidebarComponent is used to display the list of team members for a user to interact with when viewing timesheets.
+ * TeamMemberSidebarComponent is used to house the list of teams to be managed.
  *
  * @author Jessica Moffatt
  * @author Karol Talbot
- * @version 1.0
+ * @version 2.0
  */
 @Component({
   selector: 'app-team-member-sidebar',
@@ -22,14 +22,13 @@ export class TeamMemberSidebarComponent implements OnInit {
   constructor(public teamMemberTimesheetService: TeamMemberTimesheetService,
               public timesheetService:TimesheetService, public snackBar:MatSnackBar) { }
 
-  //populate the team members, and get their productivity reports: in matching order.
   ngOnInit() {
     this.teamMemberTimesheetService.reloadTeamMembers();
   }
 
   /**
-   * Displays the latest timesheet for a specified team member.
-   * @param teamMember The team member whose timesheet is to be displayed.
+   * Displays the latest Timesheet for a specified team member.
+   * @param teamMember The team member whose Timesheet is to be displayed.
    */
   displayTimesheet(teamMember: UserAccount){
     this.teamMemberTimesheetService.getMemberById(teamMember.id).subscribe((data:UserAccount) => {
@@ -45,7 +44,7 @@ export class TeamMemberSidebarComponent implements OnInit {
   }
 
   /**
-   * Displays the productivity report for the given member.
+   * Displays the productivity report for the given team member.
    * @param teamMember The team member to display the productivity report for.
    */
   displayProductivityReport(teamMember: UserAccount){
@@ -61,6 +60,9 @@ export class TeamMemberSidebarComponent implements OnInit {
   }
 }
 
+/**
+ * Pipe used to filter Team Members by their name.
+ */
 @Pipe({name: 'FilterTeamMemberByName'})
 export class FilterTeamMemberByName implements PipeTransform {
   transform(teamMemberList: Array<UserAccount>, nameFilter: string): any {

@@ -4,20 +4,19 @@ import {Observable, of} from "rxjs";
 
 const MESSAGE: string = 'The requested operation is unavailable.  Please try again later.';
 
+/**
+ * ErrorService is used to control the displaying of error messages.
+ * @author James Andrade
+ */
 @Injectable({
   providedIn: 'root'
 })
-
-
 export class ErrorService {
 
   constructor(private snackBar: MatSnackBar){}
-
-
   /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param result - optional value to return as the observable result
+   * Handles an Http operation that failed.
+   * @param result An optional value to return as the observable result.
    */
   public handleError<T>(result?: T) {
     return (): Observable<T> => {
@@ -27,6 +26,9 @@ export class ErrorService {
     };
   }
 
+  /**
+   * Displays a generic error message.
+   */
   public displayError(){
      this.snackBar.open(MESSAGE, null, {
       duration: 2000,
@@ -38,7 +40,7 @@ export class ErrorService {
   }
 
   /**
-   * This method allows the caller to pass an extra info parameter
+   * Displays a specified error message.
    * @param message The message to be displayed
    */
   public displayErrorMessage(message: string){
@@ -50,5 +52,4 @@ export class ErrorService {
       verticalPosition: 'top'
     });
   }
-
 }
