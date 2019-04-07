@@ -38,8 +38,6 @@ export class UnitTypeService {
       this.unitTypes = new BehaviorSubject<Array<UnitType>>(unitTypes);
       this.sortUnitTypes();
     }).catch(() => {
-      this.errorService.displayErrorMessage(
-        'Something went wrong when getting the list unit types. Please contact your system administrator.')
     });
   }
 
@@ -67,8 +65,8 @@ export class UnitTypeService {
     let obsUnitTypes: Observable<Array<UnitType>>;
     obsUnitTypes = this.http.get(unitTypeUrl)
       .pipe(map((data: any) => {
-      return data._embedded.unitTypes as UnitType[];
-    }));
+        return data._embedded.unitTypes as UnitType[];
+      }));
     return obsUnitTypes;
   }
 

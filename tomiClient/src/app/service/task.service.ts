@@ -41,7 +41,7 @@ export class TaskService {
       this.taskSubjectList = new BehaviorSubject<Array<Task>>(tasks);
       this.sortTasks();
     }).catch((error: any) => {
-      this.errorService.displayErrorMessage("Task error " + error);
+
     });
   }
 
