@@ -1,0 +1,2902 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>tomi-client documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">tomi-client documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li>ProjectService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/service/project.service.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>ProjectService is used to control the flow of data regarding user accounts to/from the view.</p>
+
+            </p>
+
+
+            <p class="comment">
+                <h3>Example</h3>
+            </p>
+            <div class="io-description">
+            </div>
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#billableReport">billableReport</a>
+                            </li>
+                            <li>
+                                <a href="#percentActual">percentActual</a>
+                            </li>
+                            <li>
+                                <a href="#percentRemaining">percentRemaining</a>
+                            </li>
+                            <li>
+                                <a href="#projects">projects</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#regExp">regExp</a>
+                            </li>
+                            <li>
+                                <a href="#selectedBudget">selectedBudget</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#selectedClient">selectedClient</a>
+                            </li>
+                            <li>
+                                <a href="#selectedProject">selectedProject</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#snackBar">snackBar</a>
+                            </li>
+                            <li>
+                                <a href="#userAccountList">userAccountList</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addUser">addUser</a>
+                            </li>
+                            <li>
+                                <a href="#calculatePercentActual">calculatePercentActual</a>
+                            </li>
+                            <li>
+                                <a href="#calculatePercentBillable">calculatePercentBillable</a>
+                            </li>
+                            <li>
+                                <a href="#delete">delete</a>
+                            </li>
+                            <li>
+                                <a href="#downloadBillableReport">downloadBillableReport</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#evaluateEntry">evaluateEntry</a>
+                            </li>
+                            <li>
+                                <a href="#getAllProjects">getAllProjects</a>
+                            </li>
+                            <li>
+                                <a href="#getBillableReport">getBillableReport</a>
+                            </li>
+                            <li>
+                                <a href="#getBudgetReportByProjectId">getBudgetReportByProjectId</a>
+                            </li>
+                            <li>
+                                <a href="#getDataDump">getDataDump</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getEntries">getEntries</a>
+                            </li>
+                            <li>
+                                <a href="#getProjectById">getProjectById</a>
+                            </li>
+                            <li>
+                                <a href="#getProjects">getProjects</a>
+                            </li>
+                            <li>
+                                <a href="#getProjectsForUser">getProjectsForUser</a>
+                            </li>
+                            <li>
+                                <a href="#getSelectedClient">getSelectedClient</a>
+                            </li>
+                            <li>
+                                <a href="#getSelectedProject">getSelectedProject</a>
+                            </li>
+                            <li>
+                                <a href="#populateEntries">populateEntries</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#promiseApproval">promiseApproval</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#putApprovalRequest">putApprovalRequest</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#putRejectionRequest">putRejectionRequest</a>
+                            </li>
+                            <li>
+                                <a href="#refreshProjectList">refreshProjectList</a>
+                            </li>
+                            <li>
+                                <a href="#refreshUserAccountList">refreshUserAccountList</a>
+                            </li>
+                            <li>
+                                <a href="#removeUser">removeUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#save">save</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#setSelected">setSelected</a>
+                            </li>
+                            <li>
+                                <a href="#sortProjects">sortProjects</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#submit">submit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: <a href="../classes/Client.html">HttpClient</a>, snackBar: MatSnackBar, expenseService: <a href="../injectables/ExpenseService.html">ExpenseService</a>, signInService: <a href="../injectables/SignInService.html">SignInService</a>, errorService: <a href="../injectables/ErrorService.html">ErrorService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/service/project.service.ts:71</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/Client.html" target="_self" >HttpClient</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>snackBar</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatSnackBar</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>expenseService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ExpenseService.html" target="_self" >ExpenseService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>signInService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SignInService.html" target="_self" >SignInService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>errorService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ErrorService.html" target="_self" >ErrorService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addUser"></a>
+                    <span class="name">
+                        <b>
+                            addUser
+                        </b>
+                        <a href="#addUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addUser(userAccountId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="273"
+                            class="link-to-prism">src/app/service/project.service.ts:273</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Performs an http PUT request to add the specified UserAccount(using their ID) to the Project.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userAccountId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The ID of the UserAccount to add to the Project.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="calculatePercentActual"></a>
+                    <span class="name">
+                        <b>
+                            calculatePercentActual
+                        </b>
+                        <a href="#calculatePercentActual"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>calculatePercentActual()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="194"
+                            class="link-to-prism">src/app/service/project.service.ts:194</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Calculates the percent of actual hours spent on the Project, for the Budget Report.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="calculatePercentBillable"></a>
+                    <span class="name">
+                        <b>
+                            calculatePercentBillable
+                        </b>
+                        <a href="#calculatePercentBillable"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>calculatePercentBillable()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="180"
+                            class="link-to-prism">src/app/service/project.service.ts:180</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Calculates the percent billable for the Budget Report.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="delete"></a>
+                    <span class="name">
+                        <b>
+                            delete
+                        </b>
+                        <a href="#delete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>delete(project: <a href="../classes/Project.html">Project</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="351"
+                            class="link-to-prism">src/app/service/project.service.ts:351</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Logically deletes the selected Project (sets the active status to false.)</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>project</td>
+                                    <td>
+                                                <code><a href="../classes/Project.html" target="_self" >Project</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The Project to be deleted.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="downloadBillableReport"></a>
+                    <span class="name">
+                        <b>
+                            downloadBillableReport
+                        </b>
+                        <a href="#downloadBillableReport"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>downloadBillableReport()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="234"
+                            class="link-to-prism">src/app/service/project.service.ts:234</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Retrieves the billable hour report as an xls file download.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="evaluateEntry"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            evaluateEntry
+                        </b>
+                        <a href="#evaluateEntry"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>evaluateEntry(entry: <a href="../classes/Entry.html">Entry</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="379"
+                            class="link-to-prism">src/app/service/project.service.ts:379</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Evaluates the specified entry. If the Entry&#39;s status is approved, begins the process of PUTing the approval request,
+else if the Entry&#39;s status is rejected, begins the process of PUTing the rejection request.
+If the Entry has neither status, no further action is taken.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>entry</td>
+                                    <td>
+                                                <code><a href="../classes/Entry.html" target="_self" >Entry</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The entry to evaluate the status of.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllProjects"></a>
+                    <span class="name">
+                        <b>
+                            getAllProjects
+                        </b>
+                        <a href="#getAllProjects"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAllProjects()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="83"
+                            class="link-to-prism">src/app/service/project.service.ts:83</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sends a GET message to the server to retrieve all active Projects.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Project.html" target="_self" >Observable&lt;Array&lt;Project&gt;&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getBillableReport"></a>
+                    <span class="name">
+                        <b>
+                            getBillableReport
+                        </b>
+                        <a href="#getBillableReport"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getBillableReport()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="205"
+                            class="link-to-prism">src/app/service/project.service.ts:205</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sends a GET message to the server to retrieve the lines for the billable hours report.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getBudgetReportByProjectId"></a>
+                    <span class="name">
+                        <b>
+                            getBudgetReportByProjectId
+                        </b>
+                        <a href="#getBudgetReportByProjectId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getBudgetReportByProjectId(project: <a href="../classes/Project.html">Project</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="167"
+                            class="link-to-prism">src/app/service/project.service.ts:167</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sends a GET message to the server to retrieve the BudgetReport for the specified Project.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>project</td>
+                                    <td>
+                                                <code><a href="../classes/Project.html" target="_self" >Project</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The Project to get a budget report for.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDataDump"></a>
+                    <span class="name">
+                        <b>
+                            getDataDump
+                        </b>
+                        <a href="#getDataDump"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getDataDump()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="222"
+                            class="link-to-prism">src/app/service/project.service.ts:222</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Retrieves the data dump report as an xls file download.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getEntries"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            getEntries
+                        </b>
+                        <a href="#getEntries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getEntries(project: <a href="../classes/Project.html">Project</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="363"
+                            class="link-to-prism">src/app/service/project.service.ts:363</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Gets the Entries for the selected Project.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>project</td>
+                                    <td>
+                                                <code><a href="../classes/Project.html" target="_self" >Project</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The Project to get Entries for.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getProjectById"></a>
+                    <span class="name">
+                        <b>
+                            getProjectById
+                        </b>
+                        <a href="#getProjectById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getProjectById(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="154"
+                            class="link-to-prism">src/app/service/project.service.ts:154</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sends a GET message to the server to retrieve the Project by their ID.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The ID of the project to get.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getProjects"></a>
+                    <span class="name">
+                        <b>
+                            getProjects
+                        </b>
+                        <a href="#getProjects"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getProjects()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="466"
+                            class="link-to-prism">src/app/service/project.service.ts:466</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns projects.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Project.html" target="_self" >BehaviorSubject&lt;Array&lt;Project&gt;&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getProjectsForUser"></a>
+                    <span class="name">
+                        <b>
+                            getProjectsForUser
+                        </b>
+                        <a href="#getProjectsForUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getProjectsForUser(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="99"
+                            class="link-to-prism">src/app/service/project.service.ts:99</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sends a GET message to the server to retrieve the Projects for a specified UserAccount by their ID.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The ID of the UserAccount whose Projects we want.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Project.html" target="_self" >Observable&lt;Array&lt;Project&gt;&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSelectedClient"></a>
+                    <span class="name">
+                        <b>
+                            getSelectedClient
+                        </b>
+                        <a href="#getSelectedClient"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSelectedClient()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="146"
+                            class="link-to-prism">src/app/service/project.service.ts:146</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns selectedClient.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSelectedProject"></a>
+                    <span class="name">
+                        <b>
+                            getSelectedProject
+                        </b>
+                        <a href="#getSelectedProject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSelectedProject()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="141"
+                            class="link-to-prism">src/app/service/project.service.ts:141</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns selectedProject.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="populateEntries"></a>
+                    <span class="name">
+                        <b>
+                            populateEntries
+                        </b>
+                        <a href="#populateEntries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>populateEntries(project: <a href="../classes/Project.html">Project</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="439"
+                            class="link-to-prism">src/app/service/project.service.ts:439</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sends a GET message to the server to retrieve all submitted Entries for the specified Project.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>project</td>
+                                    <td>
+                                                <code><a href="../classes/Project.html" target="_self" >Project</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The Project to get entries for.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Entry.html" target="_self" >Observable&lt;Array&lt;Entry&gt;&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="promiseApproval"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            promiseApproval
+                        </b>
+                        <a href="#promiseApproval"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>promiseApproval(currEntry: <a href="../classes/Entry.html">Entry</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="396"
+                            class="link-to-prism">src/app/service/project.service.ts:396</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Wraps the putApprovalRequest method call in a promise.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>currEntry</td>
+                                    <td>
+                                                <code><a href="../classes/Entry.html" target="_self" >Entry</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The Entry currently being evaluated.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="putApprovalRequest"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            putApprovalRequest
+                        </b>
+                        <a href="#putApprovalRequest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>putApprovalRequest(entry: <a href="../classes/Entry.html">Entry</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="405"
+                            class="link-to-prism">src/app/service/project.service.ts:405</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Performs an http PUT request to change the Entry&#39;s status to APPROVED.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>entry</td>
+                                    <td>
+                                                <code><a href="../classes/Entry.html" target="_self" >Entry</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The Entry to be approved.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="putRejectionRequest"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            putRejectionRequest
+                        </b>
+                        <a href="#putRejectionRequest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>putRejectionRequest(entry: <a href="../classes/Entry.html">Entry</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="422"
+                            class="link-to-prism">src/app/service/project.service.ts:422</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Performs an http PUT request to change the Entry&#39;s status to REJECTED.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>entry</td>
+                                    <td>
+                                                <code><a href="../classes/Entry.html" target="_self" >Entry</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The Entry to be rejected.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Entry.html" target="_self" >Promise&lt;Entry&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refreshProjectList"></a>
+                    <span class="name">
+                        <b>
+                            refreshProjectList
+                        </b>
+                        <a href="#refreshProjectList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>refreshProjectList()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="288"
+                            class="link-to-prism">src/app/service/project.service.ts:288</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Gets the list of all active Projects and populates them into the projects list.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refreshUserAccountList"></a>
+                    <span class="name">
+                        <b>
+                            refreshUserAccountList
+                        </b>
+                        <a href="#refreshUserAccountList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>refreshUserAccountList()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="323"
+                            class="link-to-prism">src/app/service/project.service.ts:323</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sends a GET message to the server to retrieve all UserAccounts associated with this Project.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeUser"></a>
+                    <span class="name">
+                        <b>
+                            removeUser
+                        </b>
+                        <a href="#removeUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeUser(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="341"
+                            class="link-to-prism">src/app/service/project.service.ts:341</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Performs an http PUT request to remove the specified UserAccount from the Project.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="save"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            save
+                        </b>
+                        <a href="#save"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>save(project: <a href="../classes/Project.html">Project</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="249"
+                            class="link-to-prism">src/app/service/project.service.ts:249</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Saves the specified Project. If the Project is new (id = 2), an HTTP POST is performed,
+else an HTTP PUT is performed to update the existing Project.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>project</td>
+                                    <td>
+                                                <code><a href="../classes/Project.html" target="_self" >Project</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The Project to be created/updated.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setSelected"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            setSelected
+                        </b>
+                        <a href="#setSelected"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setSelected(project: <a href="../classes/Project.html">Project</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="118"
+                            class="link-to-prism">src/app/service/project.service.ts:118</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sets the selected Project.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>project</td>
+                                    <td>
+                                                <code><a href="../classes/Project.html" target="_self" >Project</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>the project to be stored as selectedProject.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sortProjects"></a>
+                    <span class="name">
+                        <b>
+                            sortProjects
+                        </b>
+                        <a href="#sortProjects"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sortProjects()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="306"
+                            class="link-to-prism">src/app/service/project.service.ts:306</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sorts the Projects in the projects list by ascending name.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submit"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            submit
+                        </b>
+                        <a href="#submit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>submit(entries)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="456"
+                            class="link-to-prism">src/app/service/project.service.ts:456</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>For each entry of the selected project, calls evaluateEntry which in tern performs either an approval or rejection.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>entries</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="billableReport"></a>
+                        <span class="name">
+                            <b>
+                            billableReport</b>
+                            <a href="#billableReport"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/BillableHoursReportLine.html" target="_self" >BillableHoursReportLine[]</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/service/project.service.ts:50</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The billable hour report for all Projects.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="percentActual"></a>
+                        <span class="name">
+                            <b>
+                            percentActual</b>
+                            <a href="#percentActual"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/service/project.service.ts:53</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The actual hours spent working on a Project.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="percentRemaining"></a>
+                        <span class="name">
+                            <b>
+                            percentRemaining</b>
+                            <a href="#percentRemaining"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/service/project.service.ts:56</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The percent of budgeted hours remaining.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="projects"></a>
+                        <span class="name">
+                            <b>
+                            projects</b>
+                            <a href="#projects"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/Project.html" target="_self" >BehaviorSubject&lt;Array&lt;Project&gt;&gt;</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new BehaviorSubject([])</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/service/project.service.ts:65</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The list of all active Projects. </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="regExp"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                                <span class="modifier">Readonly</span>
+                            regExp</b>
+                            <a href="#regExp"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&quot;[A-Z]{2}[0-9]{4}&quot;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/service/project.service.ts:59</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The general expression used to check if projectId is valid </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedBudget"></a>
+                        <span class="name">
+                            <b>
+                            selectedBudget</b>
+                            <a href="#selectedBudget"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/BudgetReport.html" target="_self" >BudgetReport</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/service/project.service.ts:47</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The budget associated with the selected Project.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedClient"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            selectedClient</b>
+                            <a href="#selectedClient"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/Client.html" target="_self" >Client</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new Client()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/service/project.service.ts:71</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The client associated with the selected Project.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedProject"></a>
+                        <span class="name">
+                            <b>
+                            selectedProject</b>
+                            <a href="#selectedProject"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/Project.html" target="_self" >Project</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new Project()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/service/project.service.ts:62</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Tracks which Project is selectedProject in project-panel component and manage-project modal.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="snackBar"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            snackBar</b>
+                            <a href="#snackBar"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>MatSnackBar</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/service/project.service.ts:74</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="userAccountList"></a>
+                        <span class="name">
+                            <b>
+                            userAccountList</b>
+                            <a href="#userAccountList"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/UserAccount.html" target="_self" >BehaviorSubject&lt;Array&lt;UserAccount&gt;&gt;</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new BehaviorSubject([])</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/service/project.service.ts:68</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The UserAccounts assigned to the current project.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable} from &#x27;@angular/core&#x27;;
+import {catchError, map} from &quot;rxjs/operators&quot;;
+import {HttpClient, HttpHeaders} from &quot;@angular/common/http&quot;;
+import {BehaviorSubject, Observable} from &quot;rxjs&quot;;
+import {Project} from &quot;../model/project&quot;;
+import {
+  billableHourDownloadUrl,
+  billableUrl,
+  dataDumpUrl,
+  projectsUrl,
+  userAccountUrl
+} from &quot;../configuration/domainConfiguration&quot;;
+import {BudgetReport} from &quot;../model/budgetReport&quot;;
+import {BillableHoursReportLine} from &quot;../model/billableHoursReportLine&quot;;
+import {UserAccount} from &quot;../model/userAccount&quot;;
+import {MatSnackBar} from &quot;@angular/material&quot;;
+import {ExpenseService} from &quot;./expense.service&quot;;
+import {Entry} from &quot;../model/entry&quot;;
+import {Status} from &quot;../model/status&quot;;
+import {EntryApproveComponent} from &quot;../component/panel/entry-approve/entry-approve.component&quot;;
+import {SignInService} from &quot;./sign-in.service&quot;;
+import {Client} from &quot;../model/client&quot;;
+import {ErrorService} from &quot;./error.service&quot;;
+
+const httpOptions &#x3D; {
+  headers: new HttpHeaders({&#x27;Content-Type&#x27;: &#x27;application/json&#x27;})
+};
+
+const headers &#x3D; new HttpHeaders({
+  &#x27;Content-Type&#x27;: &#x27;application/json&#x27;
+});
+
+
+/**
+ * ProjectService is used to control the flow of data regarding user accounts to/from the view.
+ * @author Jessica Moffatt
+ * @author James Andrade
+ * @author Karol Talbot
+ * @version 3.0
+ */
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
+export class ProjectService {
+
+  /** The budget associated with the selected Project.*/
+  selectedBudget: BudgetReport;
+
+  /** The billable hour report for all Projects.*/
+  billableReport: BillableHoursReportLine[] &#x3D; [];
+
+  /** The actual hours spent working on a Project.*/
+  percentActual: number &#x3D; 0;
+
+  /** The percent of budgeted hours remaining.*/
+  percentRemaining: number &#x3D; 0;
+
+  /** The general expression used to check if projectId is valid */
+  public readonly regExp: string &#x3D; &quot;[A-Z]{2}[0-9]{4}&quot;;
+
+  /** Tracks which Project is selectedProject in project-panel component and manage-project modal.*/
+  selectedProject: Project &#x3D; new Project();
+
+  /** The list of all active Projects. */
+  projects: BehaviorSubject&lt;Array&lt;Project&gt;&gt; &#x3D; new BehaviorSubject([]);
+
+  /** The UserAccounts assigned to the current project.*/
+  userAccountList: BehaviorSubject&lt;Array&lt;UserAccount&gt;&gt; &#x3D; new BehaviorSubject([]);
+
+  /** The client associated with the selected Project.*/
+  private selectedClient: Client &#x3D; new Client();
+
+  constructor(private http: HttpClient,
+              public snackBar: MatSnackBar,
+              private expenseService: ExpenseService,
+              private signInService:SignInService,
+              private errorService: ErrorService) {
+  }
+
+  /**
+   * Sends a GET message to the server to retrieve all active Projects.
+   */
+  getAllProjects(): Observable&lt;Array&lt;Project&gt;&gt; {
+    return this.http.get(&#x60;${projectsUrl}&#x60;)
+      .pipe(map((data: any) &#x3D;&gt; {
+          if (data !&#x3D;&#x3D; undefined &amp;&amp; data._embedded !&#x3D;&#x3D; undefined) {
+            return data._embedded.projects as Project[];
+          } else {
+            return [];
+          }
+        }), catchError(this.errorService.handleError&lt;Project[]&gt;())
+      );
+  }
+
+  /**
+   * Sends a GET message to the server to retrieve the Projects for a specified UserAccount by their ID.
+   * @param userId The ID of the UserAccount whose Projects we want.
+   */
+  getProjectsForUser(userId: number): Observable&lt;Array&lt;Project&gt;&gt; {
+    return this.http.get(&#x60;${userAccountUrl}/${userId}/projects&#x60;)
+      .pipe(catchError(this.errorService.handleError&lt;Client[]&gt;()))
+      .pipe(map((data: any) &#x3D;&gt; {
+        if (data &#x3D;&#x3D;&#x3D; null) {
+          return [];
+        }
+        if (data._embedded !&#x3D;&#x3D; undefined) {
+          return data._embedded.projects as Project[];
+        } else {
+          return [];
+        }
+      }));
+  }
+
+  /**
+   * Sets the selected Project.
+   * @param project the project to be stored as selectedProject.
+   */
+  async setSelected(project: Project) {
+    this.selectedProject &#x3D; await project;
+    if (this.selectedProject !&#x3D; null &amp;&amp; this.selectedProject.id.match(this.regExp)) {
+      this.refreshUserAccountList();
+      this.expenseService.refreshExpenses(this.selectedProject);
+      this.getBudgetReportByProjectId(project).toPromise()
+        .then(
+          data &#x3D;&gt; {
+            this.selectedBudget &#x3D; data;
+            this.percentActual &#x3D; this.calculatePercentActual();
+            this.percentRemaining &#x3D; 100 - this.percentActual;
+          },
+          () &#x3D;&gt; this.errorService.displayErrorMessage(&#x27;project.service setSelected()&#x27;)
+        );
+    }
+    this.selectedClient.name &#x3D; this.selectedProject.client.name;
+    this.selectedClient.id &#x3D; this.selectedProject.client.id;
+    this.selectedClient._links &#x3D; this.selectedProject._links;
+
+    return this.selectedProject;
+  }
+
+  /** Returns selectedProject.*/
+  getSelectedProject() {
+    return this.selectedProject;
+  }
+
+  /** Returns selectedClient.*/
+  getSelectedClient() {
+    return this.selectedClient;
+  }
+
+  /**
+   * Sends a GET message to the server to retrieve the Project by their ID.
+   * @param id The ID of the project to get.
+   */
+  getProjectById(id: string) {
+    return this.http.get(&#x60;${projectsUrl}/${id}&#x60;)
+      .pipe(
+        map((res: Project) &#x3D;&gt; {
+          return res
+        }), catchError(this.errorService.handleError())
+      );
+  }
+
+  /**
+   * Sends a GET message to the server to retrieve the BudgetReport for the specified Project.
+   * @param project The Project to get a budget report for.
+   */
+  getBudgetReportByProjectId(project: Project) {
+    let url &#x3D; project._links[&quot;budget&quot;];
+    return this.http.get(&#x60;${url[&quot;href&quot;]}&#x60;)
+      .pipe(
+        map((res: BudgetReport) &#x3D;&gt; {
+          return res
+        })
+      );
+  }
+
+  /**
+   * Calculates the percent billable for the Budget Report.
+   */
+  calculatePercentBillable(): string {
+    if (this.selectedBudget) {
+      let percent &#x3D; this.selectedBudget.billableHours / this.selectedBudget.totalHours * 100;
+      let percentString &#x3D; percent.toFixed(2);
+
+      return percentString;
+    } else {
+      return &quot;0&quot;;
+    }
+  }
+
+  /**
+   * Calculates the percent of actual hours spent on the Project, for the Budget Report.
+   */
+  calculatePercentActual(): number {
+    if (this.selectedBudget) {
+      return this.selectedBudget.totalHours / this.selectedBudget.project.budgetedHours * 100;
+    } else {
+      return 0;
+    }
+  }
+
+  /**
+   * Sends a GET message to the server to retrieve the lines for the billable hours report.
+   */
+  getBillableReport() {
+    return this.http.get(billableUrl)
+      .pipe(catchError(this.errorService.handleError()))
+      .pipe(
+        map((res: BillableHoursReportLine[]) &#x3D;&gt; {
+          if (res !&#x3D;&#x3D; undefined)
+            return res
+          else
+            return []
+        })
+      );
+  }
+
+
+  /**
+   * Retrieves the data dump report as an xls file download.
+   */
+  getDataDump() {
+    return this.http.get(&#x60;${dataDumpUrl}&#x60;, {responseType: &#x27;blob&#x27;})
+      .pipe(
+        map((res) &#x3D;&gt; {
+          return res
+        }), catchError(this.errorService.handleError())
+      );
+  }
+
+  /**
+   * Retrieves the billable hour report as an xls file download.
+   */
+  downloadBillableReport() {
+    return this.http.get(&#x60;${billableHourDownloadUrl}&#x60;, {responseType: &#x27;blob&#x27;})
+      .pipe(
+        map((res) &#x3D;&gt; {
+          return res
+        }), catchError(this.errorService.handleError())
+      );
+  }
+
+  /**
+   * Saves the specified Project. If the Project is new (id &#x3D; 2), an HTTP POST is performed,
+   * else an HTTP PUT is performed to update the existing Project.
+   *
+   * @param project The Project to be created/updated.
+   */
+  async save(project: Project) {
+    if (project.id.length &#x3D;&#x3D; 2) {
+      return this.http.post&lt;Project&gt;(&#x60;${projectsUrl}&#x60;, JSON.stringify(project), httpOptions)
+        .toPromise()
+        .then((project) &#x3D;&gt; {
+          this.setSelected(project);
+          this.signInService.getNavBarList();
+        })
+        .catch(() &#x3D;&gt; this.errorService.displayError());;
+    } else {
+      const url &#x3D; project._links[&quot;update&quot;];
+
+      return this.http.put&lt;Project&gt;(url[&quot;href&quot;], JSON.stringify(project), httpOptions).toPromise()
+        .then((project) &#x3D;&gt; {
+          this.signInService.getNavBarList();
+        })
+        .catch(() &#x3D;&gt; this.errorService.displayError());
+    }
+  }
+
+  /**
+   * Performs an http PUT request to add the specified UserAccount(using their ID) to the Project.
+   * @param userAccountId The ID of the UserAccount to add to the Project.
+   */
+  addUser(userAccountId: number) {
+    let url &#x3D; &#x60;${projectsUrl}/${this.getSelectedProject().id}/add_member/${userAccountId}&#x60;;
+    this.http.put&lt;UserAccount&gt;(url, httpOptions).toPromise()
+      .then((response) &#x3D;&gt; {
+        this.refreshUserAccountList();
+        return response;
+      }).catch(() &#x3D;&gt; {
+      this.errorService.displayError();
+      return null;
+    });
+  }
+
+  /**
+   * Gets the list of all active Projects and populates them into the projects list.
+   */
+  refreshProjectList() {
+    return this.getAllProjects().forEach(project &#x3D;&gt; {
+      this.projects &#x3D; new BehaviorSubject&lt;Array&lt;Project&gt;&gt;(project);
+      this.sortProjects();
+    }).catch(() &#x3D;&gt; {
+      let getUsersErrorMessage &#x3D; &#x27;Something went wrong when getting the list of projects. Please contact your system administrator.&#x27;;
+      this.snackBar.open(getUsersErrorMessage, null, {
+        duration: 5000,
+        politeness: &#x27;assertive&#x27;,
+        panelClass: &#x27;snackbar-fail&#x27;,
+        horizontalPosition: &#x27;right&#x27;
+      });
+    });
+  }
+
+  /**
+   * Sorts the Projects in the projects list by ascending name.
+   */
+  sortProjects() {
+    this.projects.getValue().sort((project1, project2) &#x3D;&gt; {
+      let name1 &#x3D; project1.projectName.toLowerCase();
+      let name2 &#x3D; project2.projectName.toLowerCase();
+      if (name1 &gt; name2) {
+        return 1;
+      }
+      if (name1 &lt; name2) {
+        return -1;
+      }
+      return 0;
+    });
+  }
+
+  /**
+   * Sends a GET message to the server to retrieve all UserAccounts associated with this Project.
+   */
+  refreshUserAccountList() {
+    this.http.get(&#x60;${projectsUrl}/${this.selectedProject.id}/members&#x60;)
+      .pipe(catchError(this.errorService.handleError()))
+      .pipe(map((data: any) &#x3D;&gt; {
+        if (data !&#x3D;&#x3D; undefined) {
+          return data as UserAccount[];
+        } else {
+          return [];
+        }
+      })).toPromise().then(userAccount &#x3D;&gt; {
+      this.userAccountList &#x3D; new BehaviorSubject&lt;Array&lt;UserAccount&gt;&gt;(userAccount);
+    })
+  }
+
+  /**
+   * Performs an http PUT request to remove the specified UserAccount from the Project.
+   * @param userId
+   */
+  removeUser(userId: number) {
+    this.http.put(&#x60;${projectsUrl}/${this.selectedProject.id}/remove_member/${userId}&#x60;, httpOptions).toPromise()
+      .then(() &#x3D;&gt; this.refreshUserAccountList())
+      .catch(() &#x3D;&gt; this.errorService.displayError())
+  }
+
+  /**
+   * Logically deletes the selected Project (sets the active status to false.)
+   * @param project The Project to be deleted.
+   */
+  delete(project: Project) {
+    const url &#x3D; project._links[&quot;delete&quot;];
+    this.http.delete(url[&quot;href&quot;], httpOptions).toPromise().then((response) &#x3D;&gt; {
+      this.refreshProjectList();
+      return response as Project;
+    });
+  }
+
+  /**
+   * Gets the Entries for the selected Project.
+   * @param project The Project to get Entries for.
+   */
+  async getEntries(project: Project) {
+    let entryList: BehaviorSubject&lt;Array&lt;Entry&gt;&gt;;
+    entryList &#x3D; new BehaviorSubject([]);
+    await this.populateEntries(project).forEach(entries &#x3D;&gt; {
+      entryList &#x3D; new BehaviorSubject&lt;Array&lt;Entry&gt;&gt;(entries);
+    }).catch((error: any) &#x3D;&gt; {
+    });
+    return entryList;
+  }
+
+  /**
+   * Evaluates the specified entry. If the Entry&#x27;s status is approved, begins the process of PUTing the approval request,
+   * else if the Entry&#x27;s status is rejected, begins the process of PUTing the rejection request.
+   * If the Entry has neither status, no further action is taken.
+   * @param entry The entry to evaluate the status of.
+   */
+  async evaluateEntry(entry: Entry) {
+    if (entry.status &#x3D;&#x3D;&#x3D; Status.APPROVED) {
+      await this.putApprovalRequest(entry).then((data) &#x3D;&gt; {
+        return data;
+      });
+    } else if (entry.status &#x3D;&#x3D;&#x3D; Status.REJECTED) {
+      await this.putRejectionRequest(entry).then((data) &#x3D;&gt; {
+        return data;
+      });
+    }
+  }
+
+  /**
+   * Wraps the putApprovalRequest method call in a promise.
+   *
+   * @param currEntry The Entry currently being evaluated.
+   */
+  async promiseApproval(currEntry: Entry) {
+    let promise &#x3D; new Promise(resolve &#x3D;&gt; resolve(this.putApprovalRequest(currEntry)));
+    return await promise;
+  }
+
+  /**
+   * Performs an http PUT request to change the Entry&#x27;s status to APPROVED.
+   * @param entry The Entry to be approved.
+   */
+  async putApprovalRequest(entry: Entry) {
+    let url: string &#x3D; entry._links[&quot;evaluate&quot;][&quot;href&quot;];
+    let temp &#x3D; null;
+    await this.http.put(url, &#x27;&quot;APPROVED&quot;&#x27;, {headers: headers, observe: &quot;response&quot;}).toPromise().then(response &#x3D;&gt; {
+      temp &#x3D; response;
+
+      return response;
+    }).catch(() &#x3D;&gt; {
+      return null;
+    });
+    return temp;
+  }
+
+  /**
+   * Performs an http PUT request to change the Entry&#x27;s status to REJECTED.
+   * @param entry The Entry to be rejected.
+   */
+  async putRejectionRequest(entry: Entry): Promise&lt;Entry&gt; {
+    let url: string &#x3D; entry._links[&quot;evaluate&quot;][&quot;href&quot;];
+    let temp &#x3D; null;
+    await this.http.put(url, &#x27;&quot;REJECTED&quot;&#x27;, {headers: headers, observe: &quot;response&quot;}).toPromise().then(response &#x3D;&gt; {
+      temp &#x3D; response;
+      return response;
+    }).catch(() &#x3D;&gt; {
+      return null;
+    });
+
+    return temp;
+  }
+
+  /**
+   * Sends a GET message to the server to retrieve all submitted Entries for the specified Project.
+   * @param project The Project to get entries for.
+   */
+  populateEntries(project: Project): Observable&lt;Array&lt;Entry&gt;&gt; {
+    let url &#x3D; project._links[&quot;entries&quot;];
+    return this.http.get(url[&quot;href&quot;]).pipe(map((response: Response) &#x3D;&gt; response))
+      .pipe(map((data: any) &#x3D;&gt; {
+        if (data._embedded !&#x3D;&#x3D; undefined) {
+          let sorted &#x3D; data._embedded.entries as Entry[];
+          sorted &#x3D; sorted.sort((entry1, entry2) &#x3D;&gt; entry1.timesheet.id - entry2.timesheet.id);
+          return sorted;
+        } else {
+          return [];
+        }
+      }));
+  }
+
+  /**
+   * For each entry of the selected project, calls evaluateEntry which in tern performs either an approval or rejection.
+   */
+  async submit(entries) {
+    return await entries.forEach((component: EntryApproveComponent) &#x3D;&gt; {
+      let entry &#x3D; component.entry;
+      return this.evaluateEntry(entry);
+    });
+  }
+
+  /**
+   * Returns projects.
+   */
+  getProjects(): BehaviorSubject&lt;Array&lt;Project&gt;&gt; {
+    return this.projects;
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'ProjectService.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

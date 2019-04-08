@@ -1,0 +1,3259 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>tomi-client documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">tomi-client documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>ManageTeamsPanelComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts</code>
+</p>
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Example</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-manage-teams-panel</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./manage-teams-panel.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./manage-teams-panel.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#available_filter">available_filter</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#availableMembers">availableMembers</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#availableMembersPage">availableMembersPage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#availableMembersPageNumber">availableMembersPageNumber</a>
+                            </li>
+                            <li>
+                                <a href="#availablePaginator">availablePaginator</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#deleteTeamDialog">deleteTeamDialog</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#dirtyUserBuffer">dirtyUserBuffer</a>
+                            </li>
+                            <li>
+                                <a href="#editTeamLeadId">editTeamLeadId</a>
+                            </li>
+                            <li>
+                                <a href="#editTeamName">editTeamName</a>
+                            </li>
+                            <li>
+                                <a href="#member_filter">member_filter</a>
+                            </li>
+                            <li>
+                                <a href="#memberPaginator">memberPaginator</a>
+                            </li>
+                            <li>
+                                <a href="#PAGE_SIZE">PAGE_SIZE</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#selectedTeam">selectedTeam</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#selectedTeamMembers">selectedTeamMembers</a>
+                            </li>
+                            <li>
+                                <a href="#sideBar">sideBar</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#teamMembersPage">teamMembersPage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#teamMembersPageNumber">teamMembersPageNumber</a>
+                            </li>
+                            <li>
+                                <a href="#teamNameControl">teamNameControl</a>
+                            </li>
+                            <li>
+                                <a href="#teamNameMatcher">teamNameMatcher</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#userAccountService">userAccountService</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#addUserAccount">addUserAccount</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#availablePageChange">availablePageChange</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#cancel">cancel</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#delete">delete</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#drop">drop</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getAvailableMembers">getAvailableMembers</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getAvailableMembersPage">getAvailableMembersPage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getSelectedTeam">getSelectedTeam</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getSelectedTeamMembers">getSelectedTeamMembers</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getTeamMembers">getTeamMembers</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getTeamMembersPage">getTeamMembersPage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isTeamSelected">isTeamSelected</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#move">move</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#openDeleteDialog">openDeleteDialog</a>
+                            </li>
+                            <li>
+                                <a href="#openDialog">openDialog</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#remove">remove</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#save">save</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#setAvailableMembersPage">setAvailableMembersPage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#setSelectedTeam">setSelectedTeam</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#setTeamMembersPage">setTeamMembersPage</a>
+                            </li>
+                            <li>
+                                <a href="#setValuesOnOpen">setValuesOnOpen</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#teamPageChange">teamPageChange</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostListeners</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#window:keyup.Enter">window:keyup.Enter</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(dialog: MatDialog, deleteTeamDialog: MatDialog, teamService: <a href="../injectables/TeamService.html">TeamService</a>, userAccountService: <a href="../injectables/UserAccountService.html">UserAccountService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="120" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:120</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>deleteTeamDialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>teamService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TeamService.html" target="_self" >TeamService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>userAccountService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserAccountService.html" target="_self" >UserAccountService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+    <section>
+    <h3>HostListeners</h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="window:keyup.Enter"></a>
+                    <span class="name">
+                        <b>
+                            window:keyup.Enter
+                        </b>
+                        <a href="#window:keyup.Enter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <i>Arguments : </i><code>'$event' </code>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>window:keyup.Enter(e: KeyboardEvent)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="108"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:108</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Listens for the enter key&#39;s keyup event; performs the save function on that event.</p>
+</div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addUserAccount"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            addUserAccount
+                        </b>
+                        <a href="#addUserAccount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addUserAccount(member: <a href="../classes/UserAccount.html">UserAccount</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="251"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:251</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Adds the specified UserAccount to the Team.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>member</td>
+                                    <td>
+                                                <code><a href="../classes/UserAccount.html" target="_self" >UserAccount</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The UserAccount to be added.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="availablePageChange"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            availablePageChange
+                        </b>
+                        <a href="#availablePageChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>availablePageChange(event: PageEvent)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="331"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:331</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Changes the available members page number to the specified index.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+                                    <td>
+                                            <code>PageEvent</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The page event containing the page index.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cancel"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            cancel
+                        </b>
+                        <a href="#cancel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>cancel()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="223"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:223</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Clears the user buffer and deselects the selected Team.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="delete"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                            delete
+                        </b>
+                        <a href="#delete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>delete()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="361"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:361</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Passes on the request to delete the selected Team to the TeamService.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="drop"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            drop
+                        </b>
+                        <a href="#drop"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>drop(event: <a href="https://angular.io/api/router/Event" target="_blank">Event</a>, list: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank">String</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="209"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:209</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Drag and drop function used to either add or remove members (retrieved from the event)
+to the team member list or the available members list.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+                                    <td>
+                                                <code><a href="https://angular.io/api/router/Event" target="_blank" >Event</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The object dropped as an event.</p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>list</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank" >String</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The list the event is being dropped into.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAvailableMembers"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            getAvailableMembers
+                        </b>
+                        <a href="#getAvailableMembers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAvailableMembers()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="199"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:199</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns availableMembers.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAvailableMembersPage"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            getAvailableMembersPage
+                        </b>
+                        <a href="#getAvailableMembersPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAvailableMembersPage()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="309"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:309</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Gets the team members to be displayed on the available members page.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSelectedTeam"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            getSelectedTeam
+                        </b>
+                        <a href="#getSelectedTeam"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getSelectedTeam()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="156"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:156</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns selectedTeam.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Team.html" target="_self" >Team</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSelectedTeamMembers"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            getSelectedTeamMembers
+                        </b>
+                        <a href="#getSelectedTeamMembers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getSelectedTeamMembers()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="192"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:192</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns selectedTeamMembers.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTeamMembers"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            getTeamMembers
+                        </b>
+                        <a href="#getTeamMembers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getTeamMembers()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="172"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:172</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Populates the selectedTeamMembers list and the availableMembers list.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTeamMembersPage"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            getTeamMembersPage
+                        </b>
+                        <a href="#getTeamMembersPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getTeamMembersPage()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="289"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:289</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Gets the team members to be displayed on the team members page.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isTeamSelected"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            isTeamSelected
+                        </b>
+                        <a href="#isTeamSelected"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isTeamSelected()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="139"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:139</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns true if selectedTeam is not null, otherwise false.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="move"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            move
+                        </b>
+                        <a href="#move"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>move(member: <a href="../classes/UserAccount.html">UserAccount</a>, list: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="271"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:271</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Moves the specified team member to the opposite list.
+If the UserAccount was in selectedTeamMembers, moves them to availableMembers; and visa versa.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>member</td>
+                                    <td>
+                                                <code><a href="../classes/UserAccount.html" target="_self" >UserAccount</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>list</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="125"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:125</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openDeleteDialog"></a>
+                    <span class="name">
+                        <b>
+                            openDeleteDialog
+                        </b>
+                        <a href="#openDeleteDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openDeleteDialog()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="372"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:372</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Displays a Modal component for deleing the selected Team.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openDialog"></a>
+                    <span class="name">
+                        <b>
+                            openDialog
+                        </b>
+                        <a href="#openDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openDialog()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="163"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:163</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Displays a Modal component for adding a new Team.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="remove"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            remove
+                        </b>
+                        <a href="#remove"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>remove(member: <a href="../classes/UserAccount.html">UserAccount</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="233"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:233</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Removes the specified UserAccount from the Team.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>member</td>
+                                    <td>
+                                                <code><a href="../classes/UserAccount.html" target="_self" >UserAccount</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The UserAccount to be removed.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="save"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                            save
+                        </b>
+                        <a href="#save"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>save()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="339"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:339</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Passes on the request to save changes to the selected Team to the UserAccountService (for team member changes) and
+the TeamService.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setAvailableMembersPage"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            setAvailableMembersPage
+                        </b>
+                        <a href="#setAvailableMembersPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setAvailableMembersPage()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="302"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:302</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sets the members to be displayed in the available members page.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setSelectedTeam"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            setSelectedTeam
+                        </b>
+                        <a href="#setSelectedTeam"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setSelectedTeam(team: <a href="../classes/Team.html">Team</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="147"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:147</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sets selectedTeam to the specified Team.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>team</td>
+                                    <td>
+                                                <code><a href="../classes/Team.html" target="_self" >Team</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The Team to set selectedTeam to.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setTeamMembersPage"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            setTeamMembersPage
+                        </b>
+                        <a href="#setTeamMembersPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setTeamMembersPage()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="282"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:282</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sets the members to be displayed in the team members page.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setValuesOnOpen"></a>
+                    <span class="name">
+                        <b>
+                            setValuesOnOpen
+                        </b>
+                        <a href="#setValuesOnOpen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setValuesOnOpen()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="132"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:132</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Initialize the value inputs on the template. This fixes issues caused by the Validators.required when an input is pristine.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="teamPageChange"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            teamPageChange
+                        </b>
+                        <a href="#teamPageChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>teamPageChange(event: PageEvent)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="323"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:323</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Changes the team members page number to the specified index.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+                                    <td>
+                                            <code>PageEvent</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The page event containing the page index.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="available_filter"></a>
+                        <span class="name">
+                            <b>
+                            available_filter</b>
+                            <a href="#available_filter"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;available_filter&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="120" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:120</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The filter bar for filtering the available members displayed.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="availableMembers"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            availableMembers</b>
+                            <a href="#availableMembers"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/UserAccount.html" target="_self" >BehaviorSubject&lt;Array&lt;UserAccount&gt;&gt;</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new BehaviorSubject([])</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:48</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The UserAccounts that are available to be added as members of this Team.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="availableMembersPage"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            availableMembersPage</b>
+                            <a href="#availableMembersPage"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/UserAccount.html" target="_self" >Array&lt;UserAccount&gt;</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:68</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The list of available members currently being displayed on this page.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="availableMembersPageNumber"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            availableMembersPageNumber</b>
+                            <a href="#availableMembersPageNumber"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:63</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The currently viewed page number for the available members.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="availablePaginator"></a>
+                        <span class="name">
+                            <b>
+                            availablePaginator</b>
+                            <a href="#availablePaginator"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>MatPaginator</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;availablePaginator&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:102</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The paginator used to navigate the pages of the available members.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="deleteTeamDialog"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            deleteTeamDialog</b>
+                            <a href="#deleteTeamDialog"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>MatDialog</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="122" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:122</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dirtyUserBuffer"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            dirtyUserBuffer</b>
+                            <a href="#dirtyUserBuffer"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/UserAccount.html" target="_self" >Array&lt;UserAccount&gt;</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:73</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The buffer of users that need to be written out on save.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="editTeamLeadId"></a>
+                        <span class="name">
+                            <b>
+                            editTeamLeadId</b>
+                            <a href="#editTeamLeadId"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>MatSelect</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;editTeamLeadId&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:87</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The selector for this Team&#39;s team lead.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="editTeamName"></a>
+                        <span class="name">
+                            <b>
+                            editTeamName</b>
+                            <a href="#editTeamName"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>MatInput</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;editTeamName&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:84</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The input field for this Team&#39;s name.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="member_filter"></a>
+                        <span class="name">
+                            <b>
+                            member_filter</b>
+                            <a href="#member_filter"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;member_filter&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:115</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The filter bar for filtering the Team&#39;s displayed team members.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="memberPaginator"></a>
+                        <span class="name">
+                            <b>
+                            memberPaginator</b>
+                            <a href="#memberPaginator"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>MatPaginator</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;memberPaginator&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="97" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:97</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The paginator used to navigate the pages of this Team&#39;s team members.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="PAGE_SIZE"></a>
+                        <span class="name">
+                            <b>
+                            PAGE_SIZE</b>
+                            <a href="#PAGE_SIZE"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>6</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:33</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The number of Teams to be displayed per page.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedTeam"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            selectedTeam</b>
+                            <a href="#selectedTeam"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/Team.html" target="_self" >Team</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>null</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:38</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The selected Team.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedTeamMembers"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            selectedTeamMembers</b>
+                            <a href="#selectedTeamMembers"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/UserAccount.html" target="_self" >BehaviorSubject&lt;Array&lt;UserAccount&gt;&gt;</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new BehaviorSubject([])</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:43</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The team members for the selected Team.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="sideBar"></a>
+                        <span class="name">
+                            <b>
+                            sideBar</b>
+                            <a href="#sideBar"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;sideBar&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="92" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:92</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The team sidebar component within this manage teams panel component.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="teamMembersPage"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            teamMembersPage</b>
+                            <a href="#teamMembersPage"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/UserAccount.html" target="_self" >Array&lt;UserAccount&gt;</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:58</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The list of this Team&#39;s team members currently being displayed on this page.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="teamMembersPageNumber"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            teamMembersPageNumber</b>
+                            <a href="#teamMembersPageNumber"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:53</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The currently viewed page number for this Team&#39;s team members..</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="teamNameControl"></a>
+                        <span class="name">
+                            <b>
+                            teamNameControl</b>
+                            <a href="#teamNameControl"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new FormControl(&#x27;&#x27;, [
+    Validators.required
+  ])</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:76</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Validations for the name of this Team. </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="teamNameMatcher"></a>
+                        <span class="name">
+                            <b>
+                            teamNameMatcher</b>
+                            <a href="#teamNameMatcher"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new CustomErrorStateMatcher()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:81</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Invalid name error detection. </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="userAccountService"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            userAccountService</b>
+                            <a href="#userAccountService"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../injectables/UserAccountService.html" target="_self" >UserAccountService</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="122" class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:122</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, HostListener, Inject, Input, OnInit, Pipe, PipeTransform, ViewChild} from &#x27;@angular/core&#x27;;
+import {Team} from &quot;../../../model/team&quot;;
+import {FormControl, Validators} from &quot;@angular/forms&quot;;
+import {TeamService} from &quot;../../../service/team.service&quot;;
+import {UserAccountService} from &quot;../../../service/user-account.service&quot;;
+import {UserAccount} from &quot;../../../model/userAccount&quot;;
+import {BehaviorSubject} from &quot;rxjs&quot;;
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+  MatInput,
+  MatPaginator,
+  MatSelect,
+  PageEvent
+} from &quot;@angular/material&quot;;
+import {AddTeamComponent} from &quot;../../modal/add-team/add-team.component&quot;;
+import {CustomErrorStateMatcher} from &quot;../../extra/CustomErrorStateMatcher&quot;;
+
+/**
+ * @author Karol Talbot
+ * @version 2.0
+ */
+@Component({
+  selector: &#x27;app-manage-teams-panel&#x27;,
+  templateUrl: &#x27;./manage-teams-panel.component.html&#x27;,
+  styleUrls: [&#x27;./manage-teams-panel.component.scss&#x27;]
+})
+export class ManageTeamsPanelComponent implements OnInit {
+  /**
+   * The number of Teams to be displayed per page.
+   */
+  PAGE_SIZE: number &#x3D; 6;
+
+  /**
+   * The selected Team.
+   */
+  private selectedTeam: Team &#x3D; null;
+
+  /**
+   * The team members for the selected Team.
+   */
+  private selectedTeamMembers: BehaviorSubject&lt;Array&lt;UserAccount&gt;&gt; &#x3D; new BehaviorSubject([]);
+
+  /**
+   * The UserAccounts that are available to be added as members of this Team.
+   */
+  private availableMembers: BehaviorSubject&lt;Array&lt;UserAccount&gt;&gt; &#x3D; new BehaviorSubject([]);
+
+  /**
+   * The currently viewed page number for this Team&#x27;s team members..
+   */
+  private teamMembersPageNumber: number &#x3D; 0;
+
+  /**
+   * The list of this Team&#x27;s team members currently being displayed on this page.
+   */
+  private teamMembersPage: Array&lt;UserAccount&gt; &#x3D; [];
+
+  /**
+   * The currently viewed page number for the available members.
+   */
+  private availableMembersPageNumber: number &#x3D; 0;
+
+  /**
+   * The list of available members currently being displayed on this page.
+   */
+  private availableMembersPage: Array&lt;UserAccount&gt; &#x3D; [];
+
+  /**
+   * The buffer of users that need to be written out on save.
+   */
+  private dirtyUserBuffer: Array&lt;UserAccount&gt; &#x3D; [];
+
+  /** Validations for the name of this Team. */
+  teamNameControl &#x3D; new FormControl(&#x27;&#x27;, [
+    Validators.required
+  ]);
+
+  /** Invalid name error detection. */
+  teamNameMatcher &#x3D; new CustomErrorStateMatcher();
+
+  /** The input field for this Team&#x27;s name.*/
+  @ViewChild(&#x27;editTeamName&#x27;) editTeamName: MatInput;
+
+  /** The selector for this Team&#x27;s team lead.*/
+  @ViewChild(&#x27;editTeamLeadId&#x27;) editTeamLeadId: MatSelect;
+
+  /**
+   * The team sidebar component within this manage teams panel component.
+   */
+  @ViewChild(&#x27;sideBar&#x27;) sideBar;
+
+  /**
+   * The paginator used to navigate the pages of this Team&#x27;s team members.
+   */
+  @ViewChild(&#x27;memberPaginator&#x27;) memberPaginator: MatPaginator;
+
+  /**
+   * The paginator used to navigate the pages of the available members.
+   */
+  @ViewChild(&#x27;availablePaginator&#x27;) availablePaginator: MatPaginator;
+
+  /**
+   * Listens for the enter key&#x27;s keyup event; performs the save function on that event.
+   * @param e The event captured.
+   */
+  @HostListener(&#x27;window:keyup.Enter&#x27;, [&#x27;$event&#x27;]) enter(e: KeyboardEvent) {
+    this.save().then();
+  }
+
+  /**
+   * The filter bar for filtering the Team&#x27;s displayed team members.
+   */
+  @ViewChild(&#x27;member_filter&#x27;) member_filter;
+
+  /**
+   * The filter bar for filtering the available members displayed.
+   */
+  @ViewChild(&#x27;available_filter&#x27;) available_filter;
+
+  constructor(private dialog: MatDialog, public deleteTeamDialog: MatDialog, private teamService: TeamService, public userAccountService: UserAccountService) {
+  }
+
+  ngOnInit() {
+  }
+
+
+  /**
+   * Initialize the value inputs on the template. This fixes issues caused by the Validators.required when an input is pristine.
+   */
+  setValuesOnOpen() {
+    this.teamNameControl.setValue(this.selectedTeam.teamName);
+  }
+
+  /**
+   * Returns true if selectedTeam is not null, otherwise false.
+   */
+  public isTeamSelected(): boolean {
+    return this.selectedTeam !&#x3D; null;
+  }
+
+  /**
+   * Sets selectedTeam to the specified Team.
+   * @param team The Team to set selectedTeam to.
+   */
+  public setSelectedTeam(team: Team): void {
+    this.selectedTeam &#x3D; team;
+    this.setValuesOnOpen();
+    this.getTeamMembers();
+  }
+
+  /**
+   * Returns selectedTeam.
+   */
+  public getSelectedTeam(): Team {
+    return this.selectedTeam;
+  }
+
+  /**
+   * Displays a Modal component for adding a new Team.
+   */
+  openDialog(): void {
+    this.dialog.open(AddTeamComponent, {
+      width: &quot;70vw&quot;
+    });
+  }
+
+  /**
+   * Populates the selectedTeamMembers list and the availableMembers list.
+   */
+  public getTeamMembers() {
+    this.teamService.getTeamMembers(this.selectedTeam).forEach(userAccount &#x3D;&gt; {
+      this.selectedTeamMembers &#x3D; new BehaviorSubject&lt;Array&lt;UserAccount&gt;&gt;(userAccount);
+      this.userAccountService.sortUserAccounts(this.selectedTeamMembers);
+      this.setTeamMembersPage();
+    }).catch((error: any) &#x3D;&gt; {
+
+    });
+    this.teamService.getAllFreeMembers().forEach(userAccount &#x3D;&gt; {
+      this.availableMembers &#x3D; new BehaviorSubject&lt;Array&lt;UserAccount&gt;&gt;(userAccount);
+      this.userAccountService.sortUserAccounts(this.availableMembers);
+      this.setAvailableMembersPage();
+    }).catch((error: any) &#x3D;&gt; {
+
+    });
+  }
+
+  /**
+   * Returns selectedTeamMembers.
+   */
+  public getSelectedTeamMembers() {
+    return this.selectedTeamMembers;
+  }
+
+  /**
+   * Returns availableMembers.
+   */
+  public getAvailableMembers() {
+    return this.availableMembers;
+  }
+
+  /**
+   * Drag and drop function used to either add or remove members (retrieved from the event)
+   * to the team member list or the available members list.
+   * @param event The object dropped as an event.
+   * @param list The list the event is being dropped into.
+   */
+  public drop(event: Event, list: String) {
+    let member &#x3D; event[&#x27;item&#x27;].data as UserAccount;
+    if (event[&#x27;container&#x27;] !&#x3D; event[&#x27;previousContainer&#x27;]) {
+      if (&quot;available&quot; &#x3D;&#x3D; list) {
+        this.remove(member);
+      } else {
+        this.addUserAccount(member);
+      }
+    }
+  }
+
+  /**
+   * Clears the user buffer and deselects the selected Team.
+   */
+  public cancel() {
+    this.dirtyUserBuffer &#x3D; [];
+    this.sideBar.unselect(this.selectedTeam.id);
+    this.selectedTeam &#x3D; null;
+  }
+
+  /**
+   * Removes the specified UserAccount from the Team.
+   * @param member The UserAccount to be removed.
+   */
+  private remove(member: UserAccount) {
+    let index: number;
+    let arrayLocation &#x3D; this.selectedTeamMembers.getValue().lastIndexOf(member);
+    this.selectedTeamMembers.getValue().splice(arrayLocation, 1);
+    this.availableMembers.getValue().push(member);
+    index &#x3D; this.dirtyUserBuffer.lastIndexOf(member);
+    member.teamId &#x3D; -1;
+    if (-1 &#x3D;&#x3D; index) {
+      this.dirtyUserBuffer.push(member);
+    } else {
+      this.dirtyUserBuffer.splice(index, 1);
+    }
+  }
+
+  /**
+   * Adds the specified UserAccount to the Team.
+   * @param member The UserAccount to be added.
+   */
+  private addUserAccount(member: UserAccount) {
+    let index: number;
+    let arrayLocation &#x3D; this.availableMembers.getValue().lastIndexOf(member);
+    this.availableMembers.getValue().splice(arrayLocation, 1);
+    this.selectedTeamMembers.getValue().push(member);
+    index &#x3D; this.dirtyUserBuffer.lastIndexOf(member);
+    member.teamId &#x3D; this.selectedTeam.id;
+    if (-1 &#x3D;&#x3D; index) {
+      this.dirtyUserBuffer.push(member);
+    } else {
+      this.dirtyUserBuffer.splice(index, 1);
+    }
+  }
+
+  /**
+   * Moves the specified team member to the opposite list.
+   * If the UserAccount was in selectedTeamMembers, moves them to availableMembers; and visa versa.
+   * @param member
+   * @param list
+   */
+  public move(member: UserAccount, list: string) {
+    if (&quot;available&quot; !&#x3D; list) {
+      this.remove(member);
+    } else {
+      this.addUserAccount(member);
+    }
+  }
+
+  /**
+   * Sets the members to be displayed in the team members page.
+   */
+  public setTeamMembersPage() {
+    this.teamMembersPage &#x3D; this.selectedTeamMembers.getValue();
+  }
+
+  /**
+   * Gets the team members to be displayed on the team members page.
+   */
+  public getTeamMembersPage() {
+    let filter &#x3D; new FilterTeamUserAccountByName();
+    let filterList &#x3D; this.teamMembersPage;
+
+    if(this.member_filter !&#x3D; undefined){
+      filterList &#x3D; filter.transform(this.teamMembersPage, this.member_filter.nativeElement.value);
+    }
+    return filterList.slice(this.teamMembersPageNumber * this.PAGE_SIZE, this.teamMembersPageNumber * this.PAGE_SIZE + this.PAGE_SIZE);
+  }
+
+  /**
+   * Sets the members to be displayed in the available members page.
+   */
+  public setAvailableMembersPage() {
+    this.availableMembersPage &#x3D; this.availableMembers.getValue();
+  }
+
+  /**
+   * Gets the team members to be displayed on the available members page.
+   */
+  public getAvailableMembersPage() {
+    let filter &#x3D; new FilterTeamUserAccountByName();
+    let filterList &#x3D; this.availableMembersPage;
+
+    if(this.available_filter !&#x3D; undefined){
+      filterList &#x3D; filter.transform(this.availableMembersPage, this.available_filter.nativeElement.value);
+    }
+    return filterList.slice(this.availableMembersPageNumber * this.PAGE_SIZE, this.availableMembersPageNumber * this.PAGE_SIZE + this.PAGE_SIZE);
+  }
+
+  /**
+   * Changes the team members page number to the specified index.
+   * @param event The page event containing the page index.
+   */
+  public teamPageChange(event: PageEvent) {
+    this.teamMembersPageNumber &#x3D; event.pageIndex;
+  }
+
+  /**
+   * Changes the available members page number to the specified index.
+   * @param event The page event containing the page index.
+   */
+  public availablePageChange(event: PageEvent) {
+    this.availableMembersPageNumber &#x3D; event.pageIndex;
+  }
+
+  /**
+   * Passes on the request to save changes to the selected Team to the UserAccountService (for team member changes) and
+   * the TeamService.
+   */
+  public async save() {
+    if (this.teamNameControl.valid) {
+      this.selectedTeam.teamName &#x3D; this.teamNameControl.value;
+      if (undefined !&#x3D; this.editTeamLeadId.value) {
+        this.selectedTeam.leadId &#x3D; this.editTeamLeadId.value;
+      } else {
+        this.selectedTeam.leadId &#x3D; -1;
+      }
+
+      this.dirtyUserBuffer.forEach(async (user: UserAccount) &#x3D;&gt; {
+        await this.userAccountService.save(user);
+      });
+      await this.teamService.save(this.selectedTeam);
+      this.sideBar.unselect(this.selectedTeam.id);
+      this.selectedTeam &#x3D; null;
+      this.dirtyUserBuffer &#x3D; [];
+    }
+  }
+
+  /**
+   * Passes on the request to delete the selected Team to the TeamService.
+   */
+  public async delete() {
+    this.dirtyUserBuffer&#x3D; [];
+    await this.teamService.delete(this.selectedTeam);
+    this.sideBar.unselect(this.selectedTeam.id);
+    this.teamService.initializeTeams();
+    this.selectedTeam &#x3D; null;
+  }
+
+  /**
+   * Displays a Modal component for deleing the selected Team.
+   */
+  openDeleteDialog() {
+    this.deleteTeamDialog.open(DeleteTeamModal, {
+      width: &#x27;40vw&#x27;,
+      data: {teamToDelete: this.selectedTeam, parent: this}
+    });
+  }
+}
+
+// Delete Modal
+
+/**
+ * DeleteTeamModal is used to get confirmation from the user regarding their desire to delete a team.
+ */
+@Component({
+  selector: &#x27;app-delete-team-modal&#x27;,
+  templateUrl: &#x27;./delete-team-modal.html&#x27;,
+  styleUrls: [&#x27;./delete-team-modal.scss&#x27;]
+})
+export class DeleteTeamModal {
+  /**
+   * The team to be deleted.
+   */
+  teamToDelete: Team;
+
+  constructor(public dialogRef: MatDialogRef&lt;DeleteTeamModal&gt;,
+              @Inject(MAT_DIALOG_DATA) public data: DeleteDialogData) {
+
+  }
+
+  ngOnInit() {
+    this.teamToDelete &#x3D; this.data.teamToDelete;
+  }
+
+  /** Closes the modal with no extra actions.*/
+  canceledDelete(): void {
+    this.dialogRef.close();
+  }
+
+  /** Facilitates deletion of the selected Team.**/
+  confirmedDelete() {
+    this.data.parent.delete();
+    this.dialogRef.close();
+  }
+}
+
+/** Data interface for the DeleteTeamModal */
+export interface DeleteDialogData {
+  teamToDelete: Team;
+  parent: ManageTeamsPanelComponent;
+}
+
+/**
+ * Class used to filter the user accounts of either the team members list or the available members list.
+ */
+export class FilterTeamUserAccountByName {
+  transform(userList: Array&lt;UserAccount&gt;, nameFilter: string): any {
+    nameFilter &#x3D; nameFilter.toLowerCase();
+    if (!nameFilter) return userList;
+
+    return userList.filter(n &#x3D;&gt; {
+      let name &#x3D; n.firstName + n.lastName;
+      name &#x3D; name.toLowerCase();
+
+      return name.indexOf(nameFilter) &gt;&#x3D; 0;
+    });
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!--
+  @author Karol Talbot
+  @version 2.0
+--&gt;
+&lt;div class&#x3D;&quot;sidebar_container&quot;&gt;
+  &lt;app-team-sidebar #sideBar&gt;&lt;/app-team-sidebar&gt;
+&lt;/div&gt;
+&lt;div class&#x3D;&quot;team_view&quot;&gt;
+  &lt;ng-template [ngIf]&#x3D;&quot;isTeamSelected()&quot;&gt;
+    &lt;mat-card class&#x3D;&quot;team_edit_card&quot;&gt;
+      &lt;mat-card-content&gt;
+        &lt;form #editTeamForm&#x3D;&quot;ngForm&quot;&gt;
+          &lt;mat-form-field id&#x3D;&quot;team&quot;&gt;
+            &lt;input matInput #editTeamName placeholder&#x3D;&quot;Team Name&quot; [formControl]&#x3D;&quot;teamNameControl&quot; [errorStateMatcher]&#x3D;&quot;teamNameMatcher&quot;&gt;
+            &lt;mat-error
+              *ngIf&#x3D;&quot;teamNameControl.hasError(&#x27;required&#x27;)&quot;&gt;
+              Name is &lt;strong&gt;required&lt;/strong&gt;&lt;/mat-error&gt;
+          &lt;/mat-form-field&gt;
+          &lt;mat-form-field id&#x3D;&quot;team_lead&quot;&gt;
+            &lt;mat-select #editTeamLeadId placeholder&#x3D;&quot;Team Lead&quot; [value]&#x3D;&quot;this.getSelectedTeam().leadId&quot;&gt;
+              &lt;mat-option [value]&#x3D;&quot;-1&quot;&gt;None&lt;/mat-option&gt;
+              &lt;mat-option *ngFor&#x3D;&quot;let user of this.getSelectedTeamMembers() | async&quot;
+                          [value]&#x3D;&quot;user.id&quot;&gt;{{user.firstName}} {{user.lastName}}&lt;/mat-option&gt;
+            &lt;/mat-select&gt;
+          &lt;/mat-form-field&gt;
+          &lt;div cdkDropListGroup&gt;
+            &lt;span class&#x3D;&quot;title_line&quot;&gt;
+              &lt;span class&#x3D;&quot;title&quot;&gt;Team Members&lt;/span&gt;
+              &lt;span class&#x3D;&quot;search_bar_inline&quot;&gt;
+                &lt;input #member_filter id&#x3D;&quot;member_filter&quot; [ngClass]&#x3D;&quot;&#x27;input_search&#x27;&quot;
+                       placeholder&#x3D;&quot;search&quot; (keyup)&#x3D;&quot;0&quot;&gt;
+              &lt;/span&gt;
+              &lt;mat-paginator #memberPaginator [hidePageSize]&#x3D;&quot;true&quot;
+                             [length]&#x3D;&quot;this.getSelectedTeamMembers().getValue().length&quot;
+                             [pageSize]&#x3D;&quot;this.PAGE_SIZE&quot; (page)&#x3D;&quot;teamPageChange($event)&quot;&gt;
+              &lt;/mat-paginator&gt;
+            &lt;/span&gt;
+            &lt;div class&#x3D;&quot;chip_list&quot;&gt;
+              &lt;mat-chip-list cdkDropList #teamMembers&#x3D;&quot;cdkDropList&quot; [cdkDropListConnectedTo]&#x3D;&quot;[availableUserAccounts]&quot;
+                             (cdkDropListDropped)&#x3D;&quot;drop($event, &#x27;team&#x27;)&quot;&gt;
+                &lt;mat-chip [cdkDragData]&#x3D;&quot;user_account&quot; (click)&#x3D;&quot;move(user_account, &#x27;team&#x27;)&quot;
+                          class&#x3D;&quot;user_account on_team&quot;
+                          *ngFor&#x3D;&quot;let user_account of this.getTeamMembersPage()&quot; cdkDrag&gt;
+                  {{user_account.firstName}} {{user_account.lastName}}
+                &lt;/mat-chip&gt;
+              &lt;/mat-chip-list&gt;
+              &lt;ng-template [ngIf]&#x3D;&quot;this.getSelectedTeamMembers().getValue().length &#x3D;&#x3D; 0&quot;&gt;
+                &lt;div class&#x3D;&quot;no_users&quot;&gt;
+                  There are no members on this team
+                &lt;/div&gt;
+              &lt;/ng-template&gt;
+            &lt;/div&gt;
+            &lt;span class&#x3D;&quot;title_line&quot;&gt;
+                &lt;span class&#x3D;&quot;title&quot;&gt;Available Members&lt;/span&gt;
+                &lt;span class&#x3D;&quot;search_bar_inline&quot;&gt;&lt;input #available_filter id&#x3D;&quot;available_filter&quot;
+                                                       [ngClass]&#x3D;&quot;&#x27;input_search&#x27;&quot;
+                                                       placeholder&#x3D;&quot;search&quot; (keyup)&#x3D;&quot;0&quot;&gt;&lt;/span&gt;
+                &lt;mat-paginator #availablePaginator [hidePageSize]&#x3D;&quot;true&quot; [pageSize]&#x3D;&quot;this.PAGE_SIZE&quot;
+                               [length]&#x3D;&quot;this.getAvailableMembers().getValue().length&quot;
+                               (page)&#x3D;&quot;availablePageChange($event)&quot;&gt;&lt;/mat-paginator&gt;
+            &lt;/span&gt;
+            &lt;div class&#x3D;&quot;chip_list&quot;&gt;
+              &lt;mat-chip-list cdkDropList #availableUserAccounts&#x3D;&quot;cdkDropList&quot; [cdkDropListConnectedTo]&#x3D;&quot;[teamMembers]&quot;
+                             (cdkDropListDropped)&#x3D;&quot;drop($event, &#x27;available&#x27;)&quot;&gt;
+                &lt;mat-chip [cdkDragData]&#x3D;&quot;user_account&quot; (click)&#x3D;&quot;move(user_account, &#x27;available&#x27;)&quot;
+                          class&#x3D;&quot;user_account&quot; *ngFor&#x3D;&quot;let user_account of this.getAvailableMembersPage()&quot;
+                          cdkDrag&gt;
+                  {{user_account.firstName}} {{user_account.lastName}}
+                &lt;/mat-chip&gt;
+              &lt;/mat-chip-list&gt;
+              &lt;ng-template [ngIf]&#x3D;&quot;this.getAvailableMembers().getValue().length &#x3D;&#x3D; 0&quot;&gt;
+                &lt;div class&#x3D;&quot;no_users&quot;&gt;
+                  There are no unassigned users
+                &lt;/div&gt;
+              &lt;/ng-template&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/form&gt;
+      &lt;/mat-card-content&gt;
+      &lt;mat-card-actions&gt;
+        &lt;button type&#x3D;&quot;button&quot; mat-flat-button class&#x3D;&quot;manage_cancel_btn&quot; (click)&#x3D;&quot;cancel()&quot;&gt;
+          Cancel
+        &lt;/button&gt;
+        &lt;button mat-flat-button class&#x3D;&quot;manage_save_btn&quot; (click)&#x3D;&quot;save()&quot;&gt;
+          Save
+        &lt;/button&gt;
+        &lt;button  type&#x3D;&quot;button&quot; mat-flat-button class&#x3D;&quot;manage_delete_btn&quot; (click)&#x3D;&quot;openDeleteDialog()&quot;&gt;
+          Delete
+        &lt;/button&gt;
+      &lt;/mat-card-actions&gt;
+    &lt;/mat-card&gt;
+  &lt;/ng-template&gt;
+&lt;/div&gt;
+&lt;button  type&#x3D;&quot;button&quot; class&#x3D;&quot; floating_action_button&quot; mat-fab (click)&#x3D;&quot;openDialog()&quot;&gt;
+  &lt;i class&#x3D;&quot;material-icons&quot;&gt;
+    add
+  &lt;/i&gt;
+&lt;/button&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./manage-teams-panel.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;~src/variables&quot;;
+
+/**
+  @author Karol Talbot
+  @version 2.0
+ */
+.floating_action_button {
+  position: fixed;
+  right: 4vw;
+  bottom: 4vh;
+  background-color: $blue;
+
+  i {
+    color: white;
+  }
+}
+
+.team_edit_card {
+  padding: 2%;
+  height: 60%;
+  width: 60%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-bottom: 25%;
+  margin-top: 5%;
+}
+
+.manage_delete_btn {
+  background-color: $delete_btn;
+  color: $delete_btn_text;
+}
+
+.manage_cancel_btn {
+  background-color: $cancel_btn;
+  color: $cancel_btn_text;
+  float: right;
+  margin-right: 1%;
+}
+
+.manage_save_btn {
+  background-color: $save_btn;
+  color: $save_btn_text;
+  float: right;
+  margin-right: 1%;
+}
+
+.on_team {
+  background-color: $orange;
+  color: $white;
+}
+
+.title_line {
+  padding-top: 1%;
+  margin: 0;
+  display: inline-block;
+  width: 100%;
+}
+
+.title {
+  display: inline-block;
+  font-weight: bold;
+  width: 20%;
+  padding-left: 1%;
+  padding-right: 4%;
+}
+
+.mat-paginator {
+  display: inline-block;
+  width: 35%;
+  padding-left: 4%;
+  padding-right: 1%;
+}
+
+.team_view {
+  float: right;
+  width: 75vw;
+}
+
+.search_bar_inline {
+  display: inline-block !important;
+  width: 35%;
+  align-content: center;
+
+  input {
+    text-align: center;
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
+    border: $dark_grey 1px solid;
+    border-radius: 0.3em;
+  }
+}
+
+#team {
+  width: 48%;
+  padding: 1% 1% 0;
+}
+
+#team_lead {
+  width: 48%;
+  padding: 1% 1% 0;
+}
+
+.chip_list {
+  height: 4.5rem;
+  width: 98%;
+  margin: 0.5%;
+  padding: 0.5%;
+  border: $light_grey 1px solid;
+  border-radius: 0.2rem;
+}
+
+.user_account {
+  display: inline !important;
+}
+
+.no_users {
+  text-align: center;
+  font-family: Roboto, &quot;Helvetica Neue&quot;, sans-serif;
+  display: inline-block;
+  color: $dark_grey;
+  padding: 2%;
+  margin: 0;
+  width: auto;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!--  @author Karol Talbot  @version 2.0--><div class="sidebar_container">  <app-team-sidebar #sideBar></app-team-sidebar></div><div class="team_view">  <ng-template [ngIf]="isTeamSelected()">    <mat-card class="team_edit_card">      <mat-card-content>        <form #editTeamForm="ngForm">          <mat-form-field id="team">            <input matInput #editTeamName placeholder="Team Name" [formControl]="teamNameControl" [errorStateMatcher]="teamNameMatcher">            <mat-error              *ngIf="teamNameControl.hasError(\'required\')">              Name is <strong>required</strong></mat-error>          </mat-form-field>          <mat-form-field id="team_lead">            <mat-select #editTeamLeadId placeholder="Team Lead" [value]="this.getSelectedTeam().leadId">              <mat-option [value]="-1">None</mat-option>              <mat-option *ngFor="let user of this.getSelectedTeamMembers() | async"                          [value]="user.id">{{user.firstName}} {{user.lastName}}</mat-option>            </mat-select>          </mat-form-field>          <div cdkDropListGroup>            <span class="title_line">              <span class="title">Team Members</span>              <span class="search_bar_inline">                <input #member_filter id="member_filter" [ngClass]="\'input_search\'"                       placeholder="search" (keyup)="0">              </span>              <mat-paginator #memberPaginator [hidePageSize]="true"                             [length]="this.getSelectedTeamMembers().getValue().length"                             [pageSize]="this.PAGE_SIZE" (page)="teamPageChange($event)">              </mat-paginator>            </span>            <div class="chip_list">              <mat-chip-list cdkDropList #teamMembers="cdkDropList" [cdkDropListConnectedTo]="[availableUserAccounts]"                             (cdkDropListDropped)="drop($event, \'team\')">                <mat-chip [cdkDragData]="user_account" (click)="move(user_account, \'team\')"                          class="user_account on_team"                          *ngFor="let user_account of this.getTeamMembersPage()" cdkDrag>                  {{user_account.firstName}} {{user_account.lastName}}                </mat-chip>              </mat-chip-list>              <ng-template [ngIf]="this.getSelectedTeamMembers().getValue().length == 0">                <div class="no_users">                  There are no members on this team                </div>              </ng-template>            </div>            <span class="title_line">                <span class="title">Available Members</span>                <span class="search_bar_inline"><input #available_filter id="available_filter"                                                       [ngClass]="\'input_search\'"                                                       placeholder="search" (keyup)="0"></span>                <mat-paginator #availablePaginator [hidePageSize]="true" [pageSize]="this.PAGE_SIZE"                               [length]="this.getAvailableMembers().getValue().length"                               (page)="availablePageChange($event)"></mat-paginator>            </span>            <div class="chip_list">              <mat-chip-list cdkDropList #availableUserAccounts="cdkDropList" [cdkDropListConnectedTo]="[teamMembers]"                             (cdkDropListDropped)="drop($event, \'available\')">                <mat-chip [cdkDragData]="user_account" (click)="move(user_account, \'available\')"                          class="user_account" *ngFor="let user_account of this.getAvailableMembersPage()"                          cdkDrag>                  {{user_account.firstName}} {{user_account.lastName}}                </mat-chip>              </mat-chip-list>              <ng-template [ngIf]="this.getAvailableMembers().getValue().length == 0">                <div class="no_users">                  There are no unassigned users                </div>              </ng-template>            </div>          </div>        </form>      </mat-card-content>      <mat-card-actions>        <button type="button" mat-flat-button class="manage_cancel_btn" (click)="cancel()">          Cancel        </button>        <button mat-flat-button class="manage_save_btn" (click)="save()">          Save        </button>        <button  type="button" mat-flat-button class="manage_delete_btn" (click)="openDeleteDialog()">          Delete        </button>      </mat-card-actions>    </mat-card>  </ng-template></div><button  type="button" class=" floating_action_button" mat-fab (click)="openDialog()">  <i class="material-icons">    add  </i></button></div>'
+    var COMPONENTS = [{'name': 'AddProjectComponent', 'selector': 'app-add-project'},{'name': 'AddProjectExpenseComponent', 'selector': 'app-add-project-expense'},{'name': 'AddProjectMemberComponent', 'selector': 'app-add-project-member'},{'name': 'AddTaskComponent', 'selector': 'app-add-task'},{'name': 'AddTeamComponent', 'selector': 'app-add-team'},{'name': 'AddUnitTypeComponent', 'selector': 'app-add-unit-type'},{'name': 'AddUserAccountComponent', 'selector': 'app-add-user-account'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ApprovePanelComponent', 'selector': 'app-approve-panel'},{'name': 'BillableHourReportComponent', 'selector': 'app-billable-hour-report'},{'name': 'BudgetReportComponent', 'selector': 'app-budget-report'},{'name': 'DataDumpReportComponent', 'selector': 'app-data-dump-report'},{'name': 'DatePickerComponent', 'selector': 'app-date-picker'},{'name': 'DeleteEntryModalComponent', 'selector': 'app-delete-modal'},{'name': 'DeleteProjectModal', 'selector': 'app-delete-project-modal'},{'name': 'DeleteTaskModal', 'selector': 'app-delete-task-modal'},{'name': 'DeleteTeamModal', 'selector': 'app-delete-team-modal'},{'name': 'DeleteUnitTypeModal', 'selector': 'app-delete-unit-type-modal'},{'name': 'DeleteUserAccountModal', 'selector': 'app-delete-user-modal'},{'name': 'EditTaskComponent', 'selector': 'app-edit-task'},{'name': 'EditUnitTypeComponent', 'selector': 'app-edit-unit-type'},{'name': 'EditUserComponent', 'selector': 'app-edit-user'},{'name': 'EntryApproveComponent', 'selector': 'app-entry-approve'},{'name': 'EntryComponent', 'selector': 'app-entry'},{'name': 'EntryUneditableComponent', 'selector': 'app-entry-uneditable'},{'name': 'ExpenseListComponent', 'selector': 'app-expense-list'},{'name': 'ManageTeamsPanelComponent', 'selector': 'app-manage-teams-panel'},{'name': 'ProductivityReportComponent', 'selector': 'app-productivity-report'},{'name': 'ProjectDetailComponent', 'selector': 'app-project-detail'},{'name': 'ProjectEntriesComponent', 'selector': 'app-project-entries'},{'name': 'ProjectEntriesSidebarComponent', 'selector': 'app-project-entries-sidebar'},{'name': 'ProjectMemberListComponent', 'selector': 'app-project-member-list'},{'name': 'ProjectSidebarComponent', 'selector': 'app-project-sidebar'},{'name': 'ProjectsPanelComponent', 'selector': 'app-projects-panel'},{'name': 'SignInComponent', 'selector': 'app-sign-in'},{'name': 'SubmitApprovalModalComponent', 'selector': 'app-approval-modal'},{'name': 'SubmitTimesheetModalComponent', 'selector': 'app-submit-modal'},{'name': 'TasksPanelComponent', 'selector': 'app-tasks-panel'},{'name': 'TeamMemberSidebarComponent', 'selector': 'app-team-member-sidebar'},{'name': 'TeamMemberTimesheetComponent', 'selector': 'app-team-member-timesheet'},{'name': 'TeamPanelComponent', 'selector': 'app-team-panel'},{'name': 'TeamProductivityReportComponent', 'selector': 'app-team-productivity-report'},{'name': 'TeamSidebarComponent', 'selector': 'app-team-sidebar'},{'name': 'TimesheetComponent', 'selector': 'app-timesheet'},{'name': 'TopNavBarComponent', 'selector': 'app-top-nav-bar'},{'name': 'UnitTypePanelComponent', 'selector': 'app-unit-type-panel'},{'name': 'UserAccountComponent', 'selector': 'app-user-account'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ManageTeamsPanelComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ManageTeamsPanelComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

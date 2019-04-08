@@ -1,0 +1,331 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>tomi-client documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">tomi-client documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content pipe">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Pipes</li>
+  <li>FilterTaskByName</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/component/panel/tasks-panel/tasks-panel.component.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Pipe used to filter Tasks by their name.</p>
+
+            </p>
+
+
+        <section>
+            <h3>Metadata</h3>
+            <table class="table table-sm table-hover">
+                <tbody>
+                    <tr>
+                        <td class="col-md-3">Name</td>
+                        <td class="col-md-9">FilterTaskByName</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transform"></a>
+                    <span class="name">
+                        <b>
+                            transform
+                        </b>
+                        <a href="#transform"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>transform(taskList: <a href="../classes/Task.html">Array<Task></a>, nameFilter: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="80"
+                            class="link-to-prism">src/app/component/panel/tasks-panel/tasks-panel.component.ts:80</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>taskList</td>
+                                    <td>
+                                                <code><a href="../classes/Task.html" target="_self" >Array&lt;Task&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>nameFilter</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, HostListener, Pipe, PipeTransform} from &#x27;@angular/core&#x27;;
+import {OnInit} from &#x27;@angular/core&#x27;;
+import {ViewChild} from &quot;@angular/core&quot;;
+import {ElementRef} from &quot;@angular/core&quot;;
+import {TaskService} from &#x27;../../../service/task.service&#x27;;
+import {Task} from &#x27;../../../model/task&#x27;;
+import {MatDialog} from &#x27;@angular/material&#x27;;
+import {AddTaskComponent} from &#x27;../../modal/add-task/add-task.component&#x27;;
+
+/**
+ * TasksPanelComponent is used to facilitate communication between the view and front end services.
+ *
+ * @author Karol Talbot
+ * @version 2.0
+ */
+@Component({
+  selector: &#x27;app-tasks-panel&#x27;,
+  templateUrl: &#x27;./tasks-panel.component.html&#x27;,
+  styleUrls: [&#x27;./tasks-panel.component.scss&#x27;]
+})
+export class TasksPanelComponent implements OnInit{
+
+  /**
+   * The task being viewed.
+   */
+  private task: Task;
+
+  /**
+   *  The edit task component within this tasks panel component.
+   */
+  @ViewChild(&#x27;editTaskComponent&#x27;) editTaskComponent : ElementRef;
+
+  /**
+   * Listens for the Ctrl+f key&#x27;s keydown event; Moves focus to the search bar on that event.
+   * @param e The event captured.
+   */
+  @HostListener(&#x27;window:keydown.Control.f&#x27;, [&#x27;$event&#x27;]) w(e: KeyboardEvent) {
+    e.preventDefault();
+    document.getElementById(&quot;task_search&quot;).focus();
+  }
+
+  constructor(private dialog: MatDialog, public taskService: TaskService) { }
+
+  ngOnInit() {
+    this.taskService.initializeTasks();
+  }
+
+  /**
+   * Passes on the request to delete a Task to the TaskService.
+   * @param task Task to be deleted.
+   */
+  delete(task: Task) {
+    this.taskService.delete(task);
+  }
+
+  /**
+   * Passes on the request to save a Task to the TaskService.
+   * @param task Task to be saved.
+   */
+  save(task: Task) {
+    this.taskService.save(task);
+  }
+
+  /**
+   * Displays a Modal component for adding a new Task.
+   */
+  openDialog(): void {
+    this.dialog.open(AddTaskComponent, {
+      width: &quot;70vw&quot;
+    });
+  }
+  
+}
+
+/**
+ * Pipe used to filter Tasks by their name.
+ */
+@Pipe({name: &#x27;FilterTaskByName&#x27;})
+export class FilterTaskByName implements PipeTransform {
+  transform(taskList: Array&lt;Task&gt;, nameFilter: string): any {
+    nameFilter &#x3D; nameFilter.toLowerCase();
+    if (!nameFilter) return taskList;
+
+    return taskList.filter(n &#x3D;&gt; {
+      let name &#x3D; n.name;
+      name &#x3D; name.toLowerCase();
+
+      return name.indexOf(nameFilter) &gt;&#x3D; 0;
+    });
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'pipe';
+            var COMPODOC_CURRENT_PAGE_URL = 'FilterTaskByName.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

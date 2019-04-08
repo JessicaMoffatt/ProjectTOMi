@@ -1,0 +1,700 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>tomi-client documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">tomi-client documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li>FilterTeamUserAccountByName</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Class used to filter the user accounts of either the team members list or the available members list.</p>
+
+            </p>
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#transform">transform</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="transform"></a>
+                    <span class="name">
+                        <b>
+                            transform
+                        </b>
+                        <a href="#transform"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>transform(userList: <a href="../classes/UserAccount.html">Array<UserAccount></a>, nameFilter: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="427"
+                            class="link-to-prism">src/app/component/panel/manage-teams-panel/manage-teams-panel.component.ts:427</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userList</td>
+                                    <td>
+                                                <code><a href="../classes/UserAccount.html" target="_self" >Array&lt;UserAccount&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>nameFilter</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, HostListener, Inject, Input, OnInit, Pipe, PipeTransform, ViewChild} from &#x27;@angular/core&#x27;;
+import {Team} from &quot;../../../model/team&quot;;
+import {FormControl, Validators} from &quot;@angular/forms&quot;;
+import {TeamService} from &quot;../../../service/team.service&quot;;
+import {UserAccountService} from &quot;../../../service/user-account.service&quot;;
+import {UserAccount} from &quot;../../../model/userAccount&quot;;
+import {BehaviorSubject} from &quot;rxjs&quot;;
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+  MatInput,
+  MatPaginator,
+  MatSelect,
+  PageEvent
+} from &quot;@angular/material&quot;;
+import {AddTeamComponent} from &quot;../../modal/add-team/add-team.component&quot;;
+import {CustomErrorStateMatcher} from &quot;../../extra/CustomErrorStateMatcher&quot;;
+
+/**
+ * @author Karol Talbot
+ * @version 2.0
+ */
+@Component({
+  selector: &#x27;app-manage-teams-panel&#x27;,
+  templateUrl: &#x27;./manage-teams-panel.component.html&#x27;,
+  styleUrls: [&#x27;./manage-teams-panel.component.scss&#x27;]
+})
+export class ManageTeamsPanelComponent implements OnInit {
+  /**
+   * The number of Teams to be displayed per page.
+   */
+  PAGE_SIZE: number &#x3D; 6;
+
+  /**
+   * The selected Team.
+   */
+  private selectedTeam: Team &#x3D; null;
+
+  /**
+   * The team members for the selected Team.
+   */
+  private selectedTeamMembers: BehaviorSubject&lt;Array&lt;UserAccount&gt;&gt; &#x3D; new BehaviorSubject([]);
+
+  /**
+   * The UserAccounts that are available to be added as members of this Team.
+   */
+  private availableMembers: BehaviorSubject&lt;Array&lt;UserAccount&gt;&gt; &#x3D; new BehaviorSubject([]);
+
+  /**
+   * The currently viewed page number for this Team&#x27;s team members..
+   */
+  private teamMembersPageNumber: number &#x3D; 0;
+
+  /**
+   * The list of this Team&#x27;s team members currently being displayed on this page.
+   */
+  private teamMembersPage: Array&lt;UserAccount&gt; &#x3D; [];
+
+  /**
+   * The currently viewed page number for the available members.
+   */
+  private availableMembersPageNumber: number &#x3D; 0;
+
+  /**
+   * The list of available members currently being displayed on this page.
+   */
+  private availableMembersPage: Array&lt;UserAccount&gt; &#x3D; [];
+
+  /**
+   * The buffer of users that need to be written out on save.
+   */
+  private dirtyUserBuffer: Array&lt;UserAccount&gt; &#x3D; [];
+
+  /** Validations for the name of this Team. */
+  teamNameControl &#x3D; new FormControl(&#x27;&#x27;, [
+    Validators.required
+  ]);
+
+  /** Invalid name error detection. */
+  teamNameMatcher &#x3D; new CustomErrorStateMatcher();
+
+  /** The input field for this Team&#x27;s name.*/
+  @ViewChild(&#x27;editTeamName&#x27;) editTeamName: MatInput;
+
+  /** The selector for this Team&#x27;s team lead.*/
+  @ViewChild(&#x27;editTeamLeadId&#x27;) editTeamLeadId: MatSelect;
+
+  /**
+   * The team sidebar component within this manage teams panel component.
+   */
+  @ViewChild(&#x27;sideBar&#x27;) sideBar;
+
+  /**
+   * The paginator used to navigate the pages of this Team&#x27;s team members.
+   */
+  @ViewChild(&#x27;memberPaginator&#x27;) memberPaginator: MatPaginator;
+
+  /**
+   * The paginator used to navigate the pages of the available members.
+   */
+  @ViewChild(&#x27;availablePaginator&#x27;) availablePaginator: MatPaginator;
+
+  /**
+   * Listens for the enter key&#x27;s keyup event; performs the save function on that event.
+   * @param e The event captured.
+   */
+  @HostListener(&#x27;window:keyup.Enter&#x27;, [&#x27;$event&#x27;]) enter(e: KeyboardEvent) {
+    this.save().then();
+  }
+
+  /**
+   * The filter bar for filtering the Team&#x27;s displayed team members.
+   */
+  @ViewChild(&#x27;member_filter&#x27;) member_filter;
+
+  /**
+   * The filter bar for filtering the available members displayed.
+   */
+  @ViewChild(&#x27;available_filter&#x27;) available_filter;
+
+  constructor(private dialog: MatDialog, public deleteTeamDialog: MatDialog, private teamService: TeamService, public userAccountService: UserAccountService) {
+  }
+
+  ngOnInit() {
+  }
+
+
+  /**
+   * Initialize the value inputs on the template. This fixes issues caused by the Validators.required when an input is pristine.
+   */
+  setValuesOnOpen() {
+    this.teamNameControl.setValue(this.selectedTeam.teamName);
+  }
+
+  /**
+   * Returns true if selectedTeam is not null, otherwise false.
+   */
+  public isTeamSelected(): boolean {
+    return this.selectedTeam !&#x3D; null;
+  }
+
+  /**
+   * Sets selectedTeam to the specified Team.
+   * @param team The Team to set selectedTeam to.
+   */
+  public setSelectedTeam(team: Team): void {
+    this.selectedTeam &#x3D; team;
+    this.setValuesOnOpen();
+    this.getTeamMembers();
+  }
+
+  /**
+   * Returns selectedTeam.
+   */
+  public getSelectedTeam(): Team {
+    return this.selectedTeam;
+  }
+
+  /**
+   * Displays a Modal component for adding a new Team.
+   */
+  openDialog(): void {
+    this.dialog.open(AddTeamComponent, {
+      width: &quot;70vw&quot;
+    });
+  }
+
+  /**
+   * Populates the selectedTeamMembers list and the availableMembers list.
+   */
+  public getTeamMembers() {
+    this.teamService.getTeamMembers(this.selectedTeam).forEach(userAccount &#x3D;&gt; {
+      this.selectedTeamMembers &#x3D; new BehaviorSubject&lt;Array&lt;UserAccount&gt;&gt;(userAccount);
+      this.userAccountService.sortUserAccounts(this.selectedTeamMembers);
+      this.setTeamMembersPage();
+    }).catch((error: any) &#x3D;&gt; {
+
+    });
+    this.teamService.getAllFreeMembers().forEach(userAccount &#x3D;&gt; {
+      this.availableMembers &#x3D; new BehaviorSubject&lt;Array&lt;UserAccount&gt;&gt;(userAccount);
+      this.userAccountService.sortUserAccounts(this.availableMembers);
+      this.setAvailableMembersPage();
+    }).catch((error: any) &#x3D;&gt; {
+
+    });
+  }
+
+  /**
+   * Returns selectedTeamMembers.
+   */
+  public getSelectedTeamMembers() {
+    return this.selectedTeamMembers;
+  }
+
+  /**
+   * Returns availableMembers.
+   */
+  public getAvailableMembers() {
+    return this.availableMembers;
+  }
+
+  /**
+   * Drag and drop function used to either add or remove members (retrieved from the event)
+   * to the team member list or the available members list.
+   * @param event The object dropped as an event.
+   * @param list The list the event is being dropped into.
+   */
+  public drop(event: Event, list: String) {
+    let member &#x3D; event[&#x27;item&#x27;].data as UserAccount;
+    if (event[&#x27;container&#x27;] !&#x3D; event[&#x27;previousContainer&#x27;]) {
+      if (&quot;available&quot; &#x3D;&#x3D; list) {
+        this.remove(member);
+      } else {
+        this.addUserAccount(member);
+      }
+    }
+  }
+
+  /**
+   * Clears the user buffer and deselects the selected Team.
+   */
+  public cancel() {
+    this.dirtyUserBuffer &#x3D; [];
+    this.sideBar.unselect(this.selectedTeam.id);
+    this.selectedTeam &#x3D; null;
+  }
+
+  /**
+   * Removes the specified UserAccount from the Team.
+   * @param member The UserAccount to be removed.
+   */
+  private remove(member: UserAccount) {
+    let index: number;
+    let arrayLocation &#x3D; this.selectedTeamMembers.getValue().lastIndexOf(member);
+    this.selectedTeamMembers.getValue().splice(arrayLocation, 1);
+    this.availableMembers.getValue().push(member);
+    index &#x3D; this.dirtyUserBuffer.lastIndexOf(member);
+    member.teamId &#x3D; -1;
+    if (-1 &#x3D;&#x3D; index) {
+      this.dirtyUserBuffer.push(member);
+    } else {
+      this.dirtyUserBuffer.splice(index, 1);
+    }
+  }
+
+  /**
+   * Adds the specified UserAccount to the Team.
+   * @param member The UserAccount to be added.
+   */
+  private addUserAccount(member: UserAccount) {
+    let index: number;
+    let arrayLocation &#x3D; this.availableMembers.getValue().lastIndexOf(member);
+    this.availableMembers.getValue().splice(arrayLocation, 1);
+    this.selectedTeamMembers.getValue().push(member);
+    index &#x3D; this.dirtyUserBuffer.lastIndexOf(member);
+    member.teamId &#x3D; this.selectedTeam.id;
+    if (-1 &#x3D;&#x3D; index) {
+      this.dirtyUserBuffer.push(member);
+    } else {
+      this.dirtyUserBuffer.splice(index, 1);
+    }
+  }
+
+  /**
+   * Moves the specified team member to the opposite list.
+   * If the UserAccount was in selectedTeamMembers, moves them to availableMembers; and visa versa.
+   * @param member
+   * @param list
+   */
+  public move(member: UserAccount, list: string) {
+    if (&quot;available&quot; !&#x3D; list) {
+      this.remove(member);
+    } else {
+      this.addUserAccount(member);
+    }
+  }
+
+  /**
+   * Sets the members to be displayed in the team members page.
+   */
+  public setTeamMembersPage() {
+    this.teamMembersPage &#x3D; this.selectedTeamMembers.getValue();
+  }
+
+  /**
+   * Gets the team members to be displayed on the team members page.
+   */
+  public getTeamMembersPage() {
+    let filter &#x3D; new FilterTeamUserAccountByName();
+    let filterList &#x3D; this.teamMembersPage;
+
+    if(this.member_filter !&#x3D; undefined){
+      filterList &#x3D; filter.transform(this.teamMembersPage, this.member_filter.nativeElement.value);
+    }
+    return filterList.slice(this.teamMembersPageNumber * this.PAGE_SIZE, this.teamMembersPageNumber * this.PAGE_SIZE + this.PAGE_SIZE);
+  }
+
+  /**
+   * Sets the members to be displayed in the available members page.
+   */
+  public setAvailableMembersPage() {
+    this.availableMembersPage &#x3D; this.availableMembers.getValue();
+  }
+
+  /**
+   * Gets the team members to be displayed on the available members page.
+   */
+  public getAvailableMembersPage() {
+    let filter &#x3D; new FilterTeamUserAccountByName();
+    let filterList &#x3D; this.availableMembersPage;
+
+    if(this.available_filter !&#x3D; undefined){
+      filterList &#x3D; filter.transform(this.availableMembersPage, this.available_filter.nativeElement.value);
+    }
+    return filterList.slice(this.availableMembersPageNumber * this.PAGE_SIZE, this.availableMembersPageNumber * this.PAGE_SIZE + this.PAGE_SIZE);
+  }
+
+  /**
+   * Changes the team members page number to the specified index.
+   * @param event The page event containing the page index.
+   */
+  public teamPageChange(event: PageEvent) {
+    this.teamMembersPageNumber &#x3D; event.pageIndex;
+  }
+
+  /**
+   * Changes the available members page number to the specified index.
+   * @param event The page event containing the page index.
+   */
+  public availablePageChange(event: PageEvent) {
+    this.availableMembersPageNumber &#x3D; event.pageIndex;
+  }
+
+  /**
+   * Passes on the request to save changes to the selected Team to the UserAccountService (for team member changes) and
+   * the TeamService.
+   */
+  public async save() {
+    if (this.teamNameControl.valid) {
+      this.selectedTeam.teamName &#x3D; this.teamNameControl.value;
+      if (undefined !&#x3D; this.editTeamLeadId.value) {
+        this.selectedTeam.leadId &#x3D; this.editTeamLeadId.value;
+      } else {
+        this.selectedTeam.leadId &#x3D; -1;
+      }
+
+      this.dirtyUserBuffer.forEach(async (user: UserAccount) &#x3D;&gt; {
+        await this.userAccountService.save(user);
+      });
+      await this.teamService.save(this.selectedTeam);
+      this.sideBar.unselect(this.selectedTeam.id);
+      this.selectedTeam &#x3D; null;
+      this.dirtyUserBuffer &#x3D; [];
+    }
+  }
+
+  /**
+   * Passes on the request to delete the selected Team to the TeamService.
+   */
+  public async delete() {
+    this.dirtyUserBuffer&#x3D; [];
+    await this.teamService.delete(this.selectedTeam);
+    this.sideBar.unselect(this.selectedTeam.id);
+    this.teamService.initializeTeams();
+    this.selectedTeam &#x3D; null;
+  }
+
+  /**
+   * Displays a Modal component for deleing the selected Team.
+   */
+  openDeleteDialog() {
+    this.deleteTeamDialog.open(DeleteTeamModal, {
+      width: &#x27;40vw&#x27;,
+      data: {teamToDelete: this.selectedTeam, parent: this}
+    });
+  }
+}
+
+// Delete Modal
+
+/**
+ * DeleteTeamModal is used to get confirmation from the user regarding their desire to delete a team.
+ */
+@Component({
+  selector: &#x27;app-delete-team-modal&#x27;,
+  templateUrl: &#x27;./delete-team-modal.html&#x27;,
+  styleUrls: [&#x27;./delete-team-modal.scss&#x27;]
+})
+export class DeleteTeamModal {
+  /**
+   * The team to be deleted.
+   */
+  teamToDelete: Team;
+
+  constructor(public dialogRef: MatDialogRef&lt;DeleteTeamModal&gt;,
+              @Inject(MAT_DIALOG_DATA) public data: DeleteDialogData) {
+
+  }
+
+  ngOnInit() {
+    this.teamToDelete &#x3D; this.data.teamToDelete;
+  }
+
+  /** Closes the modal with no extra actions.*/
+  canceledDelete(): void {
+    this.dialogRef.close();
+  }
+
+  /** Facilitates deletion of the selected Team.**/
+  confirmedDelete() {
+    this.data.parent.delete();
+    this.dialogRef.close();
+  }
+}
+
+/** Data interface for the DeleteTeamModal */
+export interface DeleteDialogData {
+  teamToDelete: Team;
+  parent: ManageTeamsPanelComponent;
+}
+
+/**
+ * Class used to filter the user accounts of either the team members list or the available members list.
+ */
+export class FilterTeamUserAccountByName {
+  transform(userList: Array&lt;UserAccount&gt;, nameFilter: string): any {
+    nameFilter &#x3D; nameFilter.toLowerCase();
+    if (!nameFilter) return userList;
+
+    return userList.filter(n &#x3D;&gt; {
+      let name &#x3D; n.firstName + n.lastName;
+      name &#x3D; name.toLowerCase();
+
+      return name.indexOf(nameFilter) &gt;&#x3D; 0;
+    });
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'FilterTeamUserAccountByName.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

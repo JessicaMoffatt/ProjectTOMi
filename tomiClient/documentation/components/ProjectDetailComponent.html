@@ -1,0 +1,1614 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>tomi-client documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">tomi-client documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>ProjectDetailComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/component/panel/projects-panel/project-detail/project-detail.component.ts</code>
+</p>
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>ProjectDetailComponent  is used to facilitate communication between the view and front end services.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-project-detail</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./project-detail.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./project-detail.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#billing">billing</a>
+                            </li>
+                            <li>
+                                <a href="#billingControl">billingControl</a>
+                            </li>
+                            <li>
+                                <a href="#budget">budget</a>
+                            </li>
+                            <li>
+                                <a href="#budgetControl">budgetControl</a>
+                            </li>
+                            <li>
+                                <a href="#clientControl">clientControl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#clientService">clientService</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#deleteProjectDialog">deleteProjectDialog</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#expenseService">expenseService</a>
+                            </li>
+                            <li>
+                                <a href="#nameControl">nameControl</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#projectManager">projectManager</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#projectService">projectService</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#userAccountService">userAccountService</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#cancel">cancel</a>
+                            </li>
+                            <li>
+                                <a href="#delete">delete</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Static</span>
+                                <a href="#getInitialsFromName">getInitialsFromName</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Static</span>
+                                <a href="#isValidAccountManagerName">isValidAccountManagerName</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#openDeleteDialog">openDeleteDialog</a>
+                            </li>
+                            <li>
+                                <a href="#save">save</a>
+                            </li>
+                            <li>
+                                <a href="#setProject">setProject</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(projectService: <a href="../injectables/ProjectService.html">ProjectService</a>, clientService: <a href="../injectables/ClientService.html">ClientService</a>, expenseService: <a href="../injectables/ExpenseService.html">ExpenseService</a>, userAccountService: <a href="../injectables/UserAccountService.html">UserAccountService</a>, parent: <a href="../classes/Project.html">ProjectsPanelComponent</a>, deleteProjectDialog: MatDialog)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:35</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>projectService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ProjectService.html" target="_self" >ProjectService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>clientService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ClientService.html" target="_self" >ClientService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>expenseService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ExpenseService.html" target="_self" >ExpenseService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>userAccountService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserAccountService.html" target="_self" >UserAccountService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>parent</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/Project.html" target="_self" >ProjectsPanelComponent</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>deleteProjectDialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cancel"></a>
+                    <span class="name">
+                        <b>
+                            cancel
+                        </b>
+                        <a href="#cancel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cancel()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="143"
+                            class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:143</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Deselects the project and refreshes the list of projects.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="delete"></a>
+                    <span class="name">
+                        <b>
+                            delete
+                        </b>
+                        <a href="#delete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>delete()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="135"
+                            class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:135</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Passes on the request to delete a UserAccount to the UserAccountService.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getInitialsFromName"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Static</span>
+                            getInitialsFromName
+                        </b>
+                        <a href="#getInitialsFromName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getInitialsFromName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="122"
+                            class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:122</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Retrieves initials from a given string.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>name</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The name to get the initials of.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isValidAccountManagerName"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Static</span>
+                            isValidAccountManagerName
+                        </b>
+                        <a href="#isValidAccountManagerName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isValidAccountManagerName(accountManagerName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="114"
+                            class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:114</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Checks if the initials of the input account manager&#39;s name are empty.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>accountManagerName</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The name of the account manager whose initials are to be checked.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="65"
+                            class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:65</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openDeleteDialog"></a>
+                    <span class="name">
+                        <b>
+                            openDeleteDialog
+                        </b>
+                        <a href="#openDeleteDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openDeleteDialog()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="151"
+                            class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:151</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Displays a Modal component for deleting the selected Project.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="save"></a>
+                    <span class="name">
+                        <b>
+                            save
+                        </b>
+                        <a href="#save"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>save()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="84"
+                            class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:84</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Passes on the request to save the selected Project to the ProjectService.
+Also checks if a new Client has been input, if yes a request is passed on to the ClientService
+to save the new Client.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setProject"></a>
+                    <span class="name">
+                        <b>
+                            setProject
+                        </b>
+                        <a href="#setProject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setProject()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:74</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sets the values of the billingControl and budgetControl to values from the selected Project.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="billing"></a>
+                        <span class="name">
+                            <b>
+                            billing</b>
+                            <a href="#billing"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;billing&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:30</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The billing rate value of this Project.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="billingControl"></a>
+                        <span class="name">
+                            <b>
+                            billingControl</b>
+                            <a href="#billingControl"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new FormControl()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:58</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Form controller for the billing rate of this Project.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="budget"></a>
+                        <span class="name">
+                            <b>
+                            budget</b>
+                            <a href="#budget"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;budget&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:25</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The budget value of this Project.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="budgetControl"></a>
+                        <span class="name">
+                            <b>
+                            budgetControl</b>
+                            <a href="#budgetControl"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new FormControl()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:63</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Form controller for the budget of this Project.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="clientControl"></a>
+                        <span class="name">
+                            <b>
+                            clientControl</b>
+                            <a href="#clientControl"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new FormControl()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:53</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Form controller for the Client of this Project.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="clientService"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            clientService</b>
+                            <a href="#clientService"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../injectables/ClientService.html" target="_self" >ClientService</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:38</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="deleteProjectDialog"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            deleteProjectDialog</b>
+                            <a href="#deleteProjectDialog"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>MatDialog</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:42</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="expenseService"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            expenseService</b>
+                            <a href="#expenseService"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../injectables/ExpenseService.html" target="_self" >ExpenseService</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:39</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="nameControl"></a>
+                        <span class="name">
+                            <b>
+                            nameControl</b>
+                            <a href="#nameControl"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>new FormControl()</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:48</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Form controller for the name of this Project.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="projectManager"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            projectManager</b>
+                            <a href="#projectManager"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;projectManager&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:35</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The project manager value of this Project.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="projectService"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            projectService</b>
+                            <a href="#projectService"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../injectables/ProjectService.html" target="_self" >ProjectService</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:37</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="userAccountService"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            userAccountService</b>
+                            <a href="#userAccountService"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../injectables/UserAccountService.html" target="_self" >UserAccountService</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/component/panel/projects-panel/project-detail/project-detail.component.ts:40</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Inject, OnInit, ViewChild} from &#x27;@angular/core&#x27;;
+import {ProjectService} from &quot;../../../../service/project.service&quot;;
+import {ClientService} from &quot;../../../../service/client.service&quot;;
+import {Project} from &quot;../../../../model/project&quot;;
+import {FormControl} from &quot;@angular/forms&quot;;
+import {ExpenseService} from &quot;../../../../service/expense.service&quot;;
+import {Client} from &quot;../../../../model/client&quot;;
+import {UserAccountService} from &quot;../../../../service/user-account.service&quot;;
+import {ProjectsPanelComponent} from &quot;../projects-panel.component&quot;;
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from &quot;@angular/material&quot;;
+
+/**
+ * ProjectDetailComponent  is used to facilitate communication between the view and front end services.
+ */
+@Component({
+  selector: &#x27;app-project-detail&#x27;,
+  templateUrl: &#x27;./project-detail.component.html&#x27;,
+  styleUrls: [&#x27;./project-detail.component.scss&#x27;]
+})
+export class ProjectDetailComponent implements OnInit {
+
+  /**
+   * The budget value of this Project.
+   */
+  @ViewChild(&#x27;budget&#x27;) budget;
+
+  /**
+   * The billing rate value of this Project.
+   */
+  @ViewChild(&#x27;billing&#x27;) billing;
+
+  /**
+   * The project manager value of this Project.
+   */
+  @ViewChild(&#x27;projectManager&#x27;) public projectManager;
+
+  constructor(public projectService: ProjectService,
+              public clientService: ClientService,
+              public expenseService: ExpenseService,
+              public userAccountService: UserAccountService,
+              @Inject(ProjectsPanelComponent) private parent: ProjectsPanelComponent,
+              public deleteProjectDialog: MatDialog) {
+  }
+
+  /**
+   * Form controller for the name of this Project.
+   */
+  nameControl &#x3D; new FormControl();
+
+  /**
+   * Form controller for the Client of this Project.
+   */
+  clientControl &#x3D; new FormControl();
+
+  /**
+   * Form controller for the billing rate of this Project.
+   */
+  billingControl &#x3D; new FormControl();
+
+  /**
+   * Form controller for the budget of this Project.
+   */
+  budgetControl &#x3D; new FormControl();
+
+  ngOnInit() {
+    this.userAccountService.initializeUserAccounts();
+    this.setProject();
+    this.clientService.initializeClients();
+  }
+
+  /**
+   * Sets the values of the billingControl and budgetControl to values from the selected Project.
+   */
+  setProject() {
+    this.billingControl.setValue(this.projectService.getSelectedProject().budget);
+    this.budgetControl.setValue(this.projectService.getSelectedProject().billableRate);
+  }
+
+  /**
+   *  Passes on the request to save the selected Project to the ProjectService.
+   *  Also checks if a new Client has been input, if yes a request is passed on to the ClientService
+   *  to save the new Client.
+   */
+  save() {
+    let saveClient &#x3D; this.projectService.getSelectedClient();
+
+    this.projectService.getSelectedProject().budget &#x3D; this.budget.nativeElement.value * 100;
+    this.projectService.getSelectedProject().billableRate &#x3D; this.billing.nativeElement.value * 100;
+    let project: Project &#x3D; this.projectService.getSelectedProject();
+    if (this.projectManager.value &#x3D;&#x3D;&#x3D; null || this.projectManager.value &#x3D;&#x3D;&#x3D; undefined) {
+
+      project.projectManagerId &#x3D; -1;
+    }
+
+    let matchClient &#x3D; this.clientService.getClientByName(saveClient.name);
+    if (matchClient &#x3D;&#x3D;&#x3D; null) {
+      this.clientService.save(saveClient).then((client: Client) &#x3D;&gt; {
+        project.client &#x3D; client;
+
+        this.projectService.save(project);
+      });
+    } else {
+      project.client &#x3D; matchClient;
+
+      this.projectService.save(project);
+    }
+    this.parent.unselect();
+  }
+
+  /**
+   * Checks if the initials of the input account manager&#x27;s name are empty.
+   * @param accountManagerName The name of the account manager whose initials are to be checked.
+   */
+  private static isValidAccountManagerName(accountManagerName: string) {
+    return ProjectDetailComponent.getInitialsFromName(accountManagerName) &#x3D;&#x3D;&#x3D; &quot;&quot;;
+  }
+
+  /**
+   * Retrieves initials from a given string.
+   * @param name The name to get the initials of.
+   */
+  private static getInitialsFromName(name: string) {
+    let words: string[] &#x3D; name.split(&#x27; &#x27;);
+    if (words.length !&#x3D; 2) return &quot;&quot;;
+    let first &#x3D; words[0].charAt(0).toUpperCase();
+    let second &#x3D; words[1].charAt(0).toUpperCase();
+    if (!first.match(/[A-Z]/i) || !second.match(/[A-Z]/i)) return &quot;&quot;;
+    else
+      return first + second;
+  }
+
+  /**
+   *  Passes on the request to delete a UserAccount to the UserAccountService.
+   */
+  delete() {
+    this.projectService.delete(this.projectService.getSelectedProject());
+    this.parent.unselect();
+  }
+
+  /**
+   * Deselects the project and refreshes the list of projects.
+   */
+  cancel() {
+    this.projectService.refreshProjectList();
+    this.parent.unselect();
+  }
+
+  /**
+   * Displays a Modal component for deleting the selected Project.
+   */
+  openDeleteDialog() {
+    let selectedProject &#x3D; this.projectService.getSelectedProject();
+    this.deleteProjectDialog.open(DeleteProjectModal, {
+      width: &#x27;40vw&#x27;,
+      data: {projectToDelete: selectedProject, parent: this}
+    });
+  }
+}
+
+/**
+ * DeleteProjectModel is used to get confirmation from the user regarding their desire to delete a Project.
+ */
+@Component({
+  selector: &#x27;app-delete-project-modal&#x27;,
+  templateUrl: &#x27;./delete-project-modal.html&#x27;,
+  styleUrls: [&#x27;./delete-project-modal.scss&#x27;]
+})
+export class DeleteProjectModal {
+  projectToDelete: Project;
+
+  constructor(public dialogRef: MatDialogRef&lt;DeleteProjectModal&gt;,
+              @Inject(MAT_DIALOG_DATA) public data: DeleteDialogData) {
+
+  }
+
+  ngOnInit() {
+    this.projectToDelete &#x3D; this.data.projectToDelete;
+  }
+
+  /** Closes the modal with no extra actions.*/
+  canceledDelete(): void {
+    this.dialogRef.close();
+  }
+
+  /** Facilitates the deletion of the Project, as well as closes the modal.*/
+  confirmedDelete() {
+    this.data.parent.delete();
+    this.dialogRef.close();
+  }
+}
+
+/** Data interface for the DeleteProjectModal */
+export interface DeleteDialogData {
+  projectToDelete: Project;
+  parent: ProjectDetailComponent;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!--
+  @author Karol Talbot
+  @author James Andrade
+--&gt;
+&lt;div class&#x3D;&quot;content_scroll&quot;&gt;
+  &lt;mat-card id&#x3D;&quot;project_details&quot; class&#x3D;&quot;mat-elevation-z2&quot;&gt;
+    &lt;mat-card-header&gt;
+      &lt;mat-card-title&gt;
+        Project Id {{this.projectService.getSelectedProject().id}}
+      &lt;/mat-card-title&gt;
+    &lt;/mat-card-header&gt;
+    &lt;form&gt;
+      &lt;div class&#x3D;&quot;row&quot;&gt;
+        &lt;mat-form-field id&#x3D;&quot;name&quot;&gt;
+          &lt;input type&#x3D;&quot;text&quot;
+                 placeholder&#x3D;&quot;Project Name&quot;
+                 aria-label&#x3D;&quot;Project Name&quot;
+                 matInput
+                 [(ngModel)]&#x3D;&quot;this.projectService.getSelectedProject().projectName&quot;
+                 [formControl]&#x3D;&quot;this.nameControl&quot;&gt;
+        &lt;/mat-form-field&gt;
+        &lt;mat-form-field id&#x3D;&quot;client&quot;&gt;
+          &lt;input type&#x3D;&quot;text&quot;
+                 placeholder&#x3D;&quot;Client&quot;
+                 aria-label&#x3D;&quot;Client&quot;
+                 matInput
+                 [(ngModel)]&#x3D;&quot;this.projectService.getSelectedClient().name&quot;
+                 [formControl]&#x3D;&quot;clientControl&quot;
+                 [matAutocomplete]&#x3D;&quot;auto&quot;&gt;
+          &lt;mat-autocomplete #auto&#x3D;&quot;matAutocomplete&quot;&gt;
+            &lt;mat-option *ngFor&#x3D;&quot;let c of this.clientService.clients.getValue()&quot; [value]&#x3D;&quot;c.name&quot;&gt;
+              {{c.name}}
+            &lt;/mat-option&gt;
+          &lt;/mat-autocomplete&gt;
+        &lt;/mat-form-field&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;row&quot;&gt;
+        &lt;mat-form-field id&#x3D;&quot;projectManager&quot;&gt;
+          &lt;mat-select #projectManager placeholder&#x3D;&quot;Project Manager&quot;
+                      aria-label&#x3D;&quot;Project Manager&quot;
+                      [(value)]&#x3D;&quot;this.projectService.getSelectedProject().projectManagerId&quot;&gt;
+            &lt;mat-option [value]&#x3D;&quot;-1&quot;&gt;None&lt;/mat-option&gt;
+            &lt;mat-option *ngFor&#x3D;&quot;let u of this.projectService.userAccountList.getValue()&quot; [value]&#x3D;&quot;u.id&quot;&gt;
+              {{u.firstName}} {{u.lastName}}
+            &lt;/mat-option&gt;
+          &lt;/mat-select&gt;
+        &lt;/mat-form-field&gt;
+
+        &lt;mat-form-field id&#x3D;&quot;billingRate&quot;&gt;
+          &lt;input placeholder&#x3D;&quot;Billing Rate&quot;
+                 #billing
+                 aria-label&#x3D;&quot;Billing Rate&quot;
+                 type&#x3D;&quot;number&quot;
+                 min&#x3D;&quot;0.01&quot;
+                 step&#x3D;&quot;0.01&quot;
+                 matInput
+                 [value]&#x3D;&quot;(this.projectService.getSelectedProject().billableRate/100).toFixed(2)&quot;
+                 [formControl]&#x3D;&quot;this.billingControl&quot;&gt;
+          &lt;span matPrefix&gt;$&amp;nbsp;&lt;/span&gt;
+        &lt;/mat-form-field&gt;
+        &lt;mat-form-field id&#x3D;&quot;budget&quot;&gt;
+          &lt;input type&#x3D;&quot;number&quot;
+                 #budget
+                 placeholder&#x3D;&quot;Budget Total&quot;
+                 aria-label&#x3D;&quot;Budget Total&quot;
+                 min&#x3D;&quot;0.01&quot;
+                 step&#x3D;&quot;0.01&quot;
+                 matInput
+                 [value]&#x3D;&quot;(this.projectService.getSelectedProject().budget/100).toFixed(2)&quot;
+                 [formControl]&#x3D;&quot;this.budgetControl&quot;&gt;
+          &lt;span matPrefix&gt;$&amp;nbsp;&lt;/span&gt;
+        &lt;/mat-form-field&gt;
+      &lt;/div&gt;
+      &lt;app-budget-report&gt;&lt;/app-budget-report&gt;
+      &lt;app-expense-list id&#x3D;&quot;expenses&quot;&gt;&lt;/app-expense-list&gt;
+      &lt;app-project-member-list id&#x3D;&quot;members&quot;&gt;&lt;/app-project-member-list&gt;
+    &lt;/form&gt;
+    &lt;mat-card-actions class&#x3D;&quot;row&quot;&gt;
+      &lt;button class&#x3D;&quot;delete_btn&quot; (click)&#x3D;&quot;openDeleteDialog()&quot; mat-button&gt;
+        Delete
+      &lt;/button&gt;
+      &lt;button class&#x3D;&quot;cancel_btn&quot; (click)&#x3D;&quot;cancel()&quot; mat-button&gt;
+        Cancel
+      &lt;/button&gt;
+      &lt;button class&#x3D;&quot;save_btn&quot; (click)&#x3D;&quot;save()&quot; mat-button&gt;
+        Save
+      &lt;/button&gt;
+    &lt;/mat-card-actions&gt;
+  &lt;/mat-card&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./project-detail.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;~src/variables&quot;;
+
+#project_details {
+  width: 90%;
+  padding: 1%;
+  margin: 3% 4%;
+}
+
+.row {
+  width: 98%;
+  margin: 1%;
+}
+
+#projectManager {
+  width: 48%;
+  margin-right: 4%;
+}
+
+#billingRate {
+  width: 22%;
+  margin-right: 4%;
+}
+
+#budget {
+  width: 22%;
+}
+
+#name {
+  width: 48%;
+  padding-right: 4%;
+}
+
+#client {
+  width: 48%;
+}
+
+.content_scroll {
+  width: 100%;
+  height: 83vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.delete_btn {
+  margin: 1%;
+  background-color: $delete_btn;
+  color: $white;
+}
+
+.save_btn {
+  margin: 1%;
+  float: right;
+  background-color: $save_btn;
+  color: $white;
+}
+
+.cancel_btn {
+  float: right;
+  margin: 1% 4em 1% 1%;
+  background-color: $cancel_btn;
+  color: $white;
+}
+
+#expenses {
+  display: inline-block;
+  width: 100%;
+  margin: 1% 0;
+
+}
+
+#members {
+  display: inline-block;
+  width: 100%;
+  margin: 1% 0;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!--  @author Karol Talbot  @author James Andrade--><div class="content_scroll">  <mat-card id="project_details" class="mat-elevation-z2">    <mat-card-header>      <mat-card-title>        Project Id {{this.projectService.getSelectedProject().id}}      </mat-card-title>    </mat-card-header>    <form>      <div class="row">        <mat-form-field id="name">          <input type="text"                 placeholder="Project Name"                 aria-label="Project Name"                 matInput                 [(ngModel)]="this.projectService.getSelectedProject().projectName"                 [formControl]="this.nameControl">        </mat-form-field>        <mat-form-field id="client">          <input type="text"                 placeholder="Client"                 aria-label="Client"                 matInput                 [(ngModel)]="this.projectService.getSelectedClient().name"                 [formControl]="clientControl"                 [matAutocomplete]="auto">          <mat-autocomplete #auto="matAutocomplete">            <mat-option *ngFor="let c of this.clientService.clients.getValue()" [value]="c.name">              {{c.name}}            </mat-option>          </mat-autocomplete>        </mat-form-field>      </div>      <div class="row">        <mat-form-field id="projectManager">          <mat-select #projectManager placeholder="Project Manager"                      aria-label="Project Manager"                      [(value)]="this.projectService.getSelectedProject().projectManagerId">            <mat-option [value]="-1">None</mat-option>            <mat-option *ngFor="let u of this.projectService.userAccountList.getValue()" [value]="u.id">              {{u.firstName}} {{u.lastName}}            </mat-option>          </mat-select>        </mat-form-field>        <mat-form-field id="billingRate">          <input placeholder="Billing Rate"                 #billing                 aria-label="Billing Rate"                 type="number"                 min="0.01"                 step="0.01"                 matInput                 [value]="(this.projectService.getSelectedProject().billableRate/100).toFixed(2)"                 [formControl]="this.billingControl">          <span matPrefix>$&nbsp;</span>        </mat-form-field>        <mat-form-field id="budget">          <input type="number"                 #budget                 placeholder="Budget Total"                 aria-label="Budget Total"                 min="0.01"                 step="0.01"                 matInput                 [value]="(this.projectService.getSelectedProject().budget/100).toFixed(2)"                 [formControl]="this.budgetControl">          <span matPrefix>$&nbsp;</span>        </mat-form-field>      </div>      <app-budget-report></app-budget-report>      <app-expense-list id="expenses"></app-expense-list>      <app-project-member-list id="members"></app-project-member-list>    </form>    <mat-card-actions class="row">      <button class="delete_btn" (click)="openDeleteDialog()" mat-button>        Delete      </button>      <button class="cancel_btn" (click)="cancel()" mat-button>        Cancel      </button>      <button class="save_btn" (click)="save()" mat-button>        Save      </button>    </mat-card-actions>  </mat-card></div></div>'
+    var COMPONENTS = [{'name': 'AddProjectComponent', 'selector': 'app-add-project'},{'name': 'AddProjectExpenseComponent', 'selector': 'app-add-project-expense'},{'name': 'AddProjectMemberComponent', 'selector': 'app-add-project-member'},{'name': 'AddTaskComponent', 'selector': 'app-add-task'},{'name': 'AddTeamComponent', 'selector': 'app-add-team'},{'name': 'AddUnitTypeComponent', 'selector': 'app-add-unit-type'},{'name': 'AddUserAccountComponent', 'selector': 'app-add-user-account'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ApprovePanelComponent', 'selector': 'app-approve-panel'},{'name': 'BillableHourReportComponent', 'selector': 'app-billable-hour-report'},{'name': 'BudgetReportComponent', 'selector': 'app-budget-report'},{'name': 'DataDumpReportComponent', 'selector': 'app-data-dump-report'},{'name': 'DatePickerComponent', 'selector': 'app-date-picker'},{'name': 'DeleteEntryModalComponent', 'selector': 'app-delete-modal'},{'name': 'DeleteProjectModal', 'selector': 'app-delete-project-modal'},{'name': 'DeleteTaskModal', 'selector': 'app-delete-task-modal'},{'name': 'DeleteTeamModal', 'selector': 'app-delete-team-modal'},{'name': 'DeleteUnitTypeModal', 'selector': 'app-delete-unit-type-modal'},{'name': 'DeleteUserAccountModal', 'selector': 'app-delete-user-modal'},{'name': 'EditTaskComponent', 'selector': 'app-edit-task'},{'name': 'EditUnitTypeComponent', 'selector': 'app-edit-unit-type'},{'name': 'EditUserComponent', 'selector': 'app-edit-user'},{'name': 'EntryApproveComponent', 'selector': 'app-entry-approve'},{'name': 'EntryComponent', 'selector': 'app-entry'},{'name': 'EntryUneditableComponent', 'selector': 'app-entry-uneditable'},{'name': 'ExpenseListComponent', 'selector': 'app-expense-list'},{'name': 'ManageTeamsPanelComponent', 'selector': 'app-manage-teams-panel'},{'name': 'ProductivityReportComponent', 'selector': 'app-productivity-report'},{'name': 'ProjectDetailComponent', 'selector': 'app-project-detail'},{'name': 'ProjectEntriesComponent', 'selector': 'app-project-entries'},{'name': 'ProjectEntriesSidebarComponent', 'selector': 'app-project-entries-sidebar'},{'name': 'ProjectMemberListComponent', 'selector': 'app-project-member-list'},{'name': 'ProjectSidebarComponent', 'selector': 'app-project-sidebar'},{'name': 'ProjectsPanelComponent', 'selector': 'app-projects-panel'},{'name': 'SignInComponent', 'selector': 'app-sign-in'},{'name': 'SubmitApprovalModalComponent', 'selector': 'app-approval-modal'},{'name': 'SubmitTimesheetModalComponent', 'selector': 'app-submit-modal'},{'name': 'TasksPanelComponent', 'selector': 'app-tasks-panel'},{'name': 'TeamMemberSidebarComponent', 'selector': 'app-team-member-sidebar'},{'name': 'TeamMemberTimesheetComponent', 'selector': 'app-team-member-timesheet'},{'name': 'TeamPanelComponent', 'selector': 'app-team-panel'},{'name': 'TeamProductivityReportComponent', 'selector': 'app-team-productivity-report'},{'name': 'TeamSidebarComponent', 'selector': 'app-team-sidebar'},{'name': 'TimesheetComponent', 'selector': 'app-timesheet'},{'name': 'TopNavBarComponent', 'selector': 'app-top-nav-bar'},{'name': 'UnitTypePanelComponent', 'selector': 'app-unit-type-panel'},{'name': 'UserAccountComponent', 'selector': 'app-user-account'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ProjectDetailComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ProjectDetailComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

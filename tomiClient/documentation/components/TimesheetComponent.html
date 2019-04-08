@@ -1,0 +1,2858 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>tomi-client documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">tomi-client documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>TimesheetComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/component/panel/timesheet/timesheet.component.ts</code>
+</p>
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>TimesheetComponent is used to facilitate communication between the timesheet view and front end services.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                    <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Example</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-timesheet</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./timesheet.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./timesheet.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dialog">dialog</a>
+                            </li>
+                            <li>
+                                <a href="#entries">entries</a>
+                            </li>
+                            <li>
+                                <a href="#entry_container">entry_container</a>
+                            </li>
+                            <li>
+                                <a href="#entryComponents">entryComponents</a>
+                            </li>
+                            <li>
+                                <a href="#entryComponentsRef">entryComponentsRef</a>
+                            </li>
+                            <li>
+                                <a href="#sts">sts</a>
+                            </li>
+                            <li>
+                                <a href="#tally">tally</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#timesheetService">timesheetService</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#userId">userId</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#addEntry">addEntry</a>
+                            </li>
+                            <li>
+                                <a href="#copyEntry">copyEntry</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#deleteEntry">deleteEntry</a>
+                            </li>
+                            <li>
+                                <a href="#displayDeleteEntryModal">displayDeleteEntryModal</a>
+                            </li>
+                            <li>
+                                <a href="#displayNextTimesheet">displayNextTimesheet</a>
+                            </li>
+                            <li>
+                                <a href="#displayPrevTimesheet">displayPrevTimesheet</a>
+                            </li>
+                            <li>
+                                <a href="#displaySpecifiedTimesheet">displaySpecifiedTimesheet</a>
+                            </li>
+                            <li>
+                                <a href="#displaySubmitModal">displaySubmitModal</a>
+                            </li>
+                            <li>
+                                <a href="#firstLoad">firstLoad</a>
+                            </li>
+                            <li>
+                                <a href="#getEntries">getEntries</a>
+                            </li>
+                            <li>
+                                <a href="#getEntryComponents">getEntryComponents</a>
+                            </li>
+                            <li>
+                                <a href="#getStatusValue">getStatusValue</a>
+                            </li>
+                            <li>
+                                <a href="#navigateToTimesheet">navigateToTimesheet</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewInit">ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#populateProjects">populateProjects</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#populateTimesheets">populateTimesheets</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#reloadAfterSetCurrentStatus">reloadAfterSetCurrentStatus</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#reloadPromise">reloadPromise</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#save">save</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#savePromise">savePromise</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#setCurrentStatusPromise">setCurrentStatusPromise</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#submitTimesheet">submitTimesheet</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#updateTally">updateTally</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostListeners</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#window:keyup.Enter">window:keyup.Enter</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, timesheetService: <a href="../injectables/TimesheetService.html">TimesheetService</a>, projectService: <a href="../injectables/ProjectService.html">ProjectService</a>, entryService: <a href="../injectables/EntryService.html">EntryService</a>, dialog: MatDialog, signInService: <a href="../injectables/SignInService.html">SignInService</a>, errorService: <a href="../injectables/ErrorService.html">ErrorService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:74</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/Router" target="_blank" >Router</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>timesheetService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TimesheetService.html" target="_self" >TimesheetService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>projectService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ProjectService.html" target="_self" >ProjectService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>entryService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/EntryService.html" target="_self" >EntryService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>signInService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SignInService.html" target="_self" >SignInService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>errorService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ErrorService.html" target="_self" >ErrorService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+    <section>
+    <h3>HostListeners</h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="window:keyup.Enter"></a>
+                    <span class="name">
+                        <b>
+                            window:keyup.Enter
+                        </b>
+                        <a href="#window:keyup.Enter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <i>Arguments : </i><code>'$event' </code>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>window:keyup.Enter(e: KeyboardEvent)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="72"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:72</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Listens for the Enter key&#39;s keyup event; Performs a save on that event.</p>
+</div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addEntry"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            addEntry
+                        </b>
+                        <a href="#addEntry"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addEntry()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="164"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:164</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates an empty entry for the timesheet.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="copyEntry"></a>
+                    <span class="name">
+                        <b>
+                            copyEntry
+                        </b>
+                        <a href="#copyEntry"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>copyEntry(entry: <a href="../classes/Entry.html">Entry</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="183"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:183</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Duplicates an entry.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>entry</td>
+                                    <td>
+                                                <code><a href="../classes/Entry.html" target="_self" >Entry</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The entry to duplicate.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteEntry"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            deleteEntry
+                        </b>
+                        <a href="#deleteEntry"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteEntry(entry: <a href="../classes/Entry.html">Entry</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="211"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:211</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Deletes the specified entry.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>entry</td>
+                                    <td>
+                                                <code><a href="../classes/Entry.html" target="_self" >Entry</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The entry to be deleted.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayDeleteEntryModal"></a>
+                    <span class="name">
+                        <b>
+                            displayDeleteEntryModal
+                        </b>
+                        <a href="#displayDeleteEntryModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>displayDeleteEntryModal(entry: <a href="../classes/Entry.html">Entry</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="197"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:197</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Displays the modal for deleting an entry from the timesheet.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>entry</td>
+                                    <td>
+                                                <code><a href="../classes/Entry.html" target="_self" >Entry</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The entry to be deleted.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayNextTimesheet"></a>
+                    <span class="name">
+                        <b>
+                            displayNextTimesheet
+                        </b>
+                        <a href="#displayNextTimesheet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>displayNextTimesheet()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="372"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:372</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Changes the Timesheet to display to the sequentially next timesheet.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayPrevTimesheet"></a>
+                    <span class="name">
+                        <b>
+                            displayPrevTimesheet
+                        </b>
+                        <a href="#displayPrevTimesheet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>displayPrevTimesheet()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="357"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:357</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Changes the Timesheet to display to the sequentially previous timesheet.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displaySpecifiedTimesheet"></a>
+                    <span class="name">
+                        <b>
+                            displaySpecifiedTimesheet
+                        </b>
+                        <a href="#displaySpecifiedTimesheet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>displaySpecifiedTimesheet(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="388"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:388</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Changes the Timesheet to display to the Timesheet at the specified index within timesheets.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>index</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The index of the Timesheet to display.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displaySubmitModal"></a>
+                    <span class="name">
+                        <b>
+                            displaySubmitModal
+                        </b>
+                        <a href="#displaySubmitModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>displaySubmitModal()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="316"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:316</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Displays the submit modal.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="firstLoad"></a>
+                    <span class="name">
+                        <b>
+                            firstLoad
+                        </b>
+                        <a href="#firstLoad"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>firstLoad()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="112"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:112</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Populates the Timesheets for the user as well as getting the list of tasks and unit types.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getEntries"></a>
+                    <span class="name">
+                        <b>
+                            getEntries
+                        </b>
+                        <a href="#getEntries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getEntries(timesheet: <a href="../classes/Timesheet.html">Timesheet</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="144"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:144</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Gets all entries for this timesheet.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>timesheet</td>
+                                    <td>
+                                                <code><a href="../classes/Timesheet.html" target="_self" >Timesheet</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getEntryComponents"></a>
+                    <span class="name">
+                        <b>
+                            getEntryComponents
+                        </b>
+                        <a href="#getEntryComponents"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getEntryComponents()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="123"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:123</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Gets all the entry components currently on the Timesheet.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getStatusValue"></a>
+                    <span class="name">
+                        <b>
+                            getStatusValue
+                        </b>
+                        <a href="#getStatusValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getStatusValue(statusString: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="345"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:345</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Gets the number value of the string that matches in the Status enum.
+Used for comparison purposes.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>statusString</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>String to match to a Status.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="navigateToTimesheet"></a>
+                    <span class="name">
+                        <b>
+                            navigateToTimesheet
+                        </b>
+                        <a href="#navigateToTimesheet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>navigateToTimesheet()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="273"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:273</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Navigates to the timesheets page.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <b>
+                            ngAfterViewInit
+                        </b>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="105"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:105</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>After the view has initialized, gets all entry components.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="83"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:83</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="populateProjects"></a>
+                    <span class="name">
+                        <b>
+                            populateProjects
+                        </b>
+                        <a href="#populateProjects"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>populateProjects(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="157"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:157</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Gets all projects this user is associated with.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>The ID of the user.</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="populateTimesheets"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            populateTimesheets
+                        </b>
+                        <a href="#populateTimesheets"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>populateTimesheets()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="132"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:132</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Populates the list of Timesheets.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reloadAfterSetCurrentStatus"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            reloadAfterSetCurrentStatus
+                        </b>
+                        <a href="#reloadAfterSetCurrentStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>reloadAfterSetCurrentStatus()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="263"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:263</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Reloads the page once setCurrentStatus has completed.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reloadPromise"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            reloadPromise
+                        </b>
+                        <a href="#reloadPromise"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>reloadPromise()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="252"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:252</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Waits for reloadAfterSetCurrentStatus to compelete.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="save"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            save
+                        </b>
+                        <a href="#save"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>save()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="303"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:303</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Saves the state of all entries for the current timesheet.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="savePromise"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            savePromise
+                        </b>
+                        <a href="#savePromise"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>savePromise()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="292"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:292</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Waits for save to complete.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setCurrentStatusPromise"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            setCurrentStatusPromise
+                        </b>
+                        <a href="#setCurrentStatusPromise"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setCurrentStatusPromise()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="281"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:281</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Waits for setCurrentStatus to complete.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitTimesheet"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            submitTimesheet
+                        </b>
+                        <a href="#submitTimesheet"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>submitTimesheet()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="225"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:225</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Submits the current timesheet.
+Checks for validity of all entries for this timesheet before passing off the request to save to the
+entry service.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateTally"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            updateTally
+                        </b>
+                        <a href="#updateTally"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateTally()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="331"
+                            class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:331</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Updates the tally for the total worked hours for the Timesheet.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dialog"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            dialog</b>
+                            <a href="#dialog"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>MatDialog</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:78</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="entries"></a>
+                        <span class="name">
+                            <b>
+                            entries</b>
+                            <a href="#entries"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/Entry.html" target="_self" >Entry[]</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:49</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>List of all Entries for current Timesheet.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="entry_container"></a>
+                        <span class="name">
+                            <b>
+                            entry_container</b>
+                            <a href="#entry_container"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/core/ViewContainerRef" target="_blank" >ViewContainerRef</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;entryHolder&#x27;, {read: ViewContainerRef})<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:60</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>A view container ref for the template that will be used to house the entry component.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="entryComponents"></a>
+                        <span class="name">
+                            <b>
+                            entryComponents</b>
+                            <a href="#entryComponents"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/Entry.html" target="_self" >EntryComponent[]</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:66</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The list of entry components that are children of the timesheet.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="entryComponentsRef"></a>
+                        <span class="name">
+                            <b>
+                            entryComponentsRef</b>
+                            <a href="#entryComponentsRef"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>QueryList&lt;entryComponentsRef&gt;</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChildren(EntryComponent)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:63</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The entry components references within this timesheet component. </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="sts"></a>
+                        <span class="name">
+                            <b>
+                            sts</b>
+                            <a href="#sts"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>Status</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:57</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>A Status; used to compare against the status of the Timesheet.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="tally"></a>
+                        <span class="name">
+                            <b>
+                            tally</b>
+                            <a href="#tally"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:54</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Holds the total number of hours worked this week.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="timesheetService"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            timesheetService</b>
+                            <a href="#timesheetService"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../injectables/TimesheetService.html" target="_self" >TimesheetService</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:76</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="userId"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            userId</b>
+                            <a href="#userId"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>this.signInService.userAccount.id</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/component/panel/timesheet/timesheet.component.ts:46</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The ID of the user of this application.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  AfterViewInit,
+  Component, HostListener, Inject,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  ViewContainerRef
+} from &#x27;@angular/core&#x27;;
+import {Entry} from &quot;../../../model/entry&quot;;
+import {TimesheetService} from &quot;../../../service/timesheet.service&quot;;
+import {ProjectService} from &quot;../../../service/project.service&quot;;
+import {EntryService} from &quot;../../../service/entry.service&quot;;
+import {Timesheet} from &quot;../../../model/timesheet&quot;;
+import {EntryComponent} from &quot;../entry/entry.component&quot;;
+import {Status} from &quot;../../../model/status&quot;;
+import {Router} from &quot;@angular/router&quot;;
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from &quot;@angular/material&quot;;
+import {SignInService} from &quot;../../../service/sign-in.service&quot;;
+import {ErrorService} from &quot;../../../service/error.service&quot;;
+
+/**
+ *
+ *  @author Jessica Moffatt
+ */
+export interface DialogData {
+  entry: Entry;
+  parent: TimesheetComponent;
+}
+
+/**
+ * TimesheetComponent is used to facilitate communication between the timesheet view and front end services.
+ *
+ * @author Karol Talbot
+ * @author Jessica Moffatt
+ * @version 2.0
+ */
+@Component({
+  selector: &#x27;app-timesheet&#x27;,
+  templateUrl: &#x27;./timesheet.component.html&#x27;,
+  styleUrls: [&#x27;./timesheet.component.scss&#x27;]
+})
+export class TimesheetComponent implements OnInit, AfterViewInit {
+
+  /** The ID of the user of this application.*/
+  private userId &#x3D; this.signInService.userAccount.id;
+
+  /** List of all Entries for current Timesheet.*/
+  entries: Entry[] &#x3D; [];
+
+  /**
+   * Holds the total number of hours worked this week.
+   */
+  tally: number &#x3D; 0;
+
+  /** A Status; used to compare against the status of the Timesheet.*/
+  sts &#x3D; Status;
+
+  /** A view container ref for the template that will be used to house the entry component.*/
+  @ViewChild(&#x27;entryHolder&#x27;, {read: ViewContainerRef}) entry_container: ViewContainerRef;
+
+  /** The entry components references within this timesheet component. */
+  @ViewChildren(EntryComponent) entryComponentsRef: QueryList&lt;&#x27;entryComponentsRef&#x27;&gt;;
+
+  /** The list of entry components that are children of the timesheet.*/
+  entryComponents: EntryComponent[] &#x3D; [];
+
+  /**
+   * Listens for the Enter key&#x27;s keyup event; Performs a save on that event.
+   * @param e The event captured.
+   */
+  @HostListener(&#x27;window:keyup.Enter&#x27;, [&#x27;$event&#x27;]) enter(e: KeyboardEvent) {
+    this.savePromise().then();
+  }
+
+  constructor(private router: Router, public timesheetService: TimesheetService,
+              private projectService: ProjectService, private entryService: EntryService,
+              public dialog: MatDialog, private signInService: SignInService,
+              private errorService: ErrorService) {
+
+  }
+
+  ngOnInit() {
+    if (this.timesheetService.timesheets.length &#x3D;&#x3D;&#x3D; 0) {
+      this.firstLoad();
+    }else{
+      if(this.timesheetService.getRepopulateTimesheets()){
+        this.timesheetService.setRepopulateTimesheets(false);
+
+        this.populateProjects(this.userId);
+
+        this.populateTimesheets().then(()&#x3D;&gt;{
+          this.timesheetService.getCurrentTimesheet().then(data&#x3D;&gt;{
+          this.getEntries(data);
+        });})
+      }else{
+        this.timesheetService.getCurrentTimesheet().then(data&#x3D;&gt;{
+          this.getEntries(data);
+        });
+      }
+    }
+  }
+
+  /** After the view has initialized, gets all entry components.*/
+  ngAfterViewInit(): void {
+    this.getEntryComponents();
+  }
+
+  /**
+   * Populates the Timesheets for the user as well as getting the list of tasks and unit types.
+   */
+  firstLoad() {
+    this.populateTimesheets().then((value) &#x3D;&gt; {
+      let timesheet &#x3D; value as Timesheet;
+      this.getEntries(timesheet);
+      this.populateProjects(this.userId);
+      this.timesheetService.populateTasks().then();
+      this.timesheetService.populateUnitTypes().then();
+    });
+  }
+
+  /** Gets all the entry components currently on the Timesheet.*/
+  getEntryComponents() {
+    this.entryComponentsRef.changes.subscribe(c &#x3D;&gt; {
+      c.toArray().forEach(item &#x3D;&gt; {
+        this.entryComponents.push(item);
+      });
+    });
+  }
+
+  /** Populates the list of Timesheets.*/
+  async populateTimesheets() {
+    let promise &#x3D; new Promise((resolve) &#x3D;&gt; {
+      resolve(this.timesheetService.populateTimesheets(this.userId))
+    });
+
+    return await promise;
+  }
+
+  /**
+   * Gets all entries for this timesheet.
+   * @param id The ID of the timesheet we want the entries of.
+   */
+  getEntries(timesheet: Timesheet) {
+    this.timesheetService.getEntries(timesheet).subscribe((data) &#x3D;&gt; {
+      this.entries &#x3D; data;
+      this.updateTally();
+      this.timesheetService.setCurrentStatus().then();
+      this.timesheetService.setCurrentDate();
+    });
+  }
+
+  /**
+   * Gets all projects this user is associated with.
+   * @param id The ID of the user.
+   */
+  populateProjects(id: number): void {
+    this.projectService.getProjectsForUser(id).subscribe((data &#x3D;&gt; this.timesheetService.projects &#x3D; data));
+  }
+
+  /**
+   * Creates an empty entry for the timesheet.
+   */
+  public addEntry(): void {
+    if ((this.timesheetService.currentStatus &#x3D;&#x3D;&#x3D; this.sts[this.sts.LOGGING]) || (this.timesheetService.currentStatus &#x3D;&#x3D;&#x3D; this.sts[this.sts.REJECTED])) {
+      let newEntry &#x3D; new Entry();
+
+      this.timesheetService.getCurrentTimesheet().then((data) &#x3D;&gt; {
+        newEntry.timesheet &#x3D; data;
+
+        this.entryService.save(newEntry).then((data &#x3D;&gt; {
+          this.entries.push(data);
+          this.entryComponents &#x3D; [];
+        }));
+      });
+    }
+  }
+
+  /**
+   * Duplicates an entry.
+   * @param entry The entry to duplicate.
+   */
+  copyEntry(entry: Entry): void {
+    this.entryService.copy(entry).then(
+      (data) &#x3D;&gt; {
+        this.entries.push(data);
+      }
+    );
+
+    this.entryComponents &#x3D; [];
+  }
+
+  /**
+   * Displays the modal for deleting an entry from the timesheet.
+   * @param entry The entry to be deleted.
+   */
+  displayDeleteEntryModal(entry: Entry) {
+    const dialogRef &#x3D; this.dialog.open(DeleteEntryModalComponent, {
+      width: &#x27;40wv&#x27;,
+      data: {entry: entry, parent: this}
+    });
+
+    dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+    })
+  }
+
+  /**
+   * Deletes the specified entry.
+   * @param entry The entry to be deleted.
+   */
+  public deleteEntry(entry: Entry) {
+    let index &#x3D; this.entries.indexOf(entry);
+    this.entries.splice(index, 1);
+
+    this.entryComponents &#x3D; [];
+
+    this.updateTally();
+  }
+
+  /**
+   * Submits the current timesheet.
+   * Checks for validity of all entries for this timesheet before passing off the request to save to the
+   * entry service.
+   */
+  async submitTimesheet() {
+     await this.savePromise().then(async()&#x3D;&gt;{
+      let valid: boolean &#x3D; false;
+      this.entryComponents.forEach(item &#x3D;&gt; {
+        valid &#x3D; item.validateEntry();
+      });
+
+      if (valid) {
+        await this.timesheetService.submit().then((data:Timesheet) &#x3D;&gt; {
+          let promise &#x3D; new Promise((resolve)&#x3D;&gt;{
+            resolve(this.timesheetService.updateTimesheet(data))
+          }).then(()&#x3D;&gt;{
+            this.reloadPromise().then();
+          });
+
+          promise.then();
+        });
+      } else if (!valid) {
+        this.errorService.displayErrorMessage(&quot;All fields need a value to submit the timesheet.&quot;);
+      }
+      }
+    );
+  }
+
+  /**
+   * Waits for reloadAfterSetCurrentStatus to compelete.
+   */
+  async reloadPromise() {
+    let promise &#x3D; new Promise((resolve) &#x3D;&gt; {
+      resolve(this.reloadAfterSetCurrentStatus());
+    });
+
+    return await promise;
+  }
+
+  /**
+   * Reloads the page once setCurrentStatus has completed.
+   */
+  async reloadAfterSetCurrentStatus() {
+    await this.setCurrentStatusPromise().then((data) &#x3D;&gt; {
+        this.navigateToTimesheet();
+      }
+    );
+  }
+
+  /**
+   * Navigates to the timesheets page.
+   */
+  navigateToTimesheet() {
+    this.router.navigateByUrl(&#x27;/&#x27;, {skipLocationChange: true}).finally(() &#x3D;&gt;
+      this.router.navigate([&quot;/my_timesheets&quot;]));
+  }
+
+  /**
+   * Waits for setCurrentStatus to complete.
+   */
+  async setCurrentStatusPromise() {
+    let promise &#x3D; new Promise((resolve) &#x3D;&gt; {
+      resolve(this.timesheetService.setCurrentStatus());
+    });
+
+    return await promise;
+  }
+
+  /**
+   * Waits for save to complete.
+   */
+  async savePromise() {
+    let promise &#x3D; new Promise((resolve, reject) &#x3D;&gt; {
+      resolve(this.save());
+    });
+
+    return await promise;
+  }
+
+  /**
+   * Saves the state of all entries for the current timesheet.
+   */
+  async save() {
+    if ((this.timesheetService.currentStatus &#x3D;&#x3D;&#x3D; this.sts[this.sts.LOGGING]) || (this.timesheetService.currentStatus &#x3D;&#x3D;&#x3D; this.sts[this.sts.REJECTED])) {
+      return Promise.all(this.entryComponents.map((comp) &#x3D;&gt; {
+        return Promise.resolve(comp.save()).then(() &#x3D;&gt; {
+          this.updateTally();
+        });
+      }));
+    }
+  }
+
+  /**
+   * Displays the submit modal.
+   */
+  displaySubmitModal() {
+    if ((this.timesheetService.currentStatus &#x3D;&#x3D;&#x3D; this.sts[this.sts.LOGGING]) || (this.timesheetService.currentStatus &#x3D;&#x3D;&#x3D; this.sts[this.sts.REJECTED])) {
+      const dialogRef &#x3D; this.dialog.open(SubmitTimesheetModalComponent, {
+        width: &#x27;400px&#x27;,
+        data: {parent: this}
+      });
+
+      dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+      })
+    }
+  }
+
+  /**
+   * Updates the tally for the total worked hours for the Timesheet.
+   */
+  public updateTally(): void {
+    let hours: number &#x3D; 0;
+    this.entries.forEach(function (entry) {
+      hours +&#x3D; +entry.mondayHours + +entry.tuesdayHours + +entry.wednesdayHours + +entry.thursdayHours + +entry.fridayHours + +entry.saturdayHours + +entry.sundayHours;
+    });
+
+    this.tally &#x3D; hours;
+  }
+
+  /**
+   * Gets the number value of the string that matches in the Status enum.
+   * Used for comparison purposes.
+   * @param statusString String to match to a Status.
+   */
+  getStatusValue(statusString: string): number {
+    for (let item in Status) {
+      if (Status[item] &#x3D;&#x3D;&#x3D; statusString) {
+        return parseInt(item);
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Changes the Timesheet to display to the sequentially previous timesheet.
+   */
+  displayPrevTimesheet() {
+    let currentIndex &#x3D; this.timesheetService.getCurrentTimesheetIndex();
+
+    if (currentIndex &lt; this.timesheetService.timesheets.length - 1) {
+      let newIndex: number &#x3D; currentIndex + 1;
+      this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() &#x3D;&gt; {
+          this.navigateToTimesheet();
+        }
+      );
+    }
+  }
+
+  /**
+   * Changes the Timesheet to display to the sequentially next timesheet.
+   */
+  displayNextTimesheet() {
+    let currentIndex &#x3D; this.timesheetService.getCurrentTimesheetIndex();
+
+    if (currentIndex &gt; 0) {
+      let newIndex: number &#x3D; currentIndex - 1;
+      this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() &#x3D;&gt; {
+          this.navigateToTimesheet();
+        }
+      );
+    }
+  }
+
+  /**
+   * Changes the Timesheet to display to the Timesheet at the specified index within timesheets.
+   * @param index The index of the Timesheet to display.
+   */
+  displaySpecifiedTimesheet(index: number) {
+    let currentIndex &#x3D; this.timesheetService.getCurrentTimesheetIndex();
+    let newIndex: number &#x3D; currentIndex + index;
+
+    if (newIndex &lt; this.timesheetService.timesheets.length) {
+      this.timesheetService.setCurrentTimesheetIndex(newIndex).then(() &#x3D;&gt; {
+          this.navigateToTimesheet();
+        }
+      );
+    }
+  }
+}
+
+// Delete Modal
+
+/**
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
+@Component({
+  selector: &#x27;app-delete-modal&#x27;,
+  templateUrl: &#x27;./delete-entry-modal.html&#x27;,
+  styleUrls: [&#x27;./delete-entry-modal.scss&#x27;]
+})
+
+/**
+ * DeleteEntryModalComponent is used to get confirmation from the user regarding their desire to delete an Entry.
+ *
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
+export class DeleteEntryModalComponent implements OnInit {
+
+  constructor(private entryService: EntryService, public dialogRef: MatDialogRef&lt;DeleteEntryModalComponent&gt;,
+              @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  }
+
+  ngOnInit() {
+
+  }
+
+  /** Facilitates the deletion of the Entry, as well as closes the modal.*/
+  confirmDelete(): void {
+    this.deleteEntry();
+    this.dialogRef.close();
+  }
+
+  /** Closes the modal with no extra actions.*/
+  cancelDelete(): void {
+    this.dialogRef.close();
+  }
+
+  /** Facilitates deletion on the backend as well as the front end.**/
+  deleteEntry() {
+    this.entryService.delete(this.data.entry);
+    this.data.parent.deleteEntry(this.data.entry);
+  }
+}
+
+/* Submit Modal */
+/**
+ * @author Jessica Moffatt
+ * @version 1.0
+ */
+@Component({
+  selector: &#x27;app-submit-modal&#x27;,
+  template: &#x60;
+
+
+    &lt;h1 mat-dialog-title&gt;Submit Timesheet&lt;/h1&gt;
+    &lt;div mat-dialog-content&gt;
+      &lt;p&gt;Confirm submission of Timesheet&lt;/p&gt;
+      &lt;button mat-button [ngClass]&#x3D;&quot;&#x27;manage_cancel_btn&#x27;&quot; (click)&#x3D;&quot;cancel()&quot;&gt;Cancel&lt;/button&gt;
+      &lt;button mat-button [ngClass]&#x3D;&quot;&#x27;modal_submit&#x27;&quot; (click)&#x3D;&quot;confirmSubmission()&quot;&gt;Submit&lt;/button&gt;
+    &lt;/div&gt;
+  &#x60;,
+  styleUrls: [&#x27;./delete-entry-modal.scss&#x27;]
+})
+
+/**
+ * SubmitTimesheetModalComponent is used to get confirmation from the user regarding their desire to submit a Timesheet.
+ */
+export class SubmitTimesheetModalComponent implements OnInit {
+  constructor(public dialogRef: MatDialogRef&lt;DeleteEntryModalComponent&gt;,
+              @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  }
+
+  ngOnInit() {
+
+  }
+
+  /** Facilitates the submission of the current timesheet, as well as closes the modal.*/
+  confirmSubmission(): void {
+    this.submitTimesheet();
+    this.dialogRef.close();
+  }
+
+  /** Closes the modal with no extra actions.*/
+  cancel(): void {
+    this.dialogRef.close();
+  }
+
+  /** Facilitates submission of the current timesheet.**/
+  submitTimesheet() {
+    this.data.parent.submitTimesheet().then();
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!--
+@author Jessica Moffatt
+@author Karol Talbot
+@version 2.0
+--&gt;
+&lt;div class&#x3D;&quot;timesheet_content&quot;&gt;
+  &lt;div class&#x3D;&quot;scroll_panel&quot;&gt;
+    &lt;div class&#x3D;&quot;navigation&quot;&gt;
+      &lt;button mat-flat-button [ngClass]&#x3D;&quot;[&#x27;arrow&#x27;]&quot; (click)&#x3D;&quot;displayPrevTimesheet()&quot;&gt;
+          &lt;i class&#x3D;&quot;material-icons&quot;&gt;
+            navigate_before
+          &lt;/i&gt;
+      &lt;/button&gt;
+      &lt;div [ngClass]&#x3D;&quot;&#x27;week_title&#x27;&quot;&gt;
+          &lt;h4&gt;Week of {{timesheetService.currentDate}}&lt;/h4&gt;
+      &lt;/div&gt;
+      &lt;app-date-picker [parent]&#x3D;&quot;this&quot; [minDate]&#x3D;&quot;timesheetService.minDate&quot;&gt;&lt;/app-date-picker&gt;
+      &lt;mat-chip-trailing-icon disabled [ngClass]&#x3D;&quot;[&#x27;submission_status&#x27;]&quot;&gt;
+        &lt;mat-chip [disableRipple]&#x3D;&quot;true&quot; id&#x3D;&quot;status&quot;&gt;{{timesheetService.currentStatus}}&lt;/mat-chip&gt;
+      &lt;/mat-chip-trailing-icon&gt;
+      &lt;button mat-flat-button [ngClass]&#x3D;&quot;[&#x27;arrow&#x27;]&quot; (click)&#x3D;&quot;displayNextTimesheet()&quot;&gt;
+          &lt;i class&#x3D;&quot;material-icons&quot;&gt;
+            navigate_next
+          &lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;div *ngFor&#x3D;&quot;let entry of entries&quot;&gt;
+        &lt;app-entry [ngClass]&#x3D;&quot;&#x27;entry&#x27;&quot; *ngIf&#x3D;&quot;getStatusValue(entry.status.toString()) &#x3D;&#x3D;&#x3D; sts.LOGGING&quot; [entry]&#x3D;&quot;entry&quot;
+                   [projects]&#x3D;&quot;this.timesheetService.projects&quot; [unitTypes]&#x3D;&quot;this.timesheetService.unitTypes.getValue()&quot; [tasks]&#x3D;&quot;this.timesheetService.tasks.getValue()&quot;
+                   (requestCopy)&#x3D;&quot;copyEntry($event)&quot;
+                   (showDeleteModal)&#x3D;&quot;displayDeleteEntryModal($event)&quot;&gt;&lt;/app-entry&gt;
+        &lt;app-entry [ngClass]&#x3D;&quot;&#x27;rejected_entry&#x27;&quot; *ngIf&#x3D;&quot;getStatusValue(entry.status.toString()) &#x3D;&#x3D;&#x3D; sts.REJECTED&quot;
+                   [entry]&#x3D;&quot;entry&quot; [projects]&#x3D;&quot;this.timesheetService.projects&quot; [unitTypes]&#x3D;&quot;this.timesheetService.unitTypes.getValue()&quot; [tasks]&#x3D;&quot;this.timesheetService.tasks.getValue()&quot;
+                   (requestCopy)&#x3D;&quot;copyEntry($event)&quot;
+                   (showDeleteModal)&#x3D;&quot;displayDeleteEntryModal($event)&quot;&gt;&lt;/app-entry&gt;
+        &lt;app-entry-uneditable [ngClass]&#x3D;&quot;&#x27;submitted_entry&#x27;&quot;
+                              *ngIf&#x3D;&quot;getStatusValue(entry.status.toString()) &#x3D;&#x3D;&#x3D; sts.SUBMITTED&quot;
+                              [entry]&#x3D;&quot;entry&quot;&gt;&lt;/app-entry-uneditable&gt;
+        &lt;app-entry-uneditable [ngClass]&#x3D;&quot;&#x27;approved_entry&#x27;&quot;
+                              *ngIf&#x3D;&quot;getStatusValue(entry.status.toString()) &#x3D;&#x3D;&#x3D; sts.APPROVED&quot;
+                              [entry]&#x3D;&quot;entry&quot;&gt;&lt;/app-entry-uneditable&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div #entryHolder&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;div [ngClass]&#x3D;&quot;&#x27;timesheet_footer&#x27;&quot;&gt;
+  &lt;ng-template [ngIf]&#x3D;&quot;timesheetService.currentStatus.match(&#x27;LOGGING|REJECTED&#x27;)&quot;&gt;
+    &lt;button mat-flat-button (click)&#x3D;&quot;addEntry()&quot; [ngClass]&#x3D;&quot;[&#x27;add_btn&#x27;, &#x27;footer_btn&#x27;]&quot;&gt;
+      &lt;i class&#x3D;&quot;material-icons&quot;&gt;
+        add
+      &lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/ng-template&gt;
+  &lt;ng-template [ngIf]&#x3D;&quot;timesheetService.currentStatus.match(&#x27;LOGGING|REJECTED&#x27;)&quot;&gt;
+    &lt;button mat-flat-button [ngClass]&#x3D;&quot;[&#x27;submit_btn&#x27;, &#x27;footer_btn&#x27;]&quot; (click)&#x3D;&quot;displaySubmitModal()&quot;&gt;
+      &lt;i class&#x3D;&quot;material-icons&quot;&gt;
+        send
+      &lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/ng-template&gt;
+  &lt;ng-template [ngIf]&#x3D;&quot;!timesheetService.currentStatus.match(&#x27;LOGGING|REJECTED&#x27;)&quot;&gt;
+    &lt;button mat-flat-button [ngClass]&#x3D;&quot;[&#x27;hidden_btn&#x27;, &#x27;submit_btn&#x27;,  &#x27;footer_btn&#x27;]&quot; (click)&#x3D;&quot;displaySubmitModal()&quot;&gt;
+      &lt;i class&#x3D;&quot;material-icons&quot;&gt;
+        send
+      &lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/ng-template&gt;
+
+  &lt;span [ngClass]&#x3D;&quot;&#x27;hours_tally&#x27;&quot;&gt;&lt;strong&gt; {{tally}}&lt;/strong&gt; Hours&lt;/span&gt;
+  &lt;ng-template [ngIf]&#x3D;&quot;timesheetService.currentStatus.match(&#x27;LOGGING|REJECTED&#x27;)&quot;&gt;
+    &lt;button mat-flat-button [ngClass]&#x3D;&quot;[&#x27;footer_btn&#x27;, &#x27;save_btn&#x27;]&quot; (click)&#x3D;&quot;save().then()&quot; &gt;
+      &lt;i class&#x3D;&quot;material-icons&quot;&gt;
+        save_alt
+      &lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/ng-template&gt;
+&lt;/div&gt;
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./timesheet.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">/*
+@author Jessica Moffatt
+@author Karol Talbot
+@version 2.0
+ */
+@import &#x27;~src/variables&#x27;;
+
+
+.timesheet_footer {
+  background-color: $orange;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  height: $footer_height;
+  vertical-align: middle;
+  z-index: 2;
+}
+
+.timesheet_content {
+  height: 100vh;
+}
+
+.scroll_panel {
+  height: 86vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.footer_btn {
+  bottom: 0;
+  height: $footer_height;
+  width: $btn_md_wh;
+  margin: 0.5vh 0.5vw;
+}
+
+.hours_tally {
+  vertical-align: middle;
+  float: right;
+  font-size: 1.5rem;
+  margin: 0.5vh 0.5vw;
+  color: #FFFFFF;
+}
+
+
+.add_btn, .save_btn {
+  background-color: $save_btn;
+
+  i {
+
+    color: white;
+  }
+}
+
+.submit_btn {
+  float: right;
+  background-color: $save_btn;
+
+  i {
+
+    color: white;
+  }
+}
+
+.arrow {
+  box-shadow: none;
+  margin: 0vh 3vw;
+  i {
+    color: $arrow_color;
+  }
+}
+
+.arrow:hover {
+  transition-delay: .05s;
+  background-color: $light_grey;
+}
+
+.week_title {
+  flex-grow: 2;
+  position: relative;
+  height: 5vh;
+  width: fit-content;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: none;
+    h4 {
+      text-align: center;
+      font-size: 2em;
+      color: $arrow_color;
+    }
+}
+
+.navigation {
+  width: 100vw;
+  display: inline-flex;
+  flex-direction: row;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+.submission_status {
+  display: inline-flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#status {
+  padding: 0.4em;
+  border-radius: 0.5vw;
+}
+
+.hidden_btn {
+  background: none;
+
+  i {
+    color: $orange;
+  }
+
+  color: $orange;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!--@author Jessica Moffatt@author Karol Talbot@version 2.0--><div class="timesheet_content">  <div class="scroll_panel">    <div class="navigation">      <button mat-flat-button [ngClass]="[\'arrow\']" (click)="displayPrevTimesheet()">          <i class="material-icons">            navigate_before          </i>      </button>      <div [ngClass]="\'week_title\'">          <h4>Week of {{timesheetService.currentDate}}</h4>      </div>      <app-date-picker [parent]="this" [minDate]="timesheetService.minDate"></app-date-picker>      <mat-chip-trailing-icon disabled [ngClass]="[\'submission_status\']">        <mat-chip [disableRipple]="true" id="status">{{timesheetService.currentStatus}}</mat-chip>      </mat-chip-trailing-icon>      <button mat-flat-button [ngClass]="[\'arrow\']" (click)="displayNextTimesheet()">          <i class="material-icons">            navigate_next          </i>      </button>    </div>    <div>      <div *ngFor="let entry of entries">        <app-entry [ngClass]="\'entry\'" *ngIf="getStatusValue(entry.status.toString()) === sts.LOGGING" [entry]="entry"                   [projects]="this.timesheetService.projects" [unitTypes]="this.timesheetService.unitTypes.getValue()" [tasks]="this.timesheetService.tasks.getValue()"                   (requestCopy)="copyEntry($event)"                   (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>        <app-entry [ngClass]="\'rejected_entry\'" *ngIf="getStatusValue(entry.status.toString()) === sts.REJECTED"                   [entry]="entry" [projects]="this.timesheetService.projects" [unitTypes]="this.timesheetService.unitTypes.getValue()" [tasks]="this.timesheetService.tasks.getValue()"                   (requestCopy)="copyEntry($event)"                   (showDeleteModal)="displayDeleteEntryModal($event)"></app-entry>        <app-entry-uneditable [ngClass]="\'submitted_entry\'"                              *ngIf="getStatusValue(entry.status.toString()) === sts.SUBMITTED"                              [entry]="entry"></app-entry-uneditable>        <app-entry-uneditable [ngClass]="\'approved_entry\'"                              *ngIf="getStatusValue(entry.status.toString()) === sts.APPROVED"                              [entry]="entry"></app-entry-uneditable>      </div>    </div>    <div #entryHolder></div>  </div></div><div [ngClass]="\'timesheet_footer\'">  <ng-template [ngIf]="timesheetService.currentStatus.match(\'LOGGING|REJECTED\')">    <button mat-flat-button (click)="addEntry()" [ngClass]="[\'add_btn\', \'footer_btn\']">      <i class="material-icons">        add      </i>    </button>  </ng-template>  <ng-template [ngIf]="timesheetService.currentStatus.match(\'LOGGING|REJECTED\')">    <button mat-flat-button [ngClass]="[\'submit_btn\', \'footer_btn\']" (click)="displaySubmitModal()">      <i class="material-icons">        send      </i>    </button>  </ng-template>  <ng-template [ngIf]="!timesheetService.currentStatus.match(\'LOGGING|REJECTED\')">    <button mat-flat-button [ngClass]="[\'hidden_btn\', \'submit_btn\',  \'footer_btn\']" (click)="displaySubmitModal()">      <i class="material-icons">        send      </i>    </button>  </ng-template>  <span [ngClass]="\'hours_tally\'"><strong> {{tally}}</strong> Hours</span>  <ng-template [ngIf]="timesheetService.currentStatus.match(\'LOGGING|REJECTED\')">    <button mat-flat-button [ngClass]="[\'footer_btn\', \'save_btn\']" (click)="save().then()" >      <i class="material-icons">        save_alt      </i>    </button>  </ng-template></div></div>'
+    var COMPONENTS = [{'name': 'AddProjectComponent', 'selector': 'app-add-project'},{'name': 'AddProjectExpenseComponent', 'selector': 'app-add-project-expense'},{'name': 'AddProjectMemberComponent', 'selector': 'app-add-project-member'},{'name': 'AddTaskComponent', 'selector': 'app-add-task'},{'name': 'AddTeamComponent', 'selector': 'app-add-team'},{'name': 'AddUnitTypeComponent', 'selector': 'app-add-unit-type'},{'name': 'AddUserAccountComponent', 'selector': 'app-add-user-account'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ApprovePanelComponent', 'selector': 'app-approve-panel'},{'name': 'BillableHourReportComponent', 'selector': 'app-billable-hour-report'},{'name': 'BudgetReportComponent', 'selector': 'app-budget-report'},{'name': 'DataDumpReportComponent', 'selector': 'app-data-dump-report'},{'name': 'DatePickerComponent', 'selector': 'app-date-picker'},{'name': 'DeleteEntryModalComponent', 'selector': 'app-delete-modal'},{'name': 'DeleteProjectModal', 'selector': 'app-delete-project-modal'},{'name': 'DeleteTaskModal', 'selector': 'app-delete-task-modal'},{'name': 'DeleteTeamModal', 'selector': 'app-delete-team-modal'},{'name': 'DeleteUnitTypeModal', 'selector': 'app-delete-unit-type-modal'},{'name': 'DeleteUserAccountModal', 'selector': 'app-delete-user-modal'},{'name': 'EditTaskComponent', 'selector': 'app-edit-task'},{'name': 'EditUnitTypeComponent', 'selector': 'app-edit-unit-type'},{'name': 'EditUserComponent', 'selector': 'app-edit-user'},{'name': 'EntryApproveComponent', 'selector': 'app-entry-approve'},{'name': 'EntryComponent', 'selector': 'app-entry'},{'name': 'EntryUneditableComponent', 'selector': 'app-entry-uneditable'},{'name': 'ExpenseListComponent', 'selector': 'app-expense-list'},{'name': 'ManageTeamsPanelComponent', 'selector': 'app-manage-teams-panel'},{'name': 'ProductivityReportComponent', 'selector': 'app-productivity-report'},{'name': 'ProjectDetailComponent', 'selector': 'app-project-detail'},{'name': 'ProjectEntriesComponent', 'selector': 'app-project-entries'},{'name': 'ProjectEntriesSidebarComponent', 'selector': 'app-project-entries-sidebar'},{'name': 'ProjectMemberListComponent', 'selector': 'app-project-member-list'},{'name': 'ProjectSidebarComponent', 'selector': 'app-project-sidebar'},{'name': 'ProjectsPanelComponent', 'selector': 'app-projects-panel'},{'name': 'SignInComponent', 'selector': 'app-sign-in'},{'name': 'SubmitApprovalModalComponent', 'selector': 'app-approval-modal'},{'name': 'SubmitTimesheetModalComponent', 'selector': 'app-submit-modal'},{'name': 'TasksPanelComponent', 'selector': 'app-tasks-panel'},{'name': 'TeamMemberSidebarComponent', 'selector': 'app-team-member-sidebar'},{'name': 'TeamMemberTimesheetComponent', 'selector': 'app-team-member-timesheet'},{'name': 'TeamPanelComponent', 'selector': 'app-team-panel'},{'name': 'TeamProductivityReportComponent', 'selector': 'app-team-productivity-report'},{'name': 'TeamSidebarComponent', 'selector': 'app-team-sidebar'},{'name': 'TimesheetComponent', 'selector': 'app-timesheet'},{'name': 'TopNavBarComponent', 'selector': 'app-top-nav-bar'},{'name': 'UnitTypePanelComponent', 'selector': 'app-unit-type-panel'},{'name': 'UserAccountComponent', 'selector': 'app-user-account'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'TimesheetComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TimesheetComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

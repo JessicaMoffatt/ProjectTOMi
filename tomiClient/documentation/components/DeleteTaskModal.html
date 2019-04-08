@@ -1,0 +1,782 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>tomi-client documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">tomi-client documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>DeleteTaskModal</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/component/panel/edit-task/edit-task.component.ts</code>
+</p>
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>DeleteTaskModal is used to get confirmation from the user regarding their desire to delete a Task.</p>
+
+    </p>
+
+
+
+    <p class="comment">
+        <h3>Example</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-delete-task-modal</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./delete-task-modal.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./delete-task-modal.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#data">data</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dialogRef">dialogRef</a>
+                            </li>
+                            <li>
+                                <a href="#taskToDelete">taskToDelete</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#canceledDelete">canceledDelete</a>
+                            </li>
+                            <li>
+                                <a href="#confirmedDelete">confirmedDelete</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(dialogRef: <a href="../classes/Task.html">MatDialogRef<DeleteTaskModal></a>, data: <a href="../interfaces/DeleteDialogData.html">DeleteDialogData</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="123" class="link-to-prism">src/app/component/panel/edit-task/edit-task.component.ts:123</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dialogRef</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/Task.html" target="_self" >MatDialogRef&lt;DeleteTaskModal&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>data</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/DeleteDialogData.html" target="_self" >DeleteDialogData</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canceledDelete"></a>
+                    <span class="name">
+                        <b>
+                            canceledDelete
+                        </b>
+                        <a href="#canceledDelete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>canceledDelete()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="134"
+                            class="link-to-prism">src/app/component/panel/edit-task/edit-task.component.ts:134</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Closes the modal with no extra actions.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="confirmedDelete"></a>
+                    <span class="name">
+                        <b>
+                            confirmedDelete
+                        </b>
+                        <a href="#confirmedDelete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>confirmedDelete()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="139"
+                            class="link-to-prism">src/app/component/panel/edit-task/edit-task.component.ts:139</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Facilitates the deletion of the selected Task, as well as closes the modal.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="129"
+                            class="link-to-prism">src/app/component/panel/edit-task/edit-task.component.ts:129</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="data"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            data</b>
+                            <a href="#data"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../interfaces/DeleteDialogData.html" target="_self" >DeleteDialogData</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @Inject(MAT_DIALOG_DATA)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="125" class="link-to-prism">src/app/component/panel/edit-task/edit-task.component.ts:125</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="dialogRef"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            dialogRef</b>
+                            <a href="#dialogRef"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/Task.html" target="_self" >MatDialogRef&lt;DeleteTaskModal&gt;</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="125" class="link-to-prism">src/app/component/panel/edit-task/edit-task.component.ts:125</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="taskToDelete"></a>
+                        <span class="name">
+                            <b>
+                            taskToDelete</b>
+                            <a href="#taskToDelete"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="../classes/Task.html" target="_self" >Task</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="123" class="link-to-prism">src/app/component/panel/edit-task/edit-task.component.ts:123</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The Task to be deleted.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild} from &#x27;@angular/core&#x27;;
+import {FormControl, Validators} from &quot;@angular/forms&quot;;
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from &quot;@angular/material&quot;;
+import {Task} from &#x27;src/app/model/task&#x27;;
+import {CustomErrorStateMatcher} from &quot;../../extra/CustomErrorStateMatcher&quot;;
+
+/**
+ * EditUserComponent is used to facilitate communication between the edit task view and front end services.
+ *
+ * @author Karol Talbot
+ * @version 1.1
+ */
+@Component({
+  selector: &#x27;app-edit-task&#x27;,
+  templateUrl: &#x27;./edit-task.component.html&#x27;,
+  styleUrls: [&#x27;./edit-task.component.scss&#x27;]
+})
+export class EditTaskComponent implements OnInit {
+
+  /** Validations for the name. */
+  taskNameControl &#x3D; new FormControl(&#x27;&#x27;, [
+    Validators.required
+  ]);
+
+  /** The task model associated with this component. */
+  @Input() task: Task;
+
+  /** Event Emitter used to notify the TaskComponent parent that the EditUnitTypeComponent save had been requested. */
+  @Output() saveRequested &#x3D; new EventEmitter&lt;any&gt;();
+
+  /** Event Emitter used to notify the TaskComponent parent that the EditUnitTypeComponent delete had been requested. */
+  @Output() deleteRequested &#x3D; new EventEmitter&lt;any&gt;();
+
+  /** Event Emitter used to notify the TaskComponent parent that the EditUnitTypeComponent cancel had been requested. */
+  @Output() cancelRequested &#x3D; new EventEmitter&lt;any&gt;();
+
+  /** The expansion panel for this task. */
+  @ViewChild(&#x27;editTaskExpansionPanel&#x27;) editTaskExpansionPanel;
+
+  /** The input field for the Task&#x27;s name.*/
+  @ViewChild(&#x27;editTaskName&#x27;) editTaskName;
+
+  /** The input checkbox for the Task&#x27;s billable status.*/
+  @ViewChild(&#x27;editBillable&#x27;) editBillable;
+
+  /** The ngForm for this component */
+  @ViewChild(&#x27;editTaskForm&#x27;) editTaskForm;
+
+  /** Invalid name error detection. */
+  taskNameMatcher &#x3D; new CustomErrorStateMatcher();
+
+  constructor(public deleteTaskDialog: MatDialog) {
+  }
+
+  ngOnInit() {
+
+  }
+
+  /**
+   * Initialize the value inputs on the template. This fixes issues caused by the Validators.required when an input is pristine.
+   */
+  setValuesOnOpen() {
+    this.taskNameControl.setValue(this.task.name);
+    this.editBillable.checked &#x3D; this.task.billable;
+  }
+
+  /**
+   * Emits a request for this Task&#x27;s changes to be saved.
+   */
+  save(): void {
+    if (this.taskNameControl.valid) {
+      this.task.name &#x3D; this.editTaskName.nativeElement.value;
+      this.task.billable &#x3D; this.editBillable.checked;
+
+      this.editTaskExpansionPanel.toggle();
+      this.saveRequested.emit(this.task);
+    }
+  }
+
+  /**
+   * Emits a request for this Task to be deleted.
+   */
+  delete(): void {
+    this.editTaskExpansionPanel.toggle();
+    this.deleteRequested.emit(this.task);
+  }
+
+  /**
+   * Emits a request for this Task&#x27;s changes to be cancelled.
+   */
+  cancel(): void {
+    this.editTaskExpansionPanel.toggle();
+  }
+
+  /**
+   * Displays a Modal component for deleting the selected Task.
+   */
+  openDeleteDialog() {
+    this.deleteTaskDialog.open(DeleteTaskModal, {
+      width: &#x27;40vw&#x27;,
+      data: {taskToDelete: this.task, parent: this}
+    });
+  }
+}
+
+// Delete Task Modal
+
+/**
+ * DeleteTaskModal is used to get confirmation from the user regarding their desire to delete a Task.
+ *
+ * @author Karol Talbot
+ */
+@Component({
+  selector: &#x27;app-delete-task-modal&#x27;,
+  templateUrl: &#x27;./delete-task-modal.html&#x27;,
+  styleUrls: [&#x27;./delete-task-modal.scss&#x27;]
+})
+export class DeleteTaskModal {
+
+  /**
+   * The Task to be deleted.
+   */
+  taskToDelete: Task;
+
+  constructor(public dialogRef: MatDialogRef&lt;DeleteTaskModal&gt;, @Inject(MAT_DIALOG_DATA) public data: DeleteDialogData) {
+
+  }
+
+  ngOnInit() {
+    this.taskToDelete &#x3D; this.data.taskToDelete;
+  }
+
+  /** Closes the modal with no extra actions.*/
+  canceledDelete(): void {
+    this.dialogRef.close();
+  }
+
+  /** Facilitates the deletion of the selected Task, as well as closes the modal.*/
+  confirmedDelete() {
+    this.data.parent.delete();
+    this.dialogRef.close();
+  }
+}
+
+/** Data interface for the DeleteTaskModal */
+export interface DeleteDialogData {
+  taskToDelete: Task;
+  parent: EditTaskComponent;
+}
+
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!--
+  @author Karol Talbot
+--&gt;
+&lt;div class&#x3D;&quot;modal_heading&quot;&gt;&lt;h1 mat-dialog-title&gt;Delete Task&lt;/h1&gt;&lt;/div&gt;
+&lt;div mat-dialog-content&gt;
+  &lt;p&gt;Confirm deletion of {{taskToDelete.name}}&lt;/p&gt;
+  &lt;button mat-raised-button class&#x3D;&quot;manage_cancel_btn&quot; (click)&#x3D;&quot;canceledDelete()&quot;&gt;Cancel&lt;/button&gt;
+  &lt;button mat-raised-button class&#x3D;&quot;manage_delete_btn modal_delete&quot; (click)&#x3D;&quot;confirmedDelete()&quot;&gt;Delete&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./delete-task-modal.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;~src/variables&quot;;
+/**
+  @author Karol Talbot
+ */
+.modal_delete {
+  float: right;
+  margin-right: 1%;
+  background-color: $delete_btn;
+  color:$delete_btn_text;
+}
+
+.modal_heading {
+  background-color: $red;
+  border-radius: 1vh;
+  width: 100%;
+
+  h1 {
+    padding-left: 5%;
+    color: #FFFFFF;
+  }
+}
+
+.manage_cancel_btn {
+  background-color: $cancel_btn;
+  color: $cancel_btn_text;
+  float: right;
+  margin-right: 1%;
+}
+
+body{
+  overflow: hidden;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!--  @author Karol Talbot--><div class="modal_heading"><h1 mat-dialog-title>Delete Task</h1></div><div mat-dialog-content>  <p>Confirm deletion of {{taskToDelete.name}}</p>  <button mat-raised-button class="manage_cancel_btn" (click)="canceledDelete()">Cancel</button>  <button mat-raised-button class="manage_delete_btn modal_delete" (click)="confirmedDelete()">Delete</button></div></div>'
+    var COMPONENTS = [{'name': 'AddProjectComponent', 'selector': 'app-add-project'},{'name': 'AddProjectExpenseComponent', 'selector': 'app-add-project-expense'},{'name': 'AddProjectMemberComponent', 'selector': 'app-add-project-member'},{'name': 'AddTaskComponent', 'selector': 'app-add-task'},{'name': 'AddTeamComponent', 'selector': 'app-add-team'},{'name': 'AddUnitTypeComponent', 'selector': 'app-add-unit-type'},{'name': 'AddUserAccountComponent', 'selector': 'app-add-user-account'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ApprovePanelComponent', 'selector': 'app-approve-panel'},{'name': 'BillableHourReportComponent', 'selector': 'app-billable-hour-report'},{'name': 'BudgetReportComponent', 'selector': 'app-budget-report'},{'name': 'DataDumpReportComponent', 'selector': 'app-data-dump-report'},{'name': 'DatePickerComponent', 'selector': 'app-date-picker'},{'name': 'DeleteEntryModalComponent', 'selector': 'app-delete-modal'},{'name': 'DeleteProjectModal', 'selector': 'app-delete-project-modal'},{'name': 'DeleteTaskModal', 'selector': 'app-delete-task-modal'},{'name': 'DeleteTeamModal', 'selector': 'app-delete-team-modal'},{'name': 'DeleteUnitTypeModal', 'selector': 'app-delete-unit-type-modal'},{'name': 'DeleteUserAccountModal', 'selector': 'app-delete-user-modal'},{'name': 'EditTaskComponent', 'selector': 'app-edit-task'},{'name': 'EditUnitTypeComponent', 'selector': 'app-edit-unit-type'},{'name': 'EditUserComponent', 'selector': 'app-edit-user'},{'name': 'EntryApproveComponent', 'selector': 'app-entry-approve'},{'name': 'EntryComponent', 'selector': 'app-entry'},{'name': 'EntryUneditableComponent', 'selector': 'app-entry-uneditable'},{'name': 'ExpenseListComponent', 'selector': 'app-expense-list'},{'name': 'ManageTeamsPanelComponent', 'selector': 'app-manage-teams-panel'},{'name': 'ProductivityReportComponent', 'selector': 'app-productivity-report'},{'name': 'ProjectDetailComponent', 'selector': 'app-project-detail'},{'name': 'ProjectEntriesComponent', 'selector': 'app-project-entries'},{'name': 'ProjectEntriesSidebarComponent', 'selector': 'app-project-entries-sidebar'},{'name': 'ProjectMemberListComponent', 'selector': 'app-project-member-list'},{'name': 'ProjectSidebarComponent', 'selector': 'app-project-sidebar'},{'name': 'ProjectsPanelComponent', 'selector': 'app-projects-panel'},{'name': 'SignInComponent', 'selector': 'app-sign-in'},{'name': 'SubmitApprovalModalComponent', 'selector': 'app-approval-modal'},{'name': 'SubmitTimesheetModalComponent', 'selector': 'app-submit-modal'},{'name': 'TasksPanelComponent', 'selector': 'app-tasks-panel'},{'name': 'TeamMemberSidebarComponent', 'selector': 'app-team-member-sidebar'},{'name': 'TeamMemberTimesheetComponent', 'selector': 'app-team-member-timesheet'},{'name': 'TeamPanelComponent', 'selector': 'app-team-panel'},{'name': 'TeamProductivityReportComponent', 'selector': 'app-team-productivity-report'},{'name': 'TeamSidebarComponent', 'selector': 'app-team-sidebar'},{'name': 'TimesheetComponent', 'selector': 'app-timesheet'},{'name': 'TopNavBarComponent', 'selector': 'app-top-nav-bar'},{'name': 'UnitTypePanelComponent', 'selector': 'app-unit-type-panel'},{'name': 'UserAccountComponent', 'selector': 'app-user-account'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'DeleteTaskModal'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'DeleteTaskModal.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
