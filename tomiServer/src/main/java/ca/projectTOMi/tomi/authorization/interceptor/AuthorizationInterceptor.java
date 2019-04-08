@@ -115,7 +115,9 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		final String requestURI = request.getRequestURI();
 		String controller;
 		final UserAccount user;
-
+		if(requestURI.matches("^.+css$|^.+js$|^.+html$|^.+svg$")){
+			return true;
+		}
 		// Initial Login
 		if ("/tokensignin".equals(request.getRequestURI())) {
 			return true;

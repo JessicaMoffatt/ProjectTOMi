@@ -38,7 +38,7 @@ export class UnitTypePanelComponent implements OnInit{
     document.getElementById("unit_type_search").focus();
   }
 
-  constructor(private dialog: MatDialog, private unitTypeService: UnitTypeService) { }
+  constructor(private dialog: MatDialog, public unitTypeService: UnitTypeService) { }
 
   ngOnInit() {
     this.unitTypeService.initializeUnitTypes();

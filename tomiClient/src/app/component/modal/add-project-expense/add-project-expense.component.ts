@@ -23,7 +23,7 @@ export class AddProjectExpenseComponent implements OnInit {
    */
   selectedProject: Project;
 
-  constructor(public dialogRef: MatDialogRef<AddProjectExpenseComponent>, private expenseService: ExpenseService, private projectService: ProjectService) { }
+  constructor(public dialogRef: MatDialogRef<AddProjectExpenseComponent>, public expenseService: ExpenseService, public projectService: ProjectService) { }
 
   /** The input field for the Unit Types's name.*/
   @ViewChild('addExpenseNote') addExpenseNote;

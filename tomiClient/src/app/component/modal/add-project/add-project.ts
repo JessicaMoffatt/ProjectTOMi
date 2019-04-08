@@ -69,7 +69,7 @@ export class AddProjectComponent implements OnInit {
    * Passes the request to save a new Project to the ProjectService.
    * As well, if a new Client is creaed, passes the request to save the new Client to the ClientService.
    */
-  private async addProject() {
+  async addProject() {
     let initials: string;
     let project: Project;
     if (this.projectNameControl.valid && this.accountManagerControl.valid && this.billingControl.valid && this.budgetControl.valid && this.clientControl.valid) {

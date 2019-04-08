@@ -28,7 +28,8 @@ export class AddTeamComponent implements OnInit {
   /** The ngForm for this component */
   @ViewChild('addTeamForm') addTeamForm;
 
-  constructor(public dialogRef: MatDialogRef<AddTeamComponent>, private teamService:TeamService) { }
+  constructor(public dialogRef: MatDialogRef<AddTeamComponent>, public teamService: TeamService) {
+  }
 
   ngOnInit() {
 
@@ -44,12 +45,12 @@ export class AddTeamComponent implements OnInit {
   /**
    * Passes the request to save a new Tean to the TeamService.
    */
-  private async addTeam() {
+  async addTeam() {
     let teamToAdd = new Team();
     if (this.teamNameControl.valid) {
       teamToAdd.teamName = this.addTeamName.nativeElement.value;
       teamToAdd = await this.teamService.save(teamToAdd).then(
-        (value)=> {
+        (value) => {
           this.teamService.initializeTeams();
           return value;
         });

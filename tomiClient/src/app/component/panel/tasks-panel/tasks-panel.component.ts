@@ -39,7 +39,7 @@ export class TasksPanelComponent implements OnInit{
     document.getElementById("task_search").focus();
   }
 
-  constructor(private dialog: MatDialog, private taskService: TaskService) { }
+  constructor(private dialog: MatDialog, public taskService: TaskService) { }
 
   ngOnInit() {
     this.taskService.initializeTasks();

@@ -69,7 +69,7 @@ export class AddUserAccountComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<AddUserAccountComponent>,
               private userAccountService: UserAccountService,
-              private teamService: TeamService) { }
+              public teamService: TeamService) { }
 
   ngOnInit() {
 

@@ -59,7 +59,7 @@ export class ProjectService {
   public readonly regExp: string = "[A-Z]{2}[0-9]{4}";
 
   /** Tracks which Project is selectedProject in project-panel component and manage-project modal.*/
-  private selectedProject: Project = new Project();
+  selectedProject: Project = new Project();
 
   /** The list of all active Projects. */
   projects: BehaviorSubject<Array<Project>> = new BehaviorSubject([]);

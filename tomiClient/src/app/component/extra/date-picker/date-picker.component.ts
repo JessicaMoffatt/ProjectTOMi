@@ -14,15 +14,15 @@ const millisecondsToDays: number = 86400000;
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss']
 })
-export class DatePickerComponent implements OnInit{
+export class DatePickerComponent implements OnInit {
   /**
    * The latest date that can be selectedProject.
    */
-  private maxDate: Date;
+  maxDate: Date;
   /**
    * The earliest date that can be selectedProject.
    */
-  @Input() private minDate: Date;
+  @Input() minDate: Date;
 
   /**
    * The selectedProject date.
@@ -33,7 +33,7 @@ export class DatePickerComponent implements OnInit{
    */
   @Input() private parent;
 
-  constructor(private timesheetService: TimesheetService){
+  constructor(private timesheetService: TimesheetService) {
     this.maxDate = new Date();
   }
 
@@ -43,7 +43,7 @@ export class DatePickerComponent implements OnInit{
   /**
    * Sets the minimum date.
    */
-  doSetMinDate(){
+  doSetMinDate() {
     this.timesheetService.doSetMinDate();
   }
 
@@ -65,7 +65,7 @@ export class DatePickerComponent implements OnInit{
     let currentDay = new Date(this.timesheetService.currentDate);
 
     let days = +(currentDay) - +this.selectedDate;
-    let weeks = Math.floor((days / millisecondsToDays + 6) / 7) ;
+    let weeks = Math.floor((days / millisecondsToDays + 6) / 7);
     this.parent.displaySpecifiedTimesheet(weeks);
   }
 }
@@ -73,7 +73,7 @@ export class DatePickerComponent implements OnInit{
 /**
  * Inner class used to set the starting day of the week to Monday.
  */
-export class CustomDateAdapter extends NativeDateAdapter{
+export class CustomDateAdapter extends NativeDateAdapter {
 
   getFirstDayOfWeek(): number {
     return 1;
