@@ -115,7 +115,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 		final String requestURI = request.getRequestURI();
 		String controller;
 		final UserAccount user;
-		if(requestURI.matches("^.+css$|^.+js$|^.+html$|^.+svg$")){
+		if(requestURI.matches("^.+ico$|^.+css$|^.+js$|^.+html$|^.+svg$|^.+.png$|^/sign_in$|^/my_timesheets$|^/manage_projects$|^/manage_teams$|^/manage_unit_types$|^/manage_tasks$|^/manage_user_accounts$|^/approve_timesheets$")){
 			return true;
 		}
 		// Initial Login

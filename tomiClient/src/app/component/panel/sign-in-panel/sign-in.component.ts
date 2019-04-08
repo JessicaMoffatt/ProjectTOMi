@@ -60,8 +60,8 @@ export class SignInComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.meta.addTag({
       name: 'google-signin-client_id',
-      // content: '730191725836-6pv3tlbl520hai1tnl96nr0du79b7sfp.apps.googleusercontent.com' //localhost:4200
-       content: '730191725836-os1al23f91okt57uactu0renuordqo1c.apps.googleusercontent.com' //localhost:8080
+      content: '730191725836-6pv3tlbl520hai1tnl96nr0du79b7sfp.apps.googleusercontent.com' //localhost:4200
+      //  content: '730191725836-os1al23f91okt57uactu0renuordqo1c.apps.googleusercontent.com' //localhost:8080
     });
     let s = this.document.createElement("script");
     s.type = "text/javascript";
