@@ -22,6 +22,9 @@ public class ProjectViewModel {
 	 */
 	private String projectName;
 
+	public ProjectViewModel(){
+	}
+
 	/**
 	 * Creates a ProjectViewModel from an existing project.
 	 *

@@ -10,7 +10,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @Controller
 public class StaticController {
 
-	@RequestMapping (value = {"/sign_in", "/my_timesheets", "/manage_projects", "/manage_teams", "/manage_unit_types", "/manage_tasks", "/manage_user_accounts", "/approve_timesheets"}, method = GET)
+	@RequestMapping (value = {"/sign_in", "/my_timesheets", "/manage_projects", "/manage_teams",
+		"/manage_unit_types", "/manage_tasks", "/manage_user_accounts", "/approve_timesheets"}, method = GET)
 	public RedirectView redirectWithUsingRedirectView(RedirectAttributes attributes) {
 		return new RedirectView("/");
 	}
