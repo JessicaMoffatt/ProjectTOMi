@@ -74,4 +74,23 @@ public class UserAuthorizationService {
 
 		}
 	}
+
+	public void setTeamLead(UserAccount teamLead) {
+		try {
+			final UserAuthorizationPolicy policy = new UserAuthorizationPolicy();
+			policy.setRequestingUser(teamLead);
+			policy.setPermission(UserPermission.READ_TEAM);
+			this.userAuthorizationRepository.save(policy);
+		}catch (Exception e){
+
+		}
+		try {
+			final UserAuthorizationPolicy policy = new UserAuthorizationPolicy();
+			policy.setRequestingUser(teamLead);
+			policy.setPermission(UserPermission.READ_USER_ACCOUNT);
+			userAuthorizationRepository.save(policy);
+		}catch (Exception e){
+
+		}
+	}
 }

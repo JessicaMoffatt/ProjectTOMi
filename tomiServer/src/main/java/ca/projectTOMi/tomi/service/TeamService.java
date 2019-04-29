@@ -24,6 +24,7 @@ public final class TeamService {
 	 * Services for maintaining business logic surrounding {@link ca.projectTOMi.tomi.authorization.policy.TimesheetAuthorizationPolicy}s.
 	 */
 	private final TimesheetAuthorizationService timesheetAuthorizationService;
+	private final UserAuthorizationService userAuthorizationService;
 
 	/**
 	 * Constructor for the TeamService service.
@@ -34,9 +35,11 @@ public final class TeamService {
 	 * 	Service responsible for maintaining TimesheetAuthorizationPolicy objects
 	 */
 	public TeamService(final TeamRepository repository,
-	                   final TimesheetAuthorizationService timesheetAuthorizationService) {
+	                   final TimesheetAuthorizationService timesheetAuthorizationService,
+	                   final UserAuthorizationService userAuthorizationService) {
 		this.repository = repository;
 		this.timesheetAuthorizationService = timesheetAuthorizationService;
+		this.userAuthorizationService = userAuthorizationService;
 	}
 
 	/**
@@ -58,6 +61,7 @@ public final class TeamService {
 			}
 			if (newTeam.getTeamLead() != null) {
 				this.timesheetAuthorizationService.setTeamLead(newTeam.getTeamLead(), team);
+				this.userAuthorizationService.setTeamLead(newTeam.getTeamLead());
 			}
 			team.setTeamLead(newTeam.getTeamLead());
 			return this.repository.save(team);
